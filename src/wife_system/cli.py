@@ -25,6 +25,9 @@ def _positive_finite_float(value: str) -> float:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    '''
+    这个函数就是为了方便使用ArgumentParser 管理命令解析，进而操作方便控制
+    '''
     parser = argparse.ArgumentParser(description="Run the phase-0 virtual finance agent.")
     parser.add_argument("message", nargs="?", default="查询本月虚拟预算")
     parser.add_argument("--provider", choices=("offline", "deepseek"), default="offline")

@@ -5,8 +5,11 @@ All Codex agents working in this repository must first read:
 1. `README.md`
 2. `docs/project-coordination.md`
 3. `docs/coordination/README.md`
-4. The status file for their assigned role under `docs/coordination/agents/`
-5. The task brief named in their assignment
+4. `docs/coordination/control.md`
+5. The status file for their assigned role under `docs/coordination/agents/`
+6. The task brief named in their assignment
+
+Before any external login, service restart, dependency installation, destructive operation, or user-action request, re-read `docs/coordination/control.md`. A newer coordinator directive supersedes an older task plan. If the control file says an action is complete or stopped, do not repeat it; stop safely and report the stale assumption to the coordinator.
 
 ## Progress reporting
 
@@ -23,6 +26,16 @@ All Codex agents working in this repository must first read:
 - Never put API keys, account tokens, personal financial data, or unredacted private logs in progress documents.
 
 ## Coordination boundaries
+
+## Git authority and release workflow
+
+- Only the Brainstorm coordinator may change Git state. All other agents and subagents must not run `git add`, `git commit`, `git restore`, `git reset`, `git checkout`/`switch`, `git merge`/`rebase`, `git push`, create/delete branches or tags, or open/merge pull requests.
+- Other agents may use read-only Git commands such as `git status`, `git diff`, `git log`, and object hashing when needed for evidence. They deliver workspace changes, tests, reports, and immutable file-digest snapshots to the coordinator without staging them.
+- When the coordinator accepts a task or milestone as `complete`, the coordinator reviews the exact file set and verification evidence, then creates a local Git commit for that accepted unit.
+- Before the user declares a major release, commits remain local and must not be pushed to any remote.
+- At the user-declared major release, the coordinator may publish the accepted local history to GitHub.
+- After that first major release, every change must use a dedicated branch and GitHub pull request. The coordinator alone creates the branch, commits, pushes it, opens the PR, and merges only after required review and acceptance.
+- A task reaching `review` is not permission to commit it as accepted work. Defect reports or explicit checkpoints may be committed with wording that clearly states their incomplete status.
 
 - Avoid concurrent edits to the same implementation files. The Executor coordinates implementation ownership and integration.
 - The Tester reports reproducible findings independently. Code changes by the Tester require an assigned path or an isolated branch/worktree and must be re-verified.

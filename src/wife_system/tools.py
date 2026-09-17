@@ -25,6 +25,9 @@ class Tool(Generic[ArgumentsT]):
     description: str
     arguments_model: type[ArgumentsT]
     handler: Any
+    requires_context: bool = False
+    is_write: bool = False
+    required_permission: str | None = None
 
     def schema(self) -> dict[str, Any]:
         return {
@@ -36,11 +39,15 @@ class Tool(Generic[ArgumentsT]):
             },
         }
 
-    def invoke(self, arguments: dict[str, Any]) -> Any:
+    def invoke(self, arguments: dict[str, Any], context: Any = None) -> Any:
         try:
             validated = self.arguments_model.model_validate(arguments)
         except ValidationError as exc:
             raise ToolArgumentsError("Tool arguments failed validation.") from exc
+        if self.requires_context:
+            if context is None:
+                raise ToolArgumentsError("Trusted tool context is required.")
+            return self.handler(validated, context)
         return self.handler(validated)
 
 
@@ -50,20 +57,33 @@ class ToolRegistry:
         if len(self._tools) != len(tools):
             raise ValueError("Tool names must be unique.")
 
-    def schemas(self) -> tuple[dict[str, Any], ...]:
-        return tuple(tool.schema() for tool in self._tools.values())
+    def schemas(self, context: Any = None) -> tuple[dict[str, Any], ...]:
+        permissions = None if context is None else context.permissions
+        return tuple(
+            tool.schema()
+            for tool in self._tools.values()
+            if tool.required_permission is None
+            or permissions is None
+            or tool.required_permission in permissions
+        )
 
     def contains(self, name: str) -> bool:
         """Return whether a model-provided name matches a trusted registered tool."""
 
         return name in self._tools
 
-    def invoke(self, name: str, arguments: dict[str, Any]) -> Any:
+    def invoke(self, name: str, arguments: dict[str, Any], context: Any = None) -> Any:
         try:
             tool = self._tools[name]
         except KeyError as exc:
             raise ToolNotFoundError(f"Unknown tool: {name}") from exc
-        return tool.invoke(arguments)
+        return tool.invoke(arguments, context)
+
+    def is_write(self, name: str) -> bool:
+        try:
+            return self._tools[name].is_write
+        except KeyError as exc:
+            raise ToolNotFoundError(f"Unknown tool: {name}") from exc
 
 
 class QueryBudgetArguments(BaseModel):

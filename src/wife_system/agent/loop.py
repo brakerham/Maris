@@ -11,6 +11,8 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from wife_system.agent.providers import ModelProvider, ProviderError, ProviderTimeoutError
+from wife_system.agent.context import RunContext
+from wife_system.agent.prompts import FINANCE_SYSTEM_PROMPT_V1
 from wife_system.agent.types import (
     AgentRunResult,
     ConversationMessage,
@@ -25,6 +27,8 @@ class AgentRunner:
     provider: ModelProvider
     tools: ToolRegistry
     max_model_turns: int = 4
+    max_tool_calls: int = 8
+    max_write_calls: int = 1
     provider_timeout_seconds: float = 15.0
     _completed: dict[str, tuple[str, AgentRunResult]] = field(default_factory=dict, init=False)
     _in_flight: dict[str, tuple[str, threading.Event]] = field(default_factory=dict, init=False)
@@ -33,13 +37,22 @@ class AgentRunner:
     def __post_init__(self) -> None:
         if self.max_model_turns < 1:
             raise ValueError("max_model_turns must be at least 1.")
+        if self.max_tool_calls < 1 or self.max_write_calls < 1:
+            raise ValueError("tool-call limits must be at least 1.")
         if (
             not math.isfinite(self.provider_timeout_seconds)
             or self.provider_timeout_seconds <= 0
         ):
             raise ValueError("provider_timeout_seconds must be finite and positive.")
 
-    def run(self, user_message: str, request_id: str) -> AgentRunResult:
+    def run(
+        self,
+        user_message: str,
+        request_id: str | None = None,
+        *,
+        context: RunContext | None = None,
+    ) -> AgentRunResult:
+        request_id = request_id or (str(context.agent_run_id) if context is not None else "")
         if not request_id.strip():
             raise ValueError("request_id must not be blank.")
         fingerprint = hashlib.sha256(user_message.encode("utf-8")).hexdigest()
@@ -64,7 +77,7 @@ class AgentRunner:
             completion.wait()
 
         try:
-            result = self._run_uncached(user_message, request_id)
+            result = self._run_uncached(user_message, request_id, context)
         except BaseException:
             with self._request_lock:
                 self._in_flight.pop(request_id, None)
@@ -77,31 +90,52 @@ class AgentRunner:
             completion.set()
         return result
 
-    def _run_uncached(self, user_message: str, request_id: str) -> AgentRunResult:
+    def _run_uncached(
+        self, user_message: str, request_id: str, context: RunContext | None
+    ) -> AgentRunResult:
         events: list[ExecutionEvent] = []
-        messages = [ConversationMessage(role="user", content=user_message)]
+        messages = []
+        if context is not None:
+            messages.append(ConversationMessage(role="system", content=FINANCE_SYSTEM_PROMPT_V1))
+        messages.append(ConversationMessage(role="user", content=user_message))
         executed_call_ids: set[str] = set()
         executed_calls: set[str] = set()
+        total_tool_calls = 0
+        total_write_calls = 0
 
         for model_turn in range(1, self.max_model_turns + 1):
             self._event(events, "model_requested", model_turn=model_turn)
-            try:
-                turn = self.provider.complete(
-                    messages,
-                    self.tools.schemas(),
-                    self.provider_timeout_seconds,
-                )
-            except ProviderTimeoutError as exc:
+            turn = None
+            provider_attempts = 2 if context is not None else 1
+            for attempt in range(provider_attempts):
+                try:
+                    turn = self.provider.complete(
+                        messages,
+                        self.tools.schemas(context),
+                        self.provider_timeout_seconds,
+                    )
+                    break
+                except ProviderTimeoutError as exc:
+                    if attempt + 1 < provider_attempts and exc.retryable:
+                        continue
+                    return self._finish_error(
+                        request_id, events, exc.code, "Model request timed out."
+                    )
+                except ProviderError as exc:
+                    if attempt + 1 < provider_attempts and exc.retryable:
+                        continue
+                    return self._finish_error(
+                        request_id, events, exc.code, "Model provider failed."
+                    )
+                except TimeoutError:
+                    if attempt + 1 < provider_attempts:
+                        continue
+                    return self._finish_error(
+                        request_id, events, "model_timeout", "Model request timed out."
+                    )
+            if turn is None:  # pragma: no cover - defensive guard
                 return self._finish_error(
-                    request_id, events, exc.code, "Model request timed out."
-                )
-            except ProviderError as exc:
-                return self._finish_error(
-                    request_id, events, exc.code, "Model provider failed."
-                )
-            except TimeoutError:
-                return self._finish_error(
-                    request_id, events, "model_timeout", "Model request timed out."
+                    request_id, events, "model_unavailable", "Model provider failed."
                 )
 
             self._event(
@@ -118,6 +152,14 @@ class AgentRunner:
                     )
                 )
                 for call in turn.tool_calls:
+                    total_tool_calls += 1
+                    if total_tool_calls > self.max_tool_calls:
+                        return self._finish_error(
+                            request_id,
+                            events,
+                            "tool_limit_exceeded",
+                            "The agent reached its tool-call limit.",
+                        )
                     if call.id in executed_call_ids:
                         return self._finish_error(
                             request_id,
@@ -142,6 +184,15 @@ class AgentRunner:
                             "unknown_tool",
                             "The model requested an unknown tool.",
                         )
+                    if self.tools.is_write(call.name):
+                        total_write_calls += 1
+                        if total_write_calls > self.max_write_calls:
+                            return self._finish_error(
+                                request_id,
+                                events,
+                                "write_limit_exceeded",
+                                "The agent reached its finance-write limit.",
+                            )
                     self._event(
                         events,
                         "tool_started",
@@ -151,7 +202,7 @@ class AgentRunner:
                     )
                     started_at = time.perf_counter()
                     try:
-                        output = self.tools.invoke(call.name, call.arguments)
+                        output = self.tools.invoke(call.name, call.arguments, context)
                         serialized_output = json.dumps(
                             output,
                             ensure_ascii=False,
@@ -188,6 +239,49 @@ class AgentRunner:
                         duration_ms=(time.perf_counter() - started_at) * 1000,
                         outcome="success",
                     )
+                    if isinstance(output, dict) and output.get("status") in {
+                        "needs_input",
+                        "needs_confirmation",
+                    }:
+                        pending_action_id = output.get("pending_action_id")
+                        pause_reason = str(output["status"])
+                        self._event(
+                            events,
+                            "run_finished",
+                            model_turn=model_turn,
+                            outcome=pause_reason,
+                        )
+                        return AgentRunResult(
+                            request_id=request_id,
+                            status=RunStatus.PAUSED,
+                            pending_action_id=str(pending_action_id),
+                            pause_reason=pause_reason,
+                            result=output,
+                            events=tuple(events),
+                        )
+                    if isinstance(output, dict) and output.get("status") == "error":
+                        safe_error = output.get("error")
+                        code = (
+                            safe_error.get("code", "tool_error")
+                            if isinstance(safe_error, dict)
+                            else "tool_error"
+                        )
+                        retryable = (
+                            bool(safe_error.get("retryable", False))
+                            if isinstance(safe_error, dict)
+                            else False
+                        )
+                        message = (
+                            str(safe_error.get("message", "The tool failed."))
+                            if isinstance(safe_error, dict)
+                            else "The tool failed."
+                        )
+                        return self._finish_error(
+                            request_id,
+                            events,
+                            code,
+                            message if not retryable else message,
+                        )
                     messages.append(
                         ConversationMessage(
                             role="tool",

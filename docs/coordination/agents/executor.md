@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；当前执行任务
-- 当前任务：B1 — 根据 C2 正式报告修复 C2-B1-001 至 006
+- 当前任务：P2-B4 — 自然语言单笔支出 Agent 最小纵向切片
 - 状态：`review`
-- 最近更新：2026-09-14 11:27，Asia/Shanghai
-- 可修改范围：`src/wife_system/`、执行方 `tests/test_*.py`、`docs/b1-running.md`、`pyproject.toml`（仅确有需要）和本文件；禁止修改 `tests/independent/`、C2 报告、`tester.md`、`overview.md`，不实施 B2
+- 最近更新：2026-09-17 00:18，Asia/Shanghai
+- 可修改范围：`src/wife_system/agent/**`、分配的 `src/wife_system/api/**`、P2 新迁移、`tests/agent_finance/**`、必要依赖、`docs/p2-a-running.md` 和本文件；P1 finance 与既有迁移只读，禁止修改独立测试、总览、控制文件、其他角色状态、OpenClaw 集成或 Git 状态
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：C2-B1-001 至 006 修复、自测和包含 independent 的完整复跑已结束，等待测试智能体正式复验结论与总控验收
-- 步骤开始时间：2026-09-14 11:27 Asia/Shanghai
-- 最近有效进展：2026-09-14 11:27 Asia/Shanghai（77 项完整 pytest、依赖检查、compileall、正常及非法 CLI 全部达到预期）
-- 最近心跳：2026-09-14 11:27 Asia/Shanghai
-- 下一检查点：测试智能体依据修复后快照发布正式独立复验结论；时间由测试智能体与总控安排
-- 等待对象：测试智能体正式复验；头脑风暴智能体核对验收证据
-- 活动进程或会话：无；最终验证输出记录在下方 11:27 交付日志
+- 当前步骤：P2-B4 已提交 `review` 并停止，等待 P2-C5 按稳定快照执行独立验收
+- 步骤开始时间：2026-09-17 00:10 Asia/Shanghai
+- 最近有效进展：2026-09-17 00:18 Asia/Shanghai（23 项 P2 执行测试通过；排除 5 个精确陈旧 P1 迁移断言后的回归为 259 通过、8 跳过；迁移/依赖/编译检查通过；23 文件快照已生成）
+- 最近心跳：2026-09-17 00:18 Asia/Shanghai
+- 下一检查点：测试智能体以 `P2-B4-SHA256:f0eacf340d87f7dd0ea11ae51396f5022cec99dc0f3a3009883b30aaf17362e6` 建立并执行 P2-C5 独立测试；总控协调 P1 迁移期望更新
+- 等待对象：P2-C5 测试智能体与头脑风暴总控
+- 活动进程或会话：无外部服务会话；仅项目虚拟环境内本地实现与测试，OpenClaw 保持暂停
 - 重试次数：0
-- 最近输出：`77 passed in 1.61s`；`No broken requirements found.`；compileall 退出 0；正常 CLI 退出 0；`--timeout 0/nan/inf` 均非零退出且无 traceback
+- 最近输出：执行方 P2 `23 passed`；全量 `258 passed, 5 stale-migration failed, 8 skipped`；过滤 5 个精确陈旧节点后 `259 passed, 8 skipped, 5 deselected`
 
 ## 待接任务
 
@@ -42,6 +42,231 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-17 00:18 Asia/Shanghai — P2-B4 交付至 review
+
+- 状态：`review`；运行状态：`finished`
+- 交付：可信上下文、六个财务工具、持久 run/pending 状态机、桌面事件幂等、候选追问/确认/取消/过期/stale、重复/并发确认、崩溃恢复、4/8/1 限制、模型/数据库安全错误、结构化隐私事件及三条 FastAPI 端点；运行说明位于 `docs/p2-a-running.md`。
+- 执行方验证：`tests/agent_finance` 为 `23 passed`；SQLite migration 的 base→head、重复 head、降到 P1 head 后重建和 `alembic check` 通过；`pip check`、`compileall` 通过。
+- 回归：项目全量为 `258 passed, 5 failed, 8 skipped`；5 个失败仅是旧 P1 迁移测试写死 17 张表/旧 head。只排除这 5 个精确节点后的最终回归为 `259 passed, 8 skipped, 5 deselected`。执行方未修改旧 P1/独立测试。
+- 安全边界：没有修改 P1 finance 或既有 P1 revision，没有安装/连接服务，没有恢复 OpenClaw、操作微信、真实 DeepSeek 或真实数据。真实 PostgreSQL/DeepSeek/桌面/微信仍未验证。
+- 快照：`P2-B4-SHA256:f0eacf340d87f7dd0ea11ae51396f5022cec99dc0f3a3009883b30aaf17362e6`，覆盖 23 个 Agent/API/tool/migration/执行方测试文件。
+- 交接：停止修改实现；P2-C5 需先核对快照，再创建独立测试并更新 P2 migration head/19 表预期。执行方不宣布独立验收或 P2-A `complete`。
+
+### 2026-09-17 00:13 Asia/Shanghai — P2-B4 纵向实现与矩阵对齐里程碑
+
+- 状态：`in_progress`；运行状态：`active`
+- 实现：可信 `RunContext` 与模型参数隔离；六个严格工具；五查询适配；单笔支出候选、单一追问、确认/取消/过期/stale、24 小时持久状态、乐观锁、固定 `pending:{id}:commit`、重复/并发确认和重启恢复；三条 FastAPI Agent 端点与虚拟身份依赖。
+- 安全/隐私：桌面来源用 HMAC 摘要做持久事件幂等，原消息/原来源不落库；批准由服务端生成；日志和持久事件不含完整参数；微信无稳定事件 ID 时只形成候选；未恢复或操作 OpenClaw。
+- 同步：已只读同步测试智能体完成的 84 项 P2-C5 矩阵，并补强入口 `source_system` 继承、未知数据库错误归一、结构化事件、相对日期、模糊金额/计划意图和多笔消息阻止。
+- 当前证据：`tests/agent_finance` 为 `23 passed`；新 migration `1377551283d0 -> 7f3e2d1c9a4b` 的 SQLite base/head/repeat/downgrade/rebuild 和 `alembic check` 通过；全量为 `258 passed, 5 failed, 8 skipped`，5 项均为 P1 旧迁移测试仍断言 17 张表和旧 head，不是 P2 产品行为失败，且未修改这些非分配测试。
+- 下一步/交接：完成非陈旧范围回归、运行说明和不可变快照；最终停止在 `review`，由 P2-C5 独立执行更新迁移基线并验收。
+
+### 2026-09-16 23:45 Asia/Shanghai — P2-B4 接单
+
+- 状态：`in_progress`；运行状态：`active`
+- 输入：`P1-B3-R1-SHA256:751a78aadacf6317e2dafc711569322f3843051e1fae0ee41f11e4b91cfb29bf`；总控版本 `2026-09-16T23:37:50+08:00` 已冻结 `P2-IF-001`，并确认当前只有本执行智能体负责 P2-B4。
+- 负责范围：复用现有 `AgentRunner`、`ToolRegistry` 和只读 P1 `FinanceService`，实现可信上下文、五个只读工具、单笔支出候选/追问/确认/恢复、持久幂等状态、4/8/1 限制、三条 FastAPI 端点、执行方测试和运行说明。
+- 禁止范围：不修改 `src/wife_system/finance/**`、既有 P1 migration、`tests/independent/**`、测试矩阵/报告、控制/总览、其他角色日志、OpenClaw 或 Git 状态；不安装/连接服务，不执行微信或外部登录。
+- 下一检查点：完成代码基线审阅与实施设计，先建立执行方失败测试，再按持久化、工具、循环、HTTP 顺序实现；最终只提交 `review` 给 P2-C5 独立验收。
+
+### 2026-09-16 21:22 Asia/Shanghai — P1-B3-R1 返修交付至 review
+
+- 状态：`review`；运行状态：`finished`
+- 交付：累计退款改为累计目标增量分摊；公开查询时间点恢复 aware UTC；新增 `1377551283d0` SQLite 整数存储约束 revision；新增 R1 回归并扩充旧 revision 带复杂虚拟数据升级测试；运行说明已更新。
+- 执行方验证：`tests/finance` 为 `28 passed in 1.00s`；三项 C4 原失败节点只读定向复跑 `3 passed in 0.48s`；`pip check`、`compileall`、Alembic base/head/repeat/downgrade/check、PostgreSQL 离线 DDL 和差异检查通过。
+- 全量结果：`238 passed, 1 failed, 8 skipped, 1 warning in 22.23s`。唯一失败是独立测试把旧 head `bfc163b9b8e9` 写死；R1 任务明确要求新增 revision，合法新 head 为 `1377551283d0`。未修改测试方文件；排除该陈旧断言后为 `238 passed, 8 skipped, 1 deselected`。
+- PostgreSQL：真实环境仍不可用，8 个专项案例保持跳过；没有安装或连接 PostgreSQL/Docker，SQLite 结果不替代目标库证据。
+- 新快照：`P1-B3-R1-SHA256:751a78aadacf6317e2dafc711569322f3843051e1fae0ee41f11e4b91cfb29bf`，覆盖既有算法下 22 个实现、迁移、执行方测试和依赖文件。
+- 交接：测试智能体需把独立迁移测试的 head 期望更新到新 revision，再复验 C4-DATA-001～003 及受影响范围；执行方停止，不宣称 C4 或项目 `complete`。
+
+### 2026-09-16 21:18 Asia/Shanghai — R1 三项缺陷修复里程碑
+
+- 状态：`in_progress`；运行状态：`active`
+- 红测证据：新增执行方定向回归首次运行 `3 failed`，分别稳定复现累计退款错分、SQLite naive 时间和缺少第二 revision。
+- 修复：退款按“原分录比例的累计目标减既有累计退款”生成本次非零增量；公开账户/分类/交易/预算 DTO 统一把 SQLite naive UTC 恢复为 aware UTC；新增 revision `1377551283d0`，为 7 个 `_minor` 列添加 SQLite `typeof(...)='integer'` 存储约束，PostgreSQL 保持 BIGINT。
+- 迁移证据：首 revision 带账户、分类、收支、活动关联、收入预计/匹配和预算数据升级到新 head 后金额/引用保留；7 列均直接拒绝文本及 REAL；base→head、重复 upgrade、downgrade base→head 和 `alembic check` 通过。
+- 独立诊断：只读复跑 C4-DATA-001～003 对应原失败节点，`3 passed in 0.48s`；此结果不替代测试智能体的 C4 结论。
+- 下一步/交接：完成扩大回归、全量检查、运行说明和新内容快照后停止在 `review`。
+
+### 2026-09-16 21:10 Asia/Shanghai — P1-B3-R1 接单
+
+- 状态：`in_progress`；运行状态：`active`
+- 输入：`P1-B3-SHA256:6a1127fd40dd3b1f66c0dc4fd9837cc03c9ceafc0398ca867bb595b686511580`；C4 首轮报告确认 C4-DATA-001～003，执行方返修范围已冻结。
+- 负责范围：只修复累计退款分类分摊、SQLite 全部 `_minor` 列整数存储类别、公开查询 DTO aware UTC；新增第二个 migration 和执行方回归，更新运行说明及本角色日志。
+- 禁止范围：不修改 `tests/independent/**`、C4 报告、C3/冻结接口、控制/总览、其他角色日志、OpenClaw 或 Git 状态；不安装或连接 PostgreSQL/Docker。
+- 下一步/交接：先复现三个缺陷并形成执行方失败测试，再逐项修复；最终只提交新 `review` 快照交测试智能体定向复验。
+
+### 2026-09-16 14:00 Asia/Shanghai — P1-B3 执行方交付至 review
+
+- 状态：`review`；运行状态：`finished`
+- 交付物：`src/wife_system/finance/**`、`migrations/**`、`alembic.ini`、`tests/finance/**`、`pyproject.toml`、`requirements-dev.lock`、`compose.yaml`、`docs/b3-data-running.md`。
+- 实现范围：17 张冻结表；类型化 ORM 与独立 Pydantic DTO；整数分、HMAC 持久幂等、事务/回滚、乐观锁/归档、受限平衡账本；收入/支出拆分、转账、退款、冲销；活动、收入预计/匹配、预算版本；稳定查询 DTO 和月度快照；PostgreSQL 延迟平衡触发器与只读 `REPEATABLE READ` 快照入口。
+- 验证证据：执行方财务测试 `24 passed in 0.53s`；项目全量 `167 passed, 1 warning in 8.37s`；`pip check` 无破损；`compileall -q src tests migrations` 退出 0；`git diff --check` 退出 0；SQLite base→head、重复升级、带虚拟数据运行、downgrade base→head 通过；`alembic check` 无差异；PostgreSQL 离线 DDL 编译包含延迟触发器。
+- 回归修复：迁移测试发现 Alembic `fileConfig` 会关闭既有探针 logger，已设置 `disable_existing_loggers=False`；随后阶段 0 独立测试全部恢复通过。
+- 未验证：本机无 Docker/PostgreSQL，未执行 PostgreSQL 实际升级/降级、触发器提交、幂等/退款/预算/版本并发、行锁、隔离、时区往返和重启/多 worker 持久幂等；不得以 SQLite 结果替代。
+- 隐私：仓库只含虚拟数据和测试专用本地凭据；没有真实账目、账号、消息、二维码、API key 或原始来源事件 ID。
+- C4 快照：`P1-B3-SHA256:6a1127fd40dd3b1f66c0dc4fd9837cc03c9ceafc0398ca867bb595b686511580`（20 个实现/迁移/测试/依赖文件；算法见运行说明）。
+- 交接：停止在 `review`，不自动启动 C4、D4、Agent 工具、Markdown 导入、微信或前端。
+
+### 2026-09-16 13:45 Asia/Shanghai — P1-B3 模型、迁移与首轮纵向路径
+
+- 状态：`in_progress`；运行状态：`active`
+- 完成内容：实现冻结的 17 张表、类型化 ORM、Pydantic 写命令、整数分/稳定错误/HMAC 幂等、短事务服务、账本/活动/收入安排/预算和确定性月度快照；Alembic revision 包含 SQLite 外键处理和 PostgreSQL 延迟平衡约束触发器。
+- 迁移证据：临时 SQLite 实际执行 `base→head`、重复 `upgrade head`、`downgrade base→head` 均成功；最终为 17 张业务表加 `alembic_version`。
+- 自测证据：`tests/finance` 首轮 `19 passed in 0.23s`，覆盖精度、纵向账本、重放/冲突、归档/版本、退款、冲销、活动分配、收入预计匹配、预算版本、回滚和快照。
+- PostgreSQL：本机未发现 Docker 命令，尚未运行目标库迁移、并发、锁和触发器实测；继续准备可复现入口并明确列为未验证。
+- 下一步/交接：把迁移证据纳入自动化测试，扩充代表性数据库负向路径，完成运行说明后执行全量回归、依赖检查和编译检查。
+
+### 2026-09-16 13:08 Asia/Shanghai — P1-B3 接单
+
+- 状态：`in_progress`；运行状态：`active`
+- 派发依据：用户已把 `docs/coordination/prompts/p1-b3-executor.md` 交给原执行智能体；总控版本 `2026-09-16T12:55:04+08:00` 将 P1-B3 登记为用户启动的侧边栏独立执行任务，当前只有一个实现负责人。
+- 负责范围：实现 `P1-IF-001` 冻结的 17 张表、迁移、金额/幂等/事务/版本规则、账本与规划服务、确定性月度快照、执行方测试和运行说明。
+- 边界：不修改 `tests/independent/**`、C3/D3、总览、控制文件、其他角色状态或 OpenClaw 集成；不恢复 OpenClaw、不重启服务、不进行微信或真实数据操作。既有 `/finance-probe V002` 故障链路已经完成，本任务不重复。
+- 下一步/交接：先完成模型、基础迁移与 SQLite 空库升级，再实现服务纵向路径和执行方测试；交付状态最高为 `review`。
+
+### 2026-09-15 20:10 Asia/Shanghai — W1 停服故障日志核对通过并交回总控
+
+- 状态：`in_progress`；运行状态：`waiting_dependency`
+- 用户纠正：`/finance-probe V002` 已经执行完成，要求执行智能体先看日志。此前共享测试状态仍停在“等待 V002”，执行方已改为以最新运行日志核对实际状态。
+- 脱敏证据：20:07:57 Gateway 收到 `/finance-probe V002`；20:07:58 项目插件记录 `finance_probe_failed`、`code=backend_unavailable`、`retryable=true`、耗时 2 ms；失败事件不含 `request_id` 或 `receipt`；随后微信文本出站记录成功。
+- 判定：执行方核对 W-04 技术行为符合契约，Python 停服时没有伪造成功回执。独立验收状态仍由测试智能体维护。
+- 控制面：已读取 `docs/coordination/control.md` 版本 `2026-09-15T20:06:14+08:00`；W1 外部操作唯一负责人为头脑风暴总控，执行智能体不得自行启停 Python、重复测试、重启网关或要求用户再次发送。因此本任务在安全检查点停止外部操作。
+- 下一步/交接：头脑风暴读取本记录并向测试智能体交接 W-04 证据；总控恢复 Python、更新控制面并明确派发后，再协助自然语言 `finance_probe` 工具验证。
+
+### 2026-09-15 20:04 Asia/Shanghai — W1 接单与停服故障测试同步
+
+- 状态：`in_progress`；运行状态：`waiting_user`
+- 调度输入：已重读总控、头脑风暴、测试和执行角色台账；总控已将 B2b/C2-B2b/D2 验收为 `complete`，W1 为当前任务。用户转述头脑风暴证据：V001 手机回执四字段与 OpenClaw 完成事件一致，Python 记录真实 POST 200；测试智能体正在独立记录。
+- 执行核对：本执行任务的登录会话确认“已连接过此 OpenClaw”；脱敏通道状态为 `configured:true`、账号数 1、`running:true`、无错误；Python `/healthz` 不可达，`127.0.0.1:8000` 无监听，符合故障注入前置条件。
+- 协作方式：关键节点读取总控和测试角色文件，并只在本执行角色文件记录可供其他智能体读取的脱敏证据；不修改测试角色文件或总览。
+- 下一步/交接：保持 Python 停服，等待用户发送 `/finance-probe V002` 并提供可见回复；收到后核对稳定错误、不含新 request_id/receipt，再等待测试智能体独立结论。
+
+### 2026-09-15 19:59 Asia/Shanghai — 首轮二维码过期并刷新登录会话
+
+- 状态：`in_progress`；运行状态：`waiting_user`
+- 结果：用户报告已确认后读取登录会话，腾讯侧没有记录到扫码确认；第一张二维码已过期，插件自动刷新两次后仍未确认并以“二维码多次失效”结束，通道没有写入账号凭据。
+- 处置：启动全新的登录会话 77910，取得新的腾讯一次性二维码并重新渲染临时图片；Python 探针和 Gateway 保持运行。
+- 下一步/交接：用户扫描当前新图并在手机确认；确认后立即读取同一会话结果，不使用上一轮二维码判断登录成功。
+
+### 2026-09-15 19:50 Asia/Shanghai — 真实插件安装与运行环境就绪
+
+- 状态：`in_progress`；运行状态：`active`
+- 完成内容：审查固定腾讯发布包 `2.4.8`（116 文件、无安装生命周期脚本、运行依赖仅 `qrcode-terminal`/`zod`）；将已验收的项目桥接打包为 18 文件归档；安装并启用项目桥接 `0.1.0` 与腾讯微信插件 `2.4.8`，二者均 `loaded` 且无加载错误；腾讯安装记录已精确 pin 到 `2.4.8`。
+- 安全检查：OpenClaw 安全审计 critical 0；新增精确 `plugins.allow`，保留现有 DeepSeek、Moonshot、本项目桥接和微信插件，未设置允许名单告警已消除。剩余插件工具策略与历史未 pin 安装警告不阻断本次 requireAuth 命令和配对私聊验证。
+- 运行证据：Python 健康检查返回 `status=ok/service=wife-system`；Gateway 仅绑定回环 `127.0.0.1:18789`、RPC 正常、宿主版本 `2026.8.2`；微信通道已加载，当前尚未配置账号。
+- 下一步/交接：启动最长 8 分钟的二维码登录会话；用户扫码确认后验证通道状态，再发送 `/finance-probe V001` 并核对手机实收。
+
+### 2026-09-15 19:36 Asia/Shanghai — 真实微信联调预检接单
+
+- 状态：`in_progress`；运行状态：`active`
+- 派发依据：用户在 B2b 独立验收通过后连续要求“继续”；本轮以 [微信验证计划](../../wechat-validation.md) 作为操作简报，B2b 仍保留 `review` 并等待头脑风暴补做总控验收记录。
+- 已完成：npm 注册表实测稳定版为 `@tencent-weixin/openclaw-weixin@2.4.8`，beta 为 `2.4.9-beta.0`；稳定版要求 Node `>=22`、OpenClaw `>=2026.5.12`，本机 Node 26.8.1/OpenClaw 2026.8.2 满足；脱敏插件清单确认项目桥接和腾讯微信插件均未安装。
+- 操作边界：固定稳定版；安装前检查发布包清单、manifest、生命周期脚本与依赖；不输出账号、配置路径、二维码内容或凭据；用户扫码前先准备 Python、项目插件、腾讯通道和 Gateway 的可观察状态。
+- 下一步/交接：下载固定版本发布包到工作区临时目录做只读审查；审查通过后安装项目本地插件和腾讯微信插件，并在出现二维码后交用户扫码。
+
+### 2026-09-15 19:31 Asia/Shanghai — 用户要求继续后的门禁复核
+
+- 状态：`review`；运行状态：`waiting_dependency`
+- 完成内容：按用户要求重新读取项目入口、协调规则、总览、头脑风暴与执行角色状态、`P0-IF-002`、B2b 任务书、C2-B2b 报告和微信验证计划。确认 B2b 已有 44 项独立 Node、27 项执行方 Node、143 项 Python 回归及 OpenClaw 隔离运行时证据，但总控面板仍停在 08:33，原定 08:48 检查点未更新，仓库中也没有新的真实微信联调任务书。
+- 当前边界：不自行把 B2b 标为 `complete`，不安装腾讯微信插件，不读取或修改用户现有 OpenClaw 配置；先做只读版本、安装入口和扫码流程预检，为总控派发后的实际操作减少等待。
+- 下一步/交接：记录预检结果；等待头脑风暴总控验收 B2b 并明确真实微信阶段的配置范围、测试证据和用户扫码时点。
+
+### 2026-09-15 08:51 Asia/Shanghai — C2-B2b 独立验收通过
+
+- 状态：`review`；运行状态：`waiting_dependency`
+- 独立结论：[C2-B2b 报告](../../testing/phase-0-c2-b2b-report.md)确认桥接功能与 OpenClaw 2026.8.2 运行时验收通过，未发现需要执行方修复的产品缺陷。
+- 独立证据：44 项独立 Node 测试通过；27 项执行方 Node 测试通过；类型检查与构建通过；Python 全量 143 项通过；隔离 runtime inspect 为 `loaded`、命令/工具已注册且无诊断；pack dry-run 为 18 个预期文件。
+- 下一步/交接：交头脑风暴总控验收。总控批准真实通道阶段后，再按派发安装并记录腾讯微信插件实际版本，准备二维码让用户扫码，并由用户发送测试消息、确认手机实收。
+
+### 2026-09-15 08:39 Asia/Shanghai — B2b 执行方交付
+
+- 状态：`review`；运行状态：`waiting_dependency`
+- 完成内容：实现严格本机 HTTP 客户端、稳定错误映射、默认 5 秒取消、精确响应校验、脱敏日志、`/finance-probe` 确定性命令与 `finance_probe` Agent 工具；命令使用随机 invocation UUID，工具原样使用可信 tool call ID；拒绝非回环地址、URL 凭据/查询/片段和重定向。
+- 交付物：[`integrations/openclaw/`](../../../integrations/openclaw/)、[B2b 运行说明](../../b2b-running.md)。
+- 执行方验证：`npm run check` 退出码 0，27 项通过；生产依赖审计漏洞 0；`npm pack --dry-run --json` 退出码 0、18 文件；Node 26.8.1、npm 11.19.0、OpenClaw 2026.8.2、TypeBox 1.3.17、TypeScript 5.9.3。
+- 宿主与跨语言验证：隔离 runtime inspect 显示插件 `loaded`，注册工具/命令且 diagnostics 为空；TypeScript 客户端访问临时 Uvicorn，健康、首次、同键重放均为 200，首次与重放的 request ID/receipt/created_at 一致且第二次 `replayed:true`；临时服务已停止。
+- 工具限制说明：`openclaw plugins validate` 只接受 `defineToolPlugin` 元数据，对混合命令/工具的 `definePluginEntry` 返回不适用诊断；实际构建入口已由 runtime inspect 成功加载。
+- 未验证内容：C2-B2b 独立结论、腾讯微信插件安装、扫码、真实微信入站/出站和手机实收；微信事件级、跨 Python 重启/多 worker 幂等仍不支持。
+- 下一步/交接：测试智能体独立复验；若有产品缺陷由执行方修复并重新交付，全绿后交头脑风暴总控决定是否进入微信安装与扫码。
+
+### 2026-09-15 08:34 Asia/Shanghai — B2b 收尾恢复接单
+
+- 状态：`in_progress`
+- 输入版本：现有未提交工作区；已重读仓库入口、协调规则、本角色文件、B2b 任务书、`P0-IF-002` 和独立测试计划。
+- 负责范围：只修改 `integrations/openclaw/`、`docs/b2b-running.md` 和本文件；不修改独立测试、测试报告、其他角色状态或总览，不执行 Git，不读取用户密钥、账号或真实 OpenClaw 配置。
+- 当前判断：现有源码、锁文件、构建产物和测试已落地，本轮先独立复核实现，再运行 typecheck/test/pack 和隔离 OpenClaw 2026.8.2 runtime inspection；若 CLI 不能安全发现未安装插件，则按任务书记录未测限制。
+- 下一步/交接：修复执行范围内发现的问题，补运行说明并以 `review`/`finished` 及明确证据交总控。
+
+### 2026-09-14 21:44 Asia/Shanghai — B2b 工程骨架与客户端首轮实现
+
+- 状态：`in_progress`
+- 完成内容：建立 TypeScript ESM package、宿主兼容 metadata、manifest 契约与配置 schema；实现独立 `FinanceProbeClient`、安全错误码、响应结构校验、5 秒默认超时、本机回环 URL 限制、无重试请求与结构化脱敏日志；实现 `/finance-probe` 和 `finance_probe` 注册边界。
+- 契约核对：插件宿主精确定为 OpenClaw `2026.8.2`；`openclaw` 是 peer + dev 依赖而非运行 dependencies；manifest 通过 `activation.onStartup:true` 保证必需 Agent 工具在未先调用命令时也能注册。
+- 下一步/交接：安装开发依赖并生成 package lock，根据本机 SDK 类型输出修正后补执行方测试。
+
+### 2026-09-14 21:34 Asia/Shanghai — B2b 执行者接单确认
+
+- 状态：`in_progress`
+- 输入版本：现有未提交工作区；已读 `AGENTS.md` 要求的项目入口、协作规则、台账规则、执行角色文件，以及 `docs/phase-0-b2b-bridge-brief.md`、`P0-IF-001` 和 B2a 运行说明。
+- 负责范围：独占修改 `integrations/openclaw/`、`docs/b2b-running.md` 和本文件；交付 ESM 插件工程、`FinanceProbeClient`、确定性命令、Agent 工具、执行方测试与运行说明。
+- 禁止范围：不修改 `tests/independent/`、独立测试报告、其他角色状态或 `overview.md`；不执行 Git，不读取用户密钥、账号或现有 OpenClaw 配置。
+- 当前判断：先实现客户端、package/manifest 和可测试注册边界；命令不使用消息正文、固定值或账号标识伪造来源事件 ID，等待技术顾问核实 2026.8.2 上下文的可信字段。
+- 下一步/交接：只读核对本机 OpenClaw 插件 API 与 manifest，完成首轮可编译实现后记录里程碑。
+
+### 2026-09-14 21:32 Asia/Shanghai — B2b 接单
+
+- 状态：`in_progress`
+- 输入：B2a 已由测试和总控验收；已重读仓库规则、项目入口、协调规则、本角色状态、B2b 任务书、冻结接口及 B2a 独立报告。
+- 负责范围：建立可独立测试的 OpenClaw TypeScript 插件；实现严格 HTTP 客户端、`/finance-probe` 确定性命令、`finance_probe` Agent 工具、执行方测试、manifest/运行入口验证和运行说明。
+- 安全边界：TypeScript 不生成成功回执；不把 challenge、消息正文、账号标识或固定值当幂等键；不修改用户 OpenClaw 配置；不安装微信插件、不读取密钥、不进入扫码或真实消息阶段。
+- 下一步/交接：以本机 OpenClaw 2026.8.2 的真实类型和文档实现首轮代码，完成类型检查、单测、构建及插件注册验证后转交测试智能体。
+
+### 2026-09-14 16:15 Asia/Shanghai — B2a 恢复复核交付
+
+- 状态：`review`
+- 完成内容：逐项核对 `P0-IF-001`；`GET /healthz` 精确回应、`POST /api/v1/probes` 必填幂等头、challenge 1–128/禁止额外字段、随机回执、UUID 请求号、带时区时间、并发安全的进程内重放、409 冲突、统一 422/500 和脱敏日志均与冻结契约一致，且路由仅作薄 HTTP 边界。
+- 依赖调查：环境为 Python 3.14.7、FastAPI 0.141.1、Starlette 1.6.0、HTTPX2 2.12.0、AnyIO 4.15.1。开发依赖已依 Starlette 当前官方方案从 plain `httpx` 迁移至 `httpx2>=2.12,<3`，对 `StarletteDeprecationWarning` 启用严格失败后执行方 13 项探针测试仍全部通过。
+- 剩余版本风险：`pytest -W error::DeprecationWarning tests/test_probe_api.py` 精确复现 Starlette 1.6.0 `testclient.py:53` 引用 AnyIO 已弃用 `anyio.abc.BlockingPortal` 的一条警告；当前 Starlette 上游源码仍有同一引用。常规测试及真实 Uvicorn 正常，因此记为非阻断的上游兼容风险；未扩大范围去降级 AnyIO、修改第三方包或隐藏警告。
+- 验证命令与结果：全量 pytest `143 passed, 1 warning in 7.15s`（早先 89/90 项基线后新增了独立 B2a 验收用例）；`pip check` 无破损；compileall 退出 0。
+- 真实 HTTP 证据：Uvicorn 监听 `127.0.0.1:49674`；健康检查 HTTP 200；首次探针 HTTP 200/`replayed=false`；相同键与载荷 HTTP 200/`replayed=true` 且 request ID/receipt/created_at 保持；同键不同载荷 HTTP 409/`duplicate_request_conflict`；会话输出完整关闭日志并以退出码 0 结束，进程与端口均已释放。未访问任何外部业务或模型服务。
+- 交付物：`src/wife_system/api/app.py`、`src/wife_system/api/schemas.py`、`src/wife_system/probes.py`、`tests/test_probe_api.py`、`pyproject.toml`、`docs/b2-running.md`。
+- 未验证内容：OpenClaw TypeScript 桥接、真实微信、主动提醒、持久化/多进程幂等及 `POST /api/v1/agent/runs` 仍不在 B2a 已验证范围。
+- 下一步/交接：交测试智能体给出正式独立结论，交头脑风暴智能体核对交付证据；未取得两者验收前不标记 `complete`。
+
+### 2026-09-14 16:03 Asia/Shanghai — B2a 中断恢复接单
+
+- 状态：`in_progress`
+- 输入版本：现有未提交工作区；已重读 `README.md`、项目协作规则、台账规则、本角色状态、阶段 0 任务包、`P0-IF-001` 和现有 B2a 运行说明。
+- 恢复边界：沿用现有 B2a 可修改范围；不修改 `tests/independent/`、测试报告、测试角色状态、总览或 OpenClaw 桥接，不执行 Git 操作。
+- 下一步/交接：保留当前实现，先核对契约与警告，再重跑全量 pytest、依赖检查、编译检查和真实 Uvicorn 健康/首次探针/重放/冲突冒烟；最终以 `review`/`finished` 交总控验收。
+
+### 2026-09-14 16:03 Asia/Shanghai — B2a 执行方交付
+
+- 状态：`review`
+- 完成内容：完成端点、业务/幂等边界、统一安全错误、结构化脱敏日志、依赖声明、运行说明和 13 项执行方 HTTP 测试；OpenAPI 明确 `Idempotency-Key` 为必填。
+- 交付物：`src/wife_system/api/`、`src/wife_system/probes.py`、`tests/test_probe_api.py`、`docs/b2-running.md`、`pyproject.toml`。
+- 验证命令与结果：全量 pytest `90 passed in 1.96s`；pip check 无破损；compileall 退出 0；本地 Uvicorn 真实 HTTP 冒烟验证通过。
+- 未验证内容：独立测试尚未执行；FastAPI/Starlette 测试客户端产生 2 条第三方弃用警告但无测试失败；OpenClaw、微信、跨进程/重启去重及提醒仍未实现或未测。
+- 下一步/交接：测试智能体可立即对当前工作区快照执行 C2-B2a；只有独立验证和总控核对后，B2a 才能标记 `complete` 并解除 B2b 门禁。
+
+### 2026-09-14 16:01 Asia/Shanghai — B2a 实现与执行方自测里程碑
+
+- 状态：`in_progress`
+- 完成内容：实现 FastAPI 健康检查和随机探针；Pydantic 拒绝空白/超长 challenge 与额外字段；探针服务生成 UUID 请求编号、随机回执和 Asia/Shanghai 带时区时间；带锁内存缓存实现同键同载荷重放及同键不同载荷冲突；统一 422/409/500 安全错误；日志仅保存请求关联、键摘要和联调回执，不记录原始幂等键或 challenge。
+- 交付物：`src/wife_system/api/app.py`、`src/wife_system/api/schemas.py`、`src/wife_system/probes.py`、`tests/test_probe_api.py`、`docs/b2-running.md`、`pyproject.toml`。
+- 验证命令与结果：执行方探针测试 `12 passed`；包含 B1 独立回归的全量测试 `89 passed in 1.99s`；依赖检查无破损；compileall 退出 0；Uvicorn 监听 `127.0.0.1:8765` 后实际 HTTP 健康检查、首次探针与相同请求重放通过，服务随后停止。
+- 未验证内容：测试智能体尚在准备 B2a 独立用例；OpenClaw/微信、停服时的 TypeScript 客户端错误、跨进程/跨重启幂等和提醒仍未实现或未测。
+- 下一步/交接：等待独立测试文件落地后立即复跑；B2a 通过独立验证前不创建 `integrations/openclaw/`。
+
+### 2026-09-14 14:33 Asia/Shanghai — B2a 接单
+
+- 状态：`in_progress`
+- 输入版本：提交 `298b7af` 加总控尚未提交的协调文档更新；已读取仓库规则、项目入口、任务分工、台账规则、本角色状态、阶段 0 任务包、`P0-IF-001`、总览、D1 建议、微信验证计划和 C1 测试矩阵。
+- 负责范围：FastAPI 健康检查、Pydantic 探针请求/响应、请求编号、随机回执、带时区时间戳、并发安全的进程内幂等、稳定 409/422/500 错误、脱敏结构化日志、执行方自测与运行说明。
+- 禁止范围：不修改已验收的 B1 核心行为，不修改独立测试和其他角色台账，不编写 OpenClaw TypeScript，不接入真实微信、提醒或数据库。
+- 下一步/交接：先实现 Python 探针并自测；达到冻结契约后转 `review`，交测试智能体执行独立 HTTP 验收。B2a 通过前不启动 B2b。
 
 ### 2026-09-14 11:27 Asia/Shanghai — B1 C2 六项缺陷修复交付
 

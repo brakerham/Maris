@@ -1,20 +1,20 @@
 # 项目进度总览
 
-更新时间：2026-09-14 11:30，Asia/Shanghai  
+更新时间：2026-09-17 22:04，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-阶段 0：最小 Agent 与微信通道验证。D1、B1、C1 和 B1 对应的 C2 已通过总控验收；修复后的完整测试为 77 项全部通过。B2 与真实 DeepSeek/OpenClaw/微信联调尚未开始。
+P2-A 本地 SS/HTTP 范围与 P2-D6 实现教学均已完成。PG-C7 已执行 12 项真实 PostgreSQL 专项，5 项通过、7 项因共同缺陷失败；当前只等待执行智能体修复 `PG-C7-DATA-001`。
 
 ## 角色状态
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `idle`：D1/B1/C1/C2 本轮验收已结束，B2 为下一任务 | 2026-09-14 11:30 | 派发 B2 FastAPI 探针与 OpenClaw 桥接 | [角色日志](agents/brainstorm.md)、[接口冻结](../phase-0-interface-freeze.md) |
-| 技术顾问 | `complete`（总览验收） | `finished`：D1 已交付 | 2026-09-13 23:17 | B1/B2/C2 后启动 D2 | [角色日志](agents/technical-adviser.md)、[D1 建议](../phase-0-d1-technical-advice.md) |
-| 执行智能体 | `complete`（总览验收） | `finished`：B1 六项缺陷已修复并完成自测 | 2026-09-14 11:27 | 接收 B2 任务 | [角色日志](agents/executor.md)、[C2 报告](../testing/phase-0-c2-b1-report.md) |
-| 测试智能体 | `complete`（C1/C2 总览验收） | `finished`：六项修复独立复验通过 | 2026-09-14 11:28 | B2 交付后执行对应 C2 | [角色日志](agents/tester.md)、[C2 报告](../testing/phase-0-c2-b1-report.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：PG-C7 已核对，返修任务已冻结 | 2026-09-17 22:04 | 执行智能体接单 DATA-R1 | [角色日志](agents/brainstorm.md)、[返修 Prompt](prompts/pg-c7-data-r1-executor.md) |
+| 技术顾问 | `complete`（P2-D6，总控验收） | `finished`：教学交付完成 | 2026-09-17 17:27 | 等待后续教学任务 | [角色日志](agents/technical-adviser.md)、[D6 教学](../phase-2-d6-agent-teaching.md) |
+| 执行智能体 | `ready`（PG-C7-DATA-R1） | `finished`：等待用户发送返修 Prompt | 2026-09-17 22:04 | 修复 PostgreSQL `_claim` 首次写入判定并提交新快照 | [角色日志](agents/executor.md)、[返修 Prompt](prompts/pg-c7-data-r1-executor.md) |
+| 测试智能体 | `review`（PG-C7） | `finished`：12 项 PostgreSQL 专项已执行并安全停止环境 | 2026-09-17 03:45 | 等待 DATA-R1 新快照后再接定向复验 | [角色日志](agents/tester.md)、[C7 报告](../testing/phase-2-c7-postgresql-report.md) |
 
 ## 阶段 0 任务状态
 
@@ -25,19 +25,39 @@
 | B1：最小 Agent 核心 | 执行智能体 | `complete` | 实现、自测、文档齐备并通过独立验证 | 执行方、测试方和总控全量复跑分别通过；总控为 `77 passed in 1.64s` |
 | C1：阶段 0 测试设计 | 测试智能体 | `complete` | 独立验收矩阵与判定标准 | [60 项测试矩阵](../testing/phase-0-test-matrix.md) |
 | C2：B1 独立测试与结构审查 | 测试智能体 | `complete` | 依赖 B1 可运行交付和冻结契约 | 初测 6 项失败；修复后六项定向、51 项独立和 77 项完整测试全部通过 |
-| B2：微信桥接探针 | 执行智能体 | `ready` | 依赖 B1 服务接口和 D1 桥接建议 | 契约已冻结；排在 B1 独立复验之后 |
-| D2：实现后教学 | 技术顾问 | `blocked` | 依赖 B1/B2 的实际代码和 C2 结论 | B1 已满足，等待 B2 及其独立复验 |
+| B2a：FastAPI 探针 | 执行/测试智能体 | `complete` | 健康检查、随机回执、进程内幂等与独立 HTTP 验收 | 25 项新增独立、104 项独立、143 项全量测试通过；真实 Uvicorn 200/200/200/409；总控复验通过 |
+| B2b：OpenClaw 桥接 | 执行/测试/技术顾问 | `complete` | 客户端、命令、工具、宿主加载、跨语言冒烟和独立测试 | 执行 27 项、独立 44 项、pack 18 文件、runtime inspect loaded/无诊断；见 [C2-B2b 报告](../testing/phase-0-c2-b2b-report.md) |
+| D2：实现后教学 | 技术顾问 | `complete` | 结合最终代码和验证讲解 HTTP、FastAPI、幂等和桥接 | [教学文档](../phase-0-d2-bridge-teaching.md)已定稿并通过总控核对 |
+| W1：真实微信联调核心切片 | 用户/头脑风暴/测试智能体 | `complete` | 安装插件、扫码、命令实收、停服错误与工具调用 | W-02、W-03、W-04、W-12 通过；其余通道与提醒案例保留到对应功能阶段 |
+| P1-D3：数据层技术建议 | 用户启动的独立技术顾问 | `complete` | 六组选型、17 张建议表、12 条不变量、迁移、风险和教学地图经总控核对 | [D3 建议](../phase-1-d3-data-advice.md) |
+| P1-C3：数据层测试矩阵 | 用户启动的独立测试智能体 | `complete` | 98 个案例、98 个唯一 ID、0 非法状态；全部保持未执行 | [C3 矩阵](../testing/phase-1-data-test-matrix.md) |
+| P1-IF-001：数据接口冻结 | 头脑风暴 | `complete` | F01～F15、17 张表、错误、事务、范围和测试归属已冻结 | [接口冻结](../phase-1-interface-freeze.md) |
+| P1-B3：数据层实现 | 用户启动的独立执行智能体 | `review` | 首轮实现已由 C4 验出 3 个缺陷；等待 B3-R1 新快照 | [执行日志](agents/executor.md)、[B3 运行说明](../b3-data-running.md) |
+| P1-C4：数据层独立验收 | 用户启动的独立测试智能体 | `review` | 首轮 65 通过、3 失败、8 个 PostgreSQL 环境阻塞；等待 R1 定向复验 | [C4 报告](../testing/phase-1-c4-data-report.md)、[C3 矩阵](../testing/phase-1-data-test-matrix.md) |
+| P1-B3-R1：数据层缺陷返修 | 用户启动的独立执行智能体 | `review` | 三个缺陷已修复，28 项执行方测试通过并提交匹配的 22 文件新快照 | [执行日志](agents/executor.md)、[B3 运行说明](../b3-data-running.md) |
+| P1-C4-R2：数据层定向复验 | 用户启动的独立测试智能体 | `complete` | 三个缺陷全部通过；最终回归 241 通过、0 失败、8 个 PostgreSQL 跳过 | [R2 报告](../testing/phase-1-c4-data-report.md) |
+| P2-D5：财务 Agent 工具设计 | 用户启动的独立技术顾问 | `complete` | 九个工具的阶段边界、确认、幂等、状态、HTTP、风险和教学建议已验收 | [D5 建议](../phase-2-d5-finance-agent-advice.md) |
+| P2-IF-001：Agent 工具接口冻结 | 头脑风暴 | `complete` | 冻结六个工具、可信上下文、候选确认、持久状态、HTTP、错误与文件所有权 | [P2 接口](../phase-2-interface-freeze.md) |
+| P2-B4：Agent 财务工具实现 | 用户启动的独立执行智能体 | `complete`（本地范围） | 23 文件快照匹配；23 项执行方和 45 项独立 P2 测试通过 | [B4 运行说明](../p2-a-running.md)、[C6 报告](../testing/phase-2-c6-agent-report.md) |
+| P2-C5：Agent 财务测试矩阵 | 用户启动的独立测试智能体 | `complete` | 84 个唯一案例及环境分层已完成，全部明确保持未执行 | [C5 矩阵](../testing/phase-2-agent-test-matrix.md) |
+| P2-C6：Agent 财务独立执行 | 用户启动的独立测试智能体 | `complete`（本地范围） | 45 项独立和 23 项执行方 P2 测试通过；71 个矩阵案例有本地证据 | [C6 报告](../testing/phase-2-c6-agent-report.md) |
+| P2-D6：Agent 实现教学 | 用户启动的独立技术顾问 | `complete` | 九节实际代码教学、两张 Mermaid 图、术语表、学习顺序、练习和检查题经总控核对 | [D6 教学](../phase-2-d6-agent-teaching.md) |
+| PG-C7：PostgreSQL 专项验收 | 用户启动的独立测试智能体 | `review` | 12 项共 5 通过、7 失败；共同缺陷 `PG-C7-DATA-001`，环境已停止 | [C7 报告](../testing/phase-2-c7-postgresql-report.md) |
+| PG-C7-DATA-R1：PostgreSQL 首次写入返修 | 用户启动的独立执行智能体 | `ready` | 修复 `_claim` 的 PostgreSQL 新插入判定，执行目标库与 SQLite 相邻回归并生成新快照 | [返修 Prompt](prompts/pg-c7-data-r1-executor.md) |
 
 ## 当前阻塞与风险
 
-- 当前没有运行中的慢任务；D1、B1、C1、C2 对应角色均已结束执行。
+- 当前没有运行中的慢任务；PG-C7 已结束且容器/网络已停止。唯一产品阻塞为 `PG-C7-DATA-001`，执行智能体返修尚未接单。
 - C2 的并发用例原有测试夹具矛盾，经测试角色独立确认后仅修正测试基础设施；六项产品缺陷仍分别修复并通过复验。
-- B1 只保证进程内去重，没有通用工具强制超时；适用边界已写入 `P0-IF-001`。
-- 真实 DeepSeek、FastAPI、OpenClaw、微信收发和提醒均未验证。微信阶段还需要用户扫码与实收确认。
+- B1/B2a 只保证进程内去重；OpenClaw 命令上下文没有来源消息 ID，适用边界已写入 `P0-IF-002`。
+- OpenClaw 官方 worker 触发终端安全软件行为告警；虽然哈希与官方 npm 包一致且代码审查支持误报判断，运行时恢复仍暂停，P1-B3 不得操作 OpenClaw。
+- 真实 PostgreSQL 已完成专项验证，但写路径因 `PG-C7-DATA-001` 未通过；在返修和独立复验完成前，不能宣称 P1/P2 PostgreSQL 写路径通过。
+- B2a 首次执行子任务在写出实现后错过检查点且不再活动，已按已有输出恢复；这次中断不作为失败结论。
+- B2a 第一次测试子任务因临时 Codex 用量限制未接单；现已重新派发，独立结论出来前不能标记 `complete`。
 
 ## 下一次总控检查
 
-1. 执行智能体按冻结的 FastAPI 探针契约开始 B2，不修改已通过的 B1 核心行为。
-2. 测试智能体为 B2 执行 HTTP 校验、幂等、并发、停服与隐私案例。
-3. OpenClaw 与微信实际安装时记录确切版本；需要用户扫码和消息实收时再给出具体操作。
-4. 总控继续检查角色与子任务快照；仅在错过检查点且无输出时诊断 `stale` 或 `stalled_suspected`。
+1. 用户只把 `PG-C7-DATA-R1` Prompt 发给执行智能体；测试智能体与技术顾问保持停止。
+2. 执行智能体完成最小产品修复、执行方 PostgreSQL/SQLite 回归并生成新固定快照；不得修改独立测试。
+3. 总控核对新快照后再生成测试智能体定向复验任务，复跑 12 项 PostgreSQL 专项及相邻 SQLite 幂等回归。
+4. 真实 DeepSeek、桌面、微信和 Agent 真实回环断线继续单独跟踪。

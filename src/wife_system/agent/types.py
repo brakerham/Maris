@@ -1,5 +1,6 @@
 """Provider-neutral messages and structured execution results."""
 
+# 面向对象的知识 就是 对象的设计
 from __future__ import annotations
 
 from enum import StrEnum
@@ -24,7 +25,8 @@ class AssistantTurn(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     content: str | None = None
-    tool_calls: tuple[ToolCall, ...] = ()
+    tool_calls: tuple[ToolCall, ...] = () # 为什么这里用的 是 tuple 而不是 list,因为 这里 不要求数据改变就是 list 会变，但是 这里如果使用了 tuple就 从数据类型 和 静态语法的角度 很他 定下来了
+
 
 
 class ConversationMessage(BaseModel):
@@ -41,6 +43,7 @@ class ConversationMessage(BaseModel):
 class RunStatus(StrEnum):
     SUCCESS = "success"
     ERROR = "error"
+    PAUSED = "paused"
 
 
 class ExecutionEvent(BaseModel):
@@ -74,4 +77,8 @@ class AgentRunResult(BaseModel):
     answer: str | None = None
     error_code: str | None = None
     error_message: str | None = None
+    pending_action_id: str | None = None
+    pause_reason: str | None = None
+    result: dict[str, Any] | None = None
+    replayed: bool = False
     events: tuple[ExecutionEvent, ...]
