@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 import uuid
-from dataclasses import dataclass
-from datetime import UTC, datetime
+from dataclasses import dataclass, field
+from datetime import UTC, datetime, timedelta, tzinfo
 from pathlib import Path
+from threading import Lock
 from typing import Callable, Iterator
 
 import pytest
 from sqlalchemy.orm import Session, sessionmaker
 
+from wife_system.agent import application as application_module
+from wife_system.agent import pending as pending_module
 from wife_system.agent.application import AgentApplication
 from wife_system.agent.finance_tools import FinanceToolAdapter, finance_registry
 from wife_system.agent.loop import AgentRunner
@@ -23,6 +26,47 @@ from wife_system.finance.service import FinanceService, IdempotencyKeys
 ACTOR_ID = uuid.UUID("10000000-0000-0000-0000-000000000001")
 CONVERSATION_ID = uuid.UUID("20000000-0000-0000-0000-000000000001")
 RECEIVED_AT = datetime(2026, 9, 16, 12, 0, tzinfo=UTC)
+
+
+@dataclass
+class AgentTestClock:
+    """One mutable UTC clock per test, shared with application worker threads."""
+
+    _current: datetime = RECEIVED_AT
+    _lock: Lock = field(default_factory=Lock, repr=False)
+
+    def now(self) -> datetime:
+        with self._lock:
+            return self._current
+
+    def advance(self, delta: timedelta) -> datetime:
+        if delta < timedelta(0):
+            raise ValueError("test time must move forward")
+        with self._lock:
+            self._current += delta
+            return self._current
+
+
+@pytest.fixture(autouse=True)
+def agent_clock(monkeypatch: pytest.MonkeyPatch) -> Iterator[AgentTestClock]:
+    """Freeze only the two runtime lookups; restore them after every test."""
+
+    clock = AgentTestClock()
+
+    class ControlledDateTime(datetime):
+        @classmethod
+        def now(cls, tz: tzinfo | None = None) -> datetime:
+            current = clock.now()
+            if tz is None:
+                return current.astimezone().replace(tzinfo=None)
+            return current.astimezone(tz)
+
+    # Patch where the names are looked up, including implicit get/resume calls.
+    # A child context leaves other monkeypatches owned by the test untouched.
+    with monkeypatch.context() as patch:
+        patch.setattr(application_module, "datetime", ControlledDateTime)
+        patch.setattr(pending_module, "datetime", ControlledDateTime)
+        yield clock
 
 
 @dataclass

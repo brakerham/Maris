@@ -1,6 +1,6 @@
 # P2-TIME-R1：Agent 测试时钟维护执行任务
 
-状态：`ready`。输入提交：`9b73dbd`。唯一负责人：用户启动的既有执行智能体；准备任务卡不代表已接单。
+状态：已完成并由总控于 2026-09-18 验收为 `complete`；不得重复派发。独立证据见 `docs/testing/p2-time-c2-report.md`。
 
 你只负责消除 `tests/agent_finance` 的固定时间漂移，交付后停在 `review`。不要创建新的长期角色或接着开发新功能。
 

@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；当前执行任务
-- 当前任务：PG-C7-DATA-R1 — PostgreSQL 首次财务写入幂等认领返修
+- 当前任务：P2-TIME-R1 — Agent 执行方测试时钟维护
 - 状态：`review`
-- 最近更新：2026-09-17 23:02，Asia/Shanghai
-- 可修改范围：`src/wife_system/finance/service.py`、确有必要并说明的 `src/wife_system/finance/**`、执行方 `tests/finance/**`、若 Agent 确认受直接影响则最小 `tests/agent_finance/**`、`docs/b3-data-running.md` 和本文件；禁止修改独立测试/报告/矩阵、冻结接口、迁移、Compose、控制文件、其他角色状态、OpenClaw 或 Git 状态
+- 最近更新：2026-09-18 13:49，Asia/Shanghai
+- 可修改范围：`tests/agent_finance/**`、`docs/p2-time-r1-running.md` 和本文件；全部 src、独立测试/报告、既有运行说明、其他角色文件和 Git 状态只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：PG-C7-DATA-R1 已提交 `review` 并停止；等待测试智能体按新快照独立定向复验
-- 步骤开始时间：2026-09-17 23:02 Asia/Shanghai
-- 最近有效进展：2026-09-17 23:02 Asia/Shanghai（财务执行测试 32 项通过；C7 原失败节点 P1 5 项、P2 2 项只读定向通过；容器和网络已普通 down；两文件快照已生成）
-- 最近心跳：2026-09-17 23:02 Asia/Shanghai
-- 下一检查点：测试智能体先核对 `PG-C7-DATA-R1-SHA256:5046cb87bbb3a3ab3556f9bc72b371636fb4869f3b3eb18778f852c84d27ea8a`，再独立复跑 PG-C7 12 项
-- 等待对象：头脑风暴总控与测试智能体；执行智能体停止修改实现
-- 活动进程或会话：无；`docker compose down` 已成功，Compose 服务列表为空，OpenClaw 保持暂停
-- 重试次数：0
-- 最近输出：`tests/finance` 32 passed；C7 原失败节点 P1 `5 passed`、P2 `2 passed`；Agent 执行测试 18 passed/5 个固定日期过期失败；编译、依赖、diff 检查通过
+- 当前步骤：测试时钟、28 项自测、逐项还原检查、交接说明和七文件快照均已完成；停止修改，等待独立定向复验
+- 步骤开始时间：2026-09-18 13:49 Asia/Shanghai
+- 最近有效进展：2026-09-18 13:49 Asia/Shanghai（28 passed；真实日期晚于固定时间 41.738 小时；28 次测试前后还原审计通过，快照已生成）
+- 最近心跳：2026-09-18 13:49 Asia/Shanghai
+- 下一检查点：总控核对交付并正式派发测试智能体：绑定 P2-TIME-R1 七文件快照进行一次定向复验
+- 等待对象：头脑风暴总控与测试智能体；无执行阻塞
+- 活动进程或会话：无；所有测试退出 0，临时只读辅助已停止；scratch 下本轮三个 basetemp 保留
+- 重试次数：0（常规沙箱启动故障已通过获准的沙箱外工作区命令解决，无持续停滞）
+- 最近输出：原基线 18 passed/5 failed；修复原 23 passed；最终 28 passed, 1 warning in 8.33s；FUNCTION_ISOLATION=28，双模块 datetime 已恢复
 
 ## 待接任务
 
@@ -32,6 +32,13 @@
 | --- | --- | --- | --- | --- |
 | `execution_onboarding_review` | 执行智能体已有只读辅助会话 | `stopped` | 无修改 | 因本机会话刷新异常临时协助读取入门文件；同样遇到刷新错误，未执行测试、外部操作或文件修改，已中止并由主执行智能体继续 |
 
+### 本轮执行子任务快照
+
+| 子任务 | 任务状态 | 运行状态 | 当前步骤 | 最近心跳 | 下一检查点 | 等待对象 | 会话/证据 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| time_fixture_review | review | finished | 只读审阅双模块时钟与新增案例完成；没有文件修改或测试执行 | 2026-09-18 13:49（主执行方记录最终反馈） | 无；已交回主执行方 | 无 | /root/time_fixture_review：未发现阻止交付缺口；建议同进程还原审计已采纳并通过 |
+
+
 ## B1 交付物与验证
 
 - Agent 核心：[工具调用循环](../../../src/wife_system/agent/loop.py)、[中立类型](../../../src/wife_system/agent/types.py)、[模型适配器](../../../src/wife_system/agent/providers.py)
@@ -42,6 +49,47 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-18 13:49 Asia/Shanghai — P2-TIME-R1 自测结束、快照交接至 review
+
+- 状态：`review`；运行状态：`finished`。停止修改，最终验收/本地提交由总控负责。
+- 实际改动：[局部 conftest](../../../tests/agent_finance/conftest.py) 新增函数级可推进共享时钟；[时钟回归](../../../tests/agent_finance/test_clock.py) 新增 5 项；[专用交接](../../p2-time-r1-running.md) 记录方案、原 23 节点/五项失败、精确命令、恢复机制、限制和小练习；本角色日志同步。
+- 基线到交付：原 23 项实际 `18 passed, 5 failed`；仅夹具修复后原项 `23 passed`；新增边界/HTTP/取消后 `28 passed, 1 warning in 8.33s`，退出 0。原四个测试文件及 __init__ 全部未修改，无 skip/xfail/断言放宽。
+- 日期与隔离：真实运行 `2026-09-18T05:44:16.430166+00:00`，固定 `2026-09-16T12:00:00+00:00`，相差 41.738h；同进程审计 28 项 setup 前/teardown 后模块引用均还原，pytest.main 返回后再次为标准库 datetime。
+- 边界证据：24h 前 1µs 可确认；恰好 24h 和后 1µs 拒绝确认、零支出/写回执、余额保持；各自独立候选。默认 HTTP 时间、线程调用、新实例恢复及取消均通过；原补充和数据库故障重试路径恢复通过。
+- 检查：`compileall -q tests/agent_finance`、`git diff --check` 退出 0；只读差异确认产品与独立测试未改。任务输入 9b73dbd 到实际 HEAD e50e9b5 只有总控任务文档，产品与原测试基线一致。
+- 环境与范围：无新依赖、服务、容器、真实 API 或系统时间操作。使用 scratch 下全新基线/原项转绿/最终 basetemp，目录保留；唯一 warning 为既有 Starlette/AnyIO 弃用提示。
+- 子任务：临时只读 `time_fixture_review` 已完成并停止；未发现阻止交付缺口，未写文件/运行测试/服务；它的结果只属于执行方自查，不作独立验收。
+- 快照：`P2-TIME-R1-SHA256:4f7840a0bfb27928b39e22933030fb6a600845b9ae4d19c8322b44edcb687e64`，覆盖 tests/agent_finance 全部 7 个 .py，逐项路径与文件 hash 见专用交接。
+- 阻塞：无；未验证：本次独立验收尚未执行；未运行 C6 全量、C7 或外部联调。独立测试目录固定 NOW 风险仅提示，未越权修改。
+- 下一交接：测试智能体由总控正式派发后绑定快照核对原断言、日期隔离、到期前/恰好/之后及还原机制，执行一次定向复验；执行方至此停止。
+
+### 2026-09-18 13:43 Asia/Shanghai — P2-TIME-R1 夹具修复，原 23 项转绿
+
+- 局部 conftest 新增 `AgentTestClock` 与函数级 autouse `agent_clock`：原 RECEIVED_AT 不变，线程共享加锁推进时间，子 monkeypatch context 自动恢复两个模块的 datetime 引用。
+- 原 23 项测试文件/参数/断言原样复跑：`23 passed, 1 warning in 8.47s`；basetemp 为 `scratch/p2-time-r1-original-green-20260918-1341`；退出 0。
+- 新增 test_clock.py 共 5 个参数化/独立案例：24h 前 1µs、恰好 24h、后 1µs 各独立候选，HTTP 默认取时/工作线程，重启后取消不记账；未改变 TTL 或吞掉异常。
+- 只读辅助审阅初步结果：control 版本一致，HTTP 路由本身不取时，两模块引用替换能覆盖默认入口和线程；建议同进程 pytest.main 返回后检查标准库引用还原，已采纳。
+- 下一步：执行完整 28 项并在同进程核对夹具还原；真实时间与固定时间的差值单独记录，固定常量不随日历更新。
+
+### 2026-09-18 13:40 Asia/Shanghai — P2-TIME-R1 原始基线复现
+
+- 收集：原目录 23 节点，清单保留至专用交接说明；原测试内容尚未修改。
+- 命令：`.venv\Scripts\python.exe -m pytest -o addopts='' -p no:cacheprovider --basetemp=scratch/p2-time-r1-baseline-20260918-1338 tests/agent_finance --tb=short -q`。
+- 结果：`5 failed, 18 passed, 1 warning in 8.42s`；失败节点为 stale、数据库故障重试、确认/重复确认、补充字段及并发确认/重启恢复，与任务卡一致。
+- 原因：固定创建时间 2026-09-16 12:00 UTC，真实运行日期 2026-09-18，差距超过 24 小时；间接 pending.get 使用真实 datetime，先将候选持久化为 expired。
+- 环境：避开已知系统 tmp/cache 权限问题，使用全新 scratch basetemp 和禁用 pytest cache；没有新增环境失败。普通沙箱启动刷新失败已通过获准的沙箱外工作区命令解决。
+- 子任务：`/root/time_fixture_review` 已派发，只读分析补丁范围/验证设计，不写文件、不跑测试，等待其明确结果；非独立验收。
+- 下一步：局部 autouse fixture 共享可推进时钟，先保持原 23 节点和断言原样验证。
+
+### 2026-09-18 13:37 Asia/Shanghai — P2-TIME-R1 接单
+
+- 状态：`in_progress`；运行状态：`active`。输入提交 `9b73dbd`，控制版本 `2026-09-18T10:12:45+08:00`；接单前工作区无修改。
+- 问题与数据流：正常候选固定从 `RECEIVED_AT` 创建，24 小时 TTL 由 pending 持久化；`resume(now=...) -> _pending_for_run -> application.get -> pending.get` 的间接查询仍读真实日期，HTTP 默认入口及线程也会读模块 datetime。
+- 实施选择：仅本目录函数级 fixture 通过 pytest monkeypatch 替换 application/pending 模块的 datetime 引用，共享可推进时钟，默认原固定 RECEIVED_AT；结束后自动恢复。保留生产规则、TTL、原测试和断言；不换日历常量、不新增依赖。
+- 修改边界：只允许 `tests/agent_finance/**`、专用 `docs/p2-time-r1-running.md` 和本日志；Git 只读，无安装、容器、真实 API 或系统时间操作。
+- 临时只读子任务：计划由 `time_fixture_review` 审阅时钟替换范围及最小边界案例；不写文件、不运行测试、不作独立验收，由主执行智能体记录结论。
+- 下一检查点：收集原 23 项并运行未修复基线；系统 tmp 权限已知异常，使用 scratch 下本任务全新目录；持续无进展时按任务卡停止并报告。
 
 ### 2026-09-17 23:02 Asia/Shanghai — PG-C7-DATA-R1 交付至 review
 
