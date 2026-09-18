@@ -1,19 +1,19 @@
 # 项目进度总览
 
-更新时间：2026-09-18 10:02，Asia/Shanghai
+更新时间：2026-09-18 10:14，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P1 数据层与 P2-A 财务 Agent 的本地及已冻结 PostgreSQL 范围均已完成独立验收。DATA-R2 的 PostgreSQL 12/12 和相邻 SQLite 9/9 通过；`PG-C7-DATA-001` 已关闭。
+P1 数据层与 P2-A 财务 Agent 的本地及已冻结 PostgreSQL 范围均已完成独立验收。DATA-R2 的 PostgreSQL 12/12 和相邻 SQLite 9/9 通过；`PG-C7-DATA-001` 已关闭，本地提交为 `9b73dbd`。当前准备 `P2-TIME-R1` 执行方测试时钟维护，接单尚未核实。
 
 ## 角色状态
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `finished`：DATA-R2 已验收并关闭缺陷 | 2026-09-18 10:02 | 创建本地验收提交；随后规划固定时间夹具维护 | [角色日志](agents/brainstorm.md)、[R2 报告](../testing/phase-2-c7-r2-postgresql-report.md) |
+| 头脑风暴 | `in_progress` | `finished`：P2-TIME-R1 任务卡和控制同步已完成 | 2026-09-18 10:14 | 等待执行方接单及交付固定快照 | [角色日志](agents/brainstorm.md)、[TIME-R1 Prompt](prompts/p2-time-r1-executor.md) |
 | 技术顾问 | `complete`（P2-D6，总控验收） | `finished`：教学交付完成 | 2026-09-17 17:27 | 等待后续教学任务 | [角色日志](agents/technical-adviser.md)、[D6 教学](../phase-2-d6-agent-teaching.md) |
-| 执行智能体 | `complete`（PG-C7-DATA-R1，总控验收） | `finished`：修复已通过 DATA-R2 独立复验 | 2026-09-18 10:02 | 等待后续明确任务 | [角色日志](agents/executor.md)、[B3 运行说明](../b3-data-running.md) |
+| 执行智能体 | `ready`（P2-TIME-R1）；前一 DATA-R1 已验收 | 新任务接单/在线状态 `unverified`；不推断已运行 | 新任务尚无心跳 | 接单后记录基线复现和时间夹具方案 | [角色日志](agents/executor.md)、[TIME-R1 Prompt](prompts/p2-time-r1-executor.md) |
 | 测试智能体 | `complete`（PG-C7-DATA-R2，总控验收） | `finished`：报告、矩阵与环境清理完成 | 2026-09-18 09:54 | 等待后续明确任务 | [角色日志](agents/tester.md)、[R2 报告](../testing/phase-2-c7-r2-postgresql-report.md) |
 
 ## 阶段 0 任务状态
@@ -45,20 +45,20 @@ P1 数据层与 P2-A 财务 Agent 的本地及已冻结 PostgreSQL 范围均已�
 | PG-C7：PostgreSQL 专项验收 | 用户启动的独立测试智能体 | `complete`（经返修闭环） | 原基线发现 P0 缺陷，现由 DATA-R1/R2 完成修复和复验 | [C7 报告](../testing/phase-2-c7-postgresql-report.md) |
 | PG-C7-DATA-R1：PostgreSQL 首次写入返修 | 用户启动的独立执行智能体 | `complete` | `RETURNING` 修复、32 项财务测试及固定快照均通过验收 | [B3 运行说明](../b3-data-running.md) |
 | PG-C7-DATA-R2：PostgreSQL 定向独立复验 | 用户启动的独立测试智能体 | `complete` | P1 8/8、P2 SPG 4/4、SQLite 9/9、执行方补充 4/4 通过 | [R2 报告](../testing/phase-2-c7-r2-postgresql-report.md) |
+| P2-TIME-R1：Agent 测试时钟维护 | 用户启动的独立执行智能体 | `ready` | 原 23 项通过，24 小时边界与夹具隔离有证据；随后定向独立复验 | [任务卡](prompts/p2-time-r1-executor.md) |
 
 ## 当前阻塞与风险
 
-- 当前没有运行中的慢任务；DATA-R2 已结束，测试容器和网络已停止，`PG-C7-DATA-001` 已关闭。
+- DATA-R2 已结束且缺陷关闭；P2-TIME-R1 新任务尚无接单或心跳证据，不能据此报告执行智能体正在运行。
 - C2 的并发用例原有测试夹具矛盾，经测试角色独立确认后仅修正测试基础设施；六项产品缺陷仍分别修复并通过复验。
 - B1/B2a 只保证进程内去重；OpenClaw 命令上下文没有来源消息 ID，适用边界已写入 `P0-IF-002`。
 - OpenClaw 官方 worker 触发终端安全软件行为告警；虽然哈希与官方 npm 包一致且代码审查支持误报判断，运行时恢复仍暂停，P1-B3 不得操作 OpenClaw。
 - P1/P2 已冻结的真实 PostgreSQL 范围已通过；结论不外推到未设计或未运行的其他 PostgreSQL 场景。
 - `tests/agent_finance` 有 5 项因固定 `RECEIVED_AT=2026-09-16 12:00 UTC` 超过 24 小时而失败；总控定向复现为相同 `pending_action_expired`，登记为独立测试时间夹具维护项，不外推为 DATA-R1 产品失败。
 - B2a 首次执行子任务在写出实现后错过检查点且不再活动，已按已有输出恢复；这次中断不作为失败结论。
-- B2a 第一次测试子任务因临时 Codex 用量限制未接单；现已重新派发，独立结论出来前不能标记 `complete`。
 
 ## 下一次总控检查
 
-1. 总控为已验收的 DATA-R1/R2 文件创建本地 Git 提交，不推送远程。
-2. 单独冻结 `tests/agent_finance` 固定时间漂移维护任务，不修改产品代码。
-3. 完成测试基础设施维护后再选择下一产品里程碑；真实 DeepSeek、桌面、微信和 Agent 真实回环断线继续分别跟踪。
+1. 用户将 P2-TIME-R1 发给既有执行智能体；由执行方自己记录接单，完成后提交 review。
+2. 总控核对测试文件快照、文件范围和自测证据，再发一次定向独立复验任务；不重复 C6/C7 或旧教学任务。
+3. 时间夹具维护通过后，由总控验收并本地提交，再确定下一产品里程碑。真实模型、桌面与微信扩展仍分别跟踪。
