@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0 已完成。P1 数据层与 P2-A 财务 Agent 的本地及已冻结 PostgreSQL 范围均通过独立验收；`PG-C7-DATA-001` 已关闭。测试时钟维护 `P2-TIME-R1/C2` 已完成执行和独立验收，28 项 Agent 测试不再随真实日期漂移。OpenClaw worker 安全事件仍暂停运行时恢复。
+当前阶段：阶段 0、P1 数据层与 P2-A 财务 Agent 纵向切片均已完成。项目现进入 P3 活动 Markdown 导入的方案与验收设计：技术顾问负责 `P3-D7`，测试智能体负责 `P3-C8`；总控冻结 `P3-IF-001` 前不开始产品实现。OpenClaw worker 安全事件仍暂停运行时恢复。
 
 项目有两个目标：通过活动、账目和可更新计划管理大学生活开支；围绕真实代码建立 AI Agent 应用工程能力。
 
@@ -37,6 +37,9 @@
 - [P2-TIME-R1 执行智能体 Prompt（已完成）](docs/coordination/prompts/p2-time-r1-executor.md)：通过测试可控时钟消除日期漂移，保留 24 小时过期边界。
 - [P2-TIME-C2 测试智能体 Prompt（已完成）](docs/coordination/prompts/p2-time-c2-tester.md)：绑定七文件快照，独立核验 28 项、到期边界与时钟恢复。
 - [P2-TIME-C2 独立验收报告](docs/testing/p2-time-c2-report.md)：28/28、原测试 23/23 与时钟还原审计 28/28 通过。
+- [P3 活动 Markdown 导入任务书](docs/phase-3-activity-import-brief.md)：定义“文本输入 → 候选预览 → 用户确认 → 原子导入”的首个切片与安全边界。
+- [P3-D7 技术顾问 Prompt](docs/coordination/prompts/p3-d7-technical-adviser.md)：比较并推荐解析、数据模型、API、幂等与事务方案。
+- [P3-C8 测试智能体 Prompt](docs/coordination/prompts/p3-c8-tester.md)：在实现前建立独立验收矩阵，不执行测试或修改产品。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

@@ -1,20 +1,20 @@
 # 项目进度总览
 
-更新时间：2026-09-18 14:44，Asia/Shanghai
+更新时间：2026-09-18 15:20，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P1 数据层、P2-A 财务 Agent 和已冻结 PostgreSQL 范围均已完成独立验收。`P2-TIME-R1/C2` 也已闭环：执行方 28/28、原测试 23/23、独立还原审计 28/28 通过，固定时间漂移关闭。
+P1 数据层、P2-A 财务 Agent、已冻结 PostgreSQL 范围和 P2 测试时钟均已完成独立验收。当前进入 P3 活动 Markdown 导入的方案与验收设计：D7 与 C8 可以并行，执行实现等待 `P3-IF-001` 冻结。
 
 ## 角色状态
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `finished`：TIME-R1/C2 验收与本地历史已闭环 | 2026-09-18 14:44 | 选择下一产品里程碑 | [角色日志](agents/brainstorm.md)、[TIME-C2 报告](../testing/p2-time-c2-report.md) |
-| 技术顾问 | `complete`（P2-D6，总控验收） | `finished`：教学交付完成 | 2026-09-17 17:27 | 等待后续教学任务 | [角色日志](agents/technical-adviser.md)、[D6 教学](../phase-2-d6-agent-teaching.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：P3 任务书及 D7/C8 Prompt 已形成 | 2026-09-18 15:20 | 接收 D7/C8 交付并冻结 P3-IF-001 | [角色日志](agents/brainstorm.md)、[P3 任务书](../phase-3-activity-import-brief.md) |
+| 技术顾问 | `ready`（P3-D7，未核实接单） | `waiting_user`：等待用户发送正式 Prompt | 2026-09-18 15:20 | 提交架构方案为 `review` | [角色日志](agents/technical-adviser.md)、[D7 Prompt](prompts/p3-d7-technical-adviser.md) |
 | 执行智能体 | `complete`（P2-TIME-R1，总控验收） | `finished`：交付已通过 C2 独立复验 | 2026-09-18 13:49 | 等待后续明确任务 | [角色日志](agents/executor.md)、[TIME-R1 交接](../p2-time-r1-running.md) |
-| 测试智能体 | `complete`（P2-TIME-C2，总控验收） | `finished`：定向独立报告已验收 | 2026-09-18 14:37 | 等待后续明确任务 | [角色日志](agents/tester.md)、[TIME-C2 报告](../testing/p2-time-c2-report.md) |
+| 测试智能体 | `ready`（P3-C8，未核实接单） | `waiting_user`：等待用户发送正式 Prompt | 2026-09-18 15:20 | 提交未执行验收矩阵为 `review` | [角色日志](agents/tester.md)、[C8 Prompt](prompts/p3-c8-tester.md) |
 
 ## 阶段 0 任务状态
 
@@ -47,10 +47,13 @@ P1 数据层、P2-A 财务 Agent 和已冻结 PostgreSQL 范围均已完成独�
 | PG-C7-DATA-R2：PostgreSQL 定向独立复验 | 用户启动的独立测试智能体 | `complete` | P1 8/8、P2 SPG 4/4、SQLite 9/9、执行方补充 4/4 通过 | [R2 报告](../testing/phase-2-c7-r2-postgresql-report.md) |
 | P2-TIME-R1：Agent 测试时钟维护 | 用户启动的独立执行智能体 | `complete` | 28 项通过、七文件摘要匹配，并通过 C2 独立复验 | [交接](../p2-time-r1-running.md) |
 | P2-TIME-C2：测试时钟定向独立复验 | 用户启动的独立测试智能体 | `complete` | 28/28、原 23/23、还原审计 28/28、线程泄漏 0 | [报告](../testing/p2-time-c2-report.md) |
+| P3-D7：活动 Markdown 导入方案 | 用户启动的既有技术顾问 | `ready` | 比较解析、持久状态、数据模型、API、幂等、事务和安全方案，提交冻结清单 | [Prompt](prompts/p3-d7-technical-adviser.md) |
+| P3-C8：活动 Markdown 导入测试矩阵 | 用户启动的既有测试智能体 | `ready` | 独立列出预览、确认、冲突、原子性、幂等、安全和环境分层案例，全部保持 `not_run` | [Prompt](prompts/p3-c8-tester.md) |
+| P3-IF-001：活动导入接口冻结 | 头脑风暴 | `waiting` | 等待 D7/C8 的 `review` 交付后确定执行边界 | [P3 任务书](../phase-3-activity-import-brief.md) |
 
 ## 当前阻塞与风险
 
-- P2-TIME-R1/C2 已完成且无阻塞；执行和测试角色都已停止本轮修改。
+- P3 尚无产品阻塞；当前依赖 D7/C8 两份设计交付，不能把 `ready` 推断为已接单。
 - C2 的并发用例原有测试夹具矛盾，经测试角色独立确认后仅修正测试基础设施；六项产品缺陷仍分别修复并通过复验。
 - B1/B2a 只保证进程内去重；OpenClaw 命令上下文没有来源消息 ID，适用边界已写入 `P0-IF-002`。
 - OpenClaw 官方 worker 触发终端安全软件行为告警；虽然哈希与官方 npm 包一致且代码审查支持误报判断，运行时恢复仍暂停，P1-B3 不得操作 OpenClaw。
@@ -60,6 +63,6 @@ P1 数据层、P2-A 财务 Agent 和已冻结 PostgreSQL 范围均已完成独�
 
 ## 下一次总控检查
 
-1. P2-TIME-R1/C2 的验收与本地历史已经闭环；不得重复派发。
-2. 结合产品路线选择下一里程碑；真实模型、桌面与微信扩展仍分别跟踪。
-3. 新任务继续按“执行方自测 → 测试方独立验收 → 总控提交”推进。
+1. 等待技术顾问提交 D7 方案、测试智能体提交 C8 未执行矩阵；发现长期无进展时按停滞规则停止并报告问题。
+2. 总控综合两份交付冻结 `P3-IF-001`，再编写并派发 P3-B5 执行任务。
+3. B5 仍按“执行方自测 → 测试方独立验收 → 总控提交”推进；当前不操作真实个人数据、DeepSeek、OpenClaw 或微信。
