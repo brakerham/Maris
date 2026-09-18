@@ -2,26 +2,26 @@
 
 - 角色：独立测试、边界检查、回归验证和限定范围的结构优化
 - 连接状态：已确认；用户启动的侧边栏独立测试智能体已接单
-- 当前任务：PG-C7 — 真实 PostgreSQL 专项验收
+- 当前任务：PG-C7-DATA-R2 — DATA-R1 固定快照 PostgreSQL 定向独立复验
 - 状态：`review`
-- 最近更新：2026-09-17 03:45，Asia/Shanghai
-- 可修改范围：`tests/independent/agent_finance/**`、必要的 `tests/independent/finance/**`、P2 矩阵、`docs/testing/phase-2-c7-postgresql-report.md` 和本状态文件；禁止修改产品、迁移、执行方测试、依赖、`compose.yaml`、接口冻结、总览、控制文件、其他角色状态、Git 或 OpenClaw
+- 最近更新：2026-09-18 09:54，Asia/Shanghai
+- 可修改范围：`docs/testing/phase-2-c7-r2-postgresql-report.md`、P2 矩阵对应证据、必要的独立 PostgreSQL 测试诊断和本状态文件；禁止修改 DATA-R1 两文件、其他产品、执行方测试、迁移、依赖、`compose.yaml`、冻结接口、总览、控制文件、其他角色状态、Git、OpenClaw、微信、DeepSeek 或桌面端
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：PG-C7 报告与矩阵已提交 review；测试容器和网络已安全移除
-- 步骤开始时间：2026-09-17 03:00 Asia/Shanghai
-- 最近有效进展：2026-09-17 03:45 Asia/Shanghai
-- 最近心跳：2026-09-17 03:45 Asia/Shanghai
-- 下一检查点：等待总控派发 `PG-C7-DATA-001` 返修；收到新快照后定向复验 12 项 PostgreSQL 专项
-- 等待对象：执行智能体产品返修与新固定快照
-- 活动进程或会话：无；普通 compose down 已完成，compose ps 无条目
-- 重试次数：Docker Engine 按用户启动后只复查一次；一次诊断测试语法修正；一次合并收集冲突未执行产品代码
-- 最近输出：P1 PostgreSQL 3通过/5失败；P2 SPG 2通过/2失败；共同阻断缺陷 `PG-C7-DATA-001`
+- 当前步骤：PG-C7-DATA-R2 报告、矩阵与验证证据已提交 review；测试容器和网络已安全移除
+- 步骤开始时间：2026-09-17 23:20 Asia/Shanghai
+- 最近有效进展：2026-09-18 09:54 Asia/Shanghai
+- 最近心跳：2026-09-18 09:54 Asia/Shanghai
+- 下一检查点：等待头脑风暴总控核对固定摘要、报告和矩阵，并决定关闭 `PG-C7-DATA-001` 与最终 `complete`
+- 等待对象：头脑风暴总控验收
+- 活动进程或会话：无；普通 compose down 已完成，compose 服务列表为空
+- 重试次数：SQLite 因系统临时目录拒绝访问按 Prompt 使用一次全新 scratch basetemp；文档矩阵 6 行格式问题已恢复并重新校验
+- 最近输出：独立 PostgreSQL 12/12、相邻 SQLite 9/9、执行方 PostgreSQL claim 4/4 全部通过；建议关闭 `PG-C7-DATA-001`
 ## 任务与后续
 
-- P1-C4-R2 的 SQLite 与数据库无关范围已通过；PG-C7 已执行原 8 个真实 PostgreSQL 项，结果 3 通过、5 因 `PG-C7-DATA-001` 产品缺陷失败，P1-C4 继续保持 `review`。
+- PG-C7-DATA-R2 已在匹配的 DATA-R1 固定快照上复跑 P1 原 8 项并全部通过；连同 P2 SPG 4 项和相邻 SQLite 9 项均为全绿，测试智能体建议关闭 `PG-C7-DATA-001`，最终结论等待总控。
 - P1-C3 已提交 [阶段 1 个人财务数据层独立测试矩阵](../../testing/phase-1-data-test-matrix.md)，等待总控验收并形成 `P1-IF-001`。
 
 - C1 已提交 [阶段 0 独立验收矩阵](../../testing/phase-0-test-matrix.md)。
@@ -30,6 +30,55 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-09-17 23:48 Asia/Shanghai — PG-C7-DATA-R2 执行方补充测试完成
+
+- 状态：`review`；运行状态：`active`
+- 执行方补充结果：`tests/finance/test_postgresql_claim.py` 为 4 passed、0 failed，与独立证据分开统计
+- 当前累计：独立 PostgreSQL 12/12、相邻 SQLite 9/9、执行方补充 4/4
+- 下一检查点：重读最新控制文件，执行不带 `-v` 的普通 compose down 并确认最终服务列表为空
+### 2026-09-17 23:44 Asia/Shanghai — PG-C7-DATA-R2 SQLite 相邻回归完成
+
+- 状态：`review`；运行状态：`active`
+- 首轮环境结果：1 passed、8 setup errors；系统 pytest 临时目录返回 WinError 5，未执行对应产品断言
+- 规定恢复：使用仓库 `scratch/` 下全新隔离 basetemp，不清理其他目录
+- 独立有效结果：`tests/independent/finance/test_idempotency_error_contract.py` 为 9 passed、0 failed
+- 下一检查点：把 `tests/finance/test_postgresql_claim.py` 作为执行方证据单列复跑，随后更新报告与矩阵
+### 2026-09-17 23:39 Asia/Shanghai — PG-C7-DATA-R2 P2 专项完成
+
+- 状态：`review`；运行状态：`active`
+- 独立结果：`tests/independent/agent_finance/test_postgresql_agent_contract.py` 为 4 passed、0 failed
+- 覆盖：迁移与 Agent 约束、跨应用同事件单 run、并发确认一次一写与 P1 一致性、提交响应丢失恢复
+- 环境提示：同一 pytest 缓存目录 WinError 183 警告；未影响收集、执行或断言
+- 下一检查点：运行相邻 SQLite 独立幂等/错误契约，然后把执行方 claim 测试单列统计
+### 2026-09-17 23:36 Asia/Shanghai — PG-C7-DATA-R2 P1 专项完成
+
+- 状态：`review`；运行状态：`active`
+- 独立结果：`tests/independent/finance/test_postgresql_contract.py` 为 8 passed、0 failed
+- 覆盖：首次新写入、同载荷重放、异载荷冲突、并发同键、失败回滚、并发退款/转账/预算、timestamptz、迁移/约束和只读快照
+- 环境提示：pytest 缓存目录创建产生 1 个 WinError 183 警告；未影响收集、执行或断言
+- 下一检查点：单独运行 P2 SPG 4 项，避免独立目录间裸 `conftest` 名称冲突
+### 2026-09-17 23:32 Asia/Shanghai — PG-C7-DATA-R2 容器健康
+
+- 状态：`review`；运行状态：`active`
+- 环境：Docker client/server 29.8.0、Compose 5.5.1、PostgreSQL 17.6-alpine
+- 服务：仅 `finance-postgres`；容器 `wife-system-finance-postgres-1` 为 healthy，回环端口 55432，无本地 volume
+- 当前动作：分开运行原 P1 8 项；凭据仅注入当前测试进程，不写入报告或输出
+- 下一检查点：P1 独立专项完成后记录计数并启动 P2 SPG 4 项
+### 2026-09-17 23:25 Asia/Shanghai — PG-C7-DATA-R2 快照门禁通过
+
+- 状态：`review`；运行状态：`active`
+- 独立摘要：`5046cb87bbb3a3ab3556f9bc72b371636fb4869f3b3eb18778f852c84d27ea8a`
+- 结论：与 Prompt 预期摘要逐字节匹配；DATA-R1 两文件保持只读
+- 下一检查点：重读最新控制文件，确认授权未变化后检查并启动唯一 `finance-postgres` 服务
+### 2026-09-17 23:20 Asia/Shanghai — PG-C7-DATA-R2 接单
+
+- 状态：`review`；运行状态：`active`
+- 输入：总控已核对的 DATA-R1 两文件预期摘要 `5046cb87bbb3a3ab3556f9bc72b371636fb4869f3b3eb18778f852c84d27ea8a`
+- 负责范围：独立重算快照；分别复跑 P1 8 项、P2 SPG 4 项、相邻 SQLite 幂等/错误契约；可单列复跑执行方 PostgreSQL claim 测试
+- 禁止范围：不修改产品、DATA-R1 两文件、执行方测试、迁移、依赖、Compose、冻结/控制/总览、其他角色状态或 Git；不进入 DeepSeek、桌面、OpenClaw 或微信
+- 当前动作：先执行摘要门禁；摘要匹配前不启动容器
+- 下一检查点：摘要匹配并完成 Docker/Compose 配置检查后，记录容器健康和测试会话
 
 ### 2026-09-17 03:45 Asia/Shanghai — PG-C7 真实 PostgreSQL 专项交付
 

@@ -2,7 +2,7 @@
 
 - 任务：`P1-B3`
 - 接口依据：`P1-IF-001`
-- 当前交付状态：P1-B3-R1 执行方返修已提交 `review`；等待 C4 定向复验
+- 当前交付状态：PG-C7-DATA-R1 执行方返修已提交 `review`；等待测试智能体按新快照独立定向复验
 - 数据边界：示例和测试全部是虚拟数据，不包含真实账目、账号、消息或密钥
 
 ## 1. 已实现结构
@@ -68,7 +68,7 @@ docker compose down
 
 首个 revision 对 PostgreSQL 创建两个 `DEFERRABLE INITIALLY DEFERRED` 约束触发器。它们在事务提交时校验每笔交易至少两条分录且合计为零，防止绕过服务层直接写入不平衡交易。执行方测试还会离线编译 PostgreSQL DDL，确认触发器语句存在。
 
-当前机器没有 Docker 命令，也没有可用 PostgreSQL 连接，因此以下行为均为**未验证**：PostgreSQL 空库实际升级/降级、约束触发器实际提交行为、两个独立连接的幂等竞争、并发退款、并发预算发布、乐观锁竞争、`READ COMMITTED` 行锁、只读 `REPEATABLE READ` 快照、`timestamptz` 往返，以及重启/多 worker 后的持久幂等。SQLite 结果不替代这些结论。
+2026-09-17 的 PG-C7 与 PG-C7-DATA-R1 已在本机 Docker 的 PostgreSQL 17.6 上取得真实数据库证据。返修执行方使用随机隔离 schema、虚拟数据和仓库测试凭据，验证首次写入、同键重放、异载荷冲突、并发同键单一业务结果及失败回滚；测试结束后已执行普通 `docker compose down`，Compose 服务列表为空。执行方证据不替代测试智能体的新快照独立复验。
 
 ## 5. 虚拟纵向示例
 
@@ -137,7 +137,7 @@ income = service.record_income(RecordIncome(
 
 ## 9. 已知限制
 
-- PostgreSQL 实际迁移、约束和并发证据尚未取得。
+- PG-C7-DATA-R1 当前只有执行方自测和对 C7 原失败节点的只读定向诊断；测试智能体尚未按新快照复跑完整 12 项 PostgreSQL 专项并给出独立结论。
 - P1 没有 FastAPI 财务端点、Agent 工具、Markdown 导入、微信流程或桌面界面。
 - 代付、报销、分期、应收款和负债按 F15 延后，服务不会把它们伪装成收入、支出或退款。
 - P1 只接受 CNY，不处理汇率或跨币种转账。
@@ -219,3 +219,35 @@ P1-B3-R1-SHA256:751a78aadacf6317e2dafc711569322f3843051e1fae0ee41f11e4b91cfb29bf
 ```
 
 摘要算法与第 10 节相同，覆盖文件增至 22 个；新增文件是第二个 migration 和 `tests/finance/test_r1_regressions.py`。
+
+## 12. PG-C7-DATA-R1 PostgreSQL 幂等认领返修
+
+### 12.1 缺陷与修复
+
+PG-C7-DATA-001 的触发点是 PostgreSQL 首次写入：`INSERT ... ON CONFLICT DO NOTHING` 已插入 `command_receipt`，但 SQLAlchemy 2.0.54 / psycopg 3.3.5 的结果不能用 `rowcount == 1` 可靠判断插入所有权，服务因此把尚无 `result_json` 的新 receipt 误判为其他请求正在处理并返回 `concurrent_modification`。
+
+PostgreSQL 分支现在追加 `RETURNING command_receipt.id`，并以返回的非空主键判定当前事务取得认领。冲突事务不返回行，随后继续读取既有 receipt，沿用同载荷重放、异载荷冲突和未完成并发保护。SQLite 与其他方言的 `rowcount` 路径保持不变；迁移、表结构、冻结接口和错误码均未改变。
+
+### 12.2 执行方真实 PostgreSQL 回归
+
+- 新增 `tests/finance/test_postgresql_claim.py`；每项使用随机 schema，迁移到 P1 head，完成后删除自身 schema。
+- 修复前首写红测稳定为 `1 failed`，首次 `create_account` 从 `_claim` 抛出 `FinanceError(concurrent_modification)`；修复后该节点通过。
+- 最终真实 PostgreSQL 执行回归为 `4 passed`：首次写入、同键同载荷重放、同键异载荷冲突、双连接并发同键单一结果，以及失败业务写回滚 receipt 后同键可重新认领。
+- 全部 `tests/finance` 为 `32 passed in 4.32s`，同时覆盖 SQLite 相邻幂等、失败回滚、迁移与既有数据行为。
+- 只读定向复跑 PG-C7 原失败节点：P1 五项为 `5 passed in 1.48s`；P2 Agent 两项为 `2 passed in 0.76s`。这些结果只用于执行方诊断，不改写独立测试报告或验收结论。
+- `tests/agent_finance` 为 `18 passed, 5 failed`；五项均因固定 `RECEIVED_AT=2026-09-16 12:00 UTC` 在当前时间已超过 24 小时而返回 `pending_action_expired`，与本次 finance 修改无关。真实 PostgreSQL 的两个直接受影响 Agent 节点已单独通过；本任务未修改 P2 测试来掩盖日期漂移。
+- `compileall -q src tests/finance`、`pip check` 和 `git diff --check` 均退出 0。
+- 本轮仅启动 `finance-postgres`；结束时普通 `docker compose down` 成功，随后 `docker compose ps --format json` 无服务条目。
+
+### 12.3 交接快照
+
+```text
+PG-C7-DATA-R1-SHA256:5046cb87bbb3a3ab3556f9bc72b371636fb4869f3b3eb18778f852c84d27ea8a
+```
+
+摘要沿用第 10 节算法，按相对路径升序覆盖以下 2 个文件：
+
+- `src/wife_system/finance/service.py`
+- `tests/finance/test_postgresql_claim.py`
+
+运行说明和角色状态不参与摘要。执行方在此停止于 `review`；测试智能体应先核对快照，再独立复跑 PG-C7 12 项及其认为必要的相邻回归。

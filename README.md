@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0 已完成。P2-A 本地 SS/HTTP 范围与 P2-D6 实现教学已完成；PG-C7 已在真实 PostgreSQL 上执行并发现阻断写入的 `PG-C7-DATA-001`，下一步由执行智能体进行小范围返修。OpenClaw worker 安全事件仍暂停运行时恢复。
+当前阶段：阶段 0 已完成。P1 数据层与 P2-A 财务 Agent 的本地及已冻结 PostgreSQL 范围均通过独立验收；`PG-C7-DATA-001` 已关闭。下一项工程维护是消除 5 个 Agent 测试的固定时间漂移。OpenClaw worker 安全事件仍暂停运行时恢复。
 
 项目有两个目标：通过活动、账目和可更新计划管理大学生活开支；围绕真实代码建立 AI Agent 应用工程能力。
 
@@ -31,7 +31,9 @@
 - [P2-C6 测试智能体 Prompt](docs/coordination/prompts/p2-c6-tester.md)：在 P2-B4 稳定快照上执行 P2-A 独立验收。
 - [P2-D6 实现后教学](docs/phase-2-d6-agent-teaching.md)：结合实际代码讲解 Agent 数据流、状态、幂等、事务与测试证据。
 - [PG-C7 测试智能体 Prompt（已归档）](docs/coordination/prompts/pg-c7-tester.md)：该专项已执行，不得重复派发。
-- [PG-C7-DATA-R1 执行智能体 Prompt](docs/coordination/prompts/pg-c7-data-r1-executor.md)：修复 PostgreSQL 首次写入被误判为并发冲突的问题。
+- [PG-C7-DATA-R1 执行智能体 Prompt（已完成执行）](docs/coordination/prompts/pg-c7-data-r1-executor.md)：修复 PostgreSQL 首次写入被误判为并发冲突的问题。
+- [PG-C7-DATA-R2 测试智能体 Prompt（已完成）](docs/coordination/prompts/pg-c7-data-r2-tester.md)：绑定 R1 两文件快照完成独立复验。
+- [PG-C7-DATA-R2 验收报告](docs/testing/phase-2-c7-r2-postgresql-report.md)：P1 8/8、P2 SPG 4/4、相邻 SQLite 9/9 通过。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

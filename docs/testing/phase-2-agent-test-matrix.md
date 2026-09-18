@@ -2,7 +2,7 @@
 
 - 任务：`P2-C5`
 - 接口依据：`P2-IF-001`
-- 执行状态：`review`（P2-C6 本地范围已执行；PG-C7 真实 PostgreSQL 专项发现阻断缺陷）
+- 执行状态：`review`（P2-C6 本地范围已通过；PG-C7-DATA-R2 的 12 项真实 PostgreSQL 专项全部通过，建议关闭原阻断缺陷）
 - 数据边界：只使用虚拟身份、虚拟对话、虚拟账户、虚拟分类、虚拟金额、隔离数据库和 canary；禁止真实财务数据、账号、消息、密钥或来源 ID
 - P1 基线：`P1-B3-R1-SHA256:751a78aadacf6317e2dafc711569322f3843051e1fae0ee41f11e4b91cfb29bf` 的 SQLite 与数据库无关范围已通过 R2；8 个真实 PostgreSQL 项仍受环境阻塞
 
@@ -16,7 +16,7 @@
 - `失败`：任一预期不成立，记录最小输入、预期、实际、版本、环境和脱敏证据。
 - `设计完成/未执行`：案例可执行但尚未绑定 P2-B4 稳定快照，或指定环境尚未具备；不得解释为通过。
 
-P2-C6 已取得本地 SS/HTTP 证据。PG-C7 随后执行真实 PostgreSQL：P2 迁移和同事件单 run 通过，但财务写入被 `PG-C7-DATA-001` 阻断，相关 SPG 案例按行标为失败或部分通过。WX-01～05、LIVE-01～03、DSK-01～03 及 HTTP-09 真实回环仍未执行；不得用 PostgreSQL 局部证据外推这些环境。
+P2-C6 已取得本地 SS/HTTP 证据。PG-C7-DATA-R2 绑定修复快照后，P1 原 8 项和 P2 SPG 4 项全部通过；相邻 SQLite 幂等/错误契约 9 项通过。WX-01～05、LIVE-01～03、DSK-01～03 及 HTTP-09 真实回环仍未执行；不得用 PostgreSQL 证据外推这些环境。
 
 ## 2. 执行环境与证据
 
@@ -82,12 +82,12 @@ P2-C6 已取得本地 SS/HTTP 证据。PG-C7 随后执行真实 PostgreSQL：P2 
 | IDM-02 | P0 | E1 已使用 | E1 + 不同消息或 conversation | 再 POST run | 返回 `duplicate_request_conflict`；不覆盖首次记录、不启动新 run | 错误码、行数与首次数据 | SS、HTTP | 通过（P2-C6 本地证据） |
 | IDM-03 | P0 | 无既有记录 | E1/E2 使用相同文本 | 分别 POST | 作为两个独立来源事件，产生不同 run/pending；不能按文本去重 | 两组 ID、候选行数 | SS、HTTP | 通过（P2-C6 本地证据） |
 | IDM-04 | P0 | 待确认候选 P | 确认 P | 捕获传给 FinanceService 的可信键 | `source_system` 来自入口；最终 `source_event_id` 精确派生为 `pending:{P}:commit`，模型不可见 | 工具上下文与 P1 收据摘要 | SS | 通过（P2-C6 本地证据） |
-| IDM-05 | P0 | P 首次确认已提交 | 重复确认 P | 顺序确认两次 | 只有一个财务交易；后续返回同一 `result_id`，可见 replay/已提交状态 | 交易/收据数、两次响应 | SS、SPG | 失败（PG-C7 SPG：PG-C7-DATA-001；SS通过） |
-| IDM-06 | P0 | P 待确认 | 两个独立请求并发确认 P | 同步放行 | 只有一个状态转换进入 `committing`；最终一个交易和结果，另一请求得到同一结果或稳定进行中/已提交状态 | 并发响应、版本、交易数 | SS、SPG | 失败（PG-C7 SPG：PG-C7-DATA-001；SS通过） |
+| IDM-05 | P0 | P 首次确认已提交 | 重复确认 P | 顺序确认两次 | 只有一个财务交易；后续返回同一 `result_id`，可见 replay/已提交状态 | 交易/收据数、两次响应 | SS、SPG | 通过（C6 SS；DATA-R2 SPG 重复/并发确认返回同一结果） |
+| IDM-06 | P0 | P 待确认 | 两个独立请求并发确认 P | 同步放行 | 只有一个状态转换进入 `committing`；最终一个交易和结果，另一请求得到同一结果或稳定进行中/已提交状态 | 并发响应、版本、交易数 | SS、SPG | 通过（C6 SS；DATA-R2 SPG 并发确认一次一写） |
 | IDM-07 | P0 | 一个 run 可让模型请求两次写工具 | 第一次提交后再请求第二次支出写 | 执行完整循环 | 第二次被 `write_limit_exceeded` 拦截；一次 run 最多一个财务写提交 | 写计数、工具事件、P1 交易数 | SS | 通过（P2-C6 本地证据） |
-| IDM-08 | P0 | 提交在 `committing` 阶段可注入崩溃 | 财务提交前、提交后响应前分别崩溃并重启 | 恢复 P | 不生成新来源键；提交前可安全重试，提交后通过同键重放原结果；最终最多一个交易 | 状态恢复、P1 收据与交易数 | SS、SPG | 失败（PG-C7 SPG：写入缺陷阻断响应丢失恢复；SS通过） |
-| IDM-09 | P0 | 持久化 `needs_input`/`needs_confirmation` 候选 | 重启服务后 resume | 恢复两个候选 | 状态、规范化候选、版本和过期时间保持；可继续原状态机 | 重启前后数据库行与响应 | SS、SPG | 部分通过（PG-C7 SPG候选持久化；确认恢复受缺陷阻断；SS通过） |
-| IDM-10 | P0 | P 已 `committed` | 重启后 GET/status 和重复 confirm | 执行恢复 | 返回原 `result_id` 和最终结果，不再次调用模型或写账 | 重启前后结果、调用/交易计数 | SS、SPG、HTTP | 失败（PG-C7 SPG：无法形成committed；SS/HTTP通过） |
+| IDM-08 | P0 | 提交在 `committing` 阶段可注入崩溃 | 财务提交前、提交后响应前分别崩溃并重启 | 恢复 P | 不生成新来源键；提交前可安全重试，提交后通过同键重放原结果；最终最多一个交易 | 状态恢复、P1 收据与交易数 | SS、SPG | 通过（C6 SS；DATA-R2 SPG 提交后响应丢失由同键重放恢复） |
+| IDM-09 | P0 | 持久化 `needs_input`/`needs_confirmation` 候选 | 重启服务后 resume | 恢复两个候选 | 状态、规范化候选、版本和过期时间保持；可继续原状态机 | 重启前后数据库行与响应 | SS、SPG | 通过（C6 SS；DATA-R2 SPG 新应用实例恢复持久化确认候选） |
+| IDM-10 | P0 | P 已 `committed` | 重启后 GET/status 和重复 confirm | 执行恢复 | 返回原 `result_id` 和最终结果，不再次调用模型或写账 | 重启前后结果、调用/交易计数 | SS、SPG、HTTP | 通过（C6 SS/HTTP；DATA-R2 SPG 返回原结果且交易/收据各一） |
 
 ## 7. Agent 循环、权限和模型故障
 
@@ -103,15 +103,15 @@ P2-C6 已取得本地 SS/HTTP 证据。PG-C7 随后执行真实 PostgreSQL：P2 
 | LOOP-08 | P0 | 模型在允许轮次内连续请求查询 | 超过 8 次总工具调用 | 执行 | 第 9 次不执行；稳定工具调用上限错误；此前结果不串位 | 工具事件 8 次、终态 | SS | 通过（P2-C6 本地证据） |
 | LOOP-09 | P0 | 模型返回空文本、坏 JSON、缺工具 ID或不可序列化响应 | 四种响应 | 分别执行 | 映射为模型协议错误；不创建财务成功，不把原响应泄露给用户 | 错误码、数据库计数、日志 | SS | 通过（P2-C6 本地证据） |
 | LOOP-10 | P0 | 无写权限 actor | 明确支出消息及模型尝试调用写工具 | 执行 | 返回 `permission_denied`，不重试、不形成可提交批准、不调用 P1 写入 | 权限事件、写计数 0 | SS、HTTP | 通过（P2-C6 本地证据） |
-| LOOP-11 | P0 | 写已成功，最终回答模型调用失败 | 确认候选后让最终生成超时/坏响应 | 执行并重试读取/恢复 | 交易保留且仅一笔；运行返回结构化 committed 结果或可恢复状态；不得再次写入，只能同键重放 | P1 交易/收据、run 终态、调用数 | SS、SPG | 失败（PG-C7 SPG：无法先成功写入；SS通过） |
+| LOOP-11 | P0 | 写已成功，最终回答模型调用失败 | 确认候选后让最终生成超时/坏响应 | 执行并重试读取/恢复 | 交易保留且仅一笔；运行返回结构化 committed 结果或可恢复状态；不得再次写入，只能同键重放 | P1 交易/收据、run 终态、调用数 | SS、SPG | 通过（C6 SS；DATA-R2 SPG 写入成功后响应丢失仍只保留一笔并可恢复） |
 
 ## 8. 数据库与持久化故障
 
 | ID | 优先级 | 前置 | 输入 | 步骤 | 预期结果 | 通过证据 | 环境 | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | DB-01 | P0 | 数据库连接在 run 开始前不可用 | 查询或支出消息 | 执行 | 返回 `database_unavailable`/安全可重试错误；不伪造查询、候选或交易 | 错误结构、日志、零成功行 | SS、SPG | 通过（本地 SS/HTTP 部分；外部环境部分未执行） |
-| DB-02 | P0 | 候选已持久化，确认时数据库不可用 | confirm | 执行后恢复数据库再重试 | 无成功回执时不标 committed；恢复后用同一 pending/来源键安全完成至多一次 | 状态历史、P1 收据/交易数 | SS、SPG | 失败（PG-C7 SPG：恢复写入受PG-C7-DATA-001阻断；SS通过） |
-| DB-03 | P0 | 可模拟提交成功但响应丢失 | confirm | 注入断线并恢复 | 通过同一来源键查询/重放确定结果；不把超时直接解释为失败并创建第二笔 | 两连接证据、单交易 | SPG | 失败（PG-C7 SPG：未到响应丢失注入点，PG-C7-DATA-001） |
+| DB-02 | P0 | 候选已持久化，确认时数据库不可用 | confirm | 执行后恢复数据库再重试 | 无成功回执时不标 committed；恢复后用同一 pending/来源键安全完成至多一次 | 状态历史、P1 收据/交易数 | SS、SPG | 通过（C6 SS 数据库不可用恢复；DATA-R2 SPG 同一 pending/来源键恢复相邻证据） |
+| DB-03 | P0 | 可模拟提交成功但响应丢失 | confirm | 注入断线并恢复 | 通过同一来源键查询/重放确定结果；不把超时直接解释为失败并创建第二笔 | 两连接证据、单交易 | SPG | 通过（DATA-R2 SPG：提交后响应丢失，同键恢复且单交易） |
 | DB-04 | P0 | 可注入约束/未知持久化异常 | confirm | 分别触发 FinanceError 和驱动异常 | 已知码安全保留；未知错误归一；外部和日志不含 SQL、参数或异常正文；状态可恢复 | 错误响应、状态、canary 扫描 | SS、SPG | 通过（本地 SS/HTTP 部分；外部环境部分未执行） |
 
 ## 9. FastAPI run/resume/status
@@ -121,7 +121,7 @@ P2-C6 已取得本地 SS/HTTP 证据。PG-C7 随后执行真实 PostgreSQL：P2 
 | HTTP-01 | P0 | 虚拟身份依赖与完整资源 | 合法 `client_event_id`、conversation、消息 | POST `/api/v1/agent/runs` | 返回版本化严格响应、run ID 和 paused/needs_confirmation；不在首次消息直接写账 | HTTP 摘要、状态与交易数 | HTTP | 通过（P2-C6 本地证据） |
 | HTTP-02 | P0 | 路由已注册 | 缺字段、错 UUID/类型、额外字段、客户端供应商/密钥/权限字段 | 参数化 POST run | 422/稳定 validation，Agent 零启动，敏感配置不能由客户端指定 | 状态码、调用计数 | HTTP | 通过（P2-C6 本地证据） |
 | HTTP-03 | P0 | `needs_input` run | 合法补充字段 | POST `/api/v1/agent/runs/{run_id}/resume` | 绑定同 actor/conversation，恢复同一 pending 并转下一状态 | 前后响应、状态版本 | HTTP | 通过（P2-C6 本地证据） |
-| HTTP-04 | P0 | `needs_confirmation` run | confirm + 正确候选编号 | POST resume | 原子确认，返回 committed 真实结果；重复请求返回同一结果 | 两次响应、P1 交易数 | HTTP、SPG | 失败（PG-C7 SPG确认路径；HTTP本地通过） |
+| HTTP-04 | P0 | `needs_confirmation` run | confirm + 正确候选编号 | POST resume | 原子确认，返回 committed 真实结果；重复请求返回同一结果 | 两次响应、P1 交易数 | HTTP、SPG | 通过（C6 HTTP；DATA-R2 SPG 原子确认及重复结果） |
 | HTTP-05 | P0 | 待处理 run | cancel | POST resume 后再次 confirm | 转 cancelled；后续确认返回稳定错误且无交易 | 响应、状态、交易数 | HTTP | 通过（P2-C6 本地证据） |
 | HTTP-06 | P0 | paused/committing/committed/expired/cancelled 样本 | GET `/api/v1/agent/runs/{run_id}` | 逐一读取 | 返回结构化当前状态和最终结果；不调用模型/工具；不含原消息、提示词或内部工具载荷 | 响应快照、调用计数 0 | HTTP | 通过（P2-C6 本地证据） |
 | HTTP-07 | P0 | actor A 的 run | actor B 或不同 conversation GET/resume | 请求 | 拒绝且不泄露存在性或内容；状态不变 | 403/404策略、日志和行状态 | HTTP | 通过（P2-C6 本地证据） |
@@ -152,11 +152,11 @@ P2-C6 已取得本地 SS/HTTP 证据。PG-C7 随后执行真实 PostgreSQL：P2 
 
 | ID | 优先级 | 前置 | 输入 | 步骤 | 预期结果 | 通过证据 | 环境 | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| P1-01 | P0 | 账户与支出分类唯一 | 确认“午饭 18 元” | 读取 committed 输出和 P1 行 | `amount_minor=1800`、`currency=CNY`、真实 `result_id`；模型不做元分转换 | 工具输出、交易/分录 | SS | 通过（C6 SS）；PG-C7 SPG附加一致性验证失败 |
-| P1-02 | P0 | P1-01 已提交 | 查询账户余额 | 用 Agent 工具与 P1 直接查询比较 | 余额精确减少 1800 分，未维护第二份漂移余额 | 两种查询结果、分录合计 | SS | 通过（C6 SS）；PG-C7 SPG附加一致性验证失败 |
-| P1-03 | P0 | P1-01 已提交 | 查询交易列表 | 比较 Agent 与 P1 | 交易 ID、kind、时间、分类和金额一致，稳定排序和截断语义保留 | 工具/P1 输出 | SS | 通过（C6 SS）；PG-C7 SPG附加一致性验证失败 |
-| P1-04 | P0 | 当月含确认支出和既有预算 | 查询月度快照 | 比较 Agent 与 P1 | gross/net/category consumption 增加 1800 分，预算版本和 `as_of` 一致 | 两份快照 | SS | 通过（C6 SS）；PG-C7 SPG附加一致性验证失败 |
-| P1-05 | P0 | 已提交候选 | 重复确认、run 重放、服务重启后确认 | 三种重放 | P1 `command_receipt` 与交易各只有一份，始终返回原 result | 收据/交易行数与响应 | SS、SPG | 失败（PG-C7 SPG：PG-C7-DATA-001；SS通过） |
+| P1-01 | P0 | 账户与支出分类唯一 | 确认“午饭 18 元” | 读取 committed 输出和 P1 行 | `amount_minor=1800`、`currency=CNY`、真实 `result_id`；模型不做元分转换 | 工具输出、交易/分录 | SS | 通过（C6 SS；DATA-R2 SPG 18 元确认形成真实 result_id 且单交易） |
+| P1-02 | P0 | P1-01 已提交 | 查询账户余额 | 用 Agent 工具与 P1 直接查询比较 | 余额精确减少 1800 分，未维护第二份漂移余额 | 两种查询结果、分录合计 | SS | 通过（C6 SS；DATA-R2 SPG P1 余额精确为 -1800 分） |
+| P1-03 | P0 | P1-01 已提交 | 查询交易列表 | 比较 Agent 与 P1 | 交易 ID、kind、时间、分类和金额一致，稳定排序和截断语义保留 | 工具/P1 输出 | SS | 通过（C6 SS；DATA-R2 未重复扩跑字段级交易列表） |
+| P1-04 | P0 | 当月含确认支出和既有预算 | 查询月度快照 | 比较 Agent 与 P1 | gross/net/category consumption 增加 1800 分，预算版本和 `as_of` 一致 | 两份快照 | SS | 通过（C6 SS；DATA-R2 未重复扩跑含预算字段级快照） |
+| P1-05 | P0 | 已提交候选 | 重复确认、run 重放、服务重启后确认 | 三种重放 | P1 `command_receipt` 与交易各只有一份，始终返回原 result | 收据/交易行数与响应 | SS、SPG | 通过（C6 SS；DATA-R2 SPG 交易与 command receipt 各一并返回原结果） |
 | P1-06 | P0 | 分类在确认前归档或 P1 返回稳定业务错误 | confirm | 执行 | 映射为 `pending_action_stale` 或保留安全 P1 错误；不伪造 committed，不产生半写入 | 状态、FinanceError 码、交易数 | SS | 通过（P2-C6 本地证据） |
 
 ## 13. 真实 DeepSeek 与桌面端专项
@@ -209,7 +209,7 @@ P2-C6 已取得本地 SS/HTTP 证据。PG-C7 随后执行真实 PostgreSQL：P2 
 - 活动、收入安排、预算发布、Markdown 导入、搜索评估、投资功能、流式输出、登录系统和多用户资源隔离。
 - 微信稳定事件 ID 的获取与原消息级去重实现；当前只验证安全降级。
 - OpenClaw 恢复、重装、网关重启、扫码或真实微信操作；另等总控解除安全暂停并派发专项。
-- P1 尚未取得的 8 个真实 PostgreSQL 数据层结论；P2 的 PostgreSQL 场景不能倒推这些 P1 项已通过。
+- 除 DATA-R2 已单独执行并通过的原 8 个 P1 PostgreSQL 案例外，其他 P1 PostgreSQL 场景不在本阶段测试；P2 SPG 不得外推。
 - 模型回答质量的开放式评分、长期记忆、RAG、LangGraph 和提醒送达。
 
 ## 17. 自查结论
@@ -221,16 +221,20 @@ P2-C6 已取得本地 SS/HTTP 证据。PG-C7 随后执行真实 PostgreSQL：P2 
 - 独立测试：`tests/independent/agent_finance/` 当前 45 项；稳定套件 43 项全部通过，补充的 CTX-05 与 ACT-15 两项定向通过，合计 45 项通过、0 失败。
 - CTX-01～05、QRY-01～07：`test_tools_and_lifecycle.py`、`test_idempotency_and_loop.py`；Schema、可信时间、连接释放、五查询、参数与权限均通过。
 - ACT-01～16、P1-01～06：`test_tools_and_lifecycle.py`；候选、单一追问、数据库选项、计划保护、日期、摘要、补充、取消、边界过期、身份、归档/版本 stale、提交与 P1 结果均通过。
-- IDM-01～10、LOOP-01～11、DB-01～02/04：`test_idempotency_and_loop.py` 与生命周期测试；顺序/并发幂等、重启、4/8/1 限制、模型/工具/数据库故障、恢复和安全错误均通过本地部分。DB-03 只适用于真实 PostgreSQL，未执行。
+- IDM-01～10、LOOP-01～11、DB-01～02/04：`test_idempotency_and_loop.py` 与生命周期测试；顺序/并发幂等、重启、4/8/1 限制、模型/工具/数据库故障、恢复和安全错误均通过本地部分。DB-03 在 C6 未执行，已于 DATA-R2 的真实 PostgreSQL 响应丢失恢复中通过。
 - HTTP-01～08、PRV-01～05：`test_http_and_migration.py` 及三份独立测试的 canary/持久化检查；TestClient 合同、身份隔离、严格 Schema、响应与日志隐私均通过。HTTP-09 只有同源并发重放组件证据，Agent 真实回环断线未执行。
 - WX-01～05、LIVE-01～03、DSK-01～03：控制面未授权或无对应环境，保持未执行；没有恢复 OpenClaw、联网调用 DeepSeek、启动微信或使用真实数据。
 - 迁移证据：SQLite `base -> bfc163b9b8e9 -> 1377551283d0 -> 7f3e2d1c9a4b`，head 为 `7f3e2d1c9a4b`、19 张业务表；迁移维护套件 11 通过、8 个 PostgreSQL 项跳过。
 - 最终回归：315 项中 305 通过、8 跳过、2 失败；P2 独立 43/43、执行方 P2 23/23 均通过。两项失败是既有 Phase-0 回环 uvicorn 健康检查未就绪，未形成 P2 产品失败，但项目回归不是全绿。
 
-## 19. PG-C7 真实 PostgreSQL 证据
+## 19. PG-C7 与 DATA-R2 真实 PostgreSQL 证据
 
-- 环境：Docker 29.8.0、Compose v5.5.1、PostgreSQL 17.6-alpine、SQLAlchemy 2.0.54、psycopg 3.3.5；仅启动 `finance-postgres`。
-- P1 原 8 项：3 通过、5 失败。迁移、延迟平衡触发器、只读可重复读快照通过；五个需要 `FinanceService` 写入的案例均被 `PG-C7-DATA-001` 阻断。
-- P2 SPG 4 项：2 通过、2 失败。P2 head/Agent 约束和跨应用同事件单 run 通过；并发确认/P1 一致性与提交后响应丢失恢复失败。
-- 缺陷：全新 PostgreSQL schema 的首次虚拟 `FinanceService.create_account` 即返回 `concurrent_modification`；P2 confirm 保持 `paused/committing`，没有 committed 结果。
-- 完整证据见 `docs/testing/phase-2-c7-postgresql-report.md`。测试结束后已执行不带 `-v` 的普通 compose down；容器和网络已移除。
+- 原 PG-C7 基线：P1 3/8、P2 2/4，通过真实 PostgreSQL 首写误判稳定复现 `PG-C7-DATA-001`；详见 `docs/testing/phase-2-c7-postgresql-report.md`。
+- DATA-R2 固定输入：两文件摘要独立重算为 `5046cb87bbb3a3ab3556f9bc72b371636fb4869f3b3eb18778f852c84d27ea8a`，与 Prompt 预期完全匹配。
+- DATA-R2 P1：`tests/independent/finance/test_postgresql_contract.py` 8 passed、0 failed。
+- DATA-R2 P2：`tests/independent/agent_finance/test_postgresql_agent_contract.py` 4 passed、0 failed。
+- 相邻 SQLite：`tests/independent/finance/test_idempotency_error_contract.py` 使用全新仓库 basetemp 后 9 passed、0 failed；首次系统临时目录拒绝访问为环境 setup 事件，不计产品失败。
+- 执行方补充：`tests/finance/test_postgresql_claim.py` 4 passed、0 failed，与独立 12 项分开统计。
+- 结论：DATA-R2 的 12 项 PostgreSQL 独立专项与相邻 SQLite 幂等回归全部通过，测试智能体建议关闭 `PG-C7-DATA-001`；最终 `complete` 由总控决定。
+- 环境：仅启动 `finance-postgres`；结束时执行不带 `-v` 的普通 compose down，最终 compose 服务列表为空。
+- 完整证据见 `docs/testing/phase-2-c7-r2-postgresql-report.md`。

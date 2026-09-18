@@ -195,18 +195,25 @@ class FinanceService:
         dialect = session.bind.dialect.name if session.bind is not None else ""
         if dialect == "postgresql":
             from sqlalchemy.dialects.postgresql import insert as dialect_insert
-            statement = dialect_insert(CommandReceipt).values(**values).on_conflict_do_nothing(
-                index_elements=[CommandReceipt.source_system, CommandReceipt.key_digest]
+            statement = (
+                dialect_insert(CommandReceipt)
+                .values(**values)
+                .on_conflict_do_nothing(
+                    index_elements=[CommandReceipt.source_system, CommandReceipt.key_digest]
+                )
+                .returning(CommandReceipt.id)
             )
-        elif dialect == "sqlite":
-            from sqlalchemy.dialects.sqlite import insert as dialect_insert
-            statement = dialect_insert(CommandReceipt).values(**values).on_conflict_do_nothing(
-                index_elements=[CommandReceipt.source_system, CommandReceipt.key_digest]
-            )
+            inserted = session.scalar(statement) is not None
         else:
-            statement = insert(CommandReceipt).values(**values)
-        result = session.execute(statement)
-        inserted = result.rowcount == 1
+            if dialect == "sqlite":
+                from sqlalchemy.dialects.sqlite import insert as dialect_insert
+                statement = dialect_insert(CommandReceipt).values(**values).on_conflict_do_nothing(
+                    index_elements=[CommandReceipt.source_system, CommandReceipt.key_digest]
+                )
+            else:
+                statement = insert(CommandReceipt).values(**values)
+            result = session.execute(statement)
+            inserted = result.rowcount == 1
         receipt = session.scalar(
             select(CommandReceipt).where(
                 CommandReceipt.source_system == command.source_system,

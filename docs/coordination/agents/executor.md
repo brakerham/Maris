@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；当前执行任务
-- 当前任务：P2-B4 — 自然语言单笔支出 Agent 最小纵向切片
+- 当前任务：PG-C7-DATA-R1 — PostgreSQL 首次财务写入幂等认领返修
 - 状态：`review`
-- 最近更新：2026-09-17 00:18，Asia/Shanghai
-- 可修改范围：`src/wife_system/agent/**`、分配的 `src/wife_system/api/**`、P2 新迁移、`tests/agent_finance/**`、必要依赖、`docs/p2-a-running.md` 和本文件；P1 finance 与既有迁移只读，禁止修改独立测试、总览、控制文件、其他角色状态、OpenClaw 集成或 Git 状态
+- 最近更新：2026-09-17 23:02，Asia/Shanghai
+- 可修改范围：`src/wife_system/finance/service.py`、确有必要并说明的 `src/wife_system/finance/**`、执行方 `tests/finance/**`、若 Agent 确认受直接影响则最小 `tests/agent_finance/**`、`docs/b3-data-running.md` 和本文件；禁止修改独立测试/报告/矩阵、冻结接口、迁移、Compose、控制文件、其他角色状态、OpenClaw 或 Git 状态
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P2-B4 已提交 `review` 并停止，等待 P2-C5 按稳定快照执行独立验收
-- 步骤开始时间：2026-09-17 00:10 Asia/Shanghai
-- 最近有效进展：2026-09-17 00:18 Asia/Shanghai（23 项 P2 执行测试通过；排除 5 个精确陈旧 P1 迁移断言后的回归为 259 通过、8 跳过；迁移/依赖/编译检查通过；23 文件快照已生成）
-- 最近心跳：2026-09-17 00:18 Asia/Shanghai
-- 下一检查点：测试智能体以 `P2-B4-SHA256:f0eacf340d87f7dd0ea11ae51396f5022cec99dc0f3a3009883b30aaf17362e6` 建立并执行 P2-C5 独立测试；总控协调 P1 迁移期望更新
-- 等待对象：P2-C5 测试智能体与头脑风暴总控
-- 活动进程或会话：无外部服务会话；仅项目虚拟环境内本地实现与测试，OpenClaw 保持暂停
+- 当前步骤：PG-C7-DATA-R1 已提交 `review` 并停止；等待测试智能体按新快照独立定向复验
+- 步骤开始时间：2026-09-17 23:02 Asia/Shanghai
+- 最近有效进展：2026-09-17 23:02 Asia/Shanghai（财务执行测试 32 项通过；C7 原失败节点 P1 5 项、P2 2 项只读定向通过；容器和网络已普通 down；两文件快照已生成）
+- 最近心跳：2026-09-17 23:02 Asia/Shanghai
+- 下一检查点：测试智能体先核对 `PG-C7-DATA-R1-SHA256:5046cb87bbb3a3ab3556f9bc72b371636fb4869f3b3eb18778f852c84d27ea8a`，再独立复跑 PG-C7 12 项
+- 等待对象：头脑风暴总控与测试智能体；执行智能体停止修改实现
+- 活动进程或会话：无；`docker compose down` 已成功，Compose 服务列表为空，OpenClaw 保持暂停
 - 重试次数：0
-- 最近输出：执行方 P2 `23 passed`；全量 `258 passed, 5 stale-migration failed, 8 skipped`；过滤 5 个精确陈旧节点后 `259 passed, 8 skipped, 5 deselected`
+- 最近输出：`tests/finance` 32 passed；C7 原失败节点 P1 `5 passed`、P2 `2 passed`；Agent 执行测试 18 passed/5 个固定日期过期失败；编译、依赖、diff 检查通过
 
 ## 待接任务
 
@@ -30,7 +30,7 @@
 
 | 子任务 | 负责人 | 状态 | 修改范围 | 证据 |
 | --- | --- | --- | --- | --- |
-| 尚未创建 | — | — | — | — |
+| `execution_onboarding_review` | 执行智能体已有只读辅助会话 | `stopped` | 无修改 | 因本机会话刷新异常临时协助读取入门文件；同样遇到刷新错误，未执行测试、外部操作或文件修改，已中止并由主执行智能体继续 |
 
 ## B1 交付物与验证
 
@@ -42,6 +42,43 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-17 23:02 Asia/Shanghai — PG-C7-DATA-R1 交付至 review
+
+- 状态：`review`；运行状态：`finished`。
+- 产品修复：PostgreSQL `_claim` 通过 `ON CONFLICT DO NOTHING ... RETURNING command_receipt.id` 明确判断当前事务是否插入 receipt；SQLite 和其他方言的原有路径不变。
+- 执行方回归：真实 PostgreSQL 新文件最终 `4 passed`；全部 `tests/finance` 为 `32 passed in 4.32s`，覆盖首写、重放、冲突、并发同键、失败回滚原子性及 SQLite 相邻行为。
+- C7 定向诊断：只读复跑原失败节点，P1 五项 `5 passed in 1.48s`，P2 Agent 两项 `2 passed in 0.76s`；不据此改写独立报告或宣布验收。
+- Agent 执行测试：`18 passed, 5 failed`；五项的固定 `RECEIVED_AT=2026-09-16 12:00 UTC` 已超过 24 小时，均返回 `pending_action_expired`。该日期漂移与本次 finance 改动无关；直接受影响的两个真实 PostgreSQL Agent 节点已通过，未修改 P2 测试。
+- 静态与环境：`compileall -q src tests/finance`、`pip check`、`git diff --check` 均退出 0。仅启动 `finance-postgres`；普通 `docker compose down` 后服务列表为空；测试临时目录已按精确路径清理。
+- 文档：`docs/b3-data-running.md` 已记录修复机制、验证结果、限制、服务关闭证据和快照算法。
+- 快照：`PG-C7-DATA-R1-SHA256:5046cb87bbb3a3ab3556f9bc72b371636fb4869f3b3eb18778f852c84d27ea8a`，覆盖 `src/wife_system/finance/service.py` 与 `tests/finance/test_postgresql_claim.py`。
+- 交接：执行智能体停止；测试智能体应先核对两文件摘要，再独立复跑 PG-C7 全部 12 项和必要相邻回归，总控据独立证据作最终结论。
+
+### 2026-09-17 22:46 Asia/Shanghai — PostgreSQL 幂等认领修复转绿
+
+- 实现：PostgreSQL 的 `INSERT ... ON CONFLICT DO NOTHING` 增加 `RETURNING command_receipt.id`，以返回行是否存在判定当前事务是否取得认领；SQLite 与其他方言继续使用原有 `rowcount` 路径。
+- 定向结果：原首写红测修复后 `1 passed`；扩充后的执行方 PostgreSQL 文件为 `3 passed`，覆盖首次写入、同键同载荷重放、同键异载荷冲突和两连接并发同键单一业务结果。
+- 数据隔离：每项测试使用独立随机 schema 和虚拟数据，夹具完成后自动删除；`finance-postgres` 仍健康，仅为后续扩大回归保留。
+- 下一检查点：运行全部执行方 finance、P2 Agent 执行测试，并只读定向复跑 C7 的 5 个 P1 与 2 个 P2 原失败节点；完成后普通 `docker compose down`。
+
+### 2026-09-17 22:40 Asia/Shanghai — PostgreSQL 首写红测稳定复现
+
+- 服务范围：重读总控版本 `2026-09-17T22:23:00+08:00` 后，仅启动 Compose `finance-postgres`；容器达到 healthy，未启动其他服务。
+- 执行方测试：新增 `tests/finance/test_postgresql_claim.py`，每次创建随机隔离 schema、迁移到 P1 head、只使用虚拟账户数据，并在结束时删除 schema。
+- 夹具校正：第一次运行因测试 schema 误用 PostgreSQL 保留前缀 `pg_` 而在业务代码前报错；改为非保留前缀后才形成有效产品基线，该夹具错误不计为产品红测。
+- 有效红测：`test_postgresql_first_write_owns_new_claim` 为 `1 failed`；首次 `create_account` 从 `_claim` 第 222 行抛出 `FinanceError(concurrent_modification)`，与 PG-C7-DATA-001 一致。
+- 下一步：只修改 `src/wife_system/finance/service.py` 的 PostgreSQL 插入判定，使用数据库 `RETURNING` 结果确认认领所有权；SQLite 分支保持原行为。
+
+### 2026-09-17 22:30 Asia/Shanghai — PG-C7-DATA-R1 接单
+
+- 状态：`in_progress`；运行状态：`active`
+- 派发依据：用户将 `docs/coordination/prompts/pg-c7-data-r1-executor.md` 交给原执行智能体；总控版本 `2026-09-17T22:23:00+08:00` 指定本执行智能体为唯一返修负责人，测试与技术顾问保持停止。
+- 缺陷基线：PG-C7 已在真实 PostgreSQL 17.6 上证明新 schema 首次 `create_account` 错报 `concurrent_modification`；`_claim` 在 `INSERT ... ON CONFLICT DO NOTHING` 后依赖 SQLAlchemy/psycopg 的 `rowcount == 1` 判定插入所有权，首写 receipt 实际已插入但被误判。
+- 负责范围：先增加执行方真实 PostgreSQL 首写回归，再以数据库明确返回的插入结果修复 `_claim`；保持同键重放、异载荷冲突、并发单业务结果、receipt/业务原子性和 SQLite 行为；更新运行说明并生成返修快照。
+- 禁止范围：不修改 `tests/independent/**`、测试报告/矩阵、冻结接口、Compose、迁移、控制/总览、其他角色状态、OpenClaw 或 Git 状态；只允许按简报启动 `finance-postgres`，使用随机 schema 和虚拟数据，并以普通 `docker compose down` 收尾。
+- 协作记录：因主会话命令刷新错误，曾让已有只读辅助会话 `execution_onboarding_review` 协助核对入门文件；它遇到同一错误，未改文件、未运行测试或外部操作，现已中止。后续由主执行智能体独立实施，并把可复验里程碑写入本文件供总控与测试智能体读取。
+- 下一检查点：重读控制文件后只启动 `finance-postgres`，稳定复现首写红测；若 Docker Engine 不可用，立即记录阻塞并停止。
 
 ### 2026-09-17 00:18 Asia/Shanghai — P2-B4 交付至 review
 

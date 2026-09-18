@@ -5,7 +5,7 @@
 - 当前任务：A/P2 — 阶段 2 财务 Agent 工具总协调
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-17 22:04，Asia/Shanghai
+- 最近更新：2026-09-18 10:02，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -20,28 +20,52 @@
 
 ## 当前执行快照
 
-- 运行状态：`waiting_user`
-- 当前步骤：PG-C7 已核对；`PG-C7-DATA-R1` 执行方返修任务已冻结
-- 步骤开始时间：2026-09-17 22:04，Asia/Shanghai
-- 最近有效进展：2026-09-17 22:04，Asia/Shanghai（确认 PG-C7 已完成 12 项真实 PostgreSQL 专项并定位共同缺陷）
-- 最近心跳：2026-09-17 22:04，Asia/Shanghai
-- 下一检查点：执行智能体接单并完成 PostgreSQL 首次写入最小复现
-- 等待对象：用户把 DATA-R1 Prompt 发给既有执行智能体
-- 活动进程或会话：无；PG-C7 容器和网络已普通 down
-- 重试次数：0（本轮只核对既有证据）
-- 最近输出：P1 PostgreSQL 3/8、P2 SPG 2/4 通过；`PG-C7-DATA-001` 阻断其余写路径
+- 运行状态：`finished`
+- 当前步骤：DATA-R2 已验收；`PG-C7-DATA-001` 已关闭，准备本地验收提交
+- 步骤开始时间：2026-09-18 10:02，Asia/Shanghai
+- 最近有效进展：2026-09-18 10:02，Asia/Shanghai（核对快照、R2 报告、矩阵、文件边界和环境关闭证据）
+- 最近心跳：2026-09-18 10:02，Asia/Shanghai
+- 下一检查点：完成本地提交后冻结固定时间测试维护任务
+- 等待对象：无
+- 活动进程或会话：无；Docker Desktop 当前未运行，R2 报告已记录测试后普通 down 与服务列表为空
+- 重试次数：0（本轮仅核对已有独立证据）
+- 最近输出：P1 PostgreSQL 8/8、P2 SPG 4/4、SQLite 9/9、执行方补充 4/4 全部通过
 
 ## 阻塞
 
-- P1/P2 真实 PostgreSQL 写路径被 `PG-C7-DATA-001` 阻断：首次 `FinanceService` 写入被误判为 `concurrent_modification`。
+- `PG-C7-DATA-001` 已关闭；真实 PostgreSQL 结论仅覆盖冻结的 P1 8 项和 P2 SPG 4 项。
+- 5 个 P2 执行测试使用固定 2026-09-16 时间，现超过候选 24 小时 TTL；这是下一项测试基础设施维护，不属于 DATA-R1 产品缺陷。
 - 外部未验证项：真实腾讯微信消息、DeepSeek 与通知；这不影响已关闭的 B1/B2 本地范围。
 
 ## 下一步
 
-- 等待执行智能体完成 `PG-C7-DATA-R1` 并提交新固定快照。
-- 快照形成后只派发测试智能体定向复验，不重复 C6 全量回归或 D6 教学。
+- 为 DATA-R1/R2 验收结果创建本地 Git 提交，不推送远程。
+- 随后单独冻结固定时间夹具维护任务；不重复 C6、C7 或 D6。
 
 ## 工作日志
+
+### 2026-09-18 10:02 Asia/Shanghai — 验收 DATA-R2 并关闭 PG-C7-DATA-001
+
+- 总控结论：`PG-C7-DATA-R1`、`PG-C7-DATA-R2` 与原 PG-C7 返修闭环均标记 `complete`；关闭 P0 缺陷 `PG-C7-DATA-001`。
+- 固定门禁：两文件摘要再次重算为 `5046cb87bbb3a3ab3556f9bc72b371636fb4869f3b3eb18778f852c84d27ea8a`，与执行方和测试方记录完全一致。
+- 独立证据：P1 PostgreSQL 8/8、P2 SPG 4/4、相邻 SQLite 幂等/错误契约 9/9；执行方 PostgreSQL claim 4/4 单列通过。
+- 行为覆盖：首次写入、同/异载荷幂等、并发同键、失败回滚、并发退款/转账/预算、timestamptz、并发确认、一次一写和响应丢失恢复均通过。
+- 环境：测试智能体只启动 `finance-postgres`，使用随机 schema 和虚拟数据；结束时普通 down。当前 Docker Desktop 未运行，不为重复查询而重启。
+- 边界：测试智能体未修改产品、DATA-R1 两文件、执行方测试、迁移、依赖、Compose、控制/总览、其他角色状态或 Git。
+- 遗留：5 个 `tests/agent_finance` 固定时间夹具过期失败单独作为测试基础设施维护；不影响本次 finance/PostgreSQL 缺陷关闭。
+- Git：按用户规则，本轮验收文件由总控创建本地提交，不推送 GitHub；提交标识以本地 Git 历史为准。
+
+
+### 2026-09-17 23:10 Asia/Shanghai — 核对 DATA-R1 并发布 DATA-R2
+
+- 状态：DATA-R1 `review`；DATA-R2 `ready`；执行智能体和技术顾问保持停止。
+- 边界：执行智能体仅修改 `service.py`、新增执行方 PostgreSQL 测试、更新 B3 运行说明和自身日志；Git 暂存区为空、HEAD 仍为总控提交 `943b956`，未越权操作 Git。
+- 快照：总控按交付算法重算 `service.py` 与 `test_postgresql_claim.py`，精确匹配 `PG-C7-DATA-R1-SHA256:5046cb87bbb3a3ab3556f9bc72b371636fb4869f3b3eb18778f852c84d27ea8a`。
+- 实现核对：PostgreSQL 分支使用 `ON CONFLICT DO NOTHING ... RETURNING command_receipt.id` 判定认领所有权；SQLite 与其他方言保持原 `rowcount` 路径。
+- 证据异常核对：总控首次复跑因系统临时目录权限失败，未进入断言；使用仓库隔离 basetemp 后稳定得到 `18 passed, 5 failed`，五项均为固定 `RECEIVED_AT` 超过 24 小时后触发 `pending_action_expired`，未触及本次 finance 变更。
+- Git：积压检查点已由总控在本地提交为 `943b956`，远程未推送；DATA-R1 尚未独立验收，因此本轮不提交。
+- 交接：只向测试智能体派发 [DATA-R2 Prompt](../prompts/pg-c7-data-r2-tester.md)，复跑 12 项 PostgreSQL 专项和相邻 SQLite 幂等回归。
+
 
 ### 2026-09-17 22:23 Asia/Shanghai — 冻结 Git 权限与发布流程
 
