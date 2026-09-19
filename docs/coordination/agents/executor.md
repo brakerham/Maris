@@ -1,24 +1,24 @@
 # 执行智能体状态
 
 - 角色：代码实现、自测、集成和执行子任务管理
-- 连接状态：已确认；当前执行任务
-- 当前任务：P2-TIME-R1 — Agent 执行方测试时钟维护
+- 连接状态：已确认；唯一执行负责人
+- 当前任务：P3-B5-R1 — 修复 PostgreSQL 外键标识符超长
 - 状态：`review`
-- 最近更新：2026-09-18 13:49，Asia/Shanghai
-- 可修改范围：`tests/agent_finance/**`、`docs/p2-time-r1-running.md` 和本文件；全部 src、独立测试/报告、既有运行说明、其他角色文件和 Git 状态只读
+- 最近更新：2026-09-19 15:22，Asia/Shanghai
+- 可修改范围：仅单个 P3 migration、执行方 `tests/activity_import/test_migration.py`、P3-B5 运行说明与本文件；独立测试/C9报告/矩阵、其他产品、控制/总览/其他角色、依赖与 Git 禁止修改。不执行任何 Git 命令。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：测试时钟、28 项自测、逐项还原检查、交接说明和七文件快照均已完成；停止修改，等待独立定向复验
-- 步骤开始时间：2026-09-18 13:49 Asia/Shanghai
-- 最近有效进展：2026-09-18 13:49 Asia/Shanghai（28 passed；真实日期晚于固定时间 41.738 小时；28 次测试前后还原审计通过，快照已生成）
-- 最近心跳：2026-09-18 13:49 Asia/Shanghai
-- 下一检查点：总控核对交付并正式派发测试智能体：绑定 P2-TIME-R1 七文件快照进行一次定向复验
-- 等待对象：头脑风暴总控与测试智能体；无执行阻塞
-- 活动进程或会话：无；所有测试退出 0，临时只读辅助已停止；scratch 下本轮三个 basetemp 保留
-- 重试次数：0（常规沙箱启动故障已通过获准的沙箱外工作区命令解决，无持续停滞）
-- 最近输出：原基线 18 passed/5 failed；修复原 23 passed；最终 28 passed, 1 warning in 8.33s；FUNCTION_ISOLATION=28，双模块 datetime 已恢复
+- 当前步骤：最小返修、执行方本地/真实 PostgreSQL 回归、普通清理和22文件新快照均已交付；停止修改
+- 步骤开始时间：2026-09-19 15:22 Asia/Shanghai
+- 最近有效进展：2026-09-19 15:22 Asia/Shanghai（最终快照九项 PostgreSQL 实际通过，容器普通关闭，摘要复算匹配）
+- 最近心跳：2026-09-19 15:22 Asia/Shanghai
+- 下一检查点：头脑风暴总控核对 `P3-B5-R1-SHA256` 后决定是否派发 P3-C9-R2
+- 等待对象：头脑风暴总控；独立验收尚未开始
+- 活动进程或会话：无；`docker compose ps --format json` 无输出，服务列表为空
+- 重试次数：0
+- 最近输出：migration 5 passed；本地 P3 144 passed/9 PG skipped；真实 PostgreSQL 9 passed；旧 migration 4 passed；`P3-B5-R1-SHA256:fb46b8fa4957c93bfd8f971b1fd987e45dd4779e8d6eac2907660fa2f1fef53c`
 
 ## 待接任务
 
@@ -31,12 +31,16 @@
 | 子任务 | 负责人 | 状态 | 修改范围 | 证据 |
 | --- | --- | --- | --- | --- |
 | `execution_onboarding_review` | 执行智能体已有只读辅助会话 | `stopped` | 无修改 | 因本机会话刷新异常临时协助读取入门文件；同样遇到刷新错误，未执行测试、外部操作或文件修改，已中止并由主执行智能体继续 |
+| `p3_parser` | 执行智能体临时实现辅助 | `review` | 纯parser/DTO及对应执行测试 | 纯阶段120项通过后停止；父集成时补两个路径标题边界，结果纳入最终143项；无Git/外部操作/独立验收 |
+| `p3_storage` | 执行智能体临时存储辅助 | `stopped` | 模型只读设计后开始模型草稿 | 会话结束前形成models修改，未完成migration/测试；父接管并完成迁移、约束和回归；无Git/外部操作 |
 
 ### 本轮执行子任务快照
 
 | 子任务 | 任务状态 | 运行状态 | 当前步骤 | 最近心跳 | 下一检查点 | 等待对象 | 会话/证据 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | time_fixture_review | review | finished | 只读审阅双模块时钟与新增案例完成；没有文件修改或测试执行 | 2026-09-18 13:49（主执行方记录最终反馈） | 无；已交回主执行方 | 无 | /root/time_fixture_review：未发现阻止交付缺口；建议同进程还原审计已采纳并通过 |
+| p3_parser | review | finished | parser/DTO与纯测试交回父执行，停止修改 | 2026-09-18 19:14 | 无；已纳入最终快照 | 无 | 初始纯阶段120 passed；最终parser/schema边界随P3本地143项通过 |
+| p3_storage | stopped | finished | 存储设计及models草稿交回；父完成剩余迁移/测试 | 2026-09-19（父恢复时确认会话已结束） | 无 | 无 | 模型字段设计被采用；父独立完成迁移并验证 |
 
 
 ## B1 交付物与验证
@@ -49,6 +53,68 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-19 15:22 Asia/Shanghai — P3-B5-R1 交付至review并停止
+
+- 唯一产品修复：P3 migration 的 upgrade/downgrade 同时使用模块常量 `fk_activity_template_revision_import_candidate`，长度46，低于 PostgreSQL 63字符上限；没有改变 revision、表列、删除规则、约束语义、迁移顺序或其他产品功能。
+- 执行方 migration 回归以 AST 解析显式 identifier 参数，验证所有未由命名约定包装的显式名称均不超过63，并锁定 upgrade创建/downgrade删除同一冻结名称；最终 `tests/activity_import/test_migration.py` 为 `5 passed in 2.00s`。
+- 最终本地 `tests/activity_import` 为 `144 passed, 9 skipped, 1 warning in 8.72s`；新增1项，既有143项无回退。该命令的9 skip为未设置PG地址，随后真实 PostgreSQL 专项单独执行。
+- 重读 control 后只启动 `finance-postgres`；服务健康，使用随机schema和虚拟数据，最终文件版本的九项实际 `9 passed in 1.57s`，无skip/setup error。受影响旧 migration 定向回归 `4 passed in 1.58s`；未重复完整92项，未运行独立测试。
+- 测试结束执行普通 `docker compose down`；容器和网络已移除，随后 `docker compose ps --format json` 退出0且无输出。未删volume、prune、重置、启其他服务或改全局配置。
+- 22文件仅 migration 与执行方 migration 测试摘要变化，其余20项与旧B5一致。新有序摘要为 `P3-B5-R1-SHA256:fb46b8fa4957c93bfd8f971b1fd987e45dd4779e8d6eac2907660fa2f1fef53c`；逐项清单见运行说明。
+- 文件边界内共修改 migration、执行方 migration 回归、B5运行说明和本角色日志。未修改独立测试/C9报告/矩阵/其他产品/控制或Git状态，没有执行任何Git命令。独立P3-C9-R2仍未验证，状态只能为 `review`；执行方现在停止。
+
+### 2026-09-19 15:08 Asia/Shanghai — P3-B5-R1 接单与输入门禁
+
+- 最新 control 与返修任务卡一致：只修复 `P3-C9-PG-001`；执行方独占 `finance-postgres` 启停；交付仍停在 `review`，不运行独立验收或任何 Git 操作。
+- 独立按任务卡的 22 个有序路径复算旧快照：`P3-B5-SHA256:9fb36c653d20ff14f85ad9667de454900cca0c6e3ead17c2619df11fb7f63d6e`，匹配。
+- 独立按原始字节复算 C9 报告：`P3-C9-REPORT-SHA256:d0b2189ec65d477a6fcefa9790898b5840d4f330f2ed713a6684346b8fada83b`，匹配。C9 摘要确认本地独立测试通过，真实 PostgreSQL 空库迁移因显式外键名 82 字符而失败，九项执行方 PostgreSQL 测试均在 setup 阶段受阻。
+- 修改边界固定为 migration、执行方 migration 回归、P3-B5 运行说明和本角色日志；其余 20 个快照文件只读。下一检查点为定向回归和 SQLite migration 自测。
+
+### 2026-09-19 14:05 Asia/Shanghai — P3-B5 交付至review并停止
+
+- 实现与执行方本地自测完成；运行说明见 [P3-B5活动Markdown导入运行与交接](../../b5-activity-import-running.md)。三个API、受限parser、持久预览/恢复、整批原子提交、来源追溯、幂等和安全日志已形成最小纵向切片。
+- 最终SQLite/HTTP P3命令：`143 passed, 1 warning in 9.40s`；受影响finance/agent finance/API回归：`92 passed, 4 skipped, 1 warning in 13.85s`；compileall与pip check退出0。未运行独立测试。
+- PostgreSQL九类执行测试已实现但环境实际结果为 `9 skipped in 0.47s`。Docker API pipe不存在；按任务卡只检查一次并停止，未启停容器、改Docker Desktop、安装或清理volume。该层保持 `unverified`。
+- 文件边界检查：交付变化仅在任务卡允许的activity_import、必要api/finance、一个P3 migration、执行测试、两份必要旧兼容测试、运行说明和本角色日志。没有执行任何Git命令。
+- 22文件有序摘要已复算匹配：`P3-B5-SHA256:9fb36c653d20ff14f85ad9667de454900cca0c6e3ead17c2619df11fb7f63d6e`。运行说明和角色日志因包含摘要而未纳入，避免自引用。
+- 状态只能为 `review`；执行方现在停止修改。总控应先核对快照和PG未验证边界，再决定补充PG环境执行或派发P3-C9，不得把本自测写成独立验收或complete。
+
+### 2026-09-19 13:57 Asia/Shanghai — P3-B5 SQLite回归完成，PostgreSQL环境阻塞
+
+- 模型与唯一迁移已落地：模板规范名全局唯一；修订精确/范围/无金额三形状；导入批次/候选、内容和块HMAC、来源候选FK、状态/金额/决定约束。空库升级、重复升级、降回P2、重升、旧数据回填、历史ID/引用保持、重复规范名在DDL前安全失败均通过。
+- 预览、GET、提交服务和API已完成；单模板公开命令与批量提交共用Session级写入原语。SQLite覆盖预览纯度、五动作、同键重放/冲突、owner隔离、warning精确确认、全skip、create/revise来源、整批故障回滚及严格HTTP/隐私日志。
+- 执行方P3：`tests/activity_import`（不含PG环境时）`140 passed, 1 warning in 8.47s`。受影响finance/agent/API回归在旧迁移种子兼容修正后 `92 passed, 4 skipped, 1 warning in 18.43s`；跳过为既有PG环境节点。
+- PostgreSQL九类执行测试已写入执行方目录并可收集：同键预览并发、同键提交并发、同批异键、异批同名竞争、stale/归档、整批故障回滚、数据库约束、空/已有schema迁移、丢响应恢复。无URL时 `9 skipped in 0.47s`。
+- 启动外部服务前重读control，版本仍为 `2026-09-18T16:15:00+08:00`。只读 `docker compose ps` 显示 Docker API pipe 不存在且引擎未运行；依任务卡“引擎受阻时记录、不要无限重复”停止PG环境尝试。未启动/停止容器、未改Docker Desktop、未安装、未删volume。
+- 下一步：静态检查、全量允许范围复跑、运行说明和快照；PG实际九类结果明确保持 `unverified`，不得写成通过。
+
+### 2026-09-18 19:14 Asia/Shanghai — P3-B5 纯解析与DTO完成
+
+- `p3_parser` 交付 parser/schemas/errors/__init__ 与两份执行方纯测试；命令 `.venv\Scripts\python.exe -m pytest -o addopts='' -p no:cacheprovider tests/activity_import/test_parser.py tests/activity_import/test_schemas.py --tb=short -q` → `120 passed in 0.21s`，0失败/跳过。
+- 初次长文本参数ID超过 Windows 环境变量限制造成2项setup错误；只缩短参数ID后通过，未放宽产品断言。
+- 覆盖结构、金额与范围、Unicode、资源上限、恶意文本、严格类型与确认。父核对时纠正LF计数及嵌套列表warning；保留不同金额语法的形状。
+- parser辅助停止修改，父接管集成。`p3_storage` 从只读规划转为实现模型/单迁移及迁移自测；目录所有权不变，无Git/外部动作。
+- 下一检查点：模型新列与导入表、既有数据迁移证据，然后推进预览持久化。
+
+
+### 2026-09-18 19:12 Asia/Shanghai — P3-B5 执行基线与分工同步
+
+- 执行方基线：`.venv\Scripts\python.exe -m pytest -o addopts='' -p no:cacheprovider --basetemp=scratch/p3-b5-baseline tests/finance tests/agent_finance tests/test_probe_api.py tests/test_agent_loop.py tests/test_c2_regressions.py --tb=short -q` → `92 passed, 4 skipped, 1 warning in 15.23s`；四跳过为 PG 环境未启用，非 P3 结论。
+- parser 辅助已形成纯代码并补边界自测；storage 辅助完成只读设计和输入摘要复核。双方路径互斥，所有状态由父执行汇总，均不属于测试角色独立验收。
+- 主执行添加可信身份 DTO（owner/channel/permissions 仅依赖注入），准备 Session 仓储/服务草稿；持久化文件等待纯解析与模型顺序门禁。
+- 已确认范围等端点仍保留 reference_minor=NULL；迁移全体当前规范名预检必须先于DDL；旧迁移测试用新ORM准备旧表模板不再兼容，后续只替换该段历史种子为原结构 SQL，不改变旧断言。
+- 下一检查点：纯解析/DTO自测结果，然后授权storage写模型/单迁移并执行迁移自测。
+
+
+### 2026-09-18 19:03 Asia/Shanghai — P3-B5 接单与输入门禁
+
+- 只执行 P3-B5；任务卡和最新控制负责人/范围一致。P2-TIME 已由总控验收，不重复；W1 V002 已完成，不要求用户重复操作。
+- 独立按原始字节核算：P3-IF-001 `8912359d1e4748fe1b0e537c33d6e59481dba32ac573a7bc82560c4f25e8b9cd`；P3-D7 `9625009fa8b5e9e5ddd4f1fff805a437e97533a3c6e9d452cf3b84def6ca59e0`；P3-C8 `5a4eec3dcba2d1d446f66cb02fa701de6b6bae5744f4083e5cbebfcc3e176da7`，全部匹配。
+- 执行流水线：纯解析/DTO → 模型迁移 → 预览持久化 → session 级共享写入及原子提交 → API → SQLite 与 PostgreSQL 执行方自测 → review 停止。任何独立验收由总控后续派发。
+- 临时执行辅助拟分工：`p3_parser` 负责 activity_import/parser.py、schemas.py、errors.py、__init__.py 和 tests/activity_import/test_parser.py、test_schemas.py；`p3_storage` 先只读规划，解析完成后才写 finance/models.py 和唯一 P3 migration 及 tests/activity_import/test_migration.py。主执行负责服务、共享写入、API、其他测试及汇总。各自路径互斥，均不得 Git 或外部操作。
+- 输入约束无法实现、摘要变化或同一问题两检查点无进展时停止报告。预计本轮开发超过五分钟，按阶段记录可观察输出与心跳。
+
 
 ### 2026-09-18 13:49 Asia/Shanghai — P2-TIME-R1 自测结束、快照交接至 review
 

@@ -1,20 +1,20 @@
 # 项目进度总览
 
-更新时间：2026-09-18 16:15，Asia/Shanghai
+更新时间：2026-09-19 20:17，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P1 数据层、P2-A 财务 Agent、已冻结 PostgreSQL 范围和 P2 测试时钟均已完成独立验收。P3-D7/C8 已接受，`P3-IF-001` 已冻结；当前等待既有执行智能体接单 P3-B5。
+P1 数据层、P2-A 财务 Agent、已冻结 PostgreSQL 范围、P2 测试时钟和 P3 活动 Markdown 导入均已完成独立验收。P3 最终 89/89 项通过，原 PostgreSQL 迁移缺陷已关闭；下一步是 P3 代码教学和 P4 Windows 桌面端范围规划。
 
 ## 角色状态
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：P3-IF-001 与 B5 Prompt 已形成 | 2026-09-18 16:15 | 核对 B5 接单与首个检查点 | [角色日志](agents/brainstorm.md)、[P3 接口冻结](../phase-3-interface-freeze.md) |
+| 头脑风暴 | `in_progress` | `active`：P3 已验收，进行教学收口与 P4 规划 | 2026-09-19 20:17 | 向用户讲解 P3，并冻结 P4 头脑风暴输入 | [角色日志](agents/brainstorm.md)、[R2 报告](../testing/phase-3-c9-r2-activity-import-report.md) |
 | 技术顾问 | `complete`（P3-D7，总控接受） | `finished`：方案交付已纳入接口冻结 | 2026-09-18 15:49 | 等待后续教学或架构变更 | [角色日志](agents/technical-adviser.md)、[D7 方案](../phase-3-d7-activity-import-advice.md) |
-| 执行智能体 | `ready`（P3-B5，未核实接单） | `waiting_user`：等待用户发送正式 Prompt | 2026-09-18 16:15 | 重算输入摘要并开始纯解析器 | [角色日志](agents/executor.md)、[B5 Prompt](prompts/p3-b5-executor.md) |
-| 测试智能体 | `complete`（P3-C8，总控接受） | `finished`：89 项矩阵保持未执行 | 2026-09-18 15:43 | 等待 B5 固定快照和 C9 | [角色日志](agents/tester.md)、[C8 矩阵](../testing/phase-3-activity-import-test-matrix.md) |
+| 执行智能体 | `complete`（P3-B5-R1，总控接受） | `finished`：最终实现与 PostgreSQL 返修已验收 | 2026-09-19 20:17 | 等待新的 P4 实现任务 | [角色日志](agents/executor.md)、[B5 交接](../b5-activity-import-running.md) |
+| 测试智能体 | `complete`（P3-C9-R2，总控接受） | `finished`：89/89 和两组 PostgreSQL 门禁通过 | 2026-09-19 20:17 | 等待新的 P4 测试设计任务 | [角色日志](agents/tester.md)、[R2 报告](../testing/phase-3-c9-r2-activity-import-report.md) |
 
 ## 阶段 0 任务状态
 
@@ -48,13 +48,16 @@ P1 数据层、P2-A 财务 Agent、已冻结 PostgreSQL 范围和 P2 测试时�
 | P2-TIME-R1：Agent 测试时钟维护 | 用户启动的独立执行智能体 | `complete` | 28 项通过、七文件摘要匹配，并通过 C2 独立复验 | [交接](../p2-time-r1-running.md) |
 | P2-TIME-C2：测试时钟定向独立复验 | 用户启动的独立测试智能体 | `complete` | 28/28、原 23/23、还原审计 28/28、线程泄漏 0 | [报告](../testing/p2-time-c2-report.md) |
 | P3-D7：活动 Markdown 导入方案 | 用户启动的既有技术顾问 | `complete` | 724 行方案、冻结清单及摘要经总控核对并采用 | [D7 方案](../phase-3-d7-activity-import-advice.md) |
-| P3-C8：活动 Markdown 导入测试矩阵 | 用户启动的既有测试智能体 | `complete` | 89 个唯一案例、10 列完整、全部 `not_run`，经总控核对 | [C8 矩阵](../testing/phase-3-activity-import-test-matrix.md) |
+| P3-C8：活动 Markdown 导入测试矩阵 | 用户启动的既有测试智能体 | `complete` | 89 个唯一案例、10 列完整；后由 C9-R2 执行并收口为 89/89 passed | [最终矩阵](../testing/phase-3-activity-import-test-matrix.md) |
 | P3-IF-001：活动导入接口冻结 | 头脑风暴 | `complete` | 解析、持久模型、范围金额、API、幂等、事务、错误和测试边界已冻结 | [P3 接口](../phase-3-interface-freeze.md) |
-| P3-B5：活动导入实现 | 用户启动的既有执行智能体 | `ready` | 实现最小纵向切片、自测并提交固定快照到 `review` | [B5 Prompt](prompts/p3-b5-executor.md) |
+| P3-B5：活动导入实现 | 用户启动的既有执行智能体 | `complete`（经 R1/R2） | 首轮 P0 迁移缺陷已最小返修并独立关闭 | [B5 交接](../b5-activity-import-running.md) |
+| P3-C9：活动导入独立验收 | 用户启动的既有测试智能体 | `complete`（经 R2） | 首轮缺陷报告保留为返修依据，最终由 R2 收口 | [C9 报告](../testing/phase-3-c9-activity-import-report.md) |
+| P3-B5-R1：外键名最小返修 | 用户启动的既有执行智能体 | `complete` | 22 文件摘要匹配；migration 5、P3 本地 144、PG 9、旧迁移 4 均通过 | [B5 交接](../b5-activity-import-running.md) |
+| P3-C9-R2：PostgreSQL 定向复验 | 用户启动的既有测试智能体 | `complete` | 独立本地 81、执行方本地 144、旧迁移 4、PG 9/10 和矩阵 89/89 通过 | [R2 报告](../testing/phase-3-c9-r2-activity-import-report.md) |
 
 ## 当前阻塞与风险
 
-- P3 尚无产品阻塞；B5 为 `ready`，不能推断执行智能体已经接单。
+- `P3-C9-PG-001` 已由 B5-R1 修复并经 C9-R2 独立关闭；原始失败报告继续保留为审计证据。
 - C2 的并发用例原有测试夹具矛盾，经测试角色独立确认后仅修正测试基础设施；六项产品缺陷仍分别修复并通过复验。
 - B1/B2a 只保证进程内去重；OpenClaw 命令上下文没有来源消息 ID，适用边界已写入 `P0-IF-002`。
 - OpenClaw 官方 worker 触发终端安全软件行为告警；虽然哈希与官方 npm 包一致且代码审查支持误报判断，运行时恢复仍暂停，P1-B3 不得操作 OpenClaw。
@@ -64,6 +67,6 @@ P1 数据层、P2-A 财务 Agent、已冻结 PostgreSQL 范围和 P2 测试时�
 
 ## 下一次总控检查
 
-1. 用户向既有执行智能体发送 B5 Prompt；执行方先核对三份输入摘要并记录接单。
-2. B5 交付 `review` 和固定快照后，总控只核对范围、摘要和自测证据，再派发 P3-C9。
-3. 继续按“执行方自测 → 测试方独立验收 → 总控提交”推进；不操作真实个人数据、DeepSeek、OpenClaw 或微信。
+1. 总控结合实际代码向用户讲解 P3 的解析、Pydantic、FastAPI、事务、幂等、迁移和双数据库验证。
+2. 与用户确认 P4 Windows 桌面端最小纵向切片的界面范围、进程边界和学习目标。
+3. 冻结 P4 任务顺序后，再分别派发技术方案、测试矩阵、实现和独立验收任务。

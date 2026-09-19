@@ -7,7 +7,7 @@ from alembic.config import Config
 from sqlalchemy import create_engine, inspect, text
 
 
-HEAD = "7f3e2d1c9a4b"
+HEAD = "c82d7a4f901e"
 P1_HEAD = "1377551283d0"
 
 

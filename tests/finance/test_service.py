@@ -11,7 +11,14 @@ from pydantic import ValidationError
 from sqlalchemy import func, select
 
 from wife_system.finance.errors import FinanceError
-from wife_system.finance.models import CommandReceipt, FinancialTransaction, IncomeExpectation, TransactionEntry
+from wife_system.finance.models import (
+    ActivityTemplate,
+    ActivityTemplateRevision,
+    CommandReceipt,
+    FinancialTransaction,
+    IncomeExpectation,
+    TransactionEntry,
+)
 from wife_system.finance.schemas import (
     AllocateActivityExpense,
     ArchiveResource,
@@ -162,6 +169,11 @@ def test_activity_allocation_and_cancellation(service) -> None:
     with service._sessions() as session:
         entry_id = session.scalar(select(TransactionEntry.id).where(TransactionEntry.transaction_id == expense.result_id, TransactionEntry.entry_role == "expense"))
     template = service.create_activity_template(CreateActivityTemplate(source_system="test", source_event_id=fx.event(), name="虚拟跑步", reference_amount="20.00"))
+    with service._sessions() as session:
+        template_row = session.get(ActivityTemplate, template.result_id)
+        revision = session.get(ActivityTemplateRevision, template_row.current_revision_id)
+        assert template_row.name_normalized == "虚拟跑步"
+        assert (revision.reference_minor, revision.reference_min_minor, revision.reference_max_minor) == (2000, 2000, 2000)
     occurrence = service.record_activity_occurrence(RecordActivityOccurrence(source_system="test", source_event_id=fx.event(), template_id=template.result_id, occurred_at=WHEN))
     service.allocate_activity_expense(AllocateActivityExpense(source_system="test", source_event_id=fx.event(), occurrence_id=occurrence.result_id, expense_entry_id=entry_id, amount="12.00"))
     with pytest.raises(FinanceError) as raised:

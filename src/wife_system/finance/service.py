@@ -586,13 +586,14 @@ class FinanceService:
         reference = parse_minor(command.reference_amount, allow_zero=True) if command.reference_amount is not None else None
         name = _clean_name(command.name)
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            template = ActivityTemplate()
-            session.add(template); session.flush()
-            revision = ActivityTemplateRevision(template_id=template.id, revision_no=1, name=name, reference_minor=reference)
-            session.add(revision); session.flush()
-            template.current_revision_id = revision.id; session.flush()
-            self._audit(session, receipt, "activity_template", template.id, "create", None, template.version_id)
-            return CommandResult(result_type="activity_template", result_id=template.id, version_id=template.version_id)
+            return self._create_activity_template_in_session(
+                session,
+                receipt,
+                name=name,
+                reference_minor=reference,
+                reference_min_minor=reference,
+                reference_max_minor=reference,
+            )
         return self._execute(command, "create_activity_template", {"name": name, "reference_minor": reference}, work)
 
     def revise_activity_template(self, command: ReviseActivityTemplate) -> CommandResult:
@@ -600,17 +601,95 @@ class FinanceService:
         name = _clean_name(command.name)
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
             template = session.get(ActivityTemplate, command.template_id)
-            if template is None: raise FinanceError("not_found")
-            if template.archived_at is not None: raise FinanceError("archived_resource")
-            if template.version_id != command.expected_version: raise FinanceError("concurrent_modification")
-            revision_no = (session.scalar(select(func.max(ActivityTemplateRevision.revision_no)).where(ActivityTemplateRevision.template_id == template.id)) or 0) + 1
-            revision = ActivityTemplateRevision(template_id=template.id, revision_no=revision_no, name=name, reference_minor=reference)
-            session.add(revision); session.flush()
-            before = template.version_id; template.current_revision_id = revision.id; template.version_id = before + 1; session.flush()
-            self._audit(session, receipt, "activity_template", template.id, "revise", before, template.version_id)
-            return CommandResult(result_type="activity_template", result_id=template.id, version_id=template.version_id)
+            if template is None:
+                raise FinanceError("not_found")
+            return self._revise_activity_template_in_session(
+                session,
+                receipt,
+                template=template,
+                expected_version=command.expected_version,
+                name=name,
+                reference_minor=reference,
+                reference_min_minor=reference,
+                reference_max_minor=reference,
+            )
         payload = {"template_id": str(command.template_id), "expected_version": command.expected_version, "name": name, "reference_minor": reference}
         return self._execute(command, "revise_activity_template", payload, work)
+
+    def _create_activity_template_in_session(
+        self,
+        session: Session,
+        receipt: CommandReceipt,
+        *,
+        name: str,
+        reference_minor: int | None,
+        reference_min_minor: int | None,
+        reference_max_minor: int | None,
+        source_import_candidate_id: uuid.UUID | None = None,
+    ) -> CommandResult:
+        """Append a template inside a transaction owned by the caller."""
+        clean_name = _clean_name(name)
+        template = ActivityTemplate(name_normalized=_normalize_name(clean_name))
+        session.add(template)
+        session.flush()
+        revision = ActivityTemplateRevision(
+            template_id=template.id,
+            revision_no=1,
+            name=clean_name,
+            reference_minor=reference_minor,
+            reference_min_minor=reference_min_minor,
+            reference_max_minor=reference_max_minor,
+            source_import_candidate_id=source_import_candidate_id,
+        )
+        session.add(revision)
+        session.flush()
+        template.current_revision_id = revision.id
+        session.flush()
+        self._audit(session, receipt, "activity_template", template.id, "create", None, template.version_id)
+        return CommandResult(result_type="activity_template", result_id=template.id, version_id=template.version_id)
+
+    def _revise_activity_template_in_session(
+        self,
+        session: Session,
+        receipt: CommandReceipt,
+        *,
+        template: ActivityTemplate,
+        expected_version: int,
+        name: str,
+        reference_minor: int | None,
+        reference_min_minor: int | None,
+        reference_max_minor: int | None,
+        source_import_candidate_id: uuid.UUID | None = None,
+    ) -> CommandResult:
+        """Append a revision inside a transaction owned by the caller."""
+        if template.archived_at is not None:
+            raise FinanceError("archived_resource")
+        if template.version_id != expected_version:
+            raise FinanceError("concurrent_modification")
+        clean_name = _clean_name(name)
+        revision_no = (session.scalar(
+            select(func.max(ActivityTemplateRevision.revision_no)).where(
+                ActivityTemplateRevision.template_id == template.id
+            )
+        ) or 0) + 1
+        revision = ActivityTemplateRevision(
+            template_id=template.id,
+            revision_no=revision_no,
+            name=clean_name,
+            reference_minor=reference_minor,
+            reference_min_minor=reference_min_minor,
+            reference_max_minor=reference_max_minor,
+            source_import_candidate_id=source_import_candidate_id,
+        )
+        session.add(revision)
+        session.flush()
+        before = template.version_id
+        template.name_normalized = _normalize_name(clean_name)
+        template.current_revision_id = revision.id
+        template.version_id = before + 1
+        session.flush()
+        self._audit(session, receipt, "activity_template", template.id, "revise", before, template.version_id)
+        return CommandResult(result_type="activity_template", result_id=template.id, version_id=template.version_id)
 
     def record_activity_occurrence(self, command: RecordActivityOccurrence) -> CommandResult:
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:

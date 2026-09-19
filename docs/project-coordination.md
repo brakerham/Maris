@@ -118,7 +118,7 @@ Git 写操作集中由头脑风暴总控负责。执行、测试、技术顾问�
 | 测试智能体 | C1/C2（B1/B2a/B2b）`complete` | 已提交矩阵及三轮独立报告；桥接独立测试 44 项通过 |
 | 阶段 1 数据底座 | `complete`（本地与 PostgreSQL 冻结范围） | DATA-R2 独立复跑 P1 PostgreSQL 8/8 通过；首次写入、并发、事务、时区和约束均有真实目标库证据 |
 | 阶段 2 财务 Agent 工具 | `complete`（P2-A 本地与 PostgreSQL 冻结范围） | C6/D6 已完成；DATA-R2 的 P2 SPG 4/4 通过，`PG-C7-DATA-001` 已关闭；DeepSeek、桌面与微信扩展仍按独立阶段推进 |
-| P3 活动 Markdown 导入 | `ready`（实现） | D7/C8 已接受，`P3-IF-001` 已冻结；P3-B5 等待既有执行智能体接单 |
+| P3 活动 Markdown 导入 | `complete` | B5-R1 固定快照通过 C9-R2 独立验收；89/89 项、执行方 PostgreSQL 9/9、独立 PostgreSQL 10/10 通过 |
 
 此前已经有临时子智能体参与微信资料核实和学习路线审阅；这些调查结果不代表编码、账号接入或部署已完成。
 

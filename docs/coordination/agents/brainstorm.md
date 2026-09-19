@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：A/P3 — 活动 Markdown 导入总协调
+- 当前任务：A/P4 — 桌面端纵向切片教学与范围规划
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-18 16:15，Asia/Shanghai
+- 最近更新：2026-09-19 20:17，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -22,34 +22,77 @@
 - [P3-C8 测试智能体 Prompt](../prompts/p3-c8-tester.md)
 - [P3 活动导入接口冻结](../../phase-3-interface-freeze.md)
 - [P3-B5 执行智能体 Prompt](../prompts/p3-b5-executor.md)
+- [P3-B5 运行与交接](../../b5-activity-import-running.md)
+- [P3-C9 测试智能体 Prompt](../prompts/p3-c9-tester.md)
+- [P3-C9 独立验收报告](../../testing/phase-3-c9-activity-import-report.md)
+- [P3-B5-R1 执行智能体 Prompt](../prompts/p3-b5-r1-executor.md)
+- [P3-C9-R2 测试智能体 Prompt](../prompts/p3-c9-r2-tester.md)
+- [P3-C9-R2 独立复验报告](../../testing/phase-3-c9-r2-activity-import-report.md)
 
 ## 当前执行快照
 
-- 运行状态：`waiting_user`
-- 当前步骤：D7/C8 已接受，P3-IF-001 已冻结，B5 Prompt 等待既有执行智能体接单
-- 步骤开始时间：2026-09-18 16:10，Asia/Shanghai
-- 最近有效进展：2026-09-18 16:15，Asia/Shanghai（独立核对 D7 摘要、C8 的 89 个唯一案例，并裁定八组条件参数）
-- 最近心跳：2026-09-18 16:15，Asia/Shanghai
-- 下一检查点：核对 B5 接单、输入摘要和纯解析器首个检查点
-- 等待对象：用户向既有执行智能体发送 P3-B5 Prompt
-- 活动进程或会话：无；技术顾问和测试智能体已停止，B5 尚未核实启动
+- 运行状态：`active`
+- 当前步骤：P3-B5-R1/C9-R2 已由总控接受，正在创建本地验收提交并准备 P3 教学与 P4 规划
+- 步骤开始时间：2026-09-19 19:10，Asia/Shanghai
+- 最近有效进展：2026-09-19 20:17，Asia/Shanghai（R2 报告与三份摘要核对通过；矩阵 89/89 passed；P3 正式验收）
+- 最近心跳：2026-09-19 20:17，Asia/Shanghai
+- 下一检查点：完成本地验收提交，随后向用户讲解 P3 并讨论 P4 范围
+- 等待对象：无环境或智能体依赖
+- 活动进程或会话：无；R2 已普通关闭容器和项目网络
 - 重试次数：默认沙箱初始化失败后进行一次受控沙箱外只读核查
-- 最近输出：P3-IF-001 接口冻结与 P3-B5 执行任务卡
+- 最近输出：P3-C9-R2 总控验收结论与阶段收口
 
 ## 阻塞
 
 - `PG-C7-DATA-001` 已关闭；真实 PostgreSQL 结论仅覆盖冻结的 P1 8 项和 P2 SPG 4 项。
-- P3 设计参数已冻结；实现阶段当前无已知产品阻塞。
+- P3 当前无未关闭的 P0/P1 产品缺陷；`P3-C9-PG-001` 已经 R2 独立关闭。
 - 外部未验证项：真实腾讯微信消息、DeepSeek 与通知；这不影响已关闭的 B1/B2 本地范围。
 
 ## 下一步
 
-- 已验收历史最新本地提交为 `b8527fe`，未推送远程。
-- D7/C8 已由总控接受；两份交付及角色原始 `review` 记录保留。
-- 用户现在只需向既有执行智能体发送 P3-B5；测试智能体等待固定快照。
+- P3-B5-R1/C9-R2 已完成验收并纳入本地提交，未推送远程。
+- 执行、测试和技术顾问保持停止，等待 P4 新任务。
+- 下一步由总控完成 P3 代码教学，并与用户冻结 P4 Windows 桌面端最小纵向切片。
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-19 20:17 Asia/Shanghai — 接受 P3-B5-R1/C9-R2 并关闭阶段 3
+
+- 独立证据：本地 81/81、执行方 144/144、旧 migration 4/4、真实 PostgreSQL 执行方 9/9、独立 10/10 通过；矩阵 89/89 passed。
+- 总控核对：22 个文件逐项摘要无差异，总摘要为 `fb46b8fa4957c93bfd8f971b1fd987e45dd4779e8d6eac2907660fa2f1fef53c`；R2 报告、矩阵、独立 PG 文件摘要分别匹配 `6367d5a4...b7837e`、`5c2bd4dd...5039e`、`f2402395...81b3`。
+- 缺陷结论：接受测试方关闭 `P3-C9-PG-001`；没有新的 P0/P1 产品缺陷。
+- 资源与边界：Docker Desktop 只启动一次，最终容器和项目网络为空；测试方未修改产品、迁移或执行方测试；`.claude/` 属于未验收本地配置，不纳入提交。
+- 决定：P3-B5、B5-R1、C9 和 C9-R2 均标记 `complete`，创建本地验收提交但不推送远程；随后进入 P3 教学和 P4 范围规划。
+
+### 2026-09-19 19:18 Asia/Shanghai — 核对 B5-R1 并发布 C9-R2
+
+- 范围核对：22 文件中只有 P3 migration 与执行方 migration 测试摘要变化；外键名冻结为 46 字符常量，upgrade/downgrade 共用，其他迁移与产品语义不变。
+- 快照门禁：逐文件摘要全部匹配；重算总摘要为 `fb46b8fa4957c93bfd8f971b1fd987e45dd4779e8d6eac2907660fa2f1fef53c`。
+- 执行证据：migration 5 通过；本地 P3 144 通过；真实 PostgreSQL 9/9 通过，无 skip/setup error；旧 migration 4 通过。
+- 资源状态：执行方普通 compose down 后服务为空。总控派发前复核发现 Docker Engine 当前未运行，R2 测试智能体获配一次启动已安装 Docker Desktop 的权限。
+- 交接：[P3-C9-R2 Prompt](../prompts/p3-c9-r2-tester.md)。R2 绑定新快照，复跑独立/执行方 PostgreSQL、本地和旧迁移，并把 89 项收口。
+- Git：R1 仍未独立验收，不创建产品提交，不推送远程。
+
+### 2026-09-19 14:59 Asia/Shanghai — 接受 C9 缺陷并发布 B5-R1
+
+- C9 结论：本地独立 81 通过、执行方 P3 143 通过、旧回归 92 通过/4 跳过且相邻 PostgreSQL 4 通过；89 项为 64 通过、1 失败、24 阻塞。
+- 快照与边界：验收前后 22 文件摘要均匹配；测试智能体只修改独立目录、矩阵、报告和自身日志，容器普通关闭且服务为空。
+- 缺陷核对：`c82d7a4f901e` 的 upgrade 与 downgrade 均使用 82 字符外键名，真实 PostgreSQL 的 63 字符标识符限制使 migration 在业务断言前失败。
+- 决定：接受 `P3-C9-PG-001` 为 P0；B5 不予接受。冻结替代名 `fk_activity_template_revision_import_candidate`（46 字符）。
+- 返修范围：migration、一个执行方 identifier 回归、B5 交接和执行日志；其余产品及全部独立交付只读。
+- 交接：[P3-B5-R1 Prompt](../prompts/p3-b5-r1-executor.md)。执行方必须真实跑通 PostgreSQL 九项并提交新 22 文件快照；随后由测试智能体执行 C9-R2。
+- Git：B5、C9 和返修均未完成，不创建产品提交，不推送远程。
+
+### 2026-09-19 14:30 Asia/Shanghai — 核对 B5 并发布 P3-C9
+
+- 交付核对：实现、迁移、API、执行方测试和兼容修改共 22 个快照文件，均在 B5 授权范围；执行智能体未修改独立测试、接口冻结、控制/总览、其他角色或 Git。
+- 快照门禁：逐文件 SHA-256 全部匹配，按 `path<TAB>sha256<LF>` 重算总摘要为 `9fb36c653d20ff14f85ad9667de454900cca0c6e3ead17c2619df11fb7f63d6e`。
+- 执行证据：P3 SQLite/HTTP 143 通过；旧 finance/Agent/API 92 通过、4 跳过；compileall 与 pip check 通过。总控不重复完整回归。
+- 未验证边界：执行方 PostgreSQL 九类测试已编写但当时 Engine 未运行，证据保持 `unverified`，不能据此接受 B5。
+- 当前环境：总控只读检查 Docker Engine 29.8.0 可用，Compose 服务为空。C9 测试智能体被指定为 `finance-postgres` 唯一启停负责人。
+- 交接：[P3-C9 Prompt](../prompts/p3-c9-tester.md)。C9 必须绑定快照、逐项追踪 89 个案例并取得真实 PostgreSQL 证据；执行智能体继续停止。
+- Git：B5 产品仍不提交；本轮只允许总控提交 C9 计划文档，不推送远程。
 
 ### 2026-09-18 16:15 Asia/Shanghai — 接受 D7/C8、冻结 P3-IF-001 并发布 B5
 

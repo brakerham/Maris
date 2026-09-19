@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层与 P2-A 财务 Agent 纵向切片均已完成。P3 活动 Markdown 导入的 D7 技术方案与 C8 验收矩阵已由总控接受，`P3-IF-001` 已冻结；当前等待执行智能体接单 `P3-B5`。OpenClaw worker 安全事件仍暂停运行时恢复。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P3 最终 89/89 项通过，真实 PostgreSQL 执行方 9/9、独立 10/10 通过；项目进入 P4 桌面端纵向切片的教学与范围规划。OpenClaw worker 安全事件仍暂停运行时恢复。
 
 项目有两个目标：通过活动、账目和可更新计划管理大学生活开支；围绕真实代码建立 AI Agent 应用工程能力。
 
@@ -42,6 +42,12 @@
 - [P3-C8 测试智能体 Prompt](docs/coordination/prompts/p3-c8-tester.md)：在实现前建立独立验收矩阵，不执行测试或修改产品。
 - [P3 活动导入接口冻结](docs/phase-3-interface-freeze.md)：冻结离线语法、持久候选、金额范围、API、事务、幂等和数据库证据。
 - [P3-B5 执行智能体 Prompt](docs/coordination/prompts/p3-b5-executor.md)：实现活动 Markdown 导入纵向切片并完成执行方自测。
+- [P3-B5 运行与交接](docs/b5-activity-import-running.md)：实际数据流、迁移、自测、R1 返修和最终 22 文件快照。
+- [P3-C9 测试智能体 Prompt](docs/coordination/prompts/p3-c9-tester.md)：在固定 B5 快照上执行 89 项独立验收及真实 PostgreSQL 门禁。
+- [P3-C9 独立验收报告](docs/testing/phase-3-c9-activity-import-report.md)：本地范围通过，PostgreSQL 迁移缺陷阻断 24 项并导致 1 项失败。
+- [P3-B5-R1 执行智能体 Prompt](docs/coordination/prompts/p3-b5-r1-executor.md)：只缩短外键约束名、同步 downgrade，并实际复跑九项 PostgreSQL。
+- [P3-C9-R2 测试智能体 Prompt](docs/coordination/prompts/p3-c9-r2-tester.md)：绑定 R1 新快照，复验独立 PostgreSQL、迁移和 89 项最终状态。
+- [P3-C9-R2 独立复验报告](docs/testing/phase-3-c9-r2-activity-import-report.md)：89/89 项通过，执行方和独立 PostgreSQL 门禁通过，原 P0 缺陷关闭。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

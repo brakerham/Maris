@@ -17,6 +17,27 @@ def utc_now() -> datetime:
     return datetime.now(UTC)
 
 
+def _reference_constraints() -> tuple[CheckConstraint, ...]:
+    """Preserve exact, range (including equal endpoints), and unknown amounts."""
+    shape = CheckConstraint(
+        "(reference_minor IS NULL AND reference_min_minor IS NULL AND reference_max_minor IS NULL) OR "
+        "(reference_min_minor IS NOT NULL AND reference_max_minor IS NOT NULL "
+        "AND reference_min_minor >= 0 AND reference_min_minor <= reference_max_minor "
+        "AND reference_max_minor <= 999999999999 "
+        "AND (reference_minor IS NULL OR "
+        "(reference_minor = reference_min_minor AND reference_minor = reference_max_minor)))",
+        name="reference_shape",
+    )
+    storage = tuple(
+        CheckConstraint(
+            f"{column} IS NULL OR typeof({column}) = 'integer'",
+            name=f"{column}_integer_storage",
+        ).ddl_if(dialect="sqlite")
+        for column in ("reference_minor", "reference_min_minor", "reference_max_minor")
+    )
+    return (shape, *storage)
+
+
 class Versioned:
     version_id: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
 
@@ -122,7 +143,12 @@ class TransactionEntry(Base):
 
 class ActivityTemplate(Base, Versioned):
     __tablename__ = "activity_template"
+    __table_args__ = (
+        UniqueConstraint("name_normalized", name="uq_activity_template_name_normalized"),
+        CheckConstraint("length(name_normalized) BETWEEN 1 AND 360", name="normalized_name_length"),
+    )
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
+    name_normalized: Mapped[str] = mapped_column(String(360), nullable=False)
     current_revision_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True))
     archived_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
@@ -135,14 +161,99 @@ class ActivityTemplateRevision(Base):
         UniqueConstraint("template_id", "revision_no", name="uq_activity_template_revision_template_revision"),
         CheckConstraint("reference_minor IS NULL OR reference_minor >= 0", name="reference_nonnegative"),
         CheckConstraint("currency = 'CNY'", name="currency_cny"),
+        *_reference_constraints(),
     )
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
     template_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("activity_template.id", ondelete="RESTRICT"), nullable=False)
     revision_no: Mapped[int] = mapped_column(Integer, nullable=False)
     name: Mapped[str] = mapped_column(String(120), nullable=False)
     reference_minor: Mapped[int | None] = mapped_column(BigInteger)
+    reference_min_minor: Mapped[int | None] = mapped_column(BigInteger)
+    reference_max_minor: Mapped[int | None] = mapped_column(BigInteger)
+    source_import_candidate_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("activity_import_candidate.id", ondelete="RESTRICT")
+    )
     currency: Mapped[str] = mapped_column(String(3), nullable=False, default="CNY")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
+
+
+class ActivityImportBatch(Base, Versioned):
+    __tablename__ = "activity_import_batch"
+    __table_args__ = (
+        CheckConstraint("status IN ('previewed','committed')", name="status"),
+        CheckConstraint("parser_version = 'activity-md-v1'", name="parser_version"),
+        CheckConstraint("content_key_version > 0", name="content_key_version_positive"),
+        CheckConstraint("version_id > 0", name="version_positive"),
+        CheckConstraint("source_label IS NULL OR length(source_label) <= 120", name="source_label_length"),
+        CheckConstraint(
+            "(status = 'previewed' AND commit_receipt_id IS NULL AND committed_at IS NULL "
+            "AND selection_fingerprint IS NULL) OR "
+            "(status = 'committed' AND commit_receipt_id IS NOT NULL AND committed_at IS NOT NULL "
+            "AND selection_fingerprint IS NOT NULL)", name="commit_shape",
+        ),
+    )
+    id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
+    owner_id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), nullable=False, index=True)
+    status: Mapped[str] = mapped_column(String(16), nullable=False, default="previewed")
+    parser_version: Mapped[str] = mapped_column(String(32), nullable=False, default="activity-md-v1")
+    source_label: Mapped[str | None] = mapped_column(String(120))
+    content_key_version: Mapped[int] = mapped_column(Integer, nullable=False)
+    content_digest: Mapped[str] = mapped_column(String(128), nullable=False)
+    preview_receipt_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("command_receipt.id", ondelete="RESTRICT"), nullable=False, unique=True
+    )
+    commit_receipt_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("command_receipt.id", ondelete="RESTRICT"), unique=True
+    )
+    selection_fingerprint: Mapped[str | None] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
+    committed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    __mapper_args__ = {"version_id_col": Versioned.version_id, "version_id_generator": False}
+
+
+class ActivityImportCandidate(Base):
+    __tablename__ = "activity_import_candidate"
+    __table_args__ = (
+        UniqueConstraint("batch_id", "ordinal", name="uq_activity_import_candidate_batch_ordinal"),
+        CheckConstraint("ordinal BETWEEN 1 AND 50", name="ordinal"),
+        CheckConstraint("source_line_start >= 1 AND source_line_end >= source_line_start AND source_line_end <= 2000", name="source_lines"),
+        CheckConstraint("length(source_heading) BETWEEN 1 AND 120", name="heading_length"),
+        CheckConstraint("length(name_normalized) BETWEEN 1 AND 360", name="normalized_name_length"),
+        CheckConstraint("currency = 'CNY'", name="currency_cny"),
+        CheckConstraint("proposed_action IN ('create','revise','unchanged','conflict','unresolved')", name="proposed_action"),
+        CheckConstraint(
+            "(target_template_id IS NULL AND target_expected_version IS NULL) OR "
+            "(target_template_id IS NOT NULL AND target_expected_version IS NOT NULL AND target_expected_version > 0)",
+            name="target_shape",
+        ),
+        CheckConstraint(
+            "(decision IS NULL AND result_template_id IS NULL AND result_template_version IS NULL) OR "
+            "(decision = 'skip' AND result_template_id IS NULL AND result_template_version IS NULL) OR "
+            "(decision = 'accept' AND result_template_id IS NOT NULL "
+            "AND result_template_version IS NOT NULL AND result_template_version > 0)",
+            name="decision_shape",
+        ),
+        *_reference_constraints(),
+    )
+    id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
+    batch_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("activity_import_batch.id", ondelete="RESTRICT"), nullable=False)
+    ordinal: Mapped[int] = mapped_column(Integer, nullable=False)
+    source_heading: Mapped[str] = mapped_column(String(120), nullable=False)
+    source_line_start: Mapped[int] = mapped_column(Integer, nullable=False)
+    source_line_end: Mapped[int] = mapped_column(Integer, nullable=False)
+    block_digest: Mapped[str] = mapped_column(String(128), nullable=False)
+    name_normalized: Mapped[str] = mapped_column(String(360), nullable=False)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="CNY")
+    reference_minor: Mapped[int | None] = mapped_column(BigInteger)
+    reference_min_minor: Mapped[int | None] = mapped_column(BigInteger)
+    reference_max_minor: Mapped[int | None] = mapped_column(BigInteger)
+    proposed_action: Mapped[str] = mapped_column(String(16), nullable=False)
+    target_template_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("activity_template.id", ondelete="RESTRICT"))
+    target_expected_version: Mapped[int | None] = mapped_column(Integer)
+    issues_json: Mapped[str] = mapped_column(Text, nullable=False)
+    decision: Mapped[str | None] = mapped_column(String(8))
+    result_template_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("activity_template.id", ondelete="RESTRICT"))
+    result_template_version: Mapped[int | None] = mapped_column(Integer)
 
 
 class ActivityOccurrence(Base, Versioned):

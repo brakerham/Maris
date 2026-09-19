@@ -20,6 +20,10 @@ from wife_system.api.schemas import (
     ProbeResponse,
 )
 from wife_system.agent.application import AgentApplication, AgentApplicationError
+from wife_system.activity_import.context import ImportIdentity
+from wife_system.activity_import.errors import ActivityImportError
+from wife_system.activity_import.service import ActivityImportService
+from wife_system.api.activity_import_routes import router as activity_import_router
 from wife_system.api.agent_routes import AgentIdentity, router as agent_router
 from wife_system.probes import DuplicateProbeRequestError, ProbeService
 
@@ -90,6 +94,8 @@ def create_app(
     probe_service: ProbeService | None = None,
     agent_application: AgentApplication | None = None,
     agent_identity: AgentIdentity | None = None,
+    activity_import_service: ActivityImportService | None = None,
+    activity_import_identity: ImportIdentity | None = None,
 ) -> FastAPI:
     application = FastAPI(title="wife-system", version="0.1.0")
     application.state.probe_service = ProbeService() if probe_service is None else probe_service
@@ -97,6 +103,12 @@ def create_app(
     application.state.agent_identity = agent_identity or AgentIdentity(
         actor_id=uuid.UUID("00000000-0000-0000-0000-000000000001"),
         permissions=frozenset({"finance:read", "finance:write"}),
+    )
+    application.state.activity_import_service = activity_import_service
+    application.state.activity_import_identity = activity_import_identity or ImportIdentity(
+        owner_id=application.state.agent_identity.actor_id,
+        channel="http",
+        permissions=application.state.agent_identity.permissions,
     )
 
     @application.middleware("http")
@@ -158,6 +170,20 @@ def create_app(
             status_code=exc.status_code,
             code=exc.code,
             message=messages.get(exc.code, "The agent request could not be completed."),
+            retryable=exc.retryable,
+        )
+
+    @application.exception_handler(ActivityImportError)
+    async def activity_import_error_handler(
+        request: Request, exc: ActivityImportError
+    ) -> JSONResponse:
+        request_id = request.state.request_id
+        _emit("request_failed", request_id=request_id, code=exc.code)
+        return _error_response(
+            request_id=request_id,
+            status_code=exc.status_code,
+            code=exc.code,
+            message=exc.safe_message,
             retryable=exc.retryable,
         )
 
@@ -234,6 +260,7 @@ def create_app(
         )
 
     application.include_router(agent_router)
+    application.include_router(activity_import_router)
     return application
 
 

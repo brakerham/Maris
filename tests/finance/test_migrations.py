@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import uuid
 from pathlib import Path
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -15,14 +16,12 @@ from wife_system.finance.schemas import (
     AllocateActivityExpense,
     BudgetAllocationInput,
     CreateAccount,
-    CreateActivityTemplate,
     CreateBudgetPlan,
     CreateCategory,
     CreateIncomeSchedule,
     GenerateIncomeExpectation,
     MatchIncomeExpectation,
     PublishBudgetVersion,
-    RecordActivityOccurrence,
     RecordExpense,
     RecordIncome,
 )
@@ -135,15 +134,30 @@ def test_previous_revision_with_data_upgrades_to_strict_minor_head(tmp_path: Pat
         amount="2.00",
         occurred_at=datetime(2026, 9, 2, tzinfo=ZoneInfo("Asia/Shanghai")),
     ))
-    activity = service.create_activity_template(CreateActivityTemplate(
-        source_system="r1-migration", source_event_id="activity", name="虚拟升级活动", reference_amount="1.00"
-    ))
-    occurrence = service.record_activity_occurrence(RecordActivityOccurrence(
-        source_system="r1-migration",
-        source_event_id="occurrence",
-        template_id=activity.result_id,
-        occurred_at=datetime(2026, 9, 2, tzinfo=ZoneInfo("Asia/Shanghai")),
-    ))
+    # Seed these rows using the historical schema.  The current ORM includes
+    # P3 columns and intentionally cannot be used against the old revision.
+    activity_id = uuid.uuid4()
+    activity_revision_id = uuid.uuid4()
+    occurrence_id = uuid.uuid4()
+    with engine.begin() as connection:
+        connection.execute(text(
+            "INSERT INTO activity_template "
+            "(id,current_revision_id,archived_at,created_at,version_id) "
+            "VALUES (:id,NULL,NULL,CURRENT_TIMESTAMP,1)"
+        ), {"id": activity_id.hex})
+        connection.execute(text(
+            "INSERT INTO activity_template_revision "
+            "(id,template_id,revision_no,name,reference_minor,currency,created_at) "
+            "VALUES (:id,:template,1,'虚拟升级活动',100,'CNY',CURRENT_TIMESTAMP)"
+        ), {"id": activity_revision_id.hex, "template": activity_id.hex})
+        connection.execute(text(
+            "UPDATE activity_template SET current_revision_id=:revision WHERE id=:template"
+        ), {"revision": activity_revision_id.hex, "template": activity_id.hex})
+        connection.execute(text(
+            "INSERT INTO activity_occurrence "
+            "(id,template_revision_id,occurred_at,status,created_at,version_id) "
+            "VALUES (:id,:revision,CURRENT_TIMESTAMP,'active',CURRENT_TIMESTAMP,1)"
+        ), {"id": occurrence_id.hex, "revision": activity_revision_id.hex})
     schedule = service.create_income_schedule(CreateIncomeSchedule(
         source_system="r1-migration",
         source_event_id="schedule",
@@ -164,7 +178,7 @@ def test_previous_revision_with_data_upgrades_to_strict_minor_head(tmp_path: Pat
     service.allocate_activity_expense(AllocateActivityExpense(
         source_system="r1-migration",
         source_event_id="allocation",
-        occurrence_id=occurrence.result_id,
+        occurrence_id=occurrence_id,
         expense_entry_id=expense_entry_id,
         amount="1.00",
     ))

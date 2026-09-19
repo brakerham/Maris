@@ -2,26 +2,27 @@
 
 - 角色：独立测试、边界检查、回归验证和限定范围的结构优化
 - 连接状态：已确认；用户启动的侧边栏独立测试智能体已接单
-- 当前任务：P3-C8 — Markdown 活动模板导入独立验收矩阵
+- 当前任务：P3-C9-R2 — PostgreSQL 迁移缺陷独立复验
 - 状态：`review`
-- 最近更新：2026-09-18 15:43，Asia/Shanghai
-- 可修改范围：`docs/testing/phase-3-activity-import-test-matrix.md` 和本状态文件；全部产品代码、测试代码、执行方文件、依赖、迁移、接口冻结、控制/总览、其他角色状态、外部集成和 Git 只读
+- 最近更新：2026-09-19 20:10，Asia/Shanghai
+- 可修改范围：必要时 `tests/independent/activity_import/test_postgresql_contract.py` 或其 PostgreSQL fixture、`docs/testing/phase-3-activity-import-test-matrix.md`、`docs/testing/phase-3-c9-r2-activity-import-report.md` 和本状态文件；原 C9 报告、产品、迁移、执行方测试/文档、依赖、Compose、接口冻结、控制/总览、其他角色状态、OpenClaw 和 Git 只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P3-C8 独立验收矩阵已完成并提交 `review`；未运行任何测试
-- 步骤开始时间：2026-09-18 15:38 Asia/Shanghai
-- 最近有效进展：2026-09-18 15:43 Asia/Shanghai
-- 最近心跳：2026-09-18 15:43 Asia/Shanghai
-- 下一检查点：等待头脑风暴总控与 P3-D7 核对 89 项覆盖和待冻结参数；P3-IF-001 与 B5 固定快照具备后再另行派发 C9
-- 等待对象：头脑风暴总控验收矩阵并冻结 P3-IF-001
-- 活动进程或会话：无；本任务不运行测试、不启动数据库或外部服务
-- 重试次数：0
-- 最近输出：89 个未执行案例、89 个唯一 ID、全部 10 列完整且状态均为 `not_run`；已给出追踪、环境分层、C9 门禁、快照、顺序、停止条件和冻结清单
+- 当前步骤：P3-C9-R2 交付完成，停在 `review`
+- 步骤开始时间：2026-09-19 19:56 Asia/Shanghai
+- 最近有效进展：2026-09-19 20:10 Asia/Shanghai
+- 最近心跳：2026-09-19 20:10 Asia/Shanghai
+- 下一检查点：等待头脑风暴总控核对 R2 报告、89 项矩阵和交付摘要；测试智能体不再继续执行
+- 等待对象：头脑风暴总控验收 P3-B5-R1；最终 `complete` 与 Git 处理不属于测试智能体
+- 活动进程或会话：无；普通 `compose down` 已完成，`docker compose ps` 服务列表为空
+- 重试次数：1（独立 PostgreSQL 测试自身字段断言最小修正后完整重跑；Docker Desktop 仅启动一次）
+- 最近输出：本地 81/144/4 全通过；PostgreSQL 9/10 全通过；89/89 passed；最终 22 文件摘要匹配
 ## 任务与后续
 
-- P3-C8 已提交 [P3 Markdown 活动模板导入独立验收矩阵](../../testing/phase-3-activity-import-test-matrix.md)，状态为 `review`；89 项均未执行，等待 P3-IF-001 和 B5 固定快照。
+- P3-C9-R2 已提交 [独立复验报告](../../testing/phase-3-c9-r2-activity-import-report.md)、[最终 89 项矩阵](../../testing/phase-3-activity-import-test-matrix.md)和补强后的 [独立 PostgreSQL 案例](../../../tests/independent/activity_import/test_postgresql_contract.py)；`P3-C9-PG-001` 已关闭，建议总控接受 P3-B5-R1。
+- P3-C8 原始设计已由总控验收；同一 [P3 Markdown 活动模板导入独立验收矩阵](../../testing/phase-3-activity-import-test-matrix.md) 现已更新为 C9 实际状态。
 - P2-TIME-C2 已绑定七文件快照完成定向独立复验：执行方 28/28、原测试 23/23、还原审计 28/28 通过；建议总控把 P2-TIME-R1 标为 `complete`。
 - PG-C7-DATA-R2 已在匹配的 DATA-R1 固定快照上复跑 P1 原 8 项并全部通过；连同 P2 SPG 4 项和相邻 SQLite 9 项均为全绿，测试智能体建议关闭 `PG-C7-DATA-001`，最终结论等待总控。
 - P1-C3 已提交 [阶段 1 个人财务数据层独立测试矩阵](../../testing/phase-1-data-test-matrix.md)，等待总控验收并形成 `P1-IF-001`。
@@ -32,6 +33,123 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-09-19 20:10 Asia/Shanghai — P3-C9-R2 交付至 review
+
+- 交付物：[P3-C9-R2 独立复验报告](../../testing/phase-3-c9-r2-activity-import-report.md)、[P3 89 项最终矩阵](../../testing/phase-3-activity-import-test-matrix.md)、[独立 PostgreSQL 测试补强](../../../tests/independent/activity_import/test_postgresql_contract.py)
+- 测试：独立本地 81 passed；执行方本地 144 passed；旧 migration 4 passed；执行方 PostgreSQL 9 passed；独立 PostgreSQL 10 passed
+- 矩阵：89 个唯一 ID，89 passed、0 failed、0 blocked、0 not_applicable；无重复 ID 或列结构错误
+- 缺陷：`P3-C9-PG-001` 已关闭；未发现新的 P0/P1 产品缺陷，建议总控接受 P3-B5-R1
+- 摘要：矩阵 `5c2bd4dd470754a8b6a91259c6a8cd3fd8a1490df35cd55a7e558f927595039e`；R2 报告 `6367d5a437b5309f5c27f1c279e4d6ad02c9944c2fb3daf5a6812e7162b7837e`；独立 PG 文件 `f2402395dd6e59c4b186e266d3038ff6c00664cf650737ec9ee82ca7273b81b3`
+- 边界：没有修改产品、迁移、执行方测试/文档、依赖、Compose、冻结/控制/总览、其他角色、原 C9 报告、OpenClaw 或 Git；没有运行真实 DeepSeek、桌面或微信
+- 状态：按任务卡停在 `review`，等待总控核对；测试智能体不宣称项目 `complete`
+
+### 2026-09-19 20:10 Asia/Shanghai — P3-C9-R2 SPG 隐私证据补强
+
+- 文档收口时发现 `P3-SEC-10` 需要显式证明真实 PostgreSQL 冲突路径不泄露虚拟 canary；在获配的既有同名并发节点加入异常文本和结构化日志断言
+- 只再次启动 `finance-postgres`，完整重跑独立 PostgreSQL 文件为 10 passed、1 warning；canary 未出现在冲突异常或日志中
+- 随后再次执行普通 `compose down`，最终服务列表为空；Docker Desktop 仍只启动过一次，未删除 volume 或执行其他 Docker 操作
+- 最终 22 文件快照仍匹配，矩阵保持 89/89 passed
+
+### 2026-09-19 20:08 Asia/Shanghai — P3-C9-R2 最终快照与资源关闭
+
+- 结束前 22/22 单文件摘要无差异，总摘要仍为 `P3-B5-R1-SHA256:fb46b8fa4957c93bfd8f971b1fd987e45dd4779e8d6eac2907660fa2f1fef53c`
+- 原 C9 报告摘要仍为 `d0b2189ec65d477a6fcefa9790898b5840d4f330f2ed713a6684346b8fada83b`
+- 再次核对控制版本 `2026-09-19T19:18:10+08:00` 后执行普通 `docker compose down`；容器和项目网络已移除，最终服务列表为空
+- 未使用 `-v`，未删除 volume、prune、重置数据库、启动其他服务或修改 Docker 全局配置
+- 下一检查点：更新 89 项矩阵、提交 R2 报告并完成文档结构校验
+
+### 2026-09-19 20:06 Asia/Shanghai — P3-C9-R2 两组 PostgreSQL 通过
+
+- 执行方 `tests/activity_import/test_postgresql.py`：9 passed、0 failed、0 skipped、0 setup error
+- 独立 PostgreSQL 首轮：9 passed、1 failed；失败为测试自身引用不存在的 `AuditEvent.resource_id`，不是产品失败
+- 在获配独立文件内将回滚证据改为提交前后 command receipt 与 audit 总数均不增加，未削弱断言；完整重跑为 10 passed、0 failed、0 skipped、1 warning
+- 覆盖并发同键/异键、同名竞争、stale/归档、整批回滚、约束、空库及既有 P2 schema 迁移、响应丢失恢复；`P3-C9-PG-001` 未再复现
+- 下一检查点：复算最终 22 文件快照，普通 down 并确认 Compose 服务为空
+
+### 2026-09-19 20:02 Asia/Shanghai — P3-C9-R2 PostgreSQL 环境健康
+
+- 外部操作前重读控制文件，版本仍为 `2026-09-19T19:18:10+08:00`，本测试智能体仍是 R2 和 Docker/PostgreSQL 唯一负责人
+- 首次检查确认 Engine 未运行；按任务卡只隐藏启动已安装 Docker Desktop 一次，随后 Engine 正常，未安装、更新、改配置或反复启动
+- Compose 服务清单只有 `finance-postgres`；只启动该服务，PostgreSQL 17.6-alpine 已 healthy，回环端口 55432，无本地 volume
+- 下一检查点：用项目测试凭据和随机 schema 分开执行执行方 PostgreSQL 9 项与独立 PostgreSQL 全节点；不记录密码或完整连接串
+
+### 2026-09-19 20:00 Asia/Shanghai — P3-C9-R2 本地层通过
+
+- 独立本地：81 passed、0 failed、1 warning，原 C9 的 64 个本地通过结论无回退
+- 执行方本地：144 passed、0 failed、1 warning，包含新增的标识符长度与双向一致回归
+- 旧 migration 定向回归：`tests/agent_finance/test_migration.py` 与 `tests/finance/test_migrations.py` 共 4 passed
+- warning：两组均为既有 Starlette TestClient/AnyIO 弃用提示，不影响断言
+- 下一检查点：重读最新控制文件；按规定检查 Engine 一次，如未运行则最多隐藏启动 Docker Desktop 一次，随后只启动 `finance-postgres`
+
+### 2026-09-19 19:58 Asia/Shanghai — P3-C9-R2 输入门禁通过
+
+- 新 22 文件逐项摘要和总摘要匹配 `P3-B5-R1-SHA256:fb46b8fa4957c93bfd8f971b1fd987e45dd4779e8d6eac2907660fa2f1fef53c`
+- 原 C9 报告原始字节摘要匹配 `d0b2189ec65d477a6fcefa9790898b5840d4f330f2ed713a6684346b8fada83b`
+- 将 migration 与执行方 migration 测试替换为原 C9 单文件摘要后，重建总摘要精确等于旧 `P3-B5-SHA256`，确认其余 20 文件未变
+- 定向静态核对：外键名为 `fk_activity_template_revision_import_candidate`，长度 46；upgrade 创建与 downgrade 删除均引用同一常量
+- 下一检查点：独立本地、执行方本地、旧 migration 三组结果；通过后才开始 Docker 操作
+
+### 2026-09-19 19:56 Asia/Shanghai — P3-C9-R2 接单
+
+- 状态：`review`；运行状态：`active`
+- 控制核对：`2026-09-19T19:18:10+08:00` 版指定本测试智能体为 R2 与 Docker/PostgreSQL 唯一负责人；执行智能体和技术顾问停止
+- 绑定输入：预期 `P3-B5-R1-SHA256:fb46b8fa4957c93bfd8f971b1fd987e45dd4779e8d6eac2907660fa2f1fef53c`、原 C9 报告摘要 `d0b2189ec65d477a6fcefa9790898b5840d4f330f2ed713a6684346b8fada83b`
+- 返修边界：只允许 migration 与执行方 migration 测试两份快照文件变化；外键名须为 `fk_activity_template_revision_import_candidate`，upgrade/downgrade 对称且长度 46
+- 执行范围：独立本地 81 项、执行方本地、两份旧 migration、执行方 PostgreSQL 9 项、独立 PostgreSQL 全节点、最终快照与 89 项收口
+- 禁止范围：不修改产品/迁移/执行方测试/原 C9 报告/依赖/Compose/冻结/控制/总览/其他角色/OpenClaw/Git；Docker Engine 未运行时最多隐藏启动 Docker Desktop 一次
+- 下一检查点：摘要及两文件差异门禁通过后进入本地复验；任何 Docker 操作前再次读取控制文件
+
+### 2026-09-19 14:52 Asia/Shanghai — P3-C9 交付至 review
+
+- 交付物：[P3-C9 独立验收报告](../../testing/phase-3-c9-activity-import-report.md)、[更新后的 P3 矩阵](../../testing/phase-3-activity-import-test-matrix.md)、[`tests/independent/activity_import/`](../../../tests/independent/activity_import/)
+- 逐案结论：89 项全部有冻结后状态；64 passed、1 failed、24 blocked、0 not_applicable；报告逐一映射 89 个唯一 ID
+- 独立本地：81 passed、0 failed、1 warning；执行方 P3 本地复跑 143 passed；受影响旧回归 92 passed/4 skipped，四个相邻 PostgreSQL 旧回归另行实际 4 passed
+- PostgreSQL：执行方九类为 9 setup errors；独立最小复现为 1 setup error，均由 `P3-C9-PG-001` 导致。空 schema 在 P3 migration 因 82 字符外键名超过 PostgreSQL 63 字符上限失败；严重级别 P0/高
+- 快照：验收前后 22/22 单文件和总摘要均匹配 `P3-B5-SHA256:9fb36c653d20ff14f85ad9667de454900cca0c6e3ead17c2619df11fb7f63d6e`
+- 资源：仅启动 `finance-postgres`；结束执行普通 compose down，未用 `-v`，未删 volume/prune/重置；最终服务列表为空
+- 边界：未修改产品、迁移、执行方测试/文档、依赖、Compose、冻结/控制/总览、其他角色状态、OpenClaw 或 Git；未运行 DeepSeek、桌面或微信
+- 结论：P3-C9 停在 `review`，不建议总控接受 P3-B5；需先返修超长约束名并产生新快照，再完整复验 PostgreSQL 门禁
+
+### 2026-09-19 14:51 Asia/Shanghai — P3-C9-PG-001 真实 PostgreSQL 迁移阻断
+
+- 严重级别：P0/高；P3 PostgreSQL 空 schema 无法升级到 head，阻断所有冻结的并发、事务、约束、恢复和已有数据迁移场景，P3 当前不能建议 `complete`
+- 最小虚拟复现：在随机 schema 从空库运行 Alembic `upgrade head`；P1/P2 migration 成功，到 `c82d7a4f901e` 为 `activity_template_revision.source_import_candidate_id` 创建外键时失败
+- 冻结预期：P3-IF-001 要求 PostgreSQL 空库/已有库可升级并真实执行九类场景；实际为 SQLAlchemy `IdentifierError`，约束名 `fk_activity_template_revision_source_import_candidate_id_activity_import_candidate` 超过 PostgreSQL 63 字符上限
+- 证据分离：执行方 PostgreSQL 文件 9 项均 setup error；独立 PostgreSQL 最小案例 1 项同样 setup error，错误发生在业务断言前；未输出凭据或完整连接串
+- 处理：未修改产品或迁移；按高风险停止条件不再重复运行依赖同一失败迁移的其余独立 SPG 场景，随机失败 schema 已由 fixture finally 清理
+- 建议返修范围：仅缩短 P3 migration 中该显式外键约束名，并同步 downgrade 引用；形成新固定快照后完整复跑执行方 9 类、独立 SPG 与相邻迁移/SQLite 回归
+- 下一检查点：完成不依赖目标库迁移的最终 P3 本地套件和受影响旧回归，复算原快照后关闭容器
+
+### 2026-09-19 14:48 Asia/Shanghai — P3-C9 PostgreSQL 容器健康
+
+- 外部操作前控制版本仍为 `2026-09-19T14:30:21+08:00`，本测试智能体仍是唯一启停负责人
+- 沙箱内首次只读检查因 Docker config/named pipe 权限受限；按沙箱规则在已授权范围外复核后确认 Engine 正常，client/server 29.8.0、Compose 5.5.1
+- Compose 仅列出 `finance-postgres`；启动前项目服务为空，仅启动该服务；PostgreSQL 17.6-alpine 已 healthy，回环端口 55432，无本地 volume
+- 下一检查点：使用项目测试凭据和随机 schema 分开运行执行方九类与独立 SPG；报告不记录密码或完整连接串
+
+### 2026-09-19 14:45 Asia/Shanghai — P3-C9 独立本地层通过
+
+- 独立结果：`tests/independent/activity_import` 排除 PostgreSQL 文件后为 81 passed、0 failed、1 warning，覆盖 PU、SQLite、HTTP 和 SQLite 迁移
+- 首轮校正：1 个导入类名、2 个旧 schema fixture 列/UUID 绑定、行尾定位、行数错误码、审计基线共 7 项均属于独立测试自身问题；只修改获配独立目录，产品保持只读；修正后全绿
+- warning：Starlette TestClient 使用 AnyIO 已弃用类型别名，沿用既有非阻断第三方提示
+- 下一检查点：按任务卡再次读取最新控制文件，只检查并启动 Compose 中的 `finance-postgres`，健康后分别运行执行方 9 类与独立 SPG
+
+### 2026-09-19 14:37 Asia/Shanghai — P3-C9 快照门禁通过
+
+- 22/22 个清单文件存在，逐文件 SHA-256 全部与 B5 交接一致，无缺失或额外清单项
+- 按 `path<TAB>sha256<LF>` 有序 UTF-8 字节流独立计算总摘要，结果精确匹配 `P3-B5-SHA256:9fb36c653d20ff14f85ad9667de454900cca0c6e3ead17c2619df11fb7f63d6e`
+- 产品、迁移和执行方测试从此作为只读固定快照；允许进入独立 PU/SQLite/HTTP 验收
+- 下一检查点：独立本地测试完成收集和首轮执行后记录结果；PostgreSQL 前再次核对控制文件
+
+### 2026-09-19 14:36 Asia/Shanghai — P3-C9 接单
+
+- 状态：`review`；运行状态：`active`
+- 控制核对：`2026-09-19T14:30:21+08:00` 版指定本测试智能体为 P3-C9 唯一负责人及本轮 `finance-postgres` 唯一启停负责人；执行智能体和技术顾问停止
+- 输入：`P3-IF-001`、C8 的 89 项矩阵、B5 运行交接、执行方 `review` 状态及预期 `P3-B5-SHA256:9fb36c653d20ff14f85ad9667de454900cca0c6e3ead17c2619df11fb7f63d6e`
+- 负责范围：独立重算 22 文件快照，编写/执行独立 PU、SQLite、HTTP、真实 PostgreSQL 验收，单列复跑执行方 P3 与受影响旧回归，更新矩阵、报告和本日志
+- 禁止范围：不修改产品、迁移、执行方测试/文档、依赖、Compose、冻结/控制/总览、其他角色状态、OpenClaw 或 Git；发现产品缺陷只记录脱敏复现
+- 下一检查点：快照门禁通过后开始独立本地层；Docker 操作前再次读取控制文件
 
 ### 2026-09-18 15:43 Asia/Shanghai — P3-C8 交付
 
