@@ -2,24 +2,24 @@
 
 - 角色：技术选型咨询、工程教学与教学子任务统筹
 - 连接状态：用户侧边栏独立技术顾问已确认接单
-- 当前任务：P0-P3-D8 — 阶段 0～3 实现后教材与 PDF
+- 当前任务：P4-D9 — 可扩展个人 AI 应用 Host 最小技术方案评审
 - 状态：`review`
-- 最近更新：2026-09-19 21:00，Asia/Shanghai
-- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-19T20:52:00+08:00`、任务卡 `P0-P3-D8`、固定提交 `6e897623ba598d0f8f26ba1ad694dafcae0cf103`
-- 可修改范围：`docs/teaching/**` 指定五份 Markdown、`output/pdf/` 指定四份 PDF、`tools/teaching_pdf/**` 与本角色状态文件；其余项目、测试、迁移、报告、控制、其他角色文件、外部配置和 Git 状态只读
+- 最近更新：2026-09-20 13:20，Asia/Shanghai
+- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-20T12:55:41+08:00`、任务卡 `P4-D9`、固定提交 `1d06d92c93d99fb2a3a23da6ff0958932e358814`
+- 可修改范围：仅 `docs/phase-4-d9-modular-agent-host-advice.md` 与本角色状态文件；产品、测试、迁移、依赖、冻结接口、项目计划、P4 规划、控制、总览、其他角色文件、外部配置和 Git 状态只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：四册 Markdown 与四册 PDF 已完成验证，停在 `review` 等待头脑风暴总控核对
-- 步骤开始时间：2026-09-19 20:59 Asia/Shanghai
-- 最近有效进展：2026-09-19 21:00 Asia/Shanghai
-- 最近心跳：2026-09-19 21:00 Asia/Shanghai
-- 下一检查点：头脑风暴总控核对固定提交、文件边界、教材内容与 PDF；时间由总控安排
-- 等待对象：头脑风暴总控评审
-- 活动进程或会话：无；临时 PNG 渲染目录已清理
-- 重试次数：1 次 PDF TOC 收敛修复后成功；没有连续两个无进展检查点
-- 最近输出：四册共 44 页；96 个本地链接/行号锚点通过；pypdf 与 pdfplumber 重开通过；44/44 页完成视觉检查
+- 当前步骤：P4-D9 技术建议已完成验证并停在 `review`，等待头脑风暴总控结合测试建议冻结接口
+- 步骤开始时间：2026-09-20 13:20 Asia/Shanghai
+- 最近有效进展：2026-09-20 13:20 Asia/Shanghai
+- 最近心跳：2026-09-20 13:20 Asia/Shanghai
+- 下一检查点：头脑风暴总控核对 F01～F17、裁定 U01～U07 并形成正式 P4 接口冻结；时间由总控安排
+- 等待对象：头脑风暴总控评审与后续测试矩阵
+- 活动进程或会话：无；仅短时只读检查与文档编辑
+- 重试次数：0；尚未出现无进展检查点
+- 最近输出：`docs/phase-4-d9-modular-agent-host-advice.md` 766 行；十组技术问题/十组替代与复评条件、14 个有效本地链接、20 个成对代码围栏、零尾随空白；SHA-256 `765a3547b806724183a6302f4134a28b43e987d066fe30933bde5f993073fe5a`
 
 ## P0-P3-D8 分册进度
 
@@ -49,6 +49,72 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 - 未执行产品服务、Docker、DeepSeek、OpenClaw 或微信；教材只引用固定提交和既有验收证据。
 
 ## 工作日志
+
+### 2026-09-20 13:20 Asia/Shanghai — P4-D9 完整交付并提交 review
+
+- 状态：`review`；运行状态：`finished`。
+- 交付物：[P4-D9 可扩展个人 AI 应用 Host 最小技术方案](../../phase-4-d9-modular-agent-host-advice.md)。
+- 推荐架构：可信内置模块的 FastAPI 模块化单体；Python factory + 严格 manifest + 显式组合根；Profile 绑定工具视图；现有同步财务事务、候选确认和 P0～P3 接口通过 adapter 演进。
+- 关键替代：第三方 entry-point 插件、微服务、全量 MCP、LangGraph、WebSocket、向量库、多 Alembic heads 和消息 broker 均列出收益、代价和重新评估信号，P4 不预先引入。
+- 具体设计：完成 Python `ModuleDefinition`/`AgentProfile`/工具/记忆/事件草案，TypeScript UI/导航/Agent panel/设置/毛毛合同，账户/设备/渠道绑定、会话/消息/记忆/设置模型，三条数据流、目录、七步迁移、四切片和第二模块八项证明。
+- 冻结交接：提供 `P4-D9-F01`～`F17` 推荐默认值与 `P4-D9-U01`～`U07` 产品裁定项；总控需结合后续测试矩阵形成正式接口冻结。
+- 验证：正文 766 行；10 个技术问题、10 个替代/复评小节；20 个代码围栏成对；14 个本地链接和代码行号有效；尾随空白 0；敏感凭据模式未命中；SHA-256 `765a3547b806724183a6302f4134a28b43e987d066fe30933bde5f993073fe5a`。
+- 控制复核：完成前总控仍为 `2026-09-20T12:55:41+08:00`，P4-D9 仍由既有技术顾问唯一负责且为 `ready`，无新冲突。
+- 文件边界：只修改 D9 建议和本角色状态；未修改 `src/**`、测试、迁移、依赖、接口冻结、项目计划、P4 草案、控制、总览、其他角色、外部配置或 Git。工作区既有未跟踪 `.claude/` 未读取或修改。
+- 运行边界：未启动 FastAPI、PostgreSQL、Docker、DeepSeek、OpenClaw、微信或 Electron；未安装依赖、登录服务、调用付费 API 或运行产品测试。官方资料仅作只读版本/边界核对。
+- 未验证：Electron 本机行为、FastAPI 实际解析版本/SSE、MCP SDK 组合、微信稳定事件 ID、user scope/会话撤销/记忆删除/第二模块等均明确保留为待实现和待独立验收，不写成已完成。
+- 下一步/交接：技术顾问停止；等待总控评审、裁定产品问题并发布正式冻结，不自动继续实现或测试矩阵。
+
+### 2026-09-20 13:17 Asia/Shanghai — P4-D9 Electron/UI 设计里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 进程边界：Electron main 管窗口、Tray、后端监督和 OS secret；preload 只暴露窄 typed IPC；React renderer 无 Node/进程/密钥权限，并要求 sandbox、context isolation、CSP、导航限制和 IPC sender 校验。
+- UI 扩展：编译期 `DesktopModuleContribution` 注册页面、导航、Agent panel、设置和毛毛映射；后端 `/modules` 只返回能力，Shell 取前后端 registry 交集；API DTO 从 OpenAPI 生成，React loader 合同手写版本化。
+- 后端生命周期：开发时 main 可管理有所有权的 Python 子进程并等待 ready；也允许连接手动后端且不负责停止；正式本机 sidecar/未来 TLS 服务端只通过同一 API contract 切换。
+- 毛毛：一个透明窗口加 Tray，模块主形态与运行子状态分离，位置为设备设置，支持隐私/全屏/reduced motion；设备不兼容时可降级普通迷你窗。
+- P4-D：以最小只读 `wealth_management` 和八项自动检查证明导航、Profile、工具、记忆、设置与毛毛均由注册驱动，不接行情或交易。
+- 下一步/交接：完成正文结构、引用、文件边界、敏感信息和控制版本复核。
+
+### 2026-09-20 13:14 Asia/Shanghai — P4-D9 身份/记忆设计里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 身份：主人账户 + Argon2id credential + 设备与可撤销不透明 session + 一次性微信绑定；原始 token/API Key/外部身份不进入模型、普通设置或日志。
+- 用户作用域迁移：先建 bootstrap owner，再给所有 aggregate/receipt/run/pending 增加 nullable user、回填核对、增加复合唯一/外键和非空；repository/command 全部接收可信 Principal，幂等范围加入 user。
+- 记忆：conversation/message、memory candidate/item、module setting；共享只有 confirmed，模块 candidate 晋升需确认，事实数据库不复制进记忆；首版结构化过滤最多 8 项，不使用向量库。
+- 生命周期：建议会话 90 天、候选 30 天、确认记忆到删除/失效；删除敏感内容时清空正文并只留不含内容的 tombstone/审计元数据。
+- 下一步/交接：核对 Electron 安全进程、UI 注册、毛毛、主题、迁移和第二模块证明。
+
+### 2026-09-20 13:10 Asia/Shanghai — P4-D9 后端 Host 决策里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 推荐：首版继续单个 FastAPI/SQLAlchemy 进程，使用显式 `register_builtin_modules()` 组合根；模块以 Python 工厂承载运行时对象、以严格可序列化 manifest 承载 ID/版本/Profile/工具/记忆/权限/API/UI/设置/事件声明。
+- 注册边界：启动时拒绝重复 module/profile/tool ID 和不兼容 Host API 主版本；模块启停来自可信设置，但 P4 不扫描目录、不安装未知包、不执行远程配置。
+- Agent/工具：Host 组合基础安全规则、Profile 提示词和获准动态上下文；从全局工具目录生成当前 Profile 的绑定视图；Schema 可见性与执行时授权各检查一次，现有适配器继续防御性复查。
+- Workflow：保留 `agent_run`、24 小时 `pending_action`、版本比较交换和稳定提交键，将通用状态与模块 action payload/handler 分开；进程锁只作优化，数据库状态和领域幂等继续承担正确性。
+- MCP：现有财务工具继续进程内；只有跨进程、外部供应商或需要其他 Host 复用的工具才经 MCP adapter。P4 不为了协议一致性包装全部内部函数，也不引入第三方插件运行时。
+- 替代与触发：配置驱动/entry-point 插件、微服务、LangGraph、全量 MCP 均保留为有独立发布团队、未知模块安装、多个持久暂停点或跨进程隔离证据时的重新评估项。
+- 官方核对：已只读核对 FastAPI 依赖/安全/SSE、Electron 安全与进程模型、MCP 2026-07-28 资料、DeepSeek Tool Calls、SQLAlchemy Session/Alembic 分支、React lazy 和 TypeScript ES Modules；不安装或调用任何外部服务。
+- 下一步/交接：把单用户虚拟身份演进为账户、设备会话和渠道绑定，设计 user_id 回填与记忆/会话隔离。
+
+### 2026-09-20 13:07 Asia/Shanghai — P4-D9 代码现实盘点里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 固定提交核对：任务输入提交 `1d06d92c93d99fb2a3a23da6ff0958932e358814` 可读取；任务指定的 `src/**`、`tests/**` 与当前工作树在该提交后无产品差异。
+- 可复用能力：`AgentRunner` 的 4/8/1 有界循环与供应商协议、`ToolRegistry` 的唯一名称/Pydantic Schema/权限可见性、`RunContext` 的可信身份与时间、`AgentApplication` 的来源事件幂等和恢复、`pending_action` 的 24 小时状态机、`FinanceService` 的同步短事务/HMAC 收据/审计/乐观锁、FastAPI 依赖与统一错误、活动导入的 owner 隔离和严格 HTTP 边界。
+- 现实缺口：当前系统提示词和 `build_agent_application()` 固定为财务；工具注册只有 `finance_registry()`；`actor_id`/`owner_id` 仍由应用状态注入为单用户虚拟身份；财务事实表没有可信 `user_id` 作用域；没有模块/Agent Profile 注册、登录/设备/渠道绑定、通用会话与消息、分层记忆、事件总线、MCP 适配或 Electron/React 代码。
+- 不可破坏边界：P2 的可信上下文不进入模型 Schema、候选确认与派生提交键、重复/并发恢复、FinanceService 事务幂等和 4/8/1；P3 的 owner 隔离、严格输入、持久预览与原子提交；现有接口在迁移期继续兼容。
+- 测试证据盘点：执行方测试覆盖 Agent 重放/并发/重启/权限/隐私、财务事务/退款/迁移/PostgreSQL claim，以及活动导入解析/owner/并发/迁移；这里只作为设计依据，不重新宣称独立验收。
+- 下一步/交接：比较 Python 显式注册、声明配置和混合方案，确定 Host 组合根、Profile 工具视图、workflow 复用边界及 MCP 延后条件。
+
+### 2026-09-20 13:03 Asia/Shanghai — P4-D9 技术顾问接单
+
+- 状态：`in_progress`；运行状态：`active`。
+- 唯一负责人：用户启动的既有技术顾问；依据总控版本 `2026-09-20T12:55:41+08:00`，唯一负责人表中 P4-D9 为 `ready`。
+- 固定输入：`1d06d92c93d99fb2a3a23da6ff0958932e358814`；目标是从 P0～P3 已验收实现演进出可信内置模块的 Personal AI Host 最小方案，供总控后续冻结。
+- 文件边界：仅写 `docs/phase-4-d9-modular-agent-host-advice.md` 与本角色状态文件；不修改产品、测试、迁移、依赖、接口冻结、项目计划、P4 规划、控制、总览、其他角色日志、外部配置或 Git 状态。
+- 操作边界：不启动 FastAPI、Docker、DeepSeek、OpenClaw、微信或 Electron；不安装依赖、不登录外部服务、不调用付费 API、不接触密钥或真实数据。
+- 里程碑：依次记录代码现实盘点、后端 Host 决策、身份/记忆设计、Electron/UI 设计和完整交付；每个里程碑形成可核查输出。
+- 下一步/交接：先完成固定提交与必读文档的只读核对，形成可复用能力、缺口和不变量清单。
 
 ### 2026-09-19 21:00 Asia/Shanghai — P0-P3-D8 提交 review 并停止
 

@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-20 12:55，Asia/Shanghai
+更新时间：2026-09-20 13:30，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -11,8 +11,8 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：P4 Host 规划已合并，D9 任务卡已准备 | 2026-09-20 12:52 | 用户把 D9 Prompt 发送给既有技术顾问 | [角色日志](agents/brainstorm.md)、[D9 Prompt](prompts/p4-d9-modular-agent-host-technical-adviser.md) |
-| 技术顾问 | `complete`（P0-P3-D8，总控接受） | `finished`：四册 Markdown、四册 PDF 和可复现工具已交付 | 2026-09-19 21:00 | 按教材顺序开展后续教学 | [角色日志](agents/technical-adviser.md)、[教材索引](../teaching/README.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：D9 已验收，P4-C10 测试矩阵任务卡已准备 | 2026-09-20 13:30 | 用户把 C10 Prompt 发送给既有测试智能体 | [角色日志](agents/brainstorm.md)、[C10 Prompt](prompts/p4-c10-modular-agent-host-test-matrix.md) |
+| 技术顾问 | `complete`（P4-D9，总控接受） | `finished`：Host 最小技术方案、迁移和教学地图已交付 | 2026-09-20 13:20 | 等待 P4 接口冻结后的教学或评审任务 | [角色日志](agents/technical-adviser.md)、[D9 方案](../phase-4-d9-modular-agent-host-advice.md) |
 | 执行智能体 | `complete`（P3-B5-R1，总控接受） | `finished`：最终实现与 PostgreSQL 返修已验收 | 2026-09-19 20:17 | 等待新的 P4 实现任务 | [角色日志](agents/executor.md)、[B5 交接](../b5-activity-import-running.md) |
 | 测试智能体 | `complete`（P3-C9-R2，总控接受） | `finished`：89/89 和两组 PostgreSQL 门禁通过 | 2026-09-19 20:17 | 等待新的 P4 测试设计任务 | [角色日志](agents/tester.md)、[R2 报告](../testing/phase-3-c9-r2-activity-import-report.md) |
 
@@ -56,7 +56,8 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P3-C9-R2：PostgreSQL 定向复验 | 用户启动的既有测试智能体 | `complete` | 独立本地 81、执行方本地 144、旧迁移 4、PG 9/10 和矩阵 89/89 通过 | [R2 报告](../testing/phase-3-c9-r2-activity-import-report.md) |
 | P0-P3-D8：阶段实现后教材 | 用户启动的既有技术顾问 | `complete` | 四册共 44 页；96 个本地链接和行号锚点、PDF 重开及 44/44 页视觉 QA 通过 | [教材索引](../teaching/README.md)、[任务卡](prompts/p0-p3-d8-technical-adviser.md) |
 | P4-HOST-BRAINSTORM：可扩展 Agent Host 规划 | 头脑风暴总控 | `complete` | 定义 Host、模块、Agent、workflow、记忆、工具、桌面扩展和 P4 切片；用户已接受方向 | [Host 架构草案](../phase-4-modular-agent-host-architecture.md) |
-| P4-D9：Agent Host 最小技术方案评审 | 用户启动的既有技术顾问 | `ready` | 结合实际代码形成 P4-A～D 的最小可实施方案、替代方案、迁移与教学地图 | [D9 Prompt](prompts/p4-d9-modular-agent-host-technical-adviser.md) |
+| P4-D9：Agent Host 最小技术方案评审 | 用户启动的既有技术顾问 | `complete` | 766 行方案、F01～F17、7 个产品裁定项、14 个本地链接及摘要经总控核对 | [D9 方案](../phase-4-d9-modular-agent-host-advice.md) |
+| P4-C10：模块化 Agent Host 测试矩阵 | 用户启动的既有测试智能体 | `ready` | 实现前建立 P4-A～D 分层验收矩阵；所有案例保持未执行 | [C10 Prompt](prompts/p4-c10-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
@@ -71,6 +72,6 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 ## 下一次总控检查
 
-1. 用户把 P4-D9 Prompt 发送给既有技术顾问任务。
-2. 技术顾问只读评审现有 `AgentRunner`、`ToolRegistry` 和数据模型怎样最小适配 Host，不先引入复杂框架。
-3. 总控验收 D9 后，再并行派发测试矩阵设计并冻结 P4-A～P4-D 接口。
+1. 用户把 P4-C10 Prompt 发送给既有测试智能体任务。
+2. 测试智能体只设计矩阵，不运行测试、不修改产品或测试实现。
+3. 总控验收 C10 后，结合 D9 形成正式 P4 接口冻结，并只派发 P4-A Host/身份地基实现。
