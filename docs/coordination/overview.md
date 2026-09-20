@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-20 12:38，Asia/Shanghai
+更新时间：2026-09-20 12:45，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -11,7 +11,7 @@ P0～P3 已完成验收并首次发布。P4 从单一财务 workflow 的界面�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `active`：记录 P4 可扩展 Agent Host 与模块接入契约 | 2026-09-20 12:38 | 创建规划 PR，随后派发技术顾问评审 | [角色日志](agents/brainstorm.md)、[Host 架构草案](../phase-4-modular-agent-host-architecture.md) |
+| 头脑风暴 | `review` | `finished`：P4 Host 规划已提交 PR #1 | 2026-09-20 12:45 | 用户核对方向，随后派发技术顾问评审 | [角色日志](agents/brainstorm.md)、[Host 架构草案](../phase-4-modular-agent-host-architecture.md) |
 | 技术顾问 | `complete`（P0-P3-D8，总控接受） | `finished`：四册 Markdown、四册 PDF 和可复现工具已交付 | 2026-09-19 21:00 | 按教材顺序开展后续教学 | [角色日志](agents/technical-adviser.md)、[教材索引](../teaching/README.md) |
 | 执行智能体 | `complete`（P3-B5-R1，总控接受） | `finished`：最终实现与 PostgreSQL 返修已验收 | 2026-09-19 20:17 | 等待新的 P4 实现任务 | [角色日志](agents/executor.md)、[B5 交接](../b5-activity-import-running.md) |
 | 测试智能体 | `complete`（P3-C9-R2，总控接受） | `finished`：89/89 和两组 PostgreSQL 门禁通过 | 2026-09-19 20:17 | 等待新的 P4 测试设计任务 | [角色日志](agents/tester.md)、[R2 报告](../testing/phase-3-c9-r2-activity-import-report.md) |
@@ -55,7 +55,7 @@ P0～P3 已完成验收并首次发布。P4 从单一财务 workflow 的界面�
 | P3-B5-R1：外键名最小返修 | 用户启动的既有执行智能体 | `complete` | 22 文件摘要匹配；migration 5、P3 本地 144、PG 9、旧迁移 4 均通过 | [B5 交接](../b5-activity-import-running.md) |
 | P3-C9-R2：PostgreSQL 定向复验 | 用户启动的既有测试智能体 | `complete` | 独立本地 81、执行方本地 144、旧迁移 4、PG 9/10 和矩阵 89/89 通过 | [R2 报告](../testing/phase-3-c9-r2-activity-import-report.md) |
 | P0-P3-D8：阶段实现后教材 | 用户启动的既有技术顾问 | `complete` | 四册共 44 页；96 个本地链接和行号锚点、PDF 重开及 44/44 页视觉 QA 通过 | [教材索引](../teaching/README.md)、[任务卡](prompts/p0-p3-d8-technical-adviser.md) |
-| P4-HOST-BRAINSTORM：可扩展 Agent Host 规划 | 头脑风暴总控 | `in_progress` | 定义 Host、模块、Agent、workflow、记忆、工具、桌面扩展和 P4 切片 | [Host 架构草案](../phase-4-modular-agent-host-architecture.md) |
+| P4-HOST-BRAINSTORM：可扩展 Agent Host 规划 | 头脑风暴总控 | `review` | 定义 Host、模块、Agent、workflow、记忆、工具、桌面扩展和 P4 切片 | [Host 架构草案](../phase-4-modular-agent-host-architecture.md)、[PR #1](https://github.com/DM001-mm/wife-system/pull/1) |
 
 ## 当前阻塞与风险
 
@@ -70,6 +70,6 @@ P0～P3 已完成验收并首次发布。P4 从单一财务 workflow 的界面�
 
 ## 下一次总控检查
 
-1. 总控通过独立分支和 PR 交付 P4 Host 头脑风暴文档。
+1. 用户核对 PR #1 中的 P4 Host 产品方向和模块边界。
 2. 技术顾问只读评审现有 `AgentRunner`、`ToolRegistry` 和数据模型怎样最小适配 Host，不先引入复杂框架。
 3. 结合技术建议冻结 P4-A 身份/Host 契约、P4-B 桌面 Shell、P4-C 日常财务闭环和 P4-D 第二模块接入证明。

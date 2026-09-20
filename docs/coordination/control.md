@@ -2,11 +2,11 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-20T12:38:46+08:00`
+- 指令版本：`2026-09-20T12:45:50+08:00`
 - 当前阶段：P3 活动 Markdown 导入已完成。B5-R1 固定快照通过 C9-R2 独立验收，89/89 项通过，`P3-C9-PG-001` 已关闭。
-- 当前动作：首次 GitHub 发布已完成。P4 产品目标已扩展为可接入更多 AI 应用的个人 Agent Host；总控正在独立分支记录模块、Agent Profile、工具/MCP、记忆、账户、毛毛与设置契约。执行智能体、测试智能体和技术顾问保持停止。
-- 需要用户参与：继续核对 P4 产品边界；技术顾问随后评审 Host 最小技术方案，冻结后才派发实现与测试。
-- Git 状态：首次发布分支 `codex/phase-0-baseline` 已推送到 `a480bc2`，标签 `checkpoint/p3-foundation` 指向 `6e89762`。当前规划变更位于 `codex/p4-modular-agent-host-plan`，按规则通过 GitHub PR 交付。
+- 当前动作：P4 可扩展个人 Agent Host 规划已提交 GitHub PR #1，等待用户核对产品边界并由技术顾问评审最小实现方案。执行智能体和测试智能体保持停止。
+- 需要用户参与：核对 PR #1 的产品方向；之后把 Host 技术评审任务交给技术顾问，冻结后才派发实现与测试。
+- Git 状态：首次发布分支 `codex/phase-0-baseline` 已推送到 `a480bc2`，标签 `checkpoint/p3-foundation` 指向 `6e89762`。当前规划位于 `codex/p4-modular-agent-host-plan`，PR：`https://github.com/DM001-mm/wife-system/pull/1`。
 
 ## OpenClaw 安全事件临时控制
 
@@ -69,7 +69,7 @@
 | P3-C9-R2 PostgreSQL 定向复验 | `complete`；89/89 passed | R2 报告、矩阵和独立测试只读保留 | 不重复 R2 或修改最终验收证据 |
 | P3-C9-R2 PostgreSQL 环境 | `complete`；容器与项目网络已普通关闭 | 无当前外部操作负责人 | 禁止无新任务启动服务、删除 volume、prune 或改全局配置 |
 | P0-P3-D8 阶段实现后教材 | `complete`；总控已接受四册交付 | 四册 Markdown、四份 PDF、统一生成/验证脚本；44 页视觉 QA 与 96 个本地链接通过 | 教材只读保留；后续授课不回写为产品或测试结论 |
-| P4-HOST-BRAINSTORM 可扩展 Agent Host 规划 | 头脑风暴总控；`in_progress` | 产品定位、模块契约、Agent Profile、工具/MCP、分层记忆、账户、毛毛与主题 | 不启动产品实现；等待文档 PR 和技术顾问评审 |
+| P4-HOST-BRAINSTORM 可扩展 Agent Host 规划 | 头脑风暴总控；`review` | 产品定位、模块契约、Agent Profile、工具/MCP、分层记忆、账户、毛毛与主题 | PR #1 已创建；不启动产品实现，等待用户核对和技术顾问评审 |
 
 任何角色在开始工作前必须确认任务表中只有一个执行负责人。没有被列为执行负责人的角色不得“顺手继续”外部操作；发现空缺、冲突或旧指令时，只向总控报告并等待重新分配。
 
