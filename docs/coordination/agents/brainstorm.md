@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：A/P4 — 桌面端纵向切片教学与范围规划
-- 状态：`in_progress`
+- 当前任务：P4-HOST-BRAINSTORM — 可扩展个人 AI 应用 Host 与桌面产品规划
+- 状态：`review`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-20 10:32，Asia/Shanghai
+- 最近更新：2026-09-20 12:45，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -30,19 +30,20 @@
 - [P3-C9-R2 独立复验报告](../../testing/phase-3-c9-r2-activity-import-report.md)
 - [P0-P3-D8 技术顾问 Prompt](../prompts/p0-p3-d8-technical-adviser.md)
 - [P4 Windows 财务驾驶舱头脑风暴](../../phase-4-desktop-cockpit-brainstorm.md)
+- [P4 可扩展个人 AI 应用 Host 架构草案](../../phase-4-modular-agent-host-architecture.md)
 
 ## 当前执行快照
 
-- 运行状态：`active`
-- 当前步骤：P0-P3-D8 已完成总控验收；按用户授权发布全部当前已验收内容
+- 运行状态：`finished`
+- 当前步骤：P4 Host 规划已提交 PR #1，等待用户核对和技术顾问评审
 - 步骤开始时间：2026-09-19 19:10，Asia/Shanghai
-- 最近有效进展：2026-09-20 10:32，Asia/Shanghai（四册教材和 PDF 证据核对通过）
-- 最近心跳：2026-09-20 10:32，Asia/Shanghai
-- 下一检查点：确认发布提交、远端分支和检查点标签；随后冻结 P4 范围
-- 等待对象：无
+- 最近有效进展：2026-09-20 12:45，Asia/Shanghai（提交 `f279272` 并创建 GitHub PR #1）
+- 最近心跳：2026-09-20 12:45，Asia/Shanghai
+- 下一检查点：用户核对产品方向后，生成技术顾问 Host 评审 Prompt
+- 等待对象：用户产品方向核对
 - 活动进程或会话：无；R2 已普通关闭容器和项目网络
 - 重试次数：默认沙箱初始化失败后进行一次受控沙箱外只读核查
-- 最近输出：P0-P3-D8 四册教材验收结论与首次发布边界
+- 最近输出：P4 可扩展个人 AI 应用 Host 架构草案
 
 ## 阻塞
 
@@ -52,12 +53,29 @@
 
 ## 下一步
 
-- P3-B5-R1/C9-R2 已完成验收并纳入本地提交，未推送远程。
+- P3-B5-R1/C9-R2 已完成验收并随首次发布推送远程。
 - 执行、测试和技术顾问保持停止，等待 P4 新任务。
-- 四册教材已验收；用户可从 P0 开始学习。总控完成首次 GitHub 发布后，与用户冻结 P4 范围。
+- 当前先完成 P4 Host 规划 PR；随后由技术顾问评审最小实现边界，再冻结 P4-A～P4-D。
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-20 12:45 Asia/Shanghai — P4 Host 规划提交 PR #1
+
+- Git：规划提交 `f279272 Plan extensible P4 personal AI host` 已推送到 `codex/p4-modular-agent-host-plan`。
+- PR：`https://github.com/DM001-mm/wife-system/pull/1`，基线为首次发布分支 `codex/phase-0-baseline`。
+- 验证：七份变更文档的本地链接均存在，`git diff --check` 通过，未发现高置信度凭据模式。
+- 范围：只有规划与协调文档；没有修改产品、测试、依赖，没有提交概念图片或 `.claude` 本地配置。
+- 下一步：用户核对产品方向，之后由技术顾问评审最小 Host 方案；没有冻结前不派发实现。
+
+### 2026-09-20 12:38 Asia/Shanghai — 将 P4 修正为可扩展个人 AI 应用 Host
+
+- 用户纠正：当前方案仍像固定 workflow；项目后续会加入更多模块和 AI 应用，开发时必须保留受控接入空间。
+- 结论：采用 Personal AI Host 定位。Agent 负责理解、路由、规划和解释；workflow 负责候选、确认、暂停恢复和补偿；金额、事务、幂等和领域不变量由确定性程序负责。
+- 扩展面：模块通过 Agent Profile、工具白名单、记忆命名空间、权限、API、页面、设置、事件、迁移和评测契约接入。
+- 产品补充：登录、设备会话、微信绑定、模块独立/共享记忆、毛毛“日常管钱/财富管理”双形态、后台显示和主题设置纳入 P4 规划；投资明确为财富管理子模块。
+- Git：首次发布后的变更按用户规则位于独立分支 `codex/p4-modular-agent-host-plan`，最终通过 PR 交付；`.claude` 本地配置和概念图片不进入仓库。
+- 交付：[Host 架构草案](../../phase-4-modular-agent-host-architecture.md)。
 
 ### 2026-09-20 10:32 Asia/Shanghai — 接受 D8 并开始首次 GitHub 发布
 

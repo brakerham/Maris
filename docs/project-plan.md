@@ -1,6 +1,6 @@
-# 项目计划 v0.3
+# 项目计划 v0.4
 
-更新日期：2026-09-13。状态：讨论稿，仅规划；没有已实现的业务代码。
+更新日期：2026-09-20。状态：P0～P3 已形成已验收地基；P4 处于产品与架构讨论。
 
 ## 已确定的方向
 
@@ -15,6 +15,9 @@
 - 模型优先考虑用户可提供的 DeepSeek API；搜索服务、部署商和预算到接入阶段再决定。
 - 用户几乎不用现金，首版优先电子支付场景。对话记录不等于已经接入微信支付或支付宝账单。
 - 理财与投资从零学习：主动问答、消费现场解释、复盘、学习进度都属于产品能力。
+- 长期产品定位为可扩展的个人 AI 应用 Host。财务生活与财富管理是第一组内置模块；后续 AI 应用通过模块、Agent Profile、工具、记忆、权限、页面和设置契约接入，不把整个产品固化为一条 workflow。
+- Agent 负责理解、路由、规划和解释；workflow 负责候选、确认、暂停恢复和补偿；金额、事务、幂等及领域不变量继续由确定性程序负责。
+- 投资是财富管理的子模块。财富管理还包括应急资金、储蓄、现金管理、风险保障、资产配置和长期目标。
 
 ## 核心交互
 
@@ -102,7 +105,8 @@ flowchart TD
     W[微信 + 腾讯 OpenClaw 插件] --> A[消息适配与身份绑定：需验证桥接]
     D[Windows：Electron + React] --> B[FastAPI 后端]
     A --> B
-    B --> G[Agent：模型调用、工具循环、状态]
+    B --> H[Personal AI Host：身份、模块、Agent、工具、记忆与权限]
+    H --> G[模块 Agent：理解、规划与解释]
     G --> T[受约束的业务工具]
     T --> F[账本与预算程序]
     F --> DB[(PostgreSQL)]
@@ -111,7 +115,7 @@ flowchart TD
     Q --> F
 ```
 
-初版采用模块化单体后端：接口、Agent、财务业务和渠道有明确边界，不先拆成多个独立微服务。定时任务可以独立运行，与数据库共享可靠状态。
+初版采用模块化单体后端：Host、模块 Agent、workflow、财务领域和渠道有明确边界，不先拆成多个独立微服务。定时任务可以独立运行，与数据库共享可靠状态。P4 的详细模块契约见 [可扩展个人 AI 应用 Host 架构草案](phase-4-modular-agent-host-architecture.md)。
 
 ## 技术提案与替代方案
 
@@ -122,13 +126,13 @@ flowchart TD
 | 后端接口 | Python + FastAPI + Pydantic | Django 适合需要完整后台等能力的场景；FastAPI 便于围绕类型和 API 建立本项目后端。见 [FastAPI 文档](https://fastapi.tiangolo.com/features/)。 |
 | 持久化 | PostgreSQL + SQLAlchemy + Alembic | 小实验可用内存数据或 SQLite；业务联调与事务验证以目标数据库为准，避免默认两种数据库行为相同。见 [SQLAlchemy](https://docs.sqlalchemy.org/en/20/orm/quickstart.html)、[Alembic](https://alembic.sqlalchemy.org/en/latest/) 和 [PostgreSQL 事务](https://www.postgresql.org/docs/current/tutorial-transactions.html)。 |
 | 模型接入 | DeepSeek API，使用文档支持的 SDK 调用方式 | 先做薄的模型适配层，配置模型与端点；不自建庞大多供应商框架，也不预先绑定具体模型版本。 |
-| Agent 运行 | 先实现可阅读的小型 Python 工具循环 | 达到暂停恢复、分支状态和可观察性需求后，对比引入 LangGraph；保持业务工具和财务算法可独立测试。 |
+| Agent 运行 | 在现有小型 Python 工具循环上增加 Host、Agent Profile 和模块注册边界 | 达到暂停恢复、分支状态和可观察性需求后，对比引入 LangGraph；保持业务工具、workflow 和财务算法可独立测试。 |
 | 前端 | TypeScript + React；Vite 作为构建候选 | Next.js 的服务端渲染等能力需结合需求比较；本项目已有 Python 后端，先采用 React 客户端路线。 |
 | Windows | Electron | Electron 内含 Chromium 和 Node.js，支持 Windows/macOS/Linux。Tauri 为另一候选，但引入 Rust 工具链；不把 ChatGPT 桌面应用的内部实现当作已知事实。 |
 | 微信 | 腾讯 OpenClaw 微信插件 + 可替换的业务桥接层 | 已核实有官方单聊通道；插件与自建 Python Agent 的连接方式、长期主动提醒和实际账号权限仍需验证。 |
 | 搜索 | 独立搜索提供方接口 + 来源保存 | 第三方搜索 API、模型供应商提供的搜索能力、浏览器访问按可用性和费用比较；不提前购买。 |
 | 记忆与 RAG | 先结构化偏好与基础知识检索 | 有真实知识库和检索评测后再引入 Embedding/向量检索；关系账目查询仍通过数据库工具。 |
-| 外部工具 | 有外部复用需求时加入 MCP/FastMCP | 本进程 Python 函数不必先包装成 MCP；需明确 MCP 协议、客户端、服务器各自作用。 |
+| 外部工具 | Host 提供统一工具契约；有外部复用需求时加入 MCP/FastMCP 适配 | 本进程 Python 函数不必先包装成 MCP；模块只能调用 Profile 明确授权的本地或 MCP 工具。 |
 | 验证与运维 | pytest、接口测试、Agent 场景集、结构化日志 | UI 阶段加入浏览器测试；部署阶段比较 Docker Compose 等方式。队列、缓存和追踪平台按实际需求加入。 |
 
 DeepSeek 的工具调用文档明确区分“模型提出函数调用”和“开发者提供并执行函数”。项目将利用这点学习工具循环，并在执行前校验名称、参数与授权。[DeepSeek Tool Calls](https://api-docs.deepseek.com/guides/tool_calls/)

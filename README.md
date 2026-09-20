@@ -1,8 +1,8 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P3 最终 89/89 项通过，真实 PostgreSQL 执行方 9/9、独立 10/10 通过；本地检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，项目进入 P4 桌面端纵向切片的教学与范围规划。OpenClaw worker 安全事件仍暂停运行时恢复。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P3 最终 89/89 项通过，真实 PostgreSQL 执行方 9/9、独立 10/10 通过；检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，项目正在规划 P4 可扩展 Personal AI Host、Windows 桌面 Shell 和首批模块。OpenClaw worker 安全事件仍暂停运行时恢复。
 
-项目有两个目标：通过活动、账目和可更新计划管理大学生活开支；围绕真实代码建立 AI Agent 应用工程能力。
+项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
 当前终端范围：Windows 桌面应用提供完整界面，手机通过微信消息交互。两种入口使用同一后端与数据，不开发独立 Android 应用。
 
@@ -52,6 +52,7 @@
 - [P0 PDF](output/pdf/p0-agent-http-wechat-teaching.pdf)、[P1 PDF](output/pdf/p1-finance-data-foundation-teaching.pdf)、[P2 PDF](output/pdf/p2-finance-agent-workflow-teaching.pdf)、[P3 PDF](output/pdf/p3-activity-import-teaching.pdf)：四册经过程序化检查和逐页视觉检查的教学版 PDF。
 - [P0-P3-D8 技术顾问 Prompt](docs/coordination/prompts/p0-p3-d8-technical-adviser.md)：四册教材与 PDF 的已完成任务卡和验收边界。
 - [P4 Windows 财务驾驶舱头脑风暴](docs/phase-4-desktop-cockpit-brainstorm.md)：澄清微信记账、桌面聊天、数据可视化、迷你助手、未来消费和投资模块的关系及建议切片。
+- [P4 可扩展个人 AI 应用 Host 架构草案](docs/phase-4-modular-agent-host-architecture.md)：定义账户、模块注册、Agent Profile、工具/MCP、分层记忆、毛毛、主题与后续 AI 应用接入面。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 
