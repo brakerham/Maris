@@ -55,6 +55,9 @@
 - [P4 可扩展个人 AI 应用 Host 架构草案](docs/phase-4-modular-agent-host-architecture.md)：定义账户、模块注册、Agent Profile、工具/MCP、分层记忆、毛毛、主题与后续 AI 应用接入面。
 - [P4-D9 Agent Host 最小技术方案](docs/phase-4-d9-modular-agent-host-advice.md)：基于现有代码给出模块化单体、身份、记忆、Electron 和第二模块证明的实施建议。
 - [P4-C10 测试智能体 Prompt](docs/coordination/prompts/p4-c10-modular-agent-host-test-matrix.md)：在实现前建立 P4-A～P4-D 分层独立验收矩阵。
+- [P4 模块化 Agent Host 测试矩阵](docs/testing/phase-4-modular-agent-host-test-matrix.md)：120 个尚未执行的分层验收案例，覆盖四个 P4 切片。
+- [P4 接口冻结](docs/phase-4-interface-freeze.md)：冻结总架构和 P4-A Host、身份、用户隔离、记忆与 API 合同。
+- [P4-B6 执行智能体 Prompt](docs/coordination/prompts/p4-b6-host-foundation-executor.md)：实现 P4-A Host、身份和通用状态地基。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

@@ -34,19 +34,22 @@
 - [P4-D9 技术顾问 Prompt](../prompts/p4-d9-modular-agent-host-technical-adviser.md)
 - [P4-D9 Agent Host 最小技术方案](../../phase-4-d9-modular-agent-host-advice.md)
 - [P4-C10 测试智能体 Prompt](../prompts/p4-c10-modular-agent-host-test-matrix.md)
+- [P4-C10 模块化 Agent Host 测试矩阵](../../testing/phase-4-modular-agent-host-test-matrix.md)
+- [P4 接口冻结](../../phase-4-interface-freeze.md)
+- [P4-B6 执行智能体 Prompt](../prompts/p4-b6-host-foundation-executor.md)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：P4-D9 已验收；P4-C10 测试矩阵任务卡已准备，等待用户发送给既有测试智能体
+- 当前步骤：P4-C10 已验收，P4-IF-001 已冻结；P4-B6 任务卡已准备，等待用户发送给既有执行智能体
 - 步骤开始时间：2026-09-19 19:10，Asia/Shanghai
-- 最近有效进展：2026-09-20 13:30，Asia/Shanghai（D9 文件、摘要、结构、链接和边界通过核对；C10 任务卡完成）
-- 最近心跳：2026-09-20 13:30，Asia/Shanghai
-- 下一检查点：测试智能体更新共享角色日志并完成 C10 需求追踪
-- 等待对象：用户把 C10 Prompt 发送给测试智能体
+- 最近有效进展：2026-09-20 18:14，Asia/Shanghai（C10 的 120 项结构与摘要通过；冻结 P4-A 并完成 B6 任务卡）
+- 最近心跳：2026-09-20 18:14，Asia/Shanghai
+- 下一检查点：执行智能体更新共享角色日志，登记 P4-B6 固定 HEAD、子任务边界和首个合同里程碑
+- 等待对象：用户把 B6 Prompt 发送给执行智能体
 - 活动进程或会话：无；R2 已普通关闭容器和项目网络
 - 重试次数：默认沙箱初始化失败后进行一次受控沙箱外只读核查
-- 最近输出：P4-D9 验收结论与 P4-C10 测试矩阵任务卡
+- 最近输出：P4-C10 验收、P4-IF-001 接口冻结与 P4-B6 执行任务卡
 
 ## 阻塞
 
@@ -62,6 +65,14 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-20 18:14 Asia/Shanghai — 接受 P4-C10、冻结 P4-A 并准备 B6
+
+- C10 核对：矩阵 SHA-256 `7425b67e8cbfb964cb42f343e830a515193ae40296d7286b798c6eec72ff24bd`；120 个案例和 ID，A/B/C/D 为 64/24/20/12；每行 12 字段，全部 `not_run`，无尾随空白。
+- 覆盖确认：F01～F17、U01～U07、P4-D 八项扩展证明、四切片门禁、测试所有权、P0～P3 回归和停止条件齐全；本轮没有运行测试或服务。
+- 冻结：`P4-IF-001` 接受 D9 总架构并具体冻结 P4-A 的 ID/版本、4/8/1、认证/session、绑定码、user scope、lease、记忆、事件、API 和三段 migration；P4-B～D 的库与细节继续延后。
+- 实现派发：`P4-B6` 只实现 Host、身份和通用状态地基。执行智能体可协调有边界的执行子任务，但必须避免同文件并发编辑；技术顾问和测试智能体停止。
+- Git：C10、冻结和任务卡形成一个本地验收单元，不推送、不创建 PR；`.claude/` 继续排除。
 
 ### 2026-09-20 13:30 Asia/Shanghai — 接受 P4-D9 并派发 C10 矩阵设计
 

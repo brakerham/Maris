@@ -2,25 +2,26 @@
 
 - 角色：独立测试、边界检查、回归验证和限定范围的结构优化
 - 连接状态：已确认；用户启动的侧边栏独立测试智能体已接单
-- 当前任务：P3-C9-R2 — PostgreSQL 迁移缺陷独立复验
+- 当前任务：P4-C10 — 模块化 Agent Host 独立验收矩阵
 - 状态：`review`
-- 最近更新：2026-09-19 20:10，Asia/Shanghai
-- 可修改范围：必要时 `tests/independent/activity_import/test_postgresql_contract.py` 或其 PostgreSQL fixture、`docs/testing/phase-3-activity-import-test-matrix.md`、`docs/testing/phase-3-c9-r2-activity-import-report.md` 和本状态文件；原 C9 报告、产品、迁移、执行方测试/文档、依赖、Compose、接口冻结、控制/总览、其他角色状态、OpenClaw 和 Git 只读
+- 最近更新：2026-09-20 18:09，Asia/Shanghai
+- 可修改范围：`docs/testing/phase-4-modular-agent-host-test-matrix.md` 和本状态文件；产品、测试实现、migration、依赖、配置、接口冻结、D9 建议、控制/总览、项目计划、其他角色日志、服务、外部系统和 Git 只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P3-C9-R2 交付完成，停在 `review`
-- 步骤开始时间：2026-09-19 19:56 Asia/Shanghai
-- 最近有效进展：2026-09-19 20:10 Asia/Shanghai
-- 最近心跳：2026-09-19 20:10 Asia/Shanghai
-- 下一检查点：等待头脑风暴总控核对 R2 报告、89 项矩阵和交付摘要；测试智能体不再继续执行
-- 等待对象：头脑风暴总控验收 P3-B5-R1；最终 `complete` 与 Git 处理不属于测试智能体
-- 活动进程或会话：无；普通 `compose down` 已完成，`docker compose ps` 服务列表为空
-- 重试次数：1（独立 PostgreSQL 测试自身字段断言最小修正后完整重跑；Docker Desktop 仅启动一次）
-- 最近输出：本地 81/144/4 全通过；PostgreSQL 9/10 全通过；89/89 passed；最终 22 文件摘要匹配
+- 当前步骤：P4-C10 交付完成，停在 `review`
+- 步骤开始时间：2026-09-20 17:55 Asia/Shanghai
+- 最近有效进展：2026-09-20 18:09 Asia/Shanghai
+- 最近心跳：2026-09-20 18:09 Asia/Shanghai
+- 下一检查点：等待头脑风暴总控核对矩阵并形成正式 P4 接口冻结；测试智能体不继续实现或执行案例
+- 等待对象：头脑风暴总控验收 P4-C10；最终 `complete`、冻结、实现派发和 Git 处理不属于测试智能体
+- 活动进程或会话：无；本任务禁止启动服务、数据库、Docker、Electron 或外部系统
+- 重试次数：0
+- 最近输出：120 个唯一案例、12 字段完整、全部 `not_run`；F01～F17、U01～U07 和 P4-D 八项证明均已追踪；矩阵 SHA-256 `7425b67e8cbfb964cb42f343e830a515193ae40296d7286b798c6eec72ff24bd`
 ## 任务与后续
 
+- P4-C10 已提交 [模块化 Agent Host 独立验收矩阵](../../testing/phase-4-modular-agent-host-test-matrix.md)：120 个唯一案例全部 `not_run`，等待总控验收并形成正式 P4 接口冻结。
 - P3-C9-R2 已提交 [独立复验报告](../../testing/phase-3-c9-r2-activity-import-report.md)、[最终 89 项矩阵](../../testing/phase-3-activity-import-test-matrix.md)和补强后的 [独立 PostgreSQL 案例](../../../tests/independent/activity_import/test_postgresql_contract.py)；`P3-C9-PG-001` 已关闭，建议总控接受 P3-B5-R1。
 - P3-C8 原始设计已由总控验收；同一 [P3 Markdown 活动模板导入独立验收矩阵](../../testing/phase-3-activity-import-test-matrix.md) 现已更新为 C9 实际状态。
 - P2-TIME-C2 已绑定七文件快照完成定向独立复验：执行方 28/28、原测试 23/23、还原审计 28/28 通过；建议总控把 P2-TIME-R1 标为 `complete`。
@@ -33,6 +34,48 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-09-20 18:09 Asia/Shanghai — P4-C10 质量检查与交付至 review
+
+- 交付物：[P4 模块化 Agent Host 独立验收矩阵](../../testing/phase-4-modular-agent-host-test-matrix.md)
+- 案例：P4-A 64、P4-B 24、P4-C 20、P4-D 12，共 120 项；120 个 ID 唯一，每行 12 个必填字段完整，状态全部为 `not_run`
+- 分层：contract/unit 24、API/integration 41、database 23、desktop/e2e 18、security/manual 14；环境含 contract 27、API 19、SQLite 32、PostgreSQL 16、Windows/Electron 24、external/manual 2
+- 风险与方式：P0 76、P1 43、P2 1；auto 116、manual 4；计数总和均为 120
+- 覆盖：F01～F17、U01～U07、P4-D 八项扩展性证明、四切片门禁/快照、所有权、P0～P3 回归、停止条件和18组待冻结问题均已映射
+- 程序化校验：ID 格式/唯一性、切片匹配、列数、非空字段、状态、风险/方式枚举、强制关键词与计数全部通过
+- 文件摘要：`7425b67e8cbfb964cb42f343e830a515193ae40296d7286b798c6eec72ff24bd`
+- 边界：未运行测试或服务，未启动 SQLite/PostgreSQL、Docker、Electron、DeepSeek、OpenClaw 或微信；未改产品/测试实现/迁移/依赖/冻结/建议/控制/总览/其他角色/Git
+- 状态：按任务卡停在 `review`；测试智能体不宣称 P4 已实现或通过
+
+### 2026-09-20 18:07 Asia/Shanghai — P4-C10 P4-C/D 与收口内容里程碑
+
+- P4-C 完成 20 项：虚拟午饭闭环、受控查询、候选纠正、领域更正、并发幂等、GET/条件 SSE、模型/工具/数据库/权限故障和 UI 金额/月界/大列表
+- P4-D 完成 12 项：D9 八项扩展性证明逐项一一映射，另含正常、缺失、零负边界和禁止行情/交易/证券推荐的确定性计算案例
+- 补齐执行方/独立测试路径所有权、P0～P3 最终回归集合、停止条件、P0/P1 门禁、18 组正式冻结问题和分组计数
+- 当前累计 120 项，文档仍只包含设计状态；下一检查点为结构、计数和强制覆盖程序化校验
+
+### 2026-09-20 18:03 Asia/Shanghai — P4-C10 P4-B 里程碑
+
+- 完成 P4-B 24 项：Electron main/preload/renderer 安全、IPC/导航/CSP、OS secret、后端 supervisor、compiled/backend registry 交集、OpenAPI 漂移、Tray/关闭策略、单一毛毛、位置/多屏/主题/降级
+- 将 Windows/Electron 自动化与 external/manual 目标设备证据分开，未用静态检查代替真实窗口、进程或可访问性结论
+- 当前累计 88 项，全部 `not_run`；没有启动 Electron、FastAPI 或后端进程
+- 下一检查点：完成 P4-C/D，覆盖财务一次一写、失败恢复、UI 确定性金额以及 D9 八项第二模块证明
+
+### 2026-09-20 18:01 Asia/Shanghai — P4-C10 需求追踪与 P4-A 里程碑
+
+- 完成 F01～F17 和七个已采用产品默认值的追踪表，明确四切片进入条件、未来固定快照文件组和退出条件
+- 完成环境/证据分层及执行顺序，明确 SQLite、PostgreSQL、Windows/Electron 和 external/manual 证据不可互相冒充
+- P4-A 已设计 64 项：注册/Profile/工具、账户/session/绑定、user 隔离、workflow、记忆、API/迁移/事件/设置；全部为 `not_run`
+- 下一检查点：完成 P4-B Windows Shell、设置和毛毛案例，不启动 Electron 或任何服务
+
+### 2026-09-20 17:55 Asia/Shanghai — P4-C10 接单
+
+- 控制核对：`2026-09-20T13:30:44+08:00` 版指定本测试智能体为 P4-C10 唯一负责人；技术顾问和执行智能体停止
+- 固定输入：产品基座 `1d06d92c93d99fb2a3a23da6ff0958932e358814`；D9 文件摘要 `765a3547b806724183a6302f4134a28b43e987d066fe30933bde5f993073fe5a` 已独立重算并匹配
+- 目标：在实现前设计 P4-A～P4-D 可执行矩阵，追踪 F01～F17 和 7 个产品默认值；所有案例初始状态只能为 `not_run`
+- 写入边界：仅新矩阵与本角色状态；不修改产品、测试实现、migration、依赖、配置、冻结/建议、控制/总览、项目计划、其他角色日志或 Git
+- 操作边界：不运行测试，不启动 FastAPI、PostgreSQL、Docker、Electron、DeepSeek、OpenClaw 或微信，不登录、安装依赖或读取真实数据
+- 下一检查点：完成剩余只读输入检查，形成需求追踪和案例编号框架
 
 ### 2026-09-19 20:10 Asia/Shanghai — P3-C9-R2 交付至 review
 
