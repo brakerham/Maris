@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P3 最终 89/89 项通过，真实 PostgreSQL 执行方 9/9、独立 10/10 通过；项目进入 P4 桌面端纵向切片的教学与范围规划。OpenClaw worker 安全事件仍暂停运行时恢复。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P3 最终 89/89 项通过，真实 PostgreSQL 执行方 9/9、独立 10/10 通过；本地检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，项目进入 P4 桌面端纵向切片的教学与范围规划。OpenClaw worker 安全事件仍暂停运行时恢复。
 
 项目有两个目标：通过活动、账目和可更新计划管理大学生活开支；围绕真实代码建立 AI Agent 应用工程能力。
 
@@ -48,7 +48,11 @@
 - [P3-B5-R1 执行智能体 Prompt](docs/coordination/prompts/p3-b5-r1-executor.md)：只缩短外键约束名、同步 downgrade，并实际复跑九项 PostgreSQL。
 - [P3-C9-R2 测试智能体 Prompt](docs/coordination/prompts/p3-c9-r2-tester.md)：绑定 R1 新快照，复验独立 PostgreSQL、迁移和 89 项最终状态。
 - [P3-C9-R2 独立复验报告](docs/testing/phase-3-c9-r2-activity-import-report.md)：89/89 项通过，执行方和独立 PostgreSQL 门禁通过，原 P0 缺陷关闭。
+- [P0-P3 实现后教材](docs/teaching/README.md)：按 P0 → P1 → P2 → P3 学习实际代码、数据流、测试证据与练习；同目录提供四册 Markdown。
+- [P0 PDF](output/pdf/p0-agent-http-wechat-teaching.pdf)、[P1 PDF](output/pdf/p1-finance-data-foundation-teaching.pdf)、[P2 PDF](output/pdf/p2-finance-agent-workflow-teaching.pdf)、[P3 PDF](output/pdf/p3-activity-import-teaching.pdf)：四册经过程序化检查和逐页视觉检查的教学版 PDF。
+- [P0-P3-D8 技术顾问 Prompt](docs/coordination/prompts/p0-p3-d8-technical-adviser.md)：四册教材与 PDF 的已完成任务卡和验收边界。
+- [P4 Windows 财务驾驶舱头脑风暴](docs/phase-4-desktop-cockpit-brainstorm.md)：澄清微信记账、桌面聊天、数据可视化、迷你助手、未来消费和投资模块的关系及建议切片。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 
-以上文档是可修改的讨论稿，不代表候选框架、微信通道或部署服务已经接入。真实账单、个人活动资料和密钥将作为运行数据管理，不提交到代码仓库。
+P4 头脑风暴仍是可修改的讨论稿，不代表候选框架或部署服务已经接入。P0～P3 的实现、测试证据和教材按各自状态文件记录。真实账单、个人活动资料和密钥将作为运行数据管理，不提交到代码仓库。

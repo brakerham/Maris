@@ -2,24 +2,33 @@
 
 - 角色：技术选型咨询、工程教学与教学子任务统筹
 - 连接状态：用户侧边栏独立技术顾问已确认接单
-- 当前任务：P3-D7 — Markdown 活动导入技术方案
+- 当前任务：P0-P3-D8 — 阶段 0～3 实现后教材与 PDF
 - 状态：`review`
-- 最近更新：2026-09-18 15:49，Asia/Shanghai
-- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-18T15:20:00+08:00` 与 `docs/coordination/prompts/p3-d7-technical-adviser.md`
-- 可修改范围：本文件与 `docs/phase-3-d7-activity-import-advice.md`；产品、测试、迁移、依赖、其他角色文件、接口冻结、OpenClaw 配置和 Git 状态只读
+- 最近更新：2026-09-19 21:00，Asia/Shanghai
+- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-19T20:52:00+08:00`、任务卡 `P0-P3-D8`、固定提交 `6e897623ba598d0f8f26ba1ad694dafcae0cf103`
+- 可修改范围：`docs/teaching/**` 指定五份 Markdown、`output/pdf/` 指定四份 PDF、`tools/teaching_pdf/**` 与本角色状态文件；其余项目、测试、迁移、报告、控制、其他角色文件、外部配置和 Git 状态只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P3-D7 建议文档已提交 `review`，停止修改并等待头脑风暴总控结合 P3-C8 冻结接口
-- 步骤开始时间：2026-09-18 15:37 Asia/Shanghai
-- 最近有效进展：2026-09-18 15:49 Asia/Shanghai
-- 最近心跳：2026-09-18 15:49 Asia/Shanghai
-- 下一检查点：头脑风暴总控核对 D7/C8 并发布或退回 `P3-IF-001`；时间由总控安排
-- 等待对象：头脑风暴总控评审与 P3-C8 并行交付
-- 活动进程或会话：无；交付文件 `docs/phase-3-d7-activity-import-advice.md`
-- 重试次数：0
-- 最近输出：建议文档 724 行、20 个编号章节、2 个 Mermaid 图、32 个成对围栏；必需章节无缺失，尾随空白 0 行，本地代码路径均存在
+- 当前步骤：四册 Markdown 与四册 PDF 已完成验证，停在 `review` 等待头脑风暴总控核对
+- 步骤开始时间：2026-09-19 20:59 Asia/Shanghai
+- 最近有效进展：2026-09-19 21:00 Asia/Shanghai
+- 最近心跳：2026-09-19 21:00 Asia/Shanghai
+- 下一检查点：头脑风暴总控核对固定提交、文件边界、教材内容与 PDF；时间由总控安排
+- 等待对象：头脑风暴总控评审
+- 活动进程或会话：无；临时 PNG 渲染目录已清理
+- 重试次数：1 次 PDF TOC 收敛修复后成功；没有连续两个无进展检查点
+- 最近输出：四册共 44 页；96 个本地链接/行号锚点通过；pypdf 与 pdfplumber 重开通过；44/44 页完成视觉检查
+
+## P0-P3-D8 分册进度
+
+| 分册 | Markdown | PDF | 逐页视觉 QA | 当前检查点 |
+| --- | --- | --- | --- | --- |
+| P0 最小 Agent、HTTP 与微信桥接 | `complete` | `complete` | `complete` | 10 页，视觉与文本检查通过 |
+| P1 财务数据底座 | `complete` | `complete` | `complete` | 11 页，视觉与文本检查通过 |
+| P2 财务 Agent 工作流 | `complete` | `complete` | `complete` | 11 页，视觉与文本检查通过 |
+| P3 Markdown 活动导入 | `complete` | `complete` | `complete` | 12 页，视觉与文本检查通过 |
 
 ## 已有证据
 
@@ -36,10 +45,46 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 
 ## 待处理事项
 
-- 等待头脑风暴总控结合 P3-D7 与 P3-C8 裁定六项未决边界并冻结 `P3-IF-001`；冻结前不启动 P3-B5。
-- 技术顾问保持停止，不修改产品、测试、迁移、依赖、接口冻结或 Git；OpenClaw 安全暂停继续有效。
+- 等待头脑风暴总控评审 P0-P3-D8；技术顾问保持停止，不自行把 `review` 改为 `complete`。
+- 未执行产品服务、Docker、DeepSeek、OpenClaw 或微信；教材只引用固定提交和既有验收证据。
 
 ## 工作日志
+
+### 2026-09-19 21:00 Asia/Shanghai — P0-P3-D8 提交 review 并停止
+
+- 状态：`review`；运行状态：`finished`
+- Markdown 交付：[`docs/teaching/README.md`](../../teaching/README.md)、[P0](../../teaching/p0-agent-http-wechat.md)、[P1](../../teaching/p1-finance-data-foundation.md)、[P2](../../teaching/p2-finance-agent-workflow.md)、[P3](../../teaching/p3-activity-import.md)。
+- PDF 交付：[P0 PDF](../../../output/pdf/p0-agent-http-wechat-teaching.pdf)、[P1 PDF](../../../output/pdf/p1-finance-data-foundation-teaching.pdf)、[P2 PDF](../../../output/pdf/p2-finance-agent-workflow-teaching.pdf)、[P3 PDF](../../../output/pdf/p3-activity-import-teaching.pdf)。
+- 可复现工具：`tools/teaching_pdf/build_teaching_pdfs.py`、`verify_teaching_pdfs.py`、`verify_teaching_sources.py`。
+- PDF 页数与 SHA-256：P0 10 页 `fe645915058540d1f1364eadf2bc34e01afd90d6dcc5b77653c9cfc170d9b8cb`；P1 11 页 `b66559753888b07b6e4cf99008b86a8b2615e2adb78f8642e89d903949a9514b`；P2 11 页 `6de2394ac6bf6ef3b5e5e636a1bb491929daadec22e34e4536069923353f99c5`；P3 12 页 `bf100b4eb804fc092f0ffb9f56cfb891ee774b90040c150c76d7a6068821a65e`。
+- 程序化验证：pypdf 与 pdfplumber 均能重开，四册标题/关键术语存在、正文非空、无空页；96 个 Markdown 本地链接和 `#L` 行号锚点均指向存在文件且未越界。
+- 视觉验证：使用 Poppler 以 110 DPI 渲染全部 44 页并逐页查看；修复首章过度留白与深色表头对比后重新生成、重新渲染并复查 44/44 页。最终未见中文方框、裁切、重叠、代码溢出、表格跨界、黑块或空白页。
+- 生成事件：任务卡相对 marker 路径在仓库中不存在，定位 PDF skill 自带脚本后按相同命令成功登记一次；首次 PDF build 因 TOC 书签序号跨遍历未重置而不收敛，修复 `beforeDocument()` 后生成成功。两次事件之间均有有效定位/修复输出，未触发连续两个无进展检查点。
+- 清理与边界：`tmp/pdfs/` 的中间 PNG 已安全删除；只修改任务卡允许的教学 Markdown、四份 PDF、生成/验证脚本和本角色状态文件。没有 Git 写操作，没有修改产品、迁移、测试、报告、冻结接口、控制、其他角色状态、依赖或外部配置。
+- 剩余限制：本任务只读使用固定提交和既有证据，没有重新运行产品测试或外部服务；测试数字只代表对应报告范围。最终接受由头脑风暴总控决定。
+- 下一步/交接：总控审阅上述九份内容交付和三份生成/验证脚本；若接受，再由总控按项目流程处理 Git 状态。
+
+### 2026-09-19 20:51 Asia/Shanghai — P0～P3 四册源 Markdown 完成
+
+- 状态：`in_progress`；运行状态：`active`
+- P0：完成最小工具循环、FastAPI 探针、进程内幂等、TypeScript OpenClaw、双入口、DeepSeek/确定性工具和证据分层。
+- P1：完成关系账本、SQLAlchemy/Pydantic/service/repository/Alembic、整数分、业务关系、事务/版本/约束、双库门禁和四个缺陷教训。
+- P2：完成“午饭 18 元”全链路、六工具、可信上下文、pending 状态与六类 ID、24 小时、并发/隐私/错误、显式循环和测试分层。
+- P3：完成 Markdown 到事务响应全链路、离线解析、安全与金额范围、预览/确认/回滚、HMAC/幂等、PostgreSQL 并发、迁移缺陷、89 项证据角色和 P4 API 边界。
+- 交付路径：`docs/teaching/README.md` 与 `docs/teaching/p0-agent-http-wechat.md`、`p1-finance-data-foundation.md`、`p2-finance-agent-workflow.md`、`p3-activity-import.md`。
+- 检查点结论：四个连续分册检查点均有有效文件输出，未触发“两次无有效进展”停止条件。
+- 下一步/交接：执行唯一一次 PDF artifact marker，创建可复现生成器与第一版四册 PDF，再逐页视觉检查。
+
+### 2026-09-19 20:36 Asia/Shanghai — P0-P3-D8 技术顾问接单
+
+- 状态：`in_progress`；运行状态：`active`
+- 唯一负责人：用户启动的既有技术顾问；依据总控版本 `2026-09-19T20:52:00+08:00`。
+- 固定输入：本地提交 `6e897623ba598d0f8f26ba1ad694dafcae0cf103`，标题 `Complete P3 activity Markdown import`。
+- 目标：基于最终实际代码和验收证据，分别制作 P0、P1、P2、P3 四册中文 Markdown 教材和四份逐页视觉检查的 PDF；旧教学资料只作输入，不推定用户已经学过。
+- 文件边界：只写任务卡列出的教学 Markdown、四份最终 PDF、`tools/teaching_pdf/**` 与本角色日志；产品、迁移、测试、报告、接口冻结、控制、其他角色日志、依赖、外部配置和 Git 全部只读。
+- PDF 规则：已读取 PDF skill；第一次 PDF authoring 前只执行一次四输出 artifact marker，使用现有 ReportLab/pypdf/pdfplumber/Poppler，逐页 PNG 检查后才交付。
+- 停止条件：任意连续两个检查点无有效进展即安全停止，保留现场并报告最后错误、已尝试办法和待总控决定事项。
+- 下一步/交接：先完成 P0 固定提交源码和三类证据核对，产出第一册 Markdown 后更新分册进度。
 
 ### 2026-09-18 15:49 Asia/Shanghai — P3-D7 提交 review 并停止
 

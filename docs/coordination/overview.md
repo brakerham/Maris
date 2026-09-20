@@ -1,18 +1,18 @@
 # 项目进度总览
 
-更新时间：2026-09-19 20:17，Asia/Shanghai
+更新时间：2026-09-20 10:32，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P1 数据层、P2-A 财务 Agent、已冻结 PostgreSQL 范围、P2 测试时钟和 P3 活动 Markdown 导入均已完成独立验收。P3 最终 89/89 项通过，原 PostgreSQL 迁移缺陷已关闭；下一步是 P3 代码教学和 P4 Windows 桌面端范围规划。
+P1 数据层、P2-A 财务 Agent、已冻结 PostgreSQL 范围、P2 测试时钟和 P3 活动 Markdown 导入均已完成独立验收。P3 产品由提交 `6e89762` 和标签 `checkpoint/p3-foundation` 固定；P0～P3 四册实现后教材已验收。用户已授权首次发布当前已验收内容，P4 Windows 财务驾驶舱仍处于范围讨论。
 
 ## 角色状态
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `active`：P3 已验收，进行教学收口与 P4 规划 | 2026-09-19 20:17 | 向用户讲解 P3，并冻结 P4 头脑风暴输入 | [角色日志](agents/brainstorm.md)、[R2 报告](../testing/phase-3-c9-r2-activity-import-report.md) |
-| 技术顾问 | `complete`（P3-D7，总控接受） | `finished`：方案交付已纳入接口冻结 | 2026-09-18 15:49 | 等待后续教学或架构变更 | [角色日志](agents/technical-adviser.md)、[D7 方案](../phase-3-d7-activity-import-advice.md) |
+| 头脑风暴 | `in_progress` | `active`：验收 D8 并执行首次 GitHub 发布 | 2026-09-20 10:32 | 发布后冻结 P4 五项范围问题 | [角色日志](agents/brainstorm.md)、[P4 讨论稿](../phase-4-desktop-cockpit-brainstorm.md) |
+| 技术顾问 | `complete`（P0-P3-D8，总控接受） | `finished`：四册 Markdown、四册 PDF 和可复现工具已交付 | 2026-09-19 21:00 | 按教材顺序开展后续教学 | [角色日志](agents/technical-adviser.md)、[教材索引](../teaching/README.md) |
 | 执行智能体 | `complete`（P3-B5-R1，总控接受） | `finished`：最终实现与 PostgreSQL 返修已验收 | 2026-09-19 20:17 | 等待新的 P4 实现任务 | [角色日志](agents/executor.md)、[B5 交接](../b5-activity-import-running.md) |
 | 测试智能体 | `complete`（P3-C9-R2，总控接受） | `finished`：89/89 和两组 PostgreSQL 门禁通过 | 2026-09-19 20:17 | 等待新的 P4 测试设计任务 | [角色日志](agents/tester.md)、[R2 报告](../testing/phase-3-c9-r2-activity-import-report.md) |
 
@@ -54,9 +54,11 @@ P1 数据层、P2-A 财务 Agent、已冻结 PostgreSQL 范围、P2 测试时钟
 | P3-C9：活动导入独立验收 | 用户启动的既有测试智能体 | `complete`（经 R2） | 首轮缺陷报告保留为返修依据，最终由 R2 收口 | [C9 报告](../testing/phase-3-c9-activity-import-report.md) |
 | P3-B5-R1：外键名最小返修 | 用户启动的既有执行智能体 | `complete` | 22 文件摘要匹配；migration 5、P3 本地 144、PG 9、旧迁移 4 均通过 | [B5 交接](../b5-activity-import-running.md) |
 | P3-C9-R2：PostgreSQL 定向复验 | 用户启动的既有测试智能体 | `complete` | 独立本地 81、执行方本地 144、旧迁移 4、PG 9/10 和矩阵 89/89 通过 | [R2 报告](../testing/phase-3-c9-r2-activity-import-report.md) |
+| P0-P3-D8：阶段实现后教材 | 用户启动的既有技术顾问 | `complete` | 四册共 44 页；96 个本地链接和行号锚点、PDF 重开及 44/44 页视觉 QA 通过 | [教材索引](../teaching/README.md)、[任务卡](prompts/p0-p3-d8-technical-adviser.md) |
 
 ## 当前阻塞与风险
 
+- P4 前地基检查点已建立；恢复操作只能由总控在保留现有工作的前提下执行，不把检查点理解为允许其他角色自行重置工作区。
 - `P3-C9-PG-001` 已由 B5-R1 修复并经 C9-R2 独立关闭；原始失败报告继续保留为审计证据。
 - C2 的并发用例原有测试夹具矛盾，经测试角色独立确认后仅修正测试基础设施；六项产品缺陷仍分别修复并通过复验。
 - B1/B2a 只保证进程内去重；OpenClaw 命令上下文没有来源消息 ID，适用边界已写入 `P0-IF-002`。
@@ -67,6 +69,6 @@ P1 数据层、P2-A 财务 Agent、已冻结 PostgreSQL 范围、P2 测试时钟
 
 ## 下一次总控检查
 
-1. 总控结合实际代码向用户讲解 P3 的解析、Pydantic、FastAPI、事务、幂等、迁移和双数据库验证。
-2. 与用户确认 P4 Windows 桌面端最小纵向切片的界面范围、进程边界和学习目标。
-3. 冻结 P4 任务顺序后，再分别派发技术方案、测试矩阵、实现和独立验收任务。
+1. 总控完成当前已验收内容的首次 GitHub 发布，并确认远端分支与 `checkpoint/p3-foundation` 标签。
+2. 首发后的新变更使用独立分支和 GitHub PR；其他角色仍不执行 Git 写操作。
+3. 用户可从 P0 教材开始学习；项目同时冻结 P4 Windows 桌面端第一条纵向切片。
