@@ -114,8 +114,8 @@ def seed_template(connection, *, name: str, amount: int | None, archived: bool =
 def test_empty_sqlite_upgrade_repeat_downgrade_and_recover(tmp_path: Path) -> None:
     url = f"sqlite:///{(tmp_path / 'empty.sqlite3').as_posix()}"
     config = migration_config(url)
-    command.upgrade(config, "head")
-    command.upgrade(config, "head")
+    command.upgrade(config, P3_HEAD)
+    command.upgrade(config, P3_HEAD)
     engine = create_engine(url)
     assert engine.connect().scalar(text("SELECT version_num FROM alembic_version")) == P3_HEAD
     assert {"activity_import_batch", "activity_import_candidate"}.issubset(inspect(engine).get_table_names())
@@ -125,7 +125,7 @@ def test_empty_sqlite_upgrade_repeat_downgrade_and_recover(tmp_path: Path) -> No
     assert "activity_import_batch" not in inspect(engine).get_table_names()
     assert "name_normalized" not in {column["name"] for column in inspect(engine).get_columns("activity_template")}
     engine.dispose()
-    command.upgrade(config, "head")
+    command.upgrade(config, P3_HEAD)
 
 
 def test_existing_template_history_is_preserved_and_amount_is_backfilled(tmp_path: Path) -> None:
@@ -145,7 +145,7 @@ def test_existing_template_history_is_preserved_and_amount_is_backfilled(tmp_pat
         ), {"id": occurrence_id, "revision": revision_id})
     engine.dispose()
 
-    command.upgrade(config, "head")
+    command.upgrade(config, P3_HEAD)
     engine = create_engine(url)
     with engine.connect() as connection:
         template = connection.execute(text(
@@ -180,7 +180,7 @@ def test_normalized_name_collision_fails_before_schema_changes(tmp_path: Path) -
     engine.dispose()
 
     with pytest.raises(RuntimeError, match="duplicate or invalid normalized name"):
-        command.upgrade(config, "head")
+        command.upgrade(config, P3_HEAD)
     engine = create_engine(url)
     assert engine.connect().scalar(text("SELECT version_num FROM alembic_version")) == P2_HEAD
     inspector = inspect(engine)
@@ -191,7 +191,7 @@ def test_normalized_name_collision_fails_before_schema_changes(tmp_path: Path) -
 
 def test_new_database_constraints_include_identity_amount_and_source_rules(tmp_path: Path) -> None:
     url = f"sqlite:///{(tmp_path / 'constraints.sqlite3').as_posix()}"
-    command.upgrade(migration_config(url), "head")
+    command.upgrade(migration_config(url), P3_HEAD)
     engine = create_engine(url)
     inspector = inspect(engine)
     template_constraints = {item["name"] for item in inspector.get_unique_constraints("activity_template")}
@@ -238,3 +238,4 @@ def test_new_database_constraints_include_identity_amount_and_source_rules(tmp_p
                 "VALUES (:id,'虚拟约束',NULL,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,1)"
             ), {"id": uuid.uuid4().hex})
     engine.dispose()
+

@@ -9,6 +9,9 @@ from sqlalchemy.orm import Mapped, mapped_column
 from .db import Base
 
 
+BOOTSTRAP_USER_ID = uuid.UUID("00000000-0000-0000-0000-000000000001")
+
+
 def new_uuid() -> uuid.UUID:
     return uuid.uuid4()
 
@@ -42,7 +45,13 @@ class Versioned:
     version_id: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
 
 
-class Account(Base, Versioned):
+class UserScoped:
+    """Trusted owner column shared by P4 business persistence records."""
+
+    user_id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), nullable=False, index=True)
+
+
+class Account(UserScoped, Base, Versioned):
     __tablename__ = "account"
     __table_args__ = (CheckConstraint("currency = 'CNY'", name="currency_cny"),)
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
@@ -53,11 +62,11 @@ class Account(Base, Versioned):
     __mapper_args__ = {"version_id_col": Versioned.version_id, "version_id_generator": False}
 
 
-class Category(Base, Versioned):
+class Category(UserScoped, Base, Versioned):
     __tablename__ = "category"
     __table_args__ = (
         CheckConstraint("kind IN ('income','expense')", name="kind"),
-        UniqueConstraint("kind", "name_normalized", name="uq_category_kind_name_normalized"),
+        UniqueConstraint("user_id", "kind", "name_normalized", name="uq_category_user_kind_name"),
     )
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
     kind: Mapped[str] = mapped_column(String(16), nullable=False)
@@ -68,9 +77,9 @@ class Category(Base, Versioned):
     __mapper_args__ = {"version_id_col": Versioned.version_id, "version_id_generator": False}
 
 
-class CommandReceipt(Base):
+class CommandReceipt(UserScoped, Base):
     __tablename__ = "command_receipt"
-    __table_args__ = (UniqueConstraint("source_system", "key_digest", name="uq_command_receipt_source_digest"),)
+    __table_args__ = (UniqueConstraint("user_id", "source_system", "key_digest", name="uq_receipt_user_source_digest"),)
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
     source_system: Mapped[str] = mapped_column(String(80), nullable=False)
     key_version: Mapped[int] = mapped_column(Integer, nullable=False)
@@ -84,7 +93,7 @@ class CommandReceipt(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 
-class AuditEvent(Base):
+class AuditEvent(UserScoped, Base):
     __tablename__ = "audit_event"
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
     command_receipt_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("command_receipt.id", ondelete="RESTRICT"), nullable=False, index=True)
@@ -97,7 +106,7 @@ class AuditEvent(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 
-class FinancialTransaction(Base):
+class FinancialTransaction(UserScoped, Base):
     __tablename__ = "financial_transaction"
     __table_args__ = (
         CheckConstraint("kind IN ('opening_balance','income','expense','transfer','refund','reversal')", name="kind"),
@@ -117,7 +126,7 @@ class FinancialTransaction(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 
-class TransactionEntry(Base):
+class TransactionEntry(UserScoped, Base):
     __tablename__ = "transaction_entry"
     __table_args__ = (
         UniqueConstraint("transaction_id", "line_no", name="uq_transaction_entry_transaction_line"),
@@ -141,10 +150,10 @@ class TransactionEntry(Base):
     category_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("category.id", ondelete="RESTRICT"))
 
 
-class ActivityTemplate(Base, Versioned):
+class ActivityTemplate(UserScoped, Base, Versioned):
     __tablename__ = "activity_template"
     __table_args__ = (
-        UniqueConstraint("name_normalized", name="uq_activity_template_name_normalized"),
+        UniqueConstraint("user_id", "name_normalized", name="uq_template_user_name"),
         CheckConstraint("length(name_normalized) BETWEEN 1 AND 360", name="normalized_name_length"),
     )
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
@@ -155,7 +164,7 @@ class ActivityTemplate(Base, Versioned):
     __mapper_args__ = {"version_id_col": Versioned.version_id, "version_id_generator": False}
 
 
-class ActivityTemplateRevision(Base):
+class ActivityTemplateRevision(UserScoped, Base):
     __tablename__ = "activity_template_revision"
     __table_args__ = (
         UniqueConstraint("template_id", "revision_no", name="uq_activity_template_revision_template_revision"),
@@ -177,7 +186,7 @@ class ActivityTemplateRevision(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 
-class ActivityImportBatch(Base, Versioned):
+class ActivityImportBatch(UserScoped, Base, Versioned):
     __tablename__ = "activity_import_batch"
     __table_args__ = (
         CheckConstraint("status IN ('previewed','committed')", name="status"),
@@ -185,6 +194,7 @@ class ActivityImportBatch(Base, Versioned):
         CheckConstraint("content_key_version > 0", name="content_key_version_positive"),
         CheckConstraint("version_id > 0", name="version_positive"),
         CheckConstraint("source_label IS NULL OR length(source_label) <= 120", name="source_label_length"),
+        CheckConstraint("owner_id = user_id", name="owner_user"),
         CheckConstraint(
             "(status = 'previewed' AND commit_receipt_id IS NULL AND committed_at IS NULL "
             "AND selection_fingerprint IS NULL) OR "
@@ -211,7 +221,7 @@ class ActivityImportBatch(Base, Versioned):
     __mapper_args__ = {"version_id_col": Versioned.version_id, "version_id_generator": False}
 
 
-class ActivityImportCandidate(Base):
+class ActivityImportCandidate(UserScoped, Base):
     __tablename__ = "activity_import_candidate"
     __table_args__ = (
         UniqueConstraint("batch_id", "ordinal", name="uq_activity_import_candidate_batch_ordinal"),
@@ -256,7 +266,7 @@ class ActivityImportCandidate(Base):
     result_template_version: Mapped[int | None] = mapped_column(Integer)
 
 
-class ActivityOccurrence(Base, Versioned):
+class ActivityOccurrence(UserScoped, Base, Versioned):
     __tablename__ = "activity_occurrence"
     __table_args__ = (CheckConstraint("status IN ('active','cancelled')", name="status"),)
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
@@ -267,7 +277,7 @@ class ActivityOccurrence(Base, Versioned):
     __mapper_args__ = {"version_id_col": Versioned.version_id, "version_id_generator": False}
 
 
-class ActivityEntryAllocation(Base):
+class ActivityEntryAllocation(UserScoped, Base):
     __tablename__ = "activity_entry_allocation"
     __table_args__ = (
         UniqueConstraint("occurrence_id", "expense_entry_id", name="uq_activity_allocation_occurrence_entry"),
@@ -280,7 +290,7 @@ class ActivityEntryAllocation(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 
-class IncomeSchedule(Base, Versioned):
+class IncomeSchedule(UserScoped, Base, Versioned):
     __tablename__ = "income_schedule"
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
     current_version_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True))
@@ -289,7 +299,7 @@ class IncomeSchedule(Base, Versioned):
     __mapper_args__ = {"version_id_col": Versioned.version_id, "version_id_generator": False}
 
 
-class IncomeScheduleVersion(Base):
+class IncomeScheduleVersion(UserScoped, Base):
     __tablename__ = "income_schedule_version"
     __table_args__ = (
         UniqueConstraint("schedule_id", "revision_no", name="uq_income_schedule_version_schedule_revision"),
@@ -309,7 +319,7 @@ class IncomeScheduleVersion(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 
-class IncomeExpectation(Base):
+class IncomeExpectation(UserScoped, Base):
     __tablename__ = "income_expectation"
     __table_args__ = (
         UniqueConstraint("schedule_version_id", "due_date", name="uq_income_expectation_version_due_date"),
@@ -324,7 +334,7 @@ class IncomeExpectation(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 
-class IncomeExpectationMatch(Base):
+class IncomeExpectationMatch(UserScoped, Base):
     __tablename__ = "income_expectation_match"
     __table_args__ = (CheckConstraint("matched_minor > 0", name="amount_positive"),)
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
@@ -334,7 +344,7 @@ class IncomeExpectationMatch(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 
-class BudgetPlan(Base, Versioned):
+class BudgetPlan(UserScoped, Base, Versioned):
     __tablename__ = "budget_plan"
     __table_args__ = (
         CheckConstraint("currency = 'CNY'", name="currency_cny"),
@@ -349,7 +359,7 @@ class BudgetPlan(Base, Versioned):
     __mapper_args__ = {"version_id_col": Versioned.version_id, "version_id_generator": False}
 
 
-class BudgetVersion(Base):
+class BudgetVersion(UserScoped, Base):
     __tablename__ = "budget_version"
     __table_args__ = (
         UniqueConstraint("plan_id", "period", "version_no", name="uq_budget_version_plan_period_version"),
@@ -364,7 +374,7 @@ class BudgetVersion(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 
-class BudgetAllocation(Base):
+class BudgetAllocation(UserScoped, Base):
     __tablename__ = "budget_allocation"
     __table_args__ = (
         UniqueConstraint("budget_version_id", "category_id", name="uq_budget_allocation_version_category"),

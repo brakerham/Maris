@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P3-B5-R1 — 修复 PostgreSQL 外键标识符超长
-- 状态：`review`
-- 最近更新：2026-09-19 15:22，Asia/Shanghai
-- 可修改范围：仅单个 P3 migration、执行方 `tests/activity_import/test_migration.py`、P3-B5 运行说明与本文件；独立测试/C9报告/矩阵、其他产品、控制/总览/其他角色、依赖与 Git 禁止修改。不执行任何 Git 命令。
+- 当前任务：P4-B6 — Host、身份和通用状态地基实现
+- 状态：`in_progress`
+- 最近更新：2026-09-21 00:00，Asia/Shanghai
+- 可修改范围：任务卡允许的 `host/**`、P4-A `modules/**`、必要 agent/api/finance/activity-import 适配、三个线性 migration、`pyproject.toml`/锁文件、执行方测试、B6运行说明与本文件；独立测试/C10/冻结/D9/控制/总览/其他角色、Electron/OpenClaw/微信和 Git 禁止修改。不执行任何 Git 写操作。
 
 ## 当前执行快照
 
-- 运行状态：`finished`
-- 当前步骤：最小返修、执行方本地/真实 PostgreSQL 回归、普通清理和22文件新快照均已交付；停止修改
-- 步骤开始时间：2026-09-19 15:22 Asia/Shanghai
-- 最近有效进展：2026-09-19 15:22 Asia/Shanghai（最终快照九项 PostgreSQL 实际通过，容器普通关闭，摘要复算匹配）
-- 最近心跳：2026-09-19 15:22 Asia/Shanghai
-- 下一检查点：头脑风暴总控核对 `P3-B5-R1-SHA256` 后决定是否派发 P3-C9-R2
-- 等待对象：头脑风暴总控；独立验收尚未开始
-- 活动进程或会话：无；`docker compose ps --format json` 无输出，服务列表为空
+- 运行状态：`running`
+- 当前步骤：三段 migration 已交付并通过 SQLite 门禁；主执行方已接入 Host API、持久幂等和 composition root，正在完成 Agent 与 P0～P3 user-scope/workflow 兼容集成
+- 步骤开始时间：2026-09-21 00:00 Asia/Shanghai
+- 最近有效进展：2026-09-21 00:00 Asia/Shanghai（Host API/state 聚焦10项、现有Agent loop 23项通过；compileall通过）
+- 最近心跳：2026-09-21 00:00 Asia/Shanghai
+- 下一检查点：完成Agent run/pending可信作用域与lease，并合并finance/activity-import user-scope适配
+- 等待对象：`p4_migrations` 的finance/activity-import user-scope追加交付；`p4_auth` ORM/migration一致性返修
+- 活动进程或会话：`p4_migrations`、`p4_auth`；主执行方继续Agent/API集成，无外部服务
 - 重试次数：0
-- 最近输出：migration 5 passed；本地 P3 144 passed/9 PG skipped；真实 PostgreSQL 9 passed；旧 migration 4 passed；`P3-B5-R1-SHA256:fb46b8fa4957c93bfd8f971b1fd987e45dd4779e8d6eac2907660fa2f1fef53c`
+- 最近输出：migration 5 passed、Host累计44 passed后继续集成；Host API/state 10 passed；Agent loop 23 passed；`pwdlib 0.3.1` + Argon2依赖已声明并安装；P0～P3执行方基线239 passed/13 skipped
 
 ## 待接任务
 
@@ -41,6 +41,9 @@
 | time_fixture_review | review | finished | 只读审阅双模块时钟与新增案例完成；没有文件修改或测试执行 | 2026-09-18 13:49（主执行方记录最终反馈） | 无；已交回主执行方 | 无 | /root/time_fixture_review：未发现阻止交付缺口；建议同进程还原审计已采纳并通过 |
 | p3_parser | review | finished | parser/DTO与纯测试交回父执行，停止修改 | 2026-09-18 19:14 | 无；已纳入最终快照 | 无 | 初始纯阶段120 passed；最终parser/schema边界随P3本地143项通过 |
 | p3_storage | stopped | finished | 存储设计及models草稿交回；父完成剩余迁移/测试 | 2026-09-19（父恢复时确认会话已结束） | 无 | 无 | 模型字段设计被采用；父独立完成迁移并验证 |
+| p4_host_registry | review | finished | Host合同、registry、tool binding、daily fixture及对应执行方测试 | 2026-09-20 23:31 | 已交回主执行方 | 主执行方最终集成 | 8个新文件，聚焦22 passed；生产组合根只含daily_finance |
+| p4_auth | in_progress | running | 复核 auth ORM 与 migration 列名、ondelete 一致性 | 2026-09-21 00:00 | 聚焦 auth 测试后交回 | 无 | 原领域聚焦10 passed；追加范围只限auth models/test |
+| p4_migrations | in_progress | running | migration已交付；追加finance/activity-import repository/service可信user scope适配 | 2026-09-21 00:00 | 跨用户反例与旧执行方回归 | 主执行方固定Profile ID集成 | migration 5 passed、Host当时44 passed；追加范围限finance/activity-import与test_user_scope |
 
 
 ## B1 交付物与验证
@@ -53,6 +56,22 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-20 23:31 Asia/Shanghai — P4-B6 合同、认证与通用state首轮集成
+
+- `p4_host_registry` 已交付严格合同、原子注册门禁、ToolCatalog/BoundToolRegistry、daily薄适配与唯一生产组合根，聚焦 `22 passed`；没有修改共享API/模型/migration。
+- `p4_auth` 已交付 pending owner、Argon2id、登录限速、不透明session轮换/重放撤销、改密、绑定码与假adapter合同，聚焦 `10 passed`。主执行方发现并推动修复 normal user误用bootstrap marker 的唯一约束问题。
+- 主执行方新增可信Principal/HostRun上下文、签名cursor、post-commit事件、conversation/message 90天边界、memory候选/确认/拒绝/删除/最多8条、module setting CAS与持久Host幂等；合同/auth/state合并聚焦 `39 passed in 21.42s`。
+- 依任务卡在安装前重读control后，声明并安装 `pwdlib[argon2]>=0.2,<1`，实际解析为 pwdlib 0.3.1、argon2-cffi 25.1.0及其依赖，锁文件同步。P0～P3执行方基线为 `239 passed, 13 skipped, 1 warning`。
+- migration共享测试仅发现 state回填把字符串交给SQLAlchemy DateTime；已给出精确函数与错误并交回 `p4_migrations` 修复。未运行独立测试、外部服务或Git写操作。
+
+### 2026-09-20 18:41 Asia/Shanghai — P4-B6 接单、输入门禁与执行拆分
+
+- 最新 control `2026-09-20T18:14:54+08:00` 指定现有执行智能体为 P4-B6 唯一负责人；技术顾问和测试智能体停止。交付只能到 `review`，不得运行/修改独立测试或执行Git写操作。
+- 固定起点完整提交为 `498b59c997b68facb12ed27ec1a6dfdf7f9ae04b`，与用户给出的短提交一致。C10原始文件摘要 `7425b67e8cbfb964cb42f343e830a515193ae40296d7286b798c6eec72ff24bd` 与总控记录一致；P4-IF-001摘要为 `260b1df463dd7bbc198b13ca174e6f68441ac0501bd9003c88f39f1db5f53db7`。
+- 已读取任务卡、P4-IF-001、D9、C10及P2/P3冻结。只实现P4-A；不进入Electron、财富业务、真实微信/OpenClaw/DeepSeek或外部服务。
+- 临时执行子任务按互斥路径拆分：`p4_host_registry` 负责纯合同/registry/tools和daily fixture；`p4_auth` 负责 `host/auth/**`；`p4_migrations` 负责三个migration、必要旧模型作用域和迁移测试。主执行方独占共享API、workflow、memory/settings/events及最终集成，任何共享文件变化均先交回主执行方。
+- 预计实现与验证超过五分钟；下一检查点为三个纯边界交付和主执行方基线梳理。连续两个检查点无进展、任意跨用户/重复写/半事务/迁移丢失/secret泄露时立即停止扩大执行并报告。
 
 ### 2026-09-19 15:22 Asia/Shanghai — P3-B5-R1 交付至review并停止
 

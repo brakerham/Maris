@@ -5,7 +5,7 @@ from __future__ import annotations
 import uuid
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Header, Request
 from pydantic import BaseModel, ConfigDict
 
 from wife_system.agent.application import AgentApplication
@@ -20,6 +20,7 @@ class AgentIdentity(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     actor_id: uuid.UUID
+    user_id: uuid.UUID | None = None
     permissions: frozenset[str]
 
 
@@ -32,8 +33,24 @@ def get_agent_application(request: Request) -> AgentApplication:
     return application
 
 
-def get_agent_identity(request: Request) -> AgentIdentity:
-    return request.app.state.agent_identity
+def get_agent_identity(
+    request: Request,
+    authorization: Annotated[str | None, Header()] = None,
+) -> AgentIdentity:
+    runtime = getattr(request.app.state, "host_runtime", None)
+    if runtime is None:
+        return request.app.state.agent_identity
+    from datetime import UTC, datetime
+    from wife_system.host.auth.errors import AuthError
+
+    if authorization is None or not authorization.startswith("Bearer "):
+        raise AuthError("authentication_required")
+    authenticated = runtime.auth.authenticate_access(authorization[7:], now=datetime.now(UTC))
+    return AgentIdentity(
+        actor_id=authenticated.user_id,
+        user_id=authenticated.user_id,
+        permissions=runtime.owner_permissions,
+    )
 
 
 router = APIRouter(prefix="/api/v1/agent", tags=["agent"])
@@ -41,16 +58,28 @@ router = APIRouter(prefix="/api/v1/agent", tags=["agent"])
 
 @router.post("/runs", response_model=AgentRunResponse)
 def create_agent_run(
+    request: Request,
     payload: CreateAgentRunRequest,
     identity: Annotated[AgentIdentity, Depends(get_agent_identity)],
     application: Annotated[AgentApplication, Depends(get_agent_application)],
 ) -> AgentRunResponse:
+    user_id = identity.user_id or identity.actor_id
+    runtime = getattr(request.app.state, "host_runtime", None)
+    module_id = "daily_finance"
+    profile_id = "daily_finance.assistant@1"
+    if runtime is not None:
+        conversation = runtime.conversations.get(payload.conversation_id, user_id=user_id)
+        runtime.registry.resolve_profile(user_id, conversation.profile_id)
+        module_id, profile_id = conversation.module_id, conversation.profile_id
     result = application.start(
         actor_id=identity.actor_id,
+        user_id=user_id,
         conversation_id=payload.conversation_id,
         client_event_id=payload.client_event_id,
         message=payload.message,
         permissions=identity.permissions,
+        module_id=module_id,
+        profile_id=profile_id,
     )
     return AgentRunResponse.model_validate(result.model_dump())
 
@@ -65,6 +94,7 @@ def resume_agent_run(
     result = application.resume(
         run_id,
         actor_id=identity.actor_id,
+        user_id=identity.user_id or identity.actor_id,
         conversation_id=payload.conversation_id,
         action=payload.action,
         permissions=identity.permissions,
@@ -84,6 +114,7 @@ def get_agent_run(
     result = application.get(
         run_id,
         actor_id=identity.actor_id,
+        user_id=identity.user_id or identity.actor_id,
         conversation_id=conversation_id,
     )
     return AgentRunResponse.model_validate(result.model_dump())

@@ -30,6 +30,8 @@ class AgentRunner:
     max_tool_calls: int = 8
     max_write_calls: int = 1
     provider_timeout_seconds: float = 15.0
+    tool_timeout_seconds: float = 10.0
+    max_provider_retries: int = 1
     _completed: dict[str, tuple[str, AgentRunResult]] = field(default_factory=dict, init=False)
     _in_flight: dict[str, tuple[str, threading.Event]] = field(default_factory=dict, init=False)
     _request_lock: threading.Lock = field(default_factory=threading.Lock, init=False)
@@ -37,13 +39,21 @@ class AgentRunner:
     def __post_init__(self) -> None:
         if self.max_model_turns < 1:
             raise ValueError("max_model_turns must be at least 1.")
-        if self.max_tool_calls < 1 or self.max_write_calls < 1:
-            raise ValueError("tool-call limits must be at least 1.")
+        if self.max_tool_calls < 1 or self.max_tool_calls > 8:
+            raise ValueError("max_tool_calls must be between 1 and 8.")
+        if self.max_write_calls < 0 or self.max_write_calls > 1:
+            raise ValueError("max_write_calls must be between 0 and 1.")
+        if self.max_model_turns > 4:
+            raise ValueError("max_model_turns cannot exceed 4.")
         if (
             not math.isfinite(self.provider_timeout_seconds)
-            or self.provider_timeout_seconds <= 0
+            or not 0 < self.provider_timeout_seconds <= 15
         ):
-            raise ValueError("provider_timeout_seconds must be finite and positive.")
+            raise ValueError("provider_timeout_seconds must be finite and between 0 and 15.")
+        if not math.isfinite(self.tool_timeout_seconds) or not 0 < self.tool_timeout_seconds <= 10:
+            raise ValueError("tool_timeout_seconds must be finite and between 0 and 10.")
+        if self.max_provider_retries not in {0, 1}:
+            raise ValueError("max_provider_retries must be 0 or 1.")
 
     def run(
         self,
@@ -106,7 +116,7 @@ class AgentRunner:
         for model_turn in range(1, self.max_model_turns + 1):
             self._event(events, "model_requested", model_turn=model_turn)
             turn = None
-            provider_attempts = 2 if context is not None else 1
+            provider_attempts = 1 + (self.max_provider_retries if context is not None else 0)
             for attempt in range(provider_attempts):
                 try:
                     turn = self.provider.complete(
@@ -203,6 +213,14 @@ class AgentRunner:
                     started_at = time.perf_counter()
                     try:
                         output = self.tools.invoke(call.name, call.arguments, context)
+                        duration_seconds = time.perf_counter() - started_at
+                        if duration_seconds > self.tool_timeout_seconds and not self.tools.is_write(call.name):
+                            return self._finish_error(
+                                request_id,
+                                events,
+                                "tool_timeout",
+                                "The tool exceeded its cooperative deadline.",
+                            )
                         serialized_output = json.dumps(
                             output,
                             ensure_ascii=False,
@@ -236,7 +254,7 @@ class AgentRunner:
                         model_turn=model_turn,
                         tool_name=call.name,
                         tool_call_id=call.id,
-                        duration_ms=(time.perf_counter() - started_at) * 1000,
+                        duration_ms=duration_seconds * 1000,
                         outcome="success",
                     )
                     if isinstance(output, dict) and output.get("status") in {

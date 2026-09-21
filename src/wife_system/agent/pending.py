@@ -33,6 +33,7 @@ class PendingAction(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     id: uuid.UUID
+    user_id: uuid.UUID
     run_id: uuid.UUID
     actor_id: uuid.UUID
     conversation_id: uuid.UUID
@@ -48,6 +49,9 @@ class PendingAction(BaseModel):
     final_result: dict[str, Any] | None
     created_at: datetime
     expires_at: datetime
+    module_id: str
+    profile_id: str
+    action_schema_version: int
 
 
 class PendingActionStore:
@@ -59,6 +63,7 @@ class PendingActionStore:
     def _view(row: PendingActionRecord) -> PendingAction:
         return PendingAction(
             id=row.id,
+            user_id=row.user_id,
             run_id=row.run_id,
             actor_id=row.actor_id,
             conversation_id=row.conversation_id,
@@ -74,6 +79,9 @@ class PendingActionStore:
             final_result=None if row.final_result_json is None else json.loads(row.final_result_json),
             created_at=_utc(row.created_at),
             expires_at=_utc(row.expires_at),
+            module_id=row.module_id,
+            profile_id=row.profile_id,
+            action_schema_version=row.action_schema_version,
         )
 
     def create(
@@ -88,14 +96,25 @@ class PendingActionStore:
         missing_fields: list[str],
         resource_versions: dict[str, int],
         now: datetime,
+        user_id: uuid.UUID | None = None,
+        module_id: str = "daily_finance",
+        profile_id: str = "daily_finance.assistant@1",
+        action_schema_version: int = 1,
     ) -> PendingAction:
+        scope_user_id = user_id or actor_id
+        if scope_user_id != actor_id:
+            raise PendingActionError("permission_denied")
         status = "needs_input" if missing_fields else "needs_confirmation"
         for _ in range(5):
             row = PendingActionRecord(
+                user_id=scope_user_id,
                 run_id=run_id,
                 actor_id=actor_id,
                 conversation_id=conversation_id,
                 source_system=source_system,
+                module_id=module_id,
+                profile_id=profile_id,
+                action_schema_version=action_schema_version,
                 action_type=action_type,
                 action_json=json.dumps(action, sort_keys=True, separators=(",", ":")),
                 missing_fields_json=json.dumps(missing_fields, separators=(",", ":")),
@@ -114,7 +133,8 @@ class PendingActionStore:
                 with self._sessions() as session:
                     existing = session.scalar(
                         select(PendingActionRecord).where(
-                            PendingActionRecord.run_id == run_id
+                            PendingActionRecord.run_id == run_id,
+                            PendingActionRecord.user_id == scope_user_id,
                         )
                     )
                     if existing is not None:
@@ -133,7 +153,12 @@ class PendingActionStore:
         check_time = _utc(now or datetime.now(UTC))
         with self._sessions() as session, session.begin():
             row = session.get(PendingActionRecord, action_id)
-            if row is None or row.actor_id != actor_id or row.conversation_id != conversation_id:
+            if (
+                row is None
+                or row.user_id != actor_id
+                or row.actor_id != actor_id
+                or row.conversation_id != conversation_id
+            ):
                 raise PendingActionError("pending_action_not_found")
             if row.status not in {"committed", "cancelled", "expired"} and _utc(row.expires_at) <= check_time:
                 row.status = "expired"
@@ -144,7 +169,9 @@ class PendingActionStore:
             raise PendingActionError("pending_action_expired")
         return view
 
-    def active_for_run(self, run_id: uuid.UUID) -> PendingAction | None:
+    def active_for_run(
+        self, run_id: uuid.UUID, *, user_id: uuid.UUID | None = None
+    ) -> PendingAction | None:
         with self._sessions() as session:
             row = session.scalar(
                 select(PendingActionRecord)
@@ -152,6 +179,8 @@ class PendingActionStore:
                 .order_by(PendingActionRecord.created_at.desc(), PendingActionRecord.id)
                 .limit(1)
             )
+            if row is not None and user_id is not None and row.user_id != user_id:
+                return None
             return None if row is None else self._view(row)
 
     def supplement(

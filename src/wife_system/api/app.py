@@ -25,6 +25,12 @@ from wife_system.activity_import.errors import ActivityImportError
 from wife_system.activity_import.service import ActivityImportService
 from wife_system.api.activity_import_routes import router as activity_import_router
 from wife_system.api.agent_routes import AgentIdentity, router as agent_router
+from wife_system.api.host_routes import router as host_router
+from wife_system.host.auth.errors import AuthError
+from wife_system.host.cursor import InvalidCursorError
+from wife_system.host.registry import RegistryStartupError
+from wife_system.host.runtime import HostRuntime
+from wife_system.host.state import HostStateError
 from wife_system.probes import DuplicateProbeRequestError, ProbeService
 
 
@@ -96,6 +102,7 @@ def create_app(
     agent_identity: AgentIdentity | None = None,
     activity_import_service: ActivityImportService | None = None,
     activity_import_identity: ImportIdentity | None = None,
+    host_runtime: HostRuntime | None = None,
 ) -> FastAPI:
     application = FastAPI(title="wife-system", version="0.1.0")
     application.state.probe_service = ProbeService() if probe_service is None else probe_service
@@ -105,6 +112,7 @@ def create_app(
         permissions=frozenset({"finance:read", "finance:write"}),
     )
     application.state.activity_import_service = activity_import_service
+    application.state.host_runtime = host_runtime
     application.state.activity_import_identity = activity_import_identity or ImportIdentity(
         owner_id=application.state.agent_identity.actor_id,
         channel="http",
@@ -187,6 +195,69 @@ def create_app(
             retryable=exc.retryable,
         )
 
+    @application.exception_handler(AuthError)
+    async def auth_error_handler(request: Request, exc: AuthError) -> JSONResponse:
+        request_id = request.state.request_id
+        status_by_code = {
+            "authentication_required": 401,
+            "invalid_credentials": 401,
+            "session_revoked": 401,
+            "session_expired": 401,
+            "bootstrap_unauthorized": 403,
+            "channel_adapter_unauthorized": 403,
+            "session_not_found": 404,
+            "binding_not_found": 404,
+            "account_not_found": 404,
+            "login_rate_limited": 429,
+            "invalid_handle": 422,
+            "invalid_password": 422,
+            "invalid_device": 422,
+            "invalid_channel": 422,
+        }
+        status_code = status_by_code.get(exc.code, 409)
+        response = _error_response(
+            request_id=request_id,
+            status_code=status_code,
+            code=exc.code,
+            message="The authentication request could not be completed.",
+            retryable=exc.retryable,
+        )
+        if exc.retry_after is not None:
+            response.headers["Retry-After"] = str(exc.retry_after)
+        return response
+
+    @application.exception_handler(HostStateError)
+    async def host_state_error_handler(request: Request, exc: HostStateError) -> JSONResponse:
+        return _error_response(
+            request_id=request.state.request_id,
+            status_code=exc.status_code,
+            code=exc.code,
+            message="The Host request could not be completed.",
+            retryable=exc.retryable,
+        )
+
+    @application.exception_handler(RegistryStartupError)
+    async def registry_error_handler(request: Request, exc: RegistryStartupError) -> JSONResponse:
+        status_code = 404 if exc.code in {"module_not_found", "profile_not_found"} else 409
+        return _error_response(
+            request_id=request.state.request_id,
+            status_code=status_code,
+            code=exc.code,
+            message="The requested Host module is unavailable.",
+            retryable=False,
+        )
+
+    @application.exception_handler(InvalidCursorError)
+    async def cursor_error_handler(request: Request, exc: InvalidCursorError) -> JSONResponse:
+        del exc
+        return _error_response(
+            request_id=request.state.request_id,
+            status_code=422,
+            code="invalid_cursor",
+            message="The cursor is invalid.",
+            retryable=False,
+        )
+
     @application.exception_handler(Exception)
     async def internal_error_handler(request: Request, exc: Exception) -> JSONResponse:
         request_id = request.state.request_id
@@ -261,6 +332,7 @@ def create_app(
 
     application.include_router(agent_router)
     application.include_router(activity_import_router)
+    application.include_router(host_router)
     return application
 
 

@@ -9,20 +9,23 @@ from sqlalchemy import CheckConstraint, DateTime, ForeignKey, Integer, String, T
 from sqlalchemy.orm import Mapped, mapped_column
 
 from wife_system.finance.db import Base
-from wife_system.finance.models import new_uuid, utc_now
+from wife_system.finance.models import UserScoped, new_uuid, utc_now
 
 
-class AgentRunRecord(Base):
+class AgentRunRecord(UserScoped, Base):
     __tablename__ = "agent_run"
     __table_args__ = (
         UniqueConstraint(
-            "actor_id", "source_system", "source_event_digest",
-            name="uq_agent_run_actor_source_event",
+            "user_id", "source_system", "source_event_digest",
+            name="uq_run_user_source_event",
         ),
         CheckConstraint(
-            "status IN ('running','success','error','paused')",
+            "status IN ('running','success','error','paused','cancelled')",
             name="status",
         ),
+        CheckConstraint("actor_id = user_id", name="actor_user"),
+        CheckConstraint("attempt_no BETWEEN 1 AND 3", name="attempt"),
+        CheckConstraint("action_schema_version > 0", name="schema"),
     )
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
@@ -39,11 +42,17 @@ class AgentRunRecord(Base):
     result_json: Mapped[str | None] = mapped_column(Text)
     events_json: Mapped[str | None] = mapped_column(Text)
     model_name: Mapped[str | None] = mapped_column(String(120))
+    module_id: Mapped[str] = mapped_column(String(64), nullable=False, default="daily_finance")
+    profile_id: Mapped[str] = mapped_column(String(140), nullable=False, default="daily_finance.assistant@1")
+    profile_version: Mapped[str] = mapped_column(String(32), nullable=False, default="1.0.0")
+    attempt_no: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    lease_expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    action_schema_version: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 
-class PendingActionRecord(Base):
+class PendingActionRecord(UserScoped, Base):
     __tablename__ = "pending_action"
     __table_args__ = (
         UniqueConstraint("run_id", name="uq_pending_action_run_id"),
@@ -53,6 +62,8 @@ class PendingActionRecord(Base):
             name="status",
         ),
         CheckConstraint("version_id > 0", name="version_positive"),
+        CheckConstraint("actor_id = user_id", name="actor_user"),
+        CheckConstraint("action_schema_version > 0", name="schema"),
     )
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
@@ -69,6 +80,9 @@ class PendingActionRecord(Base):
     confirmation_code: Mapped[str] = mapped_column(String(16), nullable=False)
     approval_grant_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True))
     final_result_json: Mapped[str | None] = mapped_column(Text)
+    module_id: Mapped[str] = mapped_column(String(64), nullable=False, default="daily_finance")
+    profile_id: Mapped[str] = mapped_column(String(140), nullable=False, default="daily_finance.assistant@1")
+    action_schema_version: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)

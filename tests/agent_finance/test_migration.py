@@ -20,8 +20,8 @@ def config_for(url: str) -> Config:
 def test_p2_migration_upgrade_repeat_downgrade_and_recover(tmp_path: Path) -> None:
     url = f"sqlite:///{(tmp_path / 'p2-agent.sqlite3').as_posix()}"
     config = config_for(url)
-    command.upgrade(config, "head")
-    command.upgrade(config, "head")
+    command.upgrade(config, HEAD)
+    command.upgrade(config, HEAD)
     engine = create_engine(url)
     inspector = inspect(engine)
     assert {"agent_run", "pending_action"}.issubset(inspector.get_table_names())
@@ -42,4 +42,5 @@ def test_p2_migration_upgrade_repeat_downgrade_and_recover(tmp_path: Path) -> No
     assert "agent_run" not in inspect(engine).get_table_names()
     assert engine.connect().scalar(text("SELECT version_num FROM alembic_version")) == P1_HEAD
     engine.dispose()
-    command.upgrade(config, "head")
+    command.upgrade(config, HEAD)
+

@@ -8,7 +8,7 @@ import json
 import logging
 import threading
 import uuid
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict
@@ -106,10 +106,15 @@ class AgentApplication:
             updated_at=_utc(row.updated_at),
         )
 
-    def _load(self, run_id: uuid.UUID) -> AgentRunRecord | None:
+    def _load(
+        self, run_id: uuid.UUID, *, user_id: uuid.UUID | None = None
+    ) -> AgentRunRecord | None:
         try:
             with self._sessions() as session:
-                return session.get(AgentRunRecord, run_id)
+                row = session.get(AgentRunRecord, run_id)
+                if row is not None and user_id is not None and row.user_id != user_id:
+                    return None
+                return row
         except SQLAlchemyError as exc:
             raise AgentApplicationError(
                 "database_unavailable", status_code=503, retryable=True
@@ -119,15 +124,19 @@ class AgentApplication:
         self,
         *,
         actor_id: uuid.UUID,
+        user_id: uuid.UUID,
         conversation_id: uuid.UUID,
         source_system: str,
         source_event_id: str,
         message: str,
         now: datetime,
+        module_id: str,
+        profile_id: str,
     ) -> tuple[AgentRunRecord, bool]:
         event_digest = self._digest("source-event", source_event_id)
         fingerprint = self._digest("message", message)
         row = AgentRunRecord(
+            user_id=user_id,
             actor_id=actor_id,
             conversation_id=conversation_id,
             source_system=source_system,
@@ -135,6 +144,12 @@ class AgentApplication:
             request_fingerprint=fingerprint,
             status="running",
             model_name=type(self._runner.provider).__name__,
+            module_id=module_id,
+            profile_id=profile_id,
+            profile_version="1.0.0",
+            attempt_no=1,
+            lease_expires_at=now + timedelta(seconds=60),
+            action_schema_version=1,
             created_at=_utc(now),
             updated_at=_utc(now),
         )
@@ -147,7 +162,7 @@ class AgentApplication:
                 with self._sessions() as session:
                     existing = session.scalar(
                         select(AgentRunRecord).where(
-                            AgentRunRecord.actor_id == actor_id,
+                            AgentRunRecord.user_id == user_id,
                             AgentRunRecord.source_system == source_system,
                             AgentRunRecord.source_event_digest == event_digest,
                         )
@@ -240,23 +255,32 @@ class AgentApplication:
         message: str,
         permissions: frozenset[str],
         received_at: datetime | None = None,
+        user_id: uuid.UUID | None = None,
+        module_id: str = "daily_finance",
+        profile_id: str = "daily_finance.assistant@1",
     ) -> AgentRunView:
         now = _utc(received_at or datetime.now(UTC))
+        scope_user_id = user_id or actor_id
+        if scope_user_id != actor_id:
+            raise AgentApplicationError("permission_denied", status_code=403)
         row, replayed = self._claim_run(
             actor_id=actor_id,
+            user_id=scope_user_id,
             conversation_id=conversation_id,
             source_system="desktop_chat",
             source_event_id=str(client_event_id),
             message=message,
             now=now,
+            module_id=module_id,
+            profile_id=profile_id,
         )
         lock = self._lock_for(self._run_locks, row.id)
         with lock:
-            current = self._load(row.id)
+            current = self._load(row.id, user_id=scope_user_id)
             assert current is not None
             if current.status != "running":
                 return self._view(current, replayed=replayed)
-            recovered = self._pending.active_for_run(row.id)
+            recovered = self._pending.active_for_run(row.id, user_id=scope_user_id)
             if recovered is not None:
                 result = AgentRunResult(
                     request_id=str(row.id),
@@ -289,9 +313,16 @@ class AgentApplication:
         *,
         actor_id: uuid.UUID,
         conversation_id: uuid.UUID,
+        user_id: uuid.UUID | None = None,
     ) -> AgentRunView:
-        row = self._load(run_id)
-        if row is None or row.actor_id != actor_id or row.conversation_id != conversation_id:
+        scope_user_id = user_id or actor_id
+        row = self._load(run_id, user_id=scope_user_id)
+        if (
+            row is None
+            or scope_user_id != actor_id
+            or row.actor_id != actor_id
+            or row.conversation_id != conversation_id
+        ):
             raise AgentApplicationError("pending_action_not_found", status_code=404)
         if row.status == "paused" and row.pending_action_id is not None:
             try:
@@ -352,8 +383,12 @@ class AgentApplication:
         confirmation_code: str | None = None,
         values: dict[str, Any] | None = None,
         now: datetime | None = None,
+        user_id: uuid.UUID | None = None,
     ) -> AgentRunView:
         at = _utc(now or datetime.now(UTC))
+        scope_user_id = user_id or actor_id
+        if scope_user_id != actor_id:
+            raise AgentApplicationError("permission_denied", status_code=403)
         pending = self._pending_for_run(
             run_id, actor_id=actor_id, conversation_id=conversation_id, now=at
         )
