@@ -36,7 +36,7 @@ R1 与 R2 不得并发。R1 只到 `review`，R2 只到 `review`；执行方自�
 
 - 原始 `code` 只能存在于首次成功响应的进程内对象中。
 - 数据库、receipt、日志、事件、模型上下文、普通设置和错误响应均不得保存或重建原始 code。
-- `channel_binding_code` 只保存带 domain 的 HMAC digest；domain 保持 `wife.channel-binding.v1`。
+- `channel_binding_code` 只保存带 domain 的 HMAC digest；domain 为 `wife.channel-binding.v2`，输入固定包含 `code_id`、冻结 channel 与原始 code。此前本文件误写为 v1，本行按已验收 D10 第 3.1 节勘误，不改变执行方已采用的安全语义。
 - `host_request_receipt.receipt_result` 只可保存 `code_id`、`expires_at` 和安全状态，不保存 code。
 - 相同用户、相同 source、相同 `Idempotency-Key`、相同请求重放返回：
 
@@ -191,7 +191,7 @@ FK agent_run(user_id, pending_action_id)
 
 `pending_action(user_id,id)`、`agent_run(user_id,id)` unique 和 pending→run 复合 FK 保持。被复合关系替代的单列 FK 不得继续造成 ORM/schema 双重漂移。
 
-PostgreSQL 的 run→pending nullable FK 使用可延迟约束；downgrade 先移除 run→pending，再处理状态和列，随后才移除 pending→run。
+PostgreSQL 的 run→pending nullable FK 固定为 `DEFERRABLE INITIALLY DEFERRED`，在事务提交时仍强制校验跨用户关系；downgrade 先移除 run→pending，再处理状态和列，随后才移除 pending→run。该值解决 D10 建议的 `INITIALLY IMMEDIATE` 与 R1 循环关系实现之间的歧义，不放宽最终提交约束。
 
 SQLite 必须以一个受控 helper 成对 rebuild run/pending；恢复 FK 后立即执行 `PRAGMA foreign_key_check`，任何返回行都使 migration 失败。memory downgrade 先处理 candidate，再处理 item。
 

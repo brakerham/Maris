@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B6-R1-COORDINATION — 安全数据边界与兼容入口返修协调
+- 当前任务：P4-B6-R1-F1-COORDINATION — 外部身份并发绑定最小返修协调
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-25 20:08，Asia/Shanghai
+- 最近更新：2026-09-26 01:47，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -43,19 +43,22 @@
 - [P4-IF-002 返修补充冻结](../../phase-4-interface-freeze-002.md)
 - [P4-B6-R1 执行智能体 Prompt](../prompts/p4-b6-r1-security-data-executor.md)
 - [P4-B6-R1 起点快照](../snapshots/p4-b6-r1-start.sha256)
+- [P4-B6-R1 总控代码验收记录](../../p4-b6-r1-coordinator-review.md)
+- [P4-B6-R1-F1 执行智能体 Prompt](../prompts/p4-b6-r1-f1-binding-race-executor.md)
+- [P4-B6-R1-F1 起点快照](../snapshots/p4-b6-r1-f1-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：D10 已验收并发布 IF-002，等待用户把 R1 Prompt 发送给既有执行智能体
-- 步骤开始时间：2026-09-25 20:08，Asia/Shanghai
-- 最近有效进展：2026-09-25 20:08，Asia/Shanghai（核对 D10 摘要/结构，冻结 IF-002，生成 93 文件起点快照和 R1 任务卡）
-- 最近心跳：2026-09-25 20:08，Asia/Shanghai
-- 下一检查点：执行智能体记录 R1 接单并重算起点摘要 `62c250...8c2e`
-- 等待对象：用户发送 R1 Prompt；随后等待执行智能体交付
-- 活动进程或会话：无；Docker 当前服务列表为空，R1 接单后由执行智能体成为唯一 PostgreSQL 环境负责人
+- 当前步骤：R1 快照与高风险代码已核对；PG 复现 P1 并发布 F1，等待用户发送 F1 Prompt
+- 步骤开始时间：2026-09-26 01:47，Asia/Shanghai
+- 最近有效进展：2026-09-26 01:47，Asia/Shanghai（22 文件摘要匹配；本地 40 项通过；PG 复现并发外部身份败方 IntegrityError；容器已 down；F1 已准备）
+- 最近心跳：2026-09-26 01:47，Asia/Shanghai
+- 下一检查点：执行智能体记录 F1 接单并重算 23 文件起点摘要 `d46c056d...c1cd`
+- 等待对象：用户发送 F1 Prompt；随后等待执行智能体交付
+- 活动进程或会话：无；Docker 当前服务列表为空，F1 接单后由执行智能体成为唯一 PostgreSQL 环境负责人
 - 重试次数：0
-- 最近输出：P4-D10 验收、P4-IF-002、R1 93 文件起点快照和 P4-B6-R1 任务卡
+- 最近输出：R1 总控审查、IF-002 勘误、F1 23 文件起点快照和 F1 任务卡
 
 ## 阻塞
 
@@ -71,6 +74,15 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-26 01:47 Asia/Shanghai — R1 暂不接受并派发 F1
+
+- 快照：执行方报告 SHA 与 22 个产品/migration/测试文件逐项匹配；R1 总摘要 `13520520...c0f8` 可复算。93 文件起点比较为 21 changed、72 unchanged、0 missing，另新增 1 个授权 PostgreSQL 测试。
+- 定向验证：总控复跑 Host auth/API/state/migration 40 项全部通过，只有既有 Starlette/AnyIO 弃用 warning。
+- 缺陷：真实 PostgreSQL 以两个虚拟用户、两个有效 code 同步争用同一外部身份，第二轮得到一成功、一未捕获 `IntegrityError`；Host HTTP 会成为 500。数据库唯一性仍有效且败方事务回滚，分级 `P4-B6-R1-REV-001` / P1。
+- 资源：只启动项目 `finance-postgres`；复现后普通 `docker compose down`，最终服务列表为空，未删除 volume 或 prune。
+- 冻结勘误：HMAC domain 按 D10 更正为 v2；run→pending 明确接受 `DEFERRABLE INITIALLY DEFERRED`，提交时仍强制 user scope。
+- 交付：[总控审查](../../p4-b6-r1-coordinator-review.md)、[F1 Prompt](../prompts/p4-b6-r1-f1-binding-race-executor.md)、23 文件起点摘要 `d46c056d...c1cd`。R2/C11 继续停止；本轮未提交 Git。
 
 ### 2026-09-25 20:08 Asia/Shanghai — 接受 D10、冻结 IF-002 并准备 R1
 
