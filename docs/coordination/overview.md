@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-20 18:14，Asia/Shanghai
+更新时间：2026-09-25 20:08，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -11,10 +11,10 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：C10 已验收，P4-IF-001 已冻结，B6 任务卡已准备 | 2026-09-20 18:14 | 用户把 B6 Prompt 发送给既有执行智能体 | [角色日志](agents/brainstorm.md)、[B6 Prompt](prompts/p4-b6-host-foundation-executor.md) |
-| 技术顾问 | `complete`（P4-D9，总控接受） | `finished`：Host 最小技术方案、迁移和教学地图已交付 | 2026-09-20 13:20 | 等待 P4 接口冻结后的教学或评审任务 | [角色日志](agents/technical-adviser.md)、[D9 方案](../phase-4-d9-modular-agent-host-advice.md) |
-| 执行智能体 | `ready`（P4-B6） | `waiting_user`：P4-A 实现任务卡已冻结 | 2026-09-20 18:14 | 用户发送 B6 Prompt 后接单并登记执行子任务 | [角色日志](agents/executor.md)、[B6 Prompt](prompts/p4-b6-host-foundation-executor.md) |
-| 测试智能体 | `complete`（P4-C10，总控接受） | `finished`：120 个实现前案例已交付，全部未执行 | 2026-09-20 18:09 | 等待 B6 固定快照和未来 C11 独立验收任务 | [角色日志](agents/tester.md)、[C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：D10 已接受、IF-002 已冻结、R1 任务卡已准备 | 2026-09-25 20:08 | 用户把 R1 Prompt 发送给既有执行智能体 | [角色日志](agents/brainstorm.md)、[IF-002](../phase-4-interface-freeze-002.md) |
+| 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
+| 执行智能体 | `ready`（P4-B6-R1） | `waiting_user`：等待接收安全数据与兼容入口返修任务 | 2026-09-25 20:08 | 用户发送 R1 Prompt；先核对 93 文件起点摘要 | [角色日志](agents/executor.md)、[R1 Prompt](prompts/p4-b6-r1-security-data-executor.md) |
+| 测试智能体 | `complete`（P4-C10，总控接受） | `finished`：C11 尚未开始，等待 R1/R2 最终快照 | 2026-09-25 20:08 | 继续停止，不提前复现或修改产品 | [角色日志](agents/tester.md)、[C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 阶段 0 任务状态
 
@@ -59,7 +59,12 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P4-D9：Agent Host 最小技术方案评审 | 用户启动的既有技术顾问 | `complete` | 766 行方案、F01～F17、7 个产品裁定项、14 个本地链接及摘要经总控核对 | [D9 方案](../phase-4-d9-modular-agent-host-advice.md) |
 | P4-C10：模块化 Agent Host 测试矩阵 | 用户启动的既有测试智能体 | `complete` | 120 个唯一案例、12 字段完整、全部 `not_run`，F/U 与八项扩展证明已追踪 | [C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 | P4-IF-001：模块化 Agent Host 接口冻结 | 头脑风暴总控 | `complete` | 冻结总架构与 P4-A 模块、身份、user scope、workflow、记忆、API 和 migration | [P4 接口](../phase-4-interface-freeze.md) |
-| P4-B6：Host、身份和通用状态地基 | 用户启动的既有执行智能体 | `ready` | 实现 P4-A、执行方自测、迁移与固定快照，只能到 `review` | [B6 Prompt](prompts/p4-b6-host-foundation-executor.md) |
+| P4-B6：Host、身份和通用状态地基 | 用户启动的既有执行智能体 | `review`，当前不接受 | 多交接实现有可复用基础，但接管审计登记 8 个 P0、14 个 P1；禁止进入 C11 | [B6 接管审计](../p4-b6-multi-handoff-code-audit.md) |
+| P4-D10：B6 返修架构裁定 | 用户启动的既有技术顾问 | `complete` | D10 SHA 匹配；8/14 处置、七类合同、R1/R2、12 类 PG 与 C11 门禁由总控接受 | [D10 方案](../phase-4-d10-b6-repair-architecture.md) |
+| P4-IF-002：B6 返修补充冻结 | 头脑风暴总控 | `complete` | 冻结安全数据与 Host 运行时的补充合同和顺序 | [IF-002](../phase-4-interface-freeze-002.md) |
+| P4-B6-R1：安全数据与兼容入口返修 | 用户启动的既有执行智能体 | `ready` | 绑定 93 文件起点摘要，关闭 R1 的 3 P0/7 P1 并完成真实 PostgreSQL 执行方门禁 | [R1 Prompt](prompts/p4-b6-r1-security-data-executor.md) |
+| P4-B6-R2：Host/Agent 运行时返修 | 用户启动的既有执行智能体 | `unverified`，未派发 | 等总控核对 R1 精确快照后再派发 | [IF-002](../phase-4-interface-freeze-002.md) |
+| P4-C11：P4-A 独立验收 | 用户启动的既有测试智能体 | `unverified`，未派发 | 绑定最终返修快照执行 64 项、缺陷反例、兼容回归和真实 PostgreSQL | [C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
@@ -67,13 +72,14 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 - `P3-C9-PG-001` 已由 B5-R1 修复并经 C9-R2 独立关闭；原始失败报告继续保留为审计证据。
 - C2 的并发用例原有测试夹具矛盾，经测试角色独立确认后仅修正测试基础设施；六项产品缺陷仍分别修复并通过复验。
 - B1/B2a 只保证进程内去重；OpenClaw 命令上下文没有来源消息 ID，适用边界已写入 `P0-IF-002`。
-- OpenClaw 官方 worker 触发终端安全软件行为告警；虽然哈希与官方 npm 包一致且代码审查支持误报判断，运行时恢复仍暂停，P1-B3 不得操作 OpenClaw。
+- OpenClaw 官方 worker 曾触发终端安全软件行为告警；用户已于 2026-09-25 确认本机 OpenClaw 恢复且微信可连接。P4-A 审计和返修仍不操作该运行时。
 - P1/P2 已冻结的真实 PostgreSQL 范围已通过；结论不外推到未设计或未运行的其他 PostgreSQL 场景。
 - `tests/agent_finance` 原 5 项时间漂移已关闭；局部可控时钟保留 24 小时边界，并通过独立还原、时区和线程检查。
 - B2a 首次执行子任务在写出实现后错过检查点且不再活动，已按已有输出恢复；这次中断不作为失败结论。
 
 ## 下一次总控检查
 
-1. 用户把 P4-B6 Prompt 发送给既有执行智能体任务。
-2. 执行智能体登记内部子任务和文件所有权后实现 P4-A，自测后提交固定快照并停在 `review`。
-3. 总控核对 B6 交付后再准备 P4-C11；测试智能体现在不提前执行 C10 案例。
+1. 用户把 P4-B6-R1 Prompt 发送给既有执行智能体任务。
+2. 执行智能体先重算 93 文件起点摘要；匹配后完成 R1 实现、本地与真实 PostgreSQL 自测，提交 `review` 新快照。
+3. 总控核对 R1 后才生成并派发 R2；技术顾问和测试智能体继续停止。
+4. 只有最终 R2 快照无开放 P0/P1 时才派发 P4-C11。

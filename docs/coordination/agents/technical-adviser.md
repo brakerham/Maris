@@ -2,24 +2,24 @@
 
 - 角色：技术选型咨询、工程教学与教学子任务统筹
 - 连接状态：用户侧边栏独立技术顾问已确认接单
-- 当前任务：P4-D9 — 可扩展个人 AI 应用 Host 最小技术方案评审
+- 当前任务：P4-D10 — B6 接管缺陷的最小返修架构裁定
 - 状态：`review`
-- 最近更新：2026-09-20 13:20，Asia/Shanghai
-- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-20T12:55:41+08:00`、任务卡 `P4-D9`、固定提交 `1d06d92c93d99fb2a3a23da6ff0958932e358814`
-- 可修改范围：仅 `docs/phase-4-d9-modular-agent-host-advice.md` 与本角色状态文件；产品、测试、迁移、依赖、冻结接口、项目计划、P4 规划、控制、总览、其他角色文件、外部配置和 Git 状态只读
+- 最近更新：2026-09-25 19:59，Asia/Shanghai
+- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-25T15:15:00+08:00`、任务卡 `P4-D10`、当前 P4-B6 `review` 工作区
+- 可修改范围：仅 `docs/phase-4-d10-b6-repair-architecture.md` 与本角色状态文件；产品、migration、测试、审计、冻结接口、矩阵/报告、控制、总览、其他角色、依赖、外部系统和 Git 状态只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P4-D9 技术建议已完成验证并停在 `review`，等待头脑风暴总控结合测试建议冻结接口
-- 步骤开始时间：2026-09-20 13:20 Asia/Shanghai
-- 最近有效进展：2026-09-20 13:20 Asia/Shanghai
-- 最近心跳：2026-09-20 13:20 Asia/Shanghai
-- 下一检查点：头脑风暴总控核对 F01～F17、裁定 U01～U07 并形成正式 P4 接口冻结；时间由总控安排
-- 等待对象：头脑风暴总控评审与后续测试矩阵
+- 当前步骤：P4-D10 已完成校验并停在 `review`，等待头脑风暴总控裁定并发布 `P4-IF-002`
+- 步骤开始时间：2026-09-25 19:40 Asia/Shanghai
+- 最近有效进展：2026-09-25 19:59 Asia/Shanghai
+- 最近心跳：2026-09-25 19:59 Asia/Shanghai
+- 下一检查点：头脑风暴总控核对建议冻结值、形成 `P4-IF-002`，再顺序派发 R1/R2；时间由总控安排
+- 等待对象：头脑风暴总控评审与冻结补充
 - 活动进程或会话：无；仅短时只读检查与文档编辑
 - 重试次数：0；尚未出现无进展检查点
-- 最近输出：`docs/phase-4-d9-modular-agent-host-advice.md` 766 行；十组技术问题/十组替代与复评条件、14 个有效本地链接、20 个成对代码围栏、零尾随空白；SHA-256 `765a3547b806724183a6302f4134a28b43e987d066fe30933bde5f993073fe5a`
+- 最近输出：`docs/phase-4-d10-b6-repair-architecture.md` 762 行；8 个 P0、14 个 P1 逐项处置，七类合同、两张 Mermaid、R1/R2、12 个 PostgreSQL 场景和 C11 门禁齐全；27 个本地链接有效；SHA-256 `1e9283af99a658b024e094db5f4c31c56396322a2dee68c012c87d19b5df2399`
 
 ## P0-P3-D8 分册进度
 
@@ -45,10 +45,44 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 
 ## 待处理事项
 
-- 等待头脑风暴总控评审 P0-P3-D8；技术顾问保持停止，不自行把 `review` 改为 `complete`。
-- 未执行产品服务、Docker、DeepSeek、OpenClaw 或微信；教材只引用固定提交和既有验收证据。
+- 等待头脑风暴总控评审 P4-D10、发布 `P4-IF-002` 并生成顺序 R1/R2 任务卡；技术顾问保持停止，不自行实现或派发。
+- 未重新执行 249 项测试或真实 PostgreSQL，也未启动产品服务、Docker、DeepSeek、OpenClaw、微信或 Electron；本文只裁定返修合同，不把建议写成实现证据。
 
 ## 工作日志
+
+### 2026-09-25 19:59 Asia/Shanghai — P4-D10 完成交付并提交 review
+
+- 状态：`review`；运行状态：`finished`。
+- 交付物：[P4-D10 B6 接管缺陷的最小返修架构裁定](../../phase-4-d10-b6-repair-architecture.md)。
+- 审计处置：8 个 P0、14 个 P1 均逐项列出冻结要求、当前行为、建议修复、R1/R2归属、执行方证据和是否需要 `P4-IF-002`；没有删除、合并或降级为“后续优化”。
+- 核心裁定：`code_id + code`与一次性409重放；Host receipt/事实同事务；pending commit lease/CAS与run attempt fence；CompiledExecutionPlan驱动真实Agent；Profile-bound memory、setting秘密拒绝和`host_core`四事件；三条复合user FK与既有三revision修正；production factory、可信channel、统一错误和Page cursor。
+- 返修交接：R1先处理认证/绑定/receipt/user scope/migration/兼容入口并形成快照；R2只能从精确R1快照继续Host/Agent/workflow/state/event/production集成；共享文件列出顺序交接，migration仅R1、`agent/application.py`仅R2。
+- C11门禁：列出8项进入条件与12类必须真实执行的PostgreSQL场景；当前B6、D10或执行方自测均不能当成C11已经开始。
+- 文档验证：762行；32个代码围栏成对；2张Mermaid；8个P0与14个P1唯一编号齐全；27个本地链接及行号全部存在；尾随空白0；SHA-256 `1e9283af99a658b024e094db5f4c31c56396322a2dee68c012c87d19b5df2399`。
+- 控制复核：完成前最新总控仍为`2026-09-25T15:15:00+08:00`，P4-D10仍由技术顾问唯一负责，R1/R2与C11仍未派发。
+- 边界：只修改D10文档和本角色状态；未修改产品、migration、测试、审计、冻结、控制/总览、其他角色、依赖、外部系统或Git状态；未启动服务、安装依赖或运行外部操作。
+- 未裁定项：技术上没有留空选项；所有值均给出推荐。它们仍须总控明确采纳为`P4-IF-002`，技术顾问不自行发布冻结。
+- 下一步/交接：总控审阅D10并发布冻结补充；随后严格按R1→R2顺序派发，最终固定R2快照后才派C11。
+
+### 2026-09-25 19:50 Asia/Shanghai — P4-D10 审计事实盘点里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 必读输入：已按任务卡顺序完成审计、P4-IF-001、D9、C10 与 B6 运行说明核对，并只读检查审计引用的 Host/Auth/Agent/API/state models、三个 P4 migration 和执行方测试。
+- 审计结论：8 个 P0、14 个 P1 均有当前代码证据，没有发现需要反证删除的条目；249 个本地通过用例没有覆盖这些跨事务、跨进程、复合约束、生产装配和真实 PostgreSQL 行为。
+- 关键裁定方向：同库 Host 命令采用 receipt 与领域事实同一事务；绑定消费改为 `code_id + code` 且原码不落 receipt；run/pending 使用数据库 CAS、attempt fence 与可恢复 `committing`；Host 编译执行计划真正驱动 Agent；三处复合 user FK 与 ORM/Alembic 同步；未验收 P4 继续修正既有三个 revision；生产 factory 显式装配全部服务。
+- 返修划分：R1 负责认证、绑定、receipt/user scope/migration、兼容入口和 PostgreSQL 夹具；R2 必须从 R1 固定快照顺序开始，负责 Host/Agent/workflow/conversation/memory/event/production composition，禁止两任务并发编辑共享文件或 migration。
+- 下一步/交接：形成完整 D10 文档，逐项给出推荐、替代、拒绝理由、HTTP/数据库/恢复语义、执行方测试及 P4-IF-002 需要性，再做结构和链接检查。
+
+### 2026-09-25 19:40 Asia/Shanghai — P4-D10 技术顾问接单
+
+- 状态：`in_progress`；运行状态：`active`。
+- 唯一负责人：用户启动的既有技术顾问；依据总控版本 `2026-09-25T15:15:00+08:00`，P4-D10 为唯一 `ready` 技术任务。
+- 输入事实：P4-B6 多交接审计登记 8 个 P0、14 个 P1；当前 B6 `review` 不接受且已停止；本地组合套件已有 249 通过/13 PostgreSQL skip，旧 PostgreSQL 执行方文件现为 1 通过/12 失败，随机 schema 的 P4 head 最小冒烟通过。
+- 目标：逐项裁定绑定码/幂等恢复、Host 命令与 receipt、run/pending 并发、Host-Agent 集成、memory/setting/event、user scope/migration、生产组合/API/分页，并拆分顺序 R1/R2 与 C11 进入门槛。
+- 文件边界：只写 `docs/phase-4-d10-b6-repair-architecture.md` 和本角色状态；不修改产品、migration、测试、审计、冻结、矩阵/报告、控制、总览、其他角色、依赖、Compose、OpenClaw、微信、Electron、DeepSeek 或 Git。
+- 运行边界：不启动 Docker/FastAPI/外部服务，不复跑 249 项，不安装依赖，不操作 OpenClaw/微信，不派发执行或测试任务。
+- 停止条件：连续两个检查点无有效进展时，在安全位置报告最后完成项、脱敏错误、已尝试方法和待总控裁定问题。
+- 下一步/交接：按任务卡顺序读取四份核心输入，并用审计报告的准确路径核对当前代码、migration 和执行方测试。
 
 ### 2026-09-20 13:20 Asia/Shanghai — P4-D9 完整交付并提交 review
 
