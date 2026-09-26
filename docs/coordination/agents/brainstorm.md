@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-C11-R1-PREPARATION — C11 历史迁移独立证据补强
+- 当前任务：P4-B6-R3-PREPARATION — PostgreSQL 历史 user-scope migration P0 返修派发
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-27 00:12，Asia/Shanghai
+- 最近更新：2026-09-27 00:30，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -68,19 +68,22 @@
 - [P4-C11 总控核对](../../p4-c11-coordinator-review.md)
 - [P4-C11-R1 测试智能体 Prompt](../prompts/p4-c11-r1-tester-evidence-repair.md)
 - [P4-C11-R1 测试方起点快照](../snapshots/p4-c11-r1-start.sha256)
+- [P4-C11-R1 总控核对](../../p4-c11-r1-coordinator-review.md)
+- [P4-B6-R3 执行智能体 Prompt](../prompts/p4-b6-r3-postgresql-history-migration-executor.md)
+- [P4-B6-R3 起点快照](../snapshots/p4-b6-r3-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：C11 的产品与矩阵证据已核对；发现旧 P1→P4 正向迁移独立证据被削弱，C11-R1 有限补证任务已准备
-- 步骤开始时间：2026-09-27 00:00，Asia/Shanghai
-- 最近有效进展：2026-09-27 00:12，Asia/Shanghai（确认 105/105、64/64、8 P0/14 P1 和 Compose 空；固定 23 文件测试方起点）
-- 最近心跳：2026-09-27 00:12，Asia/Shanghai
-- 下一检查点：测试智能体接单并记录 105/105 与 23/23 两层快照
-- 等待对象：用户发送 C11-R1 Prompt；随后等待定向 SQLite/PostgreSQL migration 证据
-- 活动进程或会话：项目 Compose 服务为空；执行智能体和技术顾问停止
-- 重试次数：总控没有重复 C11 测试，只做摘要、差异、合同和资源只读核对
-- 最近输出：C11-R1 测试方起点 manifest SHA-256 `1c59d9e08abf9acea64324b72e3c8d63cda8eff7691239cdaa5baf94e9bdac73`
+- 当前步骤：C11-R1 P0 失败、矩阵 62/2、105 零漂移和资源收口已核对；R3 Prompt 与 130 文件起点已准备
+- 步骤开始时间：2026-09-27 00:25，Asia/Shanghai
+- 最近有效进展：2026-09-27 00:30，Asia/Shanghai（接受 `P4-C11-R1-PG-001`，冻结单 migration 原子返修边界）
+- 最近心跳：2026-09-27 00:30，Asia/Shanghai
+- 下一检查点：执行智能体接单并记录 130/130 起点与修改前 PG 精确失败
+- 等待对象：用户发送 P4-B6-R3 Prompt；随后等待执行方失败回归和根因确认
+- 活动进程或会话：项目 Compose 服务为空；测试智能体和技术顾问停止
+- 重试次数：总控没有重跑 R1 测试，只复算摘要、矩阵、快照、代码顺序和 Compose 空状态
+- 最近输出：R3 起点 manifest SHA-256 `ed4cec634ead2a8543066f19c7134f3d0a65d58f39ebe43133ef955129a86770`
 
 ## 阻塞
 
@@ -96,6 +99,17 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-27 00:30 Asia/Shanghai — 接受 C11-R1 P0 失败并准备 P4-B6-R3
+
+- 状态：C11-R1 `blocked / finished`，失败结论接受；R3 `ready / waiting_user`；P4-A 62 passed/2 failed。
+- 复算：105/105 产品快照匹配；23 文件起点为 17 unchanged/6 changed/0 missing；R1 报告、主报告、矩阵、三测试与新 history fixture 摘要全部匹配。
+- 缺陷：真实 PostgreSQL P3 历史含 P1 双分录时，`p4_host_user_scope` 在 `financial_transaction.user_id SET NOT NULL` 报 `ObjectInUse`/pending trigger events，迁移不能到 P4 head。
+- 原因边界：当前 migration 对 21 张表先 DML 回填 user，再立即 ALTER/建约束；真实 FK 历史暴露同事务 pending-trigger DDL 冲突。执行方需先以自己的 PG fixture 复现再修复。
+- 冻结：只许改 `p4_host_user_scope.py`、执行方 migration 测试、R3 运行说明和 executor 日志；保持单事务、三 revision、SQLite 路径、数据和约束合同。
+- 禁止：中途 commit、禁用触发器/约束、删数据、第四 revision、改独立测试或扩大到服务代码。
+- 快照：合并 105 产品与 25 项 C11 证据形成 130 文件起点，SHA `ed4cec63...86770`。
+- 下一步/交接：用户发送 R3 Prompt 给既有执行智能体；测试智能体和技术顾问继续停止。
 
 ### 2026-09-27 00:12 Asia/Shanghai — C11 产品门禁通过，历史迁移独立证据退回有限补强
 

@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-27 00:12，Asia/Shanghai
+更新时间：2026-09-27 00:30，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,10 +13,10 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：C11 产品结论通过，但历史迁移独立证据需有限补强 | 2026-09-27 00:12 | 用户发送 C11-R1 Prompt；测试智能体核对 105+23 两层快照 | [C11 总控核对](../p4-c11-coordinator-review.md)、[C11-R1 Prompt](prompts/p4-c11-r1-tester-evidence-repair.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：接受 C11-R1 P0 失败，R3 窄范围 migration 返修已准备 | 2026-09-27 00:30 | 用户发送 R3 Prompt；执行智能体核对 130/130 起点并先复现 PG 失败 | [R1 总控核对](../p4-c11-r1-coordinator-review.md)、[R3 Prompt](prompts/p4-b6-r3-postgresql-history-migration-executor.md) |
 | 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
-| 执行智能体 | `review / finished`（R1/R2/T2） | `finished`：17 个唯一 PG 用例通过，104 文件零漂移，资源已关闭 | 2026-09-26 22:27 | 保持停止，等待 C11 独立结论 | [角色日志](agents/executor.md)、[T2 运行说明](../b6-r2-s2-t2-postgresql-running.md) |
-| 测试智能体 | `review / finished`（C11）/ `ready`（C11-R1） | `waiting_user`：64/64 与产品门禁通过，等待有限历史迁移补证任务 | 2026-09-27 00:12 | 用户发送 C11-R1 Prompt；只补正向迁移证据与报告 | [角色日志](agents/tester.md)、[C11-R1 Prompt](prompts/p4-c11-r1-tester-evidence-repair.md) |
+| 执行智能体 | `ready`（P4-B6-R3） | `waiting_user`：只修 PostgreSQL 历史 user-scope migration 阻断 | 2026-09-27 00:30 | 用户发送 R3 Prompt；核对 130/130 并建立执行方失败回归 | [角色日志](agents/executor.md)、[R3 Prompt](prompts/p4-b6-r3-postgresql-history-migration-executor.md) |
+| 测试智能体 | `blocked / finished`（C11-R1） | `finished`：发现 P0 `P4-C11-R1-PG-001`，资源已关闭 | 2026-09-27 00:25 | 保持停止；等待 R3 新产品快照和 C11-R2 | [角色日志](agents/tester.md)、[R1 报告](../testing/phase-4-c11-r1-evidence-report.md) |
 
 ## 阶段 0 任务状态
 
@@ -72,12 +72,13 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P4-B6-R2-S2-T1：R1 PG 测试时钟返修 | 用户启动的既有执行智能体 | `review / finished` | 单文件时钟修复进入最终快照；T2 精确节点及其后 16 项证明修复生效且 monkeypatch 已恢复 | [T1 运行说明](../b6-r2-s2-t1-clock-running.md)、[T2 运行说明](../b6-r2-s2-t2-postgresql-running.md) |
 | P4-B6-R2-S2-T2：有限 PostgreSQL 复验 | 用户启动的既有执行智能体 | `review / finished` | 17/17 passed；104/104 前后匹配；Compose 服务最终为空 | [T2 运行说明](../b6-r2-s2-t2-postgresql-running.md)、[R2 最终核对](../p4-b6-r2-final-coordinator-review.md) |
 | P4-C11：P4-A 独立验收 | 用户启动的既有测试智能体 | `review / finished`，暂不接受 | 64/64、8 P0/14 P1、独立 PG 与 105/105 通过；未发现产品 P0/P1；历史迁移证据需补强 | [C11 报告](../testing/phase-4-c11-host-foundation-report.md)、[总控核对](../p4-c11-coordinator-review.md) |
-| P4-C11-R1：历史迁移证据补强 | 用户启动的既有测试智能体 | `ready`，等待用户派发 | 固定 105 产品 + 23 测试方文件；只恢复旧 revision 正向升级和报告准确性 | [C11-R1 Prompt](prompts/p4-c11-r1-tester-evidence-repair.md)、[R1 起点](snapshots/p4-c11-r1-start.sha256) |
+| P4-C11-R1：历史迁移证据补强 | 用户启动的既有测试智能体 | `blocked / finished`，失败结论接受 | SQLite 与取消证据通过；真实 PG P3 历史→P4 触发 P0 `P4-C11-R1-PG-001`；矩阵 62/2 | [R1 报告](../testing/phase-4-c11-r1-evidence-report.md)、[总控核对](../p4-c11-r1-coordinator-review.md) |
+| P4-B6-R3：PostgreSQL 历史迁移返修 | 用户启动的既有执行智能体 | `ready`，等待用户派发 | 固定 130 文件；修复 pending-trigger ALTER 阻断，保持原子性和 SQLite/三 revision 合同 | [R3 Prompt](prompts/p4-b6-r3-postgresql-history-migration-executor.md)、[R3 起点](snapshots/p4-b6-r3-start.sha256) |
 
 ## 当前阻塞与风险
 
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
-- C11 把旧 P1 首版 migration 测试改成从当前 head 开始，削弱了 P1→P4 正向升级证据；C11-R1 只补这项独立证据和对应 P0～P3 历史 SQLite/PostgreSQL 场景，不重新开发产品。
+- C11-R1 已恢复 P1 首版和 SQLite P0～P3 历史证据，并因此在真实 PostgreSQL 发现 P0：`p4_host_user_scope` 在历史双分录存在时因 pending FK trigger events 无法 ALTER `financial_transaction`。R3 必须保持原子性修复，不能通过 commit、禁用触发器或删除历史绕过。
 - 旧 P2 测试的取消后错误从 `confirmation_required` 更新为 `pending_action_cancelled`，与 D10 冻结的 P4 合同一致；R1 只要求报告准确说明这是一项合同演进并继续证明零财务写入。
 - Docker Desktop 已由 4.91.0 原位升级到 `4.92.0.240144`，双启动门禁和 T2 17 个真实 PG 用例均通过；执行方普通 down 后项目 Compose 服务为空。C11 可使用该环境，但 Engine 不可达时只能检查一次并停止，不重启 Desktop 或恢复 socket。
 - R2 的三个冻结结构缺口已由 S1 关闭，执行方真实 PostgreSQL 门禁已由 T2 收口；当前剩余门禁是 C11 对迁移、事务、约束、多连接竞争和用户隔离给出独立证据。
@@ -96,7 +97,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 ## 下一次总控检查
 
-1. 用户把 P4-C11-R1 Prompt 完整发送给既有测试智能体。
-2. 测试方核对 105/105 产品快照和 23/23 C11 测试方起点。
-3. 测试方只补 P1 首版、SQLite P0～P3 和 PostgreSQL P0～P3 历史正向升级证据，定向复跑受影响节点并普通 down。
-4. R1 报告交付后由总控核对；证据闭合后接受 P4-A、创建完整本地验收提交并规划 P4-B。
+1. 用户把 P4-B6-R3 Prompt 完整发送给既有执行智能体。
+2. 执行方核对 130/130 起点，在原 migration 上先稳定复现 PG 历史升级失败。
+3. 执行方只修改 user-scope migration 和执行方 migration 测试，取得真实 PG、SQLite、回滚和 downgrade 定向证据并普通 down。
+4. R3 进入 review 后由总控固定新快照并派 C11-R2；测试方只复验原失败节点和必要相邻 migration，不重复完整 C11。

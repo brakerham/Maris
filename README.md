@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P4-A Host、身份和通用状态地基已经完成执行方实现及 C11 第一轮独立验收，64/64 项通过且没有发现产品 P0/P1；总控正在通过 `P4-C11-R1` 补齐旧 P1→P4 与 P0～P3 历史迁移的独立证据，P4-A 尚未标记为 `complete`。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P4-A Host、身份和通用状态地基正在返修 `P4-C11-R1-PG-001`：真实 PostgreSQL 含 P1 财务双分录、P2 run/pending 和 P3 import 历史时，user-scope migration 因待处理的外键触发器事件无法完成正向升级。矩阵暂为 62 passed、2 failed，P4-A 尚未 `complete`。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -63,6 +63,8 @@
 - [P4-C11 测试智能体 Prompt](docs/coordination/prompts/p4-c11-host-foundation-tester.md)：绑定最终 R2 快照，对 P4-A 64 项、22 个接管审计问题和 P0～P3 兼容性执行独立验收。
 - [P4-C11 总控核对](docs/p4-c11-coordinator-review.md)：确认 64 项与产品快照通过，同时登记历史迁移独立证据缺口和有限补证口径。
 - [P4-C11-R1 测试证据返修 Prompt](docs/coordination/prompts/p4-c11-r1-tester-evidence-repair.md)：只补强 P1/P2/P3 历史正向迁移证据并纠正报告，不修改产品或重复全部回归。
+- [P4-C11-R1 总控核对](docs/p4-c11-r1-coordinator-review.md)：接受真实 PostgreSQL 历史升级的 P0 失败结论并冻结窄范围返修边界。
+- [P4-B6-R3 执行智能体 Prompt](docs/coordination/prompts/p4-b6-r3-postgresql-history-migration-executor.md)：保持 migration 原子性，修复带历史外键事实时的 PostgreSQL pending-trigger ALTER 阻断。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 
