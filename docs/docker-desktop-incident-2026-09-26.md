@@ -11,7 +11,19 @@
 
 本文不包含密钥、账号、个人财务数据或未脱敏的诊断包。
 
-## 2. 当前结论
+## 2. 当前恢复状态
+
+用户完成 Docker Desktop `4.91.0 → 4.92.0` 原位升级后，总控于 `2026-09-26 22:05～22:07 Asia/Shanghai` 完成了计划中的两阶段验证：
+
+- 第一次检查：Desktop `4.92.0.240144`，Desktop/backend 进程存在，`dockerDesktopLinuxEngine` 管道存在，client/server 均为 `29.8.0`，Linux Engine 正常，项目 Compose 服务列表为空。
+- 稳定性检查：使用 `docker desktop stop` 正常停止，再使用 `docker desktop start` 正常启动；新 session 建立成功。
+- 第二次检查：Desktop 状态 `running`，Engine 管道存在，client/server `29.8.0`，server OS 为 Docker Desktop、type 为 linux，项目 Compose 返回 `COMPOSE_SERVICES_EMPTY`。
+- 最近 backend 日志没有出现 `sailor-ingest.sock`、`docker-secrets-engine`、`file cannot be accessed`、Ingest 初始化失败或 Secrets 初始化失败。
+- 本轮没有改名或删除 socket 目录，没有启动项目容器，没有删除 volume/镜像/VHDX，没有 reset、prune 或修改 Docker 全局设置。
+
+当前 Docker 环境由 `blocked` 恢复为 `ready`。下一步不再重复 Desktop 恢复，而是由执行智能体按照 T2 任务卡只运行 17 个唯一 PostgreSQL 用例。
+
+### 2.1 故障发生时的结论
 
 截至 `2026-09-26 21:50 Asia/Shanghai`：
 
@@ -259,4 +271,4 @@ Docker 稳定后，由总控新建有限验证任务，不重开原 T1 实现范
 
 ## 13. 一句话判断
 
-当前项目卡住的关键不是重新设计 P4，也不是继续修改业务代码，而是先把反复复发的 Docker Desktop 4.91.0 socket 启动故障作为独立环境事件处理。P4 已有实现和测试证据仍然有效；Docker 稳定后，只需补跑剩余 17 个唯一 PostgreSQL 用例，再决定是否进入 P4-C11。
+Docker Desktop 4.91.0 的重复 socket 启动故障已经通过原位升级到 4.92.0，并完成一次正常停止/重启门禁；P4 无需重新设计，当前只需补跑剩余 17 个唯一 PostgreSQL 用例，再决定是否进入 P4-C11。

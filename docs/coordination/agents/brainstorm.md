@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：DOCKER-DESKTOP-INCIDENT — P4 PostgreSQL 环境故障记录与恢复协调
+- 当前任务：P4-B6-R2-S2-T2-PREPARATION — Docker 恢复验收与有限 PostgreSQL 复验派发
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-26 21:50，Asia/Shanghai
+- 最近更新：2026-09-26 22:10，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -60,19 +60,21 @@
 - [P4-B6-R2-S2-T1 起点快照](../snapshots/p4-b6-r2-s2-t1-start.sha256)
 - [P4 本地单主人范围决定](../../phase-4-local-owner-scope-decision.md)
 - [Docker Desktop 启动故障记录与恢复计划](../../docker-desktop-incident-2026-09-26.md)
+- [P4-B6-R2-S2-T2 执行智能体 Prompt](../prompts/p4-b6-r2-s2-t2-postgresql-verification-executor.md)
+- [P4-B6-R2-S2-T2 起点快照](../snapshots/p4-b6-r2-s2-t2-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：T1 单文件时钟修复已完成；Docker Desktop 环境事件已记录，等待版本升级
-- 步骤开始时间：2026-09-26 21:36，Asia/Shanghai
-- 最近有效进展：2026-09-26 21:50，Asia/Shanghai（确认 4.91.0、无 backend/Engine 管道，冻结 Docker 相关任务并形成恢复门槛）
-- 最近心跳：2026-09-26 21:50，Asia/Shanghai
-- 下一检查点：用户完成 Docker Desktop 原位升级；总控执行版本和稳定重启验证
-- 等待对象：用户处理 Docker Desktop 4.91.0 环境故障
-- 活动进程或会话：无 Docker Desktop/backend 进程；无项目容器会话；Engine 状态不可访问
-- 重试次数：T1 连续两个 Engine 检查点均失败；此后人工启动再次复现 stuck socket，已停止继续重试
-- 最近输出：T1 104 项终点摘要 `c7deef5af25f2ba6215bdd587fe13d46d027ecb37294bc9373a6aadf4c03529d`
+- 当前步骤：Docker Desktop 4.92.0 双启动稳定性门禁通过；T2 Prompt 与 104 文件起点已准备
+- 步骤开始时间：2026-09-26 22:05，Asia/Shanghai
+- 最近有效进展：2026-09-26 22:10，Asia/Shanghai（正常停止/启动后的第二次 Engine、空 Compose 和无旧 socket 错误检查全部通过）
+- 最近心跳：2026-09-26 22:10，Asia/Shanghai
+- 下一检查点：执行智能体接单并记录 T2 的 104/104 起点核对
+- 等待对象：用户发送 T2 Prompt；随后等待执行智能体首个检查点
+- 活动进程或会话：Docker Desktop 4.92.0 与 Engine 正常；项目 Compose 服务为空；未启动项目容器
+- 重试次数：升级后两次只读检查与中间唯一一次正常停止/启动全部通过；不再重复 Desktop 重启
+- 最近输出：T2 起点 manifest SHA-256 `c7deef5af25f2ba6215bdd587fe13d46d027ecb37294bc9373a6aadf4c03529d`
 
 ## 阻塞
 
@@ -88,6 +90,18 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-26 22:10 Asia/Shanghai — Docker 4.92.0 双启动门禁通过并准备 T2
+
+- 状态：Docker/PostgreSQL 环境 `ready`；T2 `ready / waiting_user`；T1、S2 与整体 R2 在实际 PG 通过前仍为 `blocked / finished`；C11 未派发。
+- 用户确认：Docker Desktop 更新完成且界面显示 `Engine running`、`v4.92.0`。
+- checkpoint 1：Desktop `4.92.0.240144`；Desktop/backend 进程、Engine 管道、client/server `29.8.0`、Linux Engine 与空 Compose 列表全部通过。
+- 稳定性操作：项目服务为空时，使用 `docker desktop stop` 正常停止，再用 `docker desktop start` 正常启动；没有改名 socket、删除数据或修改全局设置。
+- checkpoint 2：新 session 为 running，Engine 管道存在，server/info 正常，Compose 为 `COMPOSE_SERVICES_EMPTY`；最近 backend 日志没有旧 socket 错误。
+- T2 起点：把 T1 的单文件新摘要和运行说明加入原 103 项后得到 104 项；manifest 自身 SHA 与 T1 交付摘要同为 `c7deef5a...529d`。
+- 有限范围：T2 零代码修改，只运行精确节点 1、R1 其余 7、R2 9，共 17 个唯一 PostgreSQL 用例；不重复 Finance/P3 PG 或本地全量。
+- 交付物：[Docker 故障与恢复记录](../../docker-desktop-incident-2026-09-26.md)、[T2 Prompt](../prompts/p4-b6-r2-s2-t2-postgresql-verification-executor.md)、[T2 起点](../snapshots/p4-b6-r2-s2-t2-start.sha256)。
+- 下一步/交接：用户把 T2 Prompt 发送给既有执行智能体；技术顾问和测试智能体继续停止。
 
 ### 2026-09-26 21:50 Asia/Shanghai — 记录 Docker Desktop 反复 socket 启动故障
 

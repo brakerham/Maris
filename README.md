@@ -58,7 +58,7 @@
 - [P4 模块化 Agent Host 测试矩阵](docs/testing/phase-4-modular-agent-host-test-matrix.md)：120 个尚未执行的分层验收案例，覆盖四个 P4 切片。
 - [P4 接口冻结](docs/phase-4-interface-freeze.md)：冻结总架构和 P4-A Host、身份、用户隔离、记忆与 API 合同。
 - [P4-B6 执行智能体 Prompt](docs/coordination/prompts/p4-b6-host-foundation-executor.md)：实现 P4-A Host、身份和通用状态地基。
-- [Docker Desktop 启动故障记录与恢复计划](docs/docker-desktop-incident-2026-09-26.md)：记录 4.91.0 反复出现的 AF_UNIX socket 故障、项目影响、禁止重复操作和恢复门槛。
+- [Docker Desktop 启动故障记录与恢复计划](docs/docker-desktop-incident-2026-09-26.md)：记录 4.91.0 反复出现的 AF_UNIX socket 故障，以及升级 4.92.0 后的双启动恢复证据和后续门禁。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

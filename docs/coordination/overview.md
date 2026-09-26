@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-26 21:50，Asia/Shanghai
+更新时间：2026-09-26 22:10，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,9 +13,9 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：T1 代码已完成，Docker 4.91.0 socket 故障复发，环境操作已冻结 | 2026-09-26 21:50 | 用户原位升级 Docker Desktop；总控随后验证稳定重启 | [Docker 故障记录](../docker-desktop-incident-2026-09-26.md)、[T1 运行说明](../b6-r2-s2-t1-clock-running.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：Docker 4.92.0 双启动门禁通过，T2 有限 PG 复验已准备 | 2026-09-26 22:10 | 用户发送 T2 Prompt；执行智能体核对 104/104 起点 | [Docker 故障记录](../docker-desktop-incident-2026-09-26.md)、[T2 Prompt](prompts/p4-b6-r2-s2-t2-postgresql-verification-executor.md) |
 | 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
-| 执行智能体 | `blocked / finished`（T1/S2/R2） | `finished`：测试时钟已修复；Docker Engine 不可达，真实 PG 未运行 | 2026-09-26 21:36 | 保持停止，等待总控另立有限 PG 复验 | [角色日志](agents/executor.md)、[T1 运行说明](../b6-r2-s2-t1-clock-running.md) |
+| 执行智能体 | `blocked / finished`（T1/S2/R2）/ `ready`（T2） | `waiting_user`：Docker 已恢复，等待 T2 Prompt | 2026-09-26 22:10 | 零代码修改，运行 17 个唯一真实 PG 用例 | [角色日志](agents/executor.md)、[T2 Prompt](prompts/p4-b6-r2-s2-t2-postgresql-verification-executor.md) |
 | 测试智能体 | `complete`（P4-C10，总控接受） | `finished`：C11 尚未开始，等待 R1/R2 最终快照 | 2026-09-25 20:08 | 继续停止，不提前复现或修改产品 | [角色日志](agents/tester.md)、[C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 阶段 0 任务状态
@@ -70,12 +70,13 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P4-B6-R2-S1：运行时结构补全 | 用户启动的既有执行智能体 | `review / finished`，总控接受为 S2 输入 | 10 个变更文件摘要匹配；总控 44 项定向通过；聚合摘要勘误已登记 | [S1 总控核对](../p4-b6-r2-s1-coordinator-review.md) |
 | P4-B6-R2-S2：真实 PostgreSQL 门禁 | 用户启动的既有执行智能体 | `blocked / finished` | R2 9/9、Finance 4/4、P3 10/10 通过；Host R1 原时钟问题已由 T1 修复，待 Docker 稳定后实跑收口 | [S2 运行说明](../b6-r2-s2-postgresql-running.md)、[T1 运行说明](../b6-r2-s2-t1-clock-running.md) |
 | P4-B6-R2-S2-T1：R1 PG 测试时钟返修 | 用户启动的既有执行智能体 | `blocked / finished` | 单文件时钟修复、编译和收集完成；104 项终点摘要 `c7deef5a...529d`，真实 PG 因 Engine 不可达而 `not_run` | [T1 运行说明](../b6-r2-s2-t1-clock-running.md)、[Docker 故障记录](../docker-desktop-incident-2026-09-26.md) |
+| P4-B6-R2-S2-T2：有限 PostgreSQL 复验 | 用户启动的既有执行智能体 | `ready`，等待用户派发 | 104 项起点可复算；零代码修改；运行精确节点 1、R1 其余 7、R2 9 | [T2 Prompt](prompts/p4-b6-r2-s2-t2-postgresql-verification-executor.md)、[T2 起点](snapshots/p4-b6-r2-s2-t2-start.sha256) |
 | P4-C11：P4-A 独立验收 | 用户启动的既有测试智能体 | `unverified`，未派发 | 绑定最终返修快照执行 64 项、缺陷反例、兼容回归和真实 PostgreSQL | [C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
 - `P4-B6-R1-REV-001` 已由 F1 在开发返修层面关闭；最终 C11 仍会独立重跑真实 PostgreSQL 同步竞争反例。
-- Docker Desktop 4.91.0 在临时恢复并完成 S2 部分真实 PG 后再次停止，随后重新出现 `sailor-ingest.sock` 的 `.stale` 改名错误；当前 backend 进程和 Engine 管道均不存在。该事件已独立记录，所有 Docker 相关任务冻结，建议先原位升级 4.92.0，再由总控执行一次正常退出/重启稳定性验证。
+- Docker Desktop 已由 4.91.0 原位升级到 `4.92.0.240144`。总控第一次 Engine 检查通过后使用 Desktop CLI 正常停止/启动，第二次版本、进程、管道、server/info 和空 Compose 检查全部通过，最近 backend 日志没有旧 socket 错误；环境阻塞已解除。
 - R2 的三个冻结结构缺口已由 S1 关闭；当前产品级剩余门禁是这些行为在真实 PostgreSQL 的迁移、事务、约束和多连接竞争证据。
 - S1 报告中 10 个单文件摘要全部正确，但 10 行聚合值不可复算；总控按声明算法给出勘误 `583cac21...6a10`，并直接从实际 101 个文件生成 S2 manifest `8e926713...e74969`。
 - S2 的 103 项终点摘要 `b1c4c80d...d5b18` 可复算。唯一失败用例把 code 创建时间固定为 `2026-09-26T02:00Z`，HTTP 路由却读取真实 UTC；两枚 code 在竞争前均过期。这是测试时钟漂移，不是产品并发缺陷。
@@ -92,7 +93,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 ## 下一次总控检查
 
-1. 用户从 Docker 官方来源把 Desktop 4.91.0 原位升级到 4.92.0；不卸载、不 reset、不删除 Docker 数据或备份目录。
-2. 总控验证版本、backend、Engine 管道、`docker version/info`、空 Compose 列表，以及一次正常退出和再次启动。
-3. 稳定性门禁通过后，总控生成有限 PostgreSQL 复验任务，只覆盖修复节点、R1 其余 7 项和 R2 9 项。
-4. 最终 R2 快照稳定后才派发 P4-C11；执行、技术顾问和测试智能体在此之前继续停止。
+1. 用户把 P4-B6-R2-S2-T2 Prompt 完整发送给既有执行智能体。
+2. 执行方核对 104/104 起点，不修改代码，只运行精确节点 1 项、R1 其余 7 项和 R2 9 项。
+3. T2 全通过并形成稳定报告后由总控核对；Finance/P3 PG 和非 PG 全量不重复运行。
+4. 最终 R2 快照稳定后才派发 P4-C11；技术顾问和测试智能体在此之前继续停止。
