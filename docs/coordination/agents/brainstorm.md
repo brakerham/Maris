@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B6-R2-S2-T1-PREPARATION — S2 受阻核对与 R1 测试时钟返修派发
+- 当前任务：DOCKER-DESKTOP-INCIDENT — P4 PostgreSQL 环境故障记录与恢复协调
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-26 19:41，Asia/Shanghai
+- 最近更新：2026-09-26 21:50，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -59,19 +59,20 @@
 - [P4-B6-R2-S2-T1 执行智能体 Prompt](../prompts/p4-b6-r2-s2-t1-clock-executor.md)
 - [P4-B6-R2-S2-T1 起点快照](../snapshots/p4-b6-r2-s2-t1-start.sha256)
 - [P4 本地单主人范围决定](../../phase-4-local-owner-scope-decision.md)
+- [Docker Desktop 启动故障记录与恢复计划](../../docker-desktop-incident-2026-09-26.md)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：S2 受阻证据与 103 项摘要已核对；等待用户把 T1 Prompt 发送给既有执行智能体
-- 步骤开始时间：2026-09-26 19:20，Asia/Shanghai
-- 最近有效进展：2026-09-26 19:41，Asia/Shanghai（确认唯一失败为 R1 固定测试时钟漂移，冻结单文件 monkeypatch 返修）
-- 最近心跳：2026-09-26 19:41，Asia/Shanghai
-- 下一检查点：执行智能体接单并记录 103/103 起点核对
-- 等待对象：用户发送 T1 Prompt；随后等待执行智能体首个检查点
-- 活动进程或会话：S2 已普通 down；项目 Compose 服务为空，Docker Engine 正常
-- 重试次数：S2 首次完整基线保留 1 个测试时钟失败；没有用重复运行覆盖证据
-- 最近输出：T1 起点 manifest SHA-256 `b1c4c80d8d5a04e2571b9028e38abc7fb99f912c6b2ffba84d799f466e4d5b18`
+- 当前步骤：T1 单文件时钟修复已完成；Docker Desktop 环境事件已记录，等待版本升级
+- 步骤开始时间：2026-09-26 21:36，Asia/Shanghai
+- 最近有效进展：2026-09-26 21:50，Asia/Shanghai（确认 4.91.0、无 backend/Engine 管道，冻结 Docker 相关任务并形成恢复门槛）
+- 最近心跳：2026-09-26 21:50，Asia/Shanghai
+- 下一检查点：用户完成 Docker Desktop 原位升级；总控执行版本和稳定重启验证
+- 等待对象：用户处理 Docker Desktop 4.91.0 环境故障
+- 活动进程或会话：无 Docker Desktop/backend 进程；无项目容器会话；Engine 状态不可访问
+- 重试次数：T1 连续两个 Engine 检查点均失败；此后人工启动再次复现 stuck socket，已停止继续重试
+- 最近输出：T1 104 项终点摘要 `c7deef5af25f2ba6215bdd587fe13d46d027ecb37294bc9373a6aadf4c03529d`
 
 ## 阻塞
 
@@ -87,6 +88,18 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-26 21:50 Asia/Shanghai — 记录 Docker Desktop 反复 socket 启动故障
+
+- 状态：Docker/PostgreSQL 环境 `blocked`；T1、S2 与整体 R2 `blocked / finished`；C11 未派发。
+- T1 交付：单文件测试时钟 monkeypatch 已完成，编译与 R1/R2 collect-only 通过；104 项终点摘要为 `c7deef5a...529d`。真实 PostgreSQL 因 Engine 不可达全部 `not_run`。
+- 当前环境：Docker Desktop `4.91.0.239619`；没有 Desktop/backend 进程，`dockerDesktopLinuxEngine` 管道不存在；两个内部目录存在。
+- 复发现象：人工启动再次在 `Docker\\run\\sailor-ingest.sock` 的 `.stale` 改名处失败；此前同类错误也发生于 `docker-secrets-engine\\engine.sock`。父目录改名只实现过临时恢复。
+- 判定：本机 Docker Desktop 内部 AF_UNIX socket 生命周期故障，不是项目代码、PostgreSQL、migration、T1 测试或 `compose down` 导致。
+- 控制：冻结所有 Docker/Compose、PG 和 C11 操作；不再让执行智能体重试，不删除 volume、VHDX 或 socket 备份，不 factory reset。
+- 建议：从官方来源原位升级到 4.92.0；升级后由总控验证一次启动、正常退出与第二次启动，稳定后另立 17 个唯一 PG 用例的有限复验任务。
+- 交付物：[Docker Desktop 启动故障记录与恢复计划](../../docker-desktop-incident-2026-09-26.md)。
+- 下一步/交接：等待用户完成原位升级；执行、测试和技术顾问继续停止。
 
 ### 2026-09-26 19:41 Asia/Shanghai — S2 受阻核对并准备 T1
 

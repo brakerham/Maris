@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-26T19:41:00+08:00`
-- 当前阶段：P4-A Host、身份和通用状态地基返修。S2 新增 9 项 R2 PostgreSQL 全部通过，Finance 4 项和 activity import 10 项也通过；既有 Host R1 的 1 项固定测试时钟已过期，因此 S2 和整体 R2 按规则停在 `blocked / finished`。P4-C11 尚未开始。
-- 当前动作：只派发 `P4-B6-R2-S2-T1` 给用户侧边栏中的既有执行智能体。T1 核对 103 文件起点，只用 pytest 可控时钟修复 `tests/host/test_postgresql_r1.py` 的单个测试，不修改产品、TTL 或原业务断言。技术顾问与测试智能体继续停止。
-- 需要用户参与：把 `docs/coordination/prompts/p4-b6-r2-s2-t1-clock-executor.md` 完整发送给既有执行智能体。当前不要发送 C11，不要自行启动项目容器，也不要删除 socket 备份、volume 或项目数据。
+- 指令版本：`2026-09-26T21:50:00+08:00`
+- 当前阶段：P4-A Host、身份和通用状态地基返修。T1 已完成单文件测试时钟修复和静态验证，但 Docker Desktop 4.91.0 再次因失效 AF_UNIX socket 无法启动；精确节点、Host R1 8 项和 R2 9 项本轮均未运行。T1、S2 和整体 R2 保持 `blocked / finished`，P4-C11 尚未开始。
+- 当前动作：冻结所有 Docker、PostgreSQL 和 P4-C11 操作。执行、测试、技术顾问继续停止；总控记录环境事件并等待用户处理 Docker Desktop 版本升级。不得继续在 4.91.0 上机械重复启动或目录改名。
+- 需要用户参与：建议从 Docker 官方来源把 Docker Desktop 原位升级到 4.92.0，不卸载、不恢复出厂、不删除 volume、VHDX 或 socket 备份。升级完成后回复总控，由总控先验证版本、Engine、空 Compose 列表和一次正常退出/重启；验证通过后再生成有限 PostgreSQL 复验任务。详见 [Docker Desktop 启动故障记录](../docker-desktop-incident-2026-09-26.md)。
 - Git 状态：远端 `1d06d92` 和 `checkpoint/p3-foundation` 是防止基座被后续业务改乱的保护性检查点，不是首个大版本。产品仍处于发布前阶段；P4-D9 任务卡及后续验收默认只做本地提交，不推送、不创建 PR，除非用户另行要求远端检查点。正式大版本由用户以后明确宣布。
 
 ## 本地单主人产品范围
@@ -85,15 +85,15 @@
 | P4-IF-001 模块化 Agent Host 接口冻结 | `complete`；头脑风暴总控 | 冻结总架构和 P4-A 的身份、user scope、workflow、记忆、API 与迁移合同 | 变更必须交回总控与技术顾问，不得由执行方自行修改 |
 | P4-B6 Host/身份地基实现 | 既有执行智能体；`review`、运行已停止、当前不接受 | 保留原实现和交付现场；开放 P0/P1 见接管审计，后续只按独立 R1/R2 任务返修 | 旧 B6 任务不得自行续做；只有收到 R1 Prompt 才能修改其授权范围；禁止独立测试、Electron/外部系统和 Git |
 | P4-B6 多交接接管审计 | 头脑风暴总控；`complete` | [审计报告](../p4-b6-multi-handoff-code-audit.md)登记 8 个 P0、14 个 P1、PG 证据和任务顺序 | 不重复本轮三路审查；新代码快照形成后才重新审查相应差异 |
-| P4-B6 PostgreSQL 审计环境 | `ready`；T1 获得唯一项目环境所有权 | S2 只启动 `finance-postgres`，结束时普通 down；最终 Compose 服务列表为空，Engine 保持正常 | 用户发送 T1 Prompt 后，由执行智能体只启动 `finance-postgres`；结束时普通 down 并验证空列表 |
+| P4-B6 PostgreSQL 审计环境 | `blocked`；当前没有外部操作负责人 | Docker Desktop 4.91.0 反复在 `sailor-ingest.sock` / `engine.sock` 初始化失败；当前无 backend 进程和 Engine 管道 | 所有角色停止 Docker/Compose；等待用户升级后由总控先完成稳定性验证 |
 | P4-D10 B6 返修架构裁定 | `complete`；总控已接受 | 762 行、8 P0/14 P1 逐项处置、R1/R2 边界、12 类 PG 场景与 C11 门禁已核对 | 技术顾问停止；不得修改产品或自行派发后续任务 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |
-| P4-B6-R2 Host/Agent 运行时返修 | 既有执行智能体；`blocked / finished`，等待 T1 | S1 结构与 S2 新增 9 项真实 PG 已通过；唯一阻塞是 R1 固定测试时钟过期 | 只派单文件测试时钟 T1；T1 review 前不得启动 C11 |
+| P4-B6-R2 Host/Agent 运行时返修 | 既有执行智能体；`blocked / finished` | S1 结构与 S2 新增 9 项真实 PG 已通过；T1 已修复 R1 测试时钟，剩余阻塞为 Docker Desktop 环境 | Docker 稳定并完成有限 PG 复验前不得启动 C11 |
 | P4-B6-R2-S1 运行时结构补全 | 既有执行智能体；`review / finished`，总控接受为 S2 输入 | 10 个单文件摘要匹配；报告聚合摘要勘误为 `583cac21...6a10`；总控定向 44 passed | S1 不再修改；独立结论仍由 C11 给出 |
-| P4-B6-R2-S2 真实 PostgreSQL 门禁 | 既有执行智能体；`blocked / finished` | R2 9/9、Finance 4/4、activity import 10/10 通过；Host R1 为 7/8，失败在固定创建时间与 HTTP 真实时钟不一致 | 原 S2 停止；103 项摘要 `b1c4c80d...d5b18` 已复算，等待 T1 后收口 |
-| P4-B6-R2-S2-T1 R1 测试时钟返修 | 既有执行智能体；`ready`、等待用户发送 Prompt | 只允许修改 `tests/host/test_postgresql_r1.py`，用 monkeypatch 固定 `host_routes.datetime`；103 项起点已固定 | 运行精确节点、R1 8 项和 R2 9 项；禁止产品修改、重复全量回归或提前启动 C11 |
+| P4-B6-R2-S2 真实 PostgreSQL 门禁 | 既有执行智能体；`blocked / finished` | R2 9/9、Finance 4/4、activity import 10/10 通过；Host R1 原 1 项测试时钟问题已由 T1 修复但未实跑 | 原 S2 停止；等待 Docker 稳定后以新的有限 PG 复验收口 |
+| P4-B6-R2-S2-T1 R1 测试时钟返修 | 既有执行智能体；`blocked / finished` | 单文件 monkeypatch 已完成；104 项终点摘要为 `c7deef5a...529d`；编译和 R1/R2 收集通过 | Docker Engine 不可达，运行测试均为 `not_run`；等待总控另立有限 PG 复验，不得自行续做 |
 | P4-C11 P4-A 独立验收 | 测试智能体；`unverified`、未派发 | 等 R1/R2 固定快照；执行 64 项 P4-A、缺陷反例、兼容回归和真实 PostgreSQL 门禁 | 当前不得用旧 B6 摘要提前验收或修改产品 |
 
 任何角色在开始工作前必须确认任务表中只有一个执行负责人。没有被列为执行负责人的角色不得“顺手继续”外部操作；发现空缺、冲突或旧指令时，只向总控报告并等待重新分配。
