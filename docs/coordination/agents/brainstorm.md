@@ -5,7 +5,7 @@
 - 当前任务：P4-B6-R2-PREPARATION — Host/Agent 运行时返修派发前协调
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-26 10:41，Asia/Shanghai
+- 最近更新：2026-09-26 11:22，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -53,15 +53,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：F1 已接受为 R2 精确基线；等待 Windows 重启释放 Docker Desktop 失效 socket
-- 步骤开始时间：2026-09-26 10:41，Asia/Shanghai
-- 最近有效进展：2026-09-26 10:41，Asia/Shanghai（F1 总控审查、96 文件 R2 快照和正式 Prompt 已完成）
-- 最近心跳：2026-09-26 10:41，Asia/Shanghai
-- 下一检查点：用户确认 Windows 重启后 Docker Desktop 可正常打开；随后派发 R2
-- 等待对象：用户重启 Windows并确认 Docker Desktop
-- 活动进程或会话：无；Docker 进程已停止，项目 PostgreSQL 测试未启动
-- 重试次数：2 次 Docker Desktop 初始化；已停止继续重试
-- 最近输出：F1 4 changed/19 unchanged/0 missing、22 文件摘要匹配、本地 41 passed；Docker 初始化在本机 socket 阶段失败
+- 当前步骤：Windows 重启未清除 Docker 4.91.0 失效 socket；等待用户交互式改名 `docker-secrets-engine` 父目录
+- 步骤开始时间：2026-09-26 11:22，Asia/Shanghai
+- 最近有效进展：2026-09-26 11:22，Asia/Shanghai（精确定位 Error 1920；`Docker\run` 父目录已成功隔离，secrets 父目录在 Codex 进程中 Access denied）
+- 最近心跳：2026-09-26 11:22，Asia/Shanghai
+- 下一检查点：用户完成父目录改名并启动 Docker；总控验证 Engine server version 和 Compose 空列表
+- 等待对象：用户在交互式 Windows PowerShell 执行父目录改名
+- 活动进程或会话：无；Docker/diagnostics 已停止，WSL 已 shutdown，项目 PostgreSQL 测试未启动
+- 重试次数：重启后 2 次受控启动；已停止继续启动
+- 最近输出：CLI 客户端正常但 `dockerDesktopLinuxEngine` 不存在；本次日志再次确认 Ingest/Secrets Engine socket Error 1920
 
 ## 阻塞
 
@@ -77,6 +77,14 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-26 11:22 Asia/Shanghai — Docker 重启后仍被 AF_UNIX socket 阻断
+
+- 检查：Windows 重启后 Docker 进程最初为空；CLI 29.8.0 正常，但 Engine 命名管道不存在。总控只启动 Desktop 一次并读取日志，没有启动项目容器。
+- 结论：本次 4.91.0 日志先后确认 `sailor-ingest.sock` 和 `docker-secrets-engine/engine.sock` 为 0 字节 ReparsePoint，返回 Windows Error 1920；这与 Docker 官方问题跟踪器的已知故障一致，不是项目代码或 PostgreSQL 失败。
+- 处置：停止 Docker Desktop、backend、diagnostics，执行 WSL shutdown；`%LOCALAPPDATA%\Docker\run` 已成功改名为带时间戳备份。secrets 目录所有者/ACL正常，但 Codex 进程用 PowerShell与 .NET父目录改名均 Access denied；未删除 socket、未改 ACL、未恢复出厂。
+- 停止点：不继续尝试底层删除或权限修改。等待用户在交互式 Windows PowerShell按已知 workaround 改名 secrets 父目录；之后由总控验证 Engine。
+- 项目影响：R2/C11继续未派发，PostgreSQL测试未启动，工作区产品与 Docker 数据未改变。
 
 ### 2026-09-26 10:41 Asia/Shanghai — 接受 F1 为 R2 基线并准备 R2
 
