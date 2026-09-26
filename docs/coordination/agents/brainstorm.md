@@ -5,7 +5,7 @@
 - 当前任务：P4-B6-R2-S1-PREPARATION — 受阻审查与运行时结构补全派发
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-26 16:26，Asia/Shanghai
+- 最近更新：2026-09-26 16:49，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -52,14 +52,15 @@
 - [P4-B6-R2 受阻总控审查](../../p4-b6-r2-blocked-coordinator-review.md)
 - [P4-B6-R2-S1 执行智能体 Prompt](../prompts/p4-b6-r2-s1-schema-executor.md)
 - [P4-B6-R2-S1 起点快照](../snapshots/p4-b6-r2-s1-start.sha256)
+- [P4 本地单主人范围决定](../../phase-4-local-owner-scope-decision.md)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
 - 当前步骤：R2 受阻交付已审查；等待用户把 S1 Prompt 发送给既有执行智能体
 - 步骤开始时间：2026-09-26 16:26，Asia/Shanghai
-- 最近有效进展：2026-09-26 16:26，Asia/Shanghai（确认三个结构缺口，生成 100 文件普通摘要清单与 S1 任务卡）
-- 最近心跳：2026-09-26 16:26，Asia/Shanghai
+- 最近有效进展：2026-09-26 16:49，Asia/Shanghai（冻结单机单主人范围，暂停注册、多账号和登录 UI，保留内部 user scope）
+- 最近心跳：2026-09-26 16:49，Asia/Shanghai
 - 下一检查点：执行智能体接单并记录 100/100 起点摘要核对结果
 - 等待对象：用户发送 S1 Prompt；随后等待执行智能体接单
 - 活动进程或会话：无 Docker Desktop 后端进程；S1 明确不启动 Docker
@@ -80,6 +81,16 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-26 16:49 Asia/Shanghai — 收紧为本地单主人产品范围
+
+- 状态：`in_progress`；不改变当前 S1 派发顺序。
+- 用户决定：没有托管服务器，也不需要其他人登录用户主机；其他人使用时应各自在自己的设备保存实例和数据库。
+- 代码核对：P4-A 没有公众注册或第二用户创建；当前是一次性 singleton bootstrap owner 加本地密码/session/channel binding。内部 `user_id` 和 Principal 已贯穿财务、Agent、memory、receipt 与微信绑定。
+- 范围决定：暂停公众注册、多账号、云账户、跨主机登录、找回密码和注册/常规登录 UI；保留现有本地身份安全基础，不在 R2 稳定期删除迁移或 auth 实现。
+- 后续决策点：桌面 Shell 开始前再选择自动本地 owner 会话、可选应用锁或显式登录；只有出现同步、远端服务或多人共享实例需求才重新评估服务器账户。
+- 交付物：[P4 本地单主人范围决定](../../phase-4-local-owner-scope-decision.md)。
+- 下一步/交接：S1 Prompt 不变；执行智能体不得修改 auth，技术顾问与测试智能体继续停止。
 
 ### 2026-09-26 16:26 Asia/Shanghai — R2 受阻审查并准备 S1
 
