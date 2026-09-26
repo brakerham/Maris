@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B6-R2-S1-PREPARATION — 受阻审查与运行时结构补全派发
+- 当前任务：P4-B6-R2-S2-PREPARATION — S1 核对、Docker 恢复与真实 PostgreSQL 门禁派发
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-26 16:49，Asia/Shanghai
+- 最近更新：2026-09-26 18:49，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -52,20 +52,23 @@
 - [P4-B6-R2 受阻总控审查](../../p4-b6-r2-blocked-coordinator-review.md)
 - [P4-B6-R2-S1 执行智能体 Prompt](../prompts/p4-b6-r2-s1-schema-executor.md)
 - [P4-B6-R2-S1 起点快照](../snapshots/p4-b6-r2-s1-start.sha256)
+- [P4-B6-R2-S1 总控核对](../../p4-b6-r2-s1-coordinator-review.md)
+- [P4-B6-R2-S2 执行智能体 Prompt](../prompts/p4-b6-r2-s2-postgresql-executor.md)
+- [P4-B6-R2-S2 起点快照](../snapshots/p4-b6-r2-s2-start.sha256)
 - [P4 本地单主人范围决定](../../phase-4-local-owner-scope-decision.md)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：R2 受阻交付已审查；等待用户把 S1 Prompt 发送给既有执行智能体
-- 步骤开始时间：2026-09-26 16:26，Asia/Shanghai
-- 最近有效进展：2026-09-26 16:49，Asia/Shanghai（冻结单机单主人范围，暂停注册、多账号和登录 UI，保留内部 user scope）
-- 最近心跳：2026-09-26 16:49，Asia/Shanghai
-- 下一检查点：执行智能体接单并记录 100/100 起点摘要核对结果
-- 等待对象：用户发送 S1 Prompt；随后等待执行智能体接单
-- 活动进程或会话：无 Docker Desktop 后端进程；S1 明确不启动 Docker
-- 重试次数：R2 已安全停止；S1 尚未开始
-- 最近输出：起点 manifest SHA-256 `d6357a6e2612e5cc56217759780eaa3ab205930455e459eb4326f318965b194b`
+- 当前步骤：S1 已核对并固定 S2；等待用户在本机 PowerShell 同时隔离两个失效 Docker socket 目录
+- 步骤开始时间：2026-09-26 18:43，Asia/Shanghai
+- 最近有效进展：2026-09-26 18:49，Asia/Shanghai（确认第二阻塞点为 `docker-secrets-engine\\engine.sock`；自动改名被 Windows 拒绝）
+- 最近心跳：2026-09-26 18:49，Asia/Shanghai
+- 下一检查点：Docker Engine 返回服务器版本且项目 Compose 服务列表为空
+- 等待对象：用户完成本机目录改名并重启 Docker Desktop
+- 活动进程或会话：有限启动检查已终止；未启动项目容器
+- 重试次数：一次只隔离 `run` 后失败于 Secrets Engine；一次同时隔离时 `docker-secrets-engine` 被系统拒绝，已停止
+- 最近输出：S2 起点 manifest SHA-256 `8e92671370cfbbea33dafec36a5d3e4dfbe6fe734fa8df0ed2caab9288e74969`
 
 ## 阻塞
 
@@ -81,6 +84,16 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-26 18:49 Asia/Shanghai — S1 接受并准备 S2；Docker 第二 socket 阻塞
+
+- 状态：S1 `review / finished`，接受为 S2 输入；整体 R2 `blocked`；S2 `waiting_environment`。
+- S1 核对：100 项起点中 10 个授权文件变化、0 缺失/删除；10 个单文件 SHA 全部匹配；S1 运行说明 SHA 为 `cabc712a...30a3`。报告的 10 行聚合值计算错误，正确勘误为 `583cac21...6a10`，不影响代码。
+- 总控验证：复跑 S1 四文件定向为 `44 passed, 1 warning`；代码抽查确认 module/Profile 双版本、candidate 重检和 invalidated CAS 边界。
+- S2 固定：生成 101 项普通摘要清单，manifest SHA `8e926713...e74969`；准备 PG-only Prompt，若产品无变化不重复 326 项本地回归。
+- Docker：第一次有限启动仍失败于 `Docker\\run\\sailor-ingest.sock`。隔离当前 `run` 后，18:45 最新错误转移到 `docker-secrets-engine\\engine.sock`；自动改名被 Windows 拒绝。未启动任何项目容器，未删除 volume/备份或重置 Docker。
+- 交付物：[S1 总控核对](../../p4-b6-r2-s1-coordinator-review.md)、[S2 Prompt](../prompts/p4-b6-r2-s2-postgresql-executor.md)、[S2 起点](../snapshots/p4-b6-r2-s2-start.sha256)。
+- 下一步/交接：用户在本机 PowerShell 同时隔离当前两个 socket 目录；总控验证 Engine 后才解禁 S2。技术顾问和测试智能体继续停止。
 
 ### 2026-09-26 16:49 Asia/Shanghai — 收紧为本地单主人产品范围
 
