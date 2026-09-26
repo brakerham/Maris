@@ -21,7 +21,7 @@
 - 最近 backend 日志没有出现 `sailor-ingest.sock`、`docker-secrets-engine`、`file cannot be accessed`、Ingest 初始化失败或 Secrets 初始化失败。
 - 本轮没有改名或删除 socket 目录，没有启动项目容器，没有删除 volume/镜像/VHDX，没有 reset、prune 或修改 Docker 全局设置。
 
-当前 Docker 环境由 `blocked` 恢复为 `ready`。下一步不再重复 Desktop 恢复，而是由执行智能体按照 T2 任务卡只运行 17 个唯一 PostgreSQL 用例。
+当前 Docker 环境由 `blocked` 恢复为 `ready`。执行智能体随后按照 T2 任务卡运行了 17 个唯一 PostgreSQL 用例，结果为 `17 passed, 0 failed, 0 skipped`；104 文件快照前后零漂移，项目容器和网络已普通关闭，最终 Compose 服务列表为空。Docker 环境事件对 P4-B6-R2 的执行方门禁已经关闭，后续由 P4-C11 测试智能体使用同一已恢复环境完成独立验收。
 
 ### 2.1 故障发生时的结论
 
@@ -271,4 +271,4 @@ Docker 稳定后，由总控新建有限验证任务，不重开原 T1 实现范
 
 ## 13. 一句话判断
 
-Docker Desktop 4.91.0 的重复 socket 启动故障已经通过原位升级到 4.92.0，并完成一次正常停止/重启门禁；P4 无需重新设计，当前只需补跑剩余 17 个唯一 PostgreSQL 用例，再决定是否进入 P4-C11。
+Docker Desktop 4.91.0 的重复 socket 启动故障已经通过原位升级到 4.92.0 解决，正常停止/重启门禁和 T2 的 17 个真实 PostgreSQL 用例均已通过；P4 无需重新设计，当前进入 P4-C11 独立验收。

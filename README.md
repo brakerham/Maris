@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P3 最终 89/89 项通过，真实 PostgreSQL 执行方 9/9、独立 10/10 通过；检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，项目正在规划 P4 可扩展 Personal AI Host、Windows 桌面 Shell 和首批模块。OpenClaw worker 安全事件仍暂停运行时恢复。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P4-A Host、身份和通用状态地基已经完成执行方实现及真实 PostgreSQL 门禁，当前停在 `review / finished`，等待 `P4-C11` 对最终 105 文件快照进行独立验收；P4-A 尚未标记为 `complete`。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -59,6 +59,8 @@
 - [P4 接口冻结](docs/phase-4-interface-freeze.md)：冻结总架构和 P4-A Host、身份、用户隔离、记忆与 API 合同。
 - [P4-B6 执行智能体 Prompt](docs/coordination/prompts/p4-b6-host-foundation-executor.md)：实现 P4-A Host、身份和通用状态地基。
 - [Docker Desktop 启动故障记录与恢复计划](docs/docker-desktop-incident-2026-09-26.md)：记录 4.91.0 反复出现的 AF_UNIX socket 故障，以及升级 4.92.0 后的双启动恢复证据和后续门禁。
+- [P4-B6-R2 最终执行方交付总控核对](docs/p4-b6-r2-final-coordinator-review.md)：核对 T2 的 17/17 真实 PostgreSQL 证据、105 文件最终快照和 C11 进入条件。
+- [P4-C11 测试智能体 Prompt](docs/coordination/prompts/p4-c11-host-foundation-tester.md)：绑定最终 R2 快照，对 P4-A 64 项、22 个接管审计问题和 P0～P3 兼容性执行独立验收。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

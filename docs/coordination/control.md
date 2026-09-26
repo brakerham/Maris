@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-26T22:10:00+08:00`
-- 当前阶段：P4-A Host、身份和通用状态地基返修。Docker Desktop 已原位升级到 4.92.0，并通过总控两次 Engine 检查和中间一次正常停止/启动；T1 测试时钟代码已完成，真实 PostgreSQL 仍待 T2 有限复验。P4-C11 尚未开始。
-- 当前动作：只派发 `P4-B6-R2-S2-T2` 给用户侧边栏中的既有执行智能体。T2 核对 104 文件起点，零代码修改，只运行精确节点 1 项、R1 其余 7 项和 R2 9 项，共 17 个唯一 PostgreSQL 用例。技术顾问与测试智能体继续停止。
-- 需要用户参与：把 `docs/coordination/prompts/p4-b6-r2-s2-t2-postgresql-verification-executor.md` 完整发送给既有执行智能体。当前不要发送 C11，不要再次停止/重启 Docker Desktop，也不要删除 socket 备份、volume 或项目数据。
+- 指令版本：`2026-09-26T22:32:00+08:00`
+- 当前阶段：P4-A Host、身份和通用状态地基独立验收准备。T2 的 17 个唯一真实 PostgreSQL 用例全部通过，104 文件前后零漂移，R1/R2 执行方门禁已关闭并停在 `review / finished`；总控固定 105 文件最终 R2 快照。P4-C11 现在可以开始。
+- 当前动作：只派发 `P4-C11` 给用户侧边栏中的既有测试智能体。C11 绑定 105 文件快照，执行 P4-A 64 项、审计 8 个 P0/14 个 P1 独立复现、P0～P3 兼容回归、SQLite/Alembic 和真实 PostgreSQL 门禁。执行智能体与技术顾问继续停止。
+- 需要用户参与：把 `docs/coordination/prompts/p4-c11-host-foundation-tester.md` 完整发送给既有测试智能体。当前不要启动执行智能体、Electron、OpenClaw、微信或 DeepSeek，不要删除 volume、socket 备份或项目数据。
 - Git 状态：远端 `1d06d92` 和 `checkpoint/p3-foundation` 是防止基座被后续业务改乱的保护性检查点，不是首个大版本。产品仍处于发布前阶段；P4-D9 任务卡及后续验收默认只做本地提交，不推送、不创建 PR，除非用户另行要求远端检查点。正式大版本由用户以后明确宣布。
 
 ## 本地单主人产品范围
@@ -85,17 +85,17 @@
 | P4-IF-001 模块化 Agent Host 接口冻结 | `complete`；头脑风暴总控 | 冻结总架构和 P4-A 的身份、user scope、workflow、记忆、API 与迁移合同 | 变更必须交回总控与技术顾问，不得由执行方自行修改 |
 | P4-B6 Host/身份地基实现 | 既有执行智能体；`review`、运行已停止、当前不接受 | 保留原实现和交付现场；开放 P0/P1 见接管审计，后续只按独立 R1/R2 任务返修 | 旧 B6 任务不得自行续做；只有收到 R1 Prompt 才能修改其授权范围；禁止独立测试、Electron/外部系统和 Git |
 | P4-B6 多交接接管审计 | 头脑风暴总控；`complete` | [审计报告](../p4-b6-multi-handoff-code-audit.md)登记 8 个 P0、14 个 P1、PG 证据和任务顺序 | 不重复本轮三路审查；新代码快照形成后才重新审查相应差异 |
-| P4-B6 PostgreSQL 审计环境 | `ready`；用户发送 T2 后由既有执行智能体取得唯一所有权 | Desktop 4.92.0 已通过两次 Engine 检查和一次正常停止/重启；项目 Compose 当前为空 | T2 只启动 `finance-postgres`，不得再次停止/重启 Desktop 或处理 socket |
+| P4-B6/P4-C11 PostgreSQL 审计环境 | `ready`；用户发送 C11 后由既有测试智能体取得唯一所有权 | T2 17/17 通过并普通 down；项目 Compose 当前为空 | C11 只启动 `finance-postgres`；Engine 不可达时只检查一次并停止，不恢复 Desktop 或处理 socket |
 | P4-D10 B6 返修架构裁定 | `complete`；总控已接受 | 762 行、8 P0/14 P1 逐项处置、R1/R2 边界、12 类 PG 场景与 C11 门禁已核对 | 技术顾问停止；不得修改产品或自行派发后续任务 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |
-| P4-B6-R2 Host/Agent 运行时返修 | 既有执行智能体；`blocked / finished` | S1 结构与 S2 新增 9 项真实 PG 已通过；T1 已修复 R1 测试时钟，剩余阻塞为 Docker Desktop 环境 | Docker 稳定并完成有限 PG 复验前不得启动 C11 |
+| P4-B6-R2 Host/Agent 运行时返修 | 既有执行智能体；`review / finished`，总控接受为 C11 输入 | S1 结构完成；T2 已证明 R1/R2 共 17 个唯一真实 PG 用例全部通过；最终 105 文件快照已冻结 | 执行智能体继续停止；最终独立结论由 C11 给出 |
 | P4-B6-R2-S1 运行时结构补全 | 既有执行智能体；`review / finished`，总控接受为 S2 输入 | 10 个单文件摘要匹配；报告聚合摘要勘误为 `583cac21...6a10`；总控定向 44 passed | S1 不再修改；独立结论仍由 C11 给出 |
-| P4-B6-R2-S2 真实 PostgreSQL 门禁 | 既有执行智能体；`blocked / finished` | R2 9/9、Finance 4/4、activity import 10/10 通过；Host R1 原 1 项测试时钟问题已由 T1 修复但未实跑 | 原 S2 停止；等待 Docker 稳定后以新的有限 PG 复验收口 |
-| P4-B6-R2-S2-T1 R1 测试时钟返修 | 既有执行智能体；`blocked / finished` | 单文件 monkeypatch 已完成；104 项终点摘要为 `c7deef5a...529d`；编译和 R1/R2 收集通过 | Docker Engine 不可达，运行测试均为 `not_run`；等待总控另立有限 PG 复验，不得自行续做 |
-| P4-B6-R2-S2-T2 有限 PostgreSQL 复验 | 既有执行智能体；`ready`、等待用户发送 Prompt | 104 项起点摘要 `c7deef5a...529d`；零代码修改；17 个唯一 PG 用例 | 只运行精确节点 1、R1 其余 7、R2 9；结束普通 down，禁止自行启动 C11 |
-| P4-C11 P4-A 独立验收 | 测试智能体；`unverified`、未派发 | 等 R1/R2 固定快照；执行 64 项 P4-A、缺陷反例、兼容回归和真实 PostgreSQL 门禁 | 当前不得用旧 B6 摘要提前验收或修改产品 |
+| P4-B6-R2-S2 真实 PostgreSQL 门禁 | 既有执行智能体；`review / finished` | S2 原 R2 9/9、Finance 4/4、activity import 10/10 通过；T2 已补齐 Host R1 8/8 与 R2 9/9 | S2/T1/T2 均停止；不得重复执行，独立数据库门禁由 C11 负责 |
+| P4-B6-R2-S2-T1 R1 测试时钟返修 | 既有执行智能体；`review / finished` | 单文件 monkeypatch 已完成；104 项终点摘要为 `c7deef5a...529d`；T2 精确节点及后续 16 项证明时钟恢复 | T1 不再修改或运行；其修复随最终 105 文件快照进入 C11 |
+| P4-B6-R2-S2-T2 有限 PostgreSQL 复验 | 既有执行智能体；`review / finished` | 17 个唯一 PG 用例全部通过；104/104 前后匹配；报告摘要 `59e07d0c...f54358c` | 执行智能体停止；不得重复 T2 或自行启动 C11 |
+| P4-C11 P4-A 独立验收 | 测试智能体；`ready`、等待用户发送 Prompt | 绑定 105 项摘要 `65ee4008...360126`；执行 64 项、22 个审计复现、兼容回归、SQLite/PG | 测试方只改独立路径/报告/矩阵/自身日志；产品缺陷交回总控 |
 
 任何角色在开始工作前必须确认任务表中只有一个执行负责人。没有被列为执行负责人的角色不得“顺手继续”外部操作；发现空缺、冲突或旧指令时，只向总控报告并等待重新分配。
 

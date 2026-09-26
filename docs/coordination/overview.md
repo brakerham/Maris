@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-26 22:10，Asia/Shanghai
+更新时间：2026-09-26 22:32，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,10 +13,10 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：Docker 4.92.0 双启动门禁通过，T2 有限 PG 复验已准备 | 2026-09-26 22:10 | 用户发送 T2 Prompt；执行智能体核对 104/104 起点 | [Docker 故障记录](../docker-desktop-incident-2026-09-26.md)、[T2 Prompt](prompts/p4-b6-r2-s2-t2-postgresql-verification-executor.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：T2 交付已核对，最终 R2 快照固定，C11 已准备 | 2026-09-26 22:32 | 用户发送 C11 Prompt；测试智能体核对 105/105 起点 | [R2 最终核对](../p4-b6-r2-final-coordinator-review.md)、[C11 Prompt](prompts/p4-c11-host-foundation-tester.md) |
 | 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
-| 执行智能体 | `blocked / finished`（T1/S2/R2）/ `ready`（T2） | `waiting_user`：Docker 已恢复，等待 T2 Prompt | 2026-09-26 22:10 | 零代码修改，运行 17 个唯一真实 PG 用例 | [角色日志](agents/executor.md)、[T2 Prompt](prompts/p4-b6-r2-s2-t2-postgresql-verification-executor.md) |
-| 测试智能体 | `complete`（P4-C10，总控接受） | `finished`：C11 尚未开始，等待 R1/R2 最终快照 | 2026-09-25 20:08 | 继续停止，不提前复现或修改产品 | [角色日志](agents/tester.md)、[C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
+| 执行智能体 | `review / finished`（R1/R2/T2） | `finished`：17 个唯一 PG 用例通过，104 文件零漂移，资源已关闭 | 2026-09-26 22:27 | 保持停止，等待 C11 独立结论 | [角色日志](agents/executor.md)、[T2 运行说明](../b6-r2-s2-t2-postgresql-running.md) |
+| 测试智能体 | `ready`（P4-C11） | `waiting_user`：最终 105 文件快照和 C11 任务卡已准备 | 2026-09-26 22:32 | 用户发送 C11 Prompt；测试方核对快照并实现独立验收 | [角色日志](agents/tester.md)、[C11 Prompt](prompts/p4-c11-host-foundation-tester.md) |
 
 ## 阶段 0 任务状态
 
@@ -66,18 +66,18 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P4-IF-002：B6 返修补充冻结 | 头脑风暴总控 | `complete` | 冻结安全数据与 Host 运行时的补充合同和顺序 | [IF-002](../phase-4-interface-freeze-002.md) |
 | P4-B6-R1：安全数据与兼容入口返修 | 用户启动的既有执行智能体 | `review`，已接受为 R2 输入 | R1/F1 安全切片摘要可复算，最终独立验收仍由 C11 完成 | [F1 总控审查](../p4-b6-r1-f1-coordinator-review.md) |
 | P4-B6-R1-F1：外部身份并发绑定返修 | 用户启动的既有执行智能体 | `review`，开发返修接受 | 总控本地 41 项、范围和摘要通过；执行方真实 PG 原 21+新增 1 通过 | [F1 总控审查](../p4-b6-r1-f1-coordinator-review.md) |
-| P4-B6-R2：Host/Agent 运行时返修 | 用户启动的既有执行智能体 | `blocked / finished`，等待 Docker 恢复 | S1 结构完成；S2 新增 9 项真实 PG 通过；T1 已修复 R1 测试时钟但未能运行 PG | [Docker 故障记录](../docker-desktop-incident-2026-09-26.md)、[T1 运行说明](../b6-r2-s2-t1-clock-running.md) |
+| P4-B6-R2：Host/Agent 运行时返修 | 用户启动的既有执行智能体 | `review / finished`，总控接受为 C11 输入 | S1 结构完成；T2 已证明 R1/R2 共 17 个唯一真实 PG 用例通过；最终 105 文件快照已冻结 | [R2 最终核对](../p4-b6-r2-final-coordinator-review.md) |
 | P4-B6-R2-S1：运行时结构补全 | 用户启动的既有执行智能体 | `review / finished`，总控接受为 S2 输入 | 10 个变更文件摘要匹配；总控 44 项定向通过；聚合摘要勘误已登记 | [S1 总控核对](../p4-b6-r2-s1-coordinator-review.md) |
-| P4-B6-R2-S2：真实 PostgreSQL 门禁 | 用户启动的既有执行智能体 | `blocked / finished` | R2 9/9、Finance 4/4、P3 10/10 通过；Host R1 原时钟问题已由 T1 修复，待 Docker 稳定后实跑收口 | [S2 运行说明](../b6-r2-s2-postgresql-running.md)、[T1 运行说明](../b6-r2-s2-t1-clock-running.md) |
-| P4-B6-R2-S2-T1：R1 PG 测试时钟返修 | 用户启动的既有执行智能体 | `blocked / finished` | 单文件时钟修复、编译和收集完成；104 项终点摘要 `c7deef5a...529d`，真实 PG 因 Engine 不可达而 `not_run` | [T1 运行说明](../b6-r2-s2-t1-clock-running.md)、[Docker 故障记录](../docker-desktop-incident-2026-09-26.md) |
-| P4-B6-R2-S2-T2：有限 PostgreSQL 复验 | 用户启动的既有执行智能体 | `ready`，等待用户派发 | 104 项起点可复算；零代码修改；运行精确节点 1、R1 其余 7、R2 9 | [T2 Prompt](prompts/p4-b6-r2-s2-t2-postgresql-verification-executor.md)、[T2 起点](snapshots/p4-b6-r2-s2-t2-start.sha256) |
-| P4-C11：P4-A 独立验收 | 用户启动的既有测试智能体 | `unverified`，未派发 | 绑定最终返修快照执行 64 项、缺陷反例、兼容回归和真实 PostgreSQL | [C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
+| P4-B6-R2-S2：真实 PostgreSQL 门禁 | 用户启动的既有执行智能体 | `review / finished` | S2 原 R2 9/9、Finance 4/4、P3 10/10 通过；T2 已补齐 Host R1 8/8 与 R2 9/9 | [S2 运行说明](../b6-r2-s2-postgresql-running.md)、[T2 运行说明](../b6-r2-s2-t2-postgresql-running.md) |
+| P4-B6-R2-S2-T1：R1 PG 测试时钟返修 | 用户启动的既有执行智能体 | `review / finished` | 单文件时钟修复进入最终快照；T2 精确节点及其后 16 项证明修复生效且 monkeypatch 已恢复 | [T1 运行说明](../b6-r2-s2-t1-clock-running.md)、[T2 运行说明](../b6-r2-s2-t2-postgresql-running.md) |
+| P4-B6-R2-S2-T2：有限 PostgreSQL 复验 | 用户启动的既有执行智能体 | `review / finished` | 17/17 passed；104/104 前后匹配；Compose 服务最终为空 | [T2 运行说明](../b6-r2-s2-t2-postgresql-running.md)、[R2 最终核对](../p4-b6-r2-final-coordinator-review.md) |
+| P4-C11：P4-A 独立验收 | 用户启动的既有测试智能体 | `ready`，等待用户派发 | 绑定 105 文件最终 R2 快照，执行 64 项、22 审计复现、兼容回归和 SQLite/PG | [C11 Prompt](prompts/p4-c11-host-foundation-tester.md)、[C11 起点](snapshots/p4-c11-start.sha256) |
 
 ## 当前阻塞与风险
 
 - `P4-B6-R1-REV-001` 已由 F1 在开发返修层面关闭；最终 C11 仍会独立重跑真实 PostgreSQL 同步竞争反例。
-- Docker Desktop 已由 4.91.0 原位升级到 `4.92.0.240144`。总控第一次 Engine 检查通过后使用 Desktop CLI 正常停止/启动，第二次版本、进程、管道、server/info 和空 Compose 检查全部通过，最近 backend 日志没有旧 socket 错误；环境阻塞已解除。
-- R2 的三个冻结结构缺口已由 S1 关闭；当前产品级剩余门禁是这些行为在真实 PostgreSQL 的迁移、事务、约束和多连接竞争证据。
+- Docker Desktop 已由 4.91.0 原位升级到 `4.92.0.240144`，双启动门禁和 T2 17 个真实 PG 用例均通过；执行方普通 down 后项目 Compose 服务为空。C11 可使用该环境，但 Engine 不可达时只能检查一次并停止，不重启 Desktop 或恢复 socket。
+- R2 的三个冻结结构缺口已由 S1 关闭，执行方真实 PostgreSQL 门禁已由 T2 收口；当前剩余门禁是 C11 对迁移、事务、约束、多连接竞争和用户隔离给出独立证据。
 - S1 报告中 10 个单文件摘要全部正确，但 10 行聚合值不可复算；总控按声明算法给出勘误 `583cac21...6a10`，并直接从实际 101 个文件生成 S2 manifest `8e926713...e74969`。
 - S2 的 103 项终点摘要 `b1c4c80d...d5b18` 可复算。唯一失败用例把 code 创建时间固定为 `2026-09-26T02:00Z`，HTTP 路由却读取真实 UTC；两枚 code 在竞争前均过期。这是测试时钟漂移，不是产品并发缺陷。
 - R2 报告的 99 个普通文件哈希、报告普通哈希和有序清单总摘要可复算；自引用 canonical 哈希不可按声明算法复算。S1 改用总控生成的独立 100 文件普通摘要清单，避免自引用。
@@ -93,7 +93,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 ## 下一次总控检查
 
-1. 用户把 P4-B6-R2-S2-T2 Prompt 完整发送给既有执行智能体。
-2. 执行方核对 104/104 起点，不修改代码，只运行精确节点 1 项、R1 其余 7 项和 R2 9 项。
-3. T2 全通过并形成稳定报告后由总控核对；Finance/P3 PG 和非 PG 全量不重复运行。
-4. 最终 R2 快照稳定后才派发 P4-C11；技术顾问和测试智能体在此之前继续停止。
+1. 用户把 P4-C11 Prompt 完整发送给既有测试智能体。
+2. 测试方核对 105/105 起点，建立 P4-A 64 项与审计 22 项的独立证据映射。
+3. 测试方执行兼容回归、SQLite/Alembic 和真实 PostgreSQL 门禁，保持产品快照零漂移并普通 down。
+4. C11 报告交付后由总控核对；无开放 P0/P1 才接受 P4-A、创建本地验收提交并规划 P4-B。
