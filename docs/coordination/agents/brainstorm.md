@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B6-R1-F1-COORDINATION — 外部身份并发绑定最小返修协调
+- 当前任务：P4-B6-R2-PREPARATION — Host/Agent 运行时返修派发前协调
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-26 01:47，Asia/Shanghai
+- 最近更新：2026-09-26 10:41，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -46,19 +46,22 @@
 - [P4-B6-R1 总控代码验收记录](../../p4-b6-r1-coordinator-review.md)
 - [P4-B6-R1-F1 执行智能体 Prompt](../prompts/p4-b6-r1-f1-binding-race-executor.md)
 - [P4-B6-R1-F1 起点快照](../snapshots/p4-b6-r1-f1-start.sha256)
+- [P4-B6-R1-F1 总控审查](../../p4-b6-r1-f1-coordinator-review.md)
+- [P4-B6-R2 执行智能体 Prompt](../prompts/p4-b6-r2-runtime-executor.md)
+- [P4-B6-R2 起点快照](../snapshots/p4-b6-r2-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：R1 快照与高风险代码已核对；PG 复现 P1 并发布 F1，等待用户发送 F1 Prompt
-- 步骤开始时间：2026-09-26 01:47，Asia/Shanghai
-- 最近有效进展：2026-09-26 01:47，Asia/Shanghai（22 文件摘要匹配；本地 40 项通过；PG 复现并发外部身份败方 IntegrityError；容器已 down；F1 已准备）
-- 最近心跳：2026-09-26 01:47，Asia/Shanghai
-- 下一检查点：执行智能体记录 F1 接单并重算 23 文件起点摘要 `d46c056d...c1cd`
-- 等待对象：用户发送 F1 Prompt；随后等待执行智能体交付
-- 活动进程或会话：无；Docker 当前服务列表为空，F1 接单后由执行智能体成为唯一 PostgreSQL 环境负责人
-- 重试次数：0
-- 最近输出：R1 总控审查、IF-002 勘误、F1 23 文件起点快照和 F1 任务卡
+- 当前步骤：F1 已接受为 R2 精确基线；等待 Windows 重启释放 Docker Desktop 失效 socket
+- 步骤开始时间：2026-09-26 10:41，Asia/Shanghai
+- 最近有效进展：2026-09-26 10:41，Asia/Shanghai（F1 总控审查、96 文件 R2 快照和正式 Prompt 已完成）
+- 最近心跳：2026-09-26 10:41，Asia/Shanghai
+- 下一检查点：用户确认 Windows 重启后 Docker Desktop 可正常打开；随后派发 R2
+- 等待对象：用户重启 Windows并确认 Docker Desktop
+- 活动进程或会话：无；Docker 进程已停止，项目 PostgreSQL 测试未启动
+- 重试次数：2 次 Docker Desktop 初始化；已停止继续重试
+- 最近输出：F1 4 changed/19 unchanged/0 missing、22 文件摘要匹配、本地 41 passed；Docker 初始化在本机 socket 阶段失败
 
 ## 阻塞
 
@@ -74,6 +77,16 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-26 10:41 Asia/Shanghai — 接受 F1 为 R2 基线并准备 R2
+
+- 范围与摘要：23 文件 F1 起点比较为 4 changed、19 unchanged、0 missing；执行方五个最终文件摘要与 22 文件总摘要 `e690882a...7976` 均可复算。
+- 代码审查：binding INSERT 使用局部 savepoint；只精确识别 PostgreSQL `23505`/目标索引或 SQLite 对应两列唯一约束，确认竞争事实后恢复败方 code 并保存安全 409 receipt；其他 `IntegrityError` 继续抛出。
+- 本地验证：总控复跑 Host auth/API/state/migration 为 41 passed；仅既有 Starlette/AnyIO 弃用 warning。
+- PostgreSQL：执行方证据为原 R1 21 项和新增竞争 1 项通过。总控复跑尚未启动测试，Docker Desktop 即因 `sailor-ingest.sock`、继而 `docker-secrets-engine/engine.sock` 的本机失效 socket 初始化失败；该故障不形成产品失败。
+- 环境处置：停止所有 Docker 进程并执行 WSL shutdown；保留两个 `Docker/run` 现场备份目录，未改 secrets 目录 ACL、未恢复出厂、未删 volume、未 prune。连续初始化失败后停止重试，等待用户重启 Windows。
+- R2：生成 96 文件精确起点快照，总摘要 `7a80e083...f3632`，并完成正式 R2 Prompt。Windows/Docker 恢复后由用户发送给既有执行智能体；测试与技术顾问继续停止。
+- Git：本条记录前尚未提交产品实现；R1/F1 产品仍等待 R2+C11 整体独立验收，不把开发 review 写成 complete。
 
 ### 2026-09-26 01:47 Asia/Shanghai — R1 暂不接受并派发 F1
 

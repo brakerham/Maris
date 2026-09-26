@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-26 01:47，Asia/Shanghai
+更新时间：2026-09-26 10:41，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -11,9 +11,9 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：R1 快照已核对，真实 PG 发现 1 个 P1，F1 任务卡已准备 | 2026-09-26 01:47 | 用户把 F1 Prompt 发送给既有执行智能体 | [角色日志](agents/brainstorm.md)、[总控审查](../p4-b6-r1-coordinator-review.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：F1 已核对并固定 R2 起点；等待 Windows 重启恢复 Docker | 2026-09-26 10:41 | Docker 正常后由用户发送 R2 Prompt | [角色日志](agents/brainstorm.md)、[F1 总控审查](../p4-b6-r1-f1-coordinator-review.md) |
 | 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
-| 执行智能体 | `ready`（P4-B6-R1-F1） | `waiting_user`：R1 已停在 review，等待接收单一并发窗口返修 | 2026-09-26 01:47 | 用户发送 F1 Prompt；先核对 23 文件起点摘要 | [角色日志](agents/executor.md)、[F1 Prompt](prompts/p4-b6-r1-f1-binding-race-executor.md) |
+| 执行智能体 | `ready`（P4-B6-R2） | `waiting_user`：F1 已停止，等待 Docker 环境恢复后接收 R2 | 2026-09-26 10:41 | 核对 96 文件起点摘要后实现剩余 5 P0/7 P1 | [角色日志](agents/executor.md)、[R2 Prompt](prompts/p4-b6-r2-runtime-executor.md) |
 | 测试智能体 | `complete`（P4-C10，总控接受） | `finished`：C11 尚未开始，等待 R1/R2 最终快照 | 2026-09-25 20:08 | 继续停止，不提前复现或修改产品 | [角色日志](agents/tester.md)、[C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 阶段 0 任务状态
@@ -62,14 +62,15 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P4-B6：Host、身份和通用状态地基 | 用户启动的既有执行智能体 | `review`，当前不接受 | 多交接实现有可复用基础，但接管审计登记 8 个 P0、14 个 P1；禁止进入 C11 | [B6 接管审计](../p4-b6-multi-handoff-code-audit.md) |
 | P4-D10：B6 返修架构裁定 | 用户启动的既有技术顾问 | `complete` | D10 SHA 匹配；8/14 处置、七类合同、R1/R2、12 类 PG 与 C11 门禁由总控接受 | [D10 方案](../phase-4-d10-b6-repair-architecture.md) |
 | P4-IF-002：B6 返修补充冻结 | 头脑风暴总控 | `complete` | 冻结安全数据与 Host 运行时的补充合同和顺序 | [IF-002](../phase-4-interface-freeze-002.md) |
-| P4-B6-R1：安全数据与兼容入口返修 | 用户启动的既有执行智能体 | `review`，暂不接受 | 22 文件摘要和大部分合同通过；总控复现并发外部身份败方偶发 500 | [总控审查](../p4-b6-r1-coordinator-review.md) |
-| P4-B6-R1-F1：外部身份并发绑定返修 | 用户启动的既有执行智能体 | `ready` | 只关闭 `P4-B6-R1-REV-001`，败方固定 409 并保持 receipt/领域事务语义 | [F1 Prompt](prompts/p4-b6-r1-f1-binding-race-executor.md) |
-| P4-B6-R2：Host/Agent 运行时返修 | 用户启动的既有执行智能体 | `unverified`，未派发 | 等总控核对 R1 精确快照后再派发 | [IF-002](../phase-4-interface-freeze-002.md) |
+| P4-B6-R1：安全数据与兼容入口返修 | 用户启动的既有执行智能体 | `review`，已接受为 R2 输入 | R1/F1 安全切片摘要可复算，最终独立验收仍由 C11 完成 | [F1 总控审查](../p4-b6-r1-f1-coordinator-review.md) |
+| P4-B6-R1-F1：外部身份并发绑定返修 | 用户启动的既有执行智能体 | `review`，开发返修接受 | 总控本地 41 项、范围和摘要通过；执行方真实 PG 原 21+新增 1 通过 | [F1 总控审查](../p4-b6-r1-f1-coordinator-review.md) |
+| P4-B6-R2：Host/Agent 运行时返修 | 用户启动的既有执行智能体 | `ready`，等待 Docker 恢复 | 96 文件起点已固定，关闭剩余 5 P0/7 P1 | [R2 Prompt](prompts/p4-b6-r2-runtime-executor.md) |
 | P4-C11：P4-A 独立验收 | 用户启动的既有测试智能体 | `unverified`，未派发 | 绑定最终返修快照执行 64 项、缺陷反例、兼容回归和真实 PostgreSQL | [C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
-- `P4-B6-R1-REV-001`：两个有效 code 并发绑定同一 active 外部身份时，PostgreSQL 唯一索引败方可越过预查并抛 `IntegrityError`，经 Host HTTP 成为 500；数据库唯一性仍有效，分级 P1，等待 F1。
+- `P4-B6-R1-REV-001` 已由 F1 在开发返修层面关闭；最终 C11 仍会独立重跑真实 PostgreSQL 同步竞争反例。
+- 当前本机 Docker Desktop 被失效 socket 阻断初始化。总控测试尚未启动，因此不形成产品失败；等待 Windows 重启释放句柄。禁止恢复出厂、改 ACL、删除 volume 或继续无界重试。
 - P4 前地基检查点已建立；恢复操作只能由总控在保留现有工作的前提下执行，不把检查点理解为允许其他角色自行重置工作区。
 - `P3-C9-PG-001` 已由 B5-R1 修复并经 C9-R2 独立关闭；原始失败报告继续保留为审计证据。
 - C2 的并发用例原有测试夹具矛盾，经测试角色独立确认后仅修正测试基础设施；六项产品缺陷仍分别修复并通过复验。
@@ -81,7 +82,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 ## 下一次总控检查
 
-1. 用户把 P4-B6-R1-F1 Prompt 发送给既有执行智能体任务。
-2. 执行智能体先重算 23 文件起点摘要；匹配后只修复外部身份唯一竞争，复跑原 R1 门禁并提交 `review` 新快照。
-3. 总控核对 F1 后才准备 R2；技术顾问和测试智能体继续停止。
-4. 只有最终 R2 快照无开放 P0/P1 时才派发 P4-C11。
+1. 用户重启 Windows，打开 Docker Desktop 并确认初始化错误消失。
+2. 用户把 P4-B6-R2 Prompt 发送给既有执行智能体；执行方先重算 96 文件起点摘要 `7a80e083...f3632`。
+3. R2 关闭剩余 5 P0/7 P1，完成本地、回归和真实 PostgreSQL 执行方测试并提交终点快照。
+4. 总控核对 R2 后才派发 P4-C11；技术顾问和测试智能体在此之前继续停止。
