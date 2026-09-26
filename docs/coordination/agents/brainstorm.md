@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B6-R2-S2-PREPARATION — S1 核对、Docker 恢复与真实 PostgreSQL 门禁派发
+- 当前任务：P4-B6-R2-S2-T1-PREPARATION — S2 受阻核对与 R1 测试时钟返修派发
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-26 18:55，Asia/Shanghai
+- 最近更新：2026-09-26 19:41，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -55,20 +55,23 @@
 - [P4-B6-R2-S1 总控核对](../../p4-b6-r2-s1-coordinator-review.md)
 - [P4-B6-R2-S2 执行智能体 Prompt](../prompts/p4-b6-r2-s2-postgresql-executor.md)
 - [P4-B6-R2-S2 起点快照](../snapshots/p4-b6-r2-s2-start.sha256)
+- [P4-B6-R2-S2 受阻总控核对](../../p4-b6-r2-s2-blocked-coordinator-review.md)
+- [P4-B6-R2-S2-T1 执行智能体 Prompt](../prompts/p4-b6-r2-s2-t1-clock-executor.md)
+- [P4-B6-R2-S2-T1 起点快照](../snapshots/p4-b6-r2-s2-t1-start.sha256)
 - [P4 本地单主人范围决定](../../phase-4-local-owner-scope-decision.md)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：S1、S2 起点与 Docker 环境均已核对；等待用户把 S2 Prompt 发送给既有执行智能体
-- 步骤开始时间：2026-09-26 18:55，Asia/Shanghai
-- 最近有效进展：2026-09-26 18:55，Asia/Shanghai（Engine 29.8.0 与空 Compose 列表验证通过，S2 环境阻塞解除）
-- 最近心跳：2026-09-26 18:55，Asia/Shanghai
-- 下一检查点：执行智能体接单并记录 101/101 起点核对
-- 等待对象：用户发送 S2 Prompt；随后等待执行智能体首个检查点
-- 活动进程或会话：Docker Desktop/backend 正常；项目 Compose 服务为空，尚未启动 `finance-postgres`
-- 重试次数：两个 socket 目录最终由用户在管理员 PowerShell 同时隔离，恢复完成
-- 最近输出：S2 起点 manifest SHA-256 `8e92671370cfbbea33dafec36a5d3e4dfbe6fe734fa8df0ed2caab9288e74969`
+- 当前步骤：S2 受阻证据与 103 项摘要已核对；等待用户把 T1 Prompt 发送给既有执行智能体
+- 步骤开始时间：2026-09-26 19:20，Asia/Shanghai
+- 最近有效进展：2026-09-26 19:41，Asia/Shanghai（确认唯一失败为 R1 固定测试时钟漂移，冻结单文件 monkeypatch 返修）
+- 最近心跳：2026-09-26 19:41，Asia/Shanghai
+- 下一检查点：执行智能体接单并记录 103/103 起点核对
+- 等待对象：用户发送 T1 Prompt；随后等待执行智能体首个检查点
+- 活动进程或会话：S2 已普通 down；项目 Compose 服务为空，Docker Engine 正常
+- 重试次数：S2 首次完整基线保留 1 个测试时钟失败；没有用重复运行覆盖证据
+- 最近输出：T1 起点 manifest SHA-256 `b1c4c80d8d5a04e2571b9028e38abc7fb99f912c6b2ffba84d799f466e4d5b18`
 
 ## 阻塞
 
@@ -84,6 +87,17 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-26 19:41 Asia/Shanghai — S2 受阻核对并准备 T1
+
+- 状态：S2 与整体 R2 `blocked / finished`；T1 `ready / waiting_user`；C11 未派发。
+- S2 证据：新增 R2 PG 9/9、Finance 4/4、activity import 10/10 通过；Host R1 为 7/8。Docker 已普通 down，Compose 服务列表为空。
+- 根因：失败用例用固定 `2026-09-26T02:00Z` 创建十分钟 code，HTTP consume 使用真实 UTC；两码均在 INSERT barrier 前过期为 409，没有形成产品唯一约束失败。
+- 摘要：101 项原起点全部未变；新增 R2 PG 测试与 S2 说明组成 103 项，报告总摘要 `b1c4c80d...d5b18` 可复算并作为 T1 manifest。
+- 裁定：只修改 `tests/host/test_postgresql_r1.py`，用 pytest monkeypatch 将 `host_routes.datetime` 固定到用例已有时间；保留 TTL、`[200,409]`、重放、撤销重试和隐私断言。禁止产品改动。
+- 有限验证：精确节点、R1 8 项、R2 9 项；不重复 Finance/P3 PG、S1 44 项或 326 项非 PG 回归。
+- 交付物：[S2 受阻核对](../../p4-b6-r2-s2-blocked-coordinator-review.md)、[T1 Prompt](../prompts/p4-b6-r2-s2-t1-clock-executor.md)、[T1 起点](../snapshots/p4-b6-r2-s2-t1-start.sha256)。
+- 下一步/交接：用户发送 T1 Prompt；技术顾问和测试智能体继续停止。
 
 ### 2026-09-26 18:55 Asia/Shanghai — Docker Engine 恢复并解禁 S2
 

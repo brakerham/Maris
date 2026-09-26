@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-26 18:55，Asia/Shanghai
+更新时间：2026-09-26 19:41，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,9 +13,9 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：S1、S2 起点和 Docker 环境均已核对，等待用户发送 S2 Prompt | 2026-09-26 18:55 | 执行智能体接单并核对 101/101 起点 | [S1 核对](../p4-b6-r2-s1-coordinator-review.md)、[S2 Prompt](prompts/p4-b6-r2-s2-postgresql-executor.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：S2 受阻证据已核对，T1 单文件时钟返修已固定 | 2026-09-26 19:41 | 用户发送 T1 Prompt，执行智能体核对 103/103 起点 | [S2 受阻核对](../p4-b6-r2-s2-blocked-coordinator-review.md)、[T1 Prompt](prompts/p4-b6-r2-s2-t1-clock-executor.md) |
 | 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
-| 执行智能体 | `review`（S1）/ `ready`（S2） | `waiting_user`：S1 已停止；等待用户发送 S2 Prompt | 2026-09-26 18:55 | 核对 101 文件起点并执行 PG-only 门禁 | [角色日志](agents/executor.md)、[S2 Prompt](prompts/p4-b6-r2-s2-postgresql-executor.md) |
+| 执行智能体 | `blocked / finished`（S2）/ `ready`（T1） | `waiting_user`：S2 已停止；等待用户发送 T1 Prompt | 2026-09-26 19:41 | 只修 R1 PG 用例时钟并运行 R1 8 项、R2 9 项 | [角色日志](agents/executor.md)、[T1 Prompt](prompts/p4-b6-r2-s2-t1-clock-executor.md) |
 | 测试智能体 | `complete`（P4-C10，总控接受） | `finished`：C11 尚未开始，等待 R1/R2 最终快照 | 2026-09-25 20:08 | 继续停止，不提前复现或修改产品 | [角色日志](agents/tester.md)、[C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 阶段 0 任务状态
@@ -66,9 +66,10 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P4-IF-002：B6 返修补充冻结 | 头脑风暴总控 | `complete` | 冻结安全数据与 Host 运行时的补充合同和顺序 | [IF-002](../phase-4-interface-freeze-002.md) |
 | P4-B6-R1：安全数据与兼容入口返修 | 用户启动的既有执行智能体 | `review`，已接受为 R2 输入 | R1/F1 安全切片摘要可复算，最终独立验收仍由 C11 完成 | [F1 总控审查](../p4-b6-r1-f1-coordinator-review.md) |
 | P4-B6-R1-F1：外部身份并发绑定返修 | 用户启动的既有执行智能体 | `review`，开发返修接受 | 总控本地 41 项、范围和摘要通过；执行方真实 PG 原 21+新增 1 通过 | [F1 总控审查](../p4-b6-r1-f1-coordinator-review.md) |
-| P4-B6-R2：Host/Agent 运行时返修 | 用户启动的既有执行智能体 | `blocked / finished`，等待 S2 | S1 已关闭三个结构缺口；真实 PostgreSQL 门禁尚未执行 | [S1 总控核对](../p4-b6-r2-s1-coordinator-review.md) |
+| P4-B6-R2：Host/Agent 运行时返修 | 用户启动的既有执行智能体 | `blocked / finished`，等待 T1 | S1 结构完成；S2 新增 9 项真实 PG 通过；R1 固定测试时钟过期阻塞收口 | [S2 受阻核对](../p4-b6-r2-s2-blocked-coordinator-review.md) |
 | P4-B6-R2-S1：运行时结构补全 | 用户启动的既有执行智能体 | `review / finished`，总控接受为 S2 输入 | 10 个变更文件摘要匹配；总控 44 项定向通过；聚合摘要勘误已登记 | [S1 总控核对](../p4-b6-r2-s1-coordinator-review.md) |
-| P4-B6-R2-S2：真实 PostgreSQL 门禁 | 用户启动的既有执行智能体 | `ready`，等待用户派发 | 101 项普通摘要起点、有限 PG-only 范围和空 Docker 环境已固定 | [S2 Prompt](prompts/p4-b6-r2-s2-postgresql-executor.md)、[S2 起点](snapshots/p4-b6-r2-s2-start.sha256) |
+| P4-B6-R2-S2：真实 PostgreSQL 门禁 | 用户启动的既有执行智能体 | `blocked / finished` | R2 9/9、Finance 4/4、P3 10/10 通过；Host R1 7/8，唯一失败为固定时钟过期 | [S2 运行说明](../b6-r2-s2-postgresql-running.md)、[受阻核对](../p4-b6-r2-s2-blocked-coordinator-review.md) |
+| P4-B6-R2-S2-T1：R1 PG 测试时钟返修 | 用户启动的既有执行智能体 | `ready`，等待用户派发 | 103 项起点可复算；只改一个执行方测试，用模块级 monkeypatch 保持固定时间 | [T1 Prompt](prompts/p4-b6-r2-s2-t1-clock-executor.md)、[T1 起点](snapshots/p4-b6-r2-s2-t1-start.sha256) |
 | P4-C11：P4-A 独立验收 | 用户启动的既有测试智能体 | `unverified`，未派发 | 绑定最终返修快照执行 64 项、缺陷反例、兼容回归和真实 PostgreSQL | [C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
@@ -77,6 +78,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 - Docker Desktop 在 18:45 再现两个连续 AF_UNIX socket 故障。用户在管理员 PowerShell 同时隔离当前 `Docker\\run` 与 `docker-secrets-engine` 后，18:54 总控验证 Engine 29.8.0、Linux 后端进程和空 Compose 列表；S2 环境阻塞已解除。时间戳备份继续保留，不在本阶段清理。
 - R2 的三个冻结结构缺口已由 S1 关闭；当前产品级剩余门禁是这些行为在真实 PostgreSQL 的迁移、事务、约束和多连接竞争证据。
 - S1 报告中 10 个单文件摘要全部正确，但 10 行聚合值不可复算；总控按声明算法给出勘误 `583cac21...6a10`，并直接从实际 101 个文件生成 S2 manifest `8e926713...e74969`。
+- S2 的 103 项终点摘要 `b1c4c80d...d5b18` 可复算。唯一失败用例把 code 创建时间固定为 `2026-09-26T02:00Z`，HTTP 路由却读取真实 UTC；两枚 code 在竞争前均过期。这是测试时钟漂移，不是产品并发缺陷。
 - R2 报告的 99 个普通文件哈希、报告普通哈希和有序清单总摘要可复算；自引用 canonical 哈希不可按声明算法复算。S1 改用总控生成的独立 100 文件普通摘要清单，避免自引用。
 - P4 近期采用单机单主人范围；现有 bootstrap owner/auth 保留但停止产品扩展，不制作注册或常规登录页面。删除认证结构延后到桌面入口有真实需求时再评估，避免现在破坏 user scope、微信绑定和已完成安全修复。
 - P4 前地基检查点已建立；恢复操作只能由总控在保留现有工作的前提下执行，不把检查点理解为允许其他角色自行重置工作区。
@@ -90,7 +92,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 ## 下一次总控检查
 
-1. 用户把 P4-B6-R2-S2 Prompt 完整发送给既有执行智能体。
-2. 执行方核对 101/101 起点，只启动 `finance-postgres` 并执行有限的真实 PostgreSQL 门禁。
-3. S2 全通过并形成稳定快照后由总控核对；若发现产品缺陷则另派最小返修，不在 S2 内混改。
+1. 用户把 P4-B6-R2-S2-T1 Prompt 完整发送给既有执行智能体。
+2. 执行方核对 103/103 起点，只改 R1 PG 测试时钟，运行精确节点、R1 8 项和 R2 9 项。
+3. T1 全通过并形成稳定快照后由总控核对；Finance/P3 PG 和非 PG 全量不重复运行。
 4. 最终 R2 快照稳定后才派发 P4-C11；技术顾问和测试智能体在此之前继续停止。
