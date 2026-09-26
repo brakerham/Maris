@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-C11-PREPARATION — 最终 R2 核对与 P4-A 独立验收派发
+- 当前任务：P4-C11-R1-PREPARATION — C11 历史迁移独立证据补强
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-26 22:32，Asia/Shanghai
+- 最近更新：2026-09-27 00:12，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -65,19 +65,22 @@
 - [P4-B6-R2 最终执行方交付总控核对](../../p4-b6-r2-final-coordinator-review.md)
 - [P4-C11 测试智能体 Prompt](../prompts/p4-c11-host-foundation-tester.md)
 - [P4-C11 起点快照](../snapshots/p4-c11-start.sha256)
+- [P4-C11 总控核对](../../p4-c11-coordinator-review.md)
+- [P4-C11-R1 测试智能体 Prompt](../prompts/p4-c11-r1-tester-evidence-repair.md)
+- [P4-C11-R1 测试方起点快照](../snapshots/p4-c11-r1-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：T2 报告、摘要、104 文件零漂移和资源收口已核对；C11 Prompt 与 105 文件起点已准备
-- 步骤开始时间：2026-09-26 22:27，Asia/Shanghai
-- 最近有效进展：2026-09-26 22:32，Asia/Shanghai（接受最终 R2 执行方交付为 C11 输入，固定 105 文件摘要）
-- 最近心跳：2026-09-26 22:32，Asia/Shanghai
-- 下一检查点：测试智能体接单并记录 C11 的 105/105 起点核对
-- 等待对象：用户发送 C11 Prompt；随后等待测试智能体首个检查点
-- 活动进程或会话：T2 已普通 down，项目 Compose 服务为空；执行智能体已停止
-- 重试次数：总控只复算快照/摘要和只读查询资源，没有重复 17 项 PG 测试
-- 最近输出：C11 起点 manifest SHA-256 `65ee400893171d6caf19f2bf5adf20a4432f1f3c8048d5c381b718fc10360126`
+- 当前步骤：C11 的产品与矩阵证据已核对；发现旧 P1→P4 正向迁移独立证据被削弱，C11-R1 有限补证任务已准备
+- 步骤开始时间：2026-09-27 00:00，Asia/Shanghai
+- 最近有效进展：2026-09-27 00:12，Asia/Shanghai（确认 105/105、64/64、8 P0/14 P1 和 Compose 空；固定 23 文件测试方起点）
+- 最近心跳：2026-09-27 00:12，Asia/Shanghai
+- 下一检查点：测试智能体接单并记录 105/105 与 23/23 两层快照
+- 等待对象：用户发送 C11-R1 Prompt；随后等待定向 SQLite/PostgreSQL migration 证据
+- 活动进程或会话：项目 Compose 服务为空；执行智能体和技术顾问停止
+- 重试次数：总控没有重复 C11 测试，只做摘要、差异、合同和资源只读核对
+- 最近输出：C11-R1 测试方起点 manifest SHA-256 `1c59d9e08abf9acea64324b72e3c8d63cda8eff7691239cdaa5baf94e9bdac73`
 
 ## 阻塞
 
@@ -93,6 +96,18 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-27 00:12 Asia/Shanghai — C11 产品门禁通过，历史迁移独立证据退回有限补强
+
+- 状态：C11 `review / finished`、暂不接受；C11-R1 `ready / waiting_user`；P4-A 尚未 `complete`。
+- 已确认：105/105 产品快照匹配；矩阵 64/64 passed、B/C/D 56/56 not_run、120 ID 唯一；报告 64 行证据和 8 P0/14 P1 映射齐全；报告/矩阵摘要匹配；Compose 为空。
+- 产品结论：没有发现新的 P4-A P0/P1；两个 P0 loopback 失败与 P2-C6 既有 Windows/uvicorn 八秒健康等待一致，未进入业务断言。
+- 证据缺口：旧 P1 migration 独立测试由 `FIRST_REVISION` 起点改为当前 head，失去 P1→P4 正向升级证明；新增 C11 SQLite/PG 只证明空库或 head/P3 往返，不能替代完整 P0～P3 历史升级。
+- 合同判断：`pending_action_cancelled` 是 D10 明确冻结的 P4 合同演进，不回退；报告需把它与 fixture 调整分开并继续证明取消终态和零写入。
+- 快照：固定 C11 测试方 23 文件，manifest SHA `1c59d9e0...ac73`；产品继续绑定 105 文件 SHA `65ee4008...360126`。
+- 效率：R1 只运行受影响的 SQLite migration、取消节点和 C11 PG migration，不重复 64 项或全量 P0～P4 回归。
+- Git：P4-A 尚未完成，产品和 C11 交付继续不提交；只提交总控核对、R1 Prompt、快照和协调状态。
+- 下一步/交接：用户把 C11-R1 Prompt 发送给既有测试智能体；执行智能体和技术顾问继续停止。
 
 ### 2026-09-26 22:32 Asia/Shanghai — 接受最终 R2 输入并准备 P4-C11
 

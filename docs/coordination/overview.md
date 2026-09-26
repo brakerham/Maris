@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-26 22:32，Asia/Shanghai
+更新时间：2026-09-27 00:12，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,10 +13,10 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：T2 交付已核对，最终 R2 快照固定，C11 已准备 | 2026-09-26 22:32 | 用户发送 C11 Prompt；测试智能体核对 105/105 起点 | [R2 最终核对](../p4-b6-r2-final-coordinator-review.md)、[C11 Prompt](prompts/p4-c11-host-foundation-tester.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：C11 产品结论通过，但历史迁移独立证据需有限补强 | 2026-09-27 00:12 | 用户发送 C11-R1 Prompt；测试智能体核对 105+23 两层快照 | [C11 总控核对](../p4-c11-coordinator-review.md)、[C11-R1 Prompt](prompts/p4-c11-r1-tester-evidence-repair.md) |
 | 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
 | 执行智能体 | `review / finished`（R1/R2/T2） | `finished`：17 个唯一 PG 用例通过，104 文件零漂移，资源已关闭 | 2026-09-26 22:27 | 保持停止，等待 C11 独立结论 | [角色日志](agents/executor.md)、[T2 运行说明](../b6-r2-s2-t2-postgresql-running.md) |
-| 测试智能体 | `ready`（P4-C11） | `waiting_user`：最终 105 文件快照和 C11 任务卡已准备 | 2026-09-26 22:32 | 用户发送 C11 Prompt；测试方核对快照并实现独立验收 | [角色日志](agents/tester.md)、[C11 Prompt](prompts/p4-c11-host-foundation-tester.md) |
+| 测试智能体 | `review / finished`（C11）/ `ready`（C11-R1） | `waiting_user`：64/64 与产品门禁通过，等待有限历史迁移补证任务 | 2026-09-27 00:12 | 用户发送 C11-R1 Prompt；只补正向迁移证据与报告 | [角色日志](agents/tester.md)、[C11-R1 Prompt](prompts/p4-c11-r1-tester-evidence-repair.md) |
 
 ## 阶段 0 任务状态
 
@@ -71,11 +71,14 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P4-B6-R2-S2：真实 PostgreSQL 门禁 | 用户启动的既有执行智能体 | `review / finished` | S2 原 R2 9/9、Finance 4/4、P3 10/10 通过；T2 已补齐 Host R1 8/8 与 R2 9/9 | [S2 运行说明](../b6-r2-s2-postgresql-running.md)、[T2 运行说明](../b6-r2-s2-t2-postgresql-running.md) |
 | P4-B6-R2-S2-T1：R1 PG 测试时钟返修 | 用户启动的既有执行智能体 | `review / finished` | 单文件时钟修复进入最终快照；T2 精确节点及其后 16 项证明修复生效且 monkeypatch 已恢复 | [T1 运行说明](../b6-r2-s2-t1-clock-running.md)、[T2 运行说明](../b6-r2-s2-t2-postgresql-running.md) |
 | P4-B6-R2-S2-T2：有限 PostgreSQL 复验 | 用户启动的既有执行智能体 | `review / finished` | 17/17 passed；104/104 前后匹配；Compose 服务最终为空 | [T2 运行说明](../b6-r2-s2-t2-postgresql-running.md)、[R2 最终核对](../p4-b6-r2-final-coordinator-review.md) |
-| P4-C11：P4-A 独立验收 | 用户启动的既有测试智能体 | `ready`，等待用户派发 | 绑定 105 文件最终 R2 快照，执行 64 项、22 审计复现、兼容回归和 SQLite/PG | [C11 Prompt](prompts/p4-c11-host-foundation-tester.md)、[C11 起点](snapshots/p4-c11-start.sha256) |
+| P4-C11：P4-A 独立验收 | 用户启动的既有测试智能体 | `review / finished`，暂不接受 | 64/64、8 P0/14 P1、独立 PG 与 105/105 通过；未发现产品 P0/P1；历史迁移证据需补强 | [C11 报告](../testing/phase-4-c11-host-foundation-report.md)、[总控核对](../p4-c11-coordinator-review.md) |
+| P4-C11-R1：历史迁移证据补强 | 用户启动的既有测试智能体 | `ready`，等待用户派发 | 固定 105 产品 + 23 测试方文件；只恢复旧 revision 正向升级和报告准确性 | [C11-R1 Prompt](prompts/p4-c11-r1-tester-evidence-repair.md)、[R1 起点](snapshots/p4-c11-r1-start.sha256) |
 
 ## 当前阻塞与风险
 
-- `P4-B6-R1-REV-001` 已由 F1 在开发返修层面关闭；最终 C11 仍会独立重跑真实 PostgreSQL 同步竞争反例。
+- `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
+- C11 把旧 P1 首版 migration 测试改成从当前 head 开始，削弱了 P1→P4 正向升级证据；C11-R1 只补这项独立证据和对应 P0～P3 历史 SQLite/PostgreSQL 场景，不重新开发产品。
+- 旧 P2 测试的取消后错误从 `confirmation_required` 更新为 `pending_action_cancelled`，与 D10 冻结的 P4 合同一致；R1 只要求报告准确说明这是一项合同演进并继续证明零财务写入。
 - Docker Desktop 已由 4.91.0 原位升级到 `4.92.0.240144`，双启动门禁和 T2 17 个真实 PG 用例均通过；执行方普通 down 后项目 Compose 服务为空。C11 可使用该环境，但 Engine 不可达时只能检查一次并停止，不重启 Desktop 或恢复 socket。
 - R2 的三个冻结结构缺口已由 S1 关闭，执行方真实 PostgreSQL 门禁已由 T2 收口；当前剩余门禁是 C11 对迁移、事务、约束、多连接竞争和用户隔离给出独立证据。
 - S1 报告中 10 个单文件摘要全部正确，但 10 行聚合值不可复算；总控按声明算法给出勘误 `583cac21...6a10`，并直接从实际 101 个文件生成 S2 manifest `8e926713...e74969`。
@@ -93,7 +96,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 ## 下一次总控检查
 
-1. 用户把 P4-C11 Prompt 完整发送给既有测试智能体。
-2. 测试方核对 105/105 起点，建立 P4-A 64 项与审计 22 项的独立证据映射。
-3. 测试方执行兼容回归、SQLite/Alembic 和真实 PostgreSQL 门禁，保持产品快照零漂移并普通 down。
-4. C11 报告交付后由总控核对；无开放 P0/P1 才接受 P4-A、创建本地验收提交并规划 P4-B。
+1. 用户把 P4-C11-R1 Prompt 完整发送给既有测试智能体。
+2. 测试方核对 105/105 产品快照和 23/23 C11 测试方起点。
+3. 测试方只补 P1 首版、SQLite P0～P3 和 PostgreSQL P0～P3 历史正向升级证据，定向复跑受影响节点并普通 down。
+4. R1 报告交付后由总控核对；证据闭合后接受 P4-A、创建完整本地验收提交并规划 P4-B。
