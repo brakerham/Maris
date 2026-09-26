@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-26T18:49:00+08:00`
+- 指令版本：`2026-09-26T18:55:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基返修。`P4-B6-R2-S1` 已提交 `review / finished` 并由总控接受为 S2 输入；三个结构缺口已经关闭。整体 `P4-B6-R2` 仍为 `blocked`，只等待真实 PostgreSQL S2，P4-C11 尚未开始。
-- 当前动作：S2 Prompt 与 101 文件起点已经固定，但 Docker Desktop 4.91.0 再次受两个失效 AF_UNIX socket 目录阻断。总控已隔离当前 `Docker\\run`，随后确认第二阻塞点为 `docker-secrets-engine\\engine.sock`；自动改名被 Windows 拒绝。S2 暂不派发，技术顾问与测试智能体继续停止。
-- 需要用户参与：关闭 Docker 错误窗口，在自己的 PowerShell 中停止 Docker/diagnostics、执行 `wsl --shutdown`，把当前 `Docker\\run` 与 `docker-secrets-engine` 同时改名为时间戳备份，再启动 Docker Desktop。不要点恢复出厂设置，不要删除备份、volume 或项目数据。Engine 经总控验证后，再把 `docs/coordination/prompts/p4-b6-r2-s2-postgresql-executor.md` 发送给既有执行智能体；当前不要发送 C11。
+- 当前动作：Docker Engine 已恢复，项目 Compose 服务列表为空。只派发 `P4-B6-R2-S2` 给用户侧边栏中的既有执行智能体；S2 核对 101 文件起点后执行真实 PostgreSQL 门禁。技术顾问与测试智能体继续停止。
+- 需要用户参与：把 `docs/coordination/prompts/p4-b6-r2-s2-postgresql-executor.md` 完整发送给既有执行智能体。当前不要发送 C11，不要自行启动项目容器，也不要删除 socket 备份、volume 或项目数据。
 - Git 状态：远端 `1d06d92` 和 `checkpoint/p3-foundation` 是防止基座被后续业务改乱的保护性检查点，不是首个大版本。产品仍处于发布前阶段；P4-D9 任务卡及后续验收默认只做本地提交，不推送、不创建 PR，除非用户另行要求远端检查点。正式大版本由用户以后明确宣布。
 
 ## 本地单主人产品范围
@@ -85,14 +85,14 @@
 | P4-IF-001 模块化 Agent Host 接口冻结 | `complete`；头脑风暴总控 | 冻结总架构和 P4-A 的身份、user scope、workflow、记忆、API 与迁移合同 | 变更必须交回总控与技术顾问，不得由执行方自行修改 |
 | P4-B6 Host/身份地基实现 | 既有执行智能体；`review`、运行已停止、当前不接受 | 保留原实现和交付现场；开放 P0/P1 见接管审计，后续只按独立 R1/R2 任务返修 | 旧 B6 任务不得自行续做；只有收到 R1 Prompt 才能修改其授权范围；禁止独立测试、Electron/外部系统和 Git |
 | P4-B6 多交接接管审计 | 头脑风暴总控；`complete` | [审计报告](../p4-b6-multi-handoff-code-audit.md)登记 8 个 P0、14 个 P1、PG 证据和任务顺序 | 不重复本轮三路审查；新代码快照形成后才重新审查相应差异 |
-| P4-B6 PostgreSQL 审计环境 | `blocked`；Docker Desktop 启动失败 | 18:45 总控先隔离 `Docker\\run` 后，最新错误从 Ingest 转移到 `docker-secrets-engine\\engine.sock`；自动改名被 Windows 拒绝，Engine 管道仍不存在 | 等用户在本机 PowerShell 同时隔离当前两个 socket 目录；总控验证 Engine 和空 Compose 列表后才解禁 S2 |
+| P4-B6 PostgreSQL 审计环境 | `ready`；S2 获得唯一项目环境所有权 | 18:54 用户同时隔离两个当前 socket 目录后，总控验证 Engine 29.8.0、Docker Desktop Linux、后端进程正常且 Compose 服务列表为空 | 用户发送 S2 Prompt 后，由执行智能体只启动 `finance-postgres`；结束时普通 down 并验证空列表 |
 | P4-D10 B6 返修架构裁定 | `complete`；总控已接受 | 762 行、8 P0/14 P1 逐项处置、R1/R2 边界、12 类 PG 场景与 C11 门禁已核对 | 技术顾问停止；不得修改产品或自行派发后续任务 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |
 | P4-B6-R2 Host/Agent 运行时返修 | 既有执行智能体；`blocked / finished`，等待 S2 | S1 已关闭三个结构缺口；总控定向 44/44 通过并固定 101 文件 S2 起点；真实 PostgreSQL 仍未验证 | 原 R2/S1 停止；Docker 恢复后只派 S2，S2 review 前不得启动 C11 |
 | P4-B6-R2-S1 运行时结构补全 | 既有执行智能体；`review / finished`，总控接受为 S2 输入 | 10 个单文件摘要匹配；报告聚合摘要勘误为 `583cac21...6a10`；总控定向 44 passed | S1 不再修改；独立结论仍由 C11 给出 |
-| P4-B6-R2-S2 真实 PostgreSQL 门禁 | 既有执行智能体；`waiting_environment`、未派发 | 101 项起点 manifest `8e926713...e74969` 和 PG-only Prompt 已固定 | Docker Engine 与空 Compose 列表经总控验证后由用户发送 Prompt；禁止提前启动或改产品 |
+| P4-B6-R2-S2 真实 PostgreSQL 门禁 | 既有执行智能体；`ready`、等待用户发送 Prompt | 101 项起点 manifest `8e926713...e74969`、PG-only Prompt 与 Docker 空环境均已固定 | 用户发送 Prompt；执行方只做真实 PG 测试，发现产品缺陷停止并交回总控，不在 S2 内顺手修产品 |
 | P4-C11 P4-A 独立验收 | 测试智能体；`unverified`、未派发 | 等 R1/R2 固定快照；执行 64 项 P4-A、缺陷反例、兼容回归和真实 PostgreSQL 门禁 | 当前不得用旧 B6 摘要提前验收或修改产品 |
 
 任何角色在开始工作前必须确认任务表中只有一个执行负责人。没有被列为执行负责人的角色不得“顺手继续”外部操作；发现空缺、冲突或旧指令时，只向总控报告并等待重新分配。

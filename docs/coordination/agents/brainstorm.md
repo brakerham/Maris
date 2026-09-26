@@ -5,7 +5,7 @@
 - 当前任务：P4-B6-R2-S2-PREPARATION — S1 核对、Docker 恢复与真实 PostgreSQL 门禁派发
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-26 18:49，Asia/Shanghai
+- 最近更新：2026-09-26 18:55，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -60,14 +60,14 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：S1 已核对并固定 S2；等待用户在本机 PowerShell 同时隔离两个失效 Docker socket 目录
-- 步骤开始时间：2026-09-26 18:43，Asia/Shanghai
-- 最近有效进展：2026-09-26 18:49，Asia/Shanghai（确认第二阻塞点为 `docker-secrets-engine\\engine.sock`；自动改名被 Windows 拒绝）
-- 最近心跳：2026-09-26 18:49，Asia/Shanghai
-- 下一检查点：Docker Engine 返回服务器版本且项目 Compose 服务列表为空
-- 等待对象：用户完成本机目录改名并重启 Docker Desktop
-- 活动进程或会话：有限启动检查已终止；未启动项目容器
-- 重试次数：一次只隔离 `run` 后失败于 Secrets Engine；一次同时隔离时 `docker-secrets-engine` 被系统拒绝，已停止
+- 当前步骤：S1、S2 起点与 Docker 环境均已核对；等待用户把 S2 Prompt 发送给既有执行智能体
+- 步骤开始时间：2026-09-26 18:55，Asia/Shanghai
+- 最近有效进展：2026-09-26 18:55，Asia/Shanghai（Engine 29.8.0 与空 Compose 列表验证通过，S2 环境阻塞解除）
+- 最近心跳：2026-09-26 18:55，Asia/Shanghai
+- 下一检查点：执行智能体接单并记录 101/101 起点核对
+- 等待对象：用户发送 S2 Prompt；随后等待执行智能体首个检查点
+- 活动进程或会话：Docker Desktop/backend 正常；项目 Compose 服务为空，尚未启动 `finance-postgres`
+- 重试次数：两个 socket 目录最终由用户在管理员 PowerShell 同时隔离，恢复完成
 - 最近输出：S2 起点 manifest SHA-256 `8e92671370cfbbea33dafec36a5d3e4dfbe6fe734fa8df0ed2caab9288e74969`
 
 ## 阻塞
@@ -84,6 +84,15 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-26 18:55 Asia/Shanghai — Docker Engine 恢复并解禁 S2
+
+- 用户操作：在管理员 PowerShell 停止 Docker/diagnostics、shutdown WSL，同时把当前 `Docker\\run` 与 `docker-secrets-engine` 改名为时间戳备份，再启动 Desktop；命令无错误。
+- 总控验证：`docker info` 返回 Engine server `29.8.0`、OS `Docker Desktop`、type `linux`、24 CPU、约 8 GB 内存；Docker Desktop/backend 进程正常。
+- 项目环境：`docker compose ps --format json` 退出 0 且无输出，项目 Compose 服务列表为空；没有遗留 PostgreSQL 容器。
+- 安全边界：未删除 socket 备份、volume、镜像或项目数据；未执行 factory reset、prune 或 Docker 全局设置修改。
+- 状态：S2 从 `waiting_environment` 转为 `ready / waiting_user`；用户现在可以发送正式 S2 Prompt。C11、测试智能体和技术顾问继续停止。
+- 下一步/交接：执行智能体核对 101/101 起点后拥有本轮 `finance-postgres` 唯一操作权，完成 PG-only 门禁并普通 down。
 
 ### 2026-09-26 18:49 Asia/Shanghai — S1 接受并准备 S2；Docker 第二 socket 阻塞
 

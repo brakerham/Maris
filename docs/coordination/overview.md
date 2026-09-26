@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-26 18:49，Asia/Shanghai
+更新时间：2026-09-26 18:55，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,9 +13,9 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：S1 已核对，S2 已准备；等待用户隔离 Docker 的两个失效 socket 目录 | 2026-09-26 18:49 | Engine 恢复后验证空 Compose 列表并解禁 S2 | [S1 核对](../p4-b6-r2-s1-coordinator-review.md)、[S2 Prompt](prompts/p4-b6-r2-s2-postgresql-executor.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：S1、S2 起点和 Docker 环境均已核对，等待用户发送 S2 Prompt | 2026-09-26 18:55 | 执行智能体接单并核对 101/101 起点 | [S1 核对](../p4-b6-r2-s1-coordinator-review.md)、[S2 Prompt](prompts/p4-b6-r2-s2-postgresql-executor.md) |
 | 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
-| 执行智能体 | `review`（S1）/ `waiting_environment`（S2） | `finished`：S1 已停止；S2 尚未派发 | 2026-09-26 17:32 | Docker 恢复后核对 101 文件起点并执行 PG-only 门禁 | [角色日志](agents/executor.md)、[S2 Prompt](prompts/p4-b6-r2-s2-postgresql-executor.md) |
+| 执行智能体 | `review`（S1）/ `ready`（S2） | `waiting_user`：S1 已停止；等待用户发送 S2 Prompt | 2026-09-26 18:55 | 核对 101 文件起点并执行 PG-only 门禁 | [角色日志](agents/executor.md)、[S2 Prompt](prompts/p4-b6-r2-s2-postgresql-executor.md) |
 | 测试智能体 | `complete`（P4-C10，总控接受） | `finished`：C11 尚未开始，等待 R1/R2 最终快照 | 2026-09-25 20:08 | 继续停止，不提前复现或修改产品 | [角色日志](agents/tester.md)、[C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 阶段 0 任务状态
@@ -68,13 +68,13 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P4-B6-R1-F1：外部身份并发绑定返修 | 用户启动的既有执行智能体 | `review`，开发返修接受 | 总控本地 41 项、范围和摘要通过；执行方真实 PG 原 21+新增 1 通过 | [F1 总控审查](../p4-b6-r1-f1-coordinator-review.md) |
 | P4-B6-R2：Host/Agent 运行时返修 | 用户启动的既有执行智能体 | `blocked / finished`，等待 S2 | S1 已关闭三个结构缺口；真实 PostgreSQL 门禁尚未执行 | [S1 总控核对](../p4-b6-r2-s1-coordinator-review.md) |
 | P4-B6-R2-S1：运行时结构补全 | 用户启动的既有执行智能体 | `review / finished`，总控接受为 S2 输入 | 10 个变更文件摘要匹配；总控 44 项定向通过；聚合摘要勘误已登记 | [S1 总控核对](../p4-b6-r2-s1-coordinator-review.md) |
-| P4-B6-R2-S2：真实 PostgreSQL 门禁 | 用户启动的既有执行智能体 | `waiting_environment`，未派发 | 101 项普通摘要起点与有限 PG-only 验证范围已固定；Docker Engine 未恢复 | [S2 Prompt](prompts/p4-b6-r2-s2-postgresql-executor.md)、[S2 起点](snapshots/p4-b6-r2-s2-start.sha256) |
+| P4-B6-R2-S2：真实 PostgreSQL 门禁 | 用户启动的既有执行智能体 | `ready`，等待用户派发 | 101 项普通摘要起点、有限 PG-only 范围和空 Docker 环境已固定 | [S2 Prompt](prompts/p4-b6-r2-s2-postgresql-executor.md)、[S2 起点](snapshots/p4-b6-r2-s2-start.sha256) |
 | P4-C11：P4-A 独立验收 | 用户启动的既有测试智能体 | `unverified`，未派发 | 绑定最终返修快照执行 64 项、缺陷反例、兼容回归和真实 PostgreSQL | [C10 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
 - `P4-B6-R1-REV-001` 已由 F1 在开发返修层面关闭；最终 C11 仍会独立重跑真实 PostgreSQL 同步竞争反例。
-- Docker Desktop 在 18:45 再现 AF_UNIX socket 故障。总控成功隔离当前 `Docker\\run` 后，最新错误转移到 `docker-secrets-engine\\engine.sock`；自动改名被 Windows 拒绝。需要用户本机 PowerShell 同时隔离两个当前目录，再由总控验证 Engine。
+- Docker Desktop 在 18:45 再现两个连续 AF_UNIX socket 故障。用户在管理员 PowerShell 同时隔离当前 `Docker\\run` 与 `docker-secrets-engine` 后，18:54 总控验证 Engine 29.8.0、Linux 后端进程和空 Compose 列表；S2 环境阻塞已解除。时间戳备份继续保留，不在本阶段清理。
 - R2 的三个冻结结构缺口已由 S1 关闭；当前产品级剩余门禁是这些行为在真实 PostgreSQL 的迁移、事务、约束和多连接竞争证据。
 - S1 报告中 10 个单文件摘要全部正确，但 10 行聚合值不可复算；总控按声明算法给出勘误 `583cac21...6a10`，并直接从实际 101 个文件生成 S2 manifest `8e926713...e74969`。
 - R2 报告的 99 个普通文件哈希、报告普通哈希和有序清单总摘要可复算；自引用 canonical 哈希不可按声明算法复算。S1 改用总控生成的独立 100 文件普通摘要清单，避免自引用。
@@ -90,7 +90,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 ## 下一次总控检查
 
-1. 用户在自己的 PowerShell 中停止 Docker/diagnostics、执行 `wsl --shutdown`，并同时把当前 `Docker\\run` 与 `docker-secrets-engine` 改名为时间戳备份后重启 Desktop。
-2. 总控验证 Docker Engine 和项目 Compose 服务空列表；未验证前不要发送 S2 Prompt。
-3. 用户把 P4-B6-R2-S2 Prompt 完整发送给既有执行智能体；执行方核对 101 文件起点后只执行真实 PostgreSQL 门禁。
-4. S2 全通过并形成稳定快照后才派发 P4-C11；技术顾问和测试智能体在此之前继续停止。
+1. 用户把 P4-B6-R2-S2 Prompt 完整发送给既有执行智能体。
+2. 执行方核对 101/101 起点，只启动 `finance-postgres` 并执行有限的真实 PostgreSQL 门禁。
+3. S2 全通过并形成稳定快照后由总控核对；若发现产品缺陷则另派最小返修，不在 S2 内混改。
+4. 最终 R2 快照稳定后才派发 P4-C11；技术顾问和测试智能体在此之前继续停止。
