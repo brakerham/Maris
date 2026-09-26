@@ -5,7 +5,7 @@
 - 当前任务：P4-B6-R2-PREPARATION — Host/Agent 运行时返修派发前协调
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-26 11:22，Asia/Shanghai
+- 最近更新：2026-09-26 11:26，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -53,15 +53,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：Windows 重启未清除 Docker 4.91.0 失效 socket；等待用户交互式改名 `docker-secrets-engine` 父目录
-- 步骤开始时间：2026-09-26 11:22，Asia/Shanghai
-- 最近有效进展：2026-09-26 11:22，Asia/Shanghai（精确定位 Error 1920；`Docker\run` 父目录已成功隔离，secrets 父目录在 Codex 进程中 Access denied）
-- 最近心跳：2026-09-26 11:22，Asia/Shanghai
-- 下一检查点：用户完成父目录改名并启动 Docker；总控验证 Engine server version 和 Compose 空列表
-- 等待对象：用户在交互式 Windows PowerShell 执行父目录改名
-- 活动进程或会话：无；Docker/diagnostics 已停止，WSL 已 shutdown，项目 PostgreSQL 测试未启动
-- 重试次数：重启后 2 次受控启动；已停止继续启动
-- 最近输出：CLI 客户端正常但 `dockerDesktopLinuxEngine` 不存在；本次日志再次确认 Ingest/Secrets Engine socket Error 1920
+- 当前步骤：Docker Engine 已恢复；等待用户把 R2 Prompt 发送给既有执行智能体
+- 步骤开始时间：2026-09-26 11:26，Asia/Shanghai
+- 最近有效进展：2026-09-26 11:26，Asia/Shanghai（Engine 29.8.0/Linux 响应，Compose 空列表，新 socket 目录正常创建）
+- 最近心跳：2026-09-26 11:26，Asia/Shanghai
+- 下一检查点：执行智能体接单并记录 96 文件起点摘要核对结果
+- 等待对象：用户发送 R2 Prompt；随后等待执行智能体接单
+- 活动进程或会话：Docker Desktop 正常运行；项目 Compose 服务为空，未启动 PostgreSQL
+- 重试次数：环境恢复完成
+- 最近输出：`29.8.0|Docker Desktop|linux|24|8168054784`；11:25 后无新增 backend crash
 
 ## 阻塞
 
@@ -77,6 +77,14 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-26 11:26 Asia/Shanghai — Docker Desktop 恢复并解除 R2 环境门禁
+
+- 用户操作：在交互式 PowerShell 停止 Docker/diagnostics、shutdown WSL，把 `docker-secrets-engine` 父目录改名为时间戳 broken 备份，再启动 Desktop；所有命令无错误。
+- 总控验证：Docker Desktop/backend 进程响应正常；Engine server `29.8.0`、OS `Docker Desktop`、类型 `linux`、24 CPU、约 8 GB 内存；项目 Compose 服务列表为空。
+- 文件状态：新的 `docker-secrets-engine` 与 `Docker\run` 已正常创建，socket 时间均为本次 11:25 启动；旧 broken/backup 目录保留，不删除。
+- 日志边界：最新崩溃行均为 11:18 及更早的失败启动；11:25 恢复启动后没有新增 backend crash。
+- 项目结论：解除 Docker 环境阻塞，P4-B6-R2 状态改为 ready；用户现在可以把正式 R2 Prompt 发给既有执行智能体。C11、测试智能体和技术顾问继续停止。
 
 ### 2026-09-26 11:22 Asia/Shanghai — Docker 重启后仍被 AF_UNIX socket 阻断
 
