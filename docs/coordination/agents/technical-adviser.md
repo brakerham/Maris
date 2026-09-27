@@ -2,24 +2,24 @@
 
 - 角色：技术选型咨询、工程教学与教学子任务统筹
 - 连接状态：用户侧边栏独立技术顾问已确认接单
-- 当前任务：P4-D10 — B6 接管缺陷的最小返修架构裁定
+- 当前任务：P4-D11 — Windows Shell、毛毛与模块 UI 技术方案
 - 状态：`review`
-- 最近更新：2026-09-25 19:59，Asia/Shanghai
-- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-25T15:15:00+08:00`、任务卡 `P4-D10`、当前 P4-B6 `review` 工作区
-- 可修改范围：仅 `docs/phase-4-d10-b6-repair-architecture.md` 与本角色状态文件；产品、migration、测试、审计、冻结接口、矩阵/报告、控制、总览、其他角色、依赖、外部系统和 Git 状态只读
+- 最近更新：2026-09-27 15:44，Asia/Shanghai
+- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-27T15:15:00+08:00`、原任务卡 `P4-D11`、P4-A 最终验收提交 `88fb178`、P4-B 头脑风暴提交 `6b0e485`
+- 可修改范围：仅 `docs/phase-4-d11-windows-shell-technical-advice.md` 与本角色状态文件；产品、migration、测试、矩阵/报告、接口冻结、控制、总览、其他角色、依赖、外部系统和 Git 状态只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P4-D10 已完成校验并停在 `review`，等待头脑风暴总控裁定并发布 `P4-IF-002`
-- 步骤开始时间：2026-09-25 19:40 Asia/Shanghai
-- 最近有效进展：2026-09-25 19:59 Asia/Shanghai
-- 最近心跳：2026-09-25 19:59 Asia/Shanghai
-- 下一检查点：头脑风暴总控核对建议冻结值、形成 `P4-IF-002`，再顺序派发 R1/R2；时间由总控安排
-- 等待对象：头脑风暴总控评审与冻结补充
-- 活动进程或会话：无；仅短时只读检查与文档编辑
-- 重试次数：0；尚未出现无进展检查点
-- 最近输出：`docs/phase-4-d10-b6-repair-architecture.md` 762 行；8 个 P0、14 个 P1 逐项处置，七类合同、两张 Mermaid、R1/R2、12 个 PostgreSQL 场景和 C11 门禁齐全；27 个本地链接有效；SHA-256 `1e9283af99a658b024e094db5f4c31c56396322a2dee68c012c87d19b5df2399`
+- 当前步骤：P4-D11 已完成并停在 `review`，等待头脑风暴总控审阅和冻结 `P4-IF-003`
+- 步骤开始时间：2026-09-27 15:44 Asia/Shanghai
+- 最近有效进展：2026-09-27 15:44 Asia/Shanghai
+- 最近心跳：2026-09-27 15:44 Asia/Shanghai
+- 下一检查点：总控核对推荐值、开放问题和 24 项设计映射；时间由总控安排
+- 等待对象：头脑风暴总控评审与 `P4-IF-003` 冻结
+- 活动进程或会话：无；未遗留服务、安装、测试或长运行进程
+- 重试次数：0；本地命令通道已恢复，尚未出现无进展检查点
+- 最近输出：D11 主文档 1093 行、67 个标题、22 个成对代码块、6 张 Mermaid；19 个本地链接及行号有效，24 项编号齐全，尾随空白 0；SHA-256 `ad3dc4b899d7462d46c8b344eba0c8cd044622059d274ccfbdca7a9aba532405`
 
 ## P0-P3-D8 分册进度
 
@@ -45,10 +45,53 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 
 ## 待处理事项
 
-- 等待头脑风暴总控评审 P4-D10、发布 `P4-IF-002` 并生成顺序 R1/R2 任务卡；技术顾问保持停止，不自行实现或派发。
-- 未重新执行 249 项测试或真实 PostgreSQL，也未启动产品服务、Docker、DeepSeek、OpenClaw、微信或 Electron；本文只裁定返修合同，不把建议写成实现证据。
+- 等待头脑风暴总控评审 P4-D11 的推荐栈、IPC/owner/supervisor/outbox/设备设置合同、开放问题和 24 项设计映射，并由总控决定是否发布 `P4-IF-003`；技术顾问保持停止，不自行冻结、实现或派发。
+- 尚未安装或运行桌面依赖，也未验证 Electron/Forge/Vite 组合、Windows 进程收口、DPAPI、Tray、登录项、多显示器、全屏和透明窗口降级；这些已在 D11 明确标为 `unverified`。
 
 ## 工作日志
+
+### 2026-09-27 15:44 Asia/Shanghai — P4-D11 最终校验并提交 review
+
+- 状态：`review`；运行状态：`finished`。
+- 交付物：[P4-D11 Windows Shell、毛毛与模块 UI 技术方案](../../phase-4-d11-windows-shell-technical-advice.md)。
+- 推荐栈：Node 24 LTS、Electron 44.4.x、React 19.3.x、TypeScript 6.0.x、pnpm 12.7、Forge 7.11 + Vite 7.3、React Router 8、TanStack Query v5、CSS Modules/token、Radix、openapi-typescript/openapi-fetch、Vitest/RTL/Playwright Electron；精确 patch 由总控冻结。
+- 核心交付：完成 16 个要求主题、`DesktopModuleContribution` 与交集算法、OpenAPI 漂移门禁、三层安全和 typed IPC、本地 owner session、startup nonce/ready、Supervisor 状态机、加密 outbox、主窗口/Tray/单一毛毛/设备设置、主题、实施顺序和 12 节教学地图。
+- 测试映射：`P4B-SEC-01～08`、`P4B-SUP-01～06`、`P4B-UI-01～04`、`P4B-CMP-01～06` 共 24 个完整编号均有设计证据和未来断言，仍全部为 `not_run`。
+- 文档验证：1093 行、67 个标题、22 个代码围栏成对、6 张 Mermaid（总架构、状态机及四条要求数据流）；38 个 Markdown 链接，其中 19 个本地目标及行号全部有效；尾随空白 0、UTF-8 无 BOM、末尾换行有效；SHA-256 `ad3dc4b899d7462d46c8b344eba0c8cd044622059d274ccfbdca7a9aba532405`。
+- 控制复核：完成前重新读取最新 control，版本仍为 `2026-09-27T15:15:00+08:00`；P4-D11 仍由技术顾问唯一负责，用户本轮指令解除 `waiting_user`，没有取消、转交或完成冲突。
+- 未验证边界：未安装/启动 Node、Electron、FastAPI、Docker 或外部服务，未生成脚手架、lockfile、OpenAPI 产物或 package；Windows/DPAPI/多屏/全屏/登录项/透明窗口/进程清理仍为 `unverified`，24 项矩阵未执行。
+- 文件与权限边界：只修改 D11 文档和本角色状态；未创建 D11-R1，未修改产品、测试、矩阵、冻结、control/overview、其他角色、依赖或 Git 状态，未开始 `P4-IF-003`、`P4-B7` 或 `P4-C12`。
+- 下一步/交接：头脑风暴总控审阅 10 项开放问题并冻结精确版本、nonce、IPC、owner、Supervisor、outbox、设备设置、主题/断点和测试口径；技术顾问停止。
+
+### 2026-09-27 15:40 Asia/Shanghai — P4-D11 核心合同与测试映射里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 核心合同：已给出 `DesktopModuleContribution`、编译注册冲突检查、后端模块交集、离线 OpenAPI 生成、typed IPC allowlist、本地 owner 会话、startup nonce/ready 协议、`BackendSupervisor` 状态机、main 进程加密 outbox、Tray/关闭策略、单一毛毛窗口和设备设置原子持久化的可冻结边界。
+- 数据流：已覆盖启动与 owner 会话、模块切换与 Agent Profile、renderer 到 Host API、backend 崩溃与同一 `client_event_id` 恢复四条主流程，并补充总架构和 supervisor 状态机图。
+- 证据映射：`P4B-SEC-01～08`、`P4B-SUP-01～06`、`P4B-UI-01～04`、`P4B-CMP-01～06` 共 24 项均有建议实现点和证据目标；仍全部标为待 P4-B/C 执行，未写成已通过。
+- 风险边界：Forge Vite 插件和 Playwright Electron 支持标明实验性；Windows 进程清理、登录项、多显示器/全屏/透明窗口降级和安装包签名仍需目标机或打包后验证。
+- 下一步/交接：只做文档结构、链接、编号、围栏、尾随空白和 SHA-256 校验，复读最新 control 后完成状态交接。
+
+### 2026-09-27 15:28 Asia/Shanghai — P4-D11 代码事实与选型基线里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 实际代码事实：P4-A 已有严格 `ModuleManifest`/`AgentProfile`/`ModuleSummary`、唯一 registry 查重、`GET /api/v1/modules`、bootstrap/login/refresh/session、module setting、统一错误包络、`/healthz`、`/readyz` 和 fail-closed production factory；当前 `/modules` 返回安全摘要，`/readyz` 只返回 `status=ready`，桌面 startup nonce 和 UI contribution 仍待 P4-B 冻结。
+- 矩阵事实：已完整提取 `P4B-SEC-01～08`、`P4B-SUP-01～06`、`P4B-UI-01～04`、`P4B-CMP-01～06` 共 24 项，状态全部为 `not_run`，不会写成已通过。
+- 官方版本事实：截至 2026-09-27，Node 24 为 LTS；Electron 当前稳定 44.4.x 且官方只支持最近三个稳定 major；React 最新 19.3；TypeScript 6.0；Forge 稳定 7.11.x、Vite 插件仍标 experimental，Vite 7.3 仍获安全维护，Vite 8 是当前主线。
+- 选型方向：Node 24 + Electron 44 + React 19.3 + TypeScript 6.0；Forge 7.11 + 受控 Vite 7.3 作为首版候选，精确 patch 由 P4-IF-003 锁定；pnpm workspace、React Router/TanStack Query、CSS Modules + 语义 token、openapi-typescript/openapi-fetch、Vitest/RTL/Playwright Electron。
+- 下一步/交接：把上述事实和项目判断写入 D11，明确实验性/未验证风险、复评条件、IPC/owner/session/supervisor/outbox/设备设置合同和 24 项证据映射。
+
+### 2026-09-27 15:21 Asia/Shanghai — P4-D11 技术顾问接单
+
+- 状态：`in_progress`；运行状态：`active`。
+- 唯一负责人：用户启动的既有技术顾问；依据总控版本 `2026-09-27T15:15:00+08:00`，P4-D11 为 `ready / waiting_user`，用户本次继续指令解除等待。
+- 输入事实：P4-A 已由总控验收 `complete`，最终提交 `88fb178`、64/64 独立矩阵通过；P4-B 24 项仍为 `not_run`；三栏视觉基线、单一毛毛、Tray、单机单主人、本地 owner 会话和 P4-B/C/D 边界已经确定。
+- 目标：比较并裁定 Electron/React/TypeScript 工具链、构建与未来分发、UI 状态、模块贡献、OpenAPI、IPC、安全、本地 owner 会话、BackendSupervisor、离线恢复、窗口/Tray/毛毛、主题、测试、目录/命令/数据流、实施顺序和教学地图，供总控冻结 `P4-IF-003`。
+- 文件边界：只写 `docs/phase-4-d11-windows-shell-technical-advice.md` 和本角色状态；不修改产品、migration、测试、矩阵/报告、接口冻结、控制、总览、其他角色、依赖、外部配置或 Git 状态。
+- 禁止范围：不创建 D11-R1，不重复 P4-A/D10/C11，不安装 Electron/Node 依赖，不生成脚手架、锁文件或 OpenAPI 产物，不启动 Electron/FastAPI/Docker/PostgreSQL/DeepSeek/OpenClaw/微信，不自动开始 P4-IF-003、P4-B7、P4-C12 或 P4-C。
+- 恢复核对：本地命令执行通道以 `Get-Location` 成功验证；已按任务卡读取 AGENTS、协调规则、最新 control、角色状态、原 D11 任务卡及六份设计/冻结/矩阵/验收输入，并在开始前再次读取 control；D11 交付文件当前不存在。
+- 停止条件：连续两个检查点无有效进展时，在安全位置报告最后输出、脱敏错误、已尝试办法、可能原因和待总控裁定问题。
+- 下一步/交接：只读检查当前 P4-A 实际代码与 OpenAPI 边界，提取 P4-B 24 项矩阵，再形成完整技术建议并做结构、链接、围栏、尾随空白和 SHA-256 校验。
 
 ### 2026-09-25 19:59 Asia/Shanghai — P4-D10 完成交付并提交 review
 

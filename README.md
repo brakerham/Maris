@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。C11-R2 已在真实 PostgreSQL 上关闭历史迁移缺陷 `P4-C11-R1-PG-001`，P4-A 最终矩阵为 64 passed、0 failed、0 blocked、0 not_run，并固定 134 文件最终快照。P4-B、P4-C、P4-D 共 56 项仍为 `not_run`；下一步先冻结 P4-B 的桌面产品交互切片。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。P4-B 的 Windows Shell、模块 UI、桌面生命周期和毛毛合同已经由 P4-D11 与 `P4-IF-003` 冻结，执行任务 `P4-B7` 已准备，24 项 P4-B 矩阵仍全部为 `not_run`。下一步由执行智能体实现桌面壳并形成固定快照，再由测试智能体执行 P4-C12；P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -71,6 +71,11 @@
 - [P4-A 最终总控验收](docs/p4-a-final-coordinator-review.md)：接受 64/64 独立矩阵、关闭历史迁移 P0，并固定 134 文件最终快照。
 - [P4-B Windows Shell、毛毛与模块交互头脑风暴](docs/phase-4-b-windows-shell-brainstorm.md)：讨论主窗口、模块导航、Agent 面板、毛毛、Tray、主题、本地后端生命周期及 P4-C/P4-D 边界。
 - [P4-D11 技术顾问 Prompt](docs/coordination/prompts/p4-d11-windows-shell-technical-adviser.md)：比较并推荐 P4-B 的 Electron/React/TypeScript、OpenAPI、IPC、BackendSupervisor、毛毛、主题和桌面测试方案。
+- [P4-D11 Windows Shell 技术方案](docs/phase-4-d11-windows-shell-technical-advice.md)：给出工具链、三层安全边界、模块 UI、Supervisor、outbox、毛毛、测试与七个实施里程碑。
+- [P4-D11 总控审阅](docs/p4-d11-coordinator-review.md)：接受技术方案并登记 TypeScript 版本与 pnpm/Forge 的两项勘误。
+- [P4-IF-003 Windows Shell 接口冻结](docs/phase-4-interface-freeze-003.md)：冻结 P4-B 的精确版本、IPC、owner 会话、nonce/readiness、窗口、主题、毛毛、测试与变更控制。
+- [P4-B7 执行智能体 Prompt](docs/coordination/prompts/p4-b7-windows-shell-executor.md)：按七个内部里程碑实现桌面 Shell 并提交执行方自测和固定交付。
+- [P4-B7 固定输入快照](docs/coordination/snapshots/p4-b7-start.sha256)：绑定 P4-A 产品代码、执行方测试及 P4-B 冻结文档；开始前必须逐行复算。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

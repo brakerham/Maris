@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B-BRAINSTORM — Windows Shell、毛毛与模块交互范围冻结
+- 当前任务：P4-B7-DISPATCH — Windows Shell 实现任务冻结与派发
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-27 13:45，Asia/Shanghai
+- 最近更新：2026-09-27 16:25，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -82,27 +82,67 @@
 - [P4-A 134 文件最终快照](../snapshots/p4-a-final.sha256)
 - [P4-B Windows Shell、毛毛与模块交互头脑风暴](../../phase-4-b-windows-shell-brainstorm.md)
 - [P4-D11 Windows Shell 技术顾问 Prompt](../prompts/p4-d11-windows-shell-technical-adviser.md)
+- [P4-D11 Windows Shell 技术方案](../../phase-4-d11-windows-shell-technical-advice.md)
+- [P4-D11 总控审阅](../../p4-d11-coordinator-review.md)
+- [P4-IF-003 Windows Shell 接口冻结](../../phase-4-interface-freeze-003.md)
+- [P4-B7 执行智能体 Prompt](../prompts/p4-b7-windows-shell-executor.md)
+- [P4-B7 固定输入快照](../snapshots/p4-b7-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`active`
-- 当前步骤：P4-B 视觉基线已确认，P4-D11 技术顾问任务卡已准备
-- 步骤开始时间：2026-09-27 13:25，Asia/Shanghai
-- 最近有效进展：2026-09-27 13:45，Asia/Shanghai（确认既有两张效果图已解决默认首页、三栏布局、模块 Agent 和毛毛形态问题）
-- 最近心跳：2026-09-27 13:45，Asia/Shanghai
-- 下一检查点：技术顾问接单，提交工具链、IPC、supervisor、毛毛和测试映射方案
-- 等待对象：用户把 P4-D11 Prompt 发送给既有技术顾问
-- 活动进程或会话：项目 Compose 为空；执行、测试和技术顾问均停止；Docker Desktop 不再要求保持运行
+- 当前步骤：P4-D11 已接受，P4-IF-003、P4-B7 任务卡和固定输入已发布；等待用户派发 B7
+- 步骤开始时间：2026-09-27 16:10，Asia/Shanghai
+- 最近有效进展：2026-09-27 16:25，Asia/Shanghai（D11 接受；IF-003 与 B7 任务卡完成；测试智能体保持停止）
+- 最近心跳：2026-09-27 16:25，Asia/Shanghai
+- 下一检查点：执行智能体接单后复算 `p4-b7-start.sha256` 并开始里程碑 1
+- 等待对象：用户把 B7 Prompt 发送给既有执行智能体；不同时启动测试智能体
+- 活动进程或会话：项目 Compose 为空；执行和测试智能体停止；技术顾问已结束 D11，不再修改文件
 - 重试次数：总控没有重复完整 C11，只复算快照、矩阵、报告摘要和资源证据
 - 最近输出：P4-D11 Prompt `docs/coordination/prompts/p4-d11-windows-shell-technical-adviser.md`
 
 ## 阻塞
 
+- P4-D11 的 Codex Desktop 默认执行 helper 阻塞已于 2026-09-27 15:15 解除；23 个旧 runtime staging 目录保留在可恢复隔离区，尚未删除。
 - `PG-C7-DATA-001` 已关闭；真实 PostgreSQL 结论仅覆盖冻结的 P1 8 项和 P2 SPG 4 项。
 - P3 当前无未关闭的 P0/P1 产品缺陷；`P3-C9-PG-001` 已经 R2 独立关闭。
 - 外部未验证项：真实腾讯微信消息、DeepSeek 与通知；这不影响已关闭的 B1/B2 本地范围。
 
+### 2026-09-27 16:10 Asia/Shanghai — 接受 P4-D11 总控审阅任务
+
+- 已核对技术顾问交接的两份文件及 SHA-256，D11 方案为 1093 行，24 个 P4-B 矩阵 ID 全部存在，文件结构和本地链接检查通过。
+- 已对照 P4-A 现有 bootstrap/login/refresh、`/modules`、`/healthz`、`/readyz` 和 production factory，确认 D11 没有把未来桌面能力误写成已实现产品。
+- 官方事实勘误：TypeScript 7.0 已发布，D11 中“TypeScript 6.0 为当前稳定”的表述过期；由于 7.0 尚未提供稳定 compiler API，本项目仍有意固定 TypeScript 6.0.3 作为首版兼容基线。Electron Forge 官方还要求 pnpm 项目使用 `.npmrc` 的 `node-linker=hoisted`。
+- 上述两项由总控写入 P4-IF-003，无需创建 D11-R1；其余技术建议进入正式冻结和任务卡编制。
+
 ## 下一步
+
+1. 用户只把 `docs/coordination/prompts/p4-b7-windows-shell-executor.md` 发送给既有执行智能体。
+2. 执行智能体先复算固定输入，再按七个内部里程碑实现并停在 `review / finished`。
+3. 测试智能体保持停止；B7 稳定终点快照形成后，总控再生成 P4-C12 正式任务卡。
+
+### 2026-09-27 16:25 Asia/Shanghai — 接受 P4-D11并发布 P4-IF-003/P4-B7
+
+- D11 两文件 SHA-256 与交接一致；1093 行方案、67 个标题、22 个代码块、6 张 Mermaid 图、19 个有效本地链接和 24 个 P4-B 矩阵 ID 均完成核对。
+- 接受 Electron main/preload/renderer、compiled registry、离线 OpenAPI、本地 owner、BackendSupervisor、加密 outbox、Tray、单一毛毛、主题和测试分层方案。
+- 总控勘误：TypeScript 7.0 已发布，首版仍因 compiler API/工具兼容有意固定 TypeScript 6.0.3；pnpm + Forge 必须在 `.npmrc` 使用 `node-linker=hoisted`。
+- 已发布 `P4-IF-003` 和单一集成实现任务 `P4-B7`。P4-C12 不提前派发，必须绑定 B7 稳定终点快照。
+
+### 2026-09-27 15:15 Asia/Shanghai — 修复 Codex Desktop 默认本地执行通道
+
+- 根因证据：沙箱日志反复记录 `runtime read/execute validation failed`；失败目标位于 `cua_node/.staging-799aa322aa55dbc2-VGxhd1`，深层路径长度 302，`CreateFileW` 无法打开。目标 ACL 已包含 `CodexSandboxUsers` 的读取和执行权限，因此不是项目 ACL 或 PowerShell 错误。
+- 缓存状态：`cua_node` 下共有 23 个 2026-09-02 遗留的 `.staging-*` 目录，每个只有一个顶层项；当前实际运行时为 2026-09-26 的 `b63ee7ee40c23b77`。
+- 修复动作：把 23 个 staging 目录移动到 `C:/Users/xuhaolin/AppData/Local/OpenAI/Codex/runtime-quarantine/cua_node-staging-20260927-151252`，没有删除内容、修改项目、关闭安全软件或改变沙箱策略。
+- 验证：不使用沙箱外绕过，默认执行通道成功运行 `Get-Location` 并读取 `docs/coordination/control.md`。
+- 后续：隔离目录暂时保留；确认 Codex 持续稳定后再决定是否清理，不影响 P4-D11 继续。
+
+### 2026-09-27 14:20 Asia/Shanghai — P4-D11 本地执行 helper 阻塞
+
+- 状态：P4-D11 `blocked / not_started`；技术顾问未读取必读文件、未登记接单、未修改项目。
+- 证据：技术顾问四次最小命令均在进程创建前返回 `helper_unknown_error: setup refresh had errors`；总控使用正常默认执行通道运行 `Get-Location` 时复现相同错误。
+- 判断：阻塞位于 Codex Desktop 本地执行 helper/工作区刷新层，不是 P4-D11 提示词、PowerShell、Docker、项目代码或技术顾问推理失败。
+- 恢复边界：先重启 Codex Desktop 并重连工作区；恢复后继续原 D11，不创建返修任务，也不启动执行或测试角色。
+- 安全状态：没有项目文件变更、服务启动、Docker 操作、外部登录或 Git 写操作。
 
 - P4-A 已完成验收并建立本地提交，不推送远程。
 - 执行、测试和技术顾问保持停止，等待 P4-B 新任务。
