@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B6-R3-R1-PREPARATION — Docker 恢复后的 PostgreSQL 历史 migration 续跑派发
+- 当前任务：P4-B6-R3-ENV-WAIT — 等待用户实际启动 Docker 后再恢复历史 migration 返修
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-27 11:25，Asia/Shanghai
+- 最近更新：2026-09-27 11:47，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -78,15 +78,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：R3 阻塞交付已核对；执行方历史 fixture 保留、migration 零漂移；R3-R1 Prompt 与 131 文件起点已准备
-- 步骤开始时间：2026-09-27 11:10，Asia/Shanghai
-- 最近有效进展：2026-09-27 11:25，Asia/Shanghai（确认 Docker Desktop/backend 未运行，生成不会覆盖 R3 准备的续跑快照）
-- 最近心跳：2026-09-27 11:25，Asia/Shanghai
-- 下一检查点：用户启动 Docker Desktop；执行智能体核对 131/131 并取得修改前 PG 精确失败
-- 等待对象：用户启动 Docker Desktop 并发送 P4-B6-R3-R1 Prompt
-- 活动进程或会话：总控只读检查未发现 Docker Desktop/backend 进程；没有项目容器由本轮创建；测试智能体和技术顾问停止
-- 重试次数：执行方按任务卡只检查一次后停止；总控只做一次进程/状态只读核对，没有启动或维修 Docker
-- 最近输出：R3-R1 起点 manifest SHA-256 `5aa1db6c395e745ad1bd96a92a40ece9d69bbdcc837e7234d47d12f3badeb9bb`
+- 当前步骤：R3-R1 第二次环境阻塞已核对；暂停开发派发，等待用户实际启动 Docker Desktop
+- 步骤开始时间：2026-09-27 11:35，Asia/Shanghai
+- 最近有效进展：2026-09-27 11:47，Asia/Shanghai（确认 131 输入零漂移、migration 未改、当前仍无 Desktop/backend 进程）
+- 最近心跳：2026-09-27 11:47，Asia/Shanghai
+- 下一检查点：用户报告界面已显示 Engine running；总控只读验证 Engine server 和 Compose 起点
+- 等待对象：用户启动 Docker Desktop并回复“Docker 已显示 Engine running”
+- 活动进程或会话：没有 Docker Desktop/backend 进程；R3/R3-R1 都没有创建项目容器；执行、测试和技术顾问全部停止
+- 重试次数：R3 与 R3-R1 各执行了一次规定的 Engine 前置检查并停止；在环境恢复前不再派发第三次
+- 最近输出：R3-R1 报告 SHA-256 `221acc51de0105854b65ff43bb144d8047f3903ad41d5a0a6ca93443d1e07dd1`
 
 ## 阻塞
 
@@ -102,6 +102,14 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-27 11:47 Asia/Shanghai — R3-R1 再次被未启动的 Docker 阻塞
+
+- 状态：R3-R1 `blocked / finished`；环境 `waiting_user`；P4-A 仍为 62 passed/2 failed。
+- 输入核对：131/131 起点和终点一致，0 changed、0 missing；migration、执行方历史 fixture 和 migration 测试摘要均与固定起点相同。
+- 实际执行：`docker desktop status` 返回 Desktop 未运行；PG、Compose、pytest、migration 修改和产品测试全部 `not_run`。这不是新的产品失败，也没有取得执行方 `ObjectInUse` 基线。
+- 总控检查：当前没有 Docker Desktop 或 `com.docker.backend` 进程。R3-R1 报告与 executor 日志摘要匹配，其他角色文件由执行方保持不变。
+- 流程修正：不再在用户启动前生成或发送第三份 Prompt。用户先启动 Desktop并报告 Engine running；总控验证环境后才恢复执行任务。
 
 ### 2026-09-27 11:25 Asia/Shanghai — 接受 R3 环境阻塞并准备 R3-R1 续跑
 

@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P4-A Host、身份和通用状态地基正在返修 `P4-C11-R1-PG-001`：真实 PostgreSQL 含 P1 财务双分录、P2 run/pending 和 P3 import 历史时，user-scope migration 因待处理的外键触发器事件无法完成正向升级。R3 已准备执行方回归但因 Docker Desktop 未运行而停止，R3-R1 将在 Engine 恢复后续跑；矩阵暂为 62 passed、2 failed，P4-A 尚未 `complete`。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P4-A Host、身份和通用状态地基正在返修 `P4-C11-R1-PG-001`：真实 PostgreSQL 含 P1 财务双分录、P2 run/pending 和 P3 import 历史时，user-scope migration 因待处理的外键触发器事件无法完成正向升级。执行方历史回归已经准备，但 R3 和 R3-R1 均因 Docker Desktop 尚未启动而在测试前停止；当前暂停派发，等待用户启动 Engine 后由总控先验证环境。矩阵暂为 62 passed、2 failed，P4-A 尚未 `complete`。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
