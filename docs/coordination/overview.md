@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-27 13:25，Asia/Shanghai
+更新时间：2026-09-27 14:05，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,8 +13,8 @@ P0～P3 和 P4-A 已完成验收。P4-A 的 64 项矩阵全部通过，PostgreSQ
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | P4-A 已推送 Maris；P4-B Windows Shell、毛毛与模块交互头脑风暴进行中 | 2026-09-27 13:25 | 用户确认第一版可见布局和范围，再准备技术顾问任务 | [P4-B 讨论稿](../phase-4-b-windows-shell-brainstorm.md)、[P4-A 最终验收](../p4-a-final-coordinator-review.md) |
-| 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
+| 头脑风暴 | `in_progress` | P4-B 视觉基线已确认；P4-D11 技术顾问任务卡已准备 | 2026-09-27 14:05 | 用户发送 D11 Prompt；收到方案后冻结 P4-IF-003 | [D11 Prompt](prompts/p4-d11-windows-shell-technical-adviser.md)、[P4-B 讨论稿](../phase-4-b-windows-shell-brainstorm.md) |
+| 技术顾问 | `ready`（P4-D11） | `waiting_user`：等待接收 Windows Shell 技术方案任务卡 | 2026-09-27 14:05 | 接单后比较工具链、IPC、supervisor、毛毛和测试方案 | [D11 Prompt](prompts/p4-d11-windows-shell-technical-adviser.md)、[角色日志](agents/technical-adviser.md) |
 | 执行智能体 | `complete / finished`（P4-A） | E1 修复已由 C11-R2 独立确认，当前停止 | 2026-09-27 12:08 | 等待 P4-B 新任务卡 | [E1 运行说明](../b6-r3-r1-e1-postgresql-history-migration-running.md)、[角色日志](agents/executor.md) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 独立 7 项、执行兼容 19 项通过，P4-A 64/64 passed | 2026-09-27 12:55 | 保持停止；等待 P4-B 独立矩阵执行任务 | [C11-R2 报告](../testing/phase-4-c11-r2-postgresql-history-report.md)、[角色日志](agents/tester.md) |
 

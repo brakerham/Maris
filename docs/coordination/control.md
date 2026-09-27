@@ -2,11 +2,11 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-27T13:25:00+08:00`
+- 指令版本：`2026-09-27T14:05:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：P4-A 本地提交 `88fb178` 已按用户要求推送到新仓库 Maris 的 `origin/main`。当前只进行 P4-B Windows Shell、毛毛与模块交互头脑风暴，不安装前端依赖、不启动任务智能体。
-- 需要用户参与：审阅 P4-B 讨论稿中的可见产品形态和范围边界；不要继续任何旧 P4-A、C11、R1、R2 或 R3 任务。Docker Desktop 当前可以关闭。
-- Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；P4-A 验收提交 `88fb178` 已推送 `origin/main`。这是用户要求的发布前保护性远端检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
+- 当前动作：P4-B 视觉基线已确认；`P4-D11` Windows Shell、毛毛与模块 UI 技术方案任务卡已经准备。当前只允许既有技术顾问执行 D11，执行智能体和测试智能体继续停止。
+- 需要用户参与：把 `docs/coordination/prompts/p4-d11-windows-shell-technical-adviser.md` 完整发送给既有技术顾问。不要启动 P4-B7、P4-C12、Electron 安装或其他旧任务；Docker Desktop 可以关闭。
+- Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；P4-A 验收提交 `88fb178` 与 P4-B 头脑风暴提交 `6b0e485` 已推送，远端 `main` 当前为 `6b0e485`。这些仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 
 ## 本地单主人产品范围
 
@@ -87,6 +87,7 @@
 | P4-B6 多交接接管审计 | 头脑风暴总控；`complete` | [审计报告](../p4-b6-multi-handoff-code-audit.md)登记 8 个 P0、14 个 P1、PG 证据和任务顺序 | 不重复本轮三路审查；新代码快照形成后才重新审查相应差异 |
 | P4-A PostgreSQL 复验环境 | `complete`；当前无活动环境负责人 | C11-R2 只启动 `finance-postgres`，普通 down 后最终 Compose 为空 | 当前不再操作 Docker/PostgreSQL；下一任务另行指定唯一负责人 |
 | P4-D10 B6 返修架构裁定 | `complete`；总控已接受 | 762 行、8 P0/14 P1 逐项处置、R1/R2 边界、12 类 PG 场景与 C11 门禁已核对 | 技术顾问停止；不得修改产品或自行派发后续任务 |
+| P4-D11 Windows Shell、毛毛与模块 UI 技术方案 | 技术顾问；`ready / waiting_user` | 绑定已确认效果图、P4-A 地基和 24 项 P4-B 矩阵；只写 D11 方案和自身状态 | 不安装依赖、不写产品/测试、不启动 Electron/FastAPI/Docker，不自动继续 P4-IF-003/B7/C12 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |

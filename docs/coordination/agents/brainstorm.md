@@ -5,7 +5,7 @@
 - 当前任务：P4-B-BRAINSTORM — Windows Shell、毛毛与模块交互范围冻结
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-27 13:25，Asia/Shanghai
+- 最近更新：2026-09-27 13:45，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -81,19 +81,20 @@
 - [P4-A 最终总控验收](../../p4-a-final-coordinator-review.md)
 - [P4-A 134 文件最终快照](../snapshots/p4-a-final.sha256)
 - [P4-B Windows Shell、毛毛与模块交互头脑风暴](../../phase-4-b-windows-shell-brainstorm.md)
+- [P4-D11 Windows Shell 技术顾问 Prompt](../prompts/p4-d11-windows-shell-technical-adviser.md)
 
 ## 当前执行快照
 
 - 运行状态：`active`
-- 当前步骤：P4-A 已推送 Maris；P4-B 第一版产品布局、毛毛、Agent、生命周期和范围讨论稿已形成
+- 当前步骤：P4-B 视觉基线已确认，P4-D11 技术顾问任务卡已准备
 - 步骤开始时间：2026-09-27 13:25，Asia/Shanghai
-- 最近有效进展：2026-09-27 13:25，Asia/Shanghai（`88fb178` 推送 `origin/main`；P4-B 讨论稿写入项目）
-- 最近心跳：2026-09-27 13:25，Asia/Shanghai
-- 下一检查点：用户确认或调整 P4-B 可见布局与毛毛首版体验，再生成技术顾问方案任务
-- 等待对象：用户对 P4-B 第一轮头脑风暴的反馈；不等待执行、测试或技术顾问
+- 最近有效进展：2026-09-27 13:45，Asia/Shanghai（确认既有两张效果图已解决默认首页、三栏布局、模块 Agent 和毛毛形态问题）
+- 最近心跳：2026-09-27 13:45，Asia/Shanghai
+- 下一检查点：技术顾问接单，提交工具链、IPC、supervisor、毛毛和测试映射方案
+- 等待对象：用户把 P4-D11 Prompt 发送给既有技术顾问
 - 活动进程或会话：项目 Compose 为空；执行、测试和技术顾问均停止；Docker Desktop 不再要求保持运行
 - 重试次数：总控没有重复完整 C11，只复算快照、矩阵、报告摘要和资源证据
-- 最近输出：P4-B 讨论稿 `docs/phase-4-b-windows-shell-brainstorm.md`
+- 最近输出：P4-D11 Prompt `docs/coordination/prompts/p4-d11-windows-shell-technical-adviser.md`
 
 ## 阻塞
 
@@ -109,6 +110,23 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-27 14:05 Asia/Shanghai — 准备 P4-D11 Windows Shell 技术方案任务
+
+- 状态：P4-D11 `ready / waiting_user`；执行、测试和技术顾问当前均无活动任务。
+- 输入：已确认的两张效果图、P4-B 讨论稿、P4-A 最终地基、D9/IF-001 与 24 项 P4-B 矩阵。
+- 任务边界：技术顾问只比较和冻结建议，不安装依赖、不写产品/测试、不启动 Electron、FastAPI、Docker 或外部服务。
+- 必答范围：工具链、构建、路由/状态、OpenAPI、模块 UI 合同、Electron/IPC 安全、本地 owner 会话、BackendSupervisor、离线恢复、Tray/毛毛、主题、测试、目录/命令和教学地图。
+- 效率：要求优先一个执行任务配合内部里程碑，只有文件冲突或 Windows 门禁才拆分，减少无必要的串行微任务。
+- 下一步：用户把 Prompt 发给既有技术顾问；收到 D11 `review` 后由总控形成 P4-IF-003，不提前派 B7/C12。
+
+### 2026-09-27 13:45 Asia/Shanghai — 纠正 P4-B 视觉基线状态
+
+- 用户指出默认首页与模块界面此前已经通过两张效果图确定，总控不应重复询问。
+- 日常财务效果图固定为“左侧导航 + 财务驾驶舱 + 右侧财务助手 + 日常管钱毛毛”。
+- 投资与学习效果图固定为财富管理子视图参考；投资不等同于完整财富管理。
+- 同一个毛毛随模块切换形态，右侧 Agent 随模块切换 Profile，这两项均为已确定设计。
+- 后续头脑风暴只处理仍开放的交互合同、阶段范围和技术方案，不重新讨论三栏布局。
 
 ### 2026-09-27 13:25 Asia/Shanghai — 推送 P4-A 并启动 P4-B 头脑风暴
 
