@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-27T11:47:00+08:00`
+- 指令版本：`2026-09-27T11:51:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基 PostgreSQL 历史迁移返修。C11-R1 已补齐 SQLite 与取消合同证据，但真实 PostgreSQL P3 历史→P4 在 `p4_host_user_scope` 触发 `ObjectInUse`，登记 P0 `P4-C11-R1-PG-001`；矩阵为 62 passed、2 failed，P4-A 不能接受。
-- 当前动作：`P4-B6-R3-R1` 因用户发送任务时 Docker Desktop 仍未运行，第二次按环境硬停止条件结束为 `blocked / finished`。131 个固定产品/执行测试输入零漂移，migration 尚未修改。现在暂停派发；用户启动 Docker Desktop 后先由头脑风暴总控只读验证 Engine 和 Compose，再发布恢复指令。测试智能体与技术顾问停止。
-- 需要用户参与：只启动 Docker Desktop，等待界面显示 **Engine running**，然后回到头脑风暴聊天回复“Docker 已显示 Engine running”。在总控验证前不要再次给执行智能体发送旧 R3 或 R3-R1 Prompt；不要发送 C11-R2，不要启动 Electron、OpenClaw、微信或 DeepSeek。
+- 当前动作：用户已启动 Docker Desktop；头脑风暴总控于 `2026-09-27 11:49～11:50 +08:00` 验证 Desktop `running`、backend 进程存在、`desktop-linux`、Engine Client/Server 29.8.0、Docker Desktop 4.92.0，以及项目 Compose 起点为空。现在只派发 `P4-B6-R3-R1-E1` 给既有执行智能体，从原 migration 的精确 PG 历史失败基线继续。测试智能体与技术顾问停止。
+- 需要用户参与：把 `docs/coordination/prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md` 完整发送给既有执行智能体。不要发送旧 R3/R3-R1 Prompt，不要发送 C11-R2，不要关闭 Docker Desktop，不要启动 Electron、OpenClaw、微信或 DeepSeek。
 - Git 状态：远端 `1d06d92` 和 `checkpoint/p3-foundation` 是防止基座被后续业务改乱的保护性检查点，不是首个大版本。产品仍处于发布前阶段；P4-D9 任务卡及后续验收默认只做本地提交，不推送、不创建 PR，除非用户另行要求远端检查点。正式大版本由用户以后明确宣布。
 
 ## 本地单主人产品范围
@@ -85,7 +85,7 @@
 | P4-IF-001 模块化 Agent Host 接口冻结 | `complete`；头脑风暴总控 | 冻结总架构和 P4-A 的身份、user scope、workflow、记忆、API 与迁移合同 | 变更必须交回总控与技术顾问，不得由执行方自行修改 |
 | P4-B6 Host/身份地基实现 | 既有执行智能体；`review`、运行已停止、当前不接受 | 保留原实现和交付现场；开放 P0/P1 见接管审计，后续只按独立 R1/R2 任务返修 | 旧 B6 任务不得自行续做；只有收到 R1 Prompt 才能修改其授权范围；禁止独立测试、Electron/外部系统和 Git |
 | P4-B6 多交接接管审计 | 头脑风暴总控；`complete` | [审计报告](../p4-b6-multi-handoff-code-audit.md)登记 8 个 P0、14 个 P1、PG 证据和任务顺序 | 不重复本轮三路审查；新代码快照形成后才重新审查相应差异 |
-| P4-B6-R3 PostgreSQL 返修环境 | `blocked / waiting_user`；目前没有活动环境负责人 | R3 与 R3-R1 均在首次 Engine 检查不可达后停止，均未创建容器；总控确认当前没有 Docker Desktop/backend 进程 | 用户只启动 Docker Desktop并通知总控；总控验证前不再派发执行任务或操作 PostgreSQL |
+| P4-B6-R3-R1-E1 PostgreSQL 返修环境 | `ready / waiting_user`；用户发送 E1 后由既有执行智能体取得唯一所有权 | 总控已验证 Engine 29.8.0、Desktop 4.92.0 和项目 Compose 为空 | E1 只启动 `finance-postgres`；用户保持 Desktop 运行；其他角色不得操作 Docker/PostgreSQL |
 | P4-D10 B6 返修架构裁定 | `complete`；总控已接受 | 762 行、8 P0/14 P1 逐项处置、R1/R2 边界、12 类 PG 场景与 C11 门禁已核对 | 技术顾问停止；不得修改产品或自行派发后续任务 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
@@ -99,6 +99,7 @@
 | P4-C11-R1 历史迁移证据补强 | 测试智能体；`blocked / finished`，总控接受失败结论 | SQLite 11 项与取消 1 项通过；真实 PG 历史升级 1 failed；105/105 零漂移；登记 `P4-C11-R1-PG-001` | 测试智能体停止；矩阵保持 DB-05/06 failed，等待 R3 新快照后才派 C11-R2 |
 | P4-B6-R3 PostgreSQL 历史迁移返修 | 执行智能体；`blocked / finished` | 130/130 起点通过；执行方历史 fixture 已准备，migration 未修改；Docker Desktop 首次检查不可达后按规则停止 | 不重复旧 R3；保留 fixture 和环境阻塞报告，由 R3-R1 续跑 |
 | P4-B6-R3-R1 PostgreSQL 历史迁移返修续跑 | 执行智能体；`blocked / finished` | 固定 131 文件摘要 `5aa1db6c...b9bb` 起终点一致；Docker Desktop 仍未运行，pytest 未启动，migration 零漂移 | 不再重复发送 Prompt；等待用户启动 Docker、总控验证并发布新的恢复指令 |
+| P4-B6-R3-R1-E1 Engine 恢复后返修续段 | 执行智能体；`ready / waiting_user` | 总控环境门禁通过；继续使用 131 文件输入，保留已准备 fixture | 先在原 migration 上取得唯一一次真实 PG 失败，再最小修复；完成后停在 review，由总控决定 C11-R2 |
 
 任何角色在开始工作前必须确认任务表中只有一个执行负责人。没有被列为执行负责人的角色不得“顺手继续”外部操作；发现空缺、冲突或旧指令时，只向总控报告并等待重新分配。
 

@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-27 11:47，Asia/Shanghai
+更新时间：2026-09-27 11:51，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,9 +13,9 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：R3-R1 再次因 Docker 未运行停止；暂停派发 | 2026-09-27 11:47 | 用户只启动 Docker Desktop并通知总控；总控先验证 Engine/Compose，再恢复执行方 | [R3-R1 阻塞说明](../b6-r3-r1-postgresql-history-migration-running.md)、[控制面](control.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：Docker 环境门禁通过，E1 恢复任务已准备 | 2026-09-27 11:51 | 用户发送 E1 Prompt；执行方先取得原 migration 的真实 PG 失败基线 | [E1 Prompt](prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md)、[控制面](control.md) |
 | 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
-| 执行智能体 | `blocked / finished`（P4-B6-R3-R1） | `finished`：131 输入零漂移；Engine 不可达后停止 | 2026-09-27 11:35 | 保持停止；等待总控完成 Docker 可达性验证并另行恢复 | [角色日志](agents/executor.md)、[R3-R1 阻塞说明](../b6-r3-r1-postgresql-history-migration-running.md) |
+| 执行智能体 | `ready`（P4-B6-R3-R1-E1） | `waiting_user`：Engine 已由总控验证，等待恢复 Prompt | 2026-09-27 11:51 | 核对 131/131，接管 `finance-postgres`，运行修改前精确 PG 节点 | [E1 Prompt](prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md)、[角色日志](agents/executor.md) |
 | 测试智能体 | `blocked / finished`（C11-R1） | `finished`：发现 P0 `P4-C11-R1-PG-001`，资源已关闭 | 2026-09-27 00:25 | 保持停止；等待 R3 新产品快照和 C11-R2 | [角色日志](agents/tester.md)、[R1 报告](../testing/phase-4-c11-r1-evidence-report.md) |
 
 ## 阶段 0 任务状态
@@ -75,6 +75,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P4-C11-R1：历史迁移证据补强 | 用户启动的既有测试智能体 | `blocked / finished`，失败结论接受 | SQLite 与取消证据通过；真实 PG P3 历史→P4 触发 P0 `P4-C11-R1-PG-001`；矩阵 62/2 | [R1 报告](../testing/phase-4-c11-r1-evidence-report.md)、[总控核对](../p4-c11-r1-coordinator-review.md) |
 | P4-B6-R3：PostgreSQL 历史迁移返修 | 用户启动的既有执行智能体 | `blocked / finished` | 130/130 起点通过；执行方历史 fixture 已准备；Docker Desktop 未运行，PG 未执行且 migration 未修改 | [R3 运行说明](../b6-r3-postgresql-history-migration-running.md)、[原 R3 Prompt](prompts/p4-b6-r3-postgresql-history-migration-executor.md) |
 | P4-B6-R3-R1：PostgreSQL 历史迁移返修续跑 | 用户启动的既有执行智能体 | `blocked / finished` | 131/131 起终点一致；Docker Desktop 仍未运行，PG/pytest 未启动，migration 零漂移 | [R3-R1 阻塞说明](../b6-r3-r1-postgresql-history-migration-running.md)、[R3-R1 起点](snapshots/p4-b6-r3-r1-start.sha256) |
+| P4-B6-R3-R1-E1：Engine 恢复后返修续段 | 用户启动的既有执行智能体 | `ready / waiting_user` | 总控验证 Desktop running、Engine 29.8.0、4.92.0、desktop-linux、项目 Compose 为空；继续使用 131 输入 | [E1 Prompt](prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md)、[固定起点](snapshots/p4-b6-r3-r1-start.sha256) |
 
 ## 当前阻塞与风险
 
@@ -100,8 +101,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 ## 下一次总控检查
 
-1. 用户只启动 Docker Desktop，等待界面显示 Engine running，并在头脑风暴聊天报告该状态；当前不要发送任何执行 Prompt。
-2. 总控只读验证 Desktop/backend、Engine server 和项目 Compose 起点，确认环境真正可用。
-3. 总控发布恢复指令；执行方继续使用 131 文件固定输入，在原 migration 上先稳定复现 PG 历史升级失败。
-4. 执行方只修改 user-scope migration 和执行方 migration 测试，取得真实 PG、SQLite、回滚和 downgrade 定向证据并普通 down。
-5. 返修进入 review 后由总控固定新快照并派 C11-R2；测试方只复验原失败节点和必要相邻 migration，不重复完整 C11。
+1. 用户把 P4-B6-R3-R1-E1 Prompt 完整发送给既有执行智能体，并保持 Docker Desktop 运行。
+2. 执行方继续使用 131 文件固定输入，在原 migration 上先稳定复现 PG 历史升级失败。
+3. 执行方只修改 user-scope migration 和执行方 migration 测试，取得真实 PG、SQLite、回滚和 downgrade 定向证据并普通 down。
+4. E1 进入 review 后由总控固定新快照并派 C11-R2；测试方只复验原失败节点和必要相邻 migration，不重复完整 C11。

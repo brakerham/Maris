@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B6-R3-ENV-WAIT — 等待用户实际启动 Docker 后再恢复历史 migration 返修
+- 当前任务：P4-B6-R3-R1-E1-PREPARATION — Engine 门禁通过后的 migration 返修恢复派发
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-27 11:47，Asia/Shanghai
+- 最近更新：2026-09-27 11:51，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -74,19 +74,20 @@
 - [P4-B6-R3 环境阻塞说明](../../b6-r3-postgresql-history-migration-running.md)
 - [P4-B6-R3-R1 续跑 Prompt](../prompts/p4-b6-r3-r1-postgresql-history-migration-resume-executor.md)
 - [P4-B6-R3-R1 起点快照](../snapshots/p4-b6-r3-r1-start.sha256)
+- [P4-B6-R3-R1-E1 恢复 Prompt](../prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：R3-R1 第二次环境阻塞已核对；暂停开发派发，等待用户实际启动 Docker Desktop
-- 步骤开始时间：2026-09-27 11:35，Asia/Shanghai
-- 最近有效进展：2026-09-27 11:47，Asia/Shanghai（确认 131 输入零漂移、migration 未改、当前仍无 Desktop/backend 进程）
-- 最近心跳：2026-09-27 11:47，Asia/Shanghai
-- 下一检查点：用户报告界面已显示 Engine running；总控只读验证 Engine server 和 Compose 起点
-- 等待对象：用户启动 Docker Desktop并回复“Docker 已显示 Engine running”
-- 活动进程或会话：没有 Docker Desktop/backend 进程；R3/R3-R1 都没有创建项目容器；执行、测试和技术顾问全部停止
-- 重试次数：R3 与 R3-R1 各执行了一次规定的 Engine 前置检查并停止；在环境恢复前不再派发第三次
-- 最近输出：R3-R1 报告 SHA-256 `221acc51de0105854b65ff43bb144d8047f3903ad41d5a0a6ca93443d1e07dd1`
+- 当前步骤：Docker Desktop/Engine/Compose 总控门禁通过；E1 恢复 Prompt 已生成
+- 步骤开始时间：2026-09-27 11:49，Asia/Shanghai
+- 最近有效进展：2026-09-27 11:51，Asia/Shanghai（Desktop running、Engine 29.8.0、4.92.0、desktop-linux、Compose 空）
+- 最近心跳：2026-09-27 11:51，Asia/Shanghai
+- 下一检查点：用户发送 E1 Prompt；执行智能体取得原 migration 的单次真实 PG 失败基线
+- 等待对象：用户把 E1 Prompt 发给既有执行智能体
+- 活动进程或会话：Docker Desktop/backend 正常；项目 Compose 当前为空；尚未启动 `finance-postgres`
+- 重试次数：前两次派发在 Desktop 未运行时停止；本次先完成总控环境验证后才允许恢复
+- 最近输出：E1 恢复 Prompt；Engine server `29.8.0`，Platform `Docker Desktop 4.92.0 (240144)`
 
 ## 阻塞
 
@@ -102,6 +103,15 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-27 11:51 Asia/Shanghai — Docker Engine 恢复并准备 E1
+
+- 状态：环境门禁 `passed`；P4-B6-R3-R1-E1 `ready / waiting_user`；P4-A 仍为 62 passed/2 failed。
+- 进程：Docker Desktop 与两个 backend 进程存在，Desktop CLI 返回 `running`。
+- Engine：context `desktop-linux`；Client/Server `29.8.0`；OS `linux`；Platform `Docker Desktop 4.92.0 (240144)`。
+- Compose：项目目录执行 `docker compose ps --format json` 退出 0、无输出，确认起点服务为空。
+- 边界：总控没有启动 PostgreSQL、没有运行 pytest、没有修改 product/migration。E1 接管后成为 `finance-postgres` 唯一负责人。
+- 派发：新 E1 Prompt 只更新环境证据和续跑交付文件；完整 R3-R1 原子性、安全、测试和文件边界继续有效。
 
 ### 2026-09-27 11:47 Asia/Shanghai — R3-R1 再次被未启动的 Docker 阻塞
 
