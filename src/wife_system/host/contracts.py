@@ -127,6 +127,9 @@ class MemoryGrant(StrictContract):
         "preference", "constraint", "goal", "communication_style"
     ]] = Field(default_factory=lambda: frozenset(MEMORY_KINDS))
     limit: int = Field(default=MAX_MEMORY_ITEMS, ge=0, le=MAX_MEMORY_ITEMS)
+    operations: frozenset[Literal["read", "propose"]] = Field(
+        default_factory=lambda: frozenset({"read"})
+    )
 
     @field_validator("namespace")
     @classmethod
@@ -445,7 +448,16 @@ class ModuleSettingValue(StrictContract):
                 for key, nested in item.items():
                     if not isinstance(key, str):
                         raise ValueError("setting object keys must be strings")
-                    if key.casefold() in {"api_key", "password", "secret", "token"}:
+                    normalized = key.casefold().translate(str.maketrans("", "", "_-."))
+                    if normalized in {
+                        "apikey",
+                        "password",
+                        "secret",
+                        "token",
+                        "credential",
+                        "privatekey",
+                        "refreshtoken",
+                    }:
                         raise ValueError("secret values are not module settings")
                     reject_unsafe(nested)
             elif isinstance(item, (list, tuple)):

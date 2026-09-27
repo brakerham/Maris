@@ -1,15 +1,18 @@
 from __future__ import annotations
 
 import uuid
-from dataclasses import dataclass
-from datetime import UTC, datetime
+from dataclasses import dataclass, field
+from datetime import UTC, datetime, timedelta, tzinfo
 from pathlib import Path
+from threading import Lock
 from typing import Iterator
 
 import pytest
 from sqlalchemy.orm import Session, sessionmaker
 
 from wife_system.agent.application import AgentApplication
+from wife_system.agent import application as application_module
+from wife_system.agent import pending as pending_module
 from wife_system.agent.finance_tools import FinanceToolAdapter, finance_registry
 from wife_system.agent.loop import AgentRunner
 from wife_system.agent.pending import PendingActionStore
@@ -22,6 +25,37 @@ from wife_system.finance.service import FinanceService, IdempotencyKeys
 ACTOR = uuid.UUID("c6000000-0000-0000-0000-000000000001")
 CONVERSATION = uuid.UUID("c6000000-0000-0000-0000-000000000002")
 NOW = datetime(2026, 9, 16, 15, 30, tzinfo=UTC)
+
+
+@dataclass
+class IndependentClock:
+    current: datetime = NOW
+    lock: Lock = field(default_factory=Lock, repr=False)
+
+    def now(self) -> datetime:
+        with self.lock:
+            return self.current
+
+    def advance(self, delta: timedelta) -> datetime:
+        with self.lock:
+            self.current += delta
+            return self.current
+
+
+@pytest.fixture(autouse=True)
+def independent_clock(monkeypatch: pytest.MonkeyPatch) -> Iterator[IndependentClock]:
+    clock = IndependentClock()
+
+    class ControlledDateTime(datetime):
+        @classmethod
+        def now(cls, tz: tzinfo | None = None) -> datetime:
+            value = clock.now()
+            return value.astimezone(tz) if tz is not None else value.astimezone().replace(tzinfo=None)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(application_module, "datetime", ControlledDateTime)
+        patch.setattr(pending_module, "datetime", ControlledDateTime)
+        yield clock
 
 
 @dataclass
@@ -48,7 +82,11 @@ def ih(tmp_path: Path) -> Iterator[IndependentHarness]:
     engine = make_engine(f"sqlite+pysqlite:///{tmp_path / 'independent-agent.sqlite3'}")
     Base.metadata.create_all(engine)
     sessions = make_session_factory(engine)
-    finance = FinanceService(sessions, IdempotencyKeys({1: b"p2-c6-virtual-finance-key"}))
+    finance = FinanceService(
+        sessions,
+        IdempotencyKeys({1: b"p2-c6-virtual-finance-key"}),
+        user_id=ACTOR,
+    )
     account = finance.create_account(
         CreateAccount(source_system="p2-c6", source_event_id="account", name="虚拟日常账户")
     )

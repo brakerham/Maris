@@ -16,11 +16,12 @@ from sqlalchemy.engine import make_url
 
 from wife_system.finance.db import make_engine, make_session_factory
 from wife_system.finance.errors import FinanceError
+from wife_system.finance.models import BOOTSTRAP_USER_ID
 from wife_system.finance.schemas import CreateAccount, CreateCategory, RecordExpense
 from wife_system.finance.service import FinanceService, IdempotencyKeys
 
 
-P1_HEAD_REVISION = "1377551283d0"
+P4_HEAD_REVISION = "p4_host_state"
 
 
 def _migration_config(database_url: str) -> Config:
@@ -49,11 +50,18 @@ def postgresql_service() -> Iterator[FinanceService]:
     isolated_url = parsed.set(query=query).render_as_string(hide_password=False)
     engine = None
     try:
-        command.upgrade(_migration_config(isolated_url), P1_HEAD_REVISION)
+        command.upgrade(_migration_config(isolated_url), P4_HEAD_REVISION)
         engine = make_engine(isolated_url)
+        with engine.connect() as connection:
+            assert connection.scalar(text("SELECT version_num FROM alembic_version")) == P4_HEAD_REVISION
+            assert connection.scalar(
+                text("SELECT COUNT(*) FROM app_user WHERE id=:user_id"),
+                {"user_id": BOOTSTRAP_USER_ID},
+            ) == 1
         yield FinanceService(
             make_session_factory(engine),
             IdempotencyKeys({1: b"pg-c7-data-r1-virtual-secret"}),
+            BOOTSTRAP_USER_ID,
         )
     finally:
         if engine is not None:

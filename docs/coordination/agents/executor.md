@@ -2,29 +2,29 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B6 — Host、身份和通用状态地基实现
-- 状态：`in_progress`
-- 最近更新：2026-09-21 00:00，Asia/Shanghai
-- 可修改范围：任务卡允许的 `host/**`、P4-A `modules/**`、必要 agent/api/finance/activity-import 适配、三个线性 migration、`pyproject.toml`/锁文件、执行方测试、B6运行说明与本文件；独立测试/C10/冻结/D9/控制/总览/其他角色、Electron/OpenClaw/微信和 Git 禁止修改。不执行任何 Git 写操作。
+- 当前任务：P4-B6-R3-R1-E1 — Engine 恢复后 PostgreSQL 历史 user-scope migration 返修续段
+- 状态：`review`
+- 最近更新：2026-09-27 12:10，Asia/Shanghai
+- 可修改范围：只允许 `migrations/versions/p4_host_user_scope.py`、`tests/host/test_postgresql_r2.py`、`tests/host/test_migrations.py`，必要时新增 `tests/host/test_postgresql_r3.py`，新增 E1 运行说明并更新本文件；禁止修改两份既有环境阻塞报告、独立测试/报告/矩阵、其他 migration、产品服务、依赖、control/overview、其他角色文件或 Git 状态。
 
 ## 当前执行快照
 
-- 运行状态：`running`
-- 当前步骤：三段 migration 已交付并通过 SQLite 门禁；主执行方已接入 Host API、持久幂等和 composition root，正在完成 Agent 与 P0～P3 user-scope/workflow 兼容集成
-- 步骤开始时间：2026-09-21 00:00 Asia/Shanghai
-- 最近有效进展：2026-09-21 00:00 Asia/Shanghai（Host API/state 聚焦10项、现有Agent loop 23项通过；compileall通过）
-- 最近心跳：2026-09-21 00:00 Asia/Shanghai
-- 下一检查点：完成Agent run/pending可信作用域与lease，并合并finance/activity-import user-scope适配
-- 等待对象：`p4_migrations` 的finance/activity-import user-scope追加交付；`p4_auth` ORM/migration一致性返修
-- 活动进程或会话：`p4_migrations`、`p4_auth`；主执行方继续Agent/API集成，无外部服务
-- 重试次数：0
-- 最近输出：migration 5 passed、Host累计44 passed后继续集成；Host API/state 10 passed；Agent loop 23 passed；`pwdlib 0.3.1` + Argon2依赖已声明并安装；P0～P3执行方基线239 passed/13 skipped
+- 运行状态：`finished`
+- 当前步骤：E1 最小 migration 修复及全部执行方门禁通过，PostgreSQL 已普通 down 且 Compose 服务为空；交付 review 后停止
+- 步骤开始时间：2026-09-27 11:56 Asia/Shanghai
+- 最近有效进展：2026-09-27 12:10 Asia/Shanghai（修复后六组必需命令共 30 passed/0 failed/0 skipped；编译、pip check、diff check 通过；129 unchanged/2 changed/0 missing；E1 报告已生成）
+- 最近心跳：2026-09-27 12:10 Asia/Shanghai
+- 下一检查点：等待头脑风暴总控核对 E1 固定摘要并决定是否派发 C11-R2；执行智能体不自行继续
+- 等待对象：头脑风暴总控；测试智能体、技术顾问和 C11-R2 当前仍停止
+- 活动进程或会话：无；`finance-postgres` 容器和项目网络已普通移除，最终 `COMPOSE_SERVICES_EMPTY`
+- 重试次数：E1 Engine/Compose 1/1 通过；原 migration 精确节点 1/1 预期失败；修复后精确节点 1/1 通过
+- 最近输出：`P4-B6-R3-R1-E1-END-SHA256:a89874cfb48b5c8edc8f4260d2f6ce1f206ac02f61e31bb56f4b33ea1282eee9`；状态 `review / finished`
 
 ## 待接任务
 
-- 按 [阶段 0 任务包](../../phase-0-assignments.md) 完成 B1。
-- 在拆分执行子任务前记录子任务名称、负责人、文件范围、依赖和状态。
-- 集成后提交实际运行方式、自测输出、文件索引、限制和教学交接。
+- P4-B6-R3 因 Docker Desktop/Engine 单次检查不可达，已按任务卡停止为 `blocked / finished`；migration 未修改，PostgreSQL pytest 未运行。
+- 固定输入：R3 起点清单 130/130 匹配；当前相对起点为 129 unchanged、1 changed、0 missing，唯一 changed 是允许的执行方 PostgreSQL 回归草稿。
+- 当前等待：总控确认 Engine 恢复后重新派发 R3；恢复时必须先在原 migration 上运行精确失败节点一次，再决定 migration 修复，不启动 C11-R2。
 
 ## 子任务状态
 
@@ -42,8 +42,11 @@
 | p3_parser | review | finished | parser/DTO与纯测试交回父执行，停止修改 | 2026-09-18 19:14 | 无；已纳入最终快照 | 无 | 初始纯阶段120 passed；最终parser/schema边界随P3本地143项通过 |
 | p3_storage | stopped | finished | 存储设计及models草稿交回；父完成剩余迁移/测试 | 2026-09-19（父恢复时确认会话已结束） | 无 | 无 | 模型字段设计被采用；父独立完成迁移并验证 |
 | p4_host_registry | review | finished | Host合同、registry、tool binding、daily fixture及对应执行方测试 | 2026-09-20 23:31 | 已交回主执行方 | 主执行方最终集成 | 8个新文件，聚焦22 passed；生产组合根只含daily_finance |
-| p4_auth | in_progress | running | 复核 auth ORM 与 migration 列名、ondelete 一致性 | 2026-09-21 00:00 | 聚焦 auth 测试后交回 | 无 | 原领域聚焦10 passed；追加范围只限auth models/test |
-| p4_migrations | in_progress | running | migration已交付；追加finance/activity-import repository/service可信user scope适配 | 2026-09-21 00:00 | 跨用户反例与旧执行方回归 | 主执行方固定Profile ID集成 | migration 5 passed、Host当时44 passed；追加范围限finance/activity-import与test_user_scope |
+| p4_auth | review | finished | auth ORM、认证服务和相关执行方测试已交回 | 2026-09-24 23:05 | 无；等待总控核对 | 总控独立验收 | auth 已纳入 `tests/host` 49 passed；无外部操作 |
+| p4_migrations | review | finished | 三段 migration、finance/activity-import/Agent user scope 适配已交回 | 2026-09-24 23:05 | 无；等待总控核对 | 总控独立验收 | 四组回归 249 passed、13 PostgreSQL skip；migration 真实 PostgreSQL 未验证 |
+| p4_b6_r1_auth_receipt | review | finished | 一次性绑定、认证边界、Host command/receipt 同事务及聚焦执行方测试已交回并由父集成 | 2026-09-26 01:09 | 无 | 无 | 父集成补充 v2 HMAC、全表秘密扫描和 SQLite/PG 第五次竞争，最终纳入 265 local + 21 PG |
+| p4_b6_r1_migrations | review | finished | 复合 user scope、三个 P4 revision、cancelled downgrade 与 migration 测试已交回并由父集成 | 2026-09-26 01:09 | 无 | 无 | SQLite migration 8 passed；PG 复合约束与 cancelled 回环纳入 R1 7/7 |
+| p4_b6_r1_activity_http | review | finished | Host principal 活动导入、AuthError/404/405 envelope、PG fixture 兼容已交回并由父集成 | 2026-09-26 01:09 | 无 | 无 | 交回时 25 passed；最终 activity PostgreSQL 10/10，未运行独立测试 |
 
 
 ## B1 交付物与验证
@@ -56,6 +59,270 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-27 11:06 Asia/Shanghai — P4-B6-R3 接单与起点门禁
+
+- 状态：`in_progress`；运行状态：`active`。最新 control `2026-09-27T00:30:00+08:00` 只派发 R3，指定既有执行智能体为实现和 `finance-postgres` 唯一负责人；测试智能体、技术顾问与 C11-R2 继续停止。
+- 起点证据：`p4-b6-r3-start.sha256` 共 130 行，自身普通 SHA-256 为 `ed4cec634ead2a8543066f19c7134f3d0a65d58f39ebe43133ef955129a86770`；逐项复算 130/130 文件，0 mismatch、0 missing。
+- 唯一缺陷：真实 PostgreSQL P3 schema 含合法 P1 expense/正负双分录、P2 paused run/needs-confirmation pending 和 P3 previewed import 时，`p4_host_user_scope` 的逐表 UPDATE 后立即 ALTER 会遇到 pending FK trigger events。
+- 范围：先在执行方测试中独立构造等价虚拟历史并在原 migration 上唯一一次复现失败；随后只修 `p4_host_user_scope.py` 的 PostgreSQL add/backfill/ALTER 顺序，保留 SQLite 分支、单事务、三个 P4 revision 和唯一 head。
+- 禁止范围：不修改/运行 `tests/independent/**`，不修改独立报告/矩阵、其他 migration、产品服务、依赖、冻结/control/overview/其他角色文件，不执行 Git 写操作，不启动外部集成。
+- 当前步骤：审阅现有 R2 migration fixture，扩充 P1/P2/P3 历史事实与失败/回滚断言；Docker 操作前再次读取 control。
+- 下一检查点：精确执行方历史节点在原 migration 上得到一次可复核的 PostgreSQL 失败基线，并确认事务回滚后仍为 P3 head、无部分 user_id 列。
+
+### 2026-09-27 11:11 Asia/Shanghai — R3 失败回归就绪与 PostgreSQL 启动前检查点
+
+- 执行方 `test_postgresql_s1_migration_empty_history_and_round_trip` 已独立扩充等价 P3 历史：P1 account/category/expense transaction/正负双分录、P2 paused run/needs-confirmation pending、P3 previewed import batch/candidate；没有导入或复制独立测试断言。
+- 用例新增异常路径审计：升级异常时重新连接并断言 Alembic 仍为 P3 head、历史双分录仍在、`app_user` 不存在、六张代表表没有部分 `user_id` 列，然后重新抛出首次产品异常，使坏 migration 仍形成失败回归。
+- 修改后的执行测试 `compileall` 退出 0。最新 control 仍为 `2026-09-27T00:30:00+08:00`，R3 是唯一实现/环境负责人，测试智能体、技术顾问和 C11-R2 保持停止。
+- 长操作：确认 Engine 可达和项目 Compose 为空，只启动 `finance-postgres` 并等待 healthy；随后在原 migration 上只运行精确节点一次。下一检查点为记录 ObjectInUse/pending-trigger 失败阶段、是否到达 P4 head和事务回滚证据。
+- 不停止/重启 Desktop，不处理 socket/volume/global settings，不运行其他测试；失败基线取得后才允许修改 migration。
+
+### 2026-09-27 11:13 Asia/Shanghai — R3 Docker 环境阻塞并停止
+
+- 状态：`blocked`；运行状态：`finished`。按任务卡执行唯一一次环境检查时，`docker desktop status` 退出 1，安全输出为无法取得状态并提示 Docker Desktop 未运行。
+- 命令在 Desktop status 后立即退出，没有继续到 Engine version、Compose 空列表、服务启动或 pytest；没有容器、网络或 schema 被本任务创建。
+- R3 明确规定 Engine 不可达时只检查一次并停止、不得自行维修 Docker Desktop，因此没有执行第二轮检查、`docker desktop start`、Desktop 重启、socket/context/global settings 操作，也没有运行 PostgreSQL 失败基线。
+- 当前代码现场只包含允许的执行方回归扩展；`p4_host_user_scope.py` 尚未修改，不能宣称根因已由执行方复现或缺陷已修复。独立 C11 首次失败证据只作为任务输入，不替代执行方回归。
+- 交接：冻结允许范围内的测试草稿并完成静态/文件摘要收口；等待总控确认 Engine 恢复后重新派发。恢复时从原 migration 精确节点唯一一次失败运行开始，不直接实施推荐修复。
+
+### 2026-09-27 11:16 Asia/Shanghai — P4-B6-R3 受阻交付
+
+- 状态：`blocked`；运行状态：`finished`。没有进入 `review`，因为任务卡要求的原 migration 真实 PostgreSQL 失败基线、migration 修复和修复后门禁全部未运行；C11-R2 未启动。
+- 已完成：执行方 R2 migration fixture 独立加入 P1 expense/正负双分录、P2 paused run/needs-confirmation pending、P3 previewed import batch/candidate；加入异常时 P3 head、历史事实和无部分 schema 的回滚审计，以及修复后事实/owner/复合 FK/unique/check/default/幂等/downgrade 断言草稿。
+- 未完成：`p4_host_user_scope.py` 保持起点摘要，未实现 PostgreSQL constant server-default/NOT NULL 分流；根因仍是结合代码与独立失败证据的高可信判断，不是本轮执行方实际复现结论。
+- 测试结果：没有运行 pytest。精确失败节点及任务卡所有修复后定向组均为 `not_run`，0 passed、0 failed、0 skipped、0 warning；执行测试 `compileall` 退出 0，`pip check` 无破损，`git diff --check` 退出 0且仅有起点工作树 LF→CRLF 提示。
+- 环境与资源：唯一一次 `docker desktop status` 退出 1并提示 Desktop 未运行；命令立即停止，没有查询 Compose、启动容器/网络/schema或连接测试库。没有本任务容器可 down，最终 Compose 空列表为 `unverified`。未二次检查、启动/重启 Desktop、处理 socket/context/global settings、删除 volume或prune。
+- 文件边界：相对 130 文件起点为 129 unchanged、1 changed、0 missing/deleted；唯一 changed 是 `tests/host/test_postgresql_r2.py`，另新增 [R3 运行说明](../../b6-r3-postgresql-history-migration-running.md) 并更新本日志。独立测试/报告/矩阵、migration、产品、依赖、control/overview/其他角色均零漂移。
+- 摘要：执行测试 `671269d182fa37d7c66b3fe056d1bf4dc6d8091bd14d6eb9668d20f0cdf87e43`；运行说明 `e6ab61d865dea61b3b64efc2aa58d533c7e6d0291ab51bac09f1d2e79cfb463f`；把起点 130 行替换执行测试摘要并加入运行说明后，131 行有序摘要为 `P4-B6-R3-BLOCKED-SHA256:5aa1db6c395e745ad1bd96a92a40ece9d69bbdcc837e7234d47d12f3badeb9bb`。
+- 交接：等待总控恢复 Engine 并重新派发；当前执行智能体停止修改、测试和环境操作。恢复时保留回归草稿，从原 migration 精确节点的唯一一次实际失败开始，不把独立失败当执行方基线。
+
+### 2026-09-27 11:32 Asia/Shanghai — P4-B6-R3-R1 接单与恢复门禁
+
+- 状态：`in_progress`；运行状态：`active`。用户已发送 R3-R1 完整任务卡；最新 control `2026-09-27T11:25:00+08:00` 指定既有执行智能体为续跑唯一负责人，测试智能体、技术顾问和 C11-R2 继续停止。
+- 恢复起点：`p4-b6-r3-r1-start.sha256` 共 131 行，自身 SHA-256 为 `5aa1db6c395e745ad1bd96a92a40ece9d69bbdcc837e7234d47d12f3badeb9bb`；按路径、摘要两列逐项复算 131/131 匹配，0 missing、0 mismatch、0 invalid。
+- 现场连续性：保留 R3 已编译的执行方历史回归草稿和 blocked 运行说明；原 migration 仍为起点摘要，禁止 restore、覆盖或改用旧 130 文件清单。
+- 当前步骤：Docker 操作前再次复读 control，单次确认 Engine 可达和 Compose 空列表，只启动 `finance-postgres` 并等待 healthy；随后在原 migration 上仅运行精确历史节点一次。
+- 失败门禁：只有得到预期 PostgreSQL `ObjectInUse` / pending-trigger ALTER 失败，且异常路径证明仍为 P3 head、历史事实完整、无部分 `user_id` 列，才允许最小修改 migration；其他结果立即按任务卡停为 blocked。
+- 下一检查点：记录失败类型、阶段、表、P4 head 到达状态和事务回滚审计。不得并行执行其他测试、独立验收或外部集成。
+
+### 2026-09-27 11:35 Asia/Shanghai — P4-B6-R3-R1 Docker 环境再次阻塞并停止
+
+- 状态：`blocked`；运行状态：`finished`。Docker 操作前 control 仍为 `2026-09-27T11:25:00+08:00`；任务授权未变化。
+- 唯一一次前置检查在 `docker desktop status` 立即失败，退出码 1，安全输出为 `Could not retrieve status. Is Docker Desktop running?`。命令没有继续到 Engine version、Compose 服务列表、`finance-postgres` 启动、health 或 pytest。
+- 按任务卡硬停止条件，没有第二次检查、`docker desktop start`、Desktop 重启、socket/context/global settings 操作、volume 删除、prune 或 Factory reset。由于本轮没有创建容器或网络且 Engine 不可达，没有执行 `docker compose down`；本轮最终 Compose 空列表只能登记为 `unverified`，不能引用历史状态冒充。
+- migration 与 131 文件起点完全未变：131 unchanged、0 changed、0 missing/deleted；`p4_host_user_scope.py` 仍为 `649cf372e9bbadc6aaecf6bad4f7daac9b1be68fb663c4dc36b8376df9817e8c`，执行测试草稿仍为 `671269d182fa37d7c66b3fe056d1bf4dc6d8091bd14d6eb9668d20f0cdf87e43`。
+- 测试：所有任务卡 pytest 均为 `not_run`，0 passed、0 failed、0 skipped、0 warning；原 migration 的执行方失败类型、阶段、表名和回滚审计仍未取得，不能实施推荐 migration 修复。
+- 交付：[R3-R1 阻塞运行说明](../../b6-r3-r1-postgresql-history-migration-running.md)记录控制面、起点、唯一 Engine 检查、未运行项、资源状态和边界。执行智能体不启动 C11-R2、测试智能体、技术顾问或外部集成，等待总控确认 Engine 后重新派发。
+
+### 2026-09-27 11:56 Asia/Shanghai — P4-B6-R3-R1-E1 接单与 Engine 恢复门禁准备
+
+- 状态：`in_progress`；运行状态：`active`。最新 control `2026-09-27T11:51:00+08:00` 明确派发 E1，并记录总控已验证 Desktop running、Engine Client/Server 29.8.0、Desktop 4.92.0、`desktop-linux` 和项目 Compose 为空；用户已发送 E1 完整任务卡。
+- 固定输入：继续使用 `p4-b6-r3-r1-start.sha256` 的 131 文件；逐项复算 131/131 matched、0 mismatch、0 missing、0 invalid，清单 SHA-256 `5aa1db6c395e745ad1bd96a92a40ece9d69bbdcc837e7234d47d12f3badeb9bb`。
+- 连续性：保留 `test_postgresql_r2.py` 已准备的 P1 双分录、P2 run/pending、P3 import 历史和异常回滚审计；两份旧环境阻塞报告只读保留，不 restore、重写或复制 fixture。
+- 当前步骤：Docker 操作前再次读取 control；接管后只检查一次 Engine 可达和 Compose 为空，只启动 `finance-postgres` 并等待 running/healthy。
+- 下一检查点：在原 migration 摘要不变的前提下，只运行精确历史 migration 节点一次，登记失败类型、migration 阶段、表名、P4 head 状态、P3 回滚、双分录保留及无部分 `user_id` 列证据。
+
+### 2026-09-27 11:58 Asia/Shanghai — E1 Engine 接管与 PostgreSQL 健康里程碑
+
+- Docker 操作前复核 control 仍为 `2026-09-27T11:51:00+08:00` 且 E1 唯一负责人未变化。
+- 接管检查：context `desktop-linux`；Engine Client/Server `29.8.0`；Server OS `linux`；项目 Compose 返回空列表。Desktop CLI 状态表字段显示 `stopped`，但 Engine API 与 Compose 均成功响应，实际 Engine 可达门禁通过。
+- 只执行 `docker compose up -d finance-postgres`；创建项目默认网络和单一容器 `wife-system-finance-postgres-1`（`2f159a07b0b2`），端口 `127.0.0.1:55432`，由 `starting` 进入 `running / healthy`。
+- 没有启动其他服务、修改 Docker 设置、删除 volume 或执行 prune。当前长操作为原 migration 精确节点的唯一一次基线运行；下一检查点是失败类型和事务回滚审计。
+
+### 2026-09-27 12:03 Asia/Shanghai — 原失败复现、最小修复与完整门禁检查点
+
+- 修改前精确节点只运行一次：`1 failed, 3 warnings`；真实异常为 `psycopg.errors.ObjectInUse`，失败 SQL `ALTER TABLE financial_transaction ALTER COLUMN user_id SET NOT NULL`。异常路径的 P3 head、双分录、无 `app_user`、六张代表表无部分 `user_id` 列断言先通过，随后重新抛出原始错误。
+- migration 最小修复：PostgreSQL 从唯一 pending bootstrap owner 读取 ID，经 `uuid.UUID` 校验后构造常量 UUID DDL literal；逐表以 `ADD COLUMN ... DEFAULT ... NOT NULL` 填充历史行，立即删除 default；SQLite 保持 nullable column、显式 UPDATE 和 batch NOT NULL 路径。
+- 修复后精确节点：`1 passed, 2 warnings`。P1/P2/P3 历史、owner、约束、无 persistent default、重复 upgrade 与 head→P3→head 均通过。
+- 新增真实 PG 非法图执行测试：孤儿 pending→run 与矛盾 actor owner 共 `2 passed, 2 warnings`；两者均保持 P3 head、历史双分录和非法输入，且无 `app_user` 或部分 `user_id` 列。
+- 长操作：从 12:03 起依次运行完整 R2 PostgreSQL、完整 Host SQLite migration、Host R1 migration/round-trip 两节点、Finance migration、activity import migration，随后编译、pip check 与 diff check。下一检查点为各组独立统计；任何失败停止扩展并进入诊断。
+
+### 2026-09-27 12:10 Asia/Shanghai — P4-B6-R3-R1-E1 执行方交付
+
+- 状态：`review`；运行状态：`finished`。原 migration 精确基线只运行一次并复现 `ObjectInUse` at `financial_transaction SET NOT NULL`；异常路径先证明 P3 head、双分录、无 `app_user` 和无部分列，再重新抛出原错误。
+- 修复：仅在 `p4_host_user_scope.py` 分流 PostgreSQL 历史填充，使用经 `uuid.UUID` 校验的唯一 bootstrap owner 常量，以 `ADD COLUMN ... DEFAULT ... NOT NULL` 填充并立即删除 default；SQLite 原 nullable/update/batch 路径不变。没有手动 COMMIT、禁用约束/trigger 或扩大 revision/service 范围。
+- 真实 PG：修复后精确节点 `1 passed, 2 warnings`；新增非法孤儿/矛盾 owner 定向 `2 passed, 2 warnings`；完整 R2 文件 `11 passed, 1 warning`；Host R1 migration/round-trip `2 passed, 1 warning`。证明历史事实、owner、复合 FK/unique/check、无 persistent default、幂等、head→P3→head 和非法历史完整回滚。
+- SQLite/相邻 migration：Host migration 最终 `8 passed`，Finance `3 passed`，activity import `5 passed`。Host 首次运行因系统 Temp 权限得到 `1 passed, 7 setup errors`，改用项目内 basetemp 后全过并删除临时目录；没有产品断言失败。
+- 必需修复后六组命令共 `30 passed, 0 failed, 0 skipped`。warning 只有既有 Starlette/AnyIO alias 弃用和精确运行的 pytest cache 提示；`compileall`、`pip check`、`git diff --check` 均退出 0。
+- Docker：Engine Client/Server 29.8.0，起点 Compose 为空；只启动 `finance-postgres`，container `2f159a07b0b2` running/healthy；结束普通 `docker compose down`，容器和网络移除，最终 `COMPOSE_SERVICES_EMPTY`。未删除 volume、prune 或修改 Desktop/context/socket。
+- 文件：相对 131 文件起点为 129 unchanged、2 changed、0 missing/deleted；changed 是 migration `82bc31919bd5483650f40c0281c42764813f6f5bc0db8d1898b7ad71a3d5a800` 和执行测试 `0da6346142304f36964370b8f48344c6ab16309058413ffa6bb45d24ae922d6f`。终点有序摘要 `a89874cfb48b5c8edc8f4260d2f6ce1f206ac02f61e31bb56f4b33ea1282eee9`。
+- 交付：[E1 运行说明](../../b6-r3-r1-e1-postgresql-history-migration-running.md)普通 SHA-256 `fe922138b4e959c1cf83268772ce08cdeb0df41d388c05d87caa83f2dbae635f`。没有修改或运行独立测试，没有 Git 写操作，没有启动 C11-R2、其他角色或外部集成。
+
+### 2026-09-26 22:18 Asia/Shanghai — P4-B6-R2-S2-T2 接单与起点门禁
+
+- 状态：`in_progress`；运行状态：`active`。最新 control `2026-09-26T22:10:00+08:00` 只派发 T2，指定既有执行智能体为 `finance-postgres` 唯一负责人；技术顾问、测试智能体与 C11 继续停止。
+- 起点证据：`p4-b6-r2-s2-t2-start.sha256` 共 104 行，自身普通 SHA-256 为 `c7deef5af25f2ba6215bdd587fe13d46d027ecb37294bc9373a6aadf4c03529d`；逐项复算 104/104 文件，0 changed、0 missing。
+- 唯一目标：零代码修改，顺序执行精确修复节点 1 项、Host R1 其余 7 项和 Host R2 9 项，形成 17 个唯一真实 PostgreSQL 用例证据；第一组失败时不重跑并立即收口。
+- 文件边界：禁止修改 104 文件起点、产品、migration、测试、依赖和独立验收范围；只新增 T2 运行说明并更新本角色日志，不执行 Git 写操作。
+- 外部边界：Docker 操作前再次读取 control；起点 Compose 必须为空，只启动 `finance-postgres`，不得停止/重启 Docker Desktop、处理 socket、删除 volume、prune 或修改全局设置。
+- 下一检查点：记录 Engine/client/server、起点空服务列表和容器 running/healthy；随后登记预计超过五分钟的三组 pytest 会话。
+
+### 2026-09-26 22:20 Asia/Shanghai — T2 PostgreSQL 启动前检查点
+
+- Docker 前再次读取 control，版本仍为 `2026-09-26T22:10:00+08:00`；T2 继续独占项目环境，其他角色和 C11 保持停止。
+- 环境门禁：Docker Desktop CLI 0.4.4、Desktop 4.92.0 (240144) 为 running；context `desktop-linux`；client/server 均为 29.8.0；server 为 Docker Desktop/linux；项目 `docker compose ps --format json` 退出 0 且无输出，记录为起点 `COMPOSE_SERVICES_EMPTY`。
+- 第一次版本格式化命令引用了该 Docker CLI 不支持的 `Server.OperatingSystem` 字段并退出 1；随即用只读 `docker version` 和 `docker info` 正常取得同一信息。Engine 全程可达，这不是服务或测试失败。
+- 长操作：只启动 `finance-postgres`，等待 `wife-system-finance-postgres-1` running/healthy；设置任务卡测试 URL 后顺序执行精确节点 1 项、R1 其余 7 项和 R2 9 项。预计数分钟，下一检查点为容器 health 与精确节点首次结果。
+- 无论结果均普通 `docker compose down` 并确认最终服务列表为空；不停止/重启 Desktop，不处理 socket、volume、全局设置或其他服务。
+
+### 2026-09-26 22:22 Asia/Shanghai — T2 精确节点通过
+
+- 只启动 `finance-postgres`；`wife-system-finance-postgres-1` 达到 `running/healthy`，镜像 `postgres:17.6-alpine`，端口只绑定 `127.0.0.1:55432->5432`。
+- 使用任务卡测试 URL、随机 schema 和虚拟身份数据，精确节点只运行一次：`1 passed`、0 failed、0 skipped，2 warnings。通过原有断言确认实际竞争结果 `[200,409]`，败方 code/receipt、同键重放、撤销后新键重试及隐私断言全部成立；测试文件没有修改。
+- 两条 warning：既有 Starlette/AnyIO alias 弃用提示，以及 pytest 无法在既存 `.pytest_cache` 路径创建 nodeids 的缓存提示；均未影响用例结果。
+- 下一检查点：运行 `-k not competing_binding_codes_return_safe_replayable_conflict` 的其余 7 项；不重复精确节点。
+
+### 2026-09-26 22:26 Asia/Shanghai — P4-B6-R2-S2-T2 执行方交付至 review
+
+- 状态：`review`；运行状态：`finished`。T2、T1、S2 和整体 P4-B6-R2 均提交为 `review / finished`；这是执行方证据，P4-C11 尚未派发，未宣布 P4-A `complete`。
+- 17 个唯一 PostgreSQL 用例：精确竞争绑定节点 `1 passed`；用 `-k not ...` 排除精确节点后的 R1 其余 `7 passed`；R2 完整文件 `9 passed`。合计 17 passed、0 failed、0 skipped、0 setup error，形成 R1 8/8 + R2 9/9；没有重复精确节点。
+- T1 验证：精确节点的原断言确认实际 HTTP `[200,409]`、败方 active/attempts=0、receipt/replay、撤销后新键成功和隐私边界。R1 后继续运行 R2 9 项全部通过，证明 pytest monkeypatch 已 teardown 且无跨文件时钟污染。
+- warning：每个 pytest 进程各有 2 条，共 6 次、2 种唯一类型，分别为既有 Starlette/AnyIO alias 弃用提示和既存 `.pytest_cache` nodeids 创建失败提示；均不影响收集或结果，没有为处理 warning 修改依赖/缓存/测试。
+- 静态与边界：`pip check` 无破损；`git diff --check` 退出 0，仅起点工作树 LF→CRLF 提示；104 文件起点和终点均为 104/104 matched、0 changed、0 missing，清单 SHA-256 保持 `c7deef5af25f2ba6215bdd587fe13d46d027ecb37294bc9373a6aadf4c03529d`。
+- 环境：Docker Desktop 4.92.0 (240144)，client/server 29.8.0，linux；只启动 `finance-postgres`，容器 running/healthy，回环端口 55432。R1/R2 均使用 UUID 随机 schema 和虚拟数据并由 fixture 清理。
+- 资源：最终重读 control 22:10 后执行普通 `docker compose down`，容器和项目网络正常移除；最终 `docker compose ps --format json` 退出 0、无输出，记录为 `COMPOSE_SERVICES_EMPTY`。未删除 volume、prune、停止/重启 Desktop、修改 context/全局设置或触碰 socket。
+- 文件：104 项基线没有改动；只新增 [T2 运行说明](../../b6-r2-s2-t2-postgresql-running.md) 并更新本角色日志。运行说明普通 SHA-256 为 `59e07d0c5cd870a59d0599db032c7f2f6065a0d7d2b951e7e6c836737f54358c`；本日志最终普通 SHA-256 在停止修改后记录于交付消息。
+- 禁止范围：未运行 Finance PG 4、activity PG 10、S1 44、326 本地回归或 `tests/independent/**`；未修改产品、migration、测试、依赖、冻结/矩阵/快照/control/overview/其他角色文件，未启动其他角色或外部系统，未执行 Git 写操作。
+- 交接：执行智能体停止修改、测试和环境操作，等待总控核对并决定是否派发 P4-C11 独立验收。
+
+### 2026-09-26 21:23 Asia/Shanghai — P4-B6-R2-S2-T1 接单与起点门禁
+
+- 状态：`in_progress`；运行状态：`active`。最新 control `2026-09-26T19:41:00+08:00` 只派发 T1，指定既有执行智能体为单文件测试返修及 `finance-postgres` 唯一负责人；技术顾问、测试智能体与 C11 继续停止。
+- 起点证据：`p4-b6-r2-s2-t1-start.sha256` 共 103 行，自身普通 SHA-256 为 `b1c4c80d8d5a04e2571b9028e38abc7fb99f912c6b2ffba84d799f466e4d5b18`；逐项复算 103/103 文件，0 missing、0 mismatch。
+- 唯一修改：给 R1 绑定并发用例增加 pytest `monkeypatch`，仅在该用例期间把 `wife_system.api.host_routes.datetime.now(UTC)` 固定为已有 `2026-09-26T02:00:00Z`；保留十分钟 TTL、INSERT barrier、`[200,409]`、replay/revoke/retry 和隐私断言。
+- 禁止范围：不修改 `src/**`、migration、产品时钟/TTL、R2/Finance/P3/独立测试、S2 失败报告、冻结/审查/矩阵/快照、其他角色、依赖或 Git 状态；不启动 C11 或外部集成。
+- 当前步骤：先审阅目标文件导入和失败函数，完成最小 patch、compileall 与 collect-only；Docker 操作前再次读取 control。
+- 下一检查点：精确节点代码可编译和收集，差异只含冻结修复方式；随后登记真实 PostgreSQL 长操作并启动唯一允许服务。
+
+### 2026-09-26 21:32 Asia/Shanghai — T1 PostgreSQL 启动前检查点
+
+- 单文件修复已完成：目标用例通过 pytest `monkeypatch` 临时替换 `wife_system.api.host_routes.datetime`；可控子类的 aware `now(UTC)` 返回既有固定时刻，naive `now()` 返回同一时刻对应的本地 naive 墙钟值，夹具退出后自动还原模块对象。原 TTL、barrier 和全部业务/隐私断言未改。
+- 无 Docker 预检：修改测试 `compileall` 退出 0；pytest collect-only 对精确节点、完整 R1、完整 R2 分别收集 1、8、9 项；唯一 warning 是既有 Starlette/AnyIO alias 弃用提示。
+- 外部操作前重读 control，版本仍为 `2026-09-26T19:41:00+08:00`：T1 是当前唯一任务，本执行智能体继续独占 `finance-postgres`，其他角色和 C11 保持停止。
+- 长操作：只启动项目 Compose 服务 `finance-postgres`，使用任务卡测试 URL、随机 schema 和虚拟数据；依次且分别运行精确失败节点一次、R1 8 项、R2 9 项。下一检查点为容器 healthy 和精确节点唯一一次结果。
+- 资源退出：无论测试通过或失败，均执行普通 `docker compose down` 并确认项目服务列表为空；不删除 volume、不 prune、不修改 Docker 全局设置或 socket 目录。
+
+### 2026-09-26 21:33 Asia/Shanghai — T1 PostgreSQL 环境检查点 1
+
+- `docker compose up -d finance-postgres` 在创建项目容器前失败：`dockerDesktopLinuxEngine` 命名管道不存在，Docker API 不可达；因此没有服务被本任务启动。
+- 只读诊断显示当前 context 为 `desktop-linux`、client 29.8.0，且没有 `Docker Desktop` 或 `com.docker.backend` 进程。未启动桌面应用，未修改 context、全局设置、socket、volume 或项目数据。
+- 当前步骤：按任务卡的持续无进展规则再做一次独立 API/Compose 检查；若同一条件重复，停止 PostgreSQL 范围并交回总控，不伪造或用 skip 代替真实结果。
+- 下一检查点：第二次 `docker compose ps/up` 可达性；等待对象为本机 Docker Desktop Engine。
+
+### 2026-09-26 21:36 Asia/Shanghai — P4-B6-R2-S2-T1 受阻交付
+
+- 状态：`blocked`；运行状态：`finished`。T1、S2 和整体 R2 保持受阻；没有进入 `review`，没有启动测试智能体、技术顾问或 C11。
+- 测试修复：只修改 `tests/host/test_postgresql_r1.py`，由目标用例的 pytest monkeypatch 临时替换 `host_routes.datetime`。aware/naive 语义、TestClient 线程可见性和 teardown 自动恢复经主执行与现有只读辅助会话双重审阅，无阻断缺口；原固定时间、TTL、barrier、冲突/重放/撤销重试及隐私断言均保留。
+- 收集和静态结果：精确节点、完整 R1、完整 R2 分别 collect-only 1/8/9 项；修改测试 `compileall` 退出 0；`pip check` 无破损；`git diff --check` 退出 0，仅当前工作树 LF→CRLF 提示。收集各有 1 条既有 Starlette/AnyIO alias 弃用 warning，不计作实际测试通过。
+- PostgreSQL 阻塞：第二次检查前重读 control `2026-09-26T19:41:00+08:00`，随后 `docker compose ps/up` 再次因 `dockerDesktopLinuxEngine` 命名管道缺失失败。两个连续检查点条件相同，按任务卡停止。精确节点、R1 8 项和 R2 9 项均为 `not_run`：0 passed、0 failed、0 skipped、0 runtime warning。
+- 资源：没有项目容器成功创建或启动；普通 `docker compose down` 与最终 `docker compose ps --format json` 均因 Engine 不可达退出 1，故 Compose 空服务列表为 `unverified`。操作系统未发现 Docker Desktop 后端进程；没有本任务已知遗留运行资源，未删除 volume、prune、修改全局设置/context 或 socket 目录。
+- 文件边界：103 项起点现为 `unchanged=102`、`changed=1`、`missing/deleted=0`；唯一 changed 是 R1 测试，另新增 [T1 运行说明](../../b6-r2-s2-t1-clock-running.md) 并更新本角色日志。没有修改产品、migration、R2/Finance/P3/独立测试、冻结/审查/矩阵/快照、control/overview、其他角色、依赖或 Git 状态。
+- 普通摘要：R1 测试 `f0c3144d2aeae4ceee0ac724bbcb6bb1f43607779552c34312bcbcea8a5c8bcb`；T1 运行说明 `426e8a92b8660f941203bed464cb24c9c8bf88b9ab552d619529ead58bc55c1f`。把起点清单中的 R1 行替换并加入运行说明后，104 行终点摘要为 `P4-B6-R2-S2-T1-END-SHA256:c7deef5af25f2ba6215bdd587fe13d46d027ecb37294bc9373a6aadf4c03529d`。
+- 未验证：`[200,409]` 真实结果、R1 8/8、R2 9/9、R1 后 R2 的 monkeypatch 运行时恢复、PostgreSQL health 和最终 Compose 空列表。等待总控确认 Engine 可用并重新派发；当前停止扩展任务。
+
+### 2026-09-26 19:08 Asia/Shanghai — P4-B6-R2-S2 接单与起点门禁
+
+- 状态：`in_progress`；运行状态：`active`。最新 control `2026-09-26T18:55:00+08:00` 已接受 S1 为 S2 输入，指定既有执行智能体为 S2 及 `finance-postgres` 唯一环境负责人；技术顾问和测试智能体停止，C11 未派发。
+- 起点证据：`p4-b6-r2-s2-start.sha256` 共 101 行，自身普通 SHA-256 为 `8e92671370cfbbea33dafec36a5d3e4dfbe6fe734fa8df0ed2caab9288e74969`；逐项复算 101/101 文件，0 missing、0 mismatch。
+- 范围：默认只新增/修改 `tests/host/test_postgresql_r2.py`、S2 运行说明和本日志；若既有共享 PostgreSQL fixture 确实阻塞，才最小修改任务卡列出的三个 fixture 文件。禁止修改产品、migration、依赖、独立测试、冻结/审查/矩阵/快照、其他角色文件或 Git 状态。
+- 环境边界：尚未启动 Docker/PostgreSQL。启动前必须再次读取 control；只允许项目 `finance-postgres`、随机 schema 和虚拟数据，结束普通 `docker compose down` 并确认服务列表为空；禁止删除 volume、prune、修改 Docker 全局设置或触碰 socket 目录。
+- 当前步骤：基于正式 Alembic head 和真实 PostgreSQL 编写九类纵向用例，覆盖 migration、candidate/memory CAS、pending/run fence、message/event、setting/receipt、分页/cursor 和 production factory；先做编译与收集检查。
+- 下一检查点：新测试文件可编译、可收集，测试映射完整；随后登记预计超过五分钟的 PostgreSQL 操作并启动唯一允许服务。
+
+### 2026-09-26 19:22 Asia/Shanghai — S2 PostgreSQL 启动前检查点
+
+- 新增 `tests/host/test_postgresql_r2.py` 共 9 个纵向案例，对应任务卡九项合同；使用 Alembic 随机 schema、真实两个连接/会话、有限超时 barrier、假 provider/adapter 和虚拟数据。未修改产品、migration 或三个既有 PostgreSQL 基线文件。
+- 无 Docker 检查：`compileall` 退出 0；pytest `--collect-only` 精确收集 9 项。首次 collection 因测试文件误导入不存在且未使用的 `Transaction` 类型失败，移除该测试 import 后收集通过；这不是产品断言失败。
+- 外部操作前重读 control，版本仍为 `2026-09-26T18:55:00+08:00`：Docker Engine 已恢复、Compose 服务列表起点为空，本执行智能体仍为 S2 与 `finance-postgres` 唯一环境负责人，C11 和其他角色保持停止。
+- 长操作：下一步只启动项目 `finance-postgres`，等待 health，设置 Compose 中的测试 URL，先跑新增 9 项，再完整复跑 Host R1、Finance claim 和 activity import 三个基线；预计超过五分钟。每个 schema 随机且只含虚拟数据。
+- 下一检查点：记录容器 health 与新增 9 项首轮精确结果；若测试自身错误则只修允许的新测试文件，若 migration/产品断言失败则不改产品并按任务卡停止。最终无论结果都普通 `docker compose down` 并确认服务列表为空。
+
+### 2026-09-26 19:32 Asia/Shanghai — P4-B6-R2-S2 受阻交付
+
+- 状态：`blocked`；运行状态：`finished`。S2 和整体 R2 都没有进入 `review`，因为任务卡要求完整通过的既有 Host R1 PostgreSQL 基线存在 1 项失败；C11 未启动。
+- 新增证据：`tests/host/test_postgresql_r2.py` 最终 `9 passed, 1 warning`，逐项覆盖 S1 migration、candidate/version 竞争、memory CAS、pending commit/recovery、run takeover/fence、message/event、setting/receipt、Page/cursor 和 production factory。0 failed、0 skipped；warning 为既有 Starlette/AnyIO 弃用提示。
+- 既有基线：Host R1 `7 passed, 1 failed, 1 warning`；Finance claim `4 passed`；Activity import `10 passed`。合计 `21 passed, 1 failed, 0 skipped, 1 warning`。
+- 失败复现：绑定并发期望 HTTP `[200,409]`，实际 `[409,409]`。一次 PDB 诊断确认两端均为 `binding_code_invalid`，两枚 code 均 `expired/attempts=0`，active binding 为 0，两个 receipt 都是 completed rejected。测试用固定 `2026-09-26T02:00:00Z` 创建十分钟有效码，而 HTTP 路由使用本轮约 `11:xxZ` 的真实时间，因此未到 INSERT/唯一约束竞争。没有 SQLSTATE/constraint 失败。
+- 边界处置：S2 未获授权修改该既有业务测试，只提出另立任务同步 create/consume 测试时钟；没有修改产品、migration、依赖、三个既有 PG 文件或独立测试，没有 skip/xfail/放宽断言，也没有 Git 写操作。
+- 静态检查：新增测试 compileall 退出 0；`pip check` 无破损；`git diff --check` 退出 0，仅既有 LF→CRLF 提示。按有限策略未重复 326 项本地回归。
+- 文件边界：停止修改前，101 项起点仍为 `unchanged=101`、`changed=0`、`missing/deleted=0`；新增 `tests/host/test_postgresql_r2.py` 和 S2 运行说明，另只更新本角色日志。测试 SHA-256 `d8ad7814dd237e62dab12d993dad591d0434b47d4615b65c02de0e93e203b002`；[S2 运行说明](../../b6-r2-s2-postgresql-running.md) 普通 SHA-256 `d141267e078c664fad5d9b742547114fd17245d7bee5573625b55ea298ca780e`。
+- 终点摘要：把 101 行起点清单与上述两个新增文件的当前普通 SHA-256 合并，按路径升序拼接 `path<TAB>sha256<LF>` 后计算 SHA-256；`entries=103`，结果为 `P4-B6-R2-S2-END-SHA256:b1c4c80d8d5a04e2571b9028e38abc7fb99f912c6b2ffba84d799f466e4d5b18`。角色日志在该产品/测试/运行说明快照之外单独记录。
+- PostgreSQL 资源：项目 image `postgres:17.6-alpine` 达到 healthy；只用随机 schema/虚拟数据。结束执行普通 `docker compose down`，最终 `docker compose ps --format json` 无输出；未删除 volume、prune、修改 Docker 全局设置或触碰 socket 目录。
+- 停止点：等待总控另派最小测试时钟返修；本执行智能体不自行修改原 R1 测试、不重启数据库、不启动其他角色或外部集成。执行方证据不称为独立验收。
+
+### 2026-09-26 11:40 Asia/Shanghai — P4-B6-R2 接单与起点门禁
+
+- 状态：`in_progress`；最新 control `2026-09-26T11:26:00+08:00` 已接受 F1 为 R2 基线，并指定既有执行智能体为 R2 唯一负责人。技术顾问与测试智能体停止，C11 未派发；Docker Desktop Engine 已由总控确认恢复，保留的 socket 备份目录禁止触碰。
+- 起点证据：按 `p4-b6-r2-start.sha256` 重算 96 文件，96 present、0 missing、0 mismatch；有序总摘要为 `7a80e083b0534c0f2547d859276f9c910b94a912b9b057ef95f8dbc9a74f3632`。R1/F1 22 文件安全切片同时复算为 `e690882a291b8ec0210971d3bbed1f6da2252368cd9afff5213ff33798b87976`。
+- 范围：只修改 R2 任务卡允许的产品、执行方测试、production factory、R2 运行说明和本日志；不修改三个 P4 migration、R1/F1 安全实现和审查、冻结/矩阵/协调快照、独立测试、依赖、其他角色文件或 Git 状态。
+- 目标：关闭 P0-04/05/06/07/08 与 P1-06/07/08/09/10/11/12；保持 raw secret、同事务 Host receipt、adapter gate、复合 user FK、message/run unique 与 F1 绑定竞争不变量。
+- 下一步：只读梳理现有 runtime、registry、Agent、pending、state、API 和执行方测试，建立缺口到文件/测试的映射；先形成 pending/run fence 与 CompiledExecutionPlan 纵向链，再依次收口 memory/setting/event、Page/factory，最后本地和真实 PostgreSQL 门禁。
+
+### 2026-09-26 02:08 Asia/Shanghai — P4-B6-R1-F1 执行方交付至 review
+
+- 状态：`review`；运行 `finished`。只关闭 `P4-B6-R1-REV-001`，没有启动 R2、C11、Electron、OpenClaw、微信或 DeepSeek，没有运行/修改 `tests/independent/**`，没有执行 Git 写操作。
+- 修复：binding INSERT 使用局部 savepoint；只按 SQLSTATE/目标约束名或 SQLite 精确表列识别 active identity 唯一竞争，并在回滚后确认竞争 binding 存在才映射 409。败方 code 恢复 active/attempts 0，安全 receipt 同事务提交并可同键重放；其他 `IntegrityError` 原样抛出。
+- 失败与通过：修复前新增真实 PG 定向 `1 failed`，实际 `[200,500]`；修复后相同案例和最终复跑均 `1 passed`。本地指定四文件 `41 passed, 1 warning`；原 PostgreSQL `21 passed, 1 deselected, 1 warning`；新增 PG 独立计数 `1 passed, 1 warning`。0 skip；唯一 warning 为 Starlette/AnyIO 第三方弃用提示。
+- 静态：`pip check` 无破损；F1 三个实现/测试文件编译退出 0；Alembic 单 head 仍为 `p4_host_state`。
+- PostgreSQL：只使用项目 `finance-postgres`、随机 schema 和虚拟数据；结束后普通 `docker compose down`，`docker compose ps --format json` 无输出；未删除 volume、prune 或修改 Docker 全局设置。
+- 文件：5 个授权文件 modified，0 added、0 deleted；产品/执行方测试为 `src/wife_system/host/auth/service.py`、`tests/host/test_api.py`、`tests/host/test_postgresql_r1.py`，另更新 R1 运行说明和本日志。三份代码/测试逐文件摘要及 22 文件总摘要见运行说明。
+- 快照：`P4-B6-R1-F1-SHA256:e690882a291b8ec0210971d3bbed1f6da2252368cd9afff5213ff33798b87976`；[R1/F1 运行说明](../../b6-r1-security-data-running.md) 最终 SHA-256 为 `e5c67b7851ca3aa92a27626db089bd99afbad1de536ceee9dd4542335ec1dde9`。
+- 停止点：执行方自测不称为独立验收，不宣布 R1/P4-A complete；等待头脑风暴总控复算并决定后续派发。
+
+### 2026-09-26 02:04 Asia/Shanghai — F1 修复与本地回归里程碑
+
+- 失败前证据：真实 PostgreSQL 同步竞争定向测试稳定得到 `[200, 500]`，断言期望 `[200, 409]`，`1 failed, 1 warning`。
+- 实现：移除 direct wrapper 的任意 `IntegrityError` 兜底；只在 binding INSERT 局部 savepoint 捕获目标唯一冲突，按 PostgreSQL 约束名/SQLite 精确表列筛选，并在重新查询确认竞争 active binding 后恢复败方 code、返回领域冲突；其余完整性错误继续抛出。
+- 通过证据：同一真实 PG 定向案例 `1 passed, 1 warning`；SQLite 顺序冲突定向与完整 auth 回归 `17 passed, 1 warning`；任务卡四份本地文件合并 `41 passed, 1 warning`。
+- 隐私与恢复：新增案例断言响应、日志和 receipt 不含原始 provider/subject/code、digest、SQL 约束名或 IntegrityError；同键重放 409，撤销赢家后败方使用新键成功。
+- 下一步：control 仍为 01:47 F1 指令；保持 finance-postgres 运行，仅用随机 schema/虚拟数据分开复跑原 21 项与新增 1 项，结束后普通 down。
+
+### 2026-09-26 02:00 Asia/Shanghai — F1 PostgreSQL 失败基线测试就绪
+
+- 状态：`in_progress`；在唯一允许的 `tests/host/test_postgresql_r1.py` 中新增两连接 INSERT 屏障案例，覆盖一胜一 409、败方 code/receipt、同键重放、撤销后新键重试和隐私扫描；未修改产品实现。
+- 静态检查：新增测试文件通过 `compileall`。外部操作前重读 control，版本仍为 `2026-09-26T01:47:00+08:00`，本执行智能体仍是 F1 唯一负责人。
+- 长操作：下一步只启动项目 `finance-postgres`，使用随机 schema 和虚拟数据执行新增定向案例，预计数分钟；下一检查点为记录修复前实际 HTTP 状态/失败位置，随后普通关闭环境或进入实现修复。
+
+### 2026-09-26 01:55 Asia/Shanghai — P4-B6-R1-F1 接单与起点门禁
+
+- 状态：`in_progress`；最新 control `2026-09-26T01:47:00+08:00` 指定既有执行智能体为 F1 唯一负责人，R1 暂不接受，R2/C11 未派发。
+- 起点证据：按 F1 清单重算 23 文件，逐项差异 0；有序总摘要为 `d46c056d57f07cae567806a1ca9eb01df8627fd9cc67331e7c1fa799216ec1cd`。
+- 唯一缺陷：两个有效 code 并发争用同一 active `(channel, external_subject)` 时，预查后 INSERT 的唯一索引竞争可让败方 `IntegrityError` 越过 in-session Host 路径并成为 HTTP 500。
+- 范围：只修改任务卡允许的 binding consume 实现、三份指定执行方测试、R1 运行说明和本日志；不修改 migration/模型/冻结/审查/快照/独立测试/R2/依赖，不执行 Git 写操作。
+- 下一步：先用真实 PostgreSQL 两连接和 INSERT 屏障稳定复现失败，记录失败前结果；再在 binding insert 局部 savepoint 中只处理已确认的 active identity 唯一竞争，其他 IntegrityError 原样上抛。
+
+### 2026-09-26 01:09 Asia/Shanghai — P4-B6-R1 执行方交付至 review
+
+- 状态：`review`；运行 `finished`。只关闭 R1 指定的 3 个 P0、7 个 P1；未启动 R2、C11、Electron、OpenClaw、微信或 DeepSeek，未运行/修改 `tests/independent/**`，未执行 Git 写操作。
+- 实现：一次性 `code_id + code`、v2 HMAC、raw secret 首次响应边界、同事务 Host receipt、access 到期边界、DeviceSession platform principal、21 项 AuthError 映射、404/405 envelope、Host activity principal、三条复合 user FK、R2 schema 预备字段、三个 P4 migration 与 cancelled downgrade 已完成。
+- 执行方测试：最终本地 Host/P0～P3 组合 `265 passed, 1 warning in 40.98s`；认证/API 最终定向 `24 passed, 1 warning`；SQLite migration `8 passed`；`pip check` 无破损，允许范围 compileall 退出 0，Alembic 单 head 为 `p4_host_state`。唯一 warning 为既有 Starlette/AnyIO 弃用提示。
+- PostgreSQL：只启动项目 `finance-postgres`，随机 schema/虚拟数据；finance 4/4、activity import 10/10、R1 7/7，合并 `21 passed in 7.23s`，无 failed/skip/warning。最终普通 `docker compose down`，`docker compose ps --format json` 退出 0 且无输出；未删除 volume、prune 或修改 Docker 全局设置。
+- 文件：22 个产品/migration/执行方测试文件为 21 modified + 1 added，0 deleted；另新增 R1 运行说明并更新本日志，任务总计 22 modified + 2 added。22 文件有序摘要为 `P4-B6-R1-SHA256:13520520ebd351797f47fb1eb143e8e01b70e7a98975b51d9aca827df1fdc0f8`。
+- 交付物：[R1 运行说明](../../b6-r1-security-data-running.md)，其最终 SHA-256 为 `54edb8c9f2c5186acdb4b7e10e7be46956949c32ff6df5d8635b0c2cc9e8ff31`；22 文件逐项摘要、失败/skip/warning、PG 证据、资源状态和 R2 不变量均在文档中。
+- 下一步：执行方停止修改，等待头脑风暴总控核对快照。执行方自测不称为独立验收，不宣布 P4-A complete。
+
+### 2026-09-26 00:46 Asia/Shanghai — R1 三切片集成与本地组合回归检查点
+
+- 状态：`in_progress`；再次读取最新 control，版本仍为 `2026-09-25T20:08:00+08:00`，R1 仍由本执行智能体唯一负责，R2/C11 保持未派发。
+- 已交回：activity/HTTP 切片 `25 passed, 1 warning`；auth/state 当前组合 `20 passed`；SQLite P4 migration 定向 `8 passed`。三个临时切片均未运行 Docker、独立测试或 Git 写操作。
+- 集成修正：`p4_host_identity` 已与一次性绑定模型对齐 `status/revoked_at` 和 active partial unique；三条复合 user FK、R2 预备字段与 cancelled downgrade 已进入 migration；父集成将绑定 code HMAC 的冻结域收口为 `wife.channel-binding.v2` 并增加精确摘要断言。
+- 长操作：下一步运行任务卡允许的 Host、finance、activity-import、agent-finance 本地组合回归与静态检查，预计超过五分钟；观察点为 pytest 逐组统计及首个失败，下一检查点为所有本地失败清零或记录明确阻塞。尚未启动 PostgreSQL。
+
+### 2026-09-26 01:02 Asia/Shanghai — R1 PostgreSQL 启动前检查点
+
+- control：外部操作前再次读取，版本仍为 `2026-09-25T20:08:00+08:00`；本执行智能体仍是 `finance-postgres` 唯一负责人，未出现冲突角色或停止指令。
+- 本地门禁：Host `64 passed, 2 PostgreSQL skipped, 1 warning`；P0～P3 非 PostgreSQL `201 passed, 1 warning`。并发第五次错误/正确消费曾复现不一致，现已改为原子条件更新并由新增回归通过。
+- 环境操作：仅执行 `docker compose up -d finance-postgres`，连接 `127.0.0.1:55432`，设置 `FINANCE_TEST_POSTGRES_URL`，全部测试使用 fixture 随机 schema 与虚拟数据。先跑 finance 4、activity import 10、Host R1 专项，再按失败定向修正。
+- 下一检查点：真实 PostgreSQL 各组进入业务断言并得到精确 passed/failed/skipped/warning；无论结果如何，结束前执行普通 `docker compose down` 并确认 `docker compose ps` 空。禁止 `down -v`、volume 删除、prune 或 Docker 全局设置修改。
+
+### 2026-09-25 21:00 Asia/Shanghai — P4-B6-R1 接单与起点门禁
+
+- 状态：`in_progress`；最新 control `2026-09-25T20:08:00+08:00` 指定既有执行智能体为 R1 唯一实现负责人，技术顾问和测试智能体均停止，R2/C11 未派发。
+- 起点证据：按协调清单重算 93 个文件，逐项差异 0；有序总摘要为 `62c250c73e1c47ed13f8cd6355be9cb88ee4081f920e2ed747b82492e5168c2e`；D10 SHA-256 为 `1e9283af99a658b024e094db5f4c31c56396322a2dee68c012c87d19b5df2399`。
+- 范围：只关闭任务卡的 3 个 P0、7 个 P1，修改明确授权的产品、migration、执行方测试和 R1 文档；不修改/运行 `tests/independent/**`，不进入 R2 运行时范围，不执行 Git 写操作。
+- 环境：尚未启动 PostgreSQL；接单后本智能体为 `finance-postgres` 唯一负责人，启动前将再次读取 control 并记录下一检查点。
+- 下一步：先建立认证、一次性绑定码、Host command 同事务、活动导入 principal、复合 FK/migration 的定向失败基线，再逐组修复和回归。
 
 ### 2026-09-20 23:31 Asia/Shanghai — P4-B6 合同、认证与通用state首轮集成
 
@@ -503,3 +770,73 @@
 - 状态：`ready`
 - 未验证内容：执行智能体是否已建立或接单；当前尚无业务代码证据。
 - 下一步/交接：由执行智能体本人确认并填写实现范围。
+### 2026-09-26 12:35 Asia/Shanghai — R2 runtime/state integration milestone
+
+- Status: `in_progress`; activity: `active`.
+- Completed in the working tree: pending commit ownership/lease fence, run attempt-fenced execution and takeover path, Host execution-plan compiler, BoundToolRegistry execution, persisted run messages, Page responses/cursor filter binding, strict setting secret rejection, post-commit event wiring, and production composition entry point.
+- Executor baseline after the first integration pass: 70 directed Host/Agent tests collected; 68 passed and two obsolete expectations were identified. The immediate-retry test now waits for commit-lease expiry; the memory test now preserves the candidate's fixed target. A second pass has one remaining obsolete namespace assertion, now corrected.
+- Frozen-schema conflict isolated without modifying migrations: `memory_candidate` has no Profile-version column and `memory_item` permits only `active/deleted/superseded`, while R2 requires persisted proposal Profile version and `invalidated`. This conflict scope is stopped pending coordinator schema ruling; other R2 scopes continue.
+- Current step: add R2-specific execution tests, run the full local suites, then re-read control before PostgreSQL startup.
+- Step start: `2026-09-26 12:35 Asia/Shanghai`; last progress: `2026-09-26 12:35 Asia/Shanghai`; last heartbeat: `2026-09-26 12:35 Asia/Shanghai`.
+- Next checkpoint: directed R2 tests and production-factory smoke pass with no unaccounted failures.
+### 2026-09-26 13:05 Asia/Shanghai — R2 PostgreSQL gate start/checkpoint 1
+
+- Re-read `docs/coordination/control.md` immediately before the external operation; it still assigns sole `finance-postgres` ownership to this Executor and keeps C11/other roles stopped.
+- Intended operation: start only Compose service `finance-postgres`, run R2/R1/F1 PostgreSQL suites with test credentials, random schemas and virtual data, then ordinary `docker compose down` and verify an empty service list.
+- Observable reference: project `D:\CodeX_gap\wife-system`, Compose service `finance-postgres`; next checkpoint is Docker API reachability and service health.
+- First check result: `docker compose ps --services` could not open `dockerDesktopLinuxEngine` because the named pipe was absent. No project container was started, changed, or stopped; no volume/global Docker setting/socket backup was touched.
+- Current step: inspect Docker Desktop process/context once and retry the same read-only reachability gate. If the identical external condition remains at the second checkpoint, stop the PostgreSQL range and report it under the task's sustained-no-progress rule.
+- Step start: `2026-09-26 13:05 Asia/Shanghai`; last progress: `2026-09-26 13:05 Asia/Shanghai`; last heartbeat: `2026-09-26 13:05 Asia/Shanghai`.
+### 2026-09-26 13:10 Asia/Shanghai — R2 PostgreSQL gate stopped at checkpoint 2
+
+- Status for the PostgreSQL range: `blocked`; the local implementation/test range remains active for final evidence collection.
+- Second independent reachability check found no `Docker Desktop` or `com.docker.backend` process. Docker context remained `desktop-linux`, client 29.8.0, while the same `dockerDesktopLinuxEngine` named pipe was absent.
+- The blocking condition repeated for two consecutive checkpoints with no service start. Per the R2 task card, the long external operation is stopped. No container was started by this task, so there is nothing to shut down; the project service list could not be queried from the unavailable Engine. No volume, prune, global setting, or retained socket backup was touched.
+- Unverified due to the external block: all required real PostgreSQL R2 scenarios and the requested R1/F1 PostgreSQL replay. Local SQLite and non-PostgreSQL execution tests continue to be recorded separately and are not described as PostgreSQL evidence.
+- Next checkpoint: finish static checks, exact changed-file boundary audit, hashes, and the running note; then report both the PostgreSQL environment block and the frozen-schema conflict to the coordinator.
+- Last progress/heartbeat: `2026-09-26 13:10 Asia/Shanghai`.
+
+### 2026-09-26 16:10 Asia/Shanghai — P4-B6-R2 本地证据冻结并受阻停止
+
+- 状态：`blocked`；运行状态：`finished`。没有进入 `review`，因为任务卡要求的冻结 schema 语义和真实 PostgreSQL 门禁仍未完成；没有启动 C11 或其他角色。
+- 已实现：pending commit claim/lease/attempt fence 与 crash replay；run takeover/renew/deadline/attempt fence；统一 CompiledExecutionPlan；认证 API 到 BoundToolRegistry/pending 的真实纵向链；Profile prompt、可信上下文、获准 memory、受限历史和持久消息；setting 秘密前置拒绝；四类 post-commit event 与 subscriber；memory supersede/delete CAS；三个 Page API/cursor 绑定；fail-closed production factory/readiness。
+- schema 阻塞：冻结 `memory_candidate` 无 `proposed_by_profile_version`；冻结 `memory_item.status` check 无 `invalidated`。遵守任务卡未修改任何 migration/state model，已在运行说明给出所需 schema、原因、替代方案和受影响测试。
+- 分组测试：R2 定向 `52 passed`；Agent `32 passed`；Host `72 passed, 8 skipped`；P0～P3 `212 passed, 14 skipped`；P4 `104 passed, 8 skipped`；全量非独立执行方 `316 passed, 22 skipped, 2 warnings in 92.06s`。22 skip 全为 Docker/PostgreSQL 环境门禁，未计作通过。
+- 静态证据：源码 `compileall` 退出 0；`pip check` 报告 `No broken requirements found.`；`git diff --check` 退出 0、只有 LF→CRLF 行尾提示。两类 pytest warning 为 Starlette/AnyIO 第三方弃用提示和既有 `.pytest_cache` 无法更新提示。
+- PostgreSQL：连续两个检查点均为 `dockerDesktopLinuxEngine` 命名管道缺失且无 Docker Desktop 后端进程。没有容器成功启动，因此没有本任务容器可 shutdown；Engine 不可访问使服务空列表无法查询。未执行 volume 删除、prune、Docker 全局设置修改或触碰保留 socket 目录。
+- 文件边界：相对 96 文件起点为 `unchanged=76`、`changed=20`、`added=4`、`deleted=0`，终点 100 文件；changed/added 全部属于 R2 允许的产品、执行方测试和运行说明。未修改或运行 `tests/independent/**`，未修改 control/overview/其他角色/矩阵/协调快照/三个 P4 migration，没有 Git 写操作。
+- 快照：`P4-B6-R2-END-SHA256:d8ff817da54875bcf2ca899a9b739e11438cd7f710f6e6ebeddbf6f8d2d588d5`；[R2 运行说明](../../b6-r2-runtime-running.md) canonical SHA-256 为 `a5c4f63500712048bd35a691fe135fb73b20bee3c94f63be6f5781c7f18f53d9`，最终普通 SHA-256 为 `864ba8b17bfb19426a5b32903071d4b824ca05a3cff6900972b49ebd31fd8103`。
+- 交接：总控需先裁定并派发最小 schema 修复，再恢复 Docker Engine、重跑任务卡全部 PostgreSQL 场景。当前执行方停止修改，等待新指令；不得把本地通过或 skip 写成独立验收。
+
+### 2026-09-26 17:00 Asia/Shanghai — P4-B6-R2-S1 接单与普通摘要门禁
+
+- 状态：`in_progress`；运行状态：`active`。最新 control `2026-09-26T16:49:00+08:00` 只解禁 S1，指定既有执行智能体为唯一负责人；技术顾问与测试智能体停止，S2/C11 未派发。
+- 起点证据：`p4-b6-r2-s1-start.sha256` 自身普通 SHA-256 为 `d6357a6e2612e5cc56217759780eaa3ab205930455e459eb4326f318965b194b`；逐行复算 100/100 文件，0 missing、0 mismatch。
+- 唯一目标：在既有 `p4_host_state` 内增加 run module version、candidate proposal Profile version 和 memory invalidated 状态机；保持三个 P4 revision、单一 head 和所有 R1/R2 安全不变量。
+- 文件边界：只修改任务卡列出的 migration、ORM、application、memory service/factory、指定执行方测试、S1 运行说明和本日志；不修改独立测试、冻结/审查/矩阵/快照、其他角色、依赖或 Git 状态。
+- 外部边界：S1 禁止 Docker/PostgreSQL，不启动服务，不接触 Electron/OpenClaw/微信/DeepSeek、真实 provider、密钥、账户或个人数据。
+- 当前步骤：先审计 migration/ORM/service 构造点和测试夹具，随后按 migration→ORM→运行时→定向测试顺序集成。
+- 下一检查点：SQLite migration 三路径、module/profile 独立版本和 memory candidate/invalidation 定向测试全部进入可运行状态。
+
+### 2026-09-26 17:17 Asia/Shanghai — P4-B6-R2-S1 结构实现里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 已完成产品实现：`agent_run.module_version` 独立持久化、P0～P3 `1.0.0` 回填及 compiler 双版本比较；candidate 保存实际 Profile version 并在 confirm 时复查 ID/version/module enablement/grant；memory item 支持 `active -> invalidated -> deleted`，包含 version CAS、同事务 receipt、提交后脱敏事件与 supersede 竞争边界。
+- 已完成测试实现：SQLite migration 对字段 non-null/长度/status check/历史回填增加断言；新增合法不同 module/Profile 版本和两种恢复漂移 fail-closed 测试；新增 candidate 四类失效重查、reject、invalidate 重放/冲突/旧版本/检索/隐私/delete 与双向 CAS 竞争覆盖；同步任务卡允许的 PostgreSQL 只读 fixture 文本，但本轮不运行 PostgreSQL。
+- 编译检查：本轮允许范围的产品、migration 与测试文件 `compileall` 退出 0。
+- 当前步骤：运行四组定向测试，修复执行方测试暴露的问题，再执行原 R2、Agent、Host 及一次非 PostgreSQL 回归。
+- 步骤开始：`2026-09-26 17:17 Asia/Shanghai`；最后进展：`2026-09-26 17:17 Asia/Shanghai`；最后心跳：`2026-09-26 17:17 Asia/Shanghai`。
+- 下一检查点：定向 migration、runtime、memory 和 API 测试均有可复核统计；等待对象：无。
+
+### 2026-09-26 17:32 Asia/Shanghai — P4-B6-R2-S1 执行方交付
+
+- 状态：`review`；运行状态：`finished`。S1 三个结构缺口已经实现并停手；整体 `P4-B6-R2` 继续为 `blocked`，只因真实 PostgreSQL S2 尚未派发和执行，不启动 C11。
+- 产品结果：run 独立保存/比较 module version；candidate 保存实际 Profile version 并在 confirm 复查 ID/version/module enablement/grant；memory 完成 active→invalidated→deleted CAS、同事务 receipt、提交后脱敏 event、retrieve 排除与 supersede 单胜者边界。
+- 起点与边界：起点清单自身 SHA-256 `d6357a6e2612e5cc56217759780eaa3ab205930455e459eb4326f318965b194b`，100/100 匹配后开工；相对起点 `changed=10`、`missing/deleted=0`，另新增 S1 运行说明并更新本角色日志。10 个变更全部在任务卡产品/测试范围，`test_postgresql_r1.py` 仅同步新增 non-null fixture。
+- 测试结果：S1 四文件定向 `44 passed, 1 warning`；R2 定向 `62 passed, 1 warning`；Agent `35 passed, 1 warning`；Host 本地 `79 passed, 1 warning`；全仓非独立、非 PostgreSQL `326 passed, 1 warning`。最终无 failed/skip；warning 为既有 Starlette/AnyIO alias 弃用提示。
+- 环境失败记录：最初两次定向运行分别因系统 Temp 目录拒绝访问和项目 basetemp 父目录尚不存在得到 `4 passed, 40 setup errors`；改用已建立的项目内专用 basetemp 后全绿，临时目录最终已删除。没有产品断言失败。
+- 静态结果：`compileall` 退出 0；`pip check` 为 `No broken requirements found.`；`git diff --check` 退出 0，仅有既有工作树 LF→CRLF 提示。
+- PostgreSQL：`unverified / not_run`。遵守 S1 禁令，没有启动或查询 Docker/PostgreSQL，没有容器、volume、prune、全局配置或外部资源变化；PG migration、两连接 CAS/receipt/event 和 fixture 重放留给 S2。
+- 摘要：10 个产品/测试变更文件的普通逐文件摘要及复算算法见 [S1 运行说明](../../b6-r2-s1-schema-running.md)；有序 10 行总摘要为 `5af6dc68cced09724c53b01c984167da77111ad5e9f546ca6d08646ee5ca8106`。运行说明普通 SHA-256 为 `cabc712a266fac1c8a44059eb7a760e9fed3327c91646e307470968f59e430a3`。
+- 最终 control 复核：版本仍为 `2026-09-26T16:49:00+08:00`，只授权 S1 且禁止 Docker；没有新指令覆盖本交付。
+- 交接：总控可复核 S1 并生成停止修改后的稳定清单；执行智能体等待新的 S2 Prompt，不自行执行 PostgreSQL、独立验收、Git 或外部集成。

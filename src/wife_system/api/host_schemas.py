@@ -4,13 +4,21 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
-from typing import Any, Literal
+from typing import Any, Generic, Literal, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 
 
 class HostHttpModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
+
+
+PageItem = TypeVar("PageItem")
+
+
+class Page(HostHttpModel, Generic[PageItem]):
+    items: list[PageItem]
+    next_cursor: str | None = None
 
 
 class BootstrapStatusResponse(HostHttpModel):
@@ -75,9 +83,11 @@ class BindingCodeResponse(HostHttpModel):
     code_id: uuid.UUID
     code: str
     expires_at: datetime
+    replayed: bool = False
 
 
 class BindingConsumeRequest(HostHttpModel):
+    code_id: uuid.UUID
     channel: StrictStr = Field(min_length=1, max_length=32)
     provider_account: StrictStr = Field(min_length=1, max_length=256)
     external_subject: StrictStr = Field(min_length=1, max_length=256)
@@ -88,6 +98,7 @@ class BindingResponse(HostHttpModel):
     binding_id: uuid.UUID
     channel: str
     created_at: datetime
+    replayed: bool = False
 
 
 class ModuleResponse(HostHttpModel):
@@ -126,7 +137,7 @@ class MessageResponse(HostHttpModel):
 
 
 class MemoryCandidateDecisionRequest(HostHttpModel):
-    target_namespace: StrictStr = Field(min_length=1, max_length=140)
+    pass
 
 
 class MemoryCandidateResponse(HostHttpModel):

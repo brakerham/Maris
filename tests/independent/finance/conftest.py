@@ -37,7 +37,7 @@ EXPECTED_TABLES = {
     "income_schedule_version",
     "transaction_entry",
 }
-P1_HEAD_REVISION = "1377551283d0"
+P1_HEAD_REVISION = "head"
 
 
 def pytest_configure(config: pytest.Config) -> None:

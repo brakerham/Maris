@@ -29,8 +29,9 @@ from wife_system.finance.models import (
 )
 from wife_system.finance.schemas import ArchiveResource, CreateActivityTemplate, ReviseActivityTemplate
 from wife_system.finance.service import FinanceService
+from wife_system.host.auth.models import AppUser
 
-from .conftest import KEYS, commit_payload, trusted_identity
+from .conftest import KEYS, OWNER, commit_payload, trusted_identity
 
 
 def alembic_config(url: str) -> Config:
@@ -63,7 +64,11 @@ def pg_stack():
         command.upgrade(alembic_config(scoped), "head")
         engine = make_engine(scoped)
         sessions = make_session_factory(engine)
-        yield raw, admin, sessions, ActivityImportService(sessions, KEYS), FinanceService(sessions, KEYS)
+        with sessions() as session, session.begin():
+            session.add(AppUser(id=OWNER, handle="c9_pg_owner", status="active"))
+        yield raw, admin, sessions, ActivityImportService(sessions, KEYS), FinanceService(
+            sessions, KEYS, user_id=OWNER
+        )
     finally:
         if engine is not None:
             engine.dispose()
@@ -240,7 +245,7 @@ def test_c9_pg_empty_and_existing_p2_schema_migrations(pg_stack) -> None:
         command.upgrade(cfg, "head")
         engine = make_engine(url)
         with engine.connect() as connection:
-            assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "c82d7a4f901e"
+            assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "p4_host_state"
             assert connection.execute(text(
                 "SELECT reference_minor,reference_min_minor,reference_max_minor FROM activity_template_revision WHERE id=:id"
             ), {"id": revision}).one() == (789, 789, 789)

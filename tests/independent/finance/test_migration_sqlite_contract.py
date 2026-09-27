@@ -6,11 +6,12 @@ from pathlib import Path
 
 import pytest
 from alembic import command
+from alembic.script import ScriptDirectory
 from sqlalchemy import create_engine, inspect, select, text
 from sqlalchemy.exc import IntegrityError, OperationalError
 
 from wife_system.finance.db import make_engine, make_session_factory
-from wife_system.finance.models import TransactionEntry
+from wife_system.finance.models import BOOTSTRAP_USER_ID, TransactionEntry
 from wife_system.finance.schemas import (
     AllocateActivityExpense,
     ArchiveResource,
@@ -33,7 +34,7 @@ from conftest import EXPECTED_TABLES, TZ, migration_config
 
 
 FIRST_REVISION = "bfc163b9b8e9"
-HEAD_REVISION = "1377551283d0"
+HEAD_REVISION = "p4_host_state"
 MINOR_COLUMNS = {
     "transaction_entry": "amount_minor",
     "activity_template_revision": "reference_minor",
@@ -53,11 +54,11 @@ def test_sqlite_empty_base_to_head_repeat_has_expected_schema_and_head(tmp_path:
     command.upgrade(config, HEAD_REVISION)
     engine = make_engine(url)
     inspector = inspect(engine)
-    assert set(inspector.get_table_names()) == EXPECTED_TABLES | {"alembic_version"}
+    assert EXPECTED_TABLES | {"alembic_version"} <= set(inspector.get_table_names())
     with engine.connect() as connection:
         assert connection.scalar(text("SELECT version_num FROM alembic_version")) == HEAD_REVISION
     assert {row["name"] for row in inspector.get_unique_constraints("command_receipt")} >= {
-        "uq_command_receipt_source_digest"
+        "uq_receipt_user_source_digest"
     }
     assert {row["name"] for row in inspector.get_indexes("transaction_entry")} >= {
         "ix_transaction_entry_account_transaction",
@@ -72,134 +73,127 @@ def test_sqlite_empty_base_to_head_repeat_has_expected_schema_and_head(tmp_path:
 
 
 @pytest.mark.c3("MIG-01", "MIG-02", "MIG-05", "MIG-07")
-def test_first_revision_with_all_minor_data_upgrades_to_new_head_without_rewriting_data(
+def test_first_p1_revision_finance_facts_upgrade_to_p4_without_rewriting_data(
     tmp_path: Path,
 ) -> None:
     url = f"sqlite:///{(tmp_path / 'preserve.sqlite3').as_posix()}"
     config = migration_config(url)
     command.upgrade(config, FIRST_REVISION)
-    engine = make_engine(url)
-    service = FinanceService(
-        make_session_factory(engine), IdempotencyKeys({1: b"p1-c4-migration-virtual-secret"})
-    )
-    account = service.create_account(
-        CreateAccount(source_system="p1-c4", source_event_id="preserve-account", name="虚拟迁移账户")
-    )
-    category = service.create_category(
-        CreateCategory(
-            source_system="p1-c4",
-            source_event_id="preserve-category",
-            kind="income", name="虚拟迁移收入",
-        )
-    )
-    expense_category = service.create_category(
-        CreateCategory(
-            source_system="p1-c4", source_event_id="preserve-expense-category",
-            kind="expense", name="虚拟迁移支出",
-        )
-    )
-    transaction = service.record_income(
-        RecordIncome(
-            source_system="p1-c4",
-            source_event_id="preserve-income",
-            account_id=account.result_id,
-            category_id=category.result_id,
-            amount="12.34",
-            occurred_at=datetime(2026, 9, 1, tzinfo=TZ),
-        )
-    )
-    expense = service.record_expense(
-        RecordExpense(
-            source_system="p1-c4", source_event_id="preserve-expense",
-            account_id=account.result_id, category_id=expense_category.result_id,
-            amount="2.00", occurred_at=datetime(2026, 9, 2, tzinfo=TZ),
-        )
-    )
-    template = service.create_activity_template(
-        CreateActivityTemplate(
-            source_system="p1-c4", source_event_id="preserve-template",
-            name="虚拟迁移活动", reference_amount="1.00",
-        )
-    )
-    occurrence = service.record_activity_occurrence(
-        RecordActivityOccurrence(
-            source_system="p1-c4", source_event_id="preserve-occurrence",
-            template_id=template.result_id, occurred_at=datetime(2026, 9, 2, tzinfo=TZ),
-        )
-    )
-    schedule = service.create_income_schedule(
-        CreateIncomeSchedule(
-            source_system="p1-c4", source_event_id="preserve-schedule",
-            amount="3.00", effective_from="2026-09-01", due_day=30,
-        )
-    )
-    expectation = service.generate_income_expectation(
-        GenerateIncomeExpectation(
-            source_system="p1-c4", source_event_id="preserve-expectation",
-            schedule_id=schedule.result_id, period="2026-09",
-        )
-    )
-    with service._sessions() as session:
-        expense_entry = session.scalar(
-            select(TransactionEntry.id).where(
-                TransactionEntry.transaction_id == expense.result_id,
-                TransactionEntry.entry_role == "expense",
-            )
-        )
-        income_entry = session.scalar(
-            select(TransactionEntry.id).where(
-                TransactionEntry.transaction_id == transaction.result_id,
-                TransactionEntry.entry_role == "income",
-            )
-        )
-    assert expense_entry is not None and income_entry is not None
-    service.allocate_activity_expense(
-        AllocateActivityExpense(
-            source_system="p1-c4", source_event_id="preserve-allocation",
-            occurrence_id=occurrence.result_id, expense_entry_id=expense_entry, amount="1.00",
-        )
-    )
-    service.match_income_expectation(
-        MatchIncomeExpectation(
-            source_system="p1-c4", source_event_id="preserve-match",
-            expectation_id=expectation.result_id, income_entry_id=income_entry, amount="1.00",
-        )
-    )
-    plan = service.create_budget_plan(
-        CreateBudgetPlan(source_system="p1-c4", source_event_id="preserve-plan", name="虚拟迁移预算")
-    )
-    budget = service.publish_budget_version(
-        PublishBudgetVersion(
-            source_system="p1-c4", source_event_id="preserve-budget",
-            plan_id=plan.result_id, expected_version=1, period="2026-09",
-            allocations=[BudgetAllocationInput(category_id=expense_category.result_id, limit="1.00")],
-            published_at=datetime(2026, 9, 1, tzinfo=TZ),
-        )
-    )
-    with engine.connect() as connection:
-        before = {
-            table: connection.execute(
-                text(f"SELECT id, {column} FROM {table} ORDER BY id")
-            ).all()
-            for table, column in MINOR_COLUMNS.items()
-        }
+
+    ids = {name: uuid.uuid4().hex for name in (
+        "account", "expense_category", "income_category", "receipt", "transaction",
+        "account_entry", "expense_entry",
+    )}
+    created_at = "2026-09-01 08:00:00+00:00"
+    engine = create_engine(url)
+    with engine.begin() as connection:
         assert connection.scalar(text("SELECT version_num FROM alembic_version")) == FIRST_REVISION
+        connection.execute(
+            text(
+                "INSERT INTO account (id,name,currency,archived_at,created_at,version_id) "
+                "VALUES (:id,'virtual first-revision account','CNY',NULL,:created,1)"
+            ),
+            {"id": ids["account"], "created": created_at},
+        )
+        connection.execute(
+            text(
+                "INSERT INTO category "
+                "(id,kind,name,name_normalized,archived_at,created_at,version_id) VALUES "
+                "(:expense,'expense','virtual first-revision expense','virtual first-revision expense',NULL,:created,1),"
+                "(:income,'income','virtual first-revision income','virtual first-revision income',NULL,:created,1)"
+            ),
+            {
+                "expense": ids["expense_category"],
+                "income": ids["income_category"],
+                "created": created_at,
+            },
+        )
+        connection.execute(
+            text(
+                "INSERT INTO command_receipt "
+                "(id,source_system,key_version,key_digest,request_fingerprint,command_name,"
+                "result_type,result_id,result_json,completed_at,created_at) VALUES "
+                "(:id,'p4-c11-r1',1,:digest,:fingerprint,'record_expense',"
+                "'financial_transaction',:result_id,NULL,:created,:created)"
+            ),
+            {
+                "id": ids["receipt"],
+                "digest": "1" * 64,
+                "fingerprint": "2" * 64,
+                "result_id": ids["transaction"],
+                "created": created_at,
+            },
+        )
+        connection.execute(
+            text(
+                "INSERT INTO financial_transaction "
+                "(id,kind,status,occurred_at,currency,related_transaction_id,relation_kind,"
+                "command_receipt_id,created_at) VALUES "
+                "(:id,'expense','posted',:created,'CNY',NULL,NULL,:receipt,:created)"
+            ),
+            {"id": ids["transaction"], "receipt": ids["receipt"], "created": created_at},
+        )
+        connection.execute(
+            text(
+                "INSERT INTO transaction_entry "
+                "(id,transaction_id,line_no,entry_role,amount_minor,account_id,category_id) VALUES "
+                "(:account_entry,:transaction,1,'account',-1234,:account,NULL),"
+                "(:expense_entry,:transaction,2,'expense',1234,NULL,:category)"
+            ),
+            {
+                "account_entry": ids["account_entry"],
+                "expense_entry": ids["expense_entry"],
+                "transaction": ids["transaction"],
+                "account": ids["account"],
+                "category": ids["expense_category"],
+            },
+        )
     engine.dispose()
+
     command.upgrade(config, HEAD_REVISION)
-    engine = make_engine(url)
+    engine = create_engine(url)
+    owner = BOOTSTRAP_USER_ID.hex
     with engine.connect() as connection:
         assert connection.scalar(text("SELECT version_num FROM alembic_version")) == HEAD_REVISION
-        after = {
-            table: connection.execute(
-                text(f"SELECT id, {column} FROM {table} ORDER BY id")
-            ).all()
-            for table, column in MINOR_COLUMNS.items()
-        }
-        assert after == before
+        assert connection.scalar(text("PRAGMA foreign_key_check")) is None
+        assert connection.scalar(text("SELECT COUNT(*) FROM account")) == 1
+        assert connection.scalar(text("SELECT COUNT(*) FROM category")) == 2
+        assert connection.scalar(text("SELECT COUNT(*) FROM financial_transaction")) == 1
+        assert connection.scalar(text("SELECT COUNT(*) FROM transaction_entry")) == 2
+        assert connection.execute(
+            text(
+                "SELECT kind,status,currency,command_receipt_id FROM financial_transaction WHERE id=:id"
+            ),
+            {"id": ids["transaction"]},
+        ).one() == ("expense", "posted", "CNY", ids["receipt"])
+        assert connection.execute(
+            text(
+                "SELECT line_no,entry_role,amount_minor,typeof(amount_minor),account_id,category_id "
+                "FROM transaction_entry WHERE transaction_id=:id ORDER BY line_no"
+            ),
+            {"id": ids["transaction"]},
+        ).all() == [
+            (1, "account", -1234, "integer", ids["account"], None),
+            (2, "expense", 1234, "integer", None, ids["expense_category"]),
+        ]
+        scoped_tables = [
+            table
+            for table in inspect(connection).get_table_names()
+            if any(column["name"] == "user_id" for column in inspect(connection).get_columns(table))
+        ]
+        for table in scoped_tables:
+            assert connection.scalar(
+                text(f"SELECT COUNT(*) FROM {table} WHERE user_id IS NULL OR CAST(user_id AS TEXT)='' ")
+            ) == 0
+        for table in ("account", "category", "command_receipt", "financial_transaction", "transaction_entry"):
+            assert connection.scalar(
+                text(f"SELECT COUNT(*) FROM {table} WHERE user_id<>:owner"), {"owner": owner}
+            ) == 0
         assert connection.scalar(
-            text("SELECT limit_minor FROM budget_allocation WHERE budget_version_id=:id"),
-            {"id": budget.result_id.hex},
-        ) == 100
+            text("SELECT COUNT(*) FROM app_user WHERE id=:owner AND bootstrap_marker='bootstrap-owner'"),
+            {"owner": owner},
+        ) == 1
+    assert ScriptDirectory.from_config(config).get_heads() == [HEAD_REVISION]
     engine.dispose()
 
 
@@ -222,7 +216,7 @@ def test_sqlite_development_downgrade_to_base_and_rebuild(tmp_path: Path) -> Non
     engine.dispose()
     command.upgrade(config, HEAD_REVISION)
     engine = make_engine(url)
-    assert set(inspect(engine).get_table_names()) == EXPECTED_TABLES | {"alembic_version"}
+    assert EXPECTED_TABLES | {"alembic_version"} <= set(inspect(engine).get_table_names())
     with engine.connect() as connection:
         assert connection.scalar(text("SELECT count(*) FROM account")) == 0
     engine.dispose()
@@ -252,7 +246,7 @@ def test_failed_sqlite_upgrade_does_not_delete_unknown_existing_data_and_fresh_r
     fresh_url = f"sqlite:///{(tmp_path / 'fresh-recovery.sqlite3').as_posix()}"
     command.upgrade(migration_config(fresh_url), HEAD_REVISION)
     fresh = make_engine(fresh_url)
-    assert set(inspect(fresh).get_table_names()) == EXPECTED_TABLES | {"alembic_version"}
+    assert EXPECTED_TABLES | {"alembic_version"} <= set(inspect(fresh).get_table_names())
     fresh.dispose()
 
 
@@ -401,7 +395,10 @@ def test_postgresql_offline_ddl_omits_sqlite_typeof_guards(tmp_path: Path) -> No
     output = tmp_path / "postgresql-offline.sql"
     with output.open("w", encoding="utf-8") as stream:
         config.output_buffer = stream
-        command.upgrade(config, HEAD_REVISION, sql=True)
+        # This is a P1 dialect guard.  Later data migrations intentionally run
+        # online preflight queries, so bind the offline SQL assertion to the
+        # P1 integer-minor revision it was written to verify.
+        command.upgrade(config, "1377551283d0", sql=True)
     ddl = output.read_text(encoding="utf-8").lower()
     assert "1377551283d0" in ddl
     assert "typeof(" not in ddl

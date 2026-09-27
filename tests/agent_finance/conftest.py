@@ -94,7 +94,11 @@ def harness(tmp_path: Path) -> Iterator[AgentHarness]:
     engine = make_engine(f"sqlite+pysqlite:///{tmp_path / 'agent.db'}")
     Base.metadata.create_all(engine)
     sessions = make_session_factory(engine)
-    finance = FinanceService(sessions, IdempotencyKeys({1: b"virtual-finance-key"}))
+    finance = FinanceService(
+        sessions,
+        IdempotencyKeys({1: b"virtual-finance-key"}),
+        user_id=ACTOR_ID,
+    )
     account = finance.create_account(
         CreateAccount(source_system="test", source_event_id="account", name="日常账户")
     )

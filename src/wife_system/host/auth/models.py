@@ -102,6 +102,15 @@ class ChannelBindingCode(Base):
     __tablename__ = "channel_binding_code"
     __table_args__ = (
         CheckConstraint("attempts BETWEEN 0 AND 5", name="attempts"),
+        CheckConstraint("status IN ('active','consumed','expired','revoked','locked')", name="status"),
+        Index(
+            "uq_binding_code_user_channel_active",
+            "user_id",
+            "channel",
+            unique=True,
+            sqlite_where=text("status = 'active'"),
+            postgresql_where=text("status = 'active'"),
+        ),
     )
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
@@ -109,8 +118,10 @@ class ChannelBindingCode(Base):
     channel: Mapped[str] = mapped_column(String(32), nullable=False)
     code_digest: Mapped[str] = mapped_column(String(64), nullable=False, unique=True, index=True)
     attempts: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    status: Mapped[str] = mapped_column(String(16), nullable=False, default="active")
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     consumed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
 
 

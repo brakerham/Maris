@@ -11,6 +11,7 @@ from sqlalchemy import create_engine, inspect, text
 
 P2_HEAD = "7f3e2d1c9a4b"
 P3_HEAD = "c82d7a4f901e"
+P4_HEAD = "p4_host_state"
 
 
 def config_for(url: str) -> Config:
@@ -27,14 +28,14 @@ def test_c9_empty_sqlite_upgrade_downgrade_and_rebuild(tmp_path: Path) -> None:
     command.upgrade(cfg, "head")
     engine = create_engine(url)
     with engine.connect() as connection:
-        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == P3_HEAD
+        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == P4_HEAD
         assert {"activity_import_batch", "activity_import_candidate"}.issubset(inspect(connection).get_table_names())
     engine.dispose()
     command.downgrade(cfg, P2_HEAD)
     command.upgrade(cfg, "head")
     engine = create_engine(url)
     with engine.connect() as connection:
-        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == P3_HEAD
+        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == P4_HEAD
     engine.dispose()
 
 

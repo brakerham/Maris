@@ -114,10 +114,7 @@ class BoundToolRegistry:
         return tuple(schemas)
 
     def contains(self, name: str) -> bool:
-        try:
-            self._resolve(name)
-        except ToolNotAllowedError:
-            return False
+        self._resolve(name)
         return True
 
     def invoke(self, name: str, arguments: dict[str, Any], context: Any = None) -> Any:

@@ -145,15 +145,30 @@ def upgrade() -> None:
         sa.Column("channel", sa.String(32), nullable=False),
         sa.Column("code_digest", sa.String(64), nullable=False),
         sa.Column("attempts", sa.Integer(), nullable=False),
+        sa.Column("status", sa.String(16), nullable=False),
         sa.Column("expires_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("consumed_at", sa.DateTime(timezone=True), nullable=True),
+        sa.Column("revoked_at", sa.DateTime(timezone=True), nullable=True),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
         sa.CheckConstraint("attempts BETWEEN 0 AND 5", name=op.f("ck_channel_binding_code_attempts")),
+        sa.CheckConstraint(
+            "status IN ('active','consumed','expired','revoked','locked')",
+            name=op.f("ck_channel_binding_code_status"),
+        ),
         sa.ForeignKeyConstraint(["user_id"], ["app_user.id"], ondelete="RESTRICT", name="fk_binding_code_user"),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_channel_binding_code")),
         sa.UniqueConstraint("code_digest", name="uq_binding_code_digest"),
     )
     op.create_index("ix_binding_code_user", "channel_binding_code", ["user_id"])
+    active_code = sa.text("status = 'active'")
+    op.create_index(
+        "uq_binding_code_user_channel_active",
+        "channel_binding_code",
+        ["user_id", "channel"],
+        unique=True,
+        sqlite_where=active_code,
+        postgresql_where=active_code,
+    )
     op.create_table(
         "channel_identity_binding",
         sa.Column("id", sa.Uuid(), nullable=False),
@@ -205,6 +220,7 @@ def downgrade() -> None:
     op.drop_index("uq_binding_active_subject", table_name="channel_identity_binding")
     op.drop_index("ix_identity_binding_user", table_name="channel_identity_binding")
     op.drop_table("channel_identity_binding")
+    op.drop_index("uq_binding_code_user_channel_active", table_name="channel_binding_code")
     op.drop_index("ix_binding_code_user", table_name="channel_binding_code")
     op.drop_table("channel_binding_code")
     op.drop_index("ix_refresh_user", table_name="session_refresh_token")

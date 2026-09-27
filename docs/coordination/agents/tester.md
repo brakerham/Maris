@@ -2,23 +2,23 @@
 
 - 角色：独立测试、边界检查、回归验证和限定范围的结构优化
 - 连接状态：已确认；用户启动的侧边栏独立测试智能体已接单
-- 当前任务：P4-C10 — 模块化 Agent Host 独立验收矩阵
+- 当前任务：P4-C11-R2 — PostgreSQL 历史迁移独立复验
 - 状态：`review`
-- 最近更新：2026-09-20 18:09，Asia/Shanghai
-- 可修改范围：`docs/testing/phase-4-modular-agent-host-test-matrix.md` 和本状态文件；产品、测试实现、migration、依赖、配置、接口冻结、D9 建议、控制/总览、项目计划、其他角色日志、服务、外部系统和 Git 只读
+- 最近更新：2026-09-27 12:49，Asia/Shanghai
+- 可修改范围：`tests/independent/host/test_postgresql_acceptance.py`、必要时的 `tests/independent/host/history_fixtures.py`、R2 验收报告、C11 主报告、P4 测试矩阵和本状态文件；产品、migration、执行方测试、依赖、Compose、冻结/运行说明、控制/总览、快照、其他角色状态和 Git 只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P4-C10 交付完成，停在 `review`
-- 步骤开始时间：2026-09-20 17:55 Asia/Shanghai
-- 最近有效进展：2026-09-20 18:09 Asia/Shanghai
-- 最近心跳：2026-09-20 18:09 Asia/Shanghai
-- 下一检查点：等待头脑风暴总控核对矩阵并形成正式 P4 接口冻结；测试智能体不继续实现或执行案例
-- 等待对象：头脑风暴总控验收 P4-C10；最终 `complete`、冻结、实现派发和 Git 处理不属于测试智能体
-- 活动进程或会话：无；本任务禁止启动服务、数据库、Docker、Electron 或外部系统
-- 重试次数：0
-- 最近输出：120 个唯一案例、12 字段完整、全部 `not_run`；F01～F17、U01～U07 和 P4-D 八项证明均已追踪；矩阵 SHA-256 `7425b67e8cbfb964cb42f343e830a515193ae40296d7286b798c6eec72ff24bd`
+- 当前步骤：P4-C11-R2 交付完成，停在 `review`；不继续扩大回归或操作 Docker
+- 步骤开始时间：2026-09-27 12:49 Asia/Shanghai
+- 最近有效进展：2026-09-27 12:49 Asia/Shanghai
+- 最近心跳：2026-09-27 12:49 Asia/Shanghai
+- 下一检查点：等待头脑风暴总控核对 R2 报告、关闭建议和 P4-A 最终接受；测试智能体不自行宣布 `complete`
+- 等待对象：头脑风暴总控
+- 活动进程或会话：无；`finance-postgres` 已普通 compose down，最终 `COMPOSE_SERVICES_EMPTY`；专用测试临时目录已清理
+- 重试次数：1（独立 SQLite 文件首次因仓库内 basetemp 父目录不存在产生 3 个 setup error，未进入测试断言；创建专用父目录后同一文件 3 passed）
+- 最近输出：独立 PG 4 passed、独立 SQLite 3 passed；执行方 PG 11 passed、SQLite 8 passed；P4-A 64 passed，DB-05/06 已更新为 passed；129 unchanged、4 authorized changed、0 missing/非授权 mismatch
 ## 任务与后续
 
 - P4-C10 已提交 [模块化 Agent Host 独立验收矩阵](../../testing/phase-4-modular-agent-host-test-matrix.md)：120 个唯一案例全部 `not_run`，等待总控验收并形成正式 P4 接口冻结。
@@ -34,6 +34,123 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-09-27 12:49 Asia/Shanghai — P4-C11-R2 review / finished
+
+- 核心独立证据：原失败历史节点唯一一次 `1 passed`；两个非法历史参数场景 `2 passed`；相邻 PG round-trip/catalog `1 passed`
+- 相邻回归：独立 Host SQLite migration `3 passed`；执行方 PostgreSQL `11 passed`；执行方 SQLite migration `8 passed`；合计独立 7、执行方 19，0 failed、0 skipped
+- 首次基础设施结果：独立 SQLite 文件首次为 3 setup errors，原因是项目内 `--basetemp` 父目录不存在且未进入断言；创建专用父目录后同一文件一次通过，首次结果未被归类为产品失败
+- 静态门禁：修改后独立测试编译通过；`pip check` 无破损依赖；`git diff --check` 退出 0，仅既有 LF→CRLF 提示；矩阵 120 个唯一 ID，64 passed、56 not_run
+- 缺陷结论：建议关闭 `P4-C11-R1-PG-001`；`P4A-DB-05/06` 已更新为 passed；没有新的 P0/P1 产品缺陷，P4-A 最终接受仍归总控
+- 快照：起点 133/133 matched；终点 129 unchanged、4 个授权变更、0 missing、0 invalid、0 非授权 mismatch；migration `82bc3191...a800` 与执行方 PG 测试 `0da63461...d6f` 精确保持
+- Docker：Engine client/server 29.8.0；起点 Compose 为空，只启动 `finance-postgres` 并达到 healthy；结束普通 down，最终 `COMPOSE_SERVICES_EMPTY`；未删 volume、prune、reset 或改 Desktop
+- 交付：[R2 报告](../../testing/phase-4-c11-r2-postgresql-history-report.md) `dc9eb8f8ac9c89880e97636f1f6bb60c7049e607abdb2b02c1b786baf9339fcf`；[C11 主报告](../../testing/phase-4-c11-host-foundation-report.md) `a300266627c96b9d47d5a4842a1d08434778d403c3753f729856b92ed3daae0b`；[P4 矩阵](../../testing/phase-4-modular-agent-host-test-matrix.md) `ed6bc4a33f19986457c2e0d472bb223a09650a514c530946a2dac3fec33d993c`
+- 独立测试：`tests/independent/host/test_postgresql_acceptance.py` `9989bac66436c4a9af7aa17c679b396f4d87b0f62fff0a85b00295e9cc51d6f4`；helper 保持 `1cbae0fae892a23b6d7dfa0c6c36d5f2799bd8f22c38bcfcc6c6e7431779b796`
+- 边界：只用虚拟数据和随机 schema；未改产品、migration、执行方测试、依赖、Compose、冻结/控制/总览、快照、其他角色或 Git；未运行 Electron、OpenClaw、微信、DeepSeek 或真实 provider
+- 下一步/交接：停在 `review / finished`，等待总控核对并决定 P4-A 是否接受
+
+### 2026-09-27 12:33 Asia/Shanghai — P4-C11-R2 接单与固定快照门禁通过
+
+- 控制核对：`2026-09-27T12:19:00+08:00` 版指定本测试智能体为 P4-C11-R2 和 `finance-postgres` 唯一负责人；执行智能体与技术顾问停止
+- 固定输入：`docs/coordination/snapshots/p4-c11-r2-start.sha256` 共 133 项，133 matched、0 missing、0 mismatch、0 invalid；manifest SHA-256 `7ab8388edcadff5515aa5f038df13e40ae35233f2e4298c61fcd091357929fd3`
+- 关键摘要：`p4_host_user_scope.py` 为 `82bc31919bd5483650f40c0281c42764813f6f5bc0db8d1898b7ad71a3d5a800`；`test_postgresql_r2.py` 为 `0da6346142304f36964370b8f48344c6ab16309058413ffa6bb45d24ae922d6f`
+- 范围：原失败历史节点只运行一次；新增孤儿 run 引用与矛盾 actor owner 两个独立非法历史场景；通过后才运行任务卡列出的 PostgreSQL/SQLite 相邻 migration 回归
+- 边界：只用随机 schema 和虚拟数据；不改产品、migration、执行方测试、依赖、Compose、冻结/控制/总览、快照、其他角色或 Git；不运行 Electron、OpenClaw、微信、DeepSeek 或其他独立 PostgreSQL 业务节点
+- 下一检查点：完成独立非法历史案例，实现前保持 helper 最小变更，并通过编译检查
+
+### 2026-09-27 12:38 Asia/Shanghai — R2 独立案例与 PostgreSQL 前置门禁就绪
+
+- 独立测试：补齐原历史节点的三类复合关系、真实 FK/unique/check、无 persistent default、重复 upgrade 和 head→P3→head 事实保持；新增孤儿 `pending_action.run_id` 与矛盾 `pending_action.actor_id` 两个参数场景
+- 静态检查：修改后的独立 PostgreSQL 文件语法编译通过；未修改 helper、产品 migration 或执行方测试
+- 控制复读：Docker 操作前重新读取 `2026-09-27T12:19:00+08:00` control，唯一负责人和有限复验范围未变化
+- Docker：Engine client/server 29.8.0 可达；Compose 配置仅 `finance-postgres`，启动前 `COMPOSE_SERVICES_EMPTY_AT_START`；唯一服务现为 `running / healthy`
+- 下一检查点：按任务卡唯一一次运行原失败历史节点；不以重试挑选结果
+
+### 2026-09-27 12:39 Asia/Shanghai — R2 三项核心独立 PostgreSQL 证据通过
+
+- 原失败节点：唯一一次运行 `test_c11_pg_p3_history_forward_upgrade_preserves_p1_p2_p3_facts`，结果 `1 passed`；P3 的 P1/P2/P3 虚拟历史到 P4、约束目录、无 persistent default、重复升级及 head→P3→head 均通过，未再出现 `ObjectInUse`
+- 非法历史：参数化运行孤儿 `pending_action.run_id` 与矛盾 `pending_action.actor_id`，结果 `2 passed`；两类诊断可区分且 P3 head、非法原值、双分录、无 P4 DDL 持久化均保持
+- warning：两组各 1 条既有 Starlette/AnyIO alias 弃用提示；无产品 warning、失败、skip 或真实数据
+- 下一检查点：只运行任务卡列出的 PG round-trip/catalog 和完整独立 SQLite migration
+
+### 2026-09-27 00:53 Asia/Shanghai — P4-C11-R1 blocked / finished
+
+- 产品缺陷：`P4-C11-R1-PG-001`，P0；真实 PostgreSQL 随机 P3 schema 含合法 P1 双分录、P2 run/pending、P3 import 事实时，升级 P4 在 `financial_transaction.user_id SET NOT NULL` 因 pending trigger events 失败
+- 预期/实际：预期事实原值保持、bootstrap owner 回填、三类复合 user 关系、单 head、零孤儿；实际 migration 未到达 P4 head，故 `P4A-DB-05` 与 `P4A-DB-06` 纠正为 failed
+- 定向结果：P1 首版 SQLite 文件 8/8 passed；Host SQLite migration 文件 3/3 passed；取消合同节点 1/1 passed；新增 PG 历史节点 1 failed、0 skipped
+- 报告：[P4-C11-R1 历史迁移独立证据报告](../../testing/phase-4-c11-r1-evidence-report.md)，SHA-256 `3c80fb7fc123a6b796efad1760b3297dcf6516f5b170fb4f983f0c2a1a96c64d`
+- 修正：[P4-C11 主报告](../../testing/phase-4-c11-host-foundation-report.md)，SHA-256 `7dc0bee6cd3fa321a046f56952c588c78fef67bb7fc6b4173754ddfb4d78b4c4`；已区分 fixture 适配、P4 合同演进、恢复的历史证据和产品缺陷
+- 矩阵：[P4 模块化 Agent Host 测试矩阵](../../testing/phase-4-modular-agent-host-test-matrix.md)，SHA-256 `5be45adcf198b5336a81a97e6ece10a58a8bf41b292cc4ea35cdc1e4d8cb1abd`；120 个唯一 ID，62 passed、2 failed、56 not_run
+- 独立测试摘要：P1 migration `139a7e0d...2a07`；Host SQLite migration `0e2dfdf2...ff69`；Host PG `12b1ecea...b920`；新低层历史 helper `1cbae0fa...9b796`
+- 快照：产品终点 105/105 matched、0 missing、0 mismatch，manifest `65ee4008...0126`；测试方 23 起点文件为 6 changed、17 unchanged、0 missing，另新增 helper 与 R1 报告
+- Docker：Engine/Compose 可达，启动前服务为空；只启动 `finance-postgres` 并达到 healthy；失败后普通 down，最终 `COMPOSE_SERVICES_EMPTY`；未使用 `-v`/prune/reset
+- 隐私与边界：仅虚拟数据，文档未包含测试密码；未改产品、migration、执行方测试、依赖、Compose、冻结/控制/总览、快照、其他角色或 Git；未运行 Electron、OpenClaw、微信、DeepSeek 或真实 provider
+- 下一步/交接：总控派发窄范围 migration 返修并冻结新快照；返修后只复跑失败 PG 历史节点和必要相邻 migration 回归，不重复完整 C11
+
+### 2026-09-27 00:40 Asia/Shanghai — R1 SQLite 历史证据与取消合同通过
+
+- P1 首版：`tests/independent/finance/test_migration_sqlite_contract.py` 全文件 8/8 passed；目标测试从 `bfc163b9b8e9` 直接 SQL 造账户、分类、交易和双分录，再正向升级至 P4，验证金额仍为 SQLite integer、数量/关键值、bootstrap owner、零空 owner、零 FK 孤儿与单 head
+- Host SQLite：`tests/independent/host/test_migration_acceptance.py` 全文件 3/3 passed；新增节点从 P3 head 直接 SQL 造 P1 财务、P2 run/pending 与 P3 import batch/candidate，升级 P4 后事实、关系、owner 回填、conversation 回填、`PRAGMA foreign_key_check` 和单 head 均通过
+- 取消合同：精确节点 `test_supplement_cancel_and_confirm_after_cancel` 1/1 passed；取消为终态，后续确认返回 `pending_action_cancelled`，财务写入为零；该变化按 P4 合同演进记录，不归类为 fixture 适配
+- 警告：Host SQLite 仅有既有 Starlette/AnyIO 和 Python sqlite3 datetime adapter 弃用提示，不影响断言
+- 下一检查点：重读 control 后执行唯一新增 PostgreSQL 历史节点；未改公共 PG fixture，因此不扩展为完整 PG 文件
+
+### 2026-09-27 00:25 Asia/Shanghai — P4-C11-R1 接单与双快照门禁通过
+
+- 控制核对：`2026-09-27T00:12:00+08:00` 版指定本测试智能体为 P4-C11-R1 唯一负责人；原 C11 保持 `review / finished` 且暂不接受，本轮只补历史正向迁移证据
+- 固定输入：产品清单 105 项全部匹配，manifest SHA-256 `65ee400893171d6caf19f2bf5adf20a4432f1f3c8048d5c381b718fc10360126`；测试方清单 23 项全部匹配，manifest SHA-256 `1c59d9e08abf9acea64324b72e3c8d63cda8eff7691239cdaa5baf94e9bdac73`
+- 任务范围：恢复 P1 首版→P4、SQLite/真实 PostgreSQL P3 历史→P4 的独立正向迁移证据；定向复验取消终态；纠正 C11 报告中 fixture 适配与合同演进的归因
+- 写入边界：只改任务卡授权的独立测试、C11/R1 报告、P4 矩阵和本角色日志；不改产品、migration、执行方测试、依赖、Compose、冻结/控制/总览、快照或 Git
+- 执行边界：不重跑完整 64 项、P0 loopback、P0～P4 全量或执行方套件；PostgreSQL 前重读 control，只启动 `finance-postgres`，结束普通 down
+- 下一检查点：SQLite 两类历史正向升级案例实际通过并保留虚拟旧事实、owner 回填、单 head 和零 FK 孤儿证据
+
+### 2026-09-27 00:04 Asia/Shanghai — P4-C11 交付至 review / finished
+
+- 交付：[P4-C11 Host 地基独立验收报告](../../testing/phase-4-c11-host-foundation-report.md)，SHA-256 `bd88bdf7437cd2120ee08e6d5ca8928e8445776321f86d2fb9d5e83ade25ee56`
+- 更新：[P4 模块化 Agent Host 测试矩阵](../../testing/phase-4-modular-agent-host-test-matrix.md)，SHA-256 `3483ca3fbda8723b1cd627ed0d0aceb31c88c3f3c1dad776db2cea0417266c89`；P4-A 64/64 `passed`，P4-B/C/D 56 项仍 `not_run`，0 重复 ID
+- 独立 Host：本地 23/23、真实 PostgreSQL 5/5；既有独立 PG 基线 P1 8/8、P2 4/4、P3 10/10
+- 执行方兼容：P0 39/39、P1 28/28、P2 35/35、P3 145/145、P4 79/79；执行方 PG Host R1 8/8、R2 9/9、Finance 4/4、Activity Import 10/10
+- 接管审计：P0 8 项、P1 14 项均有独立关闭证据；隐私凭据 canary 扫描 clean；未发现 P4-A 产品 P0/P1
+- 已知基础设施：P0 独立 102 passed、2 failed；两项均为既有 Windows/uvicorn 未在 8 秒内 healthy，未进入业务断言，不覆盖首次失败
+- 快照：起点/终点均 `matched=105`、`missing=0`、`mismatch=0`；清单 SHA-256 `65ee400893171d6caf19f2bf5adf20a4432f1f3c8048d5c381b718fc10360126`
+- Docker：只启动 `finance-postgres`，healthy 后执行 PG；结束普通 `docker compose down`，最终 `COMPOSE_SERVICES_EMPTY`，未使用 `-v`/prune/reset
+- 独立 Host 文件摘要：`__init__.py` `fa108276...10ed`；`conftest.py` `3953fe27...3282`；API `4a98cb97...ce04`；contract `61807b4f...fcbd`；migration `bcdcb308...f4cc`；state `2ae4305a...d52c`；PostgreSQL `392e9264...04e2`
+- 边界：未执行 Electron、OpenClaw、微信、DeepSeek、真实 provider、账户、行情或个人数据；未执行 Git 写操作；最终项目接受权归总控
+
+### 2026-09-26 23:49 Asia/Shanghai — 本地兼容回归结束，进入 PostgreSQL 门禁
+
+- 独立：P1 本地全量通过、8 个 PG gated skip；P2 42 passed/4 PG gated skip；P3 81 passed；P4 Host 20 passed
+- 执行方：P0 39 passed；P1 finance 28 passed；P2 agent finance 35 passed；P3 activity import 145 passed；P4 Host 79 passed
+- P0 独立 102 passed/2 failed：两个既有 loopback 用例均仅因 uvicorn 未在 8 秒内健康而失败，未进入探针断言；手工短暂启动同一虚拟目标成功，且该现象与 C6 已记录基础设施问题一致，保留首次失败、不重复整组覆盖
+- 新增独立 PostgreSQL 场景：migration 往返/实际约束、owner initialize/session refresh/binding 并发、user-scoped receipt/setting/memory/lease、财务提交后中断恢复
+- Docker 操作前已重读 `2026-09-26T22:32:00+08:00` control；仍授权本测试智能体唯一启停 `finance-postgres`，Compose 只含该测试服务
+- 下一检查点：Engine/Compose 初始状态和 `finance-postgres` healthy
+
+### 2026-09-26 23:29 Asia/Shanghai — P4 独立 Host 本地验收里程碑
+
+- 新增 `tests/independent/host/` 独立 contract/API/state/migration 验收；最终 20/20 通过
+- 独立覆盖注册/严格契约/运行时权限复核、健康与认证错误信封、一次性绑定秘密、会话幂等/隔离/90 天边界、游标绑定、记忆候选确认与 tombstone、设置秘密零写入/CAS、运行租约所有权/60 秒/3 次尝试、SQLite 空库升级和 P3 往返
+- P2 独立本地回归 42 passed、4 PostgreSQL gated skipped；P3 独立本地回归 81 passed
+- P1 首轮业务执行仅余历史离线 SQL 用例跨越到需在线预检的 P3 migration；已把该 P1 dialect guard 重新绑定到 `1377551283d0` 并定向通过，等待 P1 全量确认
+- 两次无效环境尝试未记为产品失败：一次误用系统 Python（无 pytest），一次 pytest 访问用户 Temp 被拒；现已固定为项目 venv + 项目内 basetemp
+- 下一检查点：P1 全量与 P0/执行方本地兼容回归；任何 Docker 动作前重读 control
+
+### 2026-09-26 23:12 Asia/Shanghai — P4-C11 起点快照门禁通过
+
+- 独立逐行复算 `docs/coordination/snapshots/p4-c11-start.sha256`：entries=105、matched=105、missing=0、mismatch=0
+- 按 `path<TAB>sha256<LF>` 的 UTF-8 有序字节流复算总摘要，精确匹配 `65ee400893171d6caf19f2bf5adf20a4432f1f3c8048d5c381b718fc10360126`
+- 105 个产品、migration、执行方测试和运行说明文件进入只读固定状态；独立测试不在该快照内
+- 下一检查点：完成矩阵逐项映射与现有测试盘点，登记首轮本地独立测试范围；Docker 尚未启动
+
+### 2026-09-26 23:04 Asia/Shanghai — P4-C11 接单
+
+- 控制核对：`2026-09-26T22:32:00+08:00` 版指定本测试智能体为 P4-C11 唯一负责人；执行智能体与技术顾问停止
+- 固定输入：`docs/coordination/snapshots/p4-c11-start.sha256`，预期 105 项，总摘要 `65ee400893171d6caf19f2bf5adf20a4432f1f3c8048d5c381b718fc10360126`
+- 验收范围：P4-A 64 项、8 个 P0/14 个 P1 接管审计复现、P0～P3 兼容回归、SQLite/Alembic 与真实 PostgreSQL 独立门禁、隐私扫描
+- 写入边界：仅独立 Host 测试、任务卡明确允许的既有独立 fixture、C11 报告、P4 矩阵和本角色状态；产品、migration、执行方测试、依赖、Compose、冻结/运行说明、控制/总览、其他角色状态和 Git 只读
+- 外部边界：本轮取得 `finance-postgres` 唯一启停权；任何 Docker 操作前重读 control，只启动该服务，结束普通 down，禁止删卷/prune/重置；不运行 Electron、OpenClaw、微信、DeepSeek 或真实 provider
+- 当前步骤：完整读取冻结输入和运行交接，再逐行复算 105 文件快照；不匹配则立即停止且不修复工作区
+- 下一检查点：起点快照门禁结论和本地测试命令范围
 
 ### 2026-09-20 18:09 Asia/Shanghai — P4-C10 质量检查与交付至 review
 

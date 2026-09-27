@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import uuid
 from datetime import UTC, datetime
 from typing import Annotated
@@ -26,6 +27,7 @@ from wife_system.api.host_schemas import (
     MessageResponse,
     ModuleResponse,
     PasswordChangeRequest,
+    Page,
     ReadyResponse,
     RefreshRequest,
     SessionResponse,
@@ -38,13 +40,37 @@ from wife_system.host.auth.errors import AuthError
 from wife_system.host.auth.service import AuthenticatedSession, SessionTokens
 from wife_system.host.context import PrincipalContext
 from wife_system.host.cursor import InvalidCursorError
+from wife_system.host.events import EventEnvelope
 from wife_system.host.registry import RegistryStartupError
 from wife_system.host.runtime import HostRuntime
-from wife_system.host.state import HostStateError
+from wife_system.host.state import CommandOutcome, HostStateError
 from wife_system.finance.models import BOOTSTRAP_USER_ID
 
 
 router = APIRouter(tags=["host"])
+
+
+def _publish_session_revoked(
+    runtime: HostRuntime,
+    authenticated: AuthenticatedSession,
+    session_id: uuid.UUID,
+    reason: str,
+    occurred_at: datetime,
+) -> None:
+    digest = hashlib.sha256(f"{session_id}:{reason}".encode()).hexdigest()
+    runtime.events.publish(
+        EventEnvelope(
+            event_id=uuid.uuid4(),
+            event_type="auth.session_revoked@1",
+            occurred_at=occurred_at,
+            user_id=authenticated.user_id,
+            producer_module="host_core",
+            correlation_id=str(uuid.uuid4()),
+            idempotency_digest=digest,
+            sensitivity="private",
+            payload={"session_id": str(session_id), "reason": reason},
+        )
+    )
 
 
 def get_host_runtime(request: Request) -> HostRuntime:
@@ -83,11 +109,15 @@ def get_principal(
     authenticated: Annotated[AuthenticatedSession, Depends(get_authenticated_session)],
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
 ) -> PrincipalContext:
+    channels = {"windows_desktop": "desktop_chat", "api_test": "api_test"}
+    channel = channels.get(authenticated.platform)
+    if channel is None:
+        raise AuthError("invalid_device")
     return PrincipalContext(
         user_id=authenticated.user_id,
         session_id=authenticated.session_id,
         device_id=authenticated.device_id,
-        channel="api_test",
+        channel=channel,
         permissions=runtime.owner_permissions,
         authenticated_at=authenticated.authenticated_at,
     )
@@ -113,19 +143,24 @@ def initialize(
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
 ) -> InitializeResponse:
     now = datetime.now(UTC)
+    normalized_handle = runtime.auth.validate_initialize_gate(
+        handle=payload.handle,
+        password=payload.password,
+        bootstrap_token=bootstrap_token.encode("utf-8"),
+        client_host=request.client.host if request.client is not None else "",
+    )
     result, _ = runtime.commands.execute(
         user_id=BOOTSTRAP_USER_ID,
         operation="auth.initialize",
         idempotency_key=idempotency_key,
         payload=payload.model_dump(mode="json"),
         now=now,
-        command=lambda: {
+        command=lambda session: {
             "user_id": str(
-                runtime.auth.initialize(
-                    handle=payload.handle,
+                runtime.auth.initialize_in_session(
+                    session,
+                    normalized_handle=normalized_handle,
                     password=payload.password,
-                    bootstrap_token=bootstrap_token.encode("utf-8"),
-                    client_host=request.client.host if request.client is not None else "",
                     now=now,
                 )
             )
@@ -164,7 +199,10 @@ def logout(
     token: Annotated[str, Depends(bearer_token)],
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
 ) -> SuccessResponse:
-    runtime.auth.logout(token, now=datetime.now(UTC))
+    now = datetime.now(UTC)
+    authenticated = runtime.auth.authenticate_access(token, now=now)
+    runtime.auth.logout(token, now=now)
+    _publish_session_revoked(runtime, authenticated, authenticated.session_id, "logout", now)
     return SuccessResponse()
 
 
@@ -174,14 +212,20 @@ def change_password(
     token: Annotated[str, Depends(bearer_token)],
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
 ) -> TokenResponse:
-    return _tokens(
+    now = datetime.now(UTC)
+    authenticated = runtime.auth.authenticate_access(token, now=now)
+    result = _tokens(
         runtime.auth.change_password(
             token,
             old_password=payload.old_password,
             new_password=payload.new_password,
-            now=datetime.now(UTC),
+            now=now,
         )
     )
+    _publish_session_revoked(
+        runtime, authenticated, authenticated.session_id, "password_changed", now
+    )
+    return result
 
 
 @router.get("/api/v1/auth/sessions", response_model=list[SessionResponse])
@@ -198,11 +242,17 @@ def revoke_session(
     authenticated: Annotated[AuthenticatedSession, Depends(get_authenticated_session)],
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
 ) -> SuccessResponse:
-    runtime.auth.revoke_session(authenticated, session_id, now=datetime.now(UTC))
+    now = datetime.now(UTC)
+    runtime.auth.revoke_session(authenticated, session_id, now=now)
+    _publish_session_revoked(runtime, authenticated, session_id, "revoked", now)
     return SuccessResponse()
 
 
-@router.post("/api/v1/channel-bindings/codes", response_model=BindingCodeResponse)
+@router.post(
+    "/api/v1/channel-bindings/codes",
+    response_model=BindingCodeResponse,
+    status_code=201,
+)
 def create_binding_code(
     payload: BindingCodeRequest,
     idempotency_key: Annotated[str, Depends(require_host_idempotency_key)],
@@ -210,17 +260,31 @@ def create_binding_code(
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
 ) -> BindingCodeResponse:
     now = datetime.now(UTC)
-    result, _ = runtime.commands.execute(
+    result, replayed = runtime.commands.execute(
         user_id=authenticated.user_id,
         operation="binding.code.create",
         idempotency_key=idempotency_key,
         payload=payload.model_dump(mode="json"),
         now=now,
-        command=lambda: {
-            "code_id": str((created := runtime.auth.create_binding_code(authenticated, channel=payload.channel, now=now)).code_id),
-            "code": created.code,
-            "expires_at": created.expires_at.isoformat(),
-        },
+        replay_error="one_time_secret_unavailable",
+        command=lambda session: (
+            lambda created: CommandOutcome(
+                public_result={
+                    "code_id": str(created.code_id),
+                    "code": created.code,
+                    "expires_at": created.expires_at.isoformat(),
+                    "replayed": False,
+                },
+                receipt_result={
+                    "code_id": str(created.code_id),
+                    "expires_at": created.expires_at.isoformat(),
+                    "status": "created",
+                    "secret_available": False,
+                },
+            )
+        )(runtime.auth.create_binding_code_in_session(
+            session, principal=authenticated, channel=payload.channel, now=now
+        )),
     )
     return BindingCodeResponse.model_validate(result)
 
@@ -229,29 +293,47 @@ def create_binding_code(
 def consume_binding_code(
     payload: BindingConsumeRequest,
     idempotency_key: Annotated[str, Depends(require_host_idempotency_key)],
-    adapter_token: Annotated[str, Header(alias="X-Channel-Adapter-Token")],
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
+    adapter_token: Annotated[str | None, Header(alias="X-Channel-Adapter-Token")] = None,
 ) -> BindingResponse:
     now = datetime.now(UTC)
-    result, _ = runtime.commands.execute(
-        user_id=BOOTSTRAP_USER_ID,
+    adapter_bytes = None if adapter_token is None else adapter_token.encode("utf-8")
+    receipt_user_id = runtime.auth.binding_command_user_id(adapter_bytes, payload.code_id)
+
+    def consume_command(session):
+        consumed = runtime.auth.consume_binding_code_in_session(
+            session,
+            code_id=payload.code_id,
+            channel=payload.channel,
+            provider_account=payload.provider_account,
+            external_subject=payload.external_subject,
+            code=payload.code,
+            now=now,
+        )
+        if consumed.error_code is not None:
+            return CommandOutcome(
+                public_result={},
+                receipt_result={"code_id": str(payload.code_id), "status": "rejected"},
+                error_code=consumed.error_code,
+            )
+        assert consumed.view is not None
+        bound = consumed.view
+        safe = {
+            "binding_id": str(bound.binding_id),
+            "channel": bound.channel,
+            "created_at": bound.created_at.isoformat(),
+        }
+        return CommandOutcome(public_result={**safe, "replayed": False}, receipt_result=safe)
+
+    result, replayed = runtime.commands.execute(
+        user_id=receipt_user_id,
         operation="binding.code.consume",
         idempotency_key=idempotency_key,
         payload=payload.model_dump(mode="json"),
         now=now,
-        command=lambda: {
-            "binding_id": str((bound := runtime.auth.consume_binding_code(
-                adapter_token=adapter_token.encode("utf-8"),
-                channel=payload.channel,
-                provider_account=payload.provider_account,
-                external_subject=payload.external_subject,
-                code=payload.code,
-                now=now,
-            )).binding_id),
-            "channel": bound.channel,
-            "created_at": bound.created_at.isoformat(),
-        },
+        command=consume_command,
     )
+    result["replayed"] = replayed
     return BindingResponse.model_validate(result)
 
 
@@ -277,8 +359,14 @@ def revoke_binding(
         idempotency_key=idempotency_key,
         payload={"binding_id": str(binding_id)},
         now=now,
-        command=lambda: (
-            runtime.auth.revoke_binding(principal.user_id, binding_id, now=now) or {"success": True}
+        command=lambda session: (
+            runtime.auth.revoke_binding_in_session(
+                session, user_id=principal.user_id, binding_id=binding_id, now=now
+            )
+            and CommandOutcome(
+                public_result={"success": True},
+                receipt_result={"binding_id": str(binding_id), "status": "revoked"},
+            )
         ),
     )
     return SuccessResponse()
@@ -324,6 +412,8 @@ def create_conversation(
     principal: Annotated[PrincipalContext, Depends(get_principal)],
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
 ) -> ConversationResponse:
+    if payload.channel != principal.channel:
+        raise HostStateError("invalid_channel", status_code=422)
     profile = runtime.registry.resolve_profile(principal.user_id, payload.profile_id)
     if profile.module_id != payload.module_id:
         raise RegistryStartupError("profile_not_found", "The Profile was not found.")
@@ -337,15 +427,30 @@ def create_conversation(
     return _conversation(row, replayed=replayed)
 
 
-@router.get("/api/v1/conversations", response_model=list[ConversationResponse])
+@router.get("/api/v1/conversations", response_model=Page[ConversationResponse])
 def list_conversations(
     principal: Annotated[PrincipalContext, Depends(get_principal)],
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
     cursor: Annotated[str | None, Query(max_length=512)] = None,
-) -> list[ConversationResponse]:
-    before = None if cursor is None else runtime.cursor.decode(cursor, endpoint="conversations", user_id=principal.user_id)
-    return [_conversation(row) for row in runtime.conversations.list(user_id=principal.user_id, limit=limit, before=before)]
+) -> Page[ConversationResponse]:
+    endpoint = "conversations:v1"
+    before = None if cursor is None else runtime.cursor.decode(
+        cursor, endpoint=endpoint, user_id=principal.user_id, filter_fingerprint=""
+    )
+    rows = runtime.conversations.list(user_id=principal.user_id, limit=limit + 1, before=before)
+    visible = rows[:limit]
+    next_cursor = None
+    if len(rows) > limit:
+        last = visible[-1]
+        next_cursor = runtime.cursor.encode(
+            endpoint=endpoint,
+            user_id=principal.user_id,
+            filter_fingerprint="",
+            sort_time=last.created_at,
+            item_id=last.id,
+        )
+    return Page(items=[_conversation(row) for row in visible], next_cursor=next_cursor)
 
 
 @router.get("/api/v1/conversations/{conversation_id}", response_model=ConversationResponse)
@@ -357,18 +462,33 @@ def get_conversation(
     return _conversation(runtime.conversations.get(conversation_id, user_id=principal.user_id))
 
 
-@router.get("/api/v1/conversations/{conversation_id}/messages", response_model=list[MessageResponse])
+@router.get("/api/v1/conversations/{conversation_id}/messages", response_model=Page[MessageResponse])
 def messages(
     conversation_id: uuid.UUID,
     principal: Annotated[PrincipalContext, Depends(get_principal)],
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
     cursor: Annotated[str | None, Query(max_length=512)] = None,
-) -> list[MessageResponse]:
+) -> Page[MessageResponse]:
+    endpoint = f"conversation-messages:v1:{conversation_id}"
     before = None if cursor is None else runtime.cursor.decode(
-        cursor, endpoint=f"conversation:{conversation_id}:messages", user_id=principal.user_id
+        cursor, endpoint=endpoint, user_id=principal.user_id, filter_fingerprint=""
     )
-    return [
+    rows = runtime.conversations.messages(
+        conversation_id, user_id=principal.user_id, limit=limit + 1, before=before
+    )
+    visible = rows[:limit]
+    next_cursor = None
+    if len(rows) > limit:
+        last = visible[-1]
+        next_cursor = runtime.cursor.encode(
+            endpoint=endpoint,
+            user_id=principal.user_id,
+            filter_fingerprint="",
+            sort_time=last.created_at,
+            item_id=last.id,
+        )
+    return Page(items=[
         MessageResponse(
             id=row.id,
             role=row.role,
@@ -376,18 +496,46 @@ def messages(
             sensitivity=row.sensitivity,
             created_at=row.created_at,
         )
-        for row in runtime.conversations.messages(
-            conversation_id, user_id=principal.user_id, limit=limit, before=before
-        )
-    ]
+        for row in visible
+    ], next_cursor=next_cursor)
 
 
-@router.get("/api/v1/memory-candidates", response_model=list[MemoryCandidateResponse])
+@router.get("/api/v1/memory-candidates", response_model=Page[MemoryCandidateResponse])
 def memory_candidates(
     principal: Annotated[PrincipalContext, Depends(get_principal)],
     runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
-) -> list[MemoryCandidateResponse]:
-    return [
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    cursor: Annotated[str | None, Query(max_length=512)] = None,
+    status: Annotated[str | None, Query()] = None,
+) -> Page[MemoryCandidateResponse]:
+    if status is not None and status not in {"pending", "confirmed", "rejected", "expired"}:
+        raise HostStateError("invalid_request", status_code=422)
+    fingerprint = status or "all"
+    endpoint = "memory-candidates:v1"
+    before = None if cursor is None else runtime.cursor.decode(
+        cursor,
+        endpoint=endpoint,
+        user_id=principal.user_id,
+        filter_fingerprint=fingerprint,
+    )
+    rows = runtime.memories.candidates(
+        user_id=principal.user_id,
+        status=status,
+        limit=limit + 1,
+        before=before,
+    )
+    visible = rows[:limit]
+    next_cursor = None
+    if len(rows) > limit:
+        last = visible[-1]
+        next_cursor = runtime.cursor.encode(
+            endpoint=endpoint,
+            user_id=principal.user_id,
+            filter_fingerprint=fingerprint,
+            sort_time=last.created_at,
+            item_id=last.id,
+        )
+    return Page(items=[
         MemoryCandidateResponse(
             id=row.id,
             source_namespace=row.source_namespace,
@@ -398,8 +546,8 @@ def memory_candidates(
             status=row.status,
             expires_at=row.expires_at,
         )
-        for row in runtime.memories.candidates(user_id=principal.user_id)
-    ]
+        for row in visible
+    ], next_cursor=next_cursor)
 
 
 @router.post("/api/v1/memory-candidates/{candidate_id}/confirm", response_model=MemoryResponse)
@@ -420,7 +568,7 @@ def confirm_memory_candidate(
         candidate_id,
         user_id=principal.user_id,
         confirm=True,
-        target_namespace=payload.target_namespace,
+        target_namespace=None,
         allowed_namespaces=allowed,
         idempotency_key=idempotency_key,
     )
@@ -552,7 +700,7 @@ def put_setting(
 
 @router.get("/readyz", response_model=ReadyResponse)
 def readyz(runtime: Annotated[HostRuntime, Depends(get_host_runtime)]) -> ReadyResponse:
-    ready, _ = runtime.readiness()
+    ready, code = runtime.readiness()
     if not ready:
-        raise HostStateError("backend_not_ready", status_code=503, retryable=True)
+        raise HostStateError(code or "backend_not_ready", status_code=503, retryable=True)
     return ReadyResponse()

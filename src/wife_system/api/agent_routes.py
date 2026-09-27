@@ -3,17 +3,22 @@
 from __future__ import annotations
 
 import uuid
-from typing import Annotated
+from datetime import UTC, datetime
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, Header, Request
 from pydantic import BaseModel, ConfigDict
 
 from wife_system.agent.application import AgentApplication
 from wife_system.api.agent_schemas import (
-    AgentRunResponse,
+    AgentRunResponse as LegacyAgentRunResponse,
     CreateAgentRunRequest,
     ResumeAgentRunRequest,
 )
+
+
+class AgentRunResponse(LegacyAgentRunResponse):
+    status: Literal["running", "success", "error", "paused", "cancelled"]
 
 
 class AgentIdentity(BaseModel):
@@ -22,6 +27,10 @@ class AgentIdentity(BaseModel):
     actor_id: uuid.UUID
     user_id: uuid.UUID | None = None
     permissions: frozenset[str]
+    session_id: uuid.UUID | None = None
+    device_id: uuid.UUID | None = None
+    channel: str = "desktop_chat"
+    authenticated_at: datetime | None = None
 
 
 def get_agent_application(request: Request) -> AgentApplication:
@@ -40,16 +49,25 @@ def get_agent_identity(
     runtime = getattr(request.app.state, "host_runtime", None)
     if runtime is None:
         return request.app.state.agent_identity
-    from datetime import UTC, datetime
     from wife_system.host.auth.errors import AuthError
 
     if authorization is None or not authorization.startswith("Bearer "):
         raise AuthError("authentication_required")
     authenticated = runtime.auth.authenticate_access(authorization[7:], now=datetime.now(UTC))
+    channel = {
+        "windows_desktop": "desktop_chat",
+        "api_test": "api_test",
+    }.get(authenticated.platform)
+    if channel is None:
+        raise AuthError("invalid_channel")
     return AgentIdentity(
         actor_id=authenticated.user_id,
         user_id=authenticated.user_id,
         permissions=runtime.owner_permissions,
+        session_id=authenticated.session_id,
+        device_id=authenticated.device_id,
+        channel=channel,
+        authenticated_at=authenticated.authenticated_at,
     )
 
 
@@ -80,6 +98,10 @@ def create_agent_run(
         permissions=identity.permissions,
         module_id=module_id,
         profile_id=profile_id,
+        session_id=identity.session_id,
+        device_id=identity.device_id,
+        channel=identity.channel,
+        authenticated_at=identity.authenticated_at,
     )
     return AgentRunResponse.model_validate(result.model_dump())
 
@@ -100,6 +122,10 @@ def resume_agent_run(
         permissions=identity.permissions,
         confirmation_code=payload.confirmation_code,
         values=None if payload.values is None else payload.values.model_dump(exclude_none=True, mode="json"),
+        session_id=identity.session_id,
+        device_id=identity.device_id,
+        channel=identity.channel,
+        authenticated_at=identity.authenticated_at,
     )
     return AgentRunResponse.model_validate(result.model_dump())
 

@@ -1,12 +1,12 @@
 # P4 模块化 Agent Host 独立验收矩阵
 
 - 任务：`P4-C10`
-- 状态：`review`（实现前设计；未执行）
+- 状态：`review`（C10 为实现前设计；C11/R1/R2 已更新 P4-A 实际证据）
 - 设计日期：2026-09-20，Asia/Shanghai
 - 固定产品基座：`1d06d92c93d99fb2a3a23da6ff0958932e358814`
 - 固定技术建议：`docs/phase-4-d9-modular-agent-host-advice.md`，SHA-256 `765a3547b806724183a6302f4134a28b43e987d066fe30933bde5f993073fe5a`
 - 数据边界：只允许虚拟用户、虚拟财务数据、随机数据库 schema、假模型与假渠道 adapter；不得使用真实个人数据、真实微信身份、API Key 或付费模型
-- 判定边界：本文件只定义未来可执行验收；所有案例初始状态均为 `not_run`，不表示任何 P4 功能已经实现或通过
+- 判定边界：本文件最初只定义未来可执行验收；P4-C11、R1 与 R2 已把 P4-A 64 项绑定到实际独立证据，P4-B/C/D 仍保持 `not_run`
 
 ## 1. 记号、证据和通用判定
 
@@ -16,7 +16,7 @@
 | 环境 | `contract`、`API`、`SQLite`、`PostgreSQL`、`Windows/Electron`、`external/manual` |
 | 自动/人工 | `auto` 表示应由稳定自动化断言；`manual` 表示必须保留人工/真机证据，不能用静态检查替代 |
 | 风险 | `P0`：身份越权、数据损坏、重复财务写、密钥/敏感数据泄露或迁移不可恢复；`P1`：核心闭环、恢复或桌面安全失效；`P2`：局部功能/兼容/可用性；`P3`：低影响呈现或诊断 |
-| 状态 | 本任务只能使用 `not_run`；未来执行后才可写 `passed/failed/blocked/not_applicable`，并链接固定快照证据 |
+| 状态 | C10 初始只能使用 `not_run`；后续独立执行可在固定快照和报告证据下写 `passed/failed/blocked/not_applicable` |
 
 每项执行证据至少包含：固定快照摘要、虚拟前置数据、请求/事件关联 ID、结构化返回、数据库或 UI 前后状态、禁止副作用观察、脱敏日志，以及适用时的并发同步点和资源关闭记录。执行方自测不能替代独立证据；SQLite 不能替代 PostgreSQL 锁、约束或迁移证据；静态 Electron 配置不能替代目标 Windows 运行证据。
 
@@ -105,85 +105,85 @@
 
 | ID | 切片 | 需求/冻结来源 | 层级 | 环境 | 自动/人工 | 前置条件 | 输入摘要 | 步骤 | 预期结果与禁止副作用 | 风险 | 执行状态 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| P4A-REG-01 | A | F02 | contract/unit | contract | auto | manifest/Profile/tool/event/settings DTO 已冻结 | 合法对象、缺字段、错类型、额外字段、版本往返 | 分别校验并序列化/反序列化 | 合法值稳定往返；非法值按字段拒绝；不得忽略额外字段或执行 callable | P1 | not_run |
-| P4A-REG-02 | A | F02；任务卡 | contract/unit | contract | auto | 可构造两个 builtin 定义 | 重复 module/profile/tool canonical ID、别名、API 前缀、route、namespace、setting key、companion state | 参数化注册每类冲突 | 每类均在启动验证期以稳定错误失败；不得后注册覆盖先注册 | P0 | not_run |
-| P4A-REG-03 | A | F01/F02 | contract/unit | contract | auto | Host API 主版本合同冻结 | compatible、低/高不兼容版本 | 注册并读取诊断 | 兼容模块可用；不兼容模块按冻结策略禁用或阻止启动并可诊断；不得部分暴露贡献 | P1 | not_run |
-| P4A-REG-04 | A | F01/F02 | security/manual | contract | auto | 唯一组合根可静态导入 | builtin 列表、伪造目录插件、manifest import path | 审查注册入口并尝试注入未知路径 | 只显式调用可信 factory；无目录扫描、entry-point 自动执行或远程代码加载 | P0 | not_run |
-| P4A-REG-05 | A | F02；模块启停 | API/integration | API | auto | daily 与 wealth 均已编译 | 启用→禁用→再启用模块 | 调用设置与 `/modules`，并查询导航/Profile/工具/设置摘要 | 禁用后贡献全部消失，专属 API 稳定拒绝；再启用恢复合同，不删事实数据 | P1 | not_run |
-| P4A-REG-06 | A | F03 | contract/unit | contract | auto | 两模块各有 Profile | 当前桌面 route 连续切换 | 解析 Profile 多次并统计 provider 调用 | 同一路由确定性得到同一 Profile；页面切换不调用模型，不串会话/记忆 | P1 | not_run |
-| P4A-REG-07 | A | F03；微信边界 | API/integration | API | auto | 假渠道 adapter、两个可匹配意图 | 歧义、唯一匹配、禁用模块匹配 | 提交虚拟消息并检查路由状态 | 唯一时只选已启用 Profile；歧义只形成追问；不得猜选写 Profile或执行工具 | P0 | not_run |
-| P4A-REG-08 | A | F02/F14 | contract/unit | contract | auto | event/settings 合同冻结 | 未声明事件、版本不兼容、重复 setting key | 注册生产者/消费者/设置 | 未声明或不兼容在启动期失败；不得运行后静默丢事件或覆盖设置 | P1 | not_run |
-| P4A-REG-09 | A | F01/F12 | API/integration | API | auto | registry 已启动 | 当前用户无权限、模块禁用、模块启用 | GET `/modules` 与模块摘要 | 只返回用户获准且启用的序列化贡献；不返回 factory、提示词全文、内部路径 | P1 | not_run |
-| P4A-REG-10 | A | F02 | contract/unit | contract | auto | canonical 格式和 SemVer 待冻结后绑定 | 大小写、空白、Unicode 等价、非法分隔符、超长 ID | 参数化构造所有 ID/alias/version | 规范化与拒绝规则唯一；碰撞不能因后端或大小写规则绕过 | P1 | not_run |
-| P4A-PRF-01 | A | F03 | contract/unit | contract | auto | Profile 合同冻结 | profile/module 不匹配、未知 Profile、禁用模块 Profile | 解析运行上下文 | 合法绑定成功；其他稳定拒绝且不退回万能 Agent | P1 | not_run |
-| P4A-PRF-02 | A | F03/F04 | contract/unit | contract | auto | Host 全局硬上限固定 | Profile 等于、收紧、放宽模型轮次/工具/写调用/超时 | 绑定 Profile | 等于/收紧可用；任何放宽被拒；不得改变全局限制 | P0 | not_run |
-| P4A-PRF-03 | A | P2-IF-001；F03 | contract/unit | contract | auto | 脚本化 provider 与假工具 | 恰好最大轮次、总工具、写工具、重复调用、空响应 | 执行边界场景 | 在精确上限停止并返回稳定原因；不得多执行一次写工具 | P0 | not_run |
-| P4A-PRF-04 | A | F04 | contract/unit | contract | auto | 工具目录含读/写/隐藏工具 | 不同 Profile、permission、module 状态 | 生成 Schema 视图 | 仅三者交集进入模型 Schema；上下文/身份字段永不暴露 | P0 | not_run |
-| P4A-PRF-05 | A | F04 | API/integration | API | auto | 隐藏工具 canonical ID 已知给测试 | 猜测隐藏名称、别名、伪造 permission/module/profile | 绕过 Schema 直接请求执行 | 执行时再次拒绝 `tool_not_allowed`；handler、数据库、审计副作用均为零 | P0 | not_run |
-| P4A-PRF-06 | A | F04；P2-IF-001 | contract/unit | contract | auto | BoundToolRegistry 已绑定可信 principal | 参数中注入 user/device/module/profile/approved | 调用每个工具 Schema | 严格 DTO 拒绝身份与批准字段；实际上下文保持入口值 | P0 | not_run |
-| P4A-PRF-07 | A | F05/F17；P1/P2 | API/integration | SQLite | auto | daily adapter 连接现有 FinanceService | 查询、候选、确认、坏金额、stale、同键重放 | 经 Host 调用六个财务工具 | 保持整数分、确认、事务、幂等和稳定错误；不得复制或重写领域规则 | P0 | not_run |
-| P4A-PRF-08 | A | F01/F05 | security/manual | contract | auto | 工具注册完整 | `sql`、`python`、文件路径、shell、任意 MCP server 名称 | 枚举 Schema 并猜名执行 | Host 没有任意 SQL/Python/shell/文件执行入口，未允许 MCP 不可连接 | P0 | not_run |
-| P4A-PRF-09 | A | F05 | contract/unit | contract | auto | 若实现 MCP/HTTP adapter 才适用 | 非 allowlist server/tool、超时、超大输出、取消、坏协议、恶意描述 | 用假传输调用 | 固定协议/allowlist/大小/超时生效，内容按不可信数据处理；不影响进程内财务事务 | P1 | not_run |
-| P4A-PRF-10 | A | F03/F04 | contract/unit | contract | auto | ToolExecutionResult 合同冻结 | ok/needs_input/needs_confirmation/error 与非法组合 | 校验结果、错误与 provenance | 联合类型严格，安全错误保留 code/retryable；不得把异常正文、原参数或 audit 内部详情给模型 | P1 | not_run |
+| P4A-REG-01 | A | F02 | contract/unit | contract | auto | manifest/Profile/tool/event/settings DTO 已冻结 | 合法对象、缺字段、错类型、额外字段、版本往返 | 分别校验并序列化/反序列化 | 合法值稳定往返；非法值按字段拒绝；不得忽略额外字段或执行 callable | P1 | passed |
+| P4A-REG-02 | A | F02；任务卡 | contract/unit | contract | auto | 可构造两个 builtin 定义 | 重复 module/profile/tool canonical ID、别名、API 前缀、route、namespace、setting key、companion state | 参数化注册每类冲突 | 每类均在启动验证期以稳定错误失败；不得后注册覆盖先注册 | P0 | passed |
+| P4A-REG-03 | A | F01/F02 | contract/unit | contract | auto | Host API 主版本合同冻结 | compatible、低/高不兼容版本 | 注册并读取诊断 | 兼容模块可用；不兼容模块按冻结策略禁用或阻止启动并可诊断；不得部分暴露贡献 | P1 | passed |
+| P4A-REG-04 | A | F01/F02 | security/manual | contract | auto | 唯一组合根可静态导入 | builtin 列表、伪造目录插件、manifest import path | 审查注册入口并尝试注入未知路径 | 只显式调用可信 factory；无目录扫描、entry-point 自动执行或远程代码加载 | P0 | passed |
+| P4A-REG-05 | A | F02；模块启停 | API/integration | API | auto | daily 与 wealth 均已编译 | 启用→禁用→再启用模块 | 调用设置与 `/modules`，并查询导航/Profile/工具/设置摘要 | 禁用后贡献全部消失，专属 API 稳定拒绝；再启用恢复合同，不删事实数据 | P1 | passed |
+| P4A-REG-06 | A | F03 | contract/unit | contract | auto | 两模块各有 Profile | 当前桌面 route 连续切换 | 解析 Profile 多次并统计 provider 调用 | 同一路由确定性得到同一 Profile；页面切换不调用模型，不串会话/记忆 | P1 | passed |
+| P4A-REG-07 | A | F03；微信边界 | API/integration | API | auto | 假渠道 adapter、两个可匹配意图 | 歧义、唯一匹配、禁用模块匹配 | 提交虚拟消息并检查路由状态 | 唯一时只选已启用 Profile；歧义只形成追问；不得猜选写 Profile或执行工具 | P0 | passed |
+| P4A-REG-08 | A | F02/F14 | contract/unit | contract | auto | event/settings 合同冻结 | 未声明事件、版本不兼容、重复 setting key | 注册生产者/消费者/设置 | 未声明或不兼容在启动期失败；不得运行后静默丢事件或覆盖设置 | P1 | passed |
+| P4A-REG-09 | A | F01/F12 | API/integration | API | auto | registry 已启动 | 当前用户无权限、模块禁用、模块启用 | GET `/modules` 与模块摘要 | 只返回用户获准且启用的序列化贡献；不返回 factory、提示词全文、内部路径 | P1 | passed |
+| P4A-REG-10 | A | F02 | contract/unit | contract | auto | canonical 格式和 SemVer 待冻结后绑定 | 大小写、空白、Unicode 等价、非法分隔符、超长 ID | 参数化构造所有 ID/alias/version | 规范化与拒绝规则唯一；碰撞不能因后端或大小写规则绕过 | P1 | passed |
+| P4A-PRF-01 | A | F03 | contract/unit | contract | auto | Profile 合同冻结 | profile/module 不匹配、未知 Profile、禁用模块 Profile | 解析运行上下文 | 合法绑定成功；其他稳定拒绝且不退回万能 Agent | P1 | passed |
+| P4A-PRF-02 | A | F03/F04 | contract/unit | contract | auto | Host 全局硬上限固定 | Profile 等于、收紧、放宽模型轮次/工具/写调用/超时 | 绑定 Profile | 等于/收紧可用；任何放宽被拒；不得改变全局限制 | P0 | passed |
+| P4A-PRF-03 | A | P2-IF-001；F03 | contract/unit | contract | auto | 脚本化 provider 与假工具 | 恰好最大轮次、总工具、写工具、重复调用、空响应 | 执行边界场景 | 在精确上限停止并返回稳定原因；不得多执行一次写工具 | P0 | passed |
+| P4A-PRF-04 | A | F04 | contract/unit | contract | auto | 工具目录含读/写/隐藏工具 | 不同 Profile、permission、module 状态 | 生成 Schema 视图 | 仅三者交集进入模型 Schema；上下文/身份字段永不暴露 | P0 | passed |
+| P4A-PRF-05 | A | F04 | API/integration | API | auto | 隐藏工具 canonical ID 已知给测试 | 猜测隐藏名称、别名、伪造 permission/module/profile | 绕过 Schema 直接请求执行 | 执行时再次拒绝 `tool_not_allowed`；handler、数据库、审计副作用均为零 | P0 | passed |
+| P4A-PRF-06 | A | F04；P2-IF-001 | contract/unit | contract | auto | BoundToolRegistry 已绑定可信 principal | 参数中注入 user/device/module/profile/approved | 调用每个工具 Schema | 严格 DTO 拒绝身份与批准字段；实际上下文保持入口值 | P0 | passed |
+| P4A-PRF-07 | A | F05/F17；P1/P2 | API/integration | SQLite | auto | daily adapter 连接现有 FinanceService | 查询、候选、确认、坏金额、stale、同键重放 | 经 Host 调用六个财务工具 | 保持整数分、确认、事务、幂等和稳定错误；不得复制或重写领域规则 | P0 | passed |
+| P4A-PRF-08 | A | F01/F05 | security/manual | contract | auto | 工具注册完整 | `sql`、`python`、文件路径、shell、任意 MCP server 名称 | 枚举 Schema 并猜名执行 | Host 没有任意 SQL/Python/shell/文件执行入口，未允许 MCP 不可连接 | P0 | passed |
+| P4A-PRF-09 | A | F05 | contract/unit | contract | auto | 若实现 MCP/HTTP adapter 才适用 | 非 allowlist server/tool、超时、超大输出、取消、坏协议、恶意描述 | 用假传输调用 | 固定协议/allowlist/大小/超时生效，内容按不可信数据处理；不影响进程内财务事务 | P1 | passed |
+| P4A-PRF-10 | A | F03/F04 | contract/unit | contract | auto | ToolExecutionResult 合同冻结 | ok/needs_input/needs_confirmation/error 与非法组合 | 校验结果、错误与 provenance | 联合类型严格，安全错误保留 code/retryable；不得把异常正文、原参数或 audit 内部详情给模型 | P1 | passed |
 
 #### 账户、设备会话、渠道绑定与用户隔离
 
 | ID | 切片 | 需求/冻结来源 | 层级 | 环境 | 自动/人工 | 前置条件 | 输入摘要 | 步骤 | 预期结果与禁止副作用 | 风险 | 执行状态 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| P4A-AUT-01 | A | F07 | API/integration | PostgreSQL | auto | 空 schema；本机来源判定可替换 | 两个并发 initialize、远程来源、随后重复请求 | 同步提交初始化 | 只有一个主人账户成功；其余稳定拒绝；无第二 credential/device 或半写 | P0 | not_run |
-| P4A-AUT-02 | A | F07 | API/integration | SQLite | auto | 非空 P0～P3 数据库或已有用户 | initialize 请求 | 调用初始化端点 | 初始化端点稳定拒绝且零写入；既有数据的 bootstrap owner 只由受控 migration 处理，不得由 API 覆盖 owner | P0 | not_run |
-| P4A-AUT-03 | A | F07 | security/manual | SQLite | auto | 已初始化虚拟用户 | 正确密码、数据库读取、响应/日志捕获 | 登录并检查 credential | 仅存 Argon2id 哈希及冻结参数；响应/日志不含密码/哈希；错误登录不改哈希 | P0 | not_run |
-| P4A-AUT-04 | A | F07 | API/integration | API | auto | 存在用户 | 错 handle、错密码、停用用户、畸形输入 | 比较状态、文案、结构和可观察时序等级 | 错误不区分账户是否存在；严格 body；不签发 session，不泄露哈希或堆栈 | P0 | not_run |
-| P4A-AUT-05 | A | F07 | API/integration | API | auto | 成功登录 | access/refresh 或不透明 token、恰好到期前后 | 调用受保护 API 与 refresh | 原始 token 只签发一次；库仅摘要；到期边界稳定；旧 access 按冻结策略失效 | P0 | not_run |
-| P4A-AUT-06 | A | F07 | API/integration | PostgreSQL | auto | 同一 refresh/session token | 两并发刷新、顺序重放、不同设备 | 用两连接同步刷新 | 最多一个轮换成功；旧 token 重放稳定拒绝/撤销族；不产生两个 active 后继 | P0 | not_run |
-| P4A-AUT-07 | A | F07 | API/integration | API | auto | 两设备 active session | logout 当前设备、撤销其他设备、已撤销 token | 连续调用 API/refresh | 目标 session 立即不可用，其他未撤销设备按规则保留；错误为 `session_revoked` | P0 | not_run |
-| P4A-AUT-08 | A | F07 | API/integration | SQLite | auto | 两设备和旧密码 active | 改密成功/失败 | 改密后用旧新密码及所有 session 测试 | 旧密码失败，旧设备 session 全撤销，新凭据有效；失败事务不改变任何状态 | P0 | not_run |
-| P4A-AUT-09 | A | F07；绑定默认 | API/integration | PostgreSQL | auto | 假渠道 adapter、可控时钟 | 绑定码恰好过期、超尝试、已消费、并发消费、重放 | 分别提交绑定 | 仅一个未过期码一次成功；摘要存储；失败不建立 binding、不回显原码/身份 | P0 | not_run |
-| P4A-AUT-10 | A | F07 | API/integration | PostgreSQL | auto | 两虚拟用户和一个外部身份摘要 | 冲突绑定、撤销、重新绑定 | 建立/冲突/撤销/再绑定 | active 外部身份全局唯一；不自动抢占；撤销留无原始身份的审计；再绑定按冻结流程成功 | P0 | not_run |
-| P4A-ISO-01 | A | F08；P2/P3 identity | API/integration | API | auto | 认证 principal A | body/query/model/tool 参数伪造 user B | 调用所有写/读入口 | 始终使用 A；自报字段被严格拒绝或忽略规则冻结；不得访问 B | P0 | not_run |
-| P4A-ISO-02 | A | F08 | database | SQLite | auto | A/B 各有账户、分类、交易、活动、预算、收入、导入批次 | B 的 UUID 交给 A | 逐类 GET/命令/工具查询 | 返回统一未找到/拒绝；响应、日志、计数不泄露 B 数据存在性 | P0 | not_run |
-| P4A-ISO-03 | A | F08 | database | PostgreSQL | auto | A/B 资源均存在 | 交易分录引用另一用户账户/分类；活动分配跨用户 | 直接 ORM/SQL 尝试提交 | 复合 FK/约束在数据库拒绝；整个事务回滚，无孤儿或半写 | P0 | not_run |
-| P4A-ISO-04 | A | F08 | database | PostgreSQL | auto | A/B 使用同 source system 与同 raw event/key | 同载荷与异载荷组合 | 并发领取命令/run | 用户域互不冲突；每用户内部仍单一结果；HMAC/唯一键含 user 域且不存原键 | P0 | not_run |
-| P4A-ISO-05 | A | F08 | API/integration | SQLite | auto | A/B 各有 run/pending/receipt/audit | 跨用户 run/pending UUID 和确认码 | GET/resume/cancel/confirm | 统一拒绝且不改变状态；不得通过 receipt/audit 反推出 B 的金额或操作 | P0 | not_run |
-| P4A-ISO-06 | A | F08/F09 | database | SQLite | auto | A/B 各有 conversation/message/memory/setting | 跨用户 UUID、namespace、module key | 查询、更新、删除 | 所有记录按 user 过滤，复合关系防串联；A 的删除不影响 B | P0 | not_run |
-| P4A-ISO-07 | A | F08 | security/manual | API | auto | 全链路植入虚拟 canary | 密码、token、API key、外部身份、B 的财务数据 | 触发成功、校验错、数据库错、模型错并捕获响应/日志/事件/上下文 | 所有禁止值均不存在；只允许摘要前缀和内部关联 ID | P0 | not_run |
-| P4A-ISO-08 | A | F08 | database | PostgreSQL | auto | 已有跨表虚拟数据 | 停用用户、撤销 session、模块禁用同时发生 | 两连接执行查询/写入 | 新操作按可信状态拒绝；既有事实不被删除或重新归属；并发无越权窗口 | P0 | not_run |
+| P4A-AUT-01 | A | F07 | API/integration | PostgreSQL | auto | 空 schema；本机来源判定可替换 | 两个并发 initialize、远程来源、随后重复请求 | 同步提交初始化 | 只有一个主人账户成功；其余稳定拒绝；无第二 credential/device 或半写 | P0 | passed |
+| P4A-AUT-02 | A | F07 | API/integration | SQLite | auto | 非空 P0～P3 数据库或已有用户 | initialize 请求 | 调用初始化端点 | 初始化端点稳定拒绝且零写入；既有数据的 bootstrap owner 只由受控 migration 处理，不得由 API 覆盖 owner | P0 | passed |
+| P4A-AUT-03 | A | F07 | security/manual | SQLite | auto | 已初始化虚拟用户 | 正确密码、数据库读取、响应/日志捕获 | 登录并检查 credential | 仅存 Argon2id 哈希及冻结参数；响应/日志不含密码/哈希；错误登录不改哈希 | P0 | passed |
+| P4A-AUT-04 | A | F07 | API/integration | API | auto | 存在用户 | 错 handle、错密码、停用用户、畸形输入 | 比较状态、文案、结构和可观察时序等级 | 错误不区分账户是否存在；严格 body；不签发 session，不泄露哈希或堆栈 | P0 | passed |
+| P4A-AUT-05 | A | F07 | API/integration | API | auto | 成功登录 | access/refresh 或不透明 token、恰好到期前后 | 调用受保护 API 与 refresh | 原始 token 只签发一次；库仅摘要；到期边界稳定；旧 access 按冻结策略失效 | P0 | passed |
+| P4A-AUT-06 | A | F07 | API/integration | PostgreSQL | auto | 同一 refresh/session token | 两并发刷新、顺序重放、不同设备 | 用两连接同步刷新 | 最多一个轮换成功；旧 token 重放稳定拒绝/撤销族；不产生两个 active 后继 | P0 | passed |
+| P4A-AUT-07 | A | F07 | API/integration | API | auto | 两设备 active session | logout 当前设备、撤销其他设备、已撤销 token | 连续调用 API/refresh | 目标 session 立即不可用，其他未撤销设备按规则保留；错误为 `session_revoked` | P0 | passed |
+| P4A-AUT-08 | A | F07 | API/integration | SQLite | auto | 两设备和旧密码 active | 改密成功/失败 | 改密后用旧新密码及所有 session 测试 | 旧密码失败，旧设备 session 全撤销，新凭据有效；失败事务不改变任何状态 | P0 | passed |
+| P4A-AUT-09 | A | F07；绑定默认 | API/integration | PostgreSQL | auto | 假渠道 adapter、可控时钟 | 绑定码恰好过期、超尝试、已消费、并发消费、重放 | 分别提交绑定 | 仅一个未过期码一次成功；摘要存储；失败不建立 binding、不回显原码/身份 | P0 | passed |
+| P4A-AUT-10 | A | F07 | API/integration | PostgreSQL | auto | 两虚拟用户和一个外部身份摘要 | 冲突绑定、撤销、重新绑定 | 建立/冲突/撤销/再绑定 | active 外部身份全局唯一；不自动抢占；撤销留无原始身份的审计；再绑定按冻结流程成功 | P0 | passed |
+| P4A-ISO-01 | A | F08；P2/P3 identity | API/integration | API | auto | 认证 principal A | body/query/model/tool 参数伪造 user B | 调用所有写/读入口 | 始终使用 A；自报字段被严格拒绝或忽略规则冻结；不得访问 B | P0 | passed |
+| P4A-ISO-02 | A | F08 | database | SQLite | auto | A/B 各有账户、分类、交易、活动、预算、收入、导入批次 | B 的 UUID 交给 A | 逐类 GET/命令/工具查询 | 返回统一未找到/拒绝；响应、日志、计数不泄露 B 数据存在性 | P0 | passed |
+| P4A-ISO-03 | A | F08 | database | PostgreSQL | auto | A/B 资源均存在 | 交易分录引用另一用户账户/分类；活动分配跨用户 | 直接 ORM/SQL 尝试提交 | 复合 FK/约束在数据库拒绝；整个事务回滚，无孤儿或半写 | P0 | passed |
+| P4A-ISO-04 | A | F08 | database | PostgreSQL | auto | A/B 使用同 source system 与同 raw event/key | 同载荷与异载荷组合 | 并发领取命令/run | 用户域互不冲突；每用户内部仍单一结果；HMAC/唯一键含 user 域且不存原键 | P0 | passed |
+| P4A-ISO-05 | A | F08 | API/integration | SQLite | auto | A/B 各有 run/pending/receipt/audit | 跨用户 run/pending UUID 和确认码 | GET/resume/cancel/confirm | 统一拒绝且不改变状态；不得通过 receipt/audit 反推出 B 的金额或操作 | P0 | passed |
+| P4A-ISO-06 | A | F08/F09 | database | SQLite | auto | A/B 各有 conversation/message/memory/setting | 跨用户 UUID、namespace、module key | 查询、更新、删除 | 所有记录按 user 过滤，复合关系防串联；A 的删除不影响 B | P0 | passed |
+| P4A-ISO-07 | A | F08 | security/manual | API | auto | 全链路植入虚拟 canary | 密码、token、API key、外部身份、B 的财务数据 | 触发成功、校验错、数据库错、模型错并捕获响应/日志/事件/上下文 | 所有禁止值均不存在；只允许摘要前缀和内部关联 ID | P0 | passed |
+| P4A-ISO-08 | A | F08 | database | PostgreSQL | auto | 已有跨表虚拟数据 | 停用用户、撤销 session、模块禁用同时发生 | 两连接执行查询/写入 | 新操作按可信状态拒绝；既有事实不被删除或重新归属；并发无越权窗口 | P0 | passed |
 
 #### Workflow、恢复与记忆
 
 | ID | 切片 | 需求/冻结来源 | 层级 | 环境 | 自动/人工 | 前置条件 | 输入摘要 | 步骤 | 预期结果与禁止副作用 | 风险 | 执行状态 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| P4A-WFL-01 | A | F06；P2-IF-001 | contract/unit | contract | auto | 通用 coordinator 与假 handler | needs_input→needs_confirmation→committing→committed；expired/cancelled | 枚举合法/非法转换 | 只允许冻结转换，终态不可回退；非法转换无版本/审计副作用 | P0 | not_run |
-| P4A-WFL-02 | A | F06；U04 | database | SQLite | auto | 可控时钟和普通候选 | 24h−1µs、恰好24h、24h+1µs | 确认并检查事实/回执 | 前者可提交；后两者 expired 且零领域写；时钟 teardown 恢复 | P0 | not_run |
-| P4A-WFL-03 | A | F06 | database | PostgreSQL | auto | 一个 needs_confirmation 候选 | 同确认 ID 两并发请求 | 两连接同步确认 | 只有一个获得提交权；另一重放同结果；领域回执与事实恰好一份 | P0 | not_run |
-| P4A-WFL-04 | A | F06 | database | SQLite | auto | 候选引用资源版本 v1 | 确认前归档/修订为 v2 | 确认并恢复状态 | 返回 stale/重新确认要求；不写事实、不伪造 committed | P0 | not_run |
-| P4A-WFL-05 | A | F06 | database | PostgreSQL | auto | running run 持有 lease | lease 未到期、恰好到期、过期；两个接管者 | 同步尝试接管 | 未到期拒绝；到期边界按冻结规则；过期只有一个新 attempt，旧 worker 不能覆盖结果 | P0 | not_run |
-| P4A-WFL-06 | A | F06/F10 | API/integration | API | auto | commit 已完成但响应被丢弃 | 同 event/confirmation ID 和新 ID | 新应用实例 GET/重放 | 同 ID 恢复原 committed 结果；新 ID 不重复写；关联 ID 可追踪 | P0 | not_run |
-| P4A-WFL-07 | A | F06 | API/integration | API | auto | 分别处于 needs_input/confirmation/committing/committed | cancel 请求 | 各状态取消并 GET | 事务前可进入 cancelled；committing 后只报告确定结果中并最终恢复；不得虚假称已取消写入 | P0 | not_run |
-| P4A-WFL-08 | A | F06 | API/integration | SQLite | auto | 可注入模型、工具、数据库故障 | 超时、永久错误、事务前/中故障 | 执行后重试同 ID | 稳定分类；失败无半写；允许重试路径复用原 ID；永久错误不隐藏重试 | P1 | not_run |
-| P4A-WFL-09 | A | F06；P2 | API/integration | SQLite | auto | 领域提交成功 | 最终自然语言生成失败/进程退出 | GET 并重试 run | committed 事实保持一份，可从结构化结果恢复；不得再次调用写工具 | P0 | not_run |
-| P4A-WFL-10 | A | F06/F08 | contract/unit | contract | auto | 模型可返回任意 JSON | 覆盖 user/module/profile/schema/lease/version/approved | 让模型补充或确认 | 所有可信字段保持服务端值；伪造内容只作为不可信输入并被拒 | P0 | not_run |
-| P4A-MEM-01 | A | F09 | database | SQLite | auto | shared/daily/wealth 命名空间有虚拟条目 | 各 Profile 读/提议/确认越权组合 | 检索与写候选 | 只允许 manifest grant；无 wildcard；越权不泄露条目数量/内容 | P0 | not_run |
-| P4A-MEM-02 | A | F09；U04 | database | SQLite | auto | pending candidate、可控时钟 | confirm/reject；30d−1µs/恰好30d/+1µs | 执行状态转换 | 确认生成获准 item；拒绝/过期不保留敏感正文；边界稳定且不可复活 | P1 | not_run |
-| P4A-MEM-03 | A | F09 | API/integration | SQLite | auto | daily candidate 请求晋升 shared | 来源摘要、敏感级别、有效期、影响模块 | GET 详情后确认 | 只有显式确认可创建 `shared.confirmed`，候选关系可追溯；不得静默晋升 | P0 | not_run |
-| P4A-MEM-04 | A | F09 | database | SQLite | auto | confirmed v1 | 失效、由 v2 替代、重复确认、并发替代 | 执行并回查 | 活跃链唯一、旧版本可审计但不可检索；并发只有一个胜者 | P1 | not_run |
-| P4A-MEM-05 | A | F09；U04 | database | SQLite | auto | 敏感 message/item | 手动删除 | 删除并直接检索数据库与 API | 立即不可检索，正文/value_json 被清空，只留无内容 tombstone；缓存/上下文也失效 | P0 | not_run |
-| P4A-MEM-06 | A | F09 | security/manual | SQLite | auto | 账目、余额、预算、持仓、行情虚拟事实 | 建议记忆与对话总结 | 检查 candidate/item/message/prompt | 事实不被复制为长期记忆；只能由授权工具按需取最新值 | P0 | not_run |
-| P4A-MEM-07 | A | F09 | contract/unit | contract | auto | 12 条跨 namespace/状态/时间记忆 | Profile grant、tag、到期和相同时间 | 多次检索 | 只返回获准 active 未过期项，最多 8 条，稳定排序；不塞入全账本/全对话 | P1 | not_run |
-| P4A-MEM-08 | A | F09；U04 | database | SQLite | auto | 会话消息可控时钟 | 90d−1µs/恰好90d/+1µs、手动删除、保留 confirmed | 执行清理并 GET | 会话按冻结边界清理；手删立即生效；confirmed 不因会话清理消失 | P1 | not_run |
+| P4A-WFL-01 | A | F06；P2-IF-001 | contract/unit | contract | auto | 通用 coordinator 与假 handler | needs_input→needs_confirmation→committing→committed；expired/cancelled | 枚举合法/非法转换 | 只允许冻结转换，终态不可回退；非法转换无版本/审计副作用 | P0 | passed |
+| P4A-WFL-02 | A | F06；U04 | database | SQLite | auto | 可控时钟和普通候选 | 24h−1µs、恰好24h、24h+1µs | 确认并检查事实/回执 | 前者可提交；后两者 expired 且零领域写；时钟 teardown 恢复 | P0 | passed |
+| P4A-WFL-03 | A | F06 | database | PostgreSQL | auto | 一个 needs_confirmation 候选 | 同确认 ID 两并发请求 | 两连接同步确认 | 只有一个获得提交权；另一重放同结果；领域回执与事实恰好一份 | P0 | passed |
+| P4A-WFL-04 | A | F06 | database | SQLite | auto | 候选引用资源版本 v1 | 确认前归档/修订为 v2 | 确认并恢复状态 | 返回 stale/重新确认要求；不写事实、不伪造 committed | P0 | passed |
+| P4A-WFL-05 | A | F06 | database | PostgreSQL | auto | running run 持有 lease | lease 未到期、恰好到期、过期；两个接管者 | 同步尝试接管 | 未到期拒绝；到期边界按冻结规则；过期只有一个新 attempt，旧 worker 不能覆盖结果 | P0 | passed |
+| P4A-WFL-06 | A | F06/F10 | API/integration | API | auto | commit 已完成但响应被丢弃 | 同 event/confirmation ID 和新 ID | 新应用实例 GET/重放 | 同 ID 恢复原 committed 结果；新 ID 不重复写；关联 ID 可追踪 | P0 | passed |
+| P4A-WFL-07 | A | F06 | API/integration | API | auto | 分别处于 needs_input/confirmation/committing/committed | cancel 请求 | 各状态取消并 GET | 事务前可进入 cancelled；committing 后只报告确定结果中并最终恢复；不得虚假称已取消写入 | P0 | passed |
+| P4A-WFL-08 | A | F06 | API/integration | SQLite | auto | 可注入模型、工具、数据库故障 | 超时、永久错误、事务前/中故障 | 执行后重试同 ID | 稳定分类；失败无半写；允许重试路径复用原 ID；永久错误不隐藏重试 | P1 | passed |
+| P4A-WFL-09 | A | F06；P2 | API/integration | SQLite | auto | 领域提交成功 | 最终自然语言生成失败/进程退出 | GET 并重试 run | committed 事实保持一份，可从结构化结果恢复；不得再次调用写工具 | P0 | passed |
+| P4A-WFL-10 | A | F06/F08 | contract/unit | contract | auto | 模型可返回任意 JSON | 覆盖 user/module/profile/schema/lease/version/approved | 让模型补充或确认 | 所有可信字段保持服务端值；伪造内容只作为不可信输入并被拒 | P0 | passed |
+| P4A-MEM-01 | A | F09 | database | SQLite | auto | shared/daily/wealth 命名空间有虚拟条目 | 各 Profile 读/提议/确认越权组合 | 检索与写候选 | 只允许 manifest grant；无 wildcard；越权不泄露条目数量/内容 | P0 | passed |
+| P4A-MEM-02 | A | F09；U04 | database | SQLite | auto | pending candidate、可控时钟 | confirm/reject；30d−1µs/恰好30d/+1µs | 执行状态转换 | 确认生成获准 item；拒绝/过期不保留敏感正文；边界稳定且不可复活 | P1 | passed |
+| P4A-MEM-03 | A | F09 | API/integration | SQLite | auto | daily candidate 请求晋升 shared | 来源摘要、敏感级别、有效期、影响模块 | GET 详情后确认 | 只有显式确认可创建 `shared.confirmed`，候选关系可追溯；不得静默晋升 | P0 | passed |
+| P4A-MEM-04 | A | F09 | database | SQLite | auto | confirmed v1 | 失效、由 v2 替代、重复确认、并发替代 | 执行并回查 | 活跃链唯一、旧版本可审计但不可检索；并发只有一个胜者 | P1 | passed |
+| P4A-MEM-05 | A | F09；U04 | database | SQLite | auto | 敏感 message/item | 手动删除 | 删除并直接检索数据库与 API | 立即不可检索，正文/value_json 被清空，只留无内容 tombstone；缓存/上下文也失效 | P0 | passed |
+| P4A-MEM-06 | A | F09 | security/manual | SQLite | auto | 账目、余额、预算、持仓、行情虚拟事实 | 建议记忆与对话总结 | 检查 candidate/item/message/prompt | 事实不被复制为长期记忆；只能由授权工具按需取最新值 | P0 | passed |
+| P4A-MEM-07 | A | F09 | contract/unit | contract | auto | 12 条跨 namespace/状态/时间记忆 | Profile grant、tag、到期和相同时间 | 多次检索 | 只返回获准 active 未过期项，最多 8 条，稳定排序；不塞入全账本/全对话 | P1 | passed |
+| P4A-MEM-08 | A | F09；U04 | database | SQLite | auto | 会话消息可控时钟 | 90d−1µs/恰好90d/+1µs、手动删除、保留 confirmed | 执行清理并 GET | 会话按冻结边界清理；手删立即生效；confirmed 不因会话清理消失 | P1 | passed |
 
 #### API、迁移、事件与设置
 
 | ID | 切片 | 需求/冻结来源 | 层级 | 环境 | 自动/人工 | 前置条件 | 输入摘要 | 步骤 | 预期结果与禁止副作用 | 风险 | 执行状态 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| P4A-DB-01 | A | F10；D9 API | API/integration | API | auto | Host API 已组装 | auth/modules/conversation/run/memory/settings 的额外字段、错类型、缺 token、未知 ID | 参数化请求 | 严格 body、统一 request ID/error envelope/状态码；无处理器和数据库副作用 | P1 | not_run |
-| P4A-DB-02 | A | F10 | API/integration | API | auto | run/pending/conversation 已创建 | 断线、重复 GET、相同状态变更键、同键异载荷 | 重连并查询/重放 | GET 可恢复最终结构化结果；同键同载荷稳定，同键异载荷冲突；不依赖 token streaming | P0 | not_run |
-| P4A-DB-03 | A | F08/F15 | database | SQLite | auto | 空库与 migration chain | base→head、重复 upgrade、允许 downgrade/rebuild | 执行并检查 schema/head | 单一 head、owner 标注和约束符合冻结模型；重复操作安全；无 multiple heads | P0 | not_run |
-| P4A-DB-04 | A | F08/F15/F17 | database | SQLite | auto | P0～P3 全量虚拟历史数据 | nullable→回填→复合约束→非空升级 | 每阶段核对数量、ID、金额、版本、引用、摘要 | 历史逐字/数值保持，统一 bootstrap user；孤儿/重复安全失败，不自动合并或删数据 | P0 | not_run |
-| P4A-DB-05 | A | F08/F15 | database | PostgreSQL | auto | 空 schema 与已有 P0～P3 schema | 完整升级、重复升级、允许降级 | 在随机 schema 执行 | 类型、非空、复合 FK/unique/index 真实生效；单 head；失败事务不留半迁移 | P0 | not_run |
-| P4A-DB-06 | A | F08/F15 | database | PostgreSQL | auto | 含孤儿、跨用户引用、同用户/跨用户同幂等键的构造数据 | 回填与约束阶段 | 分别迁移 | 合法数据保持；非法数据在加约束前安全阻断并可诊断；不得重归属、截断或删除 | P0 | not_run |
-| P4A-DB-07 | A | F14 | API/integration | SQLite | auto | 领域事务和两个事件 handler | 事务成功/失败、handler 抛错、重复消费提示 | 提交并检查事实/UI提示 | 只在 commit 后发布；失败事务零事件；handler 失败不回滚事实；事件载荷最小且无原始键/敏感详情 | P0 | not_run |
-| P4A-DB-08 | A | F02/F09/F13 | API/integration | SQLite | auto | 账户同步、设备本地、运行时三类设置 | 合法/未知 key、错 schema version、并发更新、API key 伪装设置 | 分别通过 Host/Electron 假接口写入 | 服务端只存账户同步设置并做版本冲突；设备设置不上传；运行时可丢弃；API Key 不进入普通 JSON | P1 | not_run |
+| P4A-DB-01 | A | F10；D9 API | API/integration | API | auto | Host API 已组装 | auth/modules/conversation/run/memory/settings 的额外字段、错类型、缺 token、未知 ID | 参数化请求 | 严格 body、统一 request ID/error envelope/状态码；无处理器和数据库副作用 | P1 | passed |
+| P4A-DB-02 | A | F10 | API/integration | API | auto | run/pending/conversation 已创建 | 断线、重复 GET、相同状态变更键、同键异载荷 | 重连并查询/重放 | GET 可恢复最终结构化结果；同键同载荷稳定，同键异载荷冲突；不依赖 token streaming | P0 | passed |
+| P4A-DB-03 | A | F08/F15 | database | SQLite | auto | 空库与 migration chain | base→head、重复 upgrade、允许 downgrade/rebuild | 执行并检查 schema/head | 单一 head、owner 标注和约束符合冻结模型；重复操作安全；无 multiple heads | P0 | passed |
+| P4A-DB-04 | A | F08/F15/F17 | database | SQLite | auto | P0～P3 全量虚拟历史数据 | nullable→回填→复合约束→非空升级 | 每阶段核对数量、ID、金额、版本、引用、摘要 | 历史逐字/数值保持，统一 bootstrap user；孤儿/重复安全失败，不自动合并或删数据 | P0 | passed |
+| P4A-DB-05 | A | F08/F15 | database | PostgreSQL | auto | 空 schema 与已有 P0～P3 schema | 完整升级、重复升级、允许降级 | 在随机 schema 执行 | 类型、非空、复合 FK/unique/index 真实生效；单 head；失败事务不留半迁移 | P0 | passed |
+| P4A-DB-06 | A | F08/F15 | database | PostgreSQL | auto | 含孤儿、跨用户引用、同用户/跨用户同幂等键的构造数据 | 回填与约束阶段 | 分别迁移 | 合法数据保持；非法数据在加约束前安全阻断并可诊断；不得重归属、截断或删除 | P0 | passed |
+| P4A-DB-07 | A | F14 | API/integration | SQLite | auto | 领域事务和两个事件 handler | 事务成功/失败、handler 抛错、重复消费提示 | 提交并检查事实/UI提示 | 只在 commit 后发布；失败事务零事件；handler 失败不回滚事实；事件载荷最小且无原始键/敏感详情 | P0 | passed |
+| P4A-DB-08 | A | F02/F09/F13 | API/integration | SQLite | auto | 账户同步、设备本地、运行时三类设置 | 合法/未知 key、错 schema version、并发更新、API key 伪装设置 | 分别通过 Host/Electron 假接口写入 | 服务端只存账户同步设置并做版本冲突；设备设置不上传；运行时可丢弃；API Key 不进入普通 JSON | P1 | passed |
 
 ### 5.2 P4-B：Windows Shell、设置和毛毛（24 项）
 
@@ -381,12 +381,12 @@ P4 的 user scope、Host adapter 和 migration 会横切旧功能，因此最终
 | 方式 | auto | 116 |
 | 方式 | manual | 4 |
 
-结构质量要求：120 个 ID 必须唯一；每行恰好包含任务卡要求的 12 个字段；执行状态必须全部为 `not_run`；F01～F17、U01～U07、P4-D 八项证明和任务卡所有强制范围都必须至少映射一个案例。当前文档没有执行时间、通过率或未来实现快照摘要。
+结构质量要求：120 个 ID 必须唯一；每行恰好包含任务卡要求的 12 个字段；F01～F17、U01～U07、P4-D 八项证明和任务卡所有强制范围都必须至少映射一个案例。P4-C11-R2 终点状态为 P4-A 64 `passed`，P4-B/C/D 56 `not_run`；P4-A 的最终项目接受仍由总控决定。
 
-## 11. 本任务未测试范围
+## 11. C10 设计任务与后续执行边界
 
-- 未运行任何现有或新测试，未启动 FastAPI、SQLite/PostgreSQL 服务、Docker、Electron、DeepSeek、OpenClaw 或微信。
+- C10 设计任务本身未运行测试或服务；后续 C11/R1/R2 只把有固定快照和实际证据的 P4-A 状态更新为 `passed`。
 - 未安装依赖、登录外部服务、访问网络、读取密钥或使用真实个人/财务/渠道数据。
 - 未选择 OpenAPI 生成器、前端 router/state/chart、SSE 实现、Electron 打包工具或 MCP SDK；案例只约束与实现无关的合同。
 - 未实现 P4 产品、migration、桌面应用、独立测试、财富规划、行情、交易、证券推荐、公众注册、远程多端、第三方插件市场、自动更新或发布签名。
-- 未执行 Git 写操作；本矩阵只能提交 `review`，正式冻结、实现派发、最终 `complete` 和 Git 处理均属于头脑风暴总控。
+- C11-R2 没有运行 Electron、DeepSeek、OpenClaw、微信或其他外部系统，也没有执行 Git 写操作；最终 `complete` 和 Git 处理仍属于头脑风暴总控。

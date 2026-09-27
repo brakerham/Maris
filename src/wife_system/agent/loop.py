@@ -8,7 +8,7 @@ import math
 import threading
 import time
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Callable, Sequence
 
 from wife_system.agent.providers import ModelProvider, ProviderError, ProviderTimeoutError
 from wife_system.agent.context import RunContext
@@ -20,6 +20,7 @@ from wife_system.agent.types import (
     RunStatus,
 )
 from wife_system.tools import ToolArgumentsError, ToolNotFoundError, ToolRegistry
+from wife_system.host.tools import ToolNotAllowedError
 
 
 @dataclass
@@ -61,6 +62,9 @@ class AgentRunner:
         request_id: str | None = None,
         *,
         context: RunContext | None = None,
+        initial_messages: Sequence[ConversationMessage] | None = None,
+        checkpoint: Callable[[str, str | None], None] | None = None,
+        message_sink: Callable[[ConversationMessage], None] | None = None,
     ) -> AgentRunResult:
         request_id = request_id or (str(context.agent_run_id) if context is not None else "")
         if not request_id.strip():
@@ -87,7 +91,14 @@ class AgentRunner:
             completion.wait()
 
         try:
-            result = self._run_uncached(user_message, request_id, context)
+            result = self._run_uncached(
+                user_message,
+                request_id,
+                context,
+                initial_messages=initial_messages,
+                checkpoint=checkpoint,
+                message_sink=message_sink,
+            )
         except BaseException:
             with self._request_lock:
                 self._in_flight.pop(request_id, None)
@@ -101,13 +112,21 @@ class AgentRunner:
         return result
 
     def _run_uncached(
-        self, user_message: str, request_id: str, context: RunContext | None
+        self,
+        user_message: str,
+        request_id: str,
+        context: RunContext | None,
+        *,
+        initial_messages: Sequence[ConversationMessage] | None,
+        checkpoint: Callable[[str, str | None], None] | None,
+        message_sink: Callable[[ConversationMessage], None] | None,
     ) -> AgentRunResult:
         events: list[ExecutionEvent] = []
-        messages = []
-        if context is not None:
+        messages = list(initial_messages or ())
+        if initial_messages is None and context is not None:
             messages.append(ConversationMessage(role="system", content=FINANCE_SYSTEM_PROMPT_V1))
-        messages.append(ConversationMessage(role="user", content=user_message))
+        if initial_messages is None:
+            messages.append(ConversationMessage(role="user", content=user_message))
         executed_call_ids: set[str] = set()
         executed_calls: set[str] = set()
         total_tool_calls = 0
@@ -119,11 +138,15 @@ class AgentRunner:
             provider_attempts = 1 + (self.max_provider_retries if context is not None else 0)
             for attempt in range(provider_attempts):
                 try:
+                    if checkpoint is not None:
+                        checkpoint("provider_before", None)
                     turn = self.provider.complete(
                         messages,
                         self.tools.schemas(context),
                         self.provider_timeout_seconds,
                     )
+                    if checkpoint is not None:
+                        checkpoint("provider_after", None)
                     break
                 except ProviderTimeoutError as exc:
                     if attempt + 1 < provider_attempts and exc.retryable:
@@ -156,11 +179,12 @@ class AgentRunner:
             )
 
             if turn.tool_calls:
-                messages.append(
-                    ConversationMessage(
-                        role="assistant", content=turn.content, tool_calls=turn.tool_calls
-                    )
+                assistant_message = ConversationMessage(
+                    role="assistant", content=turn.content, tool_calls=turn.tool_calls
                 )
+                messages.append(assistant_message)
+                if message_sink is not None:
+                    message_sink(assistant_message)
                 for call in turn.tool_calls:
                     total_tool_calls += 1
                     if total_tool_calls > self.max_tool_calls:
@@ -187,22 +211,30 @@ class AgentRunner:
                             "The model repeated an identical tool call.",
                         )
                     executed_calls.add(signature)
-                    if not self.tools.contains(call.name):
-                        return self._finish_error(
-                            request_id,
-                            events,
-                            "unknown_tool",
-                            "The model requested an unknown tool.",
-                        )
-                    if self.tools.is_write(call.name):
-                        total_write_calls += 1
-                        if total_write_calls > self.max_write_calls:
+                    try:
+                        if not self.tools.contains(call.name):
                             return self._finish_error(
                                 request_id,
                                 events,
-                                "write_limit_exceeded",
-                                "The agent reached its finance-write limit.",
+                                "unknown_tool",
+                                "The model requested an unknown tool.",
                             )
+                        if self.tools.is_write(call.name):
+                            total_write_calls += 1
+                            if total_write_calls > self.max_write_calls:
+                                return self._finish_error(
+                                    request_id,
+                                    events,
+                                    "write_limit_exceeded",
+                                    "The agent reached its finance-write limit.",
+                                )
+                    except ToolNotAllowedError:
+                        return self._finish_error(
+                            request_id,
+                            events,
+                            "tool_not_allowed",
+                            "The requested tool is not allowed.",
+                        )
                     self._event(
                         events,
                         "tool_started",
@@ -212,7 +244,19 @@ class AgentRunner:
                     )
                     started_at = time.perf_counter()
                     try:
-                        output = self.tools.invoke(call.name, call.arguments, context)
+                        if checkpoint is not None:
+                            checkpoint("tool_before", call.name)
+                        tool_context = context
+                        if context is not None:
+                            tool_context = context.model_copy(
+                                update={
+                                    "tool_deadline_monotonic": time.monotonic()
+                                    + self.tool_timeout_seconds
+                                }
+                            )
+                        output = self.tools.invoke(call.name, call.arguments, tool_context)
+                        if checkpoint is not None:
+                            checkpoint("tool_after", call.name)
                         duration_seconds = time.perf_counter() - started_at
                         if duration_seconds > self.tool_timeout_seconds and not self.tools.is_write(call.name):
                             return self._finish_error(
@@ -234,12 +278,26 @@ class AgentRunner:
                             "unknown_tool",
                             "The model requested an unknown tool.",
                         )
+                    except ToolNotAllowedError:
+                        return self._finish_error(
+                            request_id,
+                            events,
+                            "tool_not_allowed",
+                            "The requested tool is not allowed.",
+                        )
                     except ToolArgumentsError:
                         return self._finish_error(
                             request_id,
                             events,
                             "invalid_tool_arguments",
                             f"Arguments for {call.name} failed validation.",
+                        )
+                    except TimeoutError:
+                        return self._finish_error(
+                            request_id,
+                            events,
+                            "tool_timeout",
+                            "The tool exceeded its cooperative deadline.",
                         )
                     except Exception:
                         return self._finish_error(
@@ -300,13 +358,14 @@ class AgentRunner:
                             code,
                             message if not retryable else message,
                         )
-                    messages.append(
-                        ConversationMessage(
-                            role="tool",
-                            tool_call_id=call.id,
-                            content=serialized_output,
-                        )
+                    tool_message = ConversationMessage(
+                        role="tool",
+                        tool_call_id=call.id,
+                        content=serialized_output,
                     )
+                    messages.append(tool_message)
+                    if message_sink is not None:
+                        message_sink(tool_message)
                 continue
 
             if turn.content:

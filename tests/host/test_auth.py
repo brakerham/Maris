@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import hmac
 import re
 import secrets
 import uuid
@@ -15,6 +17,8 @@ from sqlalchemy.orm import Session, sessionmaker
 from pwdlib import PasswordHash
 from pwdlib.hashers.argon2 import Argon2Hasher
 
+import wife_system.agent.models  # noqa: F401 -- register composite-FK targets
+
 from wife_system.finance.db import Base, make_engine, make_session_factory
 from wife_system.host.auth import (
     AppUser,
@@ -28,6 +32,7 @@ from wife_system.host.auth import (
     PasswordCredential,
     SessionRefreshToken,
 )
+from wife_system.host.auth.errors import AUTH_ERROR_CODES, AuthErrorCode
 
 
 NOW = datetime(2026, 9, 20, 12, 0, tzinfo=UTC)
@@ -188,6 +193,7 @@ def test_login_tokens_are_opaque_digest_only_and_expire_at_exact_boundaries(harn
     assert issued.access_token != issued.refresh_token
     principal = harness.service.authenticate_access(issued.access_token, now=NOW + timedelta(minutes=14, seconds=59))
     assert principal.user_id == harness.user_id
+    assert principal.platform == "api_test"
     with pytest.raises(AuthError) as caught:
         harness.service.authenticate_access(issued.access_token, now=NOW + timedelta(minutes=15))
     assert error_code(caught) == "session_expired"
@@ -312,6 +318,170 @@ def test_active_device_session_limit_is_ten(harness: Harness) -> None:
     assert error_code(caught) == "active_session_limit"
 
 
+def test_auth_error_codes_are_closed_and_password_change_checks_access_expiry(harness: Harness) -> None:
+    assert AUTH_ERROR_CODES == {item.value for item in AuthErrorCode}
+    with pytest.raises(ValueError, match="unknown AuthError code"):
+        AuthError("not_a_public_code")
+
+    issued = harness.login()
+    with harness.sessions() as session:
+        before_credential = session.scalar(
+            select(PasswordCredential.password_hash).where(PasswordCredential.user_id == harness.user_id)
+        )
+        before_sessions = session.scalar(select(func.count(DeviceSession.id)))
+        before_refresh = session.scalar(select(func.count(SessionRefreshToken.id)))
+    with pytest.raises(AuthError) as caught:
+        harness.service.change_password(
+            issued.access_token,
+            old_password=PASSWORD,
+            new_password="replacement password material",
+            now=issued.access_expires_at,
+        )
+    assert error_code(caught) == "session_expired"
+    with harness.sessions() as session:
+        assert session.scalar(
+            select(PasswordCredential.password_hash).where(PasswordCredential.user_id == harness.user_id)
+        ) == before_credential
+        assert session.scalar(select(func.count(DeviceSession.id))) == before_sessions
+        assert session.scalar(select(func.count(SessionRefreshToken.id))) == before_refresh
+
+
+@pytest.mark.parametrize(
+    ("offset", "accepted"),
+    [
+        (timedelta(microseconds=-1), True),
+        (timedelta(0), False),
+        (timedelta(microseconds=1), False),
+    ],
+)
+def test_password_change_access_expiry_microsecond_boundary(
+    harness: Harness, offset: timedelta, accepted: bool
+) -> None:
+    issued = harness.login()
+    at = issued.access_expires_at + offset
+    with harness.sessions() as session:
+        before = session.scalar(
+            select(PasswordCredential.password_hash).where(
+                PasswordCredential.user_id == harness.user_id
+            )
+        )
+    if accepted:
+        replacement = harness.service.change_password(
+            issued.access_token,
+            old_password=PASSWORD,
+            new_password="replacement password material",
+            now=at,
+        )
+        assert replacement.session_id != issued.session_id
+    else:
+        with pytest.raises(AuthError) as caught:
+            harness.service.change_password(
+                issued.access_token,
+                old_password=PASSWORD,
+                new_password="replacement password material",
+                now=at,
+            )
+        assert error_code(caught) == "session_expired"
+        with harness.sessions() as session:
+            assert session.scalar(
+                select(PasswordCredential.password_hash).where(
+                    PasswordCredential.user_id == harness.user_id
+                )
+            ) == before
+
+
+def test_binding_replacement_and_five_attempt_lock(harness: Harness) -> None:
+    principal = harness.service.authenticate_access(harness.login().access_token, now=NOW)
+    old = harness.service.create_binding_code(principal, channel="fake_wechat", now=NOW)
+    current = harness.service.create_binding_code(
+        principal, channel="fake_wechat", now=NOW + timedelta(seconds=1)
+    )
+    with harness.sessions() as session:
+        old_row = session.get(ChannelBindingCode, old.code_id)
+        assert old_row is not None and old_row.status == "revoked"
+        current_row = session.get(ChannelBindingCode, current.code_id)
+        assert current_row is not None
+        message = (
+            b"wife.channel-binding.v2\x00"
+            + str(current.code_id).encode("ascii")
+            + b"\x00fake_wechat\x00"
+            + current.code.encode("ascii")
+        )
+        assert current_row.code_digest == hmac.new(
+            harness.secrets.binding_hmac_key, message, hashlib.sha256
+        ).hexdigest()
+
+    for invalid_id, invalid_code in ((old.code_id, old.code), (uuid.uuid4(), current.code)):
+        with pytest.raises(AuthError) as caught:
+            harness.service.consume_binding_code(
+                adapter_token=harness.secrets.adapter_token,
+                code_id=invalid_id,
+                channel="fake_wechat",
+                provider_account="virtual-provider",
+                external_subject="virtual-subject",
+                code=invalid_code,
+                now=NOW + timedelta(seconds=2),
+            )
+        assert error_code(caught) == "binding_code_invalid"
+
+    for attempt in range(6):
+        with pytest.raises(AuthError) as caught:
+            harness.service.consume_binding_code(
+                adapter_token=harness.secrets.adapter_token,
+                code_id=current.code_id,
+                channel="wrong_channel",
+                provider_account="virtual-provider",
+                external_subject="virtual-subject",
+                code=current.code,
+                now=NOW + timedelta(seconds=2 + attempt),
+            )
+        assert error_code(caught) == "binding_code_invalid"
+    with harness.sessions() as session:
+        row = session.get(ChannelBindingCode, current.code_id)
+        assert row is not None and row.attempts == 5 and row.status == "locked"
+
+
+def test_binding_fifth_failure_races_correct_consume_linearly(harness: Harness) -> None:
+    principal = harness.service.authenticate_access(harness.login().access_token, now=NOW)
+    created = harness.service.create_binding_code(principal, channel="fake_wechat", now=NOW)
+    with harness.sessions() as session, session.begin():
+        row = session.get(ChannelBindingCode, created.code_id)
+        assert row is not None
+        row.attempts = 4
+
+    barrier = Barrier(2)
+
+    def consume(code: str) -> object:
+        barrier.wait()
+        try:
+            return harness.service.consume_binding_code(
+                adapter_token=harness.secrets.adapter_token,
+                code_id=created.code_id,
+                channel="fake_wechat",
+                provider_account="virtual-race-provider",
+                external_subject="virtual-race-subject",
+                code=code,
+                now=NOW + timedelta(seconds=1),
+            )
+        except AuthError as exc:
+            return exc.code
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        wrong_future = pool.submit(consume, "WRNG-CODE")
+        correct_future = pool.submit(consume, created.code)
+        wrong, correct = wrong_future.result(), correct_future.result()
+    assert wrong == "binding_code_invalid"
+    with harness.sessions() as session:
+        row = session.get(ChannelBindingCode, created.code_id)
+        assert row is not None
+        if row.status == "consumed":
+            assert row.attempts == 4
+            assert not isinstance(correct, str)
+        else:
+            assert row.status == "locked" and row.attempts == 5
+            assert correct == "binding_code_invalid"
+
+
 def test_binding_code_hmac_expiry_adapter_gate_and_no_raw_identity(harness: Harness) -> None:
     principal = harness.service.authenticate_access(harness.login().access_token, now=NOW)
     created = harness.service.create_binding_code(principal, channel="fake_wechat", now=NOW)
@@ -319,6 +489,7 @@ def test_binding_code_hmac_expiry_adapter_gate_and_no_raw_identity(harness: Harn
     with pytest.raises(AuthError) as caught:
         harness.service.consume_binding_code(
             adapter_token=secrets.token_bytes(32),
+            code_id=created.code_id,
             channel="fake_wechat",
             provider_account="virtual-provider",
             external_subject="virtual-subject",
@@ -334,17 +505,19 @@ def test_binding_code_hmac_expiry_adapter_gate_and_no_raw_identity(harness: Harn
     with pytest.raises(AuthError) as caught:
         harness.service.consume_binding_code(
             adapter_token=harness.secrets.adapter_token,
+            code_id=created.code_id,
             channel="fake_wechat",
             provider_account="virtual-provider",
             external_subject="virtual-subject",
             code=created.code,
             now=NOW + timedelta(minutes=10),
         )
-    assert error_code(caught) == "binding_code_expired"
+    assert error_code(caught) == "binding_code_invalid"
 
     fresh = harness.service.create_binding_code(principal, channel="fake_wechat", now=NOW)
     binding = harness.service.consume_binding_code(
         adapter_token=harness.secrets.adapter_token,
+        code_id=fresh.code_id,
         channel="fake_wechat",
         provider_account="virtual-provider",
         external_subject="virtual-subject",
@@ -367,6 +540,7 @@ def test_binding_concurrent_consume_conflict_and_revoked_identity_can_rebind(har
         try:
             return harness.service.consume_binding_code(
                 adapter_token=harness.secrets.adapter_token,
+                code_id=created.code_id,
                 channel="fake_wechat",
                 provider_account="provider-a",
                 external_subject="subject-a",
@@ -380,7 +554,7 @@ def test_binding_concurrent_consume_conflict_and_revoked_identity_can_rebind(har
         outcomes = list(pool.map(lambda _: consume(), range(2)))
     winners = [value for value in outcomes if not isinstance(value, str)]
     assert len(winners) == 1
-    assert [value for value in outcomes if isinstance(value, str)] == ["binding_code_consumed"]
+    assert [value for value in outcomes if isinstance(value, str)] == ["binding_code_invalid"]
 
     other_user = uuid.uuid4()
     with harness.sessions() as session, session.begin():
@@ -390,6 +564,7 @@ def test_binding_concurrent_consume_conflict_and_revoked_identity_can_rebind(har
     with pytest.raises(AuthError) as caught:
         harness.service.consume_binding_code(
             adapter_token=harness.secrets.adapter_token,
+            code_id=conflict_code.code_id,
             channel="fake_wechat",
             provider_account="provider-b",
             external_subject="subject-a",
@@ -401,6 +576,7 @@ def test_binding_concurrent_consume_conflict_and_revoked_identity_can_rebind(har
     harness.service.revoke_binding(harness.user_id, winners[0].binding_id, now=NOW + timedelta(seconds=3))
     rebound = harness.service.consume_binding_code(
         adapter_token=harness.secrets.adapter_token,
+        code_id=conflict_code.code_id,
         channel="fake_wechat",
         provider_account="provider-b",
         external_subject="subject-a",

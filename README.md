@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent 和 P3 活动 Markdown 导入纵向切片均已完成独立验收。P4-A Host、身份和通用状态地基正在关闭 `P4-C11-R1-PG-001`：E1 已在真实 PostgreSQL 上复现并最小修复历史 user-scope migration 的 pending-trigger ALTER 缺陷，30 项执行方门禁通过；当前等待 C11-R2 对原失败节点、非法历史和相邻 migration 作一次有限独立复验。矩阵在独立结论前仍为 62 passed、2 failed，P4-A 尚未 `complete`。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。C11-R2 已在真实 PostgreSQL 上关闭历史迁移缺陷 `P4-C11-R1-PG-001`，P4-A 最终矩阵为 64 passed、0 failed、0 blocked、0 not_run，并固定 134 文件最终快照。P4-B、P4-C、P4-D 共 56 项仍为 `not_run`；下一步先冻结 P4-B 的桌面产品交互切片。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -68,6 +68,7 @@
 - [P4-B6-R3-R1 续跑 Prompt](docs/coordination/prompts/p4-b6-r3-r1-postgresql-history-migration-resume-executor.md)：保留 R3 已准备的历史回归，在 Docker Engine 恢复后先复现原失败，再完成最小 migration 返修。
 - [P4-B6-R3-R1-E1 恢复 Prompt](docs/coordination/prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md)：记录总控已通过的 Engine/Compose 门禁，恢复同一返修并沿用 131 文件固定输入。
 - [P4-C11-R2 测试智能体 Prompt](docs/coordination/prompts/p4-c11-r2-postgresql-history-tester.md)：只复验原 PostgreSQL 历史失败、非法历史原子拒绝和相邻 migration，不重复完整 C11。
+- [P4-A 最终总控验收](docs/p4-a-final-coordinator-review.md)：接受 64/64 独立矩阵、关闭历史迁移 P0，并固定 134 文件最终快照。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

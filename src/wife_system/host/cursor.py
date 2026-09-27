@@ -7,7 +7,7 @@ import hashlib
 import hmac
 import json
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 
 
 class InvalidCursorError(ValueError):
@@ -27,11 +27,16 @@ class CursorCodec:
         user_id: uuid.UUID,
         sort_time: datetime,
         item_id: uuid.UUID,
+        filter_fingerprint: str = "",
     ) -> str:
+        if sort_time.tzinfo is None or sort_time.utcoffset() is None:
+            sort_time = sort_time.replace(tzinfo=UTC)
         payload = json.dumps(
             {
+                "version": 1,
                 "endpoint": endpoint,
                 "user_id": str(user_id),
+                "filter": filter_fingerprint,
                 "sort_time": sort_time.isoformat(),
                 "item_id": str(item_id),
             },
@@ -41,7 +46,14 @@ class CursorCodec:
         signature = hmac.new(self._secret, b"wife.cursor.v1\0" + payload, hashlib.sha256).digest()
         return base64.urlsafe_b64encode(payload + signature).decode().rstrip("=")
 
-    def decode(self, value: str, *, endpoint: str, user_id: uuid.UUID) -> tuple[datetime, uuid.UUID]:
+    def decode(
+        self,
+        value: str,
+        *,
+        endpoint: str,
+        user_id: uuid.UUID,
+        filter_fingerprint: str = "",
+    ) -> tuple[datetime, uuid.UUID]:
         if not isinstance(value, str) or not value or len(value) > 512:
             raise InvalidCursorError("invalid_cursor")
         try:
@@ -51,9 +63,17 @@ class CursorCodec:
             if not hmac.compare_digest(signature, expected):
                 raise InvalidCursorError("invalid_cursor")
             decoded = json.loads(payload)
-            if decoded["endpoint"] != endpoint or decoded["user_id"] != str(user_id):
+            if (
+                decoded.get("version") != 1
+                or decoded["endpoint"] != endpoint
+                or decoded["user_id"] != str(user_id)
+                or decoded.get("filter", "") != filter_fingerprint
+            ):
                 raise InvalidCursorError("invalid_cursor")
-            return datetime.fromisoformat(decoded["sort_time"]), uuid.UUID(decoded["item_id"])
+            sort_time = datetime.fromisoformat(decoded["sort_time"])
+            if sort_time.tzinfo is None or sort_time.utcoffset() is None:
+                raise InvalidCursorError("invalid_cursor")
+            return sort_time, uuid.UUID(decoded["item_id"])
         except (KeyError, ValueError, TypeError, json.JSONDecodeError) as exc:
             if isinstance(exc, InvalidCursorError):
                 raise

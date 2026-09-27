@@ -4,6 +4,7 @@ import json
 import threading
 import uuid
 from concurrent.futures import ThreadPoolExecutor
+from datetime import timedelta
 
 import pytest
 from pydantic import BaseModel, ConfigDict
@@ -251,7 +252,9 @@ def test_execution_events_and_logs_exclude_message_and_exception_canaries(
     assert all(canary not in corpus for canary in canaries)
 
 
-def test_database_failure_does_not_report_false_commit(ih: IndependentHarness, monkeypatch) -> None:
+def test_database_failure_does_not_report_false_commit(
+    ih: IndependentHarness, monkeypatch, independent_clock
+) -> None:
     """DB-01, DB-02, DB-04, LOOP-11."""
     app, _, candidate = start_candidate(ih)
     original = ih.finance.record_expense
@@ -268,10 +271,11 @@ def test_database_failure_does_not_report_false_commit(ih: IndependentHarness, m
     assert failed.status == "paused" and failed.error_code == "tool_error" and expense_count(ih) == 0
     assert "PRIVATE" not in json.dumps(failed.model_dump(mode="json"))
     monkeypatch.setattr(ih.finance, "record_expense", original)
+    independent_clock.advance(timedelta(seconds=61))
     recovered = app.resume(
         candidate.run_id, actor_id=ACTOR, conversation_id=CONVERSATION,
         action="confirm", permissions=frozenset({"finance:write"}),
-        confirmation_code=candidate.result["confirmation_code"], now=NOW,
+        confirmation_code=candidate.result["confirmation_code"], now=independent_clock.now(),
     )
     assert recovered.result["status"] == "committed" and expense_count(ih) == 1
 

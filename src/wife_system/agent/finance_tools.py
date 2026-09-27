@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import uuid
 import re
+import time
 from datetime import UTC, datetime, timedelta
 from typing import Annotated, Any, Literal
 from zoneinfo import ZoneInfo
@@ -215,11 +216,22 @@ class FinanceToolAdapter:
     def _allowed(context: ToolExecutionContext, permission: str) -> bool:
         return permission in context.permissions
 
+    @staticmethod
+    def _check_deadline(context: ToolExecutionContext) -> None:
+        deadline = context.tool_deadline_monotonic
+        if deadline is not None and time.monotonic() >= deadline:
+            raise TimeoutError("tool_timeout")
+
+    def _finance_for(self, context: ToolExecutionContext) -> FinanceService:
+        """Bind every domain read/write to the trusted run principal."""
+        self._check_deadline(context)
+        return self.finance.for_user(context.user_id or context.actor_id)
+
     def list_accounts(self, _: ListAccountsInput, context: ToolExecutionContext) -> dict[str, Any]:
         if not self._allowed(context, "finance:read"):
             return failed("permission_denied")
         try:
-            rows = self.finance.list_accounts()
+            rows = self._finance_for(context).list_accounts()
         except SQLAlchemyError:
             return failed("database_unavailable", retryable=True)
         return AccountsOutput(
@@ -230,7 +242,7 @@ class FinanceToolAdapter:
         if not self._allowed(context, "finance:read"):
             return failed("permission_denied")
         try:
-            rows = self.finance.list_categories()
+            rows = self._finance_for(context).list_categories()
         except SQLAlchemyError:
             return failed("database_unavailable", retryable=True)
         if args.kind is not None:
@@ -243,8 +255,9 @@ class FinanceToolAdapter:
         if not self._allowed(context, "finance:read"):
             return failed("permission_denied")
         try:
+            finance = self._finance_for(context)
             as_of = args.as_of or context.received_at
-            value = self.finance.account_balance(args.account_id, as_of=as_of)
+            value = finance.account_balance(args.account_id, as_of=as_of)
             return AccountBalanceOutput(
                 account_id=args.account_id, balance_minor=value, as_of=as_of.astimezone(UTC)
             ).model_dump(mode="json")
@@ -261,7 +274,7 @@ class FinanceToolAdapter:
         if start >= end:
             return failed("validation_error")
         try:
-            rows = self.finance.list_transactions(start=start, end=end)
+            rows = self._finance_for(context).list_transactions(start=start, end=end)
         except SQLAlchemyError:
             return failed("database_unavailable", retryable=True)
         return TransactionsOutput(
@@ -276,7 +289,7 @@ class FinanceToolAdapter:
         if not self._allowed(context, "finance:read"):
             return failed("permission_denied")
         try:
-            snapshot = self.finance.monthly_snapshot(
+            snapshot = self._finance_for(context).monthly_snapshot(
                 args.period,
                 args.as_of or context.received_at,
                 account_ids=args.account_ids,
@@ -288,19 +301,25 @@ class FinanceToolAdapter:
         except SQLAlchemyError:
             return failed("database_unavailable", retryable=True)
 
-    def _resource_versions(self, args: RecordExpenseToolInput) -> tuple[dict[str, int], str | None, str | None]:
+    def _resource_versions(
+        self,
+        args: RecordExpenseToolInput,
+        *,
+        user_id: uuid.UUID | None = None,
+    ) -> tuple[dict[str, int], str | None, str | None]:
+        finance = self.finance.for_user(user_id or self.finance.user_id)
         versions: dict[str, int] = {}
         account_name: str | None = None
         category_name: str | None = None
         if args.account_id is not None:
-            account = next((row for row in self.finance.list_accounts() if row.id == args.account_id), None)
+            account = next((row for row in finance.list_accounts() if row.id == args.account_id), None)
             if account is None:
                 raise FinanceError("not_found")
             versions[f"account:{account.id}"] = account.version_id
             account_name = account.name
         if args.category_id is not None:
             category = next(
-                (row for row in self.finance.list_categories() if row.id == args.category_id and row.kind == "expense"),
+                (row for row in finance.list_categories() if row.id == args.category_id and row.kind == "expense"),
                 None,
             )
             if category is None:
@@ -310,9 +329,12 @@ class FinanceToolAdapter:
         return versions, account_name, category_name
 
     def record_expense(self, args: RecordExpenseToolInput, context: ToolExecutionContext) -> dict[str, Any]:
+        self._check_deadline(context)
         if not self._allowed(context, "finance:write"):
             return failed("permission_denied")
         try:
+            scope_user_id = context.user_id or context.actor_id
+            finance = self._finance_for(context)
             message = context.user_message or ""
             if len(re.findall(r"\d+(?:\.\d+)?\s*元", message)) > 1:
                 return failed("multiple_expenses_unsupported")
@@ -338,7 +360,7 @@ class FinanceToolAdapter:
             ]
             missing = list(dict.fromkeys(forced_missing + missing))
             amount_minor = None if args.amount is None else parse_minor(args.amount)
-            versions, account_name, category_name = self._resource_versions(args)
+            versions, account_name, category_name = self._resource_versions(args, user_id=scope_user_id)
             local_received = context.received_at.astimezone(ZoneInfo("Asia/Shanghai"))
             if "昨天" in message:
                 occurred_at = local_received - timedelta(days=1)
@@ -356,12 +378,12 @@ class FinanceToolAdapter:
             if missing and missing[0] == "account_id":
                 choices = [
                     {"id": str(row.id), "label": row.name}
-                    for row in self.finance.list_accounts()[:5]
+                    for row in finance.list_accounts()[:5]
                 ]
             elif missing and missing[0] == "category_id":
                 choices = [
                     {"id": str(row.id), "label": row.name}
-                    for row in self.finance.list_categories()
+                    for row in finance.list_categories()
                     if row.kind == "expense"
                 ][:5]
             pending = self.pending.create(
@@ -374,6 +396,9 @@ class FinanceToolAdapter:
                 missing_fields=missing,
                 resource_versions=versions,
                 now=context.received_at,
+                user_id=scope_user_id,
+                module_id=context.module_id,
+                profile_id=context.profile_id,
             )
             if missing:
                 return NeedsInput(
@@ -418,7 +443,7 @@ class FinanceToolAdapter:
     def validate_versions(self, pending: PendingAction) -> None:
         try:
             args = RecordExpenseToolInput.model_validate(pending.action)
-            versions, _, _ = self._resource_versions(args)
+            versions, _, _ = self._resource_versions(args, user_id=pending.user_id)
             if versions != pending.resource_versions:
                 raise PendingActionError("pending_action_stale", retryable=True)
         except FinanceError as exc:
@@ -426,10 +451,11 @@ class FinanceToolAdapter:
 
     def commit(self, pending: PendingAction) -> dict[str, Any]:
         try:
+            finance = self.finance.for_user(pending.user_id)
             args = RecordExpenseToolInput.model_validate(pending.action)
             if args.amount is None or args.account_id is None or args.category_id is None or args.occurred_at is None:
                 return failed("missing_required_context")
-            result = self.finance.record_expense(
+            result = finance.record_expense(
                 RecordExpense(
                     source_system=pending.source_system,
                     source_event_id=f"pending:{pending.id}:commit",

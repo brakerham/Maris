@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import uuid
+from datetime import timedelta
 
 import pytest
 from pydantic import BaseModel, ConfigDict
@@ -217,7 +218,7 @@ def test_database_failure_never_returns_false_success_and_can_recover(
         action="confirm",
         permissions=frozenset({"finance:write"}),
         confirmation_code=candidate.result["confirmation_code"],
-        now=RECEIVED_AT,
+        now=RECEIVED_AT + timedelta(seconds=61),
     )
     assert recovered.result is not None and recovered.result["status"] == "committed"
 

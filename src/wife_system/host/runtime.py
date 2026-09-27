@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from wife_system.host.auth.service import AuthService
 from wife_system.host.cursor import CursorCodec
+from wife_system.host.events import InProcessEventBus
 from wife_system.host.registry import ModuleRegistry
 from wife_system.host.state import ConversationService, HostCommandService, MemoryService, ModuleSettingService
 
@@ -25,6 +26,8 @@ class HostRuntime:
     cursor: CursorCodec
     alembic_head: str
     owner_permissions: frozenset[str]
+    events: InProcessEventBus
+    agent_provider_ready: bool = True
 
     def readiness(self) -> tuple[bool, str | None]:
         try:
@@ -35,6 +38,8 @@ class HostRuntime:
                 revision = session.scalar(text("SELECT version_num FROM alembic_version"))
             if revision != self.alembic_head:
                 return False, "migration_not_current"
+            if not self.agent_provider_ready:
+                return False, "agent_provider_unconfigured"
             return True, None
         except Exception:
             return False, "database_unavailable"

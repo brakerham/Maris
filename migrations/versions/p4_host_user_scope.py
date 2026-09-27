@@ -7,6 +7,7 @@ Create Date: 2026-09-20
 
 from __future__ import annotations
 
+import uuid
 from typing import Sequence, Union
 
 import sqlalchemy as sa
@@ -98,6 +99,13 @@ def _count(connection: sa.Connection, statement: str, **params: object) -> int:
     return int(connection.scalar(sa.text(statement), params) or 0)
 
 
+def _postgresql_uuid_default(value: object) -> sa.TextClause:
+    """Return a validated PostgreSQL UUID literal for migration-only DDL."""
+
+    normalized = uuid.UUID(str(value))
+    return sa.text(f"'{normalized}'::uuid")
+
+
 def _validate_legacy_graph(connection: sa.Connection, bootstrap_user_id: object) -> None:
     legacy_owners: set[str] = set()
     for table, owner_column in (
@@ -141,6 +149,7 @@ def _validate_scoped_graph(connection: sa.Connection) -> None:
 
 def upgrade() -> None:
     connection = op.get_bind()
+    dialect = connection.dialect.name
     bootstrap_user_id = _bootstrap_user_id(connection)
     _validate_legacy_graph(connection, bootstrap_user_id)
 
@@ -157,16 +166,45 @@ def upgrade() -> None:
             {"user_id": bootstrap_user_id},
         )
 
-    for table in SCOPED_TABLES:
-        op.add_column(table, sa.Column("user_id", sa.Uuid(), nullable=True))
-        connection.execute(sa.text(f"UPDATE {table} SET user_id=:user_id"), {"user_id": bootstrap_user_id})
+    if dialect == "postgresql":
+        # PostgreSQL rejects a later ALTER when row-by-row backfill UPDATEs
+        # leave deferred FK trigger events pending.  A constant default lets
+        # ADD COLUMN populate historical rows as DDL while establishing NOT
+        # NULL in the same statement.  The default is migration-only and is
+        # removed before runtime constraints are created.
+        bootstrap_default = _postgresql_uuid_default(bootstrap_user_id)
+        for table in SCOPED_TABLES:
+            op.add_column(
+                table,
+                sa.Column(
+                    "user_id",
+                    sa.Uuid(),
+                    nullable=False,
+                    server_default=bootstrap_default,
+                ),
+            )
+            op.alter_column(
+                table,
+                "user_id",
+                existing_type=sa.Uuid(),
+                nullable=False,
+                server_default=None,
+            )
+    else:
+        for table in SCOPED_TABLES:
+            op.add_column(table, sa.Column("user_id", sa.Uuid(), nullable=True))
+            connection.execute(
+                sa.text(f"UPDATE {table} SET user_id=:user_id"),
+                {"user_id": bootstrap_user_id},
+            )
     _validate_scoped_graph(connection)
 
     recreate = _recreate_mode()
     replaced_by_table = {item[0]: item for item in SCOPED_NATURAL_UNIQUES}
     for table in SCOPED_TABLES:
         with op.batch_alter_table(table, recreate=recreate) as batch:
-            batch.alter_column("user_id", existing_type=sa.Uuid(), nullable=False)
+            if dialect != "postgresql":
+                batch.alter_column("user_id", existing_type=sa.Uuid(), nullable=False)
             batch.create_unique_constraint(f"uq_{table}_user_id", ["user_id", "id"])
             batch.create_foreign_key(
                 f"fk_{table}_user", "app_user", ["user_id"], ["id"], ondelete="RESTRICT"
@@ -176,9 +214,14 @@ def upgrade() -> None:
                 batch.drop_constraint(old_name, type_="unique")
                 batch.create_unique_constraint(new_name, list(columns))
             if table == "activity_import_batch":
-                batch.create_check_constraint("ck_import_batch_owner_user", "owner_id = user_id")
+                batch.create_check_constraint(op.f("ck_import_batch_owner_user"), "owner_id = user_id")
             elif table in {"agent_run", "pending_action"}:
-                batch.create_check_constraint(f"ck_{table}_actor_user", "actor_id = user_id")
+                batch.create_check_constraint(op.f(f"ck_{table}_actor_user"), "actor_id = user_id")
+            if table == "pending_action":
+                # The composite edge below replaces the historical single-id
+                # FK; retaining both would make ORM metadata and the migrated
+                # schema disagree and would not express user ownership.
+                batch.drop_constraint("fk_pending_action_run_id_agent_run", type_="foreignkey")
 
     for child, local_column, parent, remote_column, name in SCOPED_RELATIONSHIPS:
         with op.batch_alter_table(child, recreate=recreate) as batch:
@@ -202,9 +245,17 @@ def downgrade() -> None:
         with op.batch_alter_table(table, recreate=recreate) as batch:
             batch.drop_constraint(f"fk_{table}_user", type_="foreignkey")
             if table == "activity_import_batch":
-                batch.drop_constraint("ck_import_batch_owner_user", type_="check")
+                batch.drop_constraint(op.f("ck_import_batch_owner_user"), type_="check")
             elif table in {"agent_run", "pending_action"}:
-                batch.drop_constraint(f"ck_{table}_actor_user", type_="check")
+                batch.drop_constraint(op.f(f"ck_{table}_actor_user"), type_="check")
+            if table == "pending_action":
+                batch.create_foreign_key(
+                    "fk_pending_action_run_id_agent_run",
+                    "agent_run",
+                    ["run_id"],
+                    ["id"],
+                    ondelete="RESTRICT",
+                )
             if table in replaced_by_table:
                 _, old_name, new_name, old_columns = replaced_by_table[table]
                 batch.drop_constraint(new_name, type_="unique")

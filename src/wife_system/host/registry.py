@@ -2,9 +2,14 @@
 
 from __future__ import annotations
 
+import json
 import threading
 from dataclasses import dataclass
 from typing import Any, Callable
+
+from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session, sessionmaker
 
 from wife_system.host.contracts import (
     HOST_API_MAJOR,
@@ -22,6 +27,14 @@ DEFAULT_KNOWN_PERMISSIONS = frozenset(
         "host:modules",
         "host:memory",
         "host:settings",
+    }
+)
+HOST_CORE_EVENTS = frozenset(
+    {
+        "agent.run_status_changed@1",
+        "memory.changed@1",
+        "module.setting_changed@1",
+        "auth.session_revoked@1",
     }
 )
 
@@ -42,17 +55,43 @@ class ModuleDefinition:
     router_factory: Callable[..., Any] | None = None
     service_factory: Callable[..., Any] | None = None
     ui_manifest_factory: Callable[..., Any] | None = None
+    subscriber_handlers: tuple[tuple[str, Callable[[Any], None]], ...] = ()
 
 
 class ModuleEnablement:
     """Replaceable per-user enablement store used by schema and execution gates."""
 
-    def __init__(self, defaults: dict[str, bool]) -> None:
+    def __init__(
+        self,
+        defaults: dict[str, bool],
+        sessions: sessionmaker[Session] | None = None,
+    ) -> None:
         self._defaults = dict(defaults)
+        self._sessions = sessions
         self._overrides: dict[tuple[Any, str], bool] = {}
         self._lock = threading.RLock()
 
     def is_enabled(self, user_id: Any, module_id: str) -> bool:
+        if self._sessions is not None:
+            try:
+                from wife_system.host.state_models import ModuleSettingRecord
+
+                with self._sessions() as session:
+                    row = session.scalar(
+                        select(ModuleSettingRecord).where(
+                            ModuleSettingRecord.user_id == user_id,
+                            ModuleSettingRecord.module_id == module_id,
+                            ModuleSettingRecord.key == "module_enabled",
+                        )
+                    )
+                if row is not None:
+                    value = json.loads(row.value_json)
+                    if isinstance(value, dict) and isinstance(value.get("enabled"), bool):
+                        return value["enabled"]
+            except SQLAlchemyError as exc:
+                raise RegistryStartupError(
+                    "module_state_unavailable", "Module state is unavailable."
+                ) from exc
         with self._lock:
             return self._overrides.get(
                 (user_id, module_id), self._defaults.get(module_id, False)
@@ -61,6 +100,44 @@ class ModuleEnablement:
     def set_enabled(self, user_id: Any, module_id: str, enabled: bool) -> None:
         if module_id not in self._defaults:
             raise RegistryStartupError("module_not_found", "The module was not found.")
+        if self._sessions is not None:
+            from datetime import UTC, datetime
+            from wife_system.host.state_models import ModuleSettingRecord
+
+            try:
+                with self._sessions() as session, session.begin():
+                    row = session.scalar(
+                        select(ModuleSettingRecord).where(
+                            ModuleSettingRecord.user_id == user_id,
+                            ModuleSettingRecord.module_id == module_id,
+                            ModuleSettingRecord.key == "module_enabled",
+                        )
+                    )
+                    encoded = json.dumps(
+                        {"enabled": bool(enabled)}, separators=(",", ":"), sort_keys=True
+                    )
+                    if row is None:
+                        session.add(
+                            ModuleSettingRecord(
+                                user_id=user_id,
+                                module_id=module_id,
+                                key="module_enabled",
+                                value_json=encoded,
+                                schema_version=1,
+                                version_id=1,
+                                updated_at=datetime.now(UTC),
+                            )
+                        )
+                    else:
+                        row.value_json = encoded
+                        row.schema_version = 1
+                        row.version_id += 1
+                        row.updated_at = datetime.now(UTC)
+                return
+            except SQLAlchemyError as exc:
+                raise RegistryStartupError(
+                    "module_state_unavailable", "Module state is unavailable."
+                ) from exc
         with self._lock:
             self._overrides[(user_id, module_id)] = enabled
 
@@ -74,6 +151,7 @@ class ModuleRegistry:
         *,
         host_api_major: int = HOST_API_MAJOR,
         known_permissions: frozenset[str] = DEFAULT_KNOWN_PERMISSIONS,
+        sessions: sessionmaker[Session] | None = None,
     ) -> None:
         validated = self._validate_all(
             tuple(definitions), host_api_major, known_permissions
@@ -91,7 +169,8 @@ class ModuleRegistry:
             {
                 item.manifest.module_id: item.manifest.enabled_by_default
                 for item in validated
-            }
+            },
+            sessions,
         )
 
     @staticmethod
@@ -205,12 +284,23 @@ class ModuleRegistry:
                         "unknown_tool_grant", "A Profile grants an unknown tool."
                     )
 
-        published = {event for manifest in manifests for event in manifest.published_events}
+        published = set(HOST_CORE_EVENTS)
+        published.update(event for manifest in manifests for event in manifest.published_events)
         for manifest in manifests:
             if not set(manifest.subscribed_events).issubset(published):
                 raise RegistryStartupError(
                     "unresolved_event_subscription",
                     "A subscribed event has no registered publisher.",
+                )
+        for definition in definitions:
+            handler_events = [event for event, _ in definition.subscriber_handlers]
+            if len(handler_events) != len(set(handler_events)):
+                raise RegistryStartupError(
+                    "duplicate_event_subscription", "An event handler is duplicated."
+                )
+            if set(handler_events) != set(definition.manifest.subscribed_events):
+                raise RegistryStartupError(
+                    "event_handler_mismatch", "Subscriber handlers do not match the manifest."
                 )
         return definitions
 

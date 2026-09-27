@@ -128,8 +128,14 @@ def daily_finance_definition(adapter: object) -> ModuleDefinition:
         system_prompt=FINANCE_SYSTEM_PROMPT_V1,
         tool_grants=tuple(contract.canonical_id for contract in contracts),
         memory_grants=(
-            MemoryGrant(namespace="daily_finance.confirmed"),
-            MemoryGrant(namespace="shared.confirmed"),
+            MemoryGrant(
+                namespace="daily_finance.confirmed",
+                operations=frozenset({"read", "propose"}),
+            ),
+            MemoryGrant(
+                namespace="shared.confirmed",
+                operations=frozenset({"read", "propose"}),
+            ),
         ),
         limits=ProfileLimits(),
     )
@@ -148,7 +154,10 @@ def daily_finance_definition(adapter: object) -> ModuleDefinition:
             "daily_finance.candidates",
         ),
         settings_schema_version=1,
-        settings=(SettingContract(key="assistant_mode", schema_version=1),),
+        settings=(
+            SettingContract(key="assistant_mode", schema_version=1),
+            SettingContract(key="module_enabled", schema_version=1),
+        ),
         published_events=(),
         subscribed_events=(),
         migration_owner="daily_finance",

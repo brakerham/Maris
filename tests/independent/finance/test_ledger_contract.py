@@ -209,6 +209,7 @@ def test_injected_failure_after_transaction_header_rolls_back_and_retry_succeeds
 
     def fail_after_header(session, receipt, kind, occurred_at, entries, **kwargs):
         transaction = FinancialTransaction(
+            user_id=service.user_id,
             kind=kind,
             occurred_at=occurred_at,
             currency="CNY",

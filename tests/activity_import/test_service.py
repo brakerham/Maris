@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 from sqlalchemy import func, select
+from sqlalchemy.exc import IntegrityError
 
 from wife_system.activity_import.context import ImportIdentity
 from wife_system.activity_import.errors import ActivityImportError
@@ -34,7 +35,7 @@ def services(tmp_path: Path):
     Base.metadata.create_all(engine)
     sessions = make_session_factory(engine)
     keys = IdempotencyKeys({1: b"virtual-p3-key"})
-    yield ActivityImportService(sessions, keys), FinanceService(sessions, keys), sessions
+    yield ActivityImportService(sessions, keys), FinanceService(sessions, keys, OWNER), sessions
     engine.dispose()
 
 
@@ -212,3 +213,23 @@ def test_selection_errors_and_mid_batch_failure_roll_back_everything(services, m
         assert session.get(ActivityImportBatch, preview.batch_id).status == "previewed"
         assert all(row.decision is None for row in session.scalars(select(ActivityImportCandidate)))
         assert session.scalar(select(func.count(CommandReceipt.id))) == 1
+
+
+def test_p4_user_scoped_template_unique_constraint_maps_to_concurrent_modification(
+    services,
+) -> None:
+    service, _, _ = services
+
+    class _Diagnostic:
+        constraint_name = "uq_template_user_name"
+
+    class _OriginalError(Exception):
+        diag = _Diagnostic()
+        sqlstate = "23505"
+
+    def fail() -> None:
+        raise IntegrityError("INSERT activity_template", {}, _OriginalError())
+
+    with pytest.raises(ActivityImportError) as raised:
+        service._run(uuid.uuid4(), fail)
+    assert raised.value.code == "concurrent_modification"

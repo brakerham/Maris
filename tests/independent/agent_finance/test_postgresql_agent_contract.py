@@ -5,7 +5,7 @@ import threading
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 import pytest
 from alembic import command
@@ -24,11 +24,20 @@ from wife_system.agent.types import AssistantTurn, ToolCall
 from wife_system.finance.db import make_engine, make_session_factory
 from wife_system.finance.models import Account, Category, CommandReceipt, FinancialTransaction
 from wife_system.finance.service import FinanceService, IdempotencyKeys
+from wife_system.host.auth.models import AppUser
+from wife_system.host.state_models import ConversationRecord
 
 
 ACTOR = uuid.UUID("c7000000-0000-0000-0000-000000000001")
 CONVERSATION = uuid.UUID("c7000000-0000-0000-0000-000000000002")
 NOW = datetime(2026, 9, 17, 0, 0, tzinfo=UTC)
+
+
+@pytest.fixture(autouse=True)
+def pg_clock(independent_clock):
+    """Align the shared controllable P2 clock with this PG module's frozen NOW."""
+    independent_clock.current = NOW
+    return independent_clock
 
 
 def migration_config(url: str) -> Config:
@@ -79,8 +88,19 @@ def pg_harness() -> PgHarness:
         engine = make_engine(isolated_url)
         sessions = make_session_factory(engine)
         with sessions() as session, session.begin():
-            account = Account(name="PG-C7 虚拟账户", currency="CNY", version_id=1)
+            session.add(AppUser(id=ACTOR, handle="pg_c7_owner", status="active"))
+            session.add(ConversationRecord(
+                id=CONVERSATION,
+                user_id=ACTOR,
+                channel="api_test",
+                module_id="daily_finance",
+                profile_id="daily_finance.assistant@1",
+                created_at=NOW,
+            ))
+            session.flush()
+            account = Account(user_id=ACTOR, name="PG-C7 虚拟账户", currency="CNY", version_id=1)
             category = Category(
+                user_id=ACTOR,
                 kind="expense",
                 name="PG-C7 虚拟餐饮",
                 name_normalized="pg-c7 虚拟餐饮",
@@ -89,7 +109,11 @@ def pg_harness() -> PgHarness:
             session.add_all([account, category])
             session.flush()
             account_id, category_id = account.id, category.id
-        finance = FinanceService(sessions, IdempotencyKeys({1: b"pg-c7-virtual-finance-key"}))
+        finance = FinanceService(
+            sessions,
+            IdempotencyKeys({1: b"pg-c7-virtual-finance-key"}),
+            user_id=ACTOR,
+        )
         pending = PendingActionStore(sessions)
         yield PgHarness(
             engine=engine,
@@ -141,13 +165,15 @@ def start_candidate(harness: PgHarness):
 def test_postgresql_p2_head_has_agent_tables_and_constraints(pg_harness: PgHarness) -> None:
     """P2 migration and PostgreSQL persistence constraints."""
     inspector = inspect(pg_harness.engine)
-    assert len(inspector.get_table_names()) == 20  # 19 business tables + alembic_version
+    assert {"agent_run", "pending_action", "conversation", "app_user"}.issubset(
+        inspector.get_table_names()
+    )
     assert {"agent_run", "pending_action"}.issubset(inspector.get_table_names())
-    assert pg_harness.engine.connect().scalar(text("SELECT version_num FROM alembic_version")) == "7f3e2d1c9a4b"
-    assert {"uq_agent_run_actor_source_event"}.issubset(
+    assert pg_harness.engine.connect().scalar(text("SELECT version_num FROM alembic_version")) == "p4_host_state"
+    assert {"uq_run_user_source_event", "uq_agent_run_user_id"}.issubset(
         {item["name"] for item in inspector.get_unique_constraints("agent_run")}
     )
-    assert {"uq_pending_action_run_id", "uq_pending_action_confirmation_code"}.issubset(
+    assert {"uq_pending_action_run_id", "uq_pending_action_confirmation_code", "uq_pending_action_user_id"}.issubset(
         {item["name"] for item in inspector.get_unique_constraints("pending_action")}
     )
 
@@ -230,19 +256,19 @@ def test_postgresql_concurrent_confirm_commits_once_and_matches_p1(pg_harness: P
 
 
 def test_postgresql_commit_response_loss_recovers_same_result(
-    pg_harness: PgHarness, monkeypatch: pytest.MonkeyPatch
+    pg_harness: PgHarness, monkeypatch: pytest.MonkeyPatch, independent_clock
 ) -> None:
     """IDM-08, IDM-10, DB-02, DB-03, LOOP-11."""
     application, candidate = start_candidate(pg_harness)
     original = pg_harness.pending.mark_committed
     calls = 0
 
-    def lose_response(action_id, result, *, now):
+    def lose_response(action_id, result, *, claim, user_id, now):
         nonlocal calls
         calls += 1
         if calls == 1:
             raise RuntimeError("PG-C7 simulated response loss")
-        return original(action_id, result, now=now)
+        return original(action_id, result, claim=claim, user_id=user_id, now=now)
 
     monkeypatch.setattr(pg_harness.pending, "mark_committed", lose_response)
     with pytest.raises(RuntimeError, match="simulated response loss"):
@@ -259,6 +285,7 @@ def test_postgresql_commit_response_loss_recovers_same_result(
             "commit never reached the simulated response-loss point: "
             f"{initial.model_dump(mode='json')}"
         )
+    recovery_time = independent_clock.advance(timedelta(seconds=61))
     recovered = pg_harness.app(ScriptedModelProvider([])).resume(
         candidate.run_id,
         actor_id=ACTOR,
@@ -266,7 +293,7 @@ def test_postgresql_commit_response_loss_recovers_same_result(
         action="confirm",
         permissions=frozenset({"finance:write"}),
         confirmation_code=candidate.result["confirmation_code"],
-        now=NOW,
+        now=recovery_time,
     )
     assert recovered.result["status"] == "committed"
     assert recovered.result["replayed"] is True

@@ -27,12 +27,15 @@ from wife_system.finance.models import (
     ActivityTemplateRevision,
     AuditEvent,
     CommandReceipt,
+    BOOTSTRAP_USER_ID,
 )
 from wife_system.finance.schemas import ArchiveResource, CreateActivityTemplate, ReviseActivityTemplate
 from wife_system.finance.service import FinanceService, IdempotencyKeys
 
 
-OWNER = uuid.UUID("50000000-0000-0000-0000-000000000001")
+OWNER = BOOTSTRAP_USER_ID
+OTHER = uuid.UUID("50000000-0000-0000-0000-000000000002")
+P4_HEAD_REVISION = "p4_host_state"
 KEYS = IdempotencyKeys({1: b"virtual-postgresql-import-key"})
 
 
@@ -76,13 +79,27 @@ def pg() -> Harness:
         command.upgrade(migration_config(url), "head")
         engine = make_engine(url)
         sessions = make_session_factory(engine)
+        with engine.begin() as connection:
+            assert connection.scalar(text("SELECT version_num FROM alembic_version")) == P4_HEAD_REVISION
+            assert connection.scalar(
+                text("SELECT COUNT(*) FROM app_user WHERE id=:user_id"),
+                {"user_id": OWNER},
+            ) == 1
+            connection.execute(
+                text(
+                    "INSERT INTO app_user "
+                    "(id,handle_normalized,status,bootstrap_marker,version_id,created_at) "
+                    "VALUES (:id,:handle,'active',NULL,1,CURRENT_TIMESTAMP)"
+                ),
+                {"id": OTHER, "handle": "p4-import-other"},
+            )
         yield Harness(
             raw_url=raw_url,
             schema=schema,
             admin=admin,
             sessions=sessions,
             imports=ActivityImportService(sessions, KEYS),
-            finance=FinanceService(sessions, KEYS),
+            finance=FinanceService(sessions, KEYS, OWNER),
         )
     finally:
         if engine is not None:
@@ -92,9 +109,9 @@ def pg() -> Harness:
         admin.dispose()
 
 
-def identity() -> ImportIdentity:
+def identity(owner: uuid.UUID = OWNER) -> ImportIdentity:
     return ImportIdentity(
-        owner_id=OWNER,
+        owner_id=owner,
         channel="postgresql",
         permissions=frozenset({"finance:read", "finance:write"}),
     )
@@ -195,6 +212,29 @@ def test_postgresql_different_batches_same_name_create_race(pg: Harness) -> None
         assert session.scalar(select(func.count(ActivityTemplate.id)).where(
             ActivityTemplate.name_normalized == "pg虚拟同名竞争"
         )) == 1
+
+
+def test_postgresql_different_users_can_create_same_normalized_name(pg: Harness) -> None:
+    other_imports = ActivityImportService(pg.sessions, KEYS)
+    owner_preview = pg.imports.preview(
+        identity(OWNER), PreviewRequest(markdown="## PG 虚拟跨用户同名"), "pg-user-name-owner-preview"
+    )
+    other_preview = other_imports.preview(
+        identity(OTHER), PreviewRequest(markdown="## PG 虚拟跨用户同名"), "pg-user-name-other-preview"
+    )
+    owner_result = pg.imports.commit(
+        identity(OWNER), owner_preview.batch_id, commit_payload(owner_preview), "pg-user-name-owner-commit"
+    )
+    other_result = other_imports.commit(
+        identity(OTHER), other_preview.batch_id, commit_payload(other_preview), "pg-user-name-other-commit"
+    )
+    assert owner_result.results[0].template_id != other_result.results[0].template_id
+    with pg.sessions() as session:
+        assert session.scalar(
+            select(func.count(ActivityTemplate.id)).where(
+                ActivityTemplate.name_normalized == "pg 虚拟跨用户同名"
+            )
+        ) == 2
 
 
 def test_postgresql_stale_and_archived_targets_are_rejected(pg: Harness) -> None:
@@ -300,7 +340,7 @@ def test_postgresql_empty_and_existing_p2_schemas_upgrade(pg: Harness) -> None:
         command.upgrade(config, "head")
         engine = make_engine(url)
         with engine.connect() as connection:
-            assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "c82d7a4f901e"
+            assert connection.scalar(text("SELECT version_num FROM alembic_version")) == P4_HEAD_REVISION
             assert connection.execute(text(
                 "SELECT reference_minor,reference_min_minor,reference_max_minor "
                 "FROM activity_template_revision WHERE id=:id"

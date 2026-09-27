@@ -7,7 +7,7 @@ import re
 import uuid
 from typing import Annotated, TypeVar
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Header, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ValidationError
 from starlette.concurrency import run_in_threadpool
@@ -16,17 +16,33 @@ from wife_system.activity_import.context import ImportIdentity
 from wife_system.activity_import.errors import ActivityImportError
 from wife_system.activity_import.schemas import BatchResponse, CommitRequest, CommitResponse, PreviewRequest
 from wife_system.activity_import.service import ActivityImportService, validate_idempotency_key
+from wife_system.api.host_routes import bearer_token, get_authenticated_session, get_principal
 
 MAX_BODY_BYTES = 96 * 1024
 T = TypeVar("T", bound=BaseModel)
 router = APIRouter(prefix="/api/v1/activity-imports", tags=["activity-imports"])
 
 
-def get_import_identity(request: Request) -> ImportIdentity:
-    identity = request.app.state.activity_import_identity
-    if identity is None:
-        raise ActivityImportError("invalid_request")
-    return identity
+def get_import_identity(
+    request: Request,
+    authorization: Annotated[str | None, Header()] = None,
+) -> ImportIdentity:
+    runtime = getattr(request.app.state, "host_runtime", None)
+    if runtime is None:
+        identity = request.app.state.activity_import_identity
+        if identity is None:
+            raise ActivityImportError("invalid_request")
+        return identity
+
+    token = bearer_token(authorization)
+    authenticated = get_authenticated_session(token, runtime)
+    principal = get_principal(authenticated, runtime)
+    return ImportIdentity(
+        owner_id=principal.user_id,
+        user_id=principal.user_id,
+        channel=principal.channel,
+        permissions=principal.permissions,
+    )
 
 
 def get_import_service(request: Request) -> ActivityImportService:

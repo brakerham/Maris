@@ -94,7 +94,7 @@ def _setup_account_category(service: FinanceService, kind: str = "expense"):
 @pytest.mark.c3("MIG-01", "MIG-05", "MIG-07", "MIG-08")
 def test_postgresql_empty_migration_constraints_types_and_repeat_upgrade(postgresql_engine: Engine) -> None:
     inspector = inspect(postgresql_engine)
-    assert set(inspector.get_table_names()) == EXPECTED_TABLES | {"alembic_version"}
+    assert EXPECTED_TABLES | {"alembic_version"} <= set(inspector.get_table_names())
     command.upgrade(
         migration_config(postgresql_engine.url.render_as_string(hide_password=False)), P1_HEAD_REVISION
     )

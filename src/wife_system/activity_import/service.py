@@ -14,6 +14,7 @@ from time import monotonic
 from typing import Any, TypeVar
 
 from pydantic import TypeAdapter
+from sqlalchemy import select
 from sqlalchemy.exc import DBAPIError, IntegrityError, OperationalError
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.orm.exc import StaleDataError
@@ -108,7 +109,10 @@ class ActivityImportService:
             error = ActivityImportError(code)
         except IntegrityError as exc:
             constraint = getattr(getattr(exc.orig, "diag", None), "constraint_name", None)
-            name_race = constraint == "uq_activity_template_name_normalized"
+            name_race = constraint in {
+                "uq_activity_template_name_normalized",
+                "uq_template_user_name",
+            }
             if getattr(exc.orig, "sqlite_errorname", None) == "SQLITE_CONSTRAINT_UNIQUE":
                 name_race = "activity_template.name_normalized" in str(exc.orig)
             error = ActivityImportError("concurrent_modification" if name_race else "persistence_error")
@@ -135,7 +139,9 @@ class ActivityImportService:
             f"activity_import.{operation}:{identity.channel}:{identity.owner_id}",
             key,
         )
-        return self._finance._claim(session, source, f"activity_import.{operation}", payload)  # type: ignore[arg-type]
+        return self._finance.for_user(identity.user_id)._claim(
+            session, source, f"activity_import.{operation}", payload
+        )  # type: ignore[arg-type]
 
     @staticmethod
     def _save_receipt(
@@ -231,6 +237,7 @@ class ActivityImportService:
                     stored = PreviewResponse.model_validate_json(receipt.result_json or "{}")
                     return stored.model_copy(update={"replayed": True})
                 batch = ActivityImportBatch(
+                    user_id=identity.user_id,
                     owner_id=identity.owner_id,
                     status="previewed",
                     parser_version=PARSER_VERSION,
@@ -242,7 +249,7 @@ class ActivityImportService:
                 )
                 session.add(batch)
                 session.flush()
-                repository = ImportRepository(session)
+                repository = ImportRepository(session, identity.user_id)
                 historical_names = repository.historical_name_index()
                 rows: list[ActivityImportCandidate] = []
                 for candidate in document.candidates:
@@ -262,7 +269,12 @@ class ActivityImportService:
                         action = "conflict"
                     elif matches:
                         template = matches[0]
-                        revision = session.get(ActivityTemplateRevision, template.current_revision_id)
+                        revision = session.scalar(
+                            select(ActivityTemplateRevision).where(
+                                ActivityTemplateRevision.id == template.current_revision_id,
+                                ActivityTemplateRevision.user_id == identity.user_id,
+                            )
+                        )
                         if revision is None:
                             action = "conflict"
                         else:
@@ -275,6 +287,7 @@ class ActivityImportService:
                             )
                             action = "unchanged" if identical else "revise"
                     row = ActivityImportCandidate(
+                        user_id=identity.user_id,
                         batch_id=batch.id,
                         ordinal=candidate.ordinal,
                         source_heading=candidate.source_heading,
@@ -326,8 +339,8 @@ class ActivityImportService:
         def work() -> BatchResponse:
             _require(identity, "finance:read")
             with self._sessions() as session:
-                repository = ImportRepository(session)
-                batch = repository.batch(batch_id, identity.owner_id)
+                repository = ImportRepository(session, identity.user_id)
+                batch = repository.batch(batch_id)
                 if batch is None:
                     raise ActivityImportError("batch_not_found")
                 result = self._view(request_id, batch, repository.candidates(batch.id))
@@ -405,8 +418,8 @@ class ActivityImportService:
                 if replayed:
                     stored = CommitResponse.model_validate_json(receipt.result_json or "{}")
                     return stored.model_copy(update={"replayed": True})
-                repository = ImportRepository(session)
-                batch = repository.batch(batch_id, identity.owner_id, lock=True)
+                repository = ImportRepository(session, identity.user_id)
+                batch = repository.batch(batch_id, lock=True)
                 if batch is None:
                     raise ActivityImportError("batch_not_found")
                 if batch.status == "committed":
@@ -450,7 +463,7 @@ class ActivityImportService:
                     }
                     if row.proposed_action == "create":
                         result = self._finance._create_activity_template_in_session(
-                            session, receipt, **arguments
+                            session, receipt, user_id=identity.user_id, **arguments
                         )
                     else:
                         result = self._finance._revise_activity_template_in_session(
@@ -458,6 +471,7 @@ class ActivityImportService:
                             receipt,
                             template=targets[row.target_template_id],
                             expected_version=row.target_expected_version,
+                            user_id=identity.user_id,
                             **arguments,
                         )
                     row.decision = "accept"

@@ -52,6 +52,19 @@ class PendingAction(BaseModel):
     module_id: str
     profile_id: str
     action_schema_version: int
+    commit_attempt_no: int
+    commit_lease_expires_at: datetime | None
+
+
+class CommitClaim(BaseModel):
+    """The database fence owned by exactly one pending commit worker."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    pending_action_id: uuid.UUID
+    version_id: int
+    attempt_no: int
+    lease_expires_at: datetime
 
 
 class PendingActionStore:
@@ -82,6 +95,12 @@ class PendingActionStore:
             module_id=row.module_id,
             profile_id=row.profile_id,
             action_schema_version=row.action_schema_version,
+            commit_attempt_no=row.commit_attempt_no,
+            commit_lease_expires_at=(
+                None
+                if row.commit_lease_expires_at is None
+                else _utc(row.commit_lease_expires_at)
+            ),
         )
 
     def create(
@@ -148,14 +167,18 @@ class PendingActionStore:
         *,
         actor_id: uuid.UUID,
         conversation_id: uuid.UUID,
+        user_id: uuid.UUID | None = None,
         now: datetime | None = None,
     ) -> PendingAction:
         check_time = _utc(now or datetime.now(UTC))
+        scope_user_id = user_id or actor_id
+        if scope_user_id != actor_id:
+            raise PendingActionError("permission_denied")
         with self._sessions() as session, session.begin():
             row = session.get(PendingActionRecord, action_id)
             if (
                 row is None
-                or row.user_id != actor_id
+                or row.user_id != scope_user_id
                 or row.actor_id != actor_id
                 or row.conversation_id != conversation_id
             ):
@@ -173,14 +196,14 @@ class PendingActionStore:
         self, run_id: uuid.UUID, *, user_id: uuid.UUID | None = None
     ) -> PendingAction | None:
         with self._sessions() as session:
+            statement = select(PendingActionRecord).where(PendingActionRecord.run_id == run_id)
+            if user_id is not None:
+                statement = statement.where(PendingActionRecord.user_id == user_id)
             row = session.scalar(
-                select(PendingActionRecord)
-                .where(PendingActionRecord.run_id == run_id)
+                statement
                 .order_by(PendingActionRecord.created_at.desc(), PendingActionRecord.id)
                 .limit(1)
             )
-            if row is not None and user_id is not None and row.user_id != user_id:
-                return None
             return None if row is None else self._view(row)
 
     def supplement(
@@ -189,12 +212,19 @@ class PendingActionStore:
         *,
         actor_id: uuid.UUID,
         conversation_id: uuid.UUID,
+        user_id: uuid.UUID | None = None,
         values: dict[str, Any],
         missing_fields: list[str],
         resource_versions: dict[str, int],
         now: datetime,
     ) -> PendingAction:
-        current = self.get(action_id, actor_id=actor_id, conversation_id=conversation_id, now=now)
+        current = self.get(
+            action_id,
+            actor_id=actor_id,
+            conversation_id=conversation_id,
+            user_id=user_id,
+            now=now,
+        )
         if current.status != "needs_input":
             raise PendingActionError("pending_action_stale", retryable=True)
         action = {**current.action, **values}
@@ -218,43 +248,156 @@ class PendingActionStore:
             )
             if result.rowcount != 1:
                 raise PendingActionError("pending_action_stale", retryable=True)
-        return self.get(action_id, actor_id=actor_id, conversation_id=conversation_id, now=now)
+        return self.get(
+            action_id,
+            actor_id=actor_id,
+            conversation_id=conversation_id,
+            user_id=user_id,
+            now=now,
+        )
 
-    def claim_commit(self, action: PendingAction, *, approval_grant_id: uuid.UUID, now: datetime) -> bool:
+    def claim_commit(
+        self,
+        action: PendingAction,
+        *,
+        approval_grant_id: uuid.UUID,
+        now: datetime,
+        user_id: uuid.UUID | None = None,
+        lease_duration: timedelta = timedelta(seconds=60),
+    ) -> CommitClaim:
+        scope_user_id = user_id or action.user_id
+        if scope_user_id != action.user_id:
+            raise PendingActionError("permission_denied")
+        at = _utc(now)
+        lease_expires_at = at + lease_duration
         with self._sessions() as session, session.begin():
-            result = session.execute(
-                update(PendingActionRecord)
-                .where(
+            current = session.scalar(
+                select(PendingActionRecord).where(
                     PendingActionRecord.id == action.id,
-                    PendingActionRecord.status == "needs_confirmation",
-                    PendingActionRecord.version_id == action.version_id,
-                )
-                .values(
-                    status="committing",
-                    version_id=action.version_id + 1,
-                    approval_grant_id=approval_grant_id,
-                    updated_at=_utc(now),
+                    PendingActionRecord.user_id == scope_user_id,
                 )
             )
-            return result.rowcount == 1
+            if current is None:
+                raise PendingActionError("pending_action_not_found")
+            if current.status == "committed":
+                raise PendingActionError("pending_action_committed")
+            if current.status == "cancelled":
+                raise PendingActionError("pending_action_cancelled")
+            if current.status == "expired" or _utc(current.expires_at) <= at:
+                if current.status not in {"committed", "cancelled", "expired"}:
+                    current.status = "expired"
+                    current.version_id += 1
+                    current.updated_at = at
+                raise PendingActionError("pending_action_expired")
+            if current.status == "committing":
+                lease = (
+                    None
+                    if current.commit_lease_expires_at is None
+                    else _utc(current.commit_lease_expires_at)
+                )
+                if lease is not None and lease > at:
+                    raise PendingActionError("commit_in_progress", retryable=True)
+                expected_version = current.version_id
+                expected_attempt = current.commit_attempt_no
+                result = session.execute(
+                    update(PendingActionRecord)
+                    .where(
+                        PendingActionRecord.id == action.id,
+                        PendingActionRecord.user_id == scope_user_id,
+                        PendingActionRecord.status == "committing",
+                        PendingActionRecord.version_id == expected_version,
+                        PendingActionRecord.commit_attempt_no == expected_attempt,
+                        (
+                            PendingActionRecord.commit_lease_expires_at.is_(None)
+                            | (PendingActionRecord.commit_lease_expires_at <= at)
+                        ),
+                    )
+                    .values(
+                        version_id=expected_version + 1,
+                        commit_attempt_no=expected_attempt + 1,
+                        commit_lease_expires_at=lease_expires_at,
+                        approval_grant_id=approval_grant_id,
+                        updated_at=at,
+                    )
+                    .execution_options(synchronize_session=False)
+                )
+                next_version = expected_version + 1
+                next_attempt = expected_attempt + 1
+            elif current.status == "needs_confirmation":
+                if current.version_id != action.version_id:
+                    raise PendingActionError("pending_action_stale", retryable=True)
+                result = session.execute(
+                    update(PendingActionRecord)
+                    .where(
+                        PendingActionRecord.id == action.id,
+                        PendingActionRecord.user_id == scope_user_id,
+                        PendingActionRecord.status == "needs_confirmation",
+                        PendingActionRecord.version_id == action.version_id,
+                    )
+                    .values(
+                        status="committing",
+                        version_id=action.version_id + 1,
+                        commit_attempt_no=PendingActionRecord.commit_attempt_no + 1,
+                        commit_lease_expires_at=lease_expires_at,
+                        approval_grant_id=approval_grant_id,
+                        updated_at=at,
+                    )
+                    .execution_options(synchronize_session=False)
+                )
+                next_version = action.version_id + 1
+                next_attempt = current.commit_attempt_no + 1
+            elif current.status == "needs_input":
+                raise PendingActionError("confirmation_required")
+            else:
+                raise PendingActionError("pending_action_stale", retryable=True)
+            if result.rowcount != 1:
+                raise PendingActionError("pending_action_stale", retryable=True)
+        return CommitClaim(
+            pending_action_id=action.id,
+            version_id=next_version,
+            attempt_no=next_attempt,
+            lease_expires_at=lease_expires_at,
+        )
 
-    def mark_committed(self, action_id: uuid.UUID, result: dict[str, Any], *, now: datetime) -> None:
+    def mark_committed(
+        self,
+        action_id: uuid.UUID,
+        result: dict[str, Any],
+        *,
+        claim: CommitClaim,
+        now: datetime,
+        user_id: uuid.UUID | None = None,
+    ) -> None:
         encoded = json.dumps(result, sort_keys=True, separators=(",", ":"))
         with self._sessions() as session, session.begin():
-            session.execute(
-                update(PendingActionRecord)
-                .where(PendingActionRecord.id == action_id, PendingActionRecord.status == "committing")
+            statement = update(PendingActionRecord).where(
+                PendingActionRecord.id == action_id,
+                PendingActionRecord.status == "committing",
+                PendingActionRecord.version_id == claim.version_id,
+                PendingActionRecord.commit_attempt_no == claim.attempt_no,
+            )
+            if user_id is not None:
+                statement = statement.where(PendingActionRecord.user_id == user_id)
+            changed = session.execute(
+                statement
                 .values(
                     status="committed",
                     final_result_json=encoded,
-                    version_id=PendingActionRecord.version_id + 1,
+                    version_id=claim.version_id + 1,
+                    commit_lease_expires_at=None,
                     updated_at=_utc(now),
                 )
             )
+            if changed.rowcount != 1:
+                raise PendingActionError("pending_action_stale", retryable=True)
 
     def cancel(self, action: PendingAction, *, now: datetime) -> PendingAction:
-        if action.status in {"committed", "committing"}:
-            raise PendingActionError("pending_action_stale", retryable=True)
+        if action.status == "committing":
+            raise PendingActionError("commit_in_progress", retryable=True)
+        if action.status == "committed":
+            raise PendingActionError("pending_action_committed")
+        if action.status == "cancelled":
+            return action
         with self._sessions() as session, session.begin():
             result = session.execute(
                 update(PendingActionRecord)

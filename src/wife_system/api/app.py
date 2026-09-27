@@ -11,6 +11,7 @@ from typing import Annotated, Any
 from fastapi import Depends, FastAPI, Header, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from wife_system.api.schemas import (
     ErrorDetail,
@@ -26,7 +27,7 @@ from wife_system.activity_import.service import ActivityImportService
 from wife_system.api.activity_import_routes import router as activity_import_router
 from wife_system.api.agent_routes import AgentIdentity, router as agent_router
 from wife_system.api.host_routes import router as host_router
-from wife_system.host.auth.errors import AuthError
+from wife_system.host.auth.errors import AUTH_ERROR_CODES, AuthError, AuthErrorCode
 from wife_system.host.cursor import InvalidCursorError
 from wife_system.host.registry import RegistryStartupError
 from wife_system.host.runtime import HostRuntime
@@ -36,6 +37,33 @@ from wife_system.probes import DuplicateProbeRequestError, ProbeService
 
 LOGGER = logging.getLogger("wife_system.api")
 MAX_IDEMPOTENCY_KEY_LENGTH = 256
+
+AUTH_ERROR_STATUS_BY_CODE: dict[str, int] = {
+    AuthErrorCode.AUTHENTICATION_REQUIRED.value: 401,
+    AuthErrorCode.INVALID_CREDENTIALS.value: 401,
+    AuthErrorCode.SESSION_REVOKED.value: 401,
+    AuthErrorCode.SESSION_EXPIRED.value: 401,
+    AuthErrorCode.INVALID_REFRESH_TOKEN.value: 401,
+    AuthErrorCode.SESSION_REFRESH_REPLAYED.value: 401,
+    AuthErrorCode.CHANNEL_ADAPTER_UNAUTHORIZED.value: 401,
+    AuthErrorCode.BOOTSTRAP_UNAUTHORIZED.value: 403,
+    AuthErrorCode.SESSION_NOT_FOUND.value: 404,
+    AuthErrorCode.BINDING_NOT_FOUND.value: 404,
+    AuthErrorCode.ACCOUNT_NOT_FOUND.value: 404,
+    AuthErrorCode.ALREADY_INITIALIZED.value: 409,
+    AuthErrorCode.ACTIVE_SESSION_LIMIT.value: 409,
+    AuthErrorCode.CHANNEL_IDENTITY_CONFLICT.value: 409,
+    AuthErrorCode.BINDING_CODE_INVALID.value: 409,
+    AuthErrorCode.ONE_TIME_SECRET_UNAVAILABLE.value: 409,
+    AuthErrorCode.INVALID_HANDLE.value: 422,
+    AuthErrorCode.INVALID_PASSWORD.value: 422,
+    AuthErrorCode.INVALID_DEVICE.value: 422,
+    AuthErrorCode.INVALID_CHANNEL.value: 422,
+    AuthErrorCode.LOGIN_RATE_LIMITED.value: 429,
+}
+
+if frozenset(AUTH_ERROR_STATUS_BY_CODE) != AUTH_ERROR_CODES:
+    raise RuntimeError("AuthError HTTP mapping is not exhaustive")
 
 
 class ApiError(RuntimeError):
@@ -104,6 +132,8 @@ def create_app(
     activity_import_identity: ImportIdentity | None = None,
     host_runtime: HostRuntime | None = None,
 ) -> FastAPI:
+    if host_runtime is not None and activity_import_identity is not None:
+        raise ValueError("HostRuntime and a static activity import identity are mutually exclusive")
     application = FastAPI(title="wife-system", version="0.1.0")
     application.state.probe_service = ProbeService() if probe_service is None else probe_service
     application.state.agent_application = agent_application
@@ -113,11 +143,10 @@ def create_app(
     )
     application.state.activity_import_service = activity_import_service
     application.state.host_runtime = host_runtime
-    application.state.activity_import_identity = activity_import_identity or ImportIdentity(
-        owner_id=application.state.agent_identity.actor_id,
-        channel="http",
-        permissions=application.state.agent_identity.permissions,
-    )
+    # A static import identity is a legacy P3 test seam and must always be
+    # explicitly injected. Host mode resolves it from the authenticated
+    # DeviceSession for every request.
+    application.state.activity_import_identity = activity_import_identity
 
     @application.middleware("http")
     async def assign_request_id(request: Request, call_next: Any) -> Any:
@@ -145,6 +174,31 @@ def create_app(
             retryable=False,
         )
 
+    @application.exception_handler(StarletteHTTPException)
+    async def http_error_handler(
+        request: Request, exc: StarletteHTTPException
+    ) -> JSONResponse:
+        codes = {404: "route_not_found", 405: "method_not_allowed"}
+        messages = {
+            404: "The requested route was not found.",
+            405: "The request method is not allowed for this route.",
+        }
+        if exc.status_code not in codes:
+            return _error_response(
+                request_id=request.state.request_id,
+                status_code=exc.status_code,
+                code="http_error",
+                message="The HTTP request could not be completed.",
+                retryable=False,
+            )
+        return _error_response(
+            request_id=request.state.request_id,
+            status_code=exc.status_code,
+            code=codes[exc.status_code],
+            message=messages[exc.status_code],
+            retryable=False,
+        )
+
     @application.exception_handler(ApiError)
     async def api_error_handler(request: Request, exc: ApiError) -> JSONResponse:
         request_id = exc.request_id or request.state.request_id
@@ -169,6 +223,13 @@ def create_app(
             "pending_action_not_found": "The pending action was not found.",
             "pending_action_expired": "The pending action has expired.",
             "pending_action_stale": "The pending action must be reviewed again.",
+            "pending_action_cancelled": "The pending action was cancelled.",
+            "pending_action_committed": "The pending action was already committed.",
+            "commit_in_progress": "The pending action commit is in progress.",
+            "run_lease_lost": "The run lease is owned by another worker.",
+            "run_attempts_exhausted": "The run exhausted its recovery attempts.",
+            "module_disabled": "The requested module is disabled.",
+            "profile_changed": "The Agent Profile changed and must be reviewed again.",
             "validation_error": "The request failed validation.",
             "persistence_error": "The request could not be persisted.",
             "database_unavailable": "The finance database is unavailable.",
@@ -198,23 +259,7 @@ def create_app(
     @application.exception_handler(AuthError)
     async def auth_error_handler(request: Request, exc: AuthError) -> JSONResponse:
         request_id = request.state.request_id
-        status_by_code = {
-            "authentication_required": 401,
-            "invalid_credentials": 401,
-            "session_revoked": 401,
-            "session_expired": 401,
-            "bootstrap_unauthorized": 403,
-            "channel_adapter_unauthorized": 403,
-            "session_not_found": 404,
-            "binding_not_found": 404,
-            "account_not_found": 404,
-            "login_rate_limited": 429,
-            "invalid_handle": 422,
-            "invalid_password": 422,
-            "invalid_device": 422,
-            "invalid_channel": 422,
-        }
-        status_code = status_by_code.get(exc.code, 409)
+        status_code = AUTH_ERROR_STATUS_BY_CODE[exc.code]
         response = _error_response(
             request_id=request_id,
             status_code=status_code,

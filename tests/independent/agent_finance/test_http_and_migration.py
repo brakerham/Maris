@@ -148,12 +148,12 @@ def test_p2_migration_chain_tables_constraints_and_round_trip(tmp_path: Path) ->
     command.upgrade(config, "head")
     engine = create_engine(f"sqlite:///{target.as_posix()}")
     inspector = inspect(engine)
-    assert engine.connect().scalar(text("SELECT version_num FROM alembic_version")) == "7f3e2d1c9a4b"
+    assert engine.connect().scalar(text("SELECT version_num FROM alembic_version")) == "p4_host_state"
     assert {"agent_run", "pending_action"}.issubset(inspector.get_table_names())
-    assert {"uq_agent_run_actor_source_event"}.issubset(
+    assert {"uq_run_user_source_event", "uq_agent_run_user_id"}.issubset(
         {item["name"] for item in inspector.get_unique_constraints("agent_run")}
     )
-    assert {"uq_pending_action_run_id", "uq_pending_action_confirmation_code"}.issubset(
+    assert {"uq_pending_action_user_id", "uq_pending_action_confirmation_code"}.issubset(
         {item["name"] for item in inspector.get_unique_constraints("pending_action")}
     )
     engine.dispose()

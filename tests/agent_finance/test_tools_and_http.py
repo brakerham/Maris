@@ -91,6 +91,7 @@ def test_wechat_without_stable_event_can_only_create_candidate(harness: AgentHar
         session.add(
             AgentRunRecord(
                 id=ctx.agent_run_id,
+                user_id=ctx.user_id,
                 actor_id=ctx.actor_id,
                 conversation_id=ctx.conversation_id,
                 source_system="wechat_openclaw",

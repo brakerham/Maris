@@ -12,6 +12,7 @@ from wife_system.activity_import.service import ActivityImportService
 from wife_system.api.app import create_app
 from wife_system.finance.db import Base, make_engine, make_session_factory
 from wife_system.finance.service import FinanceService, IdempotencyKeys
+from wife_system.host.auth.models import AppUser
 
 
 OWNER = uuid.UUID("81000000-0000-0000-0000-000000000001")
@@ -53,8 +54,13 @@ def sqlite_stack(tmp_path: Path):
     engine = make_engine(f"sqlite+pysqlite:///{tmp_path / 'p3-c9.sqlite3'}")
     Base.metadata.create_all(engine)
     sessions = make_session_factory(engine)
+    with sessions() as session, session.begin():
+        session.add_all([
+            AppUser(id=OWNER, handle="virtual_owner", status="active", bootstrap_marker="primary"),
+            AppUser(id=OTHER_OWNER, handle="virtual_other", status="active", bootstrap_marker=None),
+        ])
     imports = ActivityImportService(sessions, KEYS)
-    finance = FinanceService(sessions, KEYS)
+    finance = FinanceService(sessions, KEYS, user_id=OWNER)
     yield imports, finance, sessions
     engine.dispose()
 
@@ -64,6 +70,8 @@ def http_stack(tmp_path: Path):
     engine = make_engine(f"sqlite+pysqlite:///{tmp_path / 'p3-c9-http.sqlite3'}")
     Base.metadata.create_all(engine)
     sessions = make_session_factory(engine)
+    with sessions() as session, session.begin():
+        session.add(AppUser(id=OWNER, handle="virtual_owner", status="active", bootstrap_marker="primary"))
     service = ActivityImportService(sessions, KEYS)
     app = create_app(activity_import_service=service, activity_import_identity=trusted_identity())
     with TestClient(app, raise_server_exceptions=False) as client:

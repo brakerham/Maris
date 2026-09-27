@@ -14,7 +14,9 @@ from typing import Any, Callable, TypeVar
 from sqlalchemy import and_, or_, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, sessionmaker
+from pydantic import ValidationError
 
+from wife_system.host.contracts import ModuleSettingValue
 from wife_system.host.events import EventEnvelope, InProcessEventBus
 from wife_system.host.state_models import (
     ConversationMessageRecord,
@@ -61,7 +63,29 @@ def _utc(value: datetime) -> datetime:
 
 
 def _canonical(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return json.dumps(
+        value,
+        ensure_ascii=False,
+        allow_nan=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+
+
+_SETTING_SECRET_KEYS = frozenset(
+    {"apikey", "password", "secret", "token", "credential", "privatekey", "refreshtoken"}
+)
+
+
+def _setting_contains_secret(value: Any) -> bool:
+    if isinstance(value, dict):
+        for key, nested in value.items():
+            normalized = str(key).casefold().translate(str.maketrans("", "", "_- ."))
+            if normalized in _SETTING_SECRET_KEYS or _setting_contains_secret(nested):
+                return True
+    elif isinstance(value, (list, tuple)):
+        return any(_setting_contains_secret(item) for item in value)
+    return False
 
 
 class HostStateError(RuntimeError):
@@ -153,8 +177,17 @@ class HostIdempotency:
         receipt.completed_at = _utc(now)
 
 
+@dataclass(frozen=True)
+class CommandOutcome:
+    """Separate the first response from the result that is safe to persist."""
+
+    public_result: dict[str, Any]
+    receipt_result: dict[str, Any]
+    error_code: str | None = None
+
+
 class HostCommandService:
-    """Persist replayable results for Host commands whose domain service owns its transaction."""
+    """Commit receipt claim, domain mutation, and safe result atomically."""
 
     def __init__(self, sessions: sessionmaker[Session], idempotency: HostIdempotency) -> None:
         self._sessions = sessions
@@ -167,8 +200,9 @@ class HostCommandService:
         operation: str,
         idempotency_key: str,
         payload: dict[str, Any],
-        command: Callable[[], dict[str, Any]],
+        command: Callable[[Session], CommandOutcome | dict[str, Any]],
         now: datetime | None = None,
+        replay_error: str | None = None,
     ) -> tuple[dict[str, Any], bool]:
         at = _utc(now or datetime.now(UTC))
         with self._sessions() as session, session.begin():
@@ -180,23 +214,28 @@ class HostCommandService:
                 payload=payload,
                 now=at,
             )
-            receipt_id = receipt.id
-        if replay is not None:
-            return replay, True
-        try:
-            result = command()
-        except Exception:
-            with self._sessions() as session, session.begin():
-                incomplete = session.get(HostRequestReceiptRecord, receipt_id)
-                if incomplete is not None and incomplete.result_json is None:
-                    session.delete(incomplete)
-            raise
-        with self._sessions() as session, session.begin():
-            stored = session.get(HostRequestReceiptRecord, receipt_id)
-            if stored is None:
-                raise HostStateError("persistence_error", status_code=503, retryable=True)
-            self._idempotency.complete(stored, result, at)
-        return result, False
+            if replay is not None:
+                if replay_error is not None:
+                    from wife_system.host.auth.errors import AuthError
+
+                    raise AuthError(replay_error)
+                replayed_error = replay.pop("__error_code", None)
+                if replayed_error is not None:
+                    from wife_system.host.auth.errors import AuthError
+
+                    raise AuthError(replayed_error)
+                return replay, True
+            value = command(session)
+            outcome = value if isinstance(value, CommandOutcome) else CommandOutcome(value, value)
+            safe_result = dict(outcome.receipt_result)
+            if outcome.error_code is not None:
+                safe_result["__error_code"] = outcome.error_code
+            self._idempotency.complete(receipt, safe_result, at)
+        if outcome.error_code is not None:
+            from wife_system.host.auth.errors import AuthError
+
+            raise AuthError(outcome.error_code)
+        return outcome.public_result, False
 
 
 class ConversationService:
@@ -261,7 +300,7 @@ class ConversationService:
         limit: int = 50,
         before: tuple[datetime, uuid.UUID] | None = None,
     ) -> list[ConversationRecord]:
-        if not 1 <= limit <= 100:
+        if not 1 <= limit <= 101:
             raise HostStateError("invalid_request", status_code=422)
         statement = select(ConversationRecord).where(ConversationRecord.user_id == user_id)
         if before is not None:
@@ -327,7 +366,7 @@ class ConversationService:
         limit: int = 50,
         before: tuple[datetime, uuid.UUID] | None = None,
     ) -> list[ConversationMessageRecord]:
-        if not 1 <= limit <= 100:
+        if not 1 <= limit <= 101:
             raise HostStateError("invalid_request", status_code=422)
         at = _utc(now or datetime.now(UTC))
         cutoff = at - timedelta(days=90)
@@ -375,6 +414,49 @@ class ConversationService:
                 ).all()
             )
 
+    def bounded_history(
+        self,
+        conversation_id: uuid.UUID,
+        *,
+        user_id: uuid.UUID,
+        exclude_run_id: uuid.UUID | None = None,
+        max_items: int = 20,
+        max_utf8_bytes: int = 64 * 1024,
+    ) -> list[ConversationMessageRecord]:
+        """Return the newest bounded window in chronological provider order."""
+
+        statement = select(ConversationMessageRecord).where(
+            ConversationMessageRecord.user_id == user_id,
+            ConversationMessageRecord.conversation_id == conversation_id,
+            ConversationMessageRecord.deleted_at.is_(None),
+        )
+        if exclude_run_id is not None:
+            statement = statement.where(
+                or_(
+                    ConversationMessageRecord.run_id.is_(None),
+                    ConversationMessageRecord.run_id != exclude_run_id,
+                )
+            )
+        with self._sessions() as session:
+            rows = list(
+                session.scalars(
+                    statement.order_by(
+                        ConversationMessageRecord.created_at.desc(),
+                        ConversationMessageRecord.id,
+                    ).limit(max_items)
+                ).all()
+            )
+        selected: list[ConversationMessageRecord] = []
+        used = 0
+        for row in rows:
+            size = len(row.content.encode("utf-8"))
+            if used + size > max_utf8_bytes:
+                continue
+            selected.append(row)
+            used += size
+        selected.reverse()
+        return selected
+
 
 def _memory_is_forbidden(value: Any) -> bool:
     if isinstance(value, dict):
@@ -396,10 +478,15 @@ class MemoryService:
         sessions: sessionmaker[Session],
         idempotency: HostIdempotency,
         events: InProcessEventBus,
+        validate_grant: Callable[
+            [uuid.UUID, str, str, str, str, str, str | None], str
+        ]
+        | None = None,
     ) -> None:
         self._sessions = sessions
         self._idempotency = idempotency
         self._events = events
+        self._validate_grant = validate_grant
 
     @staticmethod
     def _validate_value(value: dict[str, Any]) -> str:
@@ -425,8 +512,19 @@ class MemoryService:
         proposed_by_profile_id: str,
         now: datetime | None = None,
     ) -> MemoryCandidateRecord:
-        if kind not in MEMORY_KINDS or target_namespace == "shared.confirmed":
+        if kind not in MEMORY_KINDS:
             raise HostStateError("invalid_request", status_code=422)
+        if self._validate_grant is None:
+            raise HostStateError("memory_namespace_forbidden", status_code=403)
+        proposed_by_profile_version = self._validate_grant(
+            user_id,
+            proposed_by_profile_id,
+            source_namespace,
+            target_namespace,
+            kind,
+            "propose",
+            None,
+        )
         encoded = self._validate_value(value)
         at = _utc(now or datetime.now(UTC))
         row = MemoryCandidateRecord(
@@ -440,6 +538,7 @@ class MemoryService:
             source_ref_digest=source_ref_digest,
             sensitivity=sensitivity,
             proposed_by_profile_id=proposed_by_profile_id,
+            proposed_by_profile_version=proposed_by_profile_version,
             created_at=at,
             expires_at=at + timedelta(days=30),
         )
@@ -448,8 +547,16 @@ class MemoryService:
         return row
 
     def candidates(
-        self, *, user_id: uuid.UUID, now: datetime | None = None
+        self,
+        *,
+        user_id: uuid.UUID,
+        now: datetime | None = None,
+        status: str | None = None,
+        limit: int = 50,
+        before: tuple[datetime, uuid.UUID] | None = None,
     ) -> list[MemoryCandidateRecord]:
+        if not 1 <= limit <= 101:
+            raise HostStateError("invalid_request", status_code=422)
         at = _utc(now or datetime.now(UTC))
         with self._sessions() as session, session.begin():
             session.execute(
@@ -461,11 +568,27 @@ class MemoryService:
                 )
                 .values(status="expired", value_json="{}", decided_at=at, version_id=MemoryCandidateRecord.version_id + 1)
             )
+            statement = select(MemoryCandidateRecord).where(
+                MemoryCandidateRecord.user_id == user_id
+            )
+            if status is not None:
+                statement = statement.where(MemoryCandidateRecord.status == status)
+            if before is not None:
+                sort_time, item_id = before
+                statement = statement.where(
+                    or_(
+                        MemoryCandidateRecord.created_at < _utc(sort_time),
+                        and_(
+                            MemoryCandidateRecord.created_at == _utc(sort_time),
+                            MemoryCandidateRecord.id > item_id,
+                        ),
+                    )
+                )
             return list(
                 session.scalars(
-                    select(MemoryCandidateRecord)
-                    .where(MemoryCandidateRecord.user_id == user_id)
-                    .order_by(MemoryCandidateRecord.created_at.desc(), MemoryCandidateRecord.id)
+                    statement.order_by(
+                        MemoryCandidateRecord.created_at.desc(), MemoryCandidateRecord.id
+                    ).limit(limit)
                 ).all()
             )
 
@@ -510,19 +633,49 @@ class MemoryService:
                 raise HostStateError("memory_candidate_not_found", status_code=404)
             if candidate.status != "pending":
                 raise HostStateError("memory_candidate_conflict")
+            expected_version = candidate.version_id
+            event_status: str | None = None
             if _utc(candidate.expires_at) <= at:
-                candidate.status = "expired"
-                candidate.value_json = "{}"
-                candidate.decided_at = at
-                candidate.version_id += 1
+                changed = session.execute(
+                    update(MemoryCandidateRecord)
+                    .where(
+                        MemoryCandidateRecord.id == candidate.id,
+                        MemoryCandidateRecord.user_id == user_id,
+                        MemoryCandidateRecord.status == "pending",
+                        MemoryCandidateRecord.version_id == expected_version,
+                    )
+                    .values(
+                        status="expired",
+                        value_json="{}",
+                        decided_at=at,
+                        version_id=expected_version + 1,
+                    )
+                    .execution_options(synchronize_session=False)
+                )
+                if changed.rowcount != 1:
+                    raise HostStateError("memory_candidate_conflict")
                 self._idempotency.complete(
                     receipt,
                     {"candidate_id": str(candidate.id), "error": "memory_candidate_expired"},
                     at,
                 )
                 deferred_error = HostStateError("memory_candidate_expired", status_code=410)
+                event_status = "expired"
             elif confirm:
-                namespace = target_namespace or candidate.target_namespace
+                if target_namespace is not None and target_namespace != candidate.target_namespace:
+                    raise HostStateError("memory_namespace_forbidden", status_code=403)
+                namespace = candidate.target_namespace
+                if self._validate_grant is None:
+                    raise HostStateError("memory_candidate_conflict")
+                self._validate_grant(
+                    user_id,
+                    candidate.proposed_by_profile_id,
+                    candidate.source_namespace,
+                    namespace,
+                    candidate.kind,
+                    "propose",
+                    candidate.proposed_by_profile_version,
+                )
                 if namespace not in allowed_namespaces:
                     raise HostStateError("memory_namespace_forbidden", status_code=403)
                 item = MemoryItemRecord(
@@ -539,16 +692,48 @@ class MemoryService:
                 )
                 session.add(item)
                 session.flush()
-                candidate.status = "confirmed"
-                candidate.memory_item_id = item.id
-                candidate.audit_id = item.audit_id
+                changed = session.execute(
+                    update(MemoryCandidateRecord)
+                    .where(
+                        MemoryCandidateRecord.id == candidate.id,
+                        MemoryCandidateRecord.user_id == user_id,
+                        MemoryCandidateRecord.status == "pending",
+                        MemoryCandidateRecord.version_id == expected_version,
+                    )
+                    .values(
+                        status="confirmed",
+                        memory_item_id=item.id,
+                        audit_id=item.audit_id,
+                        decided_at=at,
+                        version_id=expected_version + 1,
+                    )
+                    .execution_options(synchronize_session=False)
+                )
+                if changed.rowcount != 1:
+                    raise HostStateError("memory_candidate_conflict")
+                event_status = "confirmed"
             elif deferred_error is None:
-                candidate.status = "rejected"
-                candidate.value_json = "{}"
-                candidate.audit_id = uuid.uuid4()
+                changed = session.execute(
+                    update(MemoryCandidateRecord)
+                    .where(
+                        MemoryCandidateRecord.id == candidate.id,
+                        MemoryCandidateRecord.user_id == user_id,
+                        MemoryCandidateRecord.status == "pending",
+                        MemoryCandidateRecord.version_id == expected_version,
+                    )
+                    .values(
+                        status="rejected",
+                        value_json="{}",
+                        audit_id=uuid.uuid4(),
+                        decided_at=at,
+                        version_id=expected_version + 1,
+                    )
+                    .execution_options(synchronize_session=False)
+                )
+                if changed.rowcount != 1:
+                    raise HostStateError("memory_candidate_conflict")
+                event_status = "rejected"
             if deferred_error is None:
-                candidate.decided_at = at
-                candidate.version_id += 1
                 result = {"candidate_id": str(candidate.id), "item_id": None if item is None else str(item.id)}
                 self._idempotency.complete(receipt, result, at)
                 event = EventEnvelope(
@@ -556,11 +741,16 @@ class MemoryService:
                     event_type="memory.changed@1",
                     occurred_at=at,
                     user_id=user_id,
-                    producer_module=candidate.source_namespace.split(".", 1)[0],
+                    producer_module="host_core",
                     correlation_id=str(uuid.uuid4()),
                     idempotency_digest=receipt.key_digest,
                     sensitivity=candidate.sensitivity,
-                    payload={"candidate_id": str(candidate.id), "status": candidate.status},
+                    payload={
+                        "object_id": str(candidate.id),
+                        "namespace": candidate.target_namespace,
+                        "status": event_status,
+                        "version_id": expected_version + 1,
+                    },
                 )
         if deferred_error is not None:
             raise deferred_error
@@ -601,12 +791,99 @@ class MemoryService:
         )
         return rows[:limit]
 
+    def invalidate(
+        self,
+        item_id: uuid.UUID,
+        *,
+        user_id: uuid.UUID,
+        expected_version: int,
+        idempotency_key: str,
+        now: datetime | None = None,
+    ) -> tuple[MemoryItemRecord, bool]:
+        """Clear and invalidate one active memory under a version CAS."""
+
+        at = _utc(now or datetime.now(UTC))
+        event: EventEnvelope | None = None
+        with self._sessions() as session, session.begin():
+            receipt, replay = self._idempotency.claim(
+                session,
+                user_id=user_id,
+                operation="memory.invalidate",
+                raw_key=idempotency_key,
+                payload={
+                    "item_id": str(item_id),
+                    "expected_version": expected_version,
+                },
+                now=at,
+            )
+            if replay is not None:
+                row = session.get(MemoryItemRecord, item_id)
+                if row is None or row.user_id != user_id:
+                    raise HostStateError("memory_not_found", status_code=404)
+                return row, True
+            item = session.scalar(
+                select(MemoryItemRecord).where(
+                    MemoryItemRecord.id == item_id,
+                    MemoryItemRecord.user_id == user_id,
+                )
+            )
+            if item is None:
+                raise HostStateError("memory_not_found", status_code=404)
+            changed = session.execute(
+                update(MemoryItemRecord)
+                .where(
+                    MemoryItemRecord.id == item_id,
+                    MemoryItemRecord.user_id == user_id,
+                    MemoryItemRecord.status == "active",
+                    MemoryItemRecord.version_id == expected_version,
+                )
+                .values(
+                    value_json="{}",
+                    tags_json="[]",
+                    status="invalidated",
+                    version_id=expected_version + 1,
+                )
+                .execution_options(synchronize_session=False)
+            )
+            if changed.rowcount != 1:
+                raise HostStateError("memory_version_conflict")
+            self._idempotency.complete(
+                receipt,
+                {
+                    "item_id": str(item_id),
+                    "status": "invalidated",
+                    "version_id": expected_version + 1,
+                },
+                at,
+            )
+            session.refresh(item)
+            event = EventEnvelope(
+                event_id=uuid.uuid4(),
+                event_type="memory.changed@1",
+                occurred_at=at,
+                user_id=user_id,
+                producer_module="host_core",
+                correlation_id=str(uuid.uuid4()),
+                idempotency_digest=receipt.key_digest,
+                sensitivity=item.sensitivity,
+                payload={
+                    "object_id": str(item_id),
+                    "namespace": item.namespace,
+                    "status": "invalidated",
+                    "version_id": expected_version + 1,
+                },
+            )
+        if event is not None:
+            self._events.publish(event)
+        return item, False
+
     def delete(
         self,
         item_id: uuid.UUID,
         *,
         user_id: uuid.UUID,
         idempotency_key: str,
+        expected_version: int | None = None,
         now: datetime | None = None,
     ) -> bool:
         at = _utc(now or datetime.now(UTC))
@@ -630,26 +907,149 @@ class MemoryService:
             )
             if item is None:
                 raise HostStateError("memory_not_found", status_code=404)
-            item.value_json = "{}"
-            item.tags_json = "[]"
-            item.status = "deleted"
-            item.deleted_at = at
-            item.version_id += 1
+            if item.status == "deleted":
+                self._idempotency.complete(
+                    receipt, {"item_id": str(item_id), "deleted": True}, at
+                )
+                return True
+            version = item.version_id if expected_version is None else expected_version
+            changed = session.execute(
+                update(MemoryItemRecord)
+                .where(
+                    MemoryItemRecord.id == item_id,
+                    MemoryItemRecord.user_id == user_id,
+                    MemoryItemRecord.version_id == version,
+                    MemoryItemRecord.status.in_(("active", "superseded", "invalidated")),
+                )
+                .values(
+                    value_json="{}",
+                    tags_json="[]",
+                    status="deleted",
+                    deleted_at=at,
+                    version_id=version + 1,
+                )
+                .execution_options(synchronize_session=False)
+            )
+            if changed.rowcount != 1:
+                raise HostStateError("memory_version_conflict")
             self._idempotency.complete(receipt, {"item_id": str(item_id), "deleted": True}, at)
             event = EventEnvelope(
                 event_id=uuid.uuid4(),
                 event_type="memory.changed@1",
                 occurred_at=at,
                 user_id=user_id,
-                producer_module=item.namespace.split(".", 1)[0],
+                producer_module="host_core",
                 correlation_id=str(uuid.uuid4()),
                 idempotency_digest=receipt.key_digest,
                 sensitivity=item.sensitivity,
-                payload={"item_id": str(item_id), "status": "deleted"},
+                payload={
+                    "object_id": str(item_id),
+                    "namespace": item.namespace,
+                    "status": "deleted",
+                    "version_id": version + 1,
+                },
             )
         if event is not None:
             self._events.publish(event)
         return True
+
+    def supersede(
+        self,
+        item_id: uuid.UUID,
+        *,
+        user_id: uuid.UUID,
+        value: dict[str, Any],
+        expected_version: int,
+        idempotency_key: str,
+        now: datetime | None = None,
+    ) -> tuple[MemoryItemRecord, bool]:
+        """Atomically replace one active fact and link its tombstone."""
+
+        encoded = self._validate_value(value)
+        at = _utc(now or datetime.now(UTC))
+        event: EventEnvelope | None = None
+        with self._sessions() as session, session.begin():
+            receipt, replay = self._idempotency.claim(
+                session,
+                user_id=user_id,
+                operation="memory.supersede",
+                raw_key=idempotency_key,
+                payload={
+                    "item_id": str(item_id),
+                    "expected_version": expected_version,
+                    "value": value,
+                },
+                now=at,
+            )
+            if replay is not None:
+                row = session.get(MemoryItemRecord, uuid.UUID(replay["replacement_id"]))
+                if row is None or row.user_id != user_id:
+                    raise HostStateError("memory_not_found", status_code=404)
+                return row, True
+            current = session.scalar(
+                select(MemoryItemRecord).where(
+                    MemoryItemRecord.id == item_id,
+                    MemoryItemRecord.user_id == user_id,
+                )
+            )
+            if current is None:
+                raise HostStateError("memory_not_found", status_code=404)
+            replacement = MemoryItemRecord(
+                user_id=user_id,
+                namespace=current.namespace,
+                kind=current.kind,
+                value_json=encoded,
+                tags_json=current.tags_json,
+                source_type=current.source_type,
+                source_ref_digest=current.source_ref_digest,
+                sensitivity=current.sensitivity,
+                confirmed_at=at,
+                expires_at=current.expires_at,
+                audit_id=uuid.uuid4(),
+            )
+            session.add(replacement)
+            session.flush()
+            changed = session.execute(
+                update(MemoryItemRecord)
+                .where(
+                    MemoryItemRecord.id == item_id,
+                    MemoryItemRecord.user_id == user_id,
+                    MemoryItemRecord.status == "active",
+                    MemoryItemRecord.version_id == expected_version,
+                )
+                .values(
+                    status="superseded",
+                    superseded_by_id=replacement.id,
+                    version_id=expected_version + 1,
+                )
+                .execution_options(synchronize_session=False)
+            )
+            if changed.rowcount != 1:
+                raise HostStateError("memory_version_conflict")
+            self._idempotency.complete(
+                receipt,
+                {"replacement_id": str(replacement.id)},
+                at,
+            )
+            event = EventEnvelope(
+                event_id=uuid.uuid4(),
+                event_type="memory.changed@1",
+                occurred_at=at,
+                user_id=user_id,
+                producer_module="host_core",
+                correlation_id=str(uuid.uuid4()),
+                idempotency_digest=receipt.key_digest,
+                sensitivity=current.sensitivity,
+                payload={
+                    "object_id": str(item_id),
+                    "namespace": current.namespace,
+                    "status": "superseded",
+                    "version_id": expected_version + 1,
+                },
+            )
+        if event is not None:
+            self._events.publish(event)
+        return replacement, False
 
 
 class ModuleSettingService:
@@ -692,9 +1092,21 @@ class ModuleSettingService:
     ) -> tuple[ModuleSettingRecord, bool]:
         if not LOCAL_NAME.fullmatch(key):
             raise HostStateError("invalid_request", status_code=422)
-        encoded = _canonical(value)
-        if len(encoded.encode("utf-8")) > 8192:
-            raise HostStateError("invalid_request", status_code=422)
+        if _setting_contains_secret(value):
+            raise HostStateError("setting_secret_forbidden", status_code=422)
+        try:
+            validated = ModuleSettingValue.model_validate(
+                {
+                    "module_id": module_id,
+                    "key": key,
+                    "schema_version": schema_version,
+                    "version_id": max(expected_version or 1, 1),
+                    "value": value,
+                }
+            )
+            encoded = _canonical(validated.value)
+        except (ValidationError, TypeError, ValueError):
+            raise HostStateError("invalid_setting", status_code=422) from None
         self._validate(module_id, key, value, schema_version)
         at = _utc(now or datetime.now(UTC))
         event: EventEnvelope | None = None
@@ -753,7 +1165,7 @@ class ModuleSettingService:
                 event_type="module.setting_changed@1",
                 occurred_at=at,
                 user_id=user_id,
-                producer_module=module_id,
+                producer_module="host_core",
                 correlation_id=str(uuid.uuid4()),
                 idempotency_digest=receipt.key_digest,
                 sensitivity="private",

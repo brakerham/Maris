@@ -26,6 +26,7 @@ from .models import (
     ActivityTemplate,
     ActivityTemplateRevision,
     AuditEvent,
+    BOOTSTRAP_USER_ID,
     BudgetAllocation,
     BudgetPlan,
     BudgetVersion,
@@ -157,15 +158,50 @@ def _proportional(total: int, entries: list[tuple[uuid.UUID, int]]) -> list[tupl
 class FinanceService:
     """Synchronous command service; every write owns one short transaction."""
 
-    def __init__(self, sessions: sessionmaker[Session], keys: IdempotencyKeys) -> None:
+    def __init__(
+        self,
+        sessions: sessionmaker[Session],
+        keys: IdempotencyKeys,
+        user_id: uuid.UUID = BOOTSTRAP_USER_ID,
+    ) -> None:
         self._sessions = sessions
         self._keys = keys
+        self._user_id = user_id
+
+    @property
+    def user_id(self) -> uuid.UUID:
+        """The trusted owner every read and write of this instance is bound to."""
+        return self._user_id
+
+    def for_user(self, user_id: uuid.UUID) -> FinanceService:
+        """Rebind the same engine and keys to another trusted principal."""
+        if user_id == self._user_id:
+            return self
+        return FinanceService(self._sessions, self._keys, user_id)
+
+    def _claim_for_user(
+        self,
+        session: Session,
+        user_id: uuid.UUID,
+        command: WriteCommand,
+        command_name: str,
+        payload: dict[str, Any],
+    ) -> tuple[CommandReceipt, bool]:
+        """Claim an idempotency receipt in an explicitly trusted user scope."""
+        return self.for_user(user_id)._claim(session, command, command_name, payload)
+
+    def _scoped_get(self, session: Session, model: type[Any], primary_key: uuid.UUID) -> Any | None:
+        """session.get plus the trusted owner check; a foreign row reads as missing."""
+        item = session.get(model, primary_key)
+        if item is None or item.user_id != self._user_id:
+            return None
+        return item
 
     def _digests(self, command: WriteCommand, command_name: str, payload: dict[str, Any]) -> tuple[str, str]:
         secret = self._keys.current()
         key_digest = hmac.new(
             secret,
-            f"{command.source_system}\0{command.source_event_id}".encode(),
+            f"{self._user_id}\0{command.source_system}\0{command.source_event_id}".encode(),
             hashlib.sha256,
         ).hexdigest()
         fingerprint = hmac.new(
@@ -185,6 +221,7 @@ class FinanceService:
         key_digest, fingerprint = self._digests(command, command_name, payload)
         values = {
             "id": uuid.uuid4(),
+            "user_id": self._user_id,
             "source_system": command.source_system,
             "key_version": self._keys.current_version,
             "key_digest": key_digest,
@@ -192,15 +229,18 @@ class FinanceService:
             "command_name": command_name,
             "created_at": utc_now(),
         }
+        conflict_target = [
+            CommandReceipt.user_id,
+            CommandReceipt.source_system,
+            CommandReceipt.key_digest,
+        ]
         dialect = session.bind.dialect.name if session.bind is not None else ""
         if dialect == "postgresql":
             from sqlalchemy.dialects.postgresql import insert as dialect_insert
             statement = (
                 dialect_insert(CommandReceipt)
                 .values(**values)
-                .on_conflict_do_nothing(
-                    index_elements=[CommandReceipt.source_system, CommandReceipt.key_digest]
-                )
+                .on_conflict_do_nothing(index_elements=conflict_target)
                 .returning(CommandReceipt.id)
             )
             inserted = session.scalar(statement) is not None
@@ -208,7 +248,7 @@ class FinanceService:
             if dialect == "sqlite":
                 from sqlalchemy.dialects.sqlite import insert as dialect_insert
                 statement = dialect_insert(CommandReceipt).values(**values).on_conflict_do_nothing(
-                    index_elements=[CommandReceipt.source_system, CommandReceipt.key_digest]
+                    index_elements=conflict_target
                 )
             else:
                 statement = insert(CommandReceipt).values(**values)
@@ -216,6 +256,7 @@ class FinanceService:
             inserted = result.rowcount == 1
         receipt = session.scalar(
             select(CommandReceipt).where(
+                CommandReceipt.user_id == self._user_id,
                 CommandReceipt.source_system == command.source_system,
                 CommandReceipt.key_digest == key_digest,
             )
@@ -265,8 +306,8 @@ class FinanceService:
             LOGGER.error(json.dumps({"event": "finance_command_failed", "code": "persistence_error", "command": command_name, "correlation_id": correlation_id}, separators=(",", ":")))
             raise FinanceError("persistence_error") from exc
 
-    @staticmethod
     def _audit(
+        self,
         session: Session,
         receipt: CommandReceipt,
         entity_type: str,
@@ -277,6 +318,7 @@ class FinanceService:
         reason: str | None = None,
     ) -> None:
         session.add(AuditEvent(
+            user_id=self._user_id,
             command_receipt_id=receipt.id,
             entity_type=entity_type,
             entity_id=entity_id,
@@ -286,9 +328,8 @@ class FinanceService:
             reason=reason,
         ))
 
-    @staticmethod
-    def _account(session: Session, account_id: uuid.UUID, *, active: bool = True, lock: bool = False) -> Account:
-        account = FinanceRepository(session).account(account_id, for_update=lock)
+    def _account(self, session: Session, account_id: uuid.UUID, *, active: bool = True, lock: bool = False) -> Account:
+        account = FinanceRepository(session, self._user_id).account(account_id, for_update=lock)
         if account is None:
             raise FinanceError("not_found")
         if active and account.archived_at is not None:
@@ -296,9 +337,8 @@ class FinanceService:
         require_cny(account.currency)
         return account
 
-    @staticmethod
-    def _category(session: Session, category_id: uuid.UUID, kind: str, *, active: bool = True) -> Category:
-        category = FinanceRepository(session).category(category_id)
+    def _category(self, session: Session, category_id: uuid.UUID, kind: str, *, active: bool = True) -> Category:
+        category = FinanceRepository(session, self._user_id).category(category_id)
         if category is None:
             raise FinanceError("not_found")
         if category.kind != kind:
@@ -307,12 +347,14 @@ class FinanceService:
             raise FinanceError("archived_resource")
         return category
 
-    @staticmethod
-    def _check_account_deltas(session: Session, deltas: dict[uuid.UUID, int]) -> None:
+    def _check_account_deltas(self, session: Session, deltas: dict[uuid.UUID, int]) -> None:
         for account_id, delta in deltas.items():
             balance = int(session.scalar(
                 select(func.coalesce(func.sum(TransactionEntry.amount_minor), 0))
-                .where(TransactionEntry.account_id == account_id)
+                .where(
+                    TransactionEntry.user_id == self._user_id,
+                    TransactionEntry.account_id == account_id,
+                )
             ) or 0)
             ensure_aggregate(balance + delta)
 
@@ -320,7 +362,7 @@ class FinanceService:
         name = _clean_name(command.name)
         require_cny(command.currency)
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            account = Account(name=name, currency="CNY")
+            account = Account(user_id=self._user_id, name=name, currency="CNY")
             session.add(account)
             session.flush()
             self._audit(session, receipt, "account", account.id, "create", None, 1)
@@ -331,9 +373,9 @@ class FinanceService:
         name = _clean_name(command.name)
         normalized = _normalize_name(name)
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            if session.scalar(select(Category.id).where(Category.kind == command.kind, Category.name_normalized == normalized)):
+            if session.scalar(select(Category.id).where(Category.user_id == self._user_id, Category.kind == command.kind, Category.name_normalized == normalized)):
                 raise FinanceError("validation_error")
-            category = Category(kind=command.kind, name=name, name_normalized=normalized)
+            category = Category(user_id=self._user_id, kind=command.kind, name=name, name_normalized=normalized)
             session.add(category)
             session.flush()
             self._audit(session, receipt, "category", category.id, "create", None, 1)
@@ -357,7 +399,7 @@ class FinanceService:
 
     def _archive(self, command: ArchiveResource, model: type[Any], entity: str) -> CommandResult:
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            item = session.get(model, command.resource_id)
+            item = self._scoped_get(session, model, command.resource_id)
             if item is None:
                 raise FinanceError("not_found")
             if item.version_id != command.expected_version:
@@ -387,6 +429,7 @@ class FinanceService:
         *,
         related_id: uuid.UUID | None = None,
         relation_kind: str | None = None,
+        user_id: uuid.UUID = BOOTSTRAP_USER_ID,
     ) -> tuple[FinancialTransaction, list[TransactionEntry]]:
         if len(entries) < 2 or any(int(entry["amount_minor"]) == 0 for entry in entries):
             raise FinanceError("unbalanced_transaction")
@@ -404,6 +447,7 @@ class FinanceService:
             if not shape_ok:
                 raise FinanceError("unbalanced_transaction")
         txn = FinancialTransaction(
+            user_id=user_id,
             kind=kind,
             occurred_at=_utc(occurred_at),
             currency="CNY",
@@ -413,7 +457,10 @@ class FinanceService:
         )
         session.add(txn)
         session.flush()
-        rows = [TransactionEntry(transaction_id=txn.id, line_no=i + 1, **entry) for i, entry in enumerate(entries)]
+        rows = [
+            TransactionEntry(user_id=user_id, transaction_id=txn.id, line_no=i + 1, **entry)
+            for i, entry in enumerate(entries)
+        ]
         session.add_all(rows)
         session.flush()
         return txn, rows
@@ -426,7 +473,7 @@ class FinanceService:
             txn, _ = self._post_transaction(session, receipt, "opening_balance", command.occurred_at, [
                 {"entry_role": "account", "amount_minor": amount, "account_id": command.account_id},
                 {"entry_role": "opening_equity", "amount_minor": -amount},
-            ])
+            ], user_id=self._user_id)
             self._audit(session, receipt, "financial_transaction", txn.id, "post")
             return CommandResult(result_type="financial_transaction", result_id=txn.id)
         return self._execute(command, "record_opening_balance", {"account_id": str(command.account_id), "amount_minor": amount, "occurred_at": _utc(command.occurred_at).isoformat()}, work)
@@ -457,7 +504,7 @@ class FinanceService:
             entries: list[dict[str, Any]] = [{"entry_role": "account", "amount_minor": account_delta, "account_id": command.account_id}]
             sign = -1 if kind == "income" else 1
             entries.extend({"entry_role": kind, "amount_minor": sign * amount, "category_id": category_id} for category_id, amount in parsed)
-            txn, _ = self._post_transaction(session, receipt, kind, command.occurred_at, entries)
+            txn, _ = self._post_transaction(session, receipt, kind, command.occurred_at, entries, user_id=self._user_id)
             self._audit(session, receipt, "financial_transaction", txn.id, "post")
             return CommandResult(result_type="financial_transaction", result_id=txn.id)
         payload = {
@@ -478,7 +525,7 @@ class FinanceService:
             txn, _ = self._post_transaction(session, receipt, kind, command.occurred_at, [
                 {"entry_role": "account", "amount_minor": account_amount, "account_id": command.account_id},
                 {"entry_role": kind, "amount_minor": category_amount, "category_id": command.category_id},
-            ])
+            ], user_id=self._user_id)
             self._audit(session, receipt, "financial_transaction", txn.id, "post")
             return CommandResult(result_type="financial_transaction", result_id=txn.id)
         payload = {"account_id": str(command.account_id), "category_id": str(command.category_id), "amount_minor": amount, "occurred_at": _utc(command.occurred_at).isoformat()}
@@ -498,7 +545,7 @@ class FinanceService:
             txn, _ = self._post_transaction(session, receipt, "transfer", command.occurred_at, [
                 {"entry_role": "account", "amount_minor": -amount, "account_id": command.source_account_id},
                 {"entry_role": "account", "amount_minor": amount, "account_id": command.destination_account_id},
-            ])
+            ], user_id=self._user_id)
             self._audit(session, receipt, "financial_transaction", txn.id, "post")
             return CommandResult(result_type="financial_transaction", result_id=txn.id)
         payload = {"source_account_id": str(command.source_account_id), "destination_account_id": str(command.destination_account_id), "amount_minor": amount, "occurred_at": _utc(command.occurred_at).isoformat()}
@@ -508,7 +555,10 @@ class FinanceService:
         amount = parse_minor(command.amount)
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
             self._account(session, command.destination_account_id)
-            stmt = select(FinancialTransaction).where(FinancialTransaction.id == command.original_transaction_id)
+            stmt = select(FinancialTransaction).where(
+                FinancialTransaction.user_id == self._user_id,
+                FinancialTransaction.id == command.original_transaction_id,
+            )
             if session.bind is not None and session.bind.dialect.name == "postgresql":
                 stmt = stmt.with_for_update()
             original = session.scalar(stmt)
@@ -517,6 +567,7 @@ class FinanceService:
             if original.kind != "expense" or original.currency != "CNY":
                 raise FinanceError("invalid_transaction_relation")
             originals = list(session.scalars(select(TransactionEntry).where(
+                TransactionEntry.user_id == self._user_id,
                 TransactionEntry.transaction_id == original.id,
                 TransactionEntry.entry_role == "expense",
                 TransactionEntry.amount_minor > 0,
@@ -528,6 +579,8 @@ class FinanceService:
             ).join(
                 FinancialTransaction, FinancialTransaction.id == TransactionEntry.transaction_id
             ).where(
+                FinancialTransaction.user_id == self._user_id,
+                TransactionEntry.user_id == self._user_id,
                 FinancialTransaction.kind == "refund",
                 FinancialTransaction.related_transaction_id == original.id,
                 TransactionEntry.entry_role == "expense",
@@ -554,7 +607,7 @@ class FinanceService:
                 raise FinanceError("persistence_error")
             entries: list[dict[str, Any]] = [{"entry_role": "account", "amount_minor": amount, "account_id": command.destination_account_id}]
             entries.extend({"entry_role": "expense", "amount_minor": -part, "category_id": by_id[entry_id].category_id} for entry_id, part in allocations)
-            txn, _ = self._post_transaction(session, receipt, "refund", command.occurred_at, entries, related_id=original.id, relation_kind="refund_of")
+            txn, _ = self._post_transaction(session, receipt, "refund", command.occurred_at, entries, related_id=original.id, relation_kind="refund_of", user_id=self._user_id)
             self._audit(session, receipt, "financial_transaction", txn.id, "post_refund")
             return CommandResult(result_type="financial_transaction", result_id=txn.id)
         payload = {"original_transaction_id": str(command.original_transaction_id), "destination_account_id": str(command.destination_account_id), "amount_minor": amount, "occurred_at": _utc(command.occurred_at).isoformat()}
@@ -562,21 +615,21 @@ class FinanceService:
 
     def record_reversal(self, command: RecordReversal) -> CommandResult:
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            original = session.get(FinancialTransaction, command.original_transaction_id)
+            original = self._scoped_get(session, FinancialTransaction, command.original_transaction_id)
             if original is None:
                 raise FinanceError("not_found")
             if original.kind == "reversal":
                 raise FinanceError("invalid_transaction_relation")
-            if session.scalar(select(FinancialTransaction.id).where(FinancialTransaction.kind == "reversal", FinancialTransaction.related_transaction_id == original.id)):
+            if session.scalar(select(FinancialTransaction.id).where(FinancialTransaction.user_id == self._user_id, FinancialTransaction.kind == "reversal", FinancialTransaction.related_transaction_id == original.id)):
                 raise FinanceError("invalid_transaction_relation")
-            rows = list(session.scalars(select(TransactionEntry).where(TransactionEntry.transaction_id == original.id).order_by(TransactionEntry.line_no)).all())
+            rows = list(session.scalars(select(TransactionEntry).where(TransactionEntry.user_id == self._user_id, TransactionEntry.transaction_id == original.id).order_by(TransactionEntry.line_no)).all())
             entries = [{"entry_role": row.entry_role, "amount_minor": -row.amount_minor, "account_id": row.account_id, "category_id": row.category_id} for row in rows]
             deltas: dict[uuid.UUID, int] = {}
             for row in rows:
                 if row.account_id is not None:
                     deltas[row.account_id] = deltas.get(row.account_id, 0) - row.amount_minor
             self._check_account_deltas(session, deltas)
-            txn, _ = self._post_transaction(session, receipt, "reversal", command.occurred_at, entries, related_id=original.id, relation_kind="reversal_of")
+            txn, _ = self._post_transaction(session, receipt, "reversal", command.occurred_at, entries, related_id=original.id, relation_kind="reversal_of", user_id=self._user_id)
             self._audit(session, receipt, "financial_transaction", txn.id, "post_reversal", reason=command.reason)
             return CommandResult(result_type="financial_transaction", result_id=txn.id)
         payload = {"original_transaction_id": str(command.original_transaction_id), "occurred_at": _utc(command.occurred_at).isoformat(), "reason": command.reason}
@@ -600,7 +653,7 @@ class FinanceService:
         reference = parse_minor(command.reference_amount, allow_zero=True) if command.reference_amount is not None else None
         name = _clean_name(command.name)
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            template = session.get(ActivityTemplate, command.template_id)
+            template = self._scoped_get(session, ActivityTemplate, command.template_id)
             if template is None:
                 raise FinanceError("not_found")
             return self._revise_activity_template_in_session(
@@ -626,13 +679,16 @@ class FinanceService:
         reference_min_minor: int | None,
         reference_max_minor: int | None,
         source_import_candidate_id: uuid.UUID | None = None,
+        user_id: uuid.UUID | None = None,
     ) -> CommandResult:
         """Append a template inside a transaction owned by the caller."""
+        owner_id = user_id or self._user_id
         clean_name = _clean_name(name)
-        template = ActivityTemplate(name_normalized=_normalize_name(clean_name))
+        template = ActivityTemplate(user_id=owner_id, name_normalized=_normalize_name(clean_name))
         session.add(template)
         session.flush()
         revision = ActivityTemplateRevision(
+            user_id=owner_id,
             template_id=template.id,
             revision_no=1,
             name=clean_name,
@@ -645,7 +701,7 @@ class FinanceService:
         session.flush()
         template.current_revision_id = revision.id
         session.flush()
-        self._audit(session, receipt, "activity_template", template.id, "create", None, template.version_id)
+        self.for_user(owner_id)._audit(session, receipt, "activity_template", template.id, "create", None, template.version_id)
         return CommandResult(result_type="activity_template", result_id=template.id, version_id=template.version_id)
 
     def _revise_activity_template_in_session(
@@ -660,8 +716,13 @@ class FinanceService:
         reference_min_minor: int | None,
         reference_max_minor: int | None,
         source_import_candidate_id: uuid.UUID | None = None,
+        user_id: uuid.UUID | None = None,
     ) -> CommandResult:
         """Append a revision inside a transaction owned by the caller."""
+        owner_id = user_id or self._user_id
+        scoped = self.for_user(owner_id)
+        if template.user_id != owner_id:
+            raise FinanceError("not_found")
         if template.archived_at is not None:
             raise FinanceError("archived_resource")
         if template.version_id != expected_version:
@@ -669,10 +730,12 @@ class FinanceService:
         clean_name = _clean_name(name)
         revision_no = (session.scalar(
             select(func.max(ActivityTemplateRevision.revision_no)).where(
-                ActivityTemplateRevision.template_id == template.id
+                ActivityTemplateRevision.user_id == owner_id,
+                ActivityTemplateRevision.template_id == template.id,
             )
         ) or 0) + 1
         revision = ActivityTemplateRevision(
+            user_id=owner_id,
             template_id=template.id,
             revision_no=revision_no,
             name=clean_name,
@@ -688,16 +751,16 @@ class FinanceService:
         template.current_revision_id = revision.id
         template.version_id = before + 1
         session.flush()
-        self._audit(session, receipt, "activity_template", template.id, "revise", before, template.version_id)
+        scoped._audit(session, receipt, "activity_template", template.id, "revise", before, template.version_id)
         return CommandResult(result_type="activity_template", result_id=template.id, version_id=template.version_id)
 
     def record_activity_occurrence(self, command: RecordActivityOccurrence) -> CommandResult:
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            template = session.get(ActivityTemplate, command.template_id)
+            template = self._scoped_get(session, ActivityTemplate, command.template_id)
             if template is None: raise FinanceError("not_found")
             if template.archived_at is not None: raise FinanceError("archived_resource")
             if template.current_revision_id is None: raise FinanceError("persistence_error")
-            occurrence = ActivityOccurrence(template_revision_id=template.current_revision_id, occurred_at=_utc(command.occurred_at))
+            occurrence = ActivityOccurrence(user_id=self._user_id, template_revision_id=template.current_revision_id, occurred_at=_utc(command.occurred_at))
             session.add(occurrence); session.flush()
             self._audit(session, receipt, "activity_occurrence", occurrence.id, "create", None, 1)
             return CommandResult(result_type="activity_occurrence", result_id=occurrence.id, version_id=1)
@@ -705,7 +768,7 @@ class FinanceService:
 
     def cancel_activity_occurrence(self, command: CancelActivityOccurrence) -> CommandResult:
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            occurrence = session.get(ActivityOccurrence, command.occurrence_id)
+            occurrence = self._scoped_get(session, ActivityOccurrence, command.occurrence_id)
             if occurrence is None: raise FinanceError("not_found")
             if occurrence.version_id != command.expected_version: raise FinanceError("concurrent_modification")
             before = occurrence.version_id; occurrence.status = "cancelled"; occurrence.version_id = before + 1; session.flush()
@@ -716,22 +779,23 @@ class FinanceService:
     def allocate_activity_expense(self, command: AllocateActivityExpense) -> CommandResult:
         amount = parse_minor(command.amount)
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            occurrence = session.get(ActivityOccurrence, command.occurrence_id)
+            occurrence = self._scoped_get(session, ActivityOccurrence, command.occurrence_id)
             if occurrence is None: raise FinanceError("not_found")
             if occurrence.status != "active": raise FinanceError("archived_resource")
-            entry_stmt = select(TransactionEntry).where(TransactionEntry.id == command.expense_entry_id)
+            entry_stmt = select(TransactionEntry).where(TransactionEntry.user_id == self._user_id, TransactionEntry.id == command.expense_entry_id)
             if session.bind is not None and session.bind.dialect.name == "postgresql": entry_stmt = entry_stmt.with_for_update()
             entry = session.scalar(entry_stmt)
             if entry is None: raise FinanceError("not_found")
             if entry.entry_role != "expense" or entry.amount_minor <= 0: raise FinanceError("validation_error")
-            allocated = session.scalar(select(func.coalesce(func.sum(ActivityEntryAllocation.allocated_minor), 0)).where(ActivityEntryAllocation.expense_entry_id == entry.id)) or 0
+            allocated = session.scalar(select(func.coalesce(func.sum(ActivityEntryAllocation.allocated_minor), 0)).where(ActivityEntryAllocation.user_id == self._user_id, ActivityEntryAllocation.expense_entry_id == entry.id)) or 0
             if allocated + amount > entry.amount_minor: raise FinanceError("allocation_exceeds_expense")
             if session.scalar(select(ActivityEntryAllocation.id).where(
+                ActivityEntryAllocation.user_id == self._user_id,
                 ActivityEntryAllocation.occurrence_id == occurrence.id,
                 ActivityEntryAllocation.expense_entry_id == entry.id,
             )):
                 raise FinanceError("validation_error")
-            allocation = ActivityEntryAllocation(occurrence_id=occurrence.id, expense_entry_id=entry.id, allocated_minor=amount)
+            allocation = ActivityEntryAllocation(user_id=self._user_id, occurrence_id=occurrence.id, expense_entry_id=entry.id, allocated_minor=amount)
             session.add(allocation); session.flush()
             self._audit(session, receipt, "activity_entry_allocation", allocation.id, "create")
             return CommandResult(result_type="activity_entry_allocation", result_id=allocation.id)
@@ -751,15 +815,15 @@ class FinanceService:
         name = "create_income_schedule" if schedule_id is None else "revise_income_schedule"
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
             if schedule_id is None:
-                schedule = IncomeSchedule(); session.add(schedule); session.flush(); revision_no = 1; before = None
+                schedule = IncomeSchedule(user_id=self._user_id); session.add(schedule); session.flush(); revision_no = 1; before = None
             else:
-                schedule = session.get(IncomeSchedule, schedule_id)
+                schedule = self._scoped_get(session, IncomeSchedule, schedule_id)
                 if schedule is None: raise FinanceError("not_found")
                 if schedule.archived_at is not None: raise FinanceError("archived_resource")
                 if schedule.version_id != command.expected_version: raise FinanceError("concurrent_modification")  # type: ignore[attr-defined]
                 before = schedule.version_id
-                revision_no = (session.scalar(select(func.max(IncomeScheduleVersion.revision_no)).where(IncomeScheduleVersion.schedule_id == schedule.id)) or 0) + 1
-            version = IncomeScheduleVersion(schedule_id=schedule.id, revision_no=revision_no, amount_minor=amount, effective_from=command.effective_from, effective_to=command.effective_to, due_day=command.due_day)
+                revision_no = (session.scalar(select(func.max(IncomeScheduleVersion.revision_no)).where(IncomeScheduleVersion.user_id == self._user_id, IncomeScheduleVersion.schedule_id == schedule.id)) or 0) + 1
+            version = IncomeScheduleVersion(user_id=self._user_id, schedule_id=schedule.id, revision_no=revision_no, amount_minor=amount, effective_from=command.effective_from, effective_to=command.effective_to, due_day=command.due_day)
             session.add(version); session.flush(); schedule.current_version_id = version.id
             if before is not None: schedule.version_id = before + 1
             session.flush()
@@ -771,10 +835,11 @@ class FinanceService:
     def generate_income_expectation(self, command: GenerateIncomeExpectation) -> CommandResult:
         period_date, _, _ = _period_bounds(command.period)
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            schedule = session.get(IncomeSchedule, command.schedule_id)
+            schedule = self._scoped_get(session, IncomeSchedule, command.schedule_id)
             if schedule is None: raise FinanceError("not_found")
             if schedule.archived_at is not None: raise FinanceError("archived_resource")
             versions = list(session.scalars(select(IncomeScheduleVersion).where(
+                IncomeScheduleVersion.user_id == self._user_id,
                 IncomeScheduleVersion.schedule_id == schedule.id,
                 IncomeScheduleVersion.effective_from <= date(period_date.year, period_date.month, calendar.monthrange(period_date.year, period_date.month)[1]),
                 or_(IncomeScheduleVersion.effective_to.is_(None), IncomeScheduleVersion.effective_to >= period_date),
@@ -789,11 +854,12 @@ class FinanceService:
                     break
             if version is None: raise FinanceError("not_found")
             if session.scalar(select(IncomeExpectation.id).where(
+                IncomeExpectation.user_id == self._user_id,
                 IncomeExpectation.schedule_version_id == version.id,
                 IncomeExpectation.due_date == due,
             )):
                 raise FinanceError("validation_error")
-            expectation = IncomeExpectation(schedule_version_id=version.id, due_date=due, expected_minor=version.amount_minor)
+            expectation = IncomeExpectation(user_id=self._user_id, schedule_version_id=version.id, due_date=due, expected_minor=version.amount_minor)
             session.add(expectation); session.flush()
             self._audit(session, receipt, "income_expectation", expectation.id, "generate")
             return CommandResult(result_type="income_expectation", result_id=expectation.id)
@@ -802,19 +868,19 @@ class FinanceService:
     def match_income_expectation(self, command: MatchIncomeExpectation) -> CommandResult:
         amount = parse_minor(command.amount)
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            expectation_stmt = select(IncomeExpectation).where(IncomeExpectation.id == command.expectation_id)
+            expectation_stmt = select(IncomeExpectation).where(IncomeExpectation.user_id == self._user_id, IncomeExpectation.id == command.expectation_id)
             if session.bind is not None and session.bind.dialect.name == "postgresql": expectation_stmt = expectation_stmt.with_for_update()
             expectation = session.scalar(expectation_stmt)
             if expectation is None: raise FinanceError("not_found")
-            entry = session.get(TransactionEntry, command.income_entry_id)
+            entry = self._scoped_get(session, TransactionEntry, command.income_entry_id)
             if entry is None: raise FinanceError("not_found")
             if entry.entry_role != "income" or entry.amount_minor >= 0: raise FinanceError("validation_error")
-            if session.scalar(select(IncomeExpectationMatch.id).where(IncomeExpectationMatch.income_entry_id == entry.id)):
+            if session.scalar(select(IncomeExpectationMatch.id).where(IncomeExpectationMatch.user_id == self._user_id, IncomeExpectationMatch.income_entry_id == entry.id)):
                 raise FinanceError("validation_error")
-            matched = session.scalar(select(func.coalesce(func.sum(IncomeExpectationMatch.matched_minor), 0)).where(IncomeExpectationMatch.expectation_id == expectation.id)) or 0
+            matched = session.scalar(select(func.coalesce(func.sum(IncomeExpectationMatch.matched_minor), 0)).where(IncomeExpectationMatch.user_id == self._user_id, IncomeExpectationMatch.expectation_id == expectation.id)) or 0
             if matched + amount > expectation.expected_minor or amount > -entry.amount_minor:
                 raise FinanceError("expectation_match_exceeds_amount")
-            match = IncomeExpectationMatch(expectation_id=expectation.id, income_entry_id=entry.id, matched_minor=amount)
+            match = IncomeExpectationMatch(user_id=self._user_id, expectation_id=expectation.id, income_entry_id=entry.id, matched_minor=amount)
             session.add(match); session.flush()
             expectation.status = "matched" if matched + amount == expectation.expected_minor else "partial"
             self._audit(session, receipt, "income_expectation_match", match.id, "create")
@@ -825,7 +891,7 @@ class FinanceService:
     def create_budget_plan(self, command: CreateBudgetPlan) -> CommandResult:
         name = _clean_name(command.name)
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            plan = BudgetPlan(name=name); session.add(plan); session.flush()
+            plan = BudgetPlan(user_id=self._user_id, name=name); session.add(plan); session.flush()
             self._audit(session, receipt, "budget_plan", plan.id, "create", None, 1)
             return CommandResult(result_type="budget_plan", result_id=plan.id, version_id=1)
         return self._execute(command, "create_budget_plan", {"name": name}, work)
@@ -840,18 +906,18 @@ class FinanceService:
         if len({row.category_id for row, _ in parsed}) != len(parsed):
             raise FinanceError("validation_error")
         def work(session: Session, receipt: CommandReceipt) -> CommandResult:
-            stmt = select(BudgetPlan).where(BudgetPlan.id == command.plan_id)
+            stmt = select(BudgetPlan).where(BudgetPlan.user_id == self._user_id, BudgetPlan.id == command.plan_id)
             if session.bind is not None and session.bind.dialect.name == "postgresql": stmt = stmt.with_for_update()
             plan = session.scalar(stmt)
             if plan is None: raise FinanceError("not_found")
             if plan.archived_at is not None: raise FinanceError("archived_resource")
             if plan.version_id != command.expected_version: raise FinanceError("concurrent_modification")
             for row, _ in parsed: self._category(session, row.category_id, "expense")
-            version_no = (session.scalar(select(func.max(BudgetVersion.version_no)).where(BudgetVersion.plan_id == plan.id, BudgetVersion.period == period_date)) or 0) + 1
+            version_no = (session.scalar(select(func.max(BudgetVersion.version_no)).where(BudgetVersion.user_id == self._user_id, BudgetVersion.plan_id == plan.id, BudgetVersion.period == period_date)) or 0) + 1
             if version_no > 1 and (not command.adjustment_reason or not command.adjustment_reason.strip()): raise FinanceError("validation_error")
-            version = BudgetVersion(plan_id=plan.id, period=period_date, version_no=version_no, adjustment_reason=command.adjustment_reason, published_at=_utc(command.published_at))
+            version = BudgetVersion(user_id=self._user_id, plan_id=plan.id, period=period_date, version_no=version_no, adjustment_reason=command.adjustment_reason, published_at=_utc(command.published_at))
             session.add(version); session.flush()
-            session.add_all(BudgetAllocation(budget_version_id=version.id, category_id=row.category_id, limit_minor=limit) for row, limit in parsed)
+            session.add_all(BudgetAllocation(user_id=self._user_id, budget_version_id=version.id, category_id=row.category_id, limit_minor=limit) for row, limit in parsed)
             before = plan.version_id; plan.version_id = before + 1; session.flush()
             self._audit(session, receipt, "budget_version", version.id, "publish", before, plan.version_id, command.adjustment_reason)
             return CommandResult(result_type="budget_version", result_id=version.id, version_id=plan.version_id)
@@ -860,14 +926,14 @@ class FinanceService:
 
     def list_accounts(self, *, include_archived: bool = False) -> list[AccountView]:
         with self._sessions() as session:
-            stmt = select(Account)
+            stmt = select(Account).where(Account.user_id == self._user_id)
             if not include_archived: stmt = stmt.where(Account.archived_at.is_(None))
             rows = session.scalars(stmt.order_by(Account.name, Account.id)).all()
             return [AccountView(id=row.id, name=row.name, currency=row.currency, version_id=row.version_id, archived_at=_aware_utc(row.archived_at), created_at=_aware_utc(row.created_at)) for row in rows]
 
     def list_categories(self, *, include_archived: bool = False) -> list[CategoryView]:
         with self._sessions() as session:
-            stmt = select(Category)
+            stmt = select(Category).where(Category.user_id == self._user_id)
             if not include_archived: stmt = stmt.where(Category.archived_at.is_(None))
             rows = session.scalars(stmt.order_by(Category.kind, Category.name_normalized, Category.id)).all()
             return [CategoryView(id=row.id, kind=row.kind, name=row.name, version_id=row.version_id, archived_at=_aware_utc(row.archived_at), created_at=_aware_utc(row.created_at)) for row in rows]
@@ -875,19 +941,19 @@ class FinanceService:
     def account_balance(self, account_id: uuid.UUID, *, as_of: datetime | None = None) -> int:
         with self._sessions() as session:
             self._account(session, account_id, active=False)
-            stmt = select(func.coalesce(func.sum(TransactionEntry.amount_minor), 0)).join(FinancialTransaction).where(TransactionEntry.account_id == account_id)
+            stmt = select(func.coalesce(func.sum(TransactionEntry.amount_minor), 0)).join(FinancialTransaction).where(TransactionEntry.user_id == self._user_id, TransactionEntry.account_id == account_id)
             if as_of is not None: stmt = stmt.where(FinancialTransaction.occurred_at <= _utc(as_of))
             return ensure_aggregate(int(session.scalar(stmt) or 0))
 
     def list_transactions(self, *, start: datetime | None = None, end: datetime | None = None) -> list[TransactionView]:
         with self._sessions() as session:
-            stmt = select(FinancialTransaction)
+            stmt = select(FinancialTransaction).where(FinancialTransaction.user_id == self._user_id)
             if start is not None: stmt = stmt.where(FinancialTransaction.occurred_at >= _utc(start))
             if end is not None: stmt = stmt.where(FinancialTransaction.occurred_at < _utc(end))
             transactions = session.scalars(stmt.order_by(FinancialTransaction.occurred_at, FinancialTransaction.id)).all()
             views = []
             for transaction in transactions:
-                entries = session.scalars(select(TransactionEntry).where(TransactionEntry.transaction_id == transaction.id).order_by(TransactionEntry.line_no, TransactionEntry.id)).all()
+                entries = session.scalars(select(TransactionEntry).where(TransactionEntry.user_id == self._user_id, TransactionEntry.transaction_id == transaction.id).order_by(TransactionEntry.line_no, TransactionEntry.id)).all()
                 views.append(TransactionView(
                     id=transaction.id,
                     kind=transaction.kind,
@@ -901,17 +967,17 @@ class FinanceService:
 
     def list_budget_versions(self, plan_id: uuid.UUID, *, period: str | None = None) -> list[BudgetVersionView]:
         with self._sessions() as session:
-            plan = session.get(BudgetPlan, plan_id)
+            plan = self._scoped_get(session, BudgetPlan, plan_id)
             if plan is None:
                 raise FinanceError("not_found")
-            stmt = select(BudgetVersion).where(BudgetVersion.plan_id == plan_id)
+            stmt = select(BudgetVersion).where(BudgetVersion.user_id == self._user_id, BudgetVersion.plan_id == plan_id)
             if period is not None:
                 period_date, _, _ = _period_bounds(period)
                 stmt = stmt.where(BudgetVersion.period == period_date)
             versions = session.scalars(stmt.order_by(BudgetVersion.period, BudgetVersion.version_no, BudgetVersion.id)).all()
             result = []
             for version in versions:
-                allocations = session.scalars(select(BudgetAllocation).where(BudgetAllocation.budget_version_id == version.id).order_by(BudgetAllocation.category_id, BudgetAllocation.id)).all()
+                allocations = session.scalars(select(BudgetAllocation).where(BudgetAllocation.user_id == self._user_id, BudgetAllocation.budget_version_id == version.id).order_by(BudgetAllocation.category_id, BudgetAllocation.id)).all()
                 result.append(BudgetVersionView(
                     id=version.id,
                     plan_id=version.plan_id,
@@ -939,16 +1005,17 @@ class FinanceService:
             if session.bind is not None and session.bind.dialect.name == "postgresql":
                 session.execute(text("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY"))
             txn_filter = select(FinancialTransaction.id).where(
+                FinancialTransaction.user_id == self._user_id,
                 FinancialTransaction.occurred_at >= start,
                 FinancialTransaction.occurred_at < cutoff,
             )
             if account_filter:
                 txn_filter = txn_filter.where(FinancialTransaction.id.in_(
-                    select(TransactionEntry.transaction_id).where(TransactionEntry.account_id.in_(account_filter))
+                    select(TransactionEntry.transaction_id).where(TransactionEntry.user_id == self._user_id, TransactionEntry.account_id.in_(account_filter))
                 ))
             if category_filter:
                 txn_filter = txn_filter.where(FinancialTransaction.id.in_(
-                    select(TransactionEntry.transaction_id).where(TransactionEntry.category_id.in_(category_filter))
+                    select(TransactionEntry.transaction_id).where(TransactionEntry.user_id == self._user_id, TransactionEntry.category_id.in_(category_filter))
                 ))
             transaction_rows = list(session.execute(select(
                 FinancialTransaction.kind,
@@ -957,6 +1024,7 @@ class FinanceService:
                 TransactionEntry.account_id,
                 TransactionEntry.category_id,
             ).join(TransactionEntry, TransactionEntry.transaction_id == FinancialTransaction.id).where(
+                TransactionEntry.user_id == self._user_id,
                 FinancialTransaction.id.in_(txn_filter),
             )).all())
             income = -sum(row.amount_minor for row in transaction_rows if row.entry_role == "income")
@@ -966,12 +1034,13 @@ class FinanceService:
             transfer_out = -sum(row.amount_minor for row in transaction_rows if row.kind == "transfer" and row.entry_role == "account" and row.amount_minor < 0)
 
             budget = session.scalar(select(BudgetVersion).where(
+                BudgetVersion.user_id == self._user_id,
                 BudgetVersion.period == period_date,
                 BudgetVersion.published_at <= _utc(as_of),
             ).order_by(BudgetVersion.published_at.desc(), BudgetVersion.version_no.desc(), BudgetVersion.id).limit(1))
             limits: dict[uuid.UUID, int] = {}
             if budget is not None:
-                allocation_stmt = select(BudgetAllocation.category_id, BudgetAllocation.limit_minor).where(BudgetAllocation.budget_version_id == budget.id)
+                allocation_stmt = select(BudgetAllocation.category_id, BudgetAllocation.limit_minor).where(BudgetAllocation.user_id == self._user_id, BudgetAllocation.budget_version_id == budget.id)
                 if category_filter:
                     allocation_stmt = allocation_stmt.where(BudgetAllocation.category_id.in_(category_filter))
                 limits = dict(session.execute(allocation_stmt).all())
@@ -990,23 +1059,25 @@ class FinanceService:
                 net = cat_gross - cat_refund
                 categories.append(CategorySnapshot(category_id=category_id, gross_expense_minor=cat_gross, refund_minor=cat_refund, net_expense_minor=net, limit_minor=limit, remaining_minor=None if limit is None else limit - net))
 
-            account_stmt = select(Account.id)
+            account_stmt = select(Account.id).where(Account.user_id == self._user_id)
             if account_filter: account_stmt = account_stmt.where(Account.id.in_(account_filter))
             account_keys = list(session.scalars(account_stmt.order_by(Account.id)).all())
             accounts = []
             for account_id in account_keys:
-                opening = int(session.scalar(select(func.coalesce(func.sum(TransactionEntry.amount_minor), 0)).join(FinancialTransaction).where(TransactionEntry.account_id == account_id, FinancialTransaction.occurred_at < start)) or 0)
+                opening = int(session.scalar(select(func.coalesce(func.sum(TransactionEntry.amount_minor), 0)).join(FinancialTransaction).where(TransactionEntry.user_id == self._user_id, TransactionEntry.account_id == account_id, FinancialTransaction.occurred_at < start)) or 0)
                 period_amounts = [row.amount_minor for row in transaction_rows if row.account_id == account_id]
                 inflow = sum(value for value in period_amounts if value > 0)
                 outflow = -sum(value for value in period_amounts if value < 0)
                 accounts.append(AccountSnapshot(account_id=account_id, opening_balance_minor=opening, inflow_minor=inflow, outflow_minor=outflow, closing_balance_minor=opening + inflow - outflow))
 
             expected = int(session.scalar(select(func.coalesce(func.sum(IncomeExpectation.expected_minor), 0)).where(
+                IncomeExpectation.user_id == self._user_id,
                 IncomeExpectation.due_date >= period_date,
                 IncomeExpectation.due_date < end.astimezone(SHANGHAI).date(),
                 IncomeExpectation.created_at <= _utc(as_of),
             )) or 0)
             received = int(session.scalar(select(func.coalesce(func.sum(IncomeExpectationMatch.matched_minor), 0)).join(IncomeExpectation).where(
+                IncomeExpectationMatch.user_id == self._user_id,
                 IncomeExpectation.due_date >= period_date,
                 IncomeExpectation.due_date < end.astimezone(SHANGHAI).date(),
                 IncomeExpectationMatch.created_at <= _utc(as_of),

@@ -50,6 +50,21 @@ class ConversationMessageRecord(Base):
             ondelete="RESTRICT",
             name="fk_message_user_conversation",
         ),
+        ForeignKeyConstraint(
+            ["user_id", "run_id"],
+            ["agent_run.user_id", "agent_run.id"],
+            ondelete="RESTRICT",
+            name="fk_message_user_run",
+        ),
+        UniqueConstraint(
+            "user_id", "run_id", "run_sequence",
+            name="uq_message_user_run_sequence",
+        ),
+        CheckConstraint(
+            "(run_id IS NULL AND run_sequence IS NULL) OR "
+            "(run_id IS NOT NULL AND run_sequence IS NOT NULL)",
+            name="run_sequence_shape",
+        ),
         CheckConstraint("role IN ('user','assistant','tool','system')", name="role"),
         CheckConstraint("sensitivity IN ('private','restricted')", name="sensitivity"),
     )
@@ -57,6 +72,9 @@ class ConversationMessageRecord(Base):
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=new_uuid)
     user_id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), nullable=False, index=True)
     conversation_id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), nullable=False, index=True)
+    run_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), index=True)
+    run_sequence: Mapped[int | None] = mapped_column(Integer)
+    tool_call_id: Mapped[str | None] = mapped_column(String(140))
     role: Mapped[str] = mapped_column(String(16), nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False)
     content_digest: Mapped[str] = mapped_column(String(64), nullable=False)
@@ -68,6 +86,12 @@ class ConversationMessageRecord(Base):
 class MemoryCandidateRecord(Base):
     __tablename__ = "memory_candidate"
     __table_args__ = (
+        ForeignKeyConstraint(
+            ["user_id", "memory_item_id"],
+            ["memory_item.user_id", "memory_item.id"],
+            ondelete="RESTRICT",
+            name="fk_memory_candidate_user_item",
+        ),
         CheckConstraint("kind IN ('preference','constraint','goal','communication_style')", name="kind"),
         CheckConstraint("sensitivity IN ('private','restricted')", name="sensitivity"),
         CheckConstraint("status IN ('pending','confirmed','rejected','expired')", name="status"),
@@ -88,6 +112,7 @@ class MemoryCandidateRecord(Base):
     sensitivity: Mapped[str] = mapped_column(String(16), nullable=False)
     status: Mapped[str] = mapped_column(String(16), nullable=False, default="pending")
     proposed_by_profile_id: Mapped[str] = mapped_column(String(140), nullable=False)
+    proposed_by_profile_version: Mapped[str] = mapped_column(String(32), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     decided_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
@@ -99,9 +124,18 @@ class MemoryCandidateRecord(Base):
 class MemoryItemRecord(Base):
     __tablename__ = "memory_item"
     __table_args__ = (
+        UniqueConstraint("user_id", "id", name="uq_memory_item_user_id"),
+        ForeignKeyConstraint(
+            ["user_id", "superseded_by_id"],
+            ["memory_item.user_id", "memory_item.id"],
+            ondelete="RESTRICT",
+            name="fk_memory_item_user_superseded",
+        ),
         CheckConstraint("kind IN ('preference','constraint','goal','communication_style')", name="kind"),
         CheckConstraint("sensitivity IN ('private','restricted')", name="sensitivity"),
-        CheckConstraint("status IN ('active','deleted','superseded')", name="status"),
+        CheckConstraint(
+            "status IN ('active','deleted','superseded','invalidated')", name="status"
+        ),
         CheckConstraint("version_id > 0", name="version_positive"),
     )
 
@@ -120,9 +154,7 @@ class MemoryItemRecord(Base):
     confirmed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    superseded_by_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("memory_item.id", ondelete="RESTRICT")
-    )
+    superseded_by_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True))
     audit_id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), nullable=False)
     version_id: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
 

@@ -23,6 +23,15 @@ def _recreate_mode() -> str:
     return "always" if op.get_bind().dialect.name == "sqlite" else "auto"
 
 
+def _assert_sqlite_foreign_keys(connection: sa.Connection) -> None:
+    """Fail the migration if a paired SQLite rebuild leaves any broken edge."""
+    if connection.dialect.name != "sqlite":
+        return
+    violations = connection.execute(sa.text("PRAGMA foreign_key_check")).fetchall()
+    if violations:
+        raise RuntimeError("P4 workflow rebuild left invalid foreign-key references")
+
+
 def _create_state_tables() -> None:
     op.create_table(
         "conversation",
@@ -47,6 +56,9 @@ def _create_state_tables() -> None:
         sa.Column("id", sa.Uuid(), nullable=False),
         sa.Column("user_id", sa.Uuid(), nullable=False),
         sa.Column("conversation_id", sa.Uuid(), nullable=False),
+        sa.Column("run_id", sa.Uuid(), nullable=True),
+        sa.Column("run_sequence", sa.Integer(), nullable=True),
+        sa.Column("tool_call_id", sa.String(140), nullable=True),
         sa.Column("role", sa.String(16), nullable=False),
         sa.Column("content", sa.Text(), nullable=False),
         sa.Column("content_digest", sa.String(64), nullable=False),
@@ -55,11 +67,24 @@ def _create_state_tables() -> None:
         sa.Column("deleted_at", sa.DateTime(timezone=True), nullable=True),
         sa.CheckConstraint("role IN ('user','assistant','tool','system')", name=op.f("ck_conversation_message_role")),
         sa.CheckConstraint("sensitivity IN ('private','restricted')", name=op.f("ck_conversation_message_sensitivity")),
+        sa.CheckConstraint(
+            "(run_id IS NULL AND run_sequence IS NULL) OR "
+            "(run_id IS NOT NULL AND run_sequence IS NOT NULL)",
+            name="ck_conversation_message_run_sequence_shape",
+        ),
         sa.ForeignKeyConstraint(
             ["user_id", "conversation_id"], ["conversation.user_id", "conversation.id"],
             ondelete="RESTRICT", name="fk_message_user_conversation",
         ),
+        sa.ForeignKeyConstraint(
+            ["user_id", "run_id"], ["agent_run.user_id", "agent_run.id"],
+            ondelete="RESTRICT", name="fk_message_user_run",
+        ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_conversation_message")),
+        sa.UniqueConstraint(
+            "user_id", "run_id", "run_sequence",
+            name="uq_message_user_run_sequence",
+        ),
     )
     op.create_index("ix_message_user", "conversation_message", ["user_id"])
     op.create_index("ix_message_conversation", "conversation_message", ["conversation_id", "created_at", "id"])
@@ -78,6 +103,7 @@ def _create_state_tables() -> None:
         sa.Column("sensitivity", sa.String(16), nullable=False),
         sa.Column("status", sa.String(16), nullable=False),
         sa.Column("proposed_by_profile_id", sa.String(140), nullable=False),
+        sa.Column("proposed_by_profile_version", sa.String(32), nullable=False),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("expires_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("decided_at", sa.DateTime(timezone=True), nullable=True),
@@ -113,14 +139,29 @@ def _create_state_tables() -> None:
         sa.Column("version_id", sa.Integer(), nullable=False),
         sa.CheckConstraint("kind IN ('preference','constraint','goal','communication_style')", name=op.f("ck_memory_item_kind")),
         sa.CheckConstraint("sensitivity IN ('private','restricted')", name=op.f("ck_memory_item_sensitivity")),
-        sa.CheckConstraint("status IN ('active','deleted','superseded')", name=op.f("ck_memory_item_status")),
+        sa.CheckConstraint(
+            "status IN ('active','deleted','superseded','invalidated')",
+            name=op.f("ck_memory_item_status"),
+        ),
         sa.CheckConstraint("version_id > 0", name=op.f("ck_memory_item_version_positive")),
         sa.ForeignKeyConstraint(["user_id"], ["app_user.id"], ondelete="RESTRICT", name="fk_memory_item_user"),
-        sa.ForeignKeyConstraint(["superseded_by_id"], ["memory_item.id"], ondelete="RESTRICT", name="fk_memory_item_superseded"),
+        sa.ForeignKeyConstraint(
+            ["user_id", "superseded_by_id"], ["memory_item.user_id", "memory_item.id"],
+            ondelete="RESTRICT", name="fk_memory_item_user_superseded",
+        ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_memory_item")),
+        sa.UniqueConstraint("user_id", "id", name="uq_memory_item_user_id"),
     )
     op.create_index("ix_memory_item_namespace", "memory_item", ["namespace"])
     op.create_index("ix_memory_item_lookup", "memory_item", ["user_id", "namespace", "status", "kind"])
+    with op.batch_alter_table("memory_candidate", recreate=_recreate_mode()) as batch:
+        batch.create_foreign_key(
+            "fk_memory_candidate_user_item",
+            "memory_item",
+            ["user_id", "memory_item_id"],
+            ["user_id", "id"],
+            ondelete="RESTRICT",
+        )
 
     op.create_table(
         "module_setting",
@@ -190,6 +231,7 @@ def upgrade() -> None:
 
     for column in (
         sa.Column("module_id", sa.String(64), nullable=True),
+        sa.Column("module_version", sa.String(32), nullable=True),
         sa.Column("profile_id", sa.String(140), nullable=True),
         sa.Column("profile_version", sa.String(32), nullable=True),
         sa.Column("attempt_no", sa.Integer(), nullable=True),
@@ -201,16 +243,19 @@ def upgrade() -> None:
         sa.Column("module_id", sa.String(64), nullable=True),
         sa.Column("profile_id", sa.String(140), nullable=True),
         sa.Column("action_schema_version", sa.Integer(), nullable=True),
+        sa.Column("commit_attempt_no", sa.Integer(), nullable=True),
+        sa.Column("commit_lease_expires_at", sa.DateTime(timezone=True), nullable=True),
     ):
         op.add_column("pending_action", column)
 
     connection.execute(sa.text(
-        "UPDATE agent_run SET module_id='daily_finance', profile_id='daily_finance.assistant@1', "
+        "UPDATE agent_run SET module_id='daily_finance', module_version='1.0.0', "
+        "profile_id='daily_finance.assistant@1', "
         "profile_version='1.0.0', attempt_no=1, action_schema_version=1"
     ))
     connection.execute(sa.text(
         "UPDATE pending_action SET module_id='daily_finance', profile_id='daily_finance.assistant@1', "
-        "action_schema_version=1"
+        "action_schema_version=1, commit_attempt_no=0"
     ))
     if connection.dialect.name == "sqlite":
         connection.execute(sa.text(
@@ -224,49 +269,78 @@ def upgrade() -> None:
     recreate = _recreate_mode()
     with op.batch_alter_table("agent_run", recreate=recreate) as batch:
         batch.alter_column("module_id", existing_type=sa.String(64), nullable=False)
+        batch.alter_column("module_version", existing_type=sa.String(32), nullable=False)
         batch.alter_column("profile_id", existing_type=sa.String(140), nullable=False)
         batch.alter_column("profile_version", existing_type=sa.String(32), nullable=False)
         batch.alter_column("attempt_no", existing_type=sa.Integer(), nullable=False)
         batch.alter_column("action_schema_version", existing_type=sa.Integer(), nullable=False)
         batch.drop_constraint(op.f("ck_agent_run_status"), type_="check")
-        batch.create_check_constraint("ck_agent_run_status", "status IN ('running','success','error','paused','cancelled')")
-        batch.create_check_constraint("ck_agent_run_attempt", "attempt_no BETWEEN 1 AND 3")
-        batch.create_check_constraint("ck_agent_run_schema", "action_schema_version > 0")
+        batch.create_check_constraint(op.f("ck_agent_run_status"), "status IN ('running','success','error','paused','cancelled')")
+        batch.create_check_constraint(op.f("ck_agent_run_attempt"), "attempt_no BETWEEN 1 AND 3")
+        batch.create_check_constraint(op.f("ck_agent_run_schema"), "action_schema_version > 0")
         batch.create_foreign_key(
             "fk_run_user_conversation", "conversation",
             ["user_id", "conversation_id"], ["user_id", "id"], ondelete="RESTRICT",
+        )
+        batch.create_foreign_key(
+            "fk_run_user_pending", "pending_action",
+            ["user_id", "pending_action_id"], ["user_id", "id"],
+            ondelete="RESTRICT", deferrable=True, initially="DEFERRED",
         )
     with op.batch_alter_table("pending_action", recreate=recreate) as batch:
         batch.alter_column("module_id", existing_type=sa.String(64), nullable=False)
         batch.alter_column("profile_id", existing_type=sa.String(140), nullable=False)
         batch.alter_column("action_schema_version", existing_type=sa.Integer(), nullable=False)
-        batch.create_check_constraint("ck_pending_action_schema", "action_schema_version > 0")
+        batch.alter_column("commit_attempt_no", existing_type=sa.Integer(), nullable=False)
+        batch.create_check_constraint(op.f("ck_pending_action_schema"), "action_schema_version > 0")
+        batch.create_check_constraint(
+            op.f("ck_pending_action_commit_attempt_nonnegative"),
+            "commit_attempt_no >= 0",
+        )
         batch.create_foreign_key(
             "fk_pending_user_conversation", "conversation",
             ["user_id", "conversation_id"], ["user_id", "id"], ondelete="RESTRICT",
         )
+    _assert_sqlite_foreign_keys(connection)
 
 
 def downgrade() -> None:
+    connection = op.get_bind()
     recreate = _recreate_mode()
+    # The reverse edge is removed before pending_action is rebuilt or its
+    # compatibility columns are changed.  This is required by PostgreSQL and
+    # keeps the SQLite pair free of a dangling circular reference.
+    with op.batch_alter_table("agent_run", recreate=recreate) as batch:
+        batch.drop_constraint("fk_run_user_pending", type_="foreignkey")
+
     with op.batch_alter_table("pending_action", recreate=recreate) as batch:
         batch.drop_constraint("fk_pending_user_conversation", type_="foreignkey")
-        batch.drop_constraint("ck_pending_action_schema", type_="check")
+        batch.drop_constraint(op.f("ck_pending_action_commit_attempt_nonnegative"), type_="check")
+        batch.drop_constraint(op.f("ck_pending_action_schema"), type_="check")
+        batch.drop_column("commit_lease_expires_at")
+        batch.drop_column("commit_attempt_no")
         batch.drop_column("action_schema_version")
         batch.drop_column("profile_id")
         batch.drop_column("module_id")
+    connection.execute(sa.text(
+        "UPDATE agent_run SET status='error', "
+        "error_code=CASE WHEN error_code IS NULL THEN 'cancelled' ELSE error_code END, "
+        "pause_reason=NULL WHERE status='cancelled'"
+    ))
     with op.batch_alter_table("agent_run", recreate=recreate) as batch:
         batch.drop_constraint("fk_run_user_conversation", type_="foreignkey")
-        batch.drop_constraint("ck_agent_run_schema", type_="check")
-        batch.drop_constraint("ck_agent_run_attempt", type_="check")
-        batch.drop_constraint("ck_agent_run_status", type_="check")
-        batch.create_check_constraint("ck_agent_run_status", "status IN ('running','success','error','paused')")
+        batch.drop_constraint(op.f("ck_agent_run_schema"), type_="check")
+        batch.drop_constraint(op.f("ck_agent_run_attempt"), type_="check")
+        batch.drop_constraint(op.f("ck_agent_run_status"), type_="check")
+        batch.create_check_constraint(op.f("ck_agent_run_status"), "status IN ('running','success','error','paused')")
         batch.drop_column("action_schema_version")
         batch.drop_column("lease_expires_at")
         batch.drop_column("attempt_no")
         batch.drop_column("profile_version")
         batch.drop_column("profile_id")
+        batch.drop_column("module_version")
         batch.drop_column("module_id")
+    _assert_sqlite_foreign_keys(connection)
 
     op.drop_index("ix_host_receipt_user", table_name="host_request_receipt")
     op.drop_table("host_request_receipt")
@@ -274,6 +348,8 @@ def downgrade() -> None:
     op.drop_table("module_setting")
     op.drop_index("ix_memory_item_lookup", table_name="memory_item")
     op.drop_index("ix_memory_item_namespace", table_name="memory_item")
+    with op.batch_alter_table("memory_candidate", recreate=recreate) as batch:
+        batch.drop_constraint("fk_memory_candidate_user_item", type_="foreignkey")
     op.drop_table("memory_item")
     op.drop_index("ix_memory_candidate_user", table_name="memory_candidate")
     op.drop_table("memory_candidate")

@@ -237,7 +237,7 @@ def test_supplement_cancel_and_confirm_after_cancel(ih: IndependentHarness) -> N
             action="confirm", permissions=frozenset({"finance:write"}),
             confirmation_code=updated.result["confirmation_code"], now=NOW,
         )
-    assert exc.value.code == "confirmation_required"
+    assert exc.value.code == "pending_action_cancelled"
     assert expense_count(ih) == 0
 
 

@@ -15,7 +15,7 @@ from datetime import UTC, datetime, timedelta
 
 from pwdlib import PasswordHash
 from pwdlib.hashers.argon2 import Argon2Hasher
-from sqlalchemy import func, select, update
+from sqlalchemy import case, func, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -40,6 +40,7 @@ LOGIN_LOCKOUT = timedelta(minutes=15)
 MAX_ACTIVE_SESSIONS = 10
 MAX_BINDING_ATTEMPTS = 5
 BINDING_HMAC_DOMAIN = b"wife.channel-binding.v1"
+BINDING_CODE_HMAC_DOMAIN = b"wife.channel-binding.v2"
 _HANDLE_PATTERN = re.compile(r"^[a-z][a-z0-9_]{2,31}$")
 _BINDING_ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"
 
@@ -86,6 +87,7 @@ class AuthenticatedSession:
     session_id: uuid.UUID
     device_id: uuid.UUID
     authenticated_at: datetime
+    platform: str = "api_test"
 
 
 @dataclass(frozen=True)
@@ -111,6 +113,12 @@ class BindingView:
     binding_id: uuid.UUID
     channel: str
     created_at: datetime
+
+
+@dataclass(frozen=True)
+class BindingConsumeResult:
+    view: BindingView | None
+    error_code: str | None = None
 
 
 class _LoginLimiter:
@@ -229,36 +237,64 @@ class AuthService:
             raise AuthError("bootstrap_unauthorized")
         normalized = self.normalize_handle(handle)
         self.validate_password(password)
-        password_hash = self._passwords.hash(password)
         try:
             with self._sessions() as session, session.begin():
-                owner = session.scalar(
-                    select(AppUser).where(AppUser.bootstrap_marker == "bootstrap-owner").with_for_update()
+                return self.initialize_in_session(
+                    session, normalized_handle=normalized, password=password, now=now
                 )
-                if owner is None or owner.status != "pending_setup":
-                    raise AuthError("already_initialized")
-                if session.scalar(select(PasswordCredential.id).where(PasswordCredential.user_id == owner.id)) is not None:
-                    raise AuthError("already_initialized")
-                claimed = session.execute(
-                    update(AppUser)
-                    .where(AppUser.id == owner.id, AppUser.status == "pending_setup")
-                    .values(status="active", handle=normalized, initialized_at=now)
-                )
-                if claimed.rowcount != 1:
-                    raise AuthError("already_initialized")
-                owner.version_id += 1
-                session.add(
-                    PasswordCredential(
-                        user_id=owner.id,
-                        password_hash=password_hash,
-                        algorithm="argon2id",
-                        created_at=now,
-                        updated_at=now,
-                    )
-                )
-                return owner.id
         except IntegrityError as exc:
             raise AuthError("already_initialized") from exc
+
+    def initialize_in_session(
+        self,
+        session: Session,
+        *,
+        normalized_handle: str,
+        password: str,
+        now: datetime,
+    ) -> uuid.UUID:
+        """Initialize inside the caller's receipt transaction after gate validation."""
+        password_hash = self._passwords.hash(password)
+        owner = session.scalar(
+            select(AppUser).where(AppUser.bootstrap_marker == "bootstrap-owner").with_for_update()
+        )
+        if owner is None or owner.status != "pending_setup":
+            raise AuthError("already_initialized")
+        if session.scalar(select(PasswordCredential.id).where(PasswordCredential.user_id == owner.id)) is not None:
+            raise AuthError("already_initialized")
+        claimed = session.execute(
+            update(AppUser)
+            .where(AppUser.id == owner.id, AppUser.status == "pending_setup")
+            .values(status="active", handle=normalized_handle, initialized_at=now)
+        )
+        if claimed.rowcount != 1:
+            raise AuthError("already_initialized")
+        owner.version_id += 1
+        session.add(
+            PasswordCredential(
+                user_id=owner.id,
+                password_hash=password_hash,
+                algorithm="argon2id",
+                created_at=now,
+                updated_at=now,
+            )
+        )
+        session.flush()
+        return owner.id
+
+    def validate_initialize_gate(
+        self, *, handle: str, password: str, bootstrap_token: bytes, client_host: str
+    ) -> str:
+        try:
+            is_loopback = ipaddress.ip_address(client_host).is_loopback
+        except ValueError:
+            is_loopback = False
+        supplied = hashlib.sha256(bootstrap_token).digest()
+        if not is_loopback or not hmac.compare_digest(supplied, self._bootstrap_digest):
+            raise AuthError("bootstrap_unauthorized")
+        normalized = self.normalize_handle(handle)
+        self.validate_password(password)
+        return normalized
 
     def login(
         self,
@@ -378,6 +414,7 @@ class AuthService:
                 session_id=row.id,
                 device_id=row.device_id,
                 authenticated_at=_utc(row.created_at),
+                platform=row.platform,
             )
 
     def refresh(self, refresh_token: str, *, now: datetime) -> SessionTokens:
@@ -523,7 +560,12 @@ class AuthService:
             current = session.scalar(
                 select(DeviceSession).where(DeviceSession.access_digest == _digest(access_token)).with_for_update()
             )
-            if current is None or current.revoked_at is not None or now >= _utc(current.absolute_expires_at):
+            if current is None or current.revoked_at is not None:
+                raise AuthError("session_revoked")
+            if now >= _utc(current.access_expires_at) or now >= _utc(current.absolute_expires_at):
+                raise AuthError("session_expired")
+            user = session.get(AppUser, current.user_id)
+            if user is None or user.status != "active":
                 raise AuthError("session_revoked")
             credential = session.scalar(
                 select(PasswordCredential).where(PasswordCredential.user_id == current.user_id).with_for_update()
@@ -565,6 +607,29 @@ class AuthService:
         now = _utc(now)
         if not channel or len(channel) > 32:
             raise AuthError("invalid_channel")
+        with self._sessions() as session, session.begin():
+            return self.create_binding_code_in_session(
+                session, principal=principal, channel=channel, now=now
+            )
+
+    def create_binding_code_in_session(
+        self,
+        session: Session,
+        *,
+        principal: AuthenticatedSession,
+        channel: str,
+        now: datetime,
+    ) -> BindingCodeResult:
+        now = _utc(now)
+        if not channel or len(channel) > 32:
+            raise AuthError("invalid_channel")
+        owner = session.scalar(
+            select(AppUser)
+            .where(AppUser.id == principal.user_id, AppUser.status == "active")
+            .with_for_update()
+        )
+        if owner is None:
+            raise AuthError("session_revoked")
         raw = self._random_bytes(5)
         # Five bytes map exactly to eight 5-bit symbols.
         number = int.from_bytes(raw, "big")
@@ -572,32 +637,70 @@ class AuthService:
         compact = "".join(symbols)
         code = f"{compact[:4]}-{compact[4:]}"
         expires_at = now + BINDING_CODE_TTL
-        with self._sessions() as session, session.begin():
-            row = ChannelBindingCode(
-                user_id=principal.user_id,
-                channel=channel,
-                code_digest=self._binding_digest(b"code", code),
-                attempts=0,
-                expires_at=expires_at,
-                created_at=now,
+        session.execute(
+            update(ChannelBindingCode)
+            .where(
+                ChannelBindingCode.user_id == principal.user_id,
+                ChannelBindingCode.channel == channel,
+                ChannelBindingCode.status == "active",
             )
-            session.add(row)
-            session.flush()
-            return BindingCodeResult(code_id=row.id, code=code, expires_at=expires_at)
+            .values(status="revoked", revoked_at=now)
+        )
+        code_id = uuid.uuid4()
+        row = ChannelBindingCode(
+            id=code_id,
+            user_id=principal.user_id,
+            channel=channel,
+            code_digest=self._binding_code_digest(code_id, channel, code),
+            attempts=0,
+            status="active",
+            expires_at=expires_at,
+            created_at=now,
+        )
+        session.add(row)
+        session.flush()
+        return BindingCodeResult(code_id=row.id, code=code, expires_at=expires_at)
 
     def _binding_digest(self, purpose: bytes, value: str) -> str:
         message = BINDING_HMAC_DOMAIN + b"\x00" + purpose + b"\x00" + value.encode("utf-8")
         return hmac.new(self._binding_hmac_key, message, hashlib.sha256).hexdigest()
 
-    def _check_adapter(self, supplied: bytes) -> None:
+    def _binding_code_digest(self, code_id: uuid.UUID, channel: str, code: str) -> str:
+        message = (
+            BINDING_CODE_HMAC_DOMAIN
+            + b"\x00"
+            + str(code_id).encode("ascii")
+            + b"\x00"
+            + channel.encode("utf-8")
+            + b"\x00"
+            + code.encode("ascii")
+        )
+        return hmac.new(self._binding_hmac_key, message, hashlib.sha256).hexdigest()
+
+    def _check_adapter(self, supplied: bytes | None) -> None:
+        if not supplied:
+            raise AuthError("channel_adapter_unauthorized")
         digest = hashlib.sha256(supplied).digest()
         if not hmac.compare_digest(digest, self._adapter_digest):
             raise AuthError("channel_adapter_unauthorized")
 
+    def validate_adapter(self, supplied: bytes | None) -> None:
+        self._check_adapter(supplied)
+
+    def binding_command_user_id(self, supplied: bytes | None, code_id: uuid.UUID) -> uuid.UUID:
+        """Authenticate the adapter before any code lookup used to scope a receipt."""
+        self._check_adapter(supplied)
+        with self._sessions() as session:
+            user_id = session.scalar(
+                select(ChannelBindingCode.user_id).where(ChannelBindingCode.id == code_id)
+            )
+        return user_id or BOOTSTRAP_USER_ID
+
     def consume_binding_code(
         self,
         *,
-        adapter_token: bytes,
+        adapter_token: bytes | None,
+        code_id: uuid.UUID,
         channel: str,
         provider_account: str,
         external_subject: str,
@@ -606,82 +709,178 @@ class AuthService:
     ) -> BindingView:
         self._check_adapter(adapter_token)
         now = _utc(now)
+        with self._sessions() as session, session.begin():
+            result = self.consume_binding_code_in_session(
+                session,
+                code_id=code_id,
+                channel=channel,
+                provider_account=provider_account,
+                external_subject=external_subject,
+                code=code,
+                now=now,
+            )
+        if result.error_code is not None:
+            raise AuthError(result.error_code)
+        assert result.view is not None
+        return result.view
+
+    @staticmethod
+    def _is_active_identity_unique_conflict(exc: IntegrityError) -> bool:
+        """Match only the active channel identity index used by this insert."""
+        original = exc.orig
+        sqlstate = getattr(original, "sqlstate", None) or getattr(original, "pgcode", None)
+        diagnostic = getattr(original, "diag", None)
+        constraint_name = getattr(diagnostic, "constraint_name", None)
+        if sqlstate == "23505":
+            return constraint_name in {
+                "uq_binding_active_subject",
+                "uq_channel_identity_active",
+            }
+
+        if getattr(original, "sqlite_errorname", None) != "SQLITE_CONSTRAINT_UNIQUE":
+            return False
+        message = str(original).lower()
+        return all(
+            column in message
+            for column in (
+                "channel_identity_binding.channel",
+                "channel_identity_binding.external_subject_digest",
+            )
+        )
+
+    def consume_binding_code_in_session(
+        self,
+        session: Session,
+        *,
+        code_id: uuid.UUID,
+        channel: str,
+        provider_account: str,
+        external_subject: str,
+        code: str,
+        now: datetime,
+    ) -> BindingConsumeResult:
+        """Consume after the adapter gate; invalid-code state changes commit with the receipt."""
+        now = _utc(now)
+        row = session.scalar(
+            select(ChannelBindingCode).where(ChannelBindingCode.id == code_id).with_for_update()
+        )
+        if row is None:
+            return BindingConsumeResult(None, "binding_code_invalid")
+        if row.status != "active":
+            return BindingConsumeResult(None, "binding_code_invalid")
+        if now >= _utc(row.expires_at):
+            session.execute(
+                update(ChannelBindingCode)
+                .where(
+                    ChannelBindingCode.id == row.id,
+                    ChannelBindingCode.status == "active",
+                    ChannelBindingCode.expires_at <= now,
+                )
+                .values(status="expired")
+                .execution_options(synchronize_session=False)
+            )
+            return BindingConsumeResult(None, "binding_code_invalid")
+        expected = self._binding_code_digest(row.id, row.channel, code)
+        valid = row.channel == channel and hmac.compare_digest(expected, row.code_digest)
+        if not valid:
+            next_attempt = ChannelBindingCode.attempts + 1
+            session.execute(
+                update(ChannelBindingCode)
+                .where(
+                    ChannelBindingCode.id == row.id,
+                    ChannelBindingCode.status == "active",
+                    ChannelBindingCode.attempts < MAX_BINDING_ATTEMPTS,
+                )
+                .values(
+                    attempts=next_attempt,
+                    status=case(
+                        (next_attempt >= MAX_BINDING_ATTEMPTS, "locked"),
+                        else_="active",
+                    ),
+                )
+                .execution_options(synchronize_session=False)
+            )
+            return BindingConsumeResult(None, "binding_code_invalid")
+
+        claimed = session.execute(
+            update(ChannelBindingCode)
+            .where(
+                ChannelBindingCode.id == row.id,
+                ChannelBindingCode.status == "active",
+                ChannelBindingCode.attempts < MAX_BINDING_ATTEMPTS,
+                ChannelBindingCode.expires_at > now,
+            )
+            .values(status="consumed", consumed_at=now)
+            .execution_options(synchronize_session=False)
+        )
+        if claimed.rowcount != 1:
+            return BindingConsumeResult(None, "binding_code_invalid")
         provider_digest = self._binding_digest(b"provider-account", provider_account)
         subject_digest = self._binding_digest(b"external-subject", external_subject)
-        code_digest = self._binding_digest(b"code", code)
-        deferred_error: AuthError | None = None
-        result: BindingView | None = None
+        conflict = session.scalar(
+            select(ChannelIdentityBinding.id).where(
+                ChannelIdentityBinding.channel == channel,
+                ChannelIdentityBinding.external_subject_digest == subject_digest,
+                ChannelIdentityBinding.status == "active",
+            )
+        )
+        if conflict is not None:
+            session.execute(
+                update(ChannelBindingCode)
+                .where(ChannelBindingCode.id == row.id, ChannelBindingCode.status == "consumed")
+                .values(status="active", consumed_at=None)
+                .execution_options(synchronize_session=False)
+            )
+            return BindingConsumeResult(None, "channel_identity_conflict")
+        binding = ChannelIdentityBinding(
+            user_id=row.user_id,
+            channel=channel,
+            provider_account_digest=provider_digest,
+            external_subject_digest=subject_digest,
+            status="active",
+            version_id=1,
+            created_at=now,
+        )
         try:
-            with self._sessions() as session:
-                with session.begin():
-                    row = session.scalar(
-                        select(ChannelBindingCode)
-                        .where(ChannelBindingCode.code_digest == code_digest)
-                        .with_for_update()
-                    )
-                    if row is None or row.channel != channel:
-                        deferred_error = AuthError("binding_code_invalid")
-                    elif row.consumed_at is not None:
-                        deferred_error = AuthError("binding_code_consumed")
-                    elif now >= _utc(row.expires_at):
-                        deferred_error = AuthError("binding_code_expired")
-                    elif row.attempts >= MAX_BINDING_ATTEMPTS:
-                        deferred_error = AuthError("binding_code_attempts_exceeded")
-                    else:
-                        conflict = session.scalar(
-                            select(ChannelIdentityBinding.id).where(
-                                ChannelIdentityBinding.channel == channel,
-                                ChannelIdentityBinding.external_subject_digest == subject_digest,
-                                ChannelIdentityBinding.status == "active",
-                            )
-                        )
-                        if conflict is not None:
-                            row.attempts += 1
-                            deferred_error = AuthError("channel_identity_conflict")
-                        else:
-                            claimed = session.execute(
-                                update(ChannelBindingCode)
-                                .where(
-                                    ChannelBindingCode.id == row.id,
-                                    ChannelBindingCode.consumed_at.is_(None),
-                                    ChannelBindingCode.attempts < MAX_BINDING_ATTEMPTS,
-                                    ChannelBindingCode.expires_at > now,
-                                )
-                                .values(consumed_at=now)
-                                .execution_options(synchronize_session=False)
-                            )
-                            if claimed.rowcount != 1:
-                                deferred_error = AuthError("binding_code_consumed")
-                            else:
-                                binding = ChannelIdentityBinding(
-                                    user_id=row.user_id,
-                                    channel=channel,
-                                    provider_account_digest=provider_digest,
-                                    external_subject_digest=subject_digest,
-                                    status="active",
-                                    version_id=1,
-                                    created_at=now,
-                                )
-                                session.add(binding)
-                                session.flush()
-                                session.add(
-                                    ChannelBindingAudit(
-                                        user_id=row.user_id,
-                                        binding_id=binding.id,
-                                        action="bound",
-                                        channel=channel,
-                                        provider_account_digest=provider_digest,
-                                        external_subject_digest=subject_digest,
-                                        created_at=now,
-                                    )
-                                )
-                                result = BindingView(binding.id, channel, now)
+            # Keep the surrounding receipt and code claim alive if another
+            # transaction wins this one unique-index race.
+            with session.begin_nested():
+                session.add(binding)
+                session.flush()
         except IntegrityError as exc:
-            raise AuthError("channel_identity_conflict") from exc
-        if deferred_error is not None:
-            raise deferred_error
-        assert result is not None
-        return result
+            if not self._is_active_identity_unique_conflict(exc):
+                raise
+            competing_binding = session.scalar(
+                select(ChannelIdentityBinding.id).where(
+                    ChannelIdentityBinding.channel == channel,
+                    ChannelIdentityBinding.external_subject_digest == subject_digest,
+                    ChannelIdentityBinding.status == "active",
+                )
+            )
+            if competing_binding is None:
+                raise
+            session.execute(
+                update(ChannelBindingCode)
+                .where(
+                    ChannelBindingCode.id == row.id,
+                    ChannelBindingCode.status == "consumed",
+                )
+                .values(status="active", consumed_at=None)
+                .execution_options(synchronize_session=False)
+            )
+            return BindingConsumeResult(None, "channel_identity_conflict")
+        session.add(
+            ChannelBindingAudit(
+                user_id=row.user_id,
+                binding_id=binding.id,
+                action="bound",
+                channel=channel,
+                provider_account_digest=provider_digest,
+                external_subject_digest=subject_digest,
+                created_at=now,
+            )
+        )
+        return BindingConsumeResult(BindingView(binding.id, channel, now))
 
     def list_bindings(self, user_id: uuid.UUID) -> list[BindingView]:
         with self._sessions() as session:
@@ -695,7 +894,13 @@ class AuthService:
     def revoke_binding(self, user_id: uuid.UUID, binding_id: uuid.UUID, *, now: datetime) -> None:
         now = _utc(now)
         with self._sessions() as session, session.begin():
-            row = session.scalar(
+            self.revoke_binding_in_session(session, user_id=user_id, binding_id=binding_id, now=now)
+
+    def revoke_binding_in_session(
+        self, session: Session, *, user_id: uuid.UUID, binding_id: uuid.UUID, now: datetime
+    ) -> BindingView:
+        now = _utc(now)
+        row = session.scalar(
                 select(ChannelIdentityBinding)
                 .where(
                     ChannelIdentityBinding.id == binding_id,
@@ -704,12 +909,12 @@ class AuthService:
                 )
                 .with_for_update()
             )
-            if row is None:
-                raise AuthError("binding_not_found")
-            row.status = "revoked"
-            row.revoked_at = now
-            row.version_id += 1
-            session.add(
+        if row is None:
+            raise AuthError("binding_not_found")
+        row.status = "revoked"
+        row.revoked_at = now
+        row.version_id += 1
+        session.add(
                 ChannelBindingAudit(
                     user_id=user_id,
                     binding_id=row.id,
@@ -719,4 +924,5 @@ class AuthService:
                     external_subject_digest=row.external_subject_digest,
                     created_at=now,
                 )
-            )
+        )
+        return BindingView(row.id, row.channel, _utc(row.created_at))

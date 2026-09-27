@@ -49,6 +49,7 @@ EXPECTED_TABLES = {
 }
 FIRST_REVISION = "bfc163b9b8e9"
 P1_HEAD_REVISION = "1377551283d0"
+USER_SCOPE_REVISION = "p4_host_user_scope"
 MINOR_COLUMNS = {
     "transaction_entry": ("amount_minor",),
     "activity_template_revision": ("reference_minor",),
@@ -76,6 +77,11 @@ def test_sqlite_base_head_repeat_and_rebuild(tmp_path: Path) -> None:
     command.upgrade(config, P1_HEAD_REVISION)
     engine = create_engine(url)
     assert set(inspect(engine).get_table_names()) == EXPECTED_TABLES | {"alembic_version"}
+    engine.dispose()
+    # P4-A put every business table under a trusted user_id, so the current ORM
+    # only matches the schema once the user-scope revision has been applied.
+    command.upgrade(config, USER_SCOPE_REVISION)
+    engine = create_engine(url)
     service = FinanceService(make_session_factory(engine), IdempotencyKeys({1: b"virtual-migration-secret"}))
     account = service.create_account(CreateAccount(source_system="migration-test", source_event_id="account", name="虚拟迁移账户"))
     category = service.create_category(CreateCategory(source_system="migration-test", source_event_id="category", kind="income", name="虚拟迁移收入"))
@@ -113,6 +119,10 @@ def test_previous_revision_with_data_upgrades_to_strict_minor_head(tmp_path: Pat
     url = f"sqlite:///{path.as_posix()}"
     config = migration_config(url)
     command.upgrade(config, FIRST_REVISION)
+    # The current ORM is intentionally user-scoped. Apply the P4 identity and
+    # scope revisions before exercising it; the dedicated Host migration suite
+    # covers raw P0-P3 history backfill independently.
+    command.upgrade(config, USER_SCOPE_REVISION)
     engine = create_engine(url)
     service = FinanceService(make_session_factory(engine), IdempotencyKeys({1: b"virtual-r1-migration-secret"}))
     account = service.create_account(CreateAccount(source_system="r1-migration", source_event_id="account", name="虚拟升级账户"))
@@ -142,22 +152,22 @@ def test_previous_revision_with_data_upgrades_to_strict_minor_head(tmp_path: Pat
     with engine.begin() as connection:
         connection.execute(text(
             "INSERT INTO activity_template "
-            "(id,current_revision_id,archived_at,created_at,version_id) "
-            "VALUES (:id,NULL,NULL,CURRENT_TIMESTAMP,1)"
-        ), {"id": activity_id.hex})
+            "(id,user_id,name_normalized,current_revision_id,archived_at,created_at,version_id) "
+            "VALUES (:id,:user,'虚拟升级活动',NULL,NULL,CURRENT_TIMESTAMP,1)"
+        ), {"id": activity_id.hex, "user": "00000000000000000000000000000001"})
         connection.execute(text(
             "INSERT INTO activity_template_revision "
-            "(id,template_id,revision_no,name,reference_minor,currency,created_at) "
-            "VALUES (:id,:template,1,'虚拟升级活动',100,'CNY',CURRENT_TIMESTAMP)"
-        ), {"id": activity_revision_id.hex, "template": activity_id.hex})
+            "(id,user_id,template_id,revision_no,name,reference_minor,reference_min_minor,reference_max_minor,currency,created_at) "
+            "VALUES (:id,:user,:template,1,'虚拟升级活动',100,100,100,'CNY',CURRENT_TIMESTAMP)"
+        ), {"id": activity_revision_id.hex, "user": "00000000000000000000000000000001", "template": activity_id.hex})
         connection.execute(text(
             "UPDATE activity_template SET current_revision_id=:revision WHERE id=:template"
         ), {"revision": activity_revision_id.hex, "template": activity_id.hex})
         connection.execute(text(
             "INSERT INTO activity_occurrence "
-            "(id,template_revision_id,occurred_at,status,created_at,version_id) "
-            "VALUES (:id,:revision,CURRENT_TIMESTAMP,'active',CURRENT_TIMESTAMP,1)"
-        ), {"id": occurrence_id.hex, "revision": activity_revision_id.hex})
+            "(id,user_id,template_revision_id,occurred_at,status,created_at,version_id) "
+            "VALUES (:id,:user,:revision,CURRENT_TIMESTAMP,'active',CURRENT_TIMESTAMP,1)"
+        ), {"id": occurrence_id.hex, "user": "00000000000000000000000000000001", "revision": activity_revision_id.hex})
     schedule = service.create_income_schedule(CreateIncomeSchedule(
         source_system="r1-migration",
         source_event_id="schedule",
@@ -201,7 +211,7 @@ def test_previous_revision_with_data_upgrades_to_strict_minor_head(tmp_path: Pat
     ))
     engine.dispose()
 
-    command.upgrade(config, P1_HEAD_REVISION)
+    command.downgrade(config, P1_HEAD_REVISION)
     engine = create_engine(url)
     with engine.begin() as connection:
         assert connection.scalar(text("SELECT version_num FROM alembic_version")) != FIRST_REVISION
