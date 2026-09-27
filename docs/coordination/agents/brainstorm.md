@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B6-R3-PREPARATION — PostgreSQL 历史 user-scope migration P0 返修派发
+- 当前任务：P4-B6-R3-R1-PREPARATION — Docker 恢复后的 PostgreSQL 历史 migration 续跑派发
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-27 00:30，Asia/Shanghai
+- 最近更新：2026-09-27 11:25，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -71,19 +71,22 @@
 - [P4-C11-R1 总控核对](../../p4-c11-r1-coordinator-review.md)
 - [P4-B6-R3 执行智能体 Prompt](../prompts/p4-b6-r3-postgresql-history-migration-executor.md)
 - [P4-B6-R3 起点快照](../snapshots/p4-b6-r3-start.sha256)
+- [P4-B6-R3 环境阻塞说明](../../b6-r3-postgresql-history-migration-running.md)
+- [P4-B6-R3-R1 续跑 Prompt](../prompts/p4-b6-r3-r1-postgresql-history-migration-resume-executor.md)
+- [P4-B6-R3-R1 起点快照](../snapshots/p4-b6-r3-r1-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：C11-R1 P0 失败、矩阵 62/2、105 零漂移和资源收口已核对；R3 Prompt 与 130 文件起点已准备
-- 步骤开始时间：2026-09-27 00:25，Asia/Shanghai
-- 最近有效进展：2026-09-27 00:30，Asia/Shanghai（接受 `P4-C11-R1-PG-001`，冻结单 migration 原子返修边界）
-- 最近心跳：2026-09-27 00:30，Asia/Shanghai
-- 下一检查点：执行智能体接单并记录 130/130 起点与修改前 PG 精确失败
-- 等待对象：用户发送 P4-B6-R3 Prompt；随后等待执行方失败回归和根因确认
-- 活动进程或会话：项目 Compose 服务为空；测试智能体和技术顾问停止
-- 重试次数：总控没有重跑 R1 测试，只复算摘要、矩阵、快照、代码顺序和 Compose 空状态
-- 最近输出：R3 起点 manifest SHA-256 `ed4cec634ead2a8543066f19c7134f3d0a65d58f39ebe43133ef955129a86770`
+- 当前步骤：R3 阻塞交付已核对；执行方历史 fixture 保留、migration 零漂移；R3-R1 Prompt 与 131 文件起点已准备
+- 步骤开始时间：2026-09-27 11:10，Asia/Shanghai
+- 最近有效进展：2026-09-27 11:25，Asia/Shanghai（确认 Docker Desktop/backend 未运行，生成不会覆盖 R3 准备的续跑快照）
+- 最近心跳：2026-09-27 11:25，Asia/Shanghai
+- 下一检查点：用户启动 Docker Desktop；执行智能体核对 131/131 并取得修改前 PG 精确失败
+- 等待对象：用户启动 Docker Desktop 并发送 P4-B6-R3-R1 Prompt
+- 活动进程或会话：总控只读检查未发现 Docker Desktop/backend 进程；没有项目容器由本轮创建；测试智能体和技术顾问停止
+- 重试次数：执行方按任务卡只检查一次后停止；总控只做一次进程/状态只读核对，没有启动或维修 Docker
+- 最近输出：R3-R1 起点 manifest SHA-256 `5aa1db6c395e745ad1bd96a92a40ece9d69bbdcc837e7234d47d12f3badeb9bb`
 
 ## 阻塞
 
@@ -99,6 +102,15 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-27 11:25 Asia/Shanghai — 接受 R3 环境阻塞并准备 R3-R1 续跑
+
+- 状态：R3 `blocked / finished`；R3-R1 `ready / waiting_user`；P4-A 仍为 62 passed/2 failed。
+- 边界核对：R3 起点 130/130 匹配；相对起点只变更 `tests/host/test_postgresql_r2.py` 并新增 R3 运行说明；`p4_host_user_scope.py` 与 `test_migrations.py` 摘要保持不变，独立测试和报告零漂移。
+- 实际进度：执行方 fixture 已独立准备 P1 双分录、P2 run/pending、P3 import 历史、成功合同和失败回滚审计；pytest/PG 未运行，缺陷未修复。
+- 环境：执行方唯一一次 `docker desktop status` 失败；总控后续只读核对未发现 Docker Desktop 或 backend 进程。因此这次不是新的 migration 失败，也不是 Docker 4.91 socket 复发的证据。
+- 续跑：固定当前 131 个产品、执行测试与现场文件，manifest SHA `5aa1db6c...b9bb`；新 Prompt 明确保留 fixture，先取得原 migration 的单次真实 PG 失败，再最小修复。
+- 用户动作：启动 Docker Desktop，确认 Engine running，然后把 R3-R1 Prompt 发给既有执行智能体。旧 R3 Prompt 不再重复使用。
 
 ### 2026-09-27 00:30 Asia/Shanghai — 接受 C11-R1 P0 失败并准备 P4-B6-R3
 
