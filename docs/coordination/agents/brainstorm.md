@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-A-FINAL-ACCEPTANCE — Host、身份和通用状态地基最终验收
+- 当前任务：P4-B-BRAINSTORM — Windows Shell、毛毛与模块交互范围冻结
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-27 12:55，Asia/Shanghai
+- 最近更新：2026-09-27 13:25，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -80,19 +80,20 @@
 - [P4-C11-R2 独立复验报告](../../testing/phase-4-c11-r2-postgresql-history-report.md)
 - [P4-A 最终总控验收](../../p4-a-final-coordinator-review.md)
 - [P4-A 134 文件最终快照](../snapshots/p4-a-final.sha256)
+- [P4-B Windows Shell、毛毛与模块交互头脑风暴](../../phase-4-b-windows-shell-brainstorm.md)
 
 ## 当前执行快照
 
 - 运行状态：`active`
-- 当前步骤：P4-A 已接受；固定最终快照并创建本地验收提交
-- 步骤开始时间：2026-09-27 12:55，Asia/Shanghai
-- 最近有效进展：2026-09-27 12:55，Asia/Shanghai（C11-R2 独立 7 passed、执行兼容 19 passed，P4-A 64/64 passed）
-- 最近心跳：2026-09-27 12:55，Asia/Shanghai
-- 下一检查点：与用户冻结 P4-B 首个可见产品切片
-- 等待对象：P4-B 头脑风暴输入；不等待执行、测试或技术顾问
+- 当前步骤：P4-A 已推送 Maris；P4-B 第一版产品布局、毛毛、Agent、生命周期和范围讨论稿已形成
+- 步骤开始时间：2026-09-27 13:25，Asia/Shanghai
+- 最近有效进展：2026-09-27 13:25，Asia/Shanghai（`88fb178` 推送 `origin/main`；P4-B 讨论稿写入项目）
+- 最近心跳：2026-09-27 13:25，Asia/Shanghai
+- 下一检查点：用户确认或调整 P4-B 可见布局与毛毛首版体验，再生成技术顾问方案任务
+- 等待对象：用户对 P4-B 第一轮头脑风暴的反馈；不等待执行、测试或技术顾问
 - 活动进程或会话：项目 Compose 为空；执行、测试和技术顾问均停止；Docker Desktop 不再要求保持运行
 - 重试次数：总控没有重复完整 C11，只复算快照、矩阵、报告摘要和资源证据
-- 最近输出：P4-A 最终 134 文件快照，manifest SHA `1e9b3037d2a963522a0250f4f4573b112053b6d8c20f7495bbe7bd4a238c6f0a`
+- 最近输出：P4-B 讨论稿 `docs/phase-4-b-windows-shell-brainstorm.md`
 
 ## 阻塞
 
@@ -108,6 +109,14 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-27 13:25 Asia/Shanghai — 推送 P4-A 并启动 P4-B 头脑风暴
+
+- Git：用户明确要求推送；`main` 从 `88376ed` 推送到新 `origin` Maris 的 `88fb178`，未操作 `old-origin`。
+- 阶段：P4-A 保持 `complete`；该推送是发布前保护性检查点，不是正式大版本，不启用 PR-only。
+- P4-B：形成 Windows Shell、模块导航、可折叠 Agent、毛毛、Tray、主题、本地 owner、BackendSupervisor 和离线恢复的第一轮产品讨论稿。
+- 边界：P4-B 不伪造财务数据；驾驶舱、账本和记账闭环进入 P4-C，财富管理进入 P4-D。
+- 协调：执行、测试和技术顾问继续停止，等用户确认产品形态后再生成技术方案任务。
 
 ### 2026-09-27 12:55 Asia/Shanghai — 接受 P4-A 并固定最终快照
 

@@ -69,6 +69,7 @@
 - [P4-B6-R3-R1-E1 恢复 Prompt](docs/coordination/prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md)：记录总控已通过的 Engine/Compose 门禁，恢复同一返修并沿用 131 文件固定输入。
 - [P4-C11-R2 测试智能体 Prompt](docs/coordination/prompts/p4-c11-r2-postgresql-history-tester.md)：只复验原 PostgreSQL 历史失败、非法历史原子拒绝和相邻 migration，不重复完整 C11。
 - [P4-A 最终总控验收](docs/p4-a-final-coordinator-review.md)：接受 64/64 独立矩阵、关闭历史迁移 P0，并固定 134 文件最终快照。
+- [P4-B Windows Shell、毛毛与模块交互头脑风暴](docs/phase-4-b-windows-shell-brainstorm.md)：讨论主窗口、模块导航、Agent 面板、毛毛、Tray、主题、本地后端生命周期及 P4-C/P4-D 边界。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-27 12:55，Asia/Shanghai
+更新时间：2026-09-27 13:25，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,7 +13,7 @@ P0～P3 和 P4-A 已完成验收。P4-A 的 64 项矩阵全部通过，PostgreSQ
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | P4-A 已验收；总控固定最终快照并收口本地提交 | 2026-09-27 12:55 | 与用户冻结 P4-B 产品交互和桌面应用切片 | [P4-A 最终验收](../p4-a-final-coordinator-review.md)、[最终快照](snapshots/p4-a-final.sha256) |
+| 头脑风暴 | `in_progress` | P4-A 已推送 Maris；P4-B Windows Shell、毛毛与模块交互头脑风暴进行中 | 2026-09-27 13:25 | 用户确认第一版可见布局和范围，再准备技术顾问任务 | [P4-B 讨论稿](../phase-4-b-windows-shell-brainstorm.md)、[P4-A 最终验收](../p4-a-final-coordinator-review.md) |
 | 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
 | 执行智能体 | `complete / finished`（P4-A） | E1 修复已由 C11-R2 独立确认，当前停止 | 2026-09-27 12:08 | 等待 P4-B 新任务卡 | [E1 运行说明](../b6-r3-r1-e1-postgresql-history-migration-running.md)、[角色日志](agents/executor.md) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 独立 7 项、执行兼容 19 项通过，P4-A 64/64 passed | 2026-09-27 12:55 | 保持停止；等待 P4-B 独立矩阵执行任务 | [C11-R2 报告](../testing/phase-4-c11-r2-postgresql-history-report.md)、[角色日志](agents/tester.md) |
@@ -103,6 +103,6 @@ P0～P3 和 P4-A 已完成验收。P4-A 的 64 项矩阵全部通过，PostgreSQ
 
 ## 下一次总控检查
 
-1. P4-A 已按 134 文件最终快照创建本地验收提交，不推送 GitHub。
-2. 与用户头脑风暴并冻结 P4-B 的具体产品边界：桌面 Shell、模块切换、毛毛状态、财务可视化和 Agent 对话的首个可见切片。
-3. 冻结后再分别生成技术顾问、执行智能体和测试智能体任务卡；当前三个任务智能体保持停止。
+1. P4-A 验收提交 `88fb178` 已按用户要求推送新仓库 Maris 的 `origin/main`。
+2. 与用户确认 P4-B 的主窗口布局、模块 Agent 呈现和毛毛首版体验；财务业务闭环继续保留给 P4-C。
+3. 产品范围确认后先生成技术顾问任务，比较并冻结 Electron/React/TypeScript、构建、路由、状态、OpenAPI、IPC、supervisor 和桌面测试方案；执行与测试智能体继续停止。
