@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B6-R3-R1-E1-PREPARATION — Engine 门禁通过后的 migration 返修恢复派发
+- 当前任务：P4-C11-R2-PREPARATION — E1 后 PostgreSQL 历史迁移有限独立复验
 - 状态：`in_progress`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-27 11:51，Asia/Shanghai
+- 最近更新：2026-09-27 12:19，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -75,19 +75,21 @@
 - [P4-B6-R3-R1 续跑 Prompt](../prompts/p4-b6-r3-r1-postgresql-history-migration-resume-executor.md)
 - [P4-B6-R3-R1 起点快照](../snapshots/p4-b6-r3-r1-start.sha256)
 - [P4-B6-R3-R1-E1 恢复 Prompt](../prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md)
+- [P4-C11-R2 测试智能体 Prompt](../prompts/p4-c11-r2-postgresql-history-tester.md)
+- [P4-C11-R2 起点快照](../snapshots/p4-c11-r2-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：Docker Desktop/Engine/Compose 总控门禁通过；E1 恢复 Prompt 已生成
-- 步骤开始时间：2026-09-27 11:49，Asia/Shanghai
-- 最近有效进展：2026-09-27 11:51，Asia/Shanghai（Desktop running、Engine 29.8.0、4.92.0、desktop-linux、Compose 空）
-- 最近心跳：2026-09-27 11:51，Asia/Shanghai
-- 下一检查点：用户发送 E1 Prompt；执行智能体取得原 migration 的单次真实 PG 失败基线
-- 等待对象：用户把 E1 Prompt 发给既有执行智能体
-- 活动进程或会话：Docker Desktop/backend 正常；项目 Compose 当前为空；尚未启动 `finance-postgres`
-- 重试次数：前两次派发在 Desktop 未运行时停止；本次先完成总控环境验证后才允许恢复
-- 最近输出：E1 恢复 Prompt；Engine server `29.8.0`，Platform `Docker Desktop 4.92.0 (240144)`
+- 当前步骤：E1 执行交付已核对；C11-R2 133 文件起点和窄范围 Prompt 已准备
+- 步骤开始时间：2026-09-27 12:08，Asia/Shanghai
+- 最近有效进展：2026-09-27 12:19，Asia/Shanghai（复算 129 unchanged/2 changed、E1 终点 `a89874cf...eee9`、Compose 空）
+- 最近心跳：2026-09-27 12:19，Asia/Shanghai
+- 下一检查点：测试智能体接单并运行原失败独立 PG 节点
+- 等待对象：用户把 P4-C11-R2 Prompt 发给既有测试智能体
+- 活动进程或会话：项目 Compose 为空；执行和技术顾问停止；Docker Desktop由用户保持运行
+- 重试次数：总控未重复执行 E1 的 30 项测试，只核对代码、摘要和资源；C11-R2 禁止完整 C11 重跑
+- 最近输出：C11-R2 起点 133 文件，manifest SHA `7ab8388edcadff5515aa5f038df13e40ae35233f2e4298c61fcd091357929fd3`
 
 ## 阻塞
 
@@ -103,6 +105,15 @@
 - 本阶段继续使用虚拟资料，不导入真实个人活动或财务数据。
 
 ## 工作日志
+
+### 2026-09-27 12:19 Asia/Shanghai — 核对 E1 并准备一次有限 C11-R2
+
+- 状态：E1 `review / finished`，接受为测试输入；C11-R2 `ready / waiting_user`；P4-A 仍待独立收口。
+- 实际返修：R3/R3-R1 都是 Docker 环境停止，只有 E1 修改产品。E1 在旧 migration 上唯一复现 `ObjectInUse`，随后只改 user-scope migration 和执行 PG 测试。
+- 总控核对：131 输入中 129 unchanged、2 changed、0 missing；两个单文件摘要和终点 `a89874cf...eee9` 可复算；代码包含 PostgreSQL 临时 UUID default+NOT NULL、删除 default、SQLite 原路径和两类非法历史回滚。
+- 执行证据：修改后六组门禁合计 30 passed、0 failed/skip；环境 Temp 错误在断言前发生并用项目 basetemp 完整复跑；Compose 最终为空。
+- 效率决定：下一步只跑原失败独立节点、两类非法历史、一个 PG catalog 节点、独立 SQLite migration 文件和两个执行兼容文件；不重复完整 C11 或其他阶段全量。
+- 快照：合并 E1 最终 131 输入与两份后续运行说明，形成 133 文件 C11-R2 起点，SHA `7ab8388e...9fd3`。
 
 ### 2026-09-27 11:51 Asia/Shanghai — Docker Engine 恢复并准备 E1
 

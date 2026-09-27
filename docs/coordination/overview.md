@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-09-27 11:51，Asia/Shanghai
+更新时间：2026-09-27 12:19，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,10 +13,10 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | `waiting_user`：Docker 环境门禁通过，E1 恢复任务已准备 | 2026-09-27 11:51 | 用户发送 E1 Prompt；执行方先取得原 migration 的真实 PG 失败基线 | [E1 Prompt](prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md)、[控制面](control.md) |
+| 头脑风暴 | `in_progress` | `waiting_user`：E1 两文件返修和自测已核对，C11-R2 有限复验已准备 | 2026-09-27 12:19 | 用户发送 C11-R2 Prompt；测试方独立关闭或保留 DB-05/06 | [C11-R2 Prompt](prompts/p4-c11-r2-postgresql-history-tester.md)、[C11-R2 起点](snapshots/p4-c11-r2-start.sha256) |
 | 技术顾问 | `complete`（P4-D10，总控接受） | `finished`：返修合同、R1/R2 边界、PG 与 C11 门禁已交付 | 2026-09-25 19:59 | 保持停止；等待以后实现后教学或新评审 | [角色日志](agents/technical-adviser.md)、[D10 方案](../phase-4-d10-b6-repair-architecture.md) |
-| 执行智能体 | `ready`（P4-B6-R3-R1-E1） | `waiting_user`：Engine 已由总控验证，等待恢复 Prompt | 2026-09-27 11:51 | 核对 131/131，接管 `finance-postgres`，运行修改前精确 PG 节点 | [E1 Prompt](prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md)、[角色日志](agents/executor.md) |
-| 测试智能体 | `blocked / finished`（C11-R1） | `finished`：发现 P0 `P4-C11-R1-PG-001`，资源已关闭 | 2026-09-27 00:25 | 保持停止；等待 R3 新产品快照和 C11-R2 | [角色日志](agents/tester.md)、[R1 报告](../testing/phase-4-c11-r1-evidence-report.md) |
+| 执行智能体 | `review / finished`（P4-B6-R3-R1-E1） | `finished`：历史 PG 缺陷已最小修复，自测与资源收口通过 | 2026-09-27 12:08 | 保持停止；等待 C11-R2 独立结论 | [E1 运行说明](../b6-r3-r1-e1-postgresql-history-migration-running.md)、[角色日志](agents/executor.md) |
+| 测试智能体 | `ready`（P4-C11-R2） | `waiting_user`：133 文件快照和有限复验边界已冻结 | 2026-09-27 12:19 | 用户发送 Prompt；先运行原失败独立 PG 节点 | [C11-R2 Prompt](prompts/p4-c11-r2-postgresql-history-tester.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
 
@@ -75,7 +75,8 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 | P4-C11-R1：历史迁移证据补强 | 用户启动的既有测试智能体 | `blocked / finished`，失败结论接受 | SQLite 与取消证据通过；真实 PG P3 历史→P4 触发 P0 `P4-C11-R1-PG-001`；矩阵 62/2 | [R1 报告](../testing/phase-4-c11-r1-evidence-report.md)、[总控核对](../p4-c11-r1-coordinator-review.md) |
 | P4-B6-R3：PostgreSQL 历史迁移返修 | 用户启动的既有执行智能体 | `blocked / finished` | 130/130 起点通过；执行方历史 fixture 已准备；Docker Desktop 未运行，PG 未执行且 migration 未修改 | [R3 运行说明](../b6-r3-postgresql-history-migration-running.md)、[原 R3 Prompt](prompts/p4-b6-r3-postgresql-history-migration-executor.md) |
 | P4-B6-R3-R1：PostgreSQL 历史迁移返修续跑 | 用户启动的既有执行智能体 | `blocked / finished` | 131/131 起终点一致；Docker Desktop 仍未运行，PG/pytest 未启动，migration 零漂移 | [R3-R1 阻塞说明](../b6-r3-r1-postgresql-history-migration-running.md)、[R3-R1 起点](snapshots/p4-b6-r3-r1-start.sha256) |
-| P4-B6-R3-R1-E1：Engine 恢复后返修续段 | 用户启动的既有执行智能体 | `ready / waiting_user` | 总控验证 Desktop running、Engine 29.8.0、4.92.0、desktop-linux、项目 Compose 为空；继续使用 131 输入 | [E1 Prompt](prompts/p4-b6-r3-r1-e1-engine-recovered-executor.md)、[固定起点](snapshots/p4-b6-r3-r1-start.sha256) |
+| P4-B6-R3-R1-E1：Engine 恢复后返修续段 | 用户启动的既有执行智能体 | `review / finished` | 原缺陷按预期复现；PG 临时 default+NOT NULL 修复；30 项门禁通过；129 unchanged/2 changed/0 missing | [E1 运行说明](../b6-r3-r1-e1-postgresql-history-migration-running.md)、[固定起点](snapshots/p4-b6-r3-r1-start.sha256) |
+| P4-C11-R2：PostgreSQL 历史迁移定向复验 | 用户启动的既有测试智能体 | `ready / waiting_user` | 只复验原失败、两类非法历史、相邻 PG/SQLite 和执行兼容；不重复完整 C11 | [C11-R2 Prompt](prompts/p4-c11-r2-postgresql-history-tester.md)、[133 文件起点](snapshots/p4-c11-r2-start.sha256) |
 
 ## 当前阻塞与风险
 
@@ -83,6 +84,7 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 - C11-R1 已恢复 P1 首版和 SQLite P0～P3 历史证据，并因此在真实 PostgreSQL 发现 P0：`p4_host_user_scope` 在历史双分录存在时因 pending FK trigger events 无法 ALTER `financial_transaction`。R3 必须保持原子性修复，不能通过 commit、禁用触发器或删除历史绕过。
 - R3 首轮只完成了执行方历史 fixture 和回滚断言准备；总控复核时 Docker Desktop/backend 进程均不存在。migration 摘要仍为起点值，缺陷没有修复。续跑必须使用 131 文件 R3-R1 新快照，不得重用旧 130 文件快照或重写已准备的 fixture。
 - R3-R1 被提前发送给执行智能体时 Docker 仍未启动，因此第二次在相同环境门禁处停止；131 个输入起终点一致。下一次不再先派任务：用户先启动 Desktop，头脑风暴总控验证 Engine 可达和 Compose 状态后才发布恢复指令。
+- E1 是 R3 系列中第一次实际修改 migration 的任务：旧实现的 PostgreSQL UPDATE→ALTER 顺序被替换为临时 UUID default+NOT NULL DDL 并立即移除 default；两类非法历史原子回滚测试补齐。R3 和 R3-R1 是环境停止点，不是两次代码返修。
 - 旧 P2 测试的取消后错误从 `confirmation_required` 更新为 `pending_action_cancelled`，与 D10 冻结的 P4 合同一致；R1 只要求报告准确说明这是一项合同演进并继续证明零财务写入。
 - Docker Desktop 已由 4.91.0 原位升级到 `4.92.0.240144`，双启动门禁和 T2 17 个真实 PG 用例均通过；执行方普通 down 后项目 Compose 服务为空。C11 可使用该环境，但 Engine 不可达时只能检查一次并停止，不重启 Desktop 或恢复 socket。
 - R2 的三个冻结结构缺口已由 S1 关闭，执行方真实 PostgreSQL 门禁已由 T2 收口；当前剩余门禁是 C11 对迁移、事务、约束、多连接竞争和用户隔离给出独立证据。
@@ -101,7 +103,6 @@ P0～P3 已完成验收，并建立 GitHub 保护性检查点；这不是正式�
 
 ## 下一次总控检查
 
-1. 用户把 P4-B6-R3-R1-E1 Prompt 完整发送给既有执行智能体，并保持 Docker Desktop 运行。
-2. 执行方继续使用 131 文件固定输入，在原 migration 上先稳定复现 PG 历史升级失败。
-3. 执行方只修改 user-scope migration 和执行方 migration 测试，取得真实 PG、SQLite、回滚和 downgrade 定向证据并普通 down。
-4. E1 进入 review 后由总控固定新快照并派 C11-R2；测试方只复验原失败节点和必要相邻 migration，不重复完整 C11。
+1. 用户保持 Docker Desktop 运行，把 P4-C11-R2 Prompt 完整发送给既有测试智能体。
+2. 测试方绑定 133 文件快照，只复验原失败 PG 历史节点、两类非法历史和相邻 migration/执行兼容。
+3. C11-R2 进入 review 后由总控核对 DB-05/06、快照和资源；通过则接受 P4-A 并做本地验收提交，失败则只返回精确缺陷，不重复完整 C11。
