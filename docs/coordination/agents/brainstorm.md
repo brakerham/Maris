@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-DISPATCH — 已冻结续段，等待用户派发执行任务卡
-- 状态：`ready`
+- 当前任务：P4-B7-R1-H1 — 已接受 D13 并冻结 package resource 静态 staging，等待用户把 H1 Prompt 发给执行智能体
+- 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-27 19:35，Asia/Shanghai
+- 最近更新：2026-09-28 00:06，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -94,24 +94,53 @@
 - [P4-IF-004](../../phase-4-interface-freeze-004.md)
 - [P4-B7-R1 执行智能体 Prompt](../prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md)
 - [P4-B7-R1 固定输入快照](../snapshots/p4-b7-r1-start.sha256)
+- [P4-B7-R1 阻塞总控核对](../../p4-b7-r1-blocked-coordinator-review.md)
+- [P4-B7-R1-E1 恢复 Prompt](../prompts/p4-b7-r1-e1-electron-download-resume-executor.md)
+- [P4-B7-R1-E1 固定输入快照](../snapshots/p4-b7-r1-e1-start.sha256)
+- [P4-B7-R1-E1 重复网络阻塞总控核对](../../p4-b7-r1-e1-blocked-coordinator-review.md)
+- [P4-B7-R1-E2 网络门禁](../../p4-b7-r1-e2-network-gate.md)
+- [P4-B7-R1-E2 执行智能体 Prompt](../prompts/p4-b7-r1-e2-electron-runtime-resume-executor.md)
+- [P4-B7-R1-E2 固定输入快照](../snapshots/p4-b7-r1-e2-start.sha256)
+- [P4-B7-R1-E2 阻塞总控核对](../../p4-b7-r1-e2-blocked-coordinator-review.md)
+- [P4-B7-R1-E2-R1 执行智能体 Prompt](../prompts/p4-b7-r1-e2-r1-electron-launch-package-executor.md)
+- [P4-B7-R1-E2-R1 固定输入快照](../snapshots/p4-b7-r1-e2-r1-start.sha256)
+- [P4-B7-R1-E2-R1 阻塞总控核对](../../p4-b7-r1-e2-r1-blocked-coordinator-review.md)
+- [P4-B7 Electron Windows 环境证据](../../p4-b7-electron-windows-environment-evidence.md)
+- [P4-D13 技术顾问 Prompt](../prompts/p4-d13-electron-windows-crash-technical-adviser.md)
+- [P4-D13 固定输入快照](../snapshots/p4-d13-start.sha256)
+- [P4-D13 技术裁定](../../phase-4-d13-electron-windows-crash-advice.md)
+- [P4-D13 总控审阅](../../p4-d13-coordinator-review.md)
+- [P4-IF-005](../../phase-4-interface-freeze-005.md)
+- [P4-B7-R1-H1 执行智能体 Prompt](../prompts/p4-b7-r1-h1-package-hygiene-executor.md)
+- [P4-B7-R1-H1 固定输入快照](../snapshots/p4-b7-r1-h1-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：D12 已接受，P4-IF-004、B7-R1 任务卡与 182 文件固定输入已发布；等待用户派发 B7-R1
-- 步骤开始时间：2026-09-27 19:25，Asia/Shanghai
-- 最近有效进展：2026-09-27 19:32，Asia/Shanghai（接受两个方案；发布 IF-004、B7-R1 Prompt 与 182 文件快照）
-- 最近心跳：2026-09-27 19:35，Asia/Shanghai
-- 下一检查点：执行智能体接单后复算 182 文件并先执行供应链门禁
-- 等待对象：用户只把 B7-R1 Prompt 发送给既有执行智能体；测试智能体保持停止
+- 当前步骤：D13 技术裁定已核对；IF-005、H1 Prompt 与固定输入已生成，等待无 Electron 的静态实现
+- 步骤开始时间：2026-09-28 00:03，Asia/Shanghai
+- 最近有效进展：2026-09-28 00:06，Asia/Shanghai（接受 26 条冻结建议，裁定八个未决问题并先拆出 H1）
+- 最近心跳：2026-09-28 00:06，Asia/Shanghai
+- 下一检查点：既有执行智能体读取 H1 Prompt，复算固定输入并实现 package resource staging
+- 等待对象：用户把 H1 Prompt 全文发送给既有执行智能体；技术顾问和测试智能体保持停止
 - 活动进程或会话：B7 启动的 Uvicorn/Electron/Maris/Playwright 均已退出；无项目服务；没有活动依赖安装
-- 重试次数：总控未重复执行 B7 全量测试，只复算交付摘要并核对依赖路径与官方安全资料
-- 最近输出：B7-R1 Prompt `docs/coordination/prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md`
+- 重试次数：E2-R1 最小 fixture 只运行一次即因不受控弹窗停止；总控未再次启动 Electron
+- 最近输出：D13 总控审阅、P4-IF-005、H1 Prompt 和 209 文件 H1 固定输入（manifest SHA-256 `24dbffd395af61c06a5ac3424163879084d2397576f7da4e4658aadccb1b3921`）
+
+### 2026-09-28 00:06 Asia/Shanghai — 接受 P4-D13 并发布 H1
+
+- 核对 D13 442 行文档，SHA-256 为 `07ad30b2e9c996e53b2940bca8b6e7835cd23a6e1612c36f6081dcb115d411ca`；技术顾问状态为 `review / finished`，没有运行 Electron 或修改产品。
+- 接受 `P4-D13-F01～F26`，并对八个未决问题作出总控裁定：不重跑 D 基线；A1 为 C direct 单次入口；A2/F1 条件分支；Procmon、diagnostic flag 与版本对照均需新任务授权。
+- 发布 `P4-IF-005`，禁止 `--no-sandbox`，冻结 renderer sandbox、fuses、安全软件、驱动、Windows 和当前 Electron/lock。
+- 先派发 `P4-B7-R1-H1`：在 `apps/desktop/.maris-staging/python-runtime` 实现显式 allowlist、原子 staging、相对路径 manifest 和静态测试；Electron、Forge package、sidecar、数据库均不启动。
+- P4-B 仍未完成，P4-C12 保持 `not_started`；本轮不执行 Git 写操作。
+- H1 固定输入共 209 项，初始 manifest SHA-256 为 `24dbffd395af61c06a5ac3424163879084d2397576f7da4e4658aadccb1b3921`；发布前将对协调文档最终状态再复算。
 
 ## 阻塞
 
-- P4-B7 在 `pnpm audit --audit-level high` 门禁停止：1 critical、11 high、3 moderate、1 low。主要路径是 Forge 7.11.2 的旧 `tar` 与 Packager 18 的 `extract-zip@2.0.1`；不得忽略、降级或由执行方擅自改变冻结依赖图。
-- B7 还未完成 Electron main 对 `LocalOwnerSession + BackendSupervisor + HostClient` 的真实组合；当前安全 fail closed，不能启动 P4-C12。
+- P4-B7-R1-E1 已证明停止时最终 lock 的 full/prod audit 均为 0 critical/high，供应链缺口已关闭；不得重复审计消耗开发轮次。
+- Electron `44.4.5` 完整归档、摘要和安装已经通过；app.asar 的 Playwright launch 仍阻塞，真实 fused EXE 尚未运行。
+- B7 已完成 Electron main 对 `LocalOwnerSession + BackendSupervisor + HostClient` 的执行方组合和 sidecar smoke；最终 EXE 与 package hygiene 未过门禁，因此不能启动 P4-C12。
 - P4-D11 的 Codex Desktop 默认执行 helper 阻塞已于 2026-09-27 15:15 解除；23 个旧 runtime staging 目录保留在可恢复隔离区，尚未删除。
 - `PG-C7-DATA-001` 已关闭；真实 PostgreSQL 结论仅覆盖冻结的 P1 8 项和 P2 SPG 4 项。
 - P3 当前无未关闭的 P0/P1 产品缺陷；`P3-C9-PG-001` 已经 R2 独立关闭。
@@ -126,9 +155,49 @@
 
 ## 下一步
 
-1. 用户只把 `docs/coordination/prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md` 发送给既有执行智能体。
-2. 执行智能体复算 182 文件，先完成供应链候选的真实门禁；通过后才做 desktop core readiness 与 main 组合。
-3. 测试智能体保持停止；B7-R1 稳定终点形成并由总控复算后，再生成 P4-C12。
+1. 用户把 H1 Prompt 全文发送给既有执行智能体。
+2. 执行智能体只实现 package resource staging 与静态测试，不启动 Electron、Forge package、sidecar 或数据库。
+3. 总控核对 H1 后另行生成 E3；技术顾问和测试智能体保持停止，P4-C12 不启动。
+3. 执行智能体和测试智能体保持停止；不得重发 E2-R1/E2/R1/E1，P4-C12 继续未启动。
+
+### 2026-09-27 23:40 Asia/Shanghai — 接受 E2-R1 最小复现并发布 D13
+
+- R1 200/200 起点和 E2 source 194/194 匹配；任务只运行一次最小 fixture，不含 Maris/Host/sidecar/数据库/真实 profile，产品与依赖零修改。
+- 接受 `blocked / finished`：Node debugger 和 renderer CDP 已连接，GPU child 随后以 `-1073741515 / 0xC0000135` 退出，browser/Playwright 进入 `0x80000003`/assertion；不受控弹窗命中硬停止条件。
+- 总控只读确认 Windows 11 25H2 build `26200.9168`、Intel UHD + RTX 4060 混合显卡、D 盘项目环境、VC++/常见 DirectX DLL 状态；未发现 Electron Code Integrity/Defender/AppLocker 命中。
+- 上游 Electron issue 同时提供 `C0000135 → unusable GPU → breakpoint` 失败链、D 盘转 C 盘恢复案例和 Windows 26200 GPU sandbox 案例；这些只作为假设排序依据，不冒充本机结论。
+- 发布 R1 阻塞总控核对、Windows 环境证据、D13 Prompt 与 205 文件固定输入；快照 SHA-256 `8fdc986e...867da`。执行与测试角色保持停止。
+
+### 2026-09-27 23:04 Asia/Shanghai — 接受 E2 阻塞并发布 E2-R1
+
+- E2 source manifest 已由总控逐行复算为 194 matched、0 mismatch、0 missing；manifest SHA-256 为 `d4a6619f...edf715`。
+- 接受 E2 的有效成果：官方 Electron 完整摘要、lock 不漂移、OpenAPI/TS/lint、22 项 Vitest、55 项 Python、managed sidecar smoke 和 Forge package。
+- 接受 `blocked / finished`：app.asar Playwright launch 连续两个检查点为 assertion/target crash；真实 EXE 未运行；最终 resources 发现 11 个 `.pyc` 与 6 个 `.egg-info`。
+- 静态核对确认现有 E2E 对 app.asar 和最终 EXE 都强制传 `executablePath`，而最终包禁用 Node CLI inspect；Playwright launcher 会注入 main inspector，二者必须分层验证。
+- 发布 E2 阻塞总控核对、E2-R1 Prompt 与 200 文件固定输入；快照 SHA-256 为 `b7d97566...f899674`。R1 先执行最小兼容性探针，不改安全 fuse、不变更依赖版本、不 patch 第三方包。
+
+### 2026-09-27 21:53 Asia/Shanghai — TUN 正文门禁通过并发布 E2
+
+- 只读网络证据确认 `Meta Tunnel` 虚拟网卡存在，并拥有 metric 0 的 IPv4 默认路由；WinINet、WinHTTP 与 proxy 环境变量仍未设置，符合透明 TUN 接管。
+- Codex 受控沙箱内第一次 curl 在 Schannel 凭据初始化阶段失败，未进入 HTTP；按沙箱规则在沙箱外用相同限量请求复验，官方 Electron 资产返回 HTTP 206、准确 1,048,576 字节、TLS 校验 0。
+- 当前 GVisor、自动全局路由、严格路由关闭、自动选择出口、MTU 1500 的用户设置已经通过门禁，不要求修改。
+- 发布 E2 网络门禁记录、E2 Prompt 与 192 文件固定输入；manifest SHA-256 为 `6537cc6c...67239b6`。E2 不重复 E1 双审计，从完整官方 Electron 安装、Host 组合、sidecar、package、E2E 与真实 EXE 继续。
+
+### 2026-09-27 21:10 Asia/Shanghai — 接受 E1 重复网络阻塞并停止执行重试
+
+- E1 source manifest `186/186` 复算匹配，摘要 `fd40e4b2...afd5fe`；运行说明、executor 和最终 lock 摘要与交接一致。
+- E1 已关闭最终 lock 证据缺口：full/prod audit 均为 0 critical/high，clean frozen install 前后 lock 保持 `5ddc0a93...dcb4a`，F04、旧包消失和策略门禁通过。
+- 接受 `blocked / finished`：Node 24 首次取得 31,817,728-byte 未校验 partial 后停滞，第二检查点 `ECONNRESET`；Host/Vitest/package 后续均未执行。
+- 总控对同一官方资产执行一次不落盘 1 MiB Range GET，Windows curl 同样被连接重置；系统代理、WinHTTP 和 proxy 环境变量均未启用。阻塞从 Node 安装脚本上移到本机/上游正文传输链路。
+- 官方文档允许直接从 GitHub Releases 下载并使用本地 Electron cache；后续 E2 只在网络正文门禁成功后创建，并要求官方 SHA-256。当前等待用户切换网络，不再派执行任务。
+
+### 2026-09-27 20:38 Asia/Shanghai — 核对 R1 环境阻塞并发布 E1
+
+- R1 source manifest `182/182` 复算匹配，摘要 `512439d5...60691c9`；运行说明、dependency graph、最终 lock、package 和 executor 摘要与交接一致。
+- 接受 `blocked / finished`：Electron 官方资产连续两个检查点 fetch failed 后停止符合 P0；8/9 Vitest files 不能算全绿，Host/runtime/package 后续均未执行。
+- 保留 Forge 8 候选图、旧包消失和候选 lock 零漏洞结果；明确停止时最终 lock `5ddc0a93...dcb4a` 必须在 E1 重新执行 full/prod audit。
+- 官方 GitHub release 已确认存在；本机 curl HEAD 与 Node fetch HEAD 当前均返回 200，因此按临时网络故障恢复，不换版本、不用第三方镜像、不返回技术顾问。
+- 发布 R1 阻塞总控核对、E1 Prompt 与 187 文件固定输入；快照 SHA-256 `a5309c27...4de901`。测试智能体和 P4-C12 继续停止。
 
 ### 2026-09-27 19:32 Asia/Shanghai — 接受 P4-D12 并发布 IF-004/B7-R1
 

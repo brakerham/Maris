@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-09-27 19:35，Asia/Shanghai
+更新时间：2026-09-28 00:06，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。P4-B7 的 66 文件桌面 Shell 快照保留；原 full audit P0 和 main 未真实接 Host 已由 P4-D12 完成技术裁定。总控通过 P4-IF-004 批准 Forge 8 alpha 仅作发布前验证，并批准带 nonce 的 desktop core readiness；B7-R1 任务卡和 182 文件起点已经准备。24 项 P4-B 独立矩阵仍全部是 `not_run`，P4-C12 未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
+P0～P3 和 P4-A 已完成验收。P4-D13 已把 Electron 故障固定为“GPU child 首先以 `0xC0000135` 退出，具体 DLL/机制未知”，并冻结 C 盘 direct→条件 Playwright 的有限三角验证；D 盘、Playwright、Windows、驱动或 sandbox 均未被预判为根因。总控先派发不启动 Electron 的 H1 package resource staging，解决 `.pyc`/`.egg-info` 等副产物进入 package 的独立缺口；动态 E3 在 H1 核对后另立任务。24 项 P4-B 独立矩阵仍全部是 `not_run`，P4-C12 未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,9 +13,9 @@ P0～P3 和 P4-A 已完成验收。P4-B7 的 66 文件桌面 Shell 快照保留�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 已接受 D12、冻结 IF-004，并准备 B7-R1 任务卡和 182 文件起点 | 2026-09-27 19:35 | 用户派发 B7-R1；收到 review 后复算终点并准备 C12 | [D12 总控审阅](../p4-d12-coordinator-review.md)、[IF-004](../phase-4-interface-freeze-004.md) |
-| 技术顾问 | `complete / finished`（P4-D12） | 728 行裁定已由总控接受，已停止修改 | 2026-09-27 19:19 | 保持停止；Forge 发布阶段变化时另立复评 | [D12 方案](../phase-4-d12-b7-supply-chain-advice.md)、[角色日志](agents/technical-adviser.md) |
-| 执行智能体 | `ready / waiting_user`（P4-B7-R1） | 原 B7 阻塞现场保留；等待任务卡，先供应链后真实 Host 组合 | 2026-09-27 19:32 | 用户只发送 B7-R1 Prompt；接单后复算 182 文件 | [B7-R1 Prompt](prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md)、[起点快照](snapshots/p4-b7-r1-start.sha256) |
+| 头脑风暴 | `ready / waiting_user` | 接受 D13，发布 IF-005、H1 Prompt 和固定输入 | 2026-09-28 00:06 | 用户把 H1 Prompt 发给既有执行智能体 | [D13 总控审阅](../p4-d13-coordinator-review.md) |
+| 技术顾问 | `complete / finished`（P4-D13） | 442 行裁定、26 条冻结建议和 8 个未决项已经总控裁定 | 2026-09-28 00:02 | 保持停止 | [D13 方案](../phase-4-d13-electron-windows-crash-advice.md) |
+| 执行智能体 | `ready / waiting_user`（P4-B7-R1-H1） | E2-R1 保持停止；下一任务只做静态 staging，不启动 Electron | 2026-09-28 00:06 | 接收 H1 Prompt，复算 209 文件固定输入后实现 allowlist | [H1 Prompt](prompts/p4-b7-r1-h1-package-hygiene-executor.md)、[固定输入](snapshots/p4-b7-r1-h1-start.sha256) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
@@ -82,12 +82,19 @@ P0～P3 和 P4-A 已完成验收。P4-B7 的 66 文件桌面 Shell 快照保留�
 | P4-B7：Windows Shell 实现 | 用户启动的既有执行智能体 | `blocked / finished` | 66 文件快照匹配；执行方本地/打包/E2E 证据通过；audit 的 critical/high 与 main 未真实接 Host 阻止进入 review | [B7 运行说明](../b7-windows-shell-running.md)、[源快照](../../apps/desktop/b7-source.sha256) |
 | P4-D12：B7 供应链与真实接线裁定 | 用户启动的既有技术顾问 | `complete / finished` | 16 项 advisory、五路线、三候选解析、22 条冻结、Host 组合与教学已由总控接受 | [D12 方案](../phase-4-d12-b7-supply-chain-advice.md)、[总控审阅](../p4-d12-coordinator-review.md) |
 | P4-IF-004：供应链与真实 Host 补充冻结 | 头脑风暴总控 | `complete` | Forge 8 alpha 发布前候选、desktop core readiness、composition root、生命周期和门禁冻结 | [IF-004](../phase-4-interface-freeze-004.md) |
-| P4-B7-R1：供应链与真实 Host 组合续段 | 用户启动的既有执行智能体 | `ready / waiting_user` | 任务卡与 182 文件起点已准备；先安全依赖图，再真实 Host 组合和 package/E2E/EXE | [B7-R1 Prompt](prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md)、[起点快照](snapshots/p4-b7-r1-start.sha256) |
+| P4-B7-R1：供应链与真实 Host 组合续段 | 用户启动的既有执行智能体 | `blocked / finished` | Forge 8 候选图、旧包消失和候选 lock 双审计有效；Electron 官方资产连续 fetch failed，Host/runtime/package 后续未执行 | [R1 运行说明](../b7-r1-windows-shell-running.md)、[总控核对](../p4-b7-r1-blocked-coordinator-review.md) |
+| P4-B7-R1-E1：Electron 链路恢复续段 | 用户启动的既有执行智能体 | `blocked / finished` | 最终 lock 双审计、F04 与 clean install 通过；Node 24 正文传输 `ECONNRESET` 后按 P0 停止 | [E1 报告](../b7-r1-e1-windows-shell-running.md)、[E1 总控核对](../p4-b7-r1-e1-blocked-coordinator-review.md) |
+| P4-B7 Electron 官方资产网络门禁 | 头脑风暴总控 | `complete` | 透明 TUN 路由生效；官方 Range GET 返回 HTTP 206 和准确 1 MiB，TLS 校验通过 | [E2 网络门禁](../p4-b7-r1-e2-network-gate.md) |
+| P4-B7-R1-E2：Electron 下载恢复与真实 Host 组合 | 用户启动的既有执行智能体 | `blocked / finished` | 194 文件 source 匹配；官方 Electron、Host/sidecar、22 Vitest、55 Python 和 package 通过；app.asar launch 阻塞，真实 EXE 未运行，resources 含 Python 副产物 | [E2 报告](../b7-r1-e2-windows-shell-running.md)、[总控核对](../p4-b7-r1-e2-blocked-coordinator-review.md) |
+| P4-B7-R1-E2-R1：启动分层与 package hygiene | 用户启动的既有执行智能体 | `blocked / finished` | 最小无业务 fixture 中 GPU child `0xC0000135`、browser `0x80000003`；产品零修改并安全收口 | [R1 报告](../b7-r1-e2-r1-windows-shell-running.md)、[总控核对](../p4-b7-r1-e2-r1-blocked-coordinator-review.md) |
+| P4-D13：Windows 25H2 Electron crash 裁定 | 用户启动的既有技术顾问 | `complete / finished` | 442 行方案、26 条冻结建议、A1/A2/F1 分支、版本与 hygiene 拆分已由总控接受 | [D13 方案](../phase-4-d13-electron-windows-crash-advice.md)、[总控审阅](../p4-d13-coordinator-review.md) |
+| P4-IF-005：Electron Windows 诊断与 package resource 冻结 | 头脑风暴总控 | `complete` | 冻结环境诊断顺序、安全开关、证据口径和 H1 staging 合同 | [IF-005](../phase-4-interface-freeze-005.md) |
+| P4-B7-R1-H1：Python package resource 静态 staging | 用户启动的既有执行智能体 | `ready / waiting_user` | 209 文件固定输入；只实现 allowlist、原子 staging、manifest 和静态测试，不启动 Electron/Forge package | [H1 Prompt](prompts/p4-b7-r1-h1-package-hygiene-executor.md)、[固定输入](snapshots/p4-b7-r1-h1-start.sha256) |
 | P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
-- P4-B7 原供应链和真实 Host 组合阻塞已经转化为 B7-R1 的受控任务。Forge 8 alpha 仍是显式发布风险：只允许开发/测试，真实 package 任一门禁失败即停止；正式发布前必须升级并复验 beta/rc/stable，优先 stable。
+- P4-B7 的供应链、完整 Electron 归档、真实 Host/sidecar 和 package 已有执行方证据；最小 fixture 证明当前启动故障独立于 Maris 业务。D13 已冻结首故障与三角验证边界，但具体 DLL/机制仍未知。直接复制 `src/migrations` 带入 `.pyc`/`.egg-info` 的独立缺口先由 H1 静态解决；H1 通过不代表 Electron 环境或最终 package 通过。Forge 8 alpha 仍只用于开发/测试，正式发布前必须升级并复验 beta/rc/stable，优先 stable。
 - P4-C12 不能提前启动：24 项矩阵已经存在，不需要测试智能体再次设计；只有 B7 形成稳定产品快照后，测试智能体才能绑定快照执行独立验收。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
@@ -112,6 +119,6 @@ P0～P3 和 P4-A 已完成验收。P4-B7 的 66 文件桌面 Shell 快照保留�
 
 ## 下一次总控检查
 
-1. 用户只把 `docs/coordination/prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md` 发给既有执行智能体；技术顾问与测试智能体保持停止。
-2. 执行智能体先复算 182 文件起点并完成供应链门禁；只有依赖图、完整/生产审计和 clean frozen install 全部通过，才进入 desktop core readiness 与 main 真实 Host 组合。
-3. B7-R1 提交稳定终点快照后，总控核对文件边界和执行证据，再生成绑定该快照的 P4-C12 独立验收任务卡。
+1. 用户把 `docs/coordination/prompts/p4-b7-r1-h1-package-hygiene-executor.md` 全文发送给既有执行智能体。
+2. 执行智能体复算 H1 固定输入，只实现 allowlist、原子 staging、manifest 与静态/单元测试；Electron、Forge package、sidecar、数据库和外部集成都不启动。
+3. 技术顾问和测试智能体保持停止；不得重新发送 D13、E2-R1/E2/R1/E1，E3 与 P4-C12 继续 `not_started`。

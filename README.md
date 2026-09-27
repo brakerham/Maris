@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。P4-B7 已保留可复算的 66 文件 Windows Shell 实现；P4-D12 已对供应链 P0 和 main 真实 Host 组合完成裁定，P4-IF-004 批准 Forge 8 alpha 仅作发布前验证，并冻结 desktop core readiness。P4-B7-R1 任务卡与 182 文件起点已经准备；24 项 P4-B 独立矩阵仍全部为 `not_run`，P4-C12 未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。P4-D13 已裁定 Electron 首个故障为 GPU child `0xC0000135`，具体 DLL/机制未知，并冻结 C 盘 direct→条件 Playwright 的有限诊断路线。当前先执行不启动 Electron 的 H1 Python package resource allowlist/staging，解决 `.pyc`/`.egg-info` 等副产物进入成品的问题；环境动态诊断随后另立任务。24 项 P4-B 独立矩阵仍全部为 `not_run`，P4-C12 未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -83,6 +83,25 @@
 - [P4-IF-004](docs/phase-4-interface-freeze-004.md)：冻结供应链候选、desktop sidecar/readiness、composition root、Supervisor、owner/token 和完整门禁。
 - [P4-B7-R1 执行智能体 Prompt](docs/coordination/prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md)：先修复供应链，再完成 main 到真实 Host 的有限续段。
 - [P4-B7-R1 固定输入快照](docs/coordination/snapshots/p4-b7-r1-start.sha256)：绑定 182 个 P4-A/B7/D12/冻结/任务输入文件。
+- [P4-B7-R1 阻塞总控核对](docs/p4-b7-r1-blocked-coordinator-review.md)：接受官方 Electron 下载临时失败的停止结论，保留供应链成果并冻结恢复顺序。
+- [P4-B7-R1-E1 恢复 Prompt](docs/coordination/prompts/p4-b7-r1-e1-electron-download-resume-executor.md)：在官方资产重新可达后，对最终 lock 重做审计并从 Electron/Vitest 门禁继续真实 Host 组合。
+- [P4-B7-R1-E1 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e1-start.sha256)：绑定 187 个 R1 产品、证据、状态和恢复任务输入文件。
+- [P4-B7-R1-E1 重复网络阻塞总控核对](docs/p4-b7-r1-e1-blocked-coordinator-review.md)：确认正文 GET 在 Node 与 curl 中均被重置，停止重复执行任务并冻结网络切换后的官方缓存恢复路线。
+- [P4-B7-R1-E2 网络门禁](docs/p4-b7-r1-e2-network-gate.md)：确认透明 TUN 路由生效，并从官方资产成功取得限量 1 MiB 正文。
+- [P4-B7-R1-E2 执行智能体 Prompt](docs/coordination/prompts/p4-b7-r1-e2-electron-runtime-resume-executor.md)：不重复供应链审计，从官方 Electron 安装继续真实 Host、sidecar、package、E2E 和 EXE 门禁。
+- [P4-B7-R1-E2 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e2-start.sha256)：绑定 192 个 E1 产品、证据、网络门禁、角色状态和 E2 任务输入文件。
+- [P4-B7-R1-E2 阻塞总控核对](docs/p4-b7-r1-e2-blocked-coordinator-review.md)：接受 194 文件稳定现场，拆分 Playwright 启动合同与 package hygiene 两个问题，并冻结恢复路线。
+- [P4-B7-R1-E2-R1 执行智能体 Prompt](docs/coordination/prompts/p4-b7-r1-e2-r1-electron-launch-package-executor.md)：先做最小启动兼容性探针，再分离 app.asar 与真实 EXE 测试并建立确定性 Python 资源 allowlist。
+- [P4-B7-R1-E2-R1 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e2-r1-start.sha256)：绑定 200 个 E2 产品、证据、执行状态、总控核对和 R1 任务输入文件。
+- [P4-B7-R1-E2-R1 阻塞总控核对](docs/p4-b7-r1-e2-r1-blocked-coordinator-review.md)：接受最小 fixture 的 GPU child `0xC0000135` 与 browser `0x80000003` 失败链，停止重复动态尝试。
+- [P4-B7 Electron Windows 环境证据](docs/p4-b7-electron-windows-environment-evidence.md)：记录 Windows 25H2 build 26200、混合显卡、运行时、事件日志和上游相似问题。
+- [P4-D13 技术顾问 Prompt](docs/coordination/prompts/p4-d13-electron-windows-crash-technical-adviser.md)：只读裁定 C/D 盘 A/B、sandbox、诊断工具、版本策略和 package hygiene 拆分顺序。
+- [P4-D13 固定输入快照](docs/coordination/snapshots/p4-d13-start.sha256)：绑定 205 个产品、失败现场、环境证据、角色状态和 D13 任务输入文件。
+- [P4-D13 技术裁定](docs/phase-4-d13-electron-windows-crash-advice.md)：冻结首个故障、证据等级、有限动态矩阵、诊断开关与 package hygiene 拆分建议。
+- [P4-D13 总控审阅](docs/p4-d13-coordinator-review.md)：接受 D13 并裁定八个未决问题，决定先执行无 Electron 的 H1。
+- [P4-IF-005](docs/phase-4-interface-freeze-005.md)：冻结 Electron Windows 诊断顺序与 Python package resource staging 合同。
+- [P4-B7-R1-H1 执行智能体 Prompt](docs/coordination/prompts/p4-b7-r1-h1-package-hygiene-executor.md)：只实现 allowlist、原子 staging、manifest 与静态测试，不启动 Electron 或 Forge package。
+- [P4-B7-R1-H1 固定输入快照](docs/coordination/snapshots/p4-b7-r1-h1-start.sha256)：绑定 H1 的产品、证据、冻结、角色状态和任务输入文件。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

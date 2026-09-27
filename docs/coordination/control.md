@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-27T19:32:00+08:00`
+- 指令版本：`2026-09-28T00:06:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：`P4-D12` 已由技术顾问完成并经总控接受；`P4-IF-004` 已批准 Forge `8.0.0-alpha.10` 仅作为发布前验证基线，并批准不改变通用 `/readyz` 的 managed desktop core readiness。`P4-B7-R1` 任务卡和 182 文件固定输入快照已经准备；执行与测试角色当前停止。
-- 需要用户参与：只把 `docs/coordination/prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md` 发送给既有执行智能体。不要同时启动技术顾问、测试智能体或 P4-C12。B7-R1 先通过真实供应链门禁，再完成 main 到 Host 组合；稳定终点快照形成后由总控另行派发 C12。Docker、OpenClaw、微信和 DeepSeek 均不属于本任务。
+- 当前动作：`P4-D13` 已由总控接受并形成 `P4-IF-005`。下一步先执行 `P4-B7-R1-H1`，只实现 Python package resource allowlist、确定性 staging、manifest 和静态测试；H1 不启动 Electron、Forge package、app.asar、Maris.exe、sidecar 或数据库。Electron 动态诊断 E3 在 H1 总控核对后另行派发。
+- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-h1-package-hygiene-executor.md` 全文发送给既有执行智能体。不要再发送 D13、E2-R1/E2/R1/E1，也不要启动技术顾问、测试智能体、E3 或 P4-C12。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；P4-A 验收提交 `88fb178` 与 P4-B 头脑风暴提交 `6b0e485` 已推送，远端 `main` 当前为 `6b0e485`。这些仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 
 ## 本地单主人产品范围
@@ -92,7 +92,14 @@
 | P4-B7 Windows Shell 实现 | 执行智能体；`blocked / finished` | 66 文件 source manifest 匹配；类型、测试、package、asar E2E 与 EXE smoke 有执行方证据；audit 发现 1 critical、11 high，main 真实 Host 组合未完成 | 执行智能体停止；不得忽略 advisory、自行改变冻结依赖图、继续接线或启动 P4-C12 |
 | P4-D12 B7 供应链与真实接线裁定 | `complete`；总控已接受 | 728 行方案、16 项 advisory、三候选隔离解析、F01～F22、Host 组合与教学地图已核对 | 技术顾问停止；不得继续改方案、依赖或产品 |
 | P4-IF-004 供应链与真实 Host 补充冻结 | `complete`；头脑风暴总控 | Forge 8 alpha 仅发布前验证；desktop core readiness、composition root、Supervisor、owner/token 和完整门禁已冻结 | 变更必须退回总控；执行方不得自由试版本、改通用 `/readyz` 或扩大业务 |
-| P4-B7-R1 供应链与真实 Host 组合续段 | 执行智能体；`ready / waiting_user` | 182 文件固定输入和任务卡已准备；先供应链门禁，后 core readiness/main 组合/package/E2E/EXE | 未收到用户派发前不安装或修改；不得运行独立测试、启动 C12、Docker、OpenClaw、微信或 DeepSeek |
+| P4-B7-R1 供应链与真实 Host 组合续段 | 执行智能体；`blocked / finished` | Forge 8 精确候选图与旧包消失通过；候选 lock full/prod audit 均为 0；Electron 官方资产连续两个检查点 fetch failed，Host 组合未开始 | 原任务停止；不得把 8/9 Vitest files 冒充全绿、引用候选审计代表最终 lock 或启动 C12 |
+| P4-B7-R1-E1 Electron 链路恢复续段 | 执行智能体；`blocked / finished` | 最终 lock 双审计、F04 和 clean frozen install 通过；Node 24 正文/redirect 以 `ECONNRESET` 阻塞，后续未执行 | 原任务停止；不得再次发送 E1、换镜像、复用旧 binary、修改安全软件或启动 C12 |
+| P4-B7 Electron 官方资产网络门禁 | 头脑风暴总控；`complete` | TUN 的 `Meta Tunnel` 默认路由 metric 0；沙箱外官方 Range GET 返回 HTTP 206、1,048,576 字节、TLS 校验 0 | 门禁已经解除；保持当前 TUN 设置，证据见 E2 网络门禁文档 |
+| P4-B7-R1-E2 Electron 下载恢复与真实 Host 组合 | 执行智能体；`blocked / finished` | 194 文件 source manifest 总控复算匹配；官方 Electron、Host/sidecar、22 Vitest、55 Python 和 package 已通过；app.asar launch 阻塞、真实 EXE 未运行，resources 含 11 `.pyc` 与 6 `.egg-info` | 原任务停止；不得继续用 Playwright Electron launcher 启动 fused EXE或重复盲试 |
+| P4-B7-R1-E2-R1 启动分层与 package hygiene | 执行智能体；`blocked / finished` | 200/200 起点和 194/194 source 匹配；最小无业务 fixture 的 debugger/CDP 已连接，GPU child 随后以 `0xC0000135` 退出，browser 弹出 `0x80000003`；产品零变化且资源已收口 | 原任务停止；不得再次运行相同 D 盘 fixture、app.asar 或 EXE |
+| P4-D13 Windows 25H2 Electron crash 裁定 | `complete`；总控已接受 | 442 行方案、26 条冻结建议、A1/A2/F1 分支、诊断开关与 hygiene 拆分已核对 | 技术顾问停止；不得继续运行动态诊断或自行创建后续任务 |
+| P4-IF-005 Electron Windows 诊断与 package resource 冻结 | `complete`；头脑风暴总控 | 冻结首故障措辞、C 盘三角验证、安全开关、版本边界、H1 staging 与后续顺序 | 变更必须返回总控与技术顾问；执行方不得自由遍历开关或版本 |
+| P4-B7-R1-H1 Python package resource 静态 staging | 执行智能体；`ready / waiting_user` | 209 文件固定输入 SHA-256 `24dbffd3...b3921`；只允许 allowlist、staging、manifest 和静态/单元测试 | 用户发送 H1 Prompt；不得启动 Electron、Forge package、sidecar、数据库、E3 或 C12 |
 | P4-C12 Windows Shell 独立验收 | `not_started`；等待 B7 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定 B7 稳定终点快照后生成 | 测试智能体当前停止；不得提前执行、修改产品或把 D11 设计映射当作通过证据 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |

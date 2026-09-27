@@ -2,24 +2,24 @@
 
 - 角色：技术选型咨询、工程教学与教学子任务统筹
 - 连接状态：用户侧边栏独立技术顾问已确认接单
-- 当前任务：P4-D12 — B7 供应链处置与桌面真实接线续段方案
+- 当前任务：P4-D13 — Windows 25H2 Electron GPU 启动崩溃裁定
 - 状态：`review`
-- 最近更新：2026-09-27 19:19，Asia/Shanghai
-- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-27T18:23:00+08:00`、任务卡 `P4-D12`、冻结 `P4-IF-003`、P4-B7 66 文件保留快照
-- 可修改范围：仅 `docs/phase-4-d12-b7-supply-chain-advice.md` 与本角色状态文件；产品、依赖/锁文件、配置、测试、矩阵/报告、冻结、控制、总览、snapshot、其他角色、外部系统和 Git 状态只读
+- 最近更新：2026-09-28 00:02，Asia/Shanghai
+- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-27T23:40:00+08:00`、任务卡 `P4-D13`、固定输入 205 文件
+- 可修改范围：仅 `docs/phase-4-d13-electron-windows-crash-advice.md` 与本角色状态文件；产品、测试、依赖/lock、Forge、manifest/snapshot、冻结、控制、总览、矩阵/报告、其他角色、系统设置、外部工具和 Git 状态只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P4-D12 两份允许交付已完成并停止修改，等待头脑风暴总控审阅和冻结
-- 步骤开始时间：2026-09-27 19:19 Asia/Shanghai
-- 最近有效进展：2026-09-27 19:19 Asia/Shanghai
-- 最近心跳：2026-09-27 19:19 Asia/Shanghai
-- 下一检查点：总控决定是否形成 `P4-IF-004`、是否接受发布前 Forge 8 alpha 与 desktop core readiness，再决定是否派发 B7-R1
-- 等待对象：头脑风暴总控审阅；用户/总控裁定两个范围变化
-- 活动进程或会话：无；隔离目录 `.codex-tmp/p4-d12` 已核验位于工作区后清理，`Test-Path=False`
-- 重试次数：1；现有 `pnpm` shim 指向已清理的 B7 临时 store，脱敏错误为“pnpm target is not recognized”，未改项目文件
-- 最近输出：D12 终稿 728 行，包含原始 16 项处置、五路线、三层 tar/Packager 兼容结论、22 条冻结建议、真实 Host 组合、B7-R1 门禁、执行/独立验收分层和教学地图；88 个链接中 36 个本地目标全部存在，18 个代码围栏成对；文档 SHA-256 `c88e5a0e06f56acb3347fbe0b19182e25bd27ee3b115b2a6764d86f8c9d64ed9`
+- 当前步骤：P4-D13 已提交 review；停止，等待头脑风暴总控审阅和冻结后续路线
+- 步骤开始时间：2026-09-27 23:47 Asia/Shanghai
+- 最近有效进展：2026-09-28 00:02 Asia/Shanghai
+- 最近心跳：2026-09-28 00:02 Asia/Shanghai
+- 下一检查点：头脑风暴总控核对 `P4-D13-F01～F26`、8 个未决问题并决定是否形成后续冻结/任务；技术顾问不自行继续
+- 等待对象：头脑风暴总控审阅
+- 活动进程或会话：无；本任务不启动 Electron、Maris、sidecar 或任何动态诊断
+- 重试次数：0
+- 最近输出：`docs/phase-4-d13-electron-windows-crash-advice.md` 已提交 review；442 行，SHA-256 `07ad30b2e9c996e53b2940bca8b6e7835cd23a6e1612c36f6081dcb115d411ca`
 
 ## P0-P3-D8 分册进度
 
@@ -45,11 +45,46 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 
 ## 待处理事项
 
-- 总控/用户决定是否允许 Forge 8.0.0-alpha.10 仅作为发布前 B7-R1 候选；若否，B7 继续 blocked，等待 beta/rc/stable。
-- 总控/用户决定是否增加带 startup nonce 的 managed desktop core readiness，同时保留通用 `/readyz` 的 provider 语义；若否，managed online 路径继续停止。
-- 总控据此形成或拒绝 `P4-IF-004` 与 B7-R1；技术顾问不自行创建冻结、实现任务或 P4-C12。
+- 对 GPU child `0xC0000135` → browser `0x80000003` 失败链按证据强度排序，避免把相似上游 issue 写成本机根因。
+- 冻结一次只改变一个变量的 C/D 盘、direct/Playwright、sandbox/GPU、版本与精确 DLL 取证顺序，并给出弹窗停止、日志保留和 owned process 收口规则。
+- 裁定 package `.pyc`/`.egg-info` allowlist 是否可以拆成不启动 Electron 的独立执行切片；不自行创建后续 Prompt、冻结或 P4-C12。
 
 ## 工作日志
+
+### 2026-09-28 00:02 Asia/Shanghai — P4-D13 提交 review 并停止
+
+- 状态：`review`；运行状态：`finished`。
+- 交付物：[P4-D13 Windows 25H2 Electron GPU 启动崩溃技术裁定](../../phase-4-d13-electron-windows-crash-advice.md)，完整文件 SHA-256 为 `07ad30b2e9c996e53b2940bca8b6e7835cd23a6e1612c36f6081dcb115d411ca`。
+- 根因边界：确认第一故障是 GPU child `0xC0000135 STATUS_DLL_NOT_FOUND`，具体 DLL 未知；`0x80000003` 与 Playwright assertion 作为高可信下游链路，不把相似上游 issue 或 Chrome CI 事件写成本机结论。
+- 动态路线：不重复 D 基线；先同摘要 C direct sandbox-on，成功后才跑 C Playwright，失败则进入一次 bounded Procmon 取证。初始 C direct 是三角验证入口，不冒充纯盘符 A/B；所有 cell 一次、60 秒、首检查点最多 4 次进程启动。
+- 安全裁定：`--disable-gpu-sandbox`/WARP 仅在严格前置下各至多一次且不组合；`--in-process-gpu` 不进入最小矩阵；`--no-sandbox` 禁止；renderer sandbox、fuses、CI/WDAC、安全软件、mitigation、驱动和 Windows 均保持。
+- 版本与发布：继续冻结 Electron `44.4.5` 和 lock；必要时只隔离比较受支持的 `43.7.4`，45 alpha 默认不运行；单次诊断成功不足以修改冻结。
+- hygiene：裁定 `.pyc`/`.egg-info` allowlist 可先拆成不启动 Electron 的独立静态实现，但未运行 Forge package/app.asar/EXE 时必须报告 `not_run`，P4-B 继续 blocked。
+- 验证：442 行、40 个标题、2 张 Mermaid、10 个代码围栏成对、26 个唯一冻结编号；1 个本地链接有效，尾随空白 0，UTF-8 无 BOM，末尾换行有效；`git diff --check` 无文档错误。
+- 控制复核：完成前重读 control，版本仍为 `2026-09-27T23:40:00+08:00`；P4-D13 仍由技术顾问唯一负责，用户本轮任务解除 `waiting_user`，P4-C12 仍 `not_started`。
+- 文件与运行边界：只新增 D13 文档并更新本角色状态；未修改或运行产品、测试、依赖/lock、Forge、manifest/snapshot、冻结、control/overview、其他角色、系统设置、外部诊断或 Git。
+- 下一步/交接：头脑风暴总控审阅 `P4-D13-F01～F26` 与 8 个未决问题，决定后续冻结和任务拆分；技术顾问停止。
+
+### 2026-09-27 23:57 Asia/Shanghai — P4-D13 技术裁定初稿里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 初稿交付：`docs/phase-4-d13-electron-windows-crash-advice.md` 已覆盖任务卡要求的 10 类交付，包括证据等级、失败链图、9 项假设排序、A1/A2/F1/S1/G1/V1/P1/P2 分支矩阵、官方诊断工具比较、日志保留、安全开关、版本策略、package hygiene 拆分、停止/验收和 26 项冻结建议。
+- 核心裁定：不重复 D 基线；先做同摘要 C direct sandbox-on，一次成功后才做 C Playwright。C direct 相对 D Playwright 有两个变化，只是安全三角验证入口；必须结合 C Playwright 才能判断执行位置类因素，且不得把 ACL/ADS/路径元数据混杂缩写成“D 盘根因”。
+- 安全边界：`--disable-gpu-sandbox` 和 WARP 仅在前置证据满足时各至多一次且不组合；`--in-process-gpu` 不进入最小矩阵；`--no-sandbox` 禁止；renderer sandbox、fuses、CI/WDAC、安全软件、mitigation、驱动和系统不改。
+- 取证顺序：内置事件 + Electron 文件日志优先；A1 同码失败后才建议官方 Procmon bounded PML；命名 DLL 后先核验存在性、bitness、hash、签名、ACL/ADS 和官方 manifest，不盲装 runtime。
+- 独立拆分：package `.pyc`/`.egg-info` hygiene 可作为不启动 Electron 的 allowlist/staging 静态实现任务先完成，但必须报告 Forge package/app.asar/EXE 为 `not_run`，不解除 P4-B blocked。
+- 文件边界：目前只新增 D13 文档并更新本角色状态；未启动任何动态诊断，未修改产品、测试、依赖/lock、Forge、manifest/snapshot、控制/总览、其他角色或 Git。
+- 下一步/交接：做机械校验、完成前重读最新 control，记录摘要与未决问题后停在 `review / finished`。
+
+### 2026-09-27 23:47 Asia/Shanghai — P4-D13 技术顾问接单
+
+- 状态：`in_progress`；运行状态：`active`。
+- 唯一负责人：最新 control `2026-09-27T23:40:00+08:00` 将 P4-D13 列为技术顾问 `ready / waiting_user`；用户发送任务卡后解除等待。E2-R1 执行方保持 `blocked / finished`，P4-C12 保持 `not_started`。
+- 起点复算：`docs/coordination/snapshots/p4-d13-start.sha256` 共 205 项，结果为 `205 matched / 0 mismatch / 0 missing / 0 invalid`；manifest SHA-256 为 `8fdc986e462b743c308897dae17e2dbf09c85170f9e54687e72847fb1bb867da`。
+- 固定故障：最小 fixture 不含 Maris/Host/数据库，Playwright loader、Node inspector 与 renderer CDP 已连接；首个底层错误为 GPU child `0xC0000135 STATUS_DLL_NOT_FOUND`，后续为 browser/Playwright assertion 与 `0x80000003 STATUS_BREAKPOINT` 弹窗。缺失或拒绝加载的具体 DLL 仍未知。
+- 环境边界：Windows 11 25H2 build `26200.9168`、Intel UHD + NVIDIA RTX 4060 Laptop 混合显卡、D 盘 Electron；常见 x64 VC++/DirectX DLL 存在，Code Integrity 时间窗只有 Chrome 命中，不能据此归因 Electron。
+- 文件与运行边界：只写 D13 文档和本角色状态；不修改或运行产品、测试、依赖、lock、Forge、manifest/snapshot、冻结、报告、系统设置或 Git，不启动 Electron/Maris/sidecar，不下载或运行诊断工具。
+- 下一步/交接：只读核对官方 NTSTATUS、Electron/Chromium sandbox/GPU、Playwright launcher、四个诊断开关、版本日程与 Microsoft/Sysinternals 取证能力，形成能区分假设的最小矩阵。
 
 ### 2026-09-27 19:19 Asia/Shanghai — P4-D12 提交 review 并停止
 
