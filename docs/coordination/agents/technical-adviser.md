@@ -2,24 +2,24 @@
 
 - 角色：技术选型咨询、工程教学与教学子任务统筹
 - 连接状态：用户侧边栏独立技术顾问已确认接单
-- 当前任务：P4-D11 — Windows Shell、毛毛与模块 UI 技术方案
+- 当前任务：P4-D12 — B7 供应链处置与桌面真实接线续段方案
 - 状态：`review`
-- 最近更新：2026-09-27 15:44，Asia/Shanghai
-- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-27T15:15:00+08:00`、原任务卡 `P4-D11`、P4-A 最终验收提交 `88fb178`、P4-B 头脑风暴提交 `6b0e485`
-- 可修改范围：仅 `docs/phase-4-d11-windows-shell-technical-advice.md` 与本角色状态文件；产品、migration、测试、矩阵/报告、接口冻结、控制、总览、其他角色、依赖、外部系统和 Git 状态只读
+- 最近更新：2026-09-27 19:19，Asia/Shanghai
+- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-27T18:23:00+08:00`、任务卡 `P4-D12`、冻结 `P4-IF-003`、P4-B7 66 文件保留快照
+- 可修改范围：仅 `docs/phase-4-d12-b7-supply-chain-advice.md` 与本角色状态文件；产品、依赖/锁文件、配置、测试、矩阵/报告、冻结、控制、总览、snapshot、其他角色、外部系统和 Git 状态只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P4-D11 已完成并停在 `review`，等待头脑风暴总控审阅和冻结 `P4-IF-003`
-- 步骤开始时间：2026-09-27 15:44 Asia/Shanghai
-- 最近有效进展：2026-09-27 15:44 Asia/Shanghai
-- 最近心跳：2026-09-27 15:44 Asia/Shanghai
-- 下一检查点：总控核对推荐值、开放问题和 24 项设计映射；时间由总控安排
-- 等待对象：头脑风暴总控评审与 `P4-IF-003` 冻结
-- 活动进程或会话：无；未遗留服务、安装、测试或长运行进程
-- 重试次数：0；本地命令通道已恢复，尚未出现无进展检查点
-- 最近输出：D11 主文档 1093 行、67 个标题、22 个成对代码块、6 张 Mermaid；19 个本地链接及行号有效，24 项编号齐全，尾随空白 0；SHA-256 `ad3dc4b899d7462d46c8b344eba0c8cd044622059d274ccfbdca7a9aba532405`
+- 当前步骤：P4-D12 两份允许交付已完成并停止修改，等待头脑风暴总控审阅和冻结
+- 步骤开始时间：2026-09-27 19:19 Asia/Shanghai
+- 最近有效进展：2026-09-27 19:19 Asia/Shanghai
+- 最近心跳：2026-09-27 19:19 Asia/Shanghai
+- 下一检查点：总控决定是否形成 `P4-IF-004`、是否接受发布前 Forge 8 alpha 与 desktop core readiness，再决定是否派发 B7-R1
+- 等待对象：头脑风暴总控审阅；用户/总控裁定两个范围变化
+- 活动进程或会话：无；隔离目录 `.codex-tmp/p4-d12` 已核验位于工作区后清理，`Test-Path=False`
+- 重试次数：1；现有 `pnpm` shim 指向已清理的 B7 临时 store，脱敏错误为“pnpm target is not recognized”，未改项目文件
+- 最近输出：D12 终稿 728 行，包含原始 16 项处置、五路线、三层 tar/Packager 兼容结论、22 条冻结建议、真实 Host 组合、B7-R1 门禁、执行/独立验收分层和教学地图；88 个链接中 36 个本地目标全部存在，18 个代码围栏成对；文档 SHA-256 `c88e5a0e06f56acb3347fbe0b19182e25bd27ee3b115b2a6764d86f8c9d64ed9`
 
 ## P0-P3-D8 分册进度
 
@@ -45,10 +45,61 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 
 ## 待处理事项
 
-- 等待头脑风暴总控评审 P4-D11 的推荐栈、IPC/owner/supervisor/outbox/设备设置合同、开放问题和 24 项设计映射，并由总控决定是否发布 `P4-IF-003`；技术顾问保持停止，不自行冻结、实现或派发。
-- 尚未安装或运行桌面依赖，也未验证 Electron/Forge/Vite 组合、Windows 进程收口、DPAPI、Tray、登录项、多显示器、全屏和透明窗口降级；这些已在 D11 明确标为 `unverified`。
+- 总控/用户决定是否允许 Forge 8.0.0-alpha.10 仅作为发布前 B7-R1 候选；若否，B7 继续 blocked，等待 beta/rc/stable。
+- 总控/用户决定是否增加带 startup nonce 的 managed desktop core readiness，同时保留通用 `/readyz` 的 provider 语义；若否，managed online 路径继续停止。
+- 总控据此形成或拒绝 `P4-IF-004` 与 B7-R1；技术顾问不自行创建冻结、实现任务或 P4-C12。
 
 ## 工作日志
+
+### 2026-09-27 19:19 Asia/Shanghai — P4-D12 提交 review 并停止
+
+- 状态：`review`；运行状态：`finished`。
+- 交付物：[P4-D12 B7 供应链处置与桌面真实 Host 接线技术裁定](../../phase-4-d12-b7-supply-chain-advice.md)，完整文件 SHA-256 为 `c88e5a0e06f56acb3347fbe0b19182e25bd27ee3b115b2a6764d86f8c9d64ed9`。
+- 技术裁定：条件首选为总控/用户明确批准后，在发布前 B7-R1 中整体采用 Forge `8.0.0-alpha.10` cohort 及上游配套 Packager `20.3.0`、Rebuild `4.2.0`、node-gyp `12.4.0`、tar `7.5.21`、内部 extract `1.0.5`；alpha 不得成为正式发行基线。若拒绝 prerelease，保持 B7 blocked，等待 beta/rc/stable；Forge 7 + Packager 20 major override、Forge 7 双 Packager、降低 audit、忽略 GHSA 和无期限 fork 均不作为自由回退。
+- 完整覆盖：原始 16 项 advisory 逐条含 GHSA/CVE、包/版本/级别、完整路径、阶段、app.asar 归属、攻击前提、修复和处置；五路线、tar 三层证据、Packager hook 合同、精确候选图、`P4-IF-004-F01～F22`、真实 composition root、B7-R1 顺序、门禁/停止、执行/独立分层、教学练习与复评触发条件均已写明。
+- 隔离证据：原 full audit 为 1 critical、11 high、3 moderate、1 low；候选 A 与 C audit 为 0，候选 B 仍有 2 high；A 因 Forge 7/Packager 20 hook 合同不兼容而拒绝，C 仅是 Node 26.8.1 下的 lockfile-only 解析事实。候选中另发现 `tmp@0.2.6` 命中 `GHSA-7c78-jf6q-g5cm`，最低修正为 `0.2.7`。
+- 清理：完成前重读 control，版本仍为 `2026-09-27T18:23:00+08:00`，唯一负责人和停止规则未变化；核验绝对目标位于工作区 `.codex-tmp` 后删除 `.codex-tmp/p4-d12`，清理后 `Test-Path=False`。
+- 文档验证：728 行、57 个标题、18 个代码围栏成对、16 行公告、22 个唯一冻结编号、88 个 Markdown 链接；36 个本地目标全部存在，表格列结构无错误，尾随空白 0，UTF-8 无 BOM，末尾换行有效，`git diff --check` 无文档错误。
+- 边界：只修改 D12 文档和本角色状态；未修改产品、依赖、lock、配置、测试、矩阵/报告、冻结、control/overview、其他角色或 Git 状态，未启动服务、外部登录、P4-B7-R1 或 P4-C12。
+- 未决：总控/用户裁定 Forge 8 alpha 的发布前例外，以及 managed desktop core readiness 的窄公开合同；总控随后决定是否形成 P4-IF-004 和派发 B7-R1。技术顾问停止。
+
+### 2026-09-27 19:12 Asia/Shanghai — P4-D12 文档初稿与结构校验里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 交付初稿：`docs/phase-4-d12-b7-supply-chain-advice.md` 已形成 20 个主章节，完整覆盖 16 项公告、五路线、tar 与 Packager 兼容层次、候选依赖图、`P4-IF-004-F01～F22`、desktop core readiness 待裁定项、真实 composition root、B7-R1 顺序、门禁与教学地图。
+- 校验结果：694 行、54 个标题、16 个代码围栏成对、83 个 Markdown 链接；36 个本地链接目标全部存在，尾随空白为 0，UTF-8 无 BOM，末尾换行有效。
+- 关键复核：现有 B7 原始 `tmp@0.0.33` 两条公告的 patched 范围与 audit JSON 一致；新 `tmp@0.2.6` 公告单独列为候选修正，不混入原始 16 项。
+- 下一步/交接：补充 npm 官方 override/audit/lockfile 来源和精确实验记录，完成前重读最新 control，安全清理隔离目录，计算交付物摘要并停在 `review / finished`。
+
+### 2026-09-27 19:02 Asia/Shanghai — P4-D12 候选解析与兼容边界里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 隔离结果：Forge 7 + `tar@7.5.21` + `tmp@0.2.7` 仍保留 `extract-zip@2.0.1` 的 2 high；再 major override Packager 20 后 lockfile audit 为 0；Forge 8 alpha.10 配套 Packager 20.3.0、Rebuild 4.2.0、node-gyp 12.4.0、tar 7.5.21 与内部 extract 1.0.5 的候选 audit 也为 0。
+- 新公告修正：`tmp@0.2.6` 自身命中 `GHSA-7c78-jf6q-g5cm`，因此候选下限必须改为 `tmp@0.2.7`；这条是修复过程中发现的新公告，不改写 B7 原始 16 项基线。
+- 兼容裁定：Packager 20 为 ESM、Node ≥22.12；Node 24 可 `require()` 同步 ESM，但 Forge 7 的 package 代码仍构造五参数 callback hooks，Packager 20 改成单一 options 对象和 Promise hooks。零告警 lockfile 不能证明该 major override 可打包，直接采用风险不可接受。
+- `tar` 边界：tar 7.5.21 同时提供 `import`/`require` 导出和 `extract` API，当前 Rebuild 3/node-gyp/cacache 图能解析；实际 Electron headers 下载、native rebuild 与 package 行为仍必须由 B7-R1 在目标 Node 24/Windows 下证明。
+- 推荐方向：首选上游配套的 Forge 8 图只用于发布前续作，并设置“不得发布、真实 package 不通过即停止”的硬边界；若总控/用户不接受 alpha，则保持 B7 blocked，等待 Forge 8 beta/rc/stable，不能把 Forge 7 major override、漏洞忽略或长期本地安全 fork当作默认回退。
+- 下一步/交接：完成 `P4-IF-004-Fxx`、Host composition root、provider readiness 矛盾的待裁定项和 B7-R1 文件/门禁顺序。
+
+### 2026-09-27 18:50 Asia/Shanghai — P4-D12 供应链告警归因里程碑
+
+- 状态：`in_progress`；运行状态：`active`。
+- 原始证据：使用隔离 `pnpm@12.7.0` 对现有 lockfile 重放 full audit；JSON 摘要为 1 critical、11 high、3 moderate、1 low，共 16 项，文件 SHA-256 为 `601e031929b404c7650f001c7911a402173c98e2be55a1f77b88102597b611cf`。
+- 路径归因：12 项汇聚到 Forge 7 → Rebuild 3 / Electron node-gyp / make-fetch-happen / cacache → `tar@6.2.1`；2 项为 Forge 7 → Packager 18 → `extract-zip@2.0.1`；2 项为 Forge CLI → Inquirer/external-editor → `tmp@0.0.33`。
+- 可达性边界：这些包属于开发、下载、原生重建与打包工具链，不进入当前最终 app.asar 运行时；处理下载档案、原生源码或临时路径时仍运行于开发者权限下，不能因“devDependency”忽略 P0 门禁。
+- 官方核对：GitHub Advisory Database 已提供 16 个 GHSA/CVE 对应关系；Forge #4228 明确记录 7.x 的 Rebuild 3/tar 6 链，Forge #4082 明确 Forge 8 alpha 尚不适合一般使用且整体转为 Node 22/ESM。
+- 下一步/交接：在隔离目录验证候选 lockfile 和 CJS/ESM/API 边界，再形成首选、备选、退出条件与 `P4-IF-004-Fxx` 冻结建议；不会把 lockfile 解析成功写成真实 package 已通过。
+
+### 2026-09-27 18:37 Asia/Shanghai — P4-D12 技术顾问接单
+
+- 状态：`in_progress`；运行状态：`active`。
+- 唯一负责人：依据总控版本 `2026-09-27T18:23:00+08:00`，P4-D12 为技术顾问 `ready / waiting_user`；用户发送任务卡后解除等待。P4-B7 执行方保持 `blocked / finished`，P4-C12 保持 `not_started`。
+- 输入事实：B7 的 66 文件清单匹配；type/lint/generated、16 项 Vitest、15 项 Python 定向、package、app.asar E2E 和 EXE smoke 有执行方证据；full audit 仍有 1 critical、11 high、3 moderate、1 low，main 尚未把 `BackendSupervisor`、`LocalOwnerSession`、`HostClient` 组合为真实 managed Host 链路。
+- 目标：完整解释 16 项 advisory，比较五类处置路线，给出精确依赖图和 `P4-IF-004-Fxx` 建议，并设计一个有限 B7-R1 续段及工程教学章节。
+- 文件边界：只写 `docs/phase-4-d12-b7-supply-chain-advice.md` 和本角色状态；其余项目文件只读。不得安装/更新项目依赖、修改 lockfile/配置/产品/测试、启动服务、执行独立验收或进行 Git 写操作。
+- 初始读取：已按顺序重读 AGENTS、README、协调规则、最新 control、角色状态、D11、D11 总控审阅、P4-IF-003、B7 任务卡、受阻运行说明、66 文件摘要和项目依赖/构建配置；当前继续读取实际 main/会话/Supervisor/Host 实现和测试。
+- 停止规则：网络或工具连续两个检查点无进展即安全停止并报告；若建议需要改变 Electron 主版本、放弃 Forge、修改 Python Host 公开合同或扩大 P4-C/P4-D，标为需总控与用户裁定，不让执行方自由选择。
+- 下一步/交接：只读解析当前 lockfile 和 actual code；任何网络访问或隔离依赖解析前再次读取 control。
 
 ### 2026-09-27 15:44 Asia/Shanghai — P4-D11 最终校验并提交 review
 

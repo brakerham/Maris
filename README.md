@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。P4-B 的 Windows Shell、模块 UI、桌面生命周期和毛毛合同已经由 P4-D11 与 `P4-IF-003` 冻结，执行任务 `P4-B7` 已准备，24 项 P4-B 矩阵仍全部为 `not_run`。下一步由执行智能体实现桌面壳并形成固定快照，再由测试智能体执行 P4-C12；P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。P4-B7 已保留可复算的 66 文件 Windows Shell 实现；P4-D12 已对供应链 P0 和 main 真实 Host 组合完成裁定，P4-IF-004 批准 Forge 8 alpha 仅作发布前验证，并冻结 desktop core readiness。P4-B7-R1 任务卡与 182 文件起点已经准备；24 项 P4-B 独立矩阵仍全部为 `not_run`，P4-C12 未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -76,6 +76,13 @@
 - [P4-IF-003 Windows Shell 接口冻结](docs/phase-4-interface-freeze-003.md)：冻结 P4-B 的精确版本、IPC、owner 会话、nonce/readiness、窗口、主题、毛毛、测试与变更控制。
 - [P4-B7 执行智能体 Prompt](docs/coordination/prompts/p4-b7-windows-shell-executor.md)：按七个内部里程碑实现桌面 Shell 并提交执行方自测和固定交付。
 - [P4-B7 固定输入快照](docs/coordination/snapshots/p4-b7-start.sha256)：绑定 P4-A 产品代码、执行方测试及 P4-B 冻结文档；开始前必须逐行复算。
+- [P4-B7 受阻运行说明](docs/b7-windows-shell-running.md)：记录已保留实现、执行方测试/打包证据、供应链 P0 和 main 真实 Host 组合缺口。
+- [P4-D12 技术顾问 Prompt](docs/coordination/prompts/p4-d12-b7-supply-chain-technical-adviser.md)：完整核对 16 项 advisory，裁定精确依赖图与 B7-R1 真实接线边界。
+- [P4-D12 技术裁定](docs/phase-4-d12-b7-supply-chain-advice.md)：16 项公告、五路线、三候选解析、22 条冻结建议、真实 Host 组合和教学地图。
+- [P4-D12 总控审阅](docs/p4-d12-coordinator-review.md)：批准发布前 Forge 8 alpha 候选和 desktop core readiness，明确退出条件。
+- [P4-IF-004](docs/phase-4-interface-freeze-004.md)：冻结供应链候选、desktop sidecar/readiness、composition root、Supervisor、owner/token 和完整门禁。
+- [P4-B7-R1 执行智能体 Prompt](docs/coordination/prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md)：先修复供应链，再完成 main 到真实 Host 的有限续段。
+- [P4-B7-R1 固定输入快照](docs/coordination/snapshots/p4-b7-r1-start.sha256)：绑定 182 个 P4-A/B7/D12/冻结/任务输入文件。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-DISPATCH — Windows Shell 实现任务冻结与派发
-- 状态：`in_progress`
+- 当前任务：P4-B7-R1-DISPATCH — 已冻结续段，等待用户派发执行任务卡
+- 状态：`ready`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-27 16:25，Asia/Shanghai
+- 最近更新：2026-09-27 19:35，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -87,22 +87,31 @@
 - [P4-IF-003 Windows Shell 接口冻结](../../phase-4-interface-freeze-003.md)
 - [P4-B7 执行智能体 Prompt](../prompts/p4-b7-windows-shell-executor.md)
 - [P4-B7 固定输入快照](../snapshots/p4-b7-start.sha256)
+- [P4-B7 受阻运行说明](../../b7-windows-shell-running.md)
+- [P4-D12 技术顾问 Prompt](../prompts/p4-d12-b7-supply-chain-technical-adviser.md)
+- [P4-D12 技术裁定](../../phase-4-d12-b7-supply-chain-advice.md)
+- [P4-D12 总控审阅](../../p4-d12-coordinator-review.md)
+- [P4-IF-004](../../phase-4-interface-freeze-004.md)
+- [P4-B7-R1 执行智能体 Prompt](../prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md)
+- [P4-B7-R1 固定输入快照](../snapshots/p4-b7-r1-start.sha256)
 
 ## 当前执行快照
 
-- 运行状态：`active`
-- 当前步骤：P4-D11 已接受，P4-IF-003、P4-B7 任务卡和固定输入已发布；等待用户派发 B7
-- 步骤开始时间：2026-09-27 16:10，Asia/Shanghai
-- 最近有效进展：2026-09-27 16:25，Asia/Shanghai（D11 接受；IF-003 与 B7 任务卡完成；测试智能体保持停止）
-- 最近心跳：2026-09-27 16:25，Asia/Shanghai
-- 下一检查点：执行智能体接单后复算 `p4-b7-start.sha256` 并开始里程碑 1
-- 等待对象：用户把 B7 Prompt 发送给既有执行智能体；不同时启动测试智能体
-- 活动进程或会话：项目 Compose 为空；执行和测试智能体停止；技术顾问已结束 D11，不再修改文件
-- 重试次数：总控没有重复完整 C11，只复算快照、矩阵、报告摘要和资源证据
-- 最近输出：P4-D11 Prompt `docs/coordination/prompts/p4-d11-windows-shell-technical-adviser.md`
+- 运行状态：`waiting_user`
+- 当前步骤：D12 已接受，P4-IF-004、B7-R1 任务卡与 182 文件固定输入已发布；等待用户派发 B7-R1
+- 步骤开始时间：2026-09-27 19:25，Asia/Shanghai
+- 最近有效进展：2026-09-27 19:32，Asia/Shanghai（接受两个方案；发布 IF-004、B7-R1 Prompt 与 182 文件快照）
+- 最近心跳：2026-09-27 19:35，Asia/Shanghai
+- 下一检查点：执行智能体接单后复算 182 文件并先执行供应链门禁
+- 等待对象：用户只把 B7-R1 Prompt 发送给既有执行智能体；测试智能体保持停止
+- 活动进程或会话：B7 启动的 Uvicorn/Electron/Maris/Playwright 均已退出；无项目服务；没有活动依赖安装
+- 重试次数：总控未重复执行 B7 全量测试，只复算交付摘要并核对依赖路径与官方安全资料
+- 最近输出：B7-R1 Prompt `docs/coordination/prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md`
 
 ## 阻塞
 
+- P4-B7 在 `pnpm audit --audit-level high` 门禁停止：1 critical、11 high、3 moderate、1 low。主要路径是 Forge 7.11.2 的旧 `tar` 与 Packager 18 的 `extract-zip@2.0.1`；不得忽略、降级或由执行方擅自改变冻结依赖图。
+- B7 还未完成 Electron main 对 `LocalOwnerSession + BackendSupervisor + HostClient` 的真实组合；当前安全 fail closed，不能启动 P4-C12。
 - P4-D11 的 Codex Desktop 默认执行 helper 阻塞已于 2026-09-27 15:15 解除；23 个旧 runtime staging 目录保留在可恢复隔离区，尚未删除。
 - `PG-C7-DATA-001` 已关闭；真实 PostgreSQL 结论仅覆盖冻结的 P1 8 项和 P2 SPG 4 项。
 - P3 当前无未关闭的 P0/P1 产品缺陷；`P3-C9-PG-001` 已经 R2 独立关闭。
@@ -117,9 +126,25 @@
 
 ## 下一步
 
-1. 用户只把 `docs/coordination/prompts/p4-b7-windows-shell-executor.md` 发送给既有执行智能体。
-2. 执行智能体先复算固定输入，再按七个内部里程碑实现并停在 `review / finished`。
-3. 测试智能体保持停止；B7 稳定终点快照形成后，总控再生成 P4-C12 正式任务卡。
+1. 用户只把 `docs/coordination/prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md` 发送给既有执行智能体。
+2. 执行智能体复算 182 文件，先完成供应链候选的真实门禁；通过后才做 desktop core readiness 与 main 组合。
+3. 测试智能体保持停止；B7-R1 稳定终点形成并由总控复算后，再生成 P4-C12。
+
+### 2026-09-27 19:32 Asia/Shanghai — 接受 P4-D12 并发布 IF-004/B7-R1
+
+- D12 终稿 728 行，文档 SHA-256 `c88e5a0e...d64ed9`；16 项公告、五条路线、三候选隔离实验、F01～F22、Host 组合和教学地图齐全。
+- 总控批准 Forge `8.0.0-alpha.10` 仅用于发布前 B7-R1 验证，禁止用于正式发布；任一真实门禁失败即停止，不回退 Forge 7 major override。
+- 总控批准 managed desktop `/api/v1/desktop/readyz`；通用 `/readyz` 继续保留 provider readiness，不伪造 DeepSeek ready。
+- 发布 P4-IF-004、B7-R1 执行任务卡和 182 文件固定输入；快照 SHA-256 `18ce1e96...9029441a`。
+- 技术顾问、测试智能体继续停止；用户只需把 B7-R1 Prompt 发给既有执行智能体。
+
+### 2026-09-27 18:23 Asia/Shanghai — 核对 P4-B7 阻塞交付并派发 D12
+
+- B7 已在 P0 供应链门禁处正确停止，没有把 audit 失败伪装为 warning，也没有启动 C12。
+- 66 文件 source manifest 复算匹配；最终 `Maris.exe` 与 `app.asar` 的大小和 SHA-256 与执行方交接一致；B7 进程和临时资源已收口。
+- 保留全部现有实现。当前不从头重做桌面端；后续续段只处理依赖图和 main 的真实 Host 组合。
+- 官方证据确认 `extract-zip <=2.0.1` 的两项 high advisory 均无 patched release；Forge 8 仍是 prerelease，Packager 已有 20.x 稳定线。因此依赖处理属于冻结架构变化，先交技术顾问比较并形成 D12，执行方不得自行 override 或升级。
+- 交付 `P4-D12` 任务卡；技术顾问只写方案和自己的状态文件，执行、测试、Git、Docker 与外部集成保持停止。
 
 ### 2026-09-27 16:25 Asia/Shanghai — 接受 P4-D11并发布 P4-IF-003/P4-B7
 

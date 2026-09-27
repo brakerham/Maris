@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-09-27 16:25，Asia/Shanghai
+更新时间：2026-09-27 19:35，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。P4-A 的 64 项矩阵全部通过，PostgreSQL 历史迁移缺陷 `P4-C11-R1-PG-001` 已关闭，并固定 134 文件最终快照。P4-D11 已完成并由总控接受，`P4-IF-003` 已冻结 P4-B Windows Shell、模块 UI、桌面生命周期和毛毛合同；P4-B7 任务卡与固定输入快照已经准备，24 项 P4-B 独立矩阵仍全部是 `not_run`。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
+P0～P3 和 P4-A 已完成验收。P4-B7 的 66 文件桌面 Shell 快照保留；原 full audit P0 和 main 未真实接 Host 已由 P4-D12 完成技术裁定。总控通过 P4-IF-004 批准 Forge 8 alpha 仅作发布前验证，并批准带 nonce 的 desktop core readiness；B7-R1 任务卡和 182 文件起点已经准备。24 项 P4-B 独立矩阵仍全部是 `not_run`，P4-C12 未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,9 +13,9 @@ P0～P3 和 P4-A 已完成验收。P4-A 的 64 项矩阵全部通过，PostgreSQ
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `in_progress` | 已接受 D11、发布 P4-IF-003，并准备 B7 任务卡和固定输入 | 2026-09-27 16:25 | 用户派发 B7 后跟踪七个里程碑；B7 固定快照形成后再准备 C12 | [D11 总控审阅](../p4-d11-coordinator-review.md)、[P4-IF-003](../phase-4-interface-freeze-003.md) |
-| 技术顾问 | `complete / finished`（P4-D11） | 1093 行方案与 24 项映射通过总控审阅，已停止修改 | 2026-09-27 16:00 | 保持停止；架构变化时才另立任务 | [D11 方案](../phase-4-d11-windows-shell-technical-advice.md)、[角色日志](agents/technical-adviser.md) |
-| 执行智能体 | `ready / waiting_user`（P4-B7） | P4-A 已完成；B7 任务卡和固定输入已准备，尚未接单或安装桌面依赖 | 2026-09-27 16:25 | 用户只发送 B7 Prompt；接单后先复算快照 | [B7 Prompt](prompts/p4-b7-windows-shell-executor.md)、[起点快照](snapshots/p4-b7-start.sha256) |
+| 头脑风暴 | `ready / waiting_user` | 已接受 D12、冻结 IF-004，并准备 B7-R1 任务卡和 182 文件起点 | 2026-09-27 19:35 | 用户派发 B7-R1；收到 review 后复算终点并准备 C12 | [D12 总控审阅](../p4-d12-coordinator-review.md)、[IF-004](../phase-4-interface-freeze-004.md) |
+| 技术顾问 | `complete / finished`（P4-D12） | 728 行裁定已由总控接受，已停止修改 | 2026-09-27 19:19 | 保持停止；Forge 发布阶段变化时另立复评 | [D12 方案](../phase-4-d12-b7-supply-chain-advice.md)、[角色日志](agents/technical-adviser.md) |
+| 执行智能体 | `ready / waiting_user`（P4-B7-R1） | 原 B7 阻塞现场保留；等待任务卡，先供应链后真实 Host 组合 | 2026-09-27 19:32 | 用户只发送 B7-R1 Prompt；接单后复算 182 文件 | [B7-R1 Prompt](prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md)、[起点快照](snapshots/p4-b7-r1-start.sha256) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
@@ -79,12 +79,15 @@ P0～P3 和 P4-A 已完成验收。P4-A 的 64 项矩阵全部通过，PostgreSQ
 | P4-C11-R2：PostgreSQL 历史迁移定向复验 | 用户启动的既有测试智能体 | `complete / finished` | 独立 7 passed、执行兼容 19 passed；关闭 DB-05/06 和 P0 缺陷；Compose 最终为空 | [C11-R2 报告](../testing/phase-4-c11-r2-postgresql-history-report.md)、[最终快照](snapshots/p4-a-final.sha256) |
 | P4-D11：Windows Shell 技术方案 | 用户启动的既有技术顾问 | `complete / finished` | 1093 行方案、24 个 P4-B ID、19 个本地链接与两文件摘要通过总控核对；两项事实勘误由 IF-003 吸收 | [D11 方案](../phase-4-d11-windows-shell-technical-advice.md)、[总控审阅](../p4-d11-coordinator-review.md) |
 | P4-IF-003：Windows Shell 接口冻结 | 头脑风暴总控 | `complete` | 精确版本、三层安全、模块 UI、OpenAPI、owner、nonce、Supervisor、outbox、Tray、毛毛、主题和测试边界已冻结 | [IF-003](../phase-4-interface-freeze-003.md) |
-| P4-B7：Windows Shell 实现 | 用户启动的既有执行智能体 | `ready / waiting_user` | 一个集成任务、七个内部里程碑；任务卡与固定输入已准备，尚未安装依赖或修改产品 | [B7 Prompt](prompts/p4-b7-windows-shell-executor.md)、[起点快照](snapshots/p4-b7-start.sha256) |
+| P4-B7：Windows Shell 实现 | 用户启动的既有执行智能体 | `blocked / finished` | 66 文件快照匹配；执行方本地/打包/E2E 证据通过；audit 的 critical/high 与 main 未真实接 Host 阻止进入 review | [B7 运行说明](../b7-windows-shell-running.md)、[源快照](../../apps/desktop/b7-source.sha256) |
+| P4-D12：B7 供应链与真实接线裁定 | 用户启动的既有技术顾问 | `complete / finished` | 16 项 advisory、五路线、三候选解析、22 条冻结、Host 组合与教学已由总控接受 | [D12 方案](../phase-4-d12-b7-supply-chain-advice.md)、[总控审阅](../p4-d12-coordinator-review.md) |
+| P4-IF-004：供应链与真实 Host 补充冻结 | 头脑风暴总控 | `complete` | Forge 8 alpha 发布前候选、desktop core readiness、composition root、生命周期和门禁冻结 | [IF-004](../phase-4-interface-freeze-004.md) |
+| P4-B7-R1：供应链与真实 Host 组合续段 | 用户启动的既有执行智能体 | `ready / waiting_user` | 任务卡与 182 文件起点已准备；先安全依赖图，再真实 Host 组合和 package/E2E/EXE | [B7-R1 Prompt](prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md)、[起点快照](snapshots/p4-b7-r1-start.sha256) |
 | P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
-- P4-B 当前没有产品缺陷阻塞，尚未开始实现。TypeScript 6.0.3 是为工具兼容有意固定的基线，并非最新版本；TypeScript 7.0/7.1 的升级必须另立任务。Forge Vite plugin 仍属 experimental，B7 必须通过精确 pin、`node-linker=hoisted`、package smoke 和 Electron E2E 控制风险。
+- P4-B7 原供应链和真实 Host 组合阻塞已经转化为 B7-R1 的受控任务。Forge 8 alpha 仍是显式发布风险：只允许开发/测试，真实 package 任一门禁失败即停止；正式发布前必须升级并复验 beta/rc/stable，优先 stable。
 - P4-C12 不能提前启动：24 项矩阵已经存在，不需要测试智能体再次设计；只有 B7 形成稳定产品快照后，测试智能体才能绑定快照执行独立验收。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
@@ -109,6 +112,6 @@ P0～P3 和 P4-A 已完成验收。P4-A 的 64 项矩阵全部通过，PostgreSQ
 
 ## 下一次总控检查
 
-1. P4-A 验收提交 `88fb178` 已按用户要求推送新仓库 Maris 的 `origin/main`。
-2. 与用户确认 P4-B 的主窗口布局、模块 Agent 呈现和毛毛首版体验；财务业务闭环继续保留给 P4-C。
-3. 产品范围确认后先生成技术顾问任务，比较并冻结 Electron/React/TypeScript、构建、路由、状态、OpenAPI、IPC、supervisor 和桌面测试方案；执行与测试智能体继续停止。
+1. 用户只把 `docs/coordination/prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md` 发给既有执行智能体；技术顾问与测试智能体保持停止。
+2. 执行智能体先复算 182 文件起点并完成供应链门禁；只有依赖图、完整/生产审计和 clean frozen install 全部通过，才进入 desktop core readiness 与 main 真实 Host 组合。
+3. B7-R1 提交稳定终点快照后，总控核对文件边界和执行证据，再生成绑定该快照的 P4-C12 独立验收任务卡。

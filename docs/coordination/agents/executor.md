@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B6-R3-R1-E1 — Engine 恢复后 PostgreSQL 历史 user-scope migration 返修续段
-- 状态：`review`
-- 最近更新：2026-09-27 12:10，Asia/Shanghai
-- 可修改范围：只允许 `migrations/versions/p4_host_user_scope.py`、`tests/host/test_postgresql_r2.py`、`tests/host/test_migrations.py`，必要时新增 `tests/host/test_postgresql_r3.py`，新增 E1 运行说明并更新本文件；禁止修改两份既有环境阻塞报告、独立测试/报告/矩阵、其他 migration、产品服务、依赖、control/overview、其他角色文件或 Git 状态。
+- 当前任务：P4-B7 — Windows Shell、毛毛与模块 UI 实现
+- 状态：`blocked / finished`
+- 最近更新：2026-09-27 17:11，Asia/Shanghai
+- 可修改范围：根 pnpm/Node 配置、`apps/desktop/**`、`tools/openapi/**`、冻结允许的窄 Python desktop transport/API 接线与执行方 Host 测试、B7 运行说明及本文件；禁止修改 migration、Finance/Agent/activity_import/Host 业务实现、独立测试/矩阵、冻结/control/overview/其他角色、`.claude/**` 或 Git 状态。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：E1 最小 migration 修复及全部执行方门禁通过，PostgreSQL 已普通 down 且 Compose 服务为空；交付 review 后停止
-- 步骤开始时间：2026-09-27 11:56 Asia/Shanghai
-- 最近有效进展：2026-09-27 12:10 Asia/Shanghai（修复后六组必需命令共 30 passed/0 failed/0 skipped；编译、pip check、diff check 通过；129 unchanged/2 changed/0 missing；E1 报告已生成）
-- 最近心跳：2026-09-27 12:10 Asia/Shanghai
-- 下一检查点：等待头脑风暴总控核对 E1 固定摘要并决定是否派发 C11-R2；执行智能体不自行继续
-- 等待对象：头脑风暴总控；测试智能体、技术顾问和 C11-R2 当前仍停止
-- 活动进程或会话：无；`finance-postgres` 容器和项目网络已普通移除，最终 `COMPOSE_SERVICES_EMPTY`
-- 重试次数：E1 Engine/Compose 1/1 通过；原 migration 精确节点 1/1 预期失败；修复后精确节点 1/1 通过
-- 最近输出：`P4-B6-R3-R1-E1-END-SHA256:a89874cfb48b5c8edc8f4260d2f6ce1f206ac02f61e31bb56f4b33ea1282eee9`；状态 `review / finished`
+- 当前步骤：P4-B7 已按供应链 P0 停止并完成资源/证据收口；等待总控与技术顾问发布新冻结或安全裁定
+- 步骤开始时间：2026-09-27 16:27 Asia/Shanghai
+- 最近有效进展：2026-09-27 17:11 Asia/Shanghai（package、packaged app.asar E2E、最终 Maris.exe 自退出 smoke 均通过；`pnpm audit --audit-level high` 发现 1 critical/11 high/3 moderate/1 low，按任务卡 P0 停止）
+- 最近心跳：2026-09-27 17:11 Asia/Shanghai
+- 下一检查点：无；新任务必须先解决冻结 Forge 构建链的 `tar` 与无 patched release 的 `extract-zip` advisory，并固定新的依赖输入
+- 等待对象：头脑风暴总控与技术顾问的供应链裁定；测试智能体和 P4-C12 继续停止
+- 活动进程或会话：无；自有 Uvicorn/Electron/Maris/Playwright 全部退出，owned residual 0；临时工具链、store、node_modules、profile 和 trace 已清理
+- 重试次数：依赖安装因 pnpm Windows 沙箱锁重试 1 次；Electron 官方 GitHub 资产网络失败 2 次后改用镜像并由官方 SHA-256 校验成功；未放宽供应链策略
+- 最近输出：typecheck/lint/generated/peers 均通过；Vitest 9 files/16 passed；Python 15 passed；Playwright 1 passed；Forge package 与 exe smoke 通过；audit 退出 1并触发 P0；源码清单 66 entries、摘要 `de1f80c5...3352a`
 
 ## 待接任务
 
@@ -59,6 +59,33 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-27 16:27 Asia/Shanghai — P4-B7 接单与里程碑 1 起点
+
+- 状态：`in_progress`；运行状态：`active`。最新 control `2026-09-27T16:25:00+08:00` 指定现有执行智能体为 P4-B7 唯一负责人；测试智能体与 P4-C12 未启动，Docker/OpenClaw/微信/DeepSeek 均不在任务范围。
+- 固定输入：`p4-b7-start.sha256` 共 113 行，逐项 113/113 matched、0 mismatch、0 missing；清单 SHA-256 `1cf5603e86d4f9eccb3240feafda7443f5d9c9c610afc738707909c4e0581d02`。
+- 工具链现状：系统 Node `26.8.1`、pnpm `11.7.0`，无 corepack，不符合冻结 Node `24.21.0`/pnpm `12.7.0`。按任务卡使用工作区临时 `.b7-tools` 的 portable Node 和项目级 pnpm，不改系统 PATH、不全局安装；最终清理临时工具链并记录来源与摘要。
+- 里程碑 1 长操作：复读 control 后下载并核对官方 Node ZIP/SHASUMS，建立根 workspace 和三层 Electron 空壳，生成精确 lockfile，运行 typecheck/unit/build/Forge package smoke。下一检查点是依赖安装可复现、renderer 无 Node、package 可启动；连续两个检查点无进展则停止相关工作。
+
+### 2026-09-27 16:50 Asia/Shanghai — P4-B7 里程碑 1～6 集成检查点
+
+- 里程碑 1：项目内 portable Node `24.21.0` 与 pnpm `12.7.0` 已核验；workspace、精确依赖、lockfile、Forge/Vite、sandbox/contextIsolation/CSP/navigation/window deny 已实现。pnpm 12 对 Forge 固定的 Electron node-gyp Git 子依赖默认阻断；未关闭安全策略，改为 vendor 固定提交归档并保留 `blockExoticSubdeps: true`，生命周期仅允许 Electron/esbuild。Electron 镜像归档由 npm 包内官方 SHA-256 `11c395...cb5d` 校验。
+- 里程碑 2：production route graph 离线 OpenAPI、checked-in schema/TypeScript、零漂移脚本、main-only HostClient、DesktopError、严格 module contribution/冲突/Host 交集和 daily lazy placeholder 已实现。
+- 里程碑 3：严格 sender/origin/window/main-frame/tuple/object-extra IPC、版本化原子设备设置、safeStorage fail-closed、本地 owner 两阶段初始化/refresh/login/repair 和并发 refresh single-flight 已实现。
+- 里程碑 4：managed/external_dev 七状态 Supervisor、ownership/nonce/有界恢复与停止、加密 outbox/20 条容量/固定 client ID/摘要/重启恢复，以及 Python managed desktop nonce readiness 窄接线已实现。
+- 里程碑 5：960×680 三栏 Shell、1120/1360 断点、模块导航、统一 Agent 占位、主题/高对比/reduced motion/privacy、恶意文本 text-node 和 lazy error UI 已实现；页面明确标记演示占位。
+- 里程碑 6：single instance、Tray、三种 close policy、登录项 adapter、唯一 CompanionController/毛毛窗口/七子状态、DIP clamp、手动显示与普通窗口可降级合同已实现；外部全屏能力保持 unsupported，不引入原生 helper。
+- 当前验证：TypeScript 退出 0；lint 退出 0；Vitest 9 files、16 passed、0 failed/skip。下一长操作是 Python 定向回归、generated 检查、unsigned package 与 packaged E2E；无活动子进程或 Docker/外部集成。
+
+### 2026-09-27 17:11 Asia/Shanghai — P4-B7 供应链 P0 阻塞交付
+
+- 状态：`blocked / finished`，没有提交为 `review`。`pnpm audit --audit-level high` 退出 1，报告 16 项：1 critical、11 high、3 moderate、1 low。冻结 Forge/`@electron/rebuild` 的 `tar` 路径存在可升级修复，但冻结 `@electron/packager` 的 `extract-zip <=2.0.1` 两项 high 显示无 patched version。任务卡要求依赖供应链高危立即停止，执行方没有自行更换 Forge、添加未冻结 override、忽略 advisory 或启动 P4-C12。
+- 已通过门禁：pnpm peer 0 issues；OpenAPI generated 零漂移；typecheck、lint 退出 0；Vitest 9 files/16 passed；Python定向 15 passed、0 failed/skip、1 deprecation warning；owned Uvicorn health smoke 200并关闭；Forge unsigned package 通过；最终 package 的 `app.asar` Playwright 1 passed、owned residual 0；最终 `Maris.exe` 自退出 smoke 退出 0。
+- 实现完整性说明：安全三层、OpenAPI、registry、strict IPC、设置/safeStorage、本地 owner/Supervisor/outbox 核心类、nonce readiness、Shell、Tray 和单一毛毛均已形成；但 main 仍以 fail-closed 空模块/后端未配置状态运行，尚未把 LocalOwnerSession/BackendSupervisor/HostClient 组合成真实 managed Host 正常链路。不能把核心类单测写成完整桌面链路完成。
+- 文件证据：113 文件起点终点为 110 unchanged、3 allowed changed、0 missing；66 个实现文件有序清单为 `apps/desktop/b7-source.sha256`，清单 SHA-256 `de1f80c566faf165d7869bb4641477b3743bea80b72c65f137079e0f3993352a`。运行说明见 `docs/b7-windows-shell-running.md`。
+- package 证据：`Maris.exe` 246032896 bytes，SHA-256 `15abf2f04e6d59ea9f0f5217f457a4452f0282e12f4fdebb9fb776c31167d878`；`app.asar` 740053 bytes，SHA-256 `6b11806a1d47adb3ea79142adcd0cd797bfc280ce6344d8cc471b088283b4d97`。package 被桌面 `.gitignore` 排除，未加入源码清单。
+- 资源收口：无 Maris/Electron/本任务 Python 进程或测试端口；没有启动 Docker/PostgreSQL/OpenClaw/微信/DeepSeek。`.b7-tools`、pnpm store、node_modules、profiles 和 traces 已删除。预存 `.claude/**` 未触碰；无 Git 写操作。
+- 等待：总控与技术顾问对 `tar` override 和无修复 `extract-zip` advisory 形成新冻结/安全裁定，再新立执行任务继续真实 main 组合与门禁。P4-C12 当前不得启动。
 
 ### 2026-09-27 11:06 Asia/Shanghai — P4-B6-R3 接单与起点门禁
 

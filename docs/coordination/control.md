@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-27T16:25:00+08:00`
+- 指令版本：`2026-09-27T19:32:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：`P4-D11` 已由技术顾问提交并经总控接受，`P4-IF-003` 已冻结 Windows Shell、模块 UI、桌面生命周期和毛毛合同。`P4-B7` 执行任务卡与固定输入快照已经准备；执行和测试角色当前仍停止。
-- 需要用户参与：只把 `docs/coordination/prompts/p4-b7-windows-shell-executor.md` 发送给既有执行智能体。不要同时启动测试智能体或 P4-C12；C12 必须等 B7 形成稳定产品快照后由总控另行生成和派发。Docker Desktop 不属于 P4-B7 依赖，可以关闭。
+- 当前动作：`P4-D12` 已由技术顾问完成并经总控接受；`P4-IF-004` 已批准 Forge `8.0.0-alpha.10` 仅作为发布前验证基线，并批准不改变通用 `/readyz` 的 managed desktop core readiness。`P4-B7-R1` 任务卡和 182 文件固定输入快照已经准备；执行与测试角色当前停止。
+- 需要用户参与：只把 `docs/coordination/prompts/p4-b7-r1-windows-shell-supply-chain-runtime-executor.md` 发送给既有执行智能体。不要同时启动技术顾问、测试智能体或 P4-C12。B7-R1 先通过真实供应链门禁，再完成 main 到 Host 组合；稳定终点快照形成后由总控另行派发 C12。Docker、OpenClaw、微信和 DeepSeek 均不属于本任务。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；P4-A 验收提交 `88fb178` 与 P4-B 头脑风暴提交 `6b0e485` 已推送，远端 `main` 当前为 `6b0e485`。这些仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 
 ## 本地单主人产品范围
@@ -89,7 +89,10 @@
 | P4-D10 B6 返修架构裁定 | `complete`；总控已接受 | 762 行、8 P0/14 P1 逐项处置、R1/R2 边界、12 类 PG 场景与 C11 门禁已核对 | 技术顾问停止；不得修改产品或自行派发后续任务 |
 | P4-D11 Windows Shell、毛毛与模块 UI 技术方案 | `complete`；总控已接受 | 1093 行方案、24 项矩阵映射、19 个本地链接和两文件摘要匹配；总控登记 TS 版本与 pnpm/Forge 两项勘误 | 技术顾问停止；不创建 D11-R1，不把设计证据写成桌面功能已实现 |
 | P4-IF-003 Windows Shell 接口冻结 | `complete`；头脑风暴总控 | 冻结精确工具链、三层边界、模块 UI、OpenAPI、owner 会话、nonce/readiness、Supervisor、outbox、Tray、毛毛、主题和测试口径 | 变更必须退回总控与技术顾问；执行方不得自行替换 Electron、工具链或扩大到 P4-C/P4-D |
-| P4-B7 Windows Shell 实现 | 执行智能体；`ready / waiting_user` | 任务卡和 113 文件固定输入快照已准备；由一个执行任务按七个内部里程碑集成 main/preload/renderer/Python 窄适配 | 未收到用户派发前不安装依赖或修改实现；不得修改独立矩阵/测试或启动 P4-C12 |
+| P4-B7 Windows Shell 实现 | 执行智能体；`blocked / finished` | 66 文件 source manifest 匹配；类型、测试、package、asar E2E 与 EXE smoke 有执行方证据；audit 发现 1 critical、11 high，main 真实 Host 组合未完成 | 执行智能体停止；不得忽略 advisory、自行改变冻结依赖图、继续接线或启动 P4-C12 |
+| P4-D12 B7 供应链与真实接线裁定 | `complete`；总控已接受 | 728 行方案、16 项 advisory、三候选隔离解析、F01～F22、Host 组合与教学地图已核对 | 技术顾问停止；不得继续改方案、依赖或产品 |
+| P4-IF-004 供应链与真实 Host 补充冻结 | `complete`；头脑风暴总控 | Forge 8 alpha 仅发布前验证；desktop core readiness、composition root、Supervisor、owner/token 和完整门禁已冻结 | 变更必须退回总控；执行方不得自由试版本、改通用 `/readyz` 或扩大业务 |
+| P4-B7-R1 供应链与真实 Host 组合续段 | 执行智能体；`ready / waiting_user` | 182 文件固定输入和任务卡已准备；先供应链门禁，后 core readiness/main 组合/package/E2E/EXE | 未收到用户派发前不安装或修改；不得运行独立测试、启动 C12、Docker、OpenClaw、微信或 DeepSeek |
 | P4-C12 Windows Shell 独立验收 | `not_started`；等待 B7 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定 B7 稳定终点快照后生成 | 测试智能体当前停止；不得提前执行、修改产品或把 D11 设计映射当作通过证据 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
