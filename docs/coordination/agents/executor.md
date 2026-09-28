@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E4-PKG-R1 — 普通持续会话直接预检与唯一 package
-- 状态：`blocked / finished`
-- 最近更新：2026-09-29 00:42，Asia/Shanghai（停止交付）
-- 可修改范围：本角色日志、新增 PKG-R1 运行说明和 source manifest；create-new package-resume-1 证据，现有 wrapper 可生成并清理 workspace staging/out。只直接执行六项预检及一次 package，静态核对产物；禁止旧 synthetic/Job 路线、产品/测试/依赖/lock 修改、永久环境、其他角色和 Git 写操作。
+- 当前任务：P4-B7-R1-E4-PKG-R2 — 复用已接受预检，只执行一次真实 package
+- 状态：`review / finished`
+- 最近更新：2026-09-29 01:27，Asia/Shanghai（执行方交付）
+- 可修改范围：本角色日志、新增 PKG-R2 运行说明和 source manifest；create-new package-resume-2 证据，现有 wrapper 可生成并清理 workspace staging/out，Forge 可生成 out。只执行一次 package 和成功后的只读静态核对；禁止重跑 Q1～Q6、产品/测试/依赖/lock 修改、永久环境、其他角色和 Git 写操作。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：PKG-R1 证据核对异常后停止；失败说明与不可变交付清单收口
-- 步骤开始时间：2026-09-29 00:36:23 Asia/Shanghai
-- 最近有效进展：Q1～Q5 真实通过；Q6 原生与四个 Forge 查询成功，执行方读取 inner-0 和错误 receipt 字段使会话停止；固定 C 输入完整终点匹配
-- 最近心跳：2026-09-29 00:42 Asia/Shanghai
-- 下一检查点：无自动后续；总控读取运行说明与摘要后决定新任务
+- 当前步骤：唯一 package 与全部静态门禁通过；证据和资源已收口
+- 步骤开始时间：2026-09-29 01:09 Asia/Shanghai
+- 最近有效进展：package exit 0；out 140 文件/386491445 bytes，fuse 前六项匹配，H1 67/67 精确匹配，污染 0，staging/transition 0；所有冻结输入终点匹配
+- 最近心跳：2026-09-29 01:27 Asia/Shanghai
+- 下一检查点：无自动后续；总控核对 PKG-R2 三文件交付与外部 evidence 后决定一次性动态任务
 - 等待对象：头脑风暴总控；技术顾问、测试、app.asar/EXE/P4-C12 保持停止
-- 活动进程或会话：普通 PowerShell PID 5348 已结束；native PID 10860/8956/5704/15948/20684/23360 残留 0；固定 C 根自有进程 0
-- 重试次数：六项各执行 1/1；package 0/1；没有重跑或修改冻结 probe/shim
-- 最近输出：out/staging 均不存在，transition 0；PATH/cache 已还原，User/Machine PATH 不变；node_modules 12451 文件/570581590 bytes 聚合不变
+- 活动进程或会话：PowerShell 6424、package native 7340、静态 Node 11552 均结束；已知和固定 C 根自有进程残留 0
+- 重试次数：PKG-R2 package 1/1，成功；Q1～Q6 accepted_from_previous_evidence / not_rerun
+- 最近输出：Maris.exe `149ccd6e...4199`，app.asar `c38cd0c7...22f6`；source/dist/node_modules/lock 不变，PATH/cache 已还原；动态产物和 P4-C12 not_run
 
 ## 待接任务
 
@@ -59,6 +59,44 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-29 01:27 Asia/Shanghai — P4-B7-R1-E4-PKG-R2 执行方交付
+
+- 状态 `review / finished`。PKG-R1 evidence 45/45 匹配；Q1～Q6 全部 `accepted_from_previous_evidence / not_rerun`。
+- 唯一 native package 1/1：PID 7340，`2026-09-29T01:14:33.8857859+08:00` 至 `01:14:44.1662946+08:00`，10252 ms，exit 0、未超时。stdout 1339 bytes；stderr 35 bytes仅为 pnpm lifecycle 命令回显。
+- pre-launch 曾有一次执行方 Test-Path 表达式错误，但发生在 Process.Start 前，known PID 和 package raw logs 均为空；原证据保留，未计为 native package。实际 package 没有重跑。
+- 静态结果：out 140 文件/386491445 bytes；Maris.exe 246032896 bytes，SHA `149ccd6e2d71a8945ffef4ecba81e5121bc19c4816331ed5bcb6e72948174199`；app.asar 758263 bytes，SHA `c38cd0c7c5b42e4576d051f936d2942cd6a180b4386c62687a1886e991ae22f6`。Fuse V1 前六项 48/49/48/48/49/49 全匹配；H1 resources 67/67，missing/extra/mismatch/forbidden 均 0；污染 0；staging/transition 0。
+- 静态读取器首次 asar Windows 分隔符错误、未执行的 v2 生成错误和 v3 对 `.vite/build` production bundle 的误报全部保留；v4 只读检查 exit 0、stderr 0。package 产物未为检查而修改。
+- 固定 source 198、Electron dist 73、node_modules 12451 文件/570581590 bytes、lock 和 PKG-R1 evidence 终点全部匹配。任务 PID 和固定根自有进程残留 0，PATH/ELECTRON_CACHE 已还原，User/Machine PATH 未变。
+- 交付：[PKG-R2 运行说明](../../b7-r1-e4-pkg-r2-running.md)、[198 项 source manifest](../../../apps/desktop/b7-r1-e4-pkg-r2-source.sha256) 和本日志；外部 evidence 为 `package-resume-2`。app.asar、Maris.exe、Electron、Playwright、sidecar 和 P4-C12 均未启动。
+- 本结果不是独立验收或 P4-B complete。停止继续操作，等待头脑风暴总控。
+
+### 2026-09-29 01:11 Asia/Shanghai — P4-B7-R1-E4-PKG-R2 接单
+
+- 最新 control `2026-09-29T00:52:00+08:00` 接受 PKG-R1 的 Q1～Q6 原始证据并只授权 package-only 续段；执行智能体为唯一负责人，技术顾问和测试保持停止。
+- PKG-R2 起点清单 SHA-256 `7bd97e11d6803d9bbbf4a500a35b027f68e8cbb6c9ffa1394f6fdda63849a9d2`；逐项复算 240/240 匹配、240 unique、0 missing/mismatch，Ordinal 有序。
+- 任务卡引用的独立 H1-R1 运行文件不存在；沿用总控已接受的仓库事实，完整读取 `docs/b7-r1-h1-package-hygiene-running.md` 第 1～10 节，其中第 10 节是 H1-R1 原子替换记录。未修改任务卡或重复 H1 测试。
+- 本轮不运行 Q1～Q6，只读核对 `package-resume-1`；新 evidence 必须 create-new。package 仍为 0/1，完成 C 盘固定输入门禁后才在同一进程环境执行一次。
+- 禁止产品/测试/依赖/lock/配置修改、Git 写入和动态产物启动；成功只做 EXE/app.asar/fuse/resources/staging 静态检查，最终最多提交 `review / finished`。
+
+### 2026-09-29 01:14 Asia/Shanghai — package 1/1 长操作检查点
+
+- 外部门禁：PKG-R1 evidence 45/45、Q1～Q6 接受证据、source 198/198、Electron dist 73/73、node_modules 12451 文件/570581590 bytes、lock 和 shim 均匹配；out/staging/transition/自有进程均为空。
+- 新 evidence `package-resume-2` create-new 成功；只复制字节一致 shim，SHA-256 `57785cc51fff3a94b68815e46f48a400f1cb016f9edc82d2cb9606cbdb088bdf`。预检未运行。
+- 计划操作可能超过五分钟：在固定 desktop cwd 和进程级 PATH/ELECTRON_CACHE 中由固定 pnpm-native 执行 `run package` 一次；每 15 秒输出可观察检查点，最长 15 分钟。下一检查点为真实退出码和 wrapper staging 收口。
+
+### 2026-09-29 01:16 Asia/Shanghai — pre-launch 会话错误，实际 package 仍为 0/1
+
+- 首次普通会话在 `Test-Path` 证据碰撞检查处发生 PowerShell 参数绑定错误，位置早于 `Process.Start()`；`knownTaskPids=[]`、package result 为 null、package 目录无 stdout/stderr/started 文件，固定 workspace 未启动 pnpm/Node/Forge。
+- 原始 `session-result.json` 保留，环境字段均为 restored/unchanged。该失败归类为 `executor_prelaunch_expression_error`，不归类为真实 package 失败，也不消耗 native package 1/1。
+- 只修正内联布尔表达式括号，并使用新的实际会话结果文件，避免覆盖 pre-launch 证据；不运行预检、不改产品或环境。下一次若 native 进程启动，无论退出结果均停止 package 动作。
+
+### 2026-09-29 01:15 Asia/Shanghai — 唯一实际 package 成功
+
+- 固定 pnpm-native 在固定 desktop cwd 执行 `run package`；native PID 7340，开始 `2026-09-29T01:14:33.8857859+08:00`，结束 `2026-09-29T01:14:44.1662946+08:00`，10252 ms，退出码 0，未超时。
+- 原始 stdout 1339 bytes、SHA-256 `9423dd069c0b36e154588bd5a5ab15cf5b3735cae60e01312202cef4c7af4856`；stderr 35 bytes、SHA-256 `e7266701f226f730bccd6a2ea4ec1ca115fb6eb9ab9035ca54a497bba6804dab`，待只读分类。
+- 会话观察 27 个任务 PID，终点残留 0；process-local PATH/ELECTRON_CACHE 已还原，User/Machine PATH 未变。package 实际次数固定为 1/1，不再运行 package。
+- 下一步仅静态读取成功产物；不启动 app.asar、Maris.exe、Electron、Playwright、sidecar 或 P4-C12。
 
 ### 2026-09-29 00:42 Asia/Shanghai — P4-B7-R1-E4-PKG-R1 失败交付并停止
 

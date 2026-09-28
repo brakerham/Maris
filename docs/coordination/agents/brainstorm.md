@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E4-PKG-R2 — 接受六项真实预检证据，只恢复唯一 package
+- 当前任务：P4-B7-R1-E4-DYN-R1 — 复用已接受 package，条件式验证 app.asar 与最终 EXE
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-29 00:52，Asia/Shanghai
+- 最近更新：2026-09-29 02:10，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -144,19 +144,27 @@
 - [P4-B7-R1-E4-PKG-R1 阻塞总控核对](../../p4-b7-r1-e4-pkg-r1-blocked-coordinator-review.md)
 - [P4-B7-R1-E4-PKG-R2 Prompt](../prompts/p4-b7-r1-e4-pkg-r2-executor.md)
 - [P4-B7-R1-E4-PKG-R2 固定输入快照](../snapshots/p4-b7-r1-e4-pkg-r2-start.sha256)
+- [P4-B7-R1-E4-PKG-R2 总控核对](../../p4-b7-r1-e4-pkg-r2-coordinator-review.md)
+- [P4-B7-R1-E4-DYN-R1 Prompt](../prompts/p4-b7-r1-e4-dyn-r1-executor.md)
+- [P4-B7-R1-E4-DYN-R1 固定输入快照](../snapshots/p4-b7-r1-e4-dyn-r1-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：PKG-R1 原始证据已核对；Q1～Q6 接受为通过，PKG-R2 package-only 任务已冻结
-- 步骤开始时间：2026-09-29 00:52，Asia/Shanghai
-- 最近有效进展：2026-09-29 00:52，Asia/Shanghai（外部 evidence 45/45、Q6 四组 inner 和完整 JSON 均匹配；package 0/1）
-- 最近心跳：2026-09-29 00:52，Asia/Shanghai
-- 下一检查点：不重跑预检，真实 package 唯一一次结束并完成静态产物核对
-- 等待对象：用户把 PKG-R2 Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
+- 当前步骤：PKG-R2 package 与静态产物已复算接受；DYN-R1 条件式动态门禁已冻结
+- 步骤开始时间：2026-09-29 02:10，Asia/Shanghai
+- 最近有效进展：2026-09-29 02:10，Asia/Shanghai（PKG-R2 evidence 40/40、最终二进制、fuses、67 项 resources 与收口均匹配）
+- 最近心跳：2026-09-29 02:10，Asia/Shanghai
+- 下一检查点：P1 app.asar 单次动态门禁完成；只有通过才进入 P2 最终 EXE
+- 等待对象：用户把 DYN-R1 Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
 - 活动进程或会话：B7 启动的 Uvicorn/Electron/Maris/Playwright 均已退出；无项目服务；没有活动依赖安装
 - 重试次数：E2-R1 最小 fixture 只运行一次即因不受控弹窗停止；总控未再次启动 Electron
-- 最近输出：PKG-R1 阻塞总控核对、PKG-R2 Prompt 与新固定输入；总控没有运行 package、Electron、Maris 或 sidecar
+- 最近输出：PKG-R2 总控核对、DYN-R1 Prompt 与新固定输入；总控只读复算产物，没有启动 Electron、Maris 或 sidecar
+
+### 2026-09-29 02:10 Asia/Shanghai — 接受唯一 package 并发布条件式动态门禁
+
+- 复算 PKG-R2 40/40 外部 evidence、三份仓库交付与最终二进制；唯一 package 退出 0，EXE/app.asar、fuses、67 项 Python resources、零污染与进程收口一致。
+- 接受 PKG-R2，发布 `P4-B7-R1-E4-DYN-R1`；不再运行预检、测试、build 或 package，P1 单次通过后才允许 P2 单次运行。
 
 ### 2026-09-29 00:52 Asia/Shanghai — 接受六项真实预检并发布 package-only
 

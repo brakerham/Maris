@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-09-29 00:52，Asia/Shanghai
+更新时间：2026-09-29 02:10，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。PKG-R1 已真实证明任务专属 pnpm 路径、版本、三项 config 及 Forge `spawnPackageManager` 四项查询全部正确；执行方只因证据核对从 `inner-0` 开始读取而停止，package 仍为 0/1。总控接受原始证据，下一步不重跑预检，只执行一次真实 package 与静态产物核对。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
+P0～P3 和 P4-A 已完成验收。H1-R1、E3 和 PKG-R2 已通过总控核对。唯一真实 package 已成功，最终 `Maris.exe`、app.asar、production fuses、67 项 Python resources、零污染和资源收口均有可复算证据。下一步不再执行 pnpm/R0 预检或 package，只对同一份不可变产物做一次 app.asar 和一次条件式最终 EXE 动态验证。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,9 +13,9 @@ P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。PKG-R1 已真实证�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 已从原始 inner 证据接受 Q1～Q6，通过 package-only 边界避免再次重跑预检 | 2026-09-29 00:52 | 用户把 PKG-R2 Prompt 发给既有执行智能体 | [PKG-R1 阻塞核对](../p4-b7-r1-e4-pkg-r1-blocked-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | 已复算并接受 PKG-R2 唯一 package、最终产物与资源收口，冻结条件式动态门禁 | 2026-09-29 02:10 | 用户把 DYN-R1 Prompt 发给既有执行智能体 | [PKG-R2 总控核对](../p4-b7-r1-e4-pkg-r2-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E4-PKG-R2） | PKG-R1 已 blocked/finished；Q1～Q6 已由总控接受，待只执行一次真实 package | 2026-09-29 00:52 | 用户发送 PKG-R2 Prompt；先复算新固定快照 | [PKG-R2 Prompt](prompts/p4-b7-r1-e4-pkg-r2-executor.md)、[固定快照](snapshots/p4-b7-r1-e4-pkg-r2-start.sha256) |
+| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E4-DYN-R1） | PKG-R2 已 review/finished 并由总控接受；待验证同一份不可变 package | 2026-09-29 02:10 | 用户发送 DYN-R1 Prompt；P1 通过后才进入 P2 | [DYN-R1 Prompt](prompts/p4-b7-r1-e4-dyn-r1-executor.md)、[固定快照](snapshots/p4-b7-r1-e4-dyn-r1-start.sha256) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
@@ -98,7 +98,8 @@ P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。PKG-R1 已真实证�
 | P4-B7-R1-E4-R0-R1：R0 driver 单独恢复与六项预检 | 用户启动的既有执行智能体 | `blocked / finished` | attempt-0 synthetic 捕获额外 `conhost.exe` 后安全停止；Q1～Q6/package 均 not_run，27 文件 evidence 匹配 | [运行说明](../b7-r1-e4-r0-r1-running.md)、[阻塞核对](../p4-b7-r1-e4-r0-r1-blocked-coordinator-review.md) |
 | P4-B7-R1-E4-R0-R1-A1：标准流前置修正 | 用户启动的既有执行智能体 | `blocked / finished` | 三条标准流接管后仍由 `conhost.exe` 触发精确进程数门禁；Q1～Q6/package not_run，不允许 attempt-2 | [A1 运行说明](../b7-r1-e4-r0-r1-a1-running.md)、[总控核对](../p4-b7-r1-e4-r0-r1-a1-blocked-coordinator-review.md) |
 | P4-B7-R1-E4-PKG-R1：真实预检交付 | 用户启动的既有执行智能体 | `blocked / finished` | Q1～Q6 原始证据通过；核对代码读取 `inner-0` 失败，package 0/1 | [运行说明](../b7-r1-e4-pkg-r1-running.md)、[总控核对](../p4-b7-r1-e4-pkg-r1-blocked-coordinator-review.md) |
-| P4-B7-R1-E4-PKG-R2：package-only | 用户启动的既有执行智能体 | `ready / waiting_user` | 复用六项通过证据，只执行一次 package；成功后静态检查，禁止动态启动 | [PKG-R2 Prompt](prompts/p4-b7-r1-e4-pkg-r2-executor.md)、[固定快照](snapshots/p4-b7-r1-e4-pkg-r2-start.sha256) |
+| P4-B7-R1-E4-PKG-R2：package-only | 用户启动的既有执行智能体 | `review / finished`，总控已接受 | 唯一 package 成功；140 文件产物、fuses、67 项 Python resources、零污染和收口通过 | [运行说明](../b7-r1-e4-pkg-r2-running.md)、[总控核对](../p4-b7-r1-e4-pkg-r2-coordinator-review.md) |
+| P4-B7-R1-E4-DYN-R1：最终动态门禁 | 用户启动的既有执行智能体 | `ready / waiting_user` | 不重新 package；P1 app.asar 单次通过后才执行 P2 最终 EXE 单次黑盒验证 | [DYN-R1 Prompt](prompts/p4-b7-r1-e4-dyn-r1-executor.md)、[固定快照](snapshots/p4-b7-r1-e4-dyn-r1-start.sha256) |
 | P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
