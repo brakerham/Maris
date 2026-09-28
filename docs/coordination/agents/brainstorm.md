@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E4-R1 — E4 在 Forge pnpm 命令解析处停止；同构预检已通过，等待用户发送最小恢复 Prompt
+- 当前任务：P4-D14 — E4-R1 的 R0 driver 因 `$Args` 自动变量冲突停止；普通重试暂停，等待 GPT-6 Astra 技术裁定
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-28 15:25，Asia/Shanghai
+- 最近更新：2026-09-28 16:20，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -126,19 +126,29 @@
 - [P4-B7-R1-E4 阻塞总控核对](../../p4-b7-r1-e4-blocked-coordinator-review.md)
 - [P4-B7-R1-E4-R1 执行智能体 Prompt](../prompts/p4-b7-r1-e4-r1-pnpm-path-resume-executor.md)
 - [P4-B7-R1-E4-R1 固定输入快照](../snapshots/p4-b7-r1-e4-r1-start.sha256)
+- [P4-B7-R1-E4-R1 阻塞总控核对](../../p4-b7-r1-e4-r1-blocked-coordinator-review.md)
+- [P4-D14 GPT-6 Astra 技术顾问 Prompt](../prompts/p4-d14-r0-driver-recovery-technical-adviser.md)
+- [P4-D14 固定输入快照](../snapshots/p4-d14-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：E4 仓库与 26 文件 C 盘 evidence 已核对；Forge pnpm 同构预检通过，E4-R1 Prompt 已冻结，正在生成固定输入快照
-- 步骤开始时间：2026-09-28 14:58，Asia/Shanghai
-- 最近有效进展：2026-09-28 15:25，Asia/Shanghai（task-owned pnpm shim 为 PATH 第一项；Forge version/config 四项退出 0；临时目录已清理）
-- 最近心跳：2026-09-28 15:25，Asia/Shanghai
-- 下一检查点：既有执行智能体读取 E4-R1 Prompt，复算保留现场并重做同环境 R0；只有 R0 通过才消耗新的唯一 package 预算
-- 等待对象：用户把 E4-R1 Prompt 全文发送给既有执行智能体；技术顾问和测试智能体保持停止
+- 当前步骤：E4-R1 报告、failure summary 与原始 driver 已核对；D14 Astra 技术顾问 Prompt 已冻结，正在生成固定输入快照
+- 步骤开始时间：2026-09-28 16:04，Asia/Shanghai
+- 最近有效进展：2026-09-28 16:20，Asia/Shanghai（确认 `$Args` 形参与自动变量冲突；package 0/1；产品、lock、PATH 与现场不变）
+- 最近心跳：2026-09-28 16:20，Asia/Shanghai
+- 下一检查点：GPT-6 Astra 技术顾问只读交付唯一 driver 实现、参数 evidence、超时/PID 与 R0-only 合同
+- 等待对象：用户在技术顾问聊天选择 GPT-6 Astra high，并发送 D14 Prompt；执行智能体和测试智能体保持停止
 - 活动进程或会话：B7 启动的 Uvicorn/Electron/Maris/Playwright 均已退出；无项目服务；没有活动依赖安装
 - 重试次数：E2-R1 最小 fixture 只运行一次即因不受控弹窗停止；总控未再次启动 Electron
-- 最近输出：E4 阻塞总控核对、E4-R1 Prompt 与固定输入；总控没有运行 package、Electron、Maris 或 sidecar
+- 最近输出：E4-R1 阻塞总控核对、D14 Prompt 与固定输入；总控没有运行 R0、package、Electron、Maris 或 sidecar
+
+### 2026-09-28 16:20 Asia/Shanghai — 接受 E4-R1 driver 阻塞并升级到 Astra D14
+
+- 复算并交叉核对 E4-R1 运行说明、failure summary 与外部 `r1-controller.ps1`：`Run-Captured([string]$File,[string[]]$Args,...)` 使用 PowerShell 自动变量名，函数体的 `@Args` 实际为空，准确解释 where、四个 pnpm 和 Node probe 的无参数行为。
+- 接受 `blocked / finished`：R1 起点 219/219、E4 source 198/198、旧 evidence 26/26、C 盘 source 198/198、Electron 73/73、污染 marker 9/9；package 0/1、P1/P2 not_run，out/staging/process 为零，产品/依赖/lock/PATH 不变。
+- 遵守用户升级边界：不再立即发布第三张普通执行重试；创建 GPT-6 Astra high 的 P4-D14，只读冻结唯一 driver 实现、参数自证、超时/PID、fresh evidence 和 R0-only 合同。
+
 
 ### 2026-09-28 15:25 Asia/Shanghai — 接受 E4 工具链阻塞并发布 E4-R1
 
@@ -199,10 +209,10 @@
 
 ## 下一步
 
-1. 用户把 E4-R1 Prompt 全文发送给既有执行智能体。
-2. 执行智能体复算 E4 保留现场，创建 task-owned `pnpm.cmd`，使用 package 将继承的同一 PATH 完成 Forge `spawnPackageManager` 硬预检。
-3. 只有预检通过才执行唯一 package；只有 package 与最终资源完全通过才单次运行 app.asar；只有 P1 通过才直接启动单次最终 `Maris.exe`。任一级失败立即停止，不改产品或重跑。
-4. 技术顾问和测试智能体保持停止；不得重发 E4/E3/H1/H1-R1/E2-R1/E2/R1/E1，P4-C12 继续未启动。
+1. 用户在技术顾问聊天选择 GPT-6 Astra、reasoning `high`，发送 D14 Prompt 全文。
+2. 技术顾问只读审计外部 driver，交付唯一推荐实现、参数 evidence 合同和 R0-only 执行边界，不运行任何命令链。
+3. 总控核对 D14 后只允许二选一：冻结一次 R0-only 任务，或暂停 package 环境路线；不直接授权 package，不再开放式重试。
+4. 执行智能体和测试智能体保持停止；P4-C12 与业务前端实现不得由本任务自动启动。
 
 ### 2026-09-27 23:40 Asia/Shanghai — 接受 E2-R1 最小复现并发布 D13
 

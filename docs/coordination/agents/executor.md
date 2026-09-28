@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E4 — C 盘 package、app.asar 与最终 EXE 恢复门禁
+- 当前任务：P4-B7-R1-E4-R1 — 固定 pnpm 子进程解析并恢复最终门禁
 - 状态：`blocked / finished`
-- 最近更新：2026-09-28 14:12，Asia/Shanghai
-- 可修改范围：新增 E4 运行说明、E4 source manifest 及本角色日志；C 盘全新任务根保存 198 文件固定源码副本、固定工具、依赖、唯一 package、隔离 profile 与受限证据。禁止修改产品/Forge/staging/测试/依赖/lock、独立测试/矩阵/报告、冻结/control/overview/其他角色、`.claude/**` 或 Git 状态。
+- 最近更新：2026-09-28 16:04，Asia/Shanghai
+- 可修改范围：新增 E4-R1 运行说明、E4-R1 source manifest 及本角色日志；在保留的 E4 任务根中新建 `r1-pnpm-resume`，仅保存 task-owned pnpm shim、R0/package/P1/P2 与最终 evidence。禁止修改产品、Forge 配置、package wrapper、staging、测试、依赖、lock、系统 pnpm、永久 PATH、独立材料、control/overview/其他角色、`.claude/**` 或 Git 状态。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：E4 已按 P0 停止条件完成安全收口并停止，等待头脑风暴总控复算
-- 步骤开始时间：2026-09-28 14:03 Asia/Shanghai
-- 最近有效进展：2026-09-28 14:12 Asia/Shanghai（三个授权仓库交付已形成；E4 source 198/198、C 盘 evidence 26/26 可复算；out=false、staging=false、owned process=0）
-- 最近心跳：2026-09-28 14:12 Asia/Shanghai
-- 下一检查点：头脑风暴总控核对 E4 失败证据，并决定是否派发最小 pnpm command-resolution 恢复任务
-- 等待对象：头脑风暴总控；技术顾问、测试智能体、P4-C12、OpenClaw、微信、DeepSeek、Docker/PostgreSQL 继续停止
-- 活动进程或会话：无；任务根 `C:\MarisE4\E4-20260928-1255` 完整保留，任务自有进程、端口、窗口和 Tray 均为 0
-- 重试次数：package 1/1 已使用并失败；P1 0/1 `not_run`；P2 0/1 `not_run`
-- 最近输出：Forge 调用 `pnpm config get hoist-pattern` 时命中用户级 pnpm shim，其内部目标命令不可执行；package exit 1、log SHA-256 `e9c841c4...b0d6`；未生成 out，wrapper finally 已清除 staging，任务进程为 0
+- 当前步骤：E4-R1 已按 R0 停止条件完成证据与资源收口，等待头脑风暴总控复算
+- 步骤开始时间：2026-09-28 15:54 Asia/Shanghai
+- 最近有效进展：2026-09-28 16:04 Asia/Shanghai（R1 evidence 14/14 可复算；source 198/198；out/staging/transition/owned process=0；package/P1/P2 均为 0 次）
+- 最近心跳：2026-09-28 16:04 Asia/Shanghai
+- 下一检查点：头脑风暴总控复算 `P4-E4-R1-R0-DRIVER-ARGS-001`，决定是否发布新的 R0-only 恢复任务
+- 等待对象：头脑风暴总控；技术顾问、测试智能体、P4-C12 及其他外部集成继续停止
+- 活动进程或会话：无；唯一控制会话已中断并返回，task-owned process/port/window/Tray 均为 0
+- 重试次数：R1 package 0/1；P1 0/1；P2 0/1
+- 最近输出：完整 `node_modules` 基线为 12,451 files、570,581,590 bytes、有序摘要 `f06ce306...00c7`；固定 Node、pnpm native、Electron 与 lock 摘要均匹配保留现场
 
 ## 待接任务
 
@@ -59,6 +59,31 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-28 15:36 Asia/Shanghai — P4-B7-R1-E4-R1 接单与起点门禁
+
+- 状态：`in_progress / active`。最新 control `2026-09-28T15:25:00+08:00` 只授权既有执行智能体执行 E4-R1；阶段 A、E3、H1/H1-R1 不重复，技术顾问、测试智能体和 P4-C12 保持停止。
+- 仓库起点：`p4-b7-r1-e4-r1-start.sha256` 为 219 matched、0 mismatch、0 missing，自身 SHA-256 `88538b00a627deeecb90f05f65c08a38ab4e6abe8a2da9cc03e569d0d1370fee`；E4 source 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`。
+- E4 保留现场：旧 evidence 26/26、C 盘 source 198/198、Electron dist 73/73、污染 marker 9/9 全部匹配；对应 manifest SHA-256 分别为 `5958703...ba2d1`、`4a4a7350...6ce2`、`ffb4b389...f8f`、`b239e272...05f8`。workspace lock 仍为 `5ddc0a93...cb4a`，`out=false`、staging=false、transition artifacts=0、owned process=0，新的 R1 目录开始前不存在。
+- 固定工具：Node executable SHA-256 `ba4e6d11...c6c32`；pnpm native 为 53,373,952 bytes、SHA-256 `3e1a5bb3...665ce`；Electron executable SHA-256 `bd14928e...748e`。版本文件继续显示 Electron 44.4.5、Playwright 1.63.0、Forge 8.0.0-alpha.10。
+- node_modules 只读基线：12,451 files、570,581,590 bytes；按相对路径、字节数与单文件 SHA-256 排序计算的总摘要为 `f06ce306456134f7f78176e64d3f9a7e54133607d3e9202ff6bb1a9fcbf800c7`；`.modules.yaml` SHA-256 `68dd21a69c44908e3436b47c0ee40be328cfab4b9e7d0f89728fd809e7b317e1`。
+- 下一步：新建 `r1-pnpm-resume` 受限 evidence 和 task-owned `forge-pnpm-bin/pnpm.cmd`，重新读取 control 后，以正式 package 将继承的完全相同 PATH 执行 R0；任一预检失败立即停为 `blocked / finished`，package 保持 0/1。
+
+### 2026-09-28 15:54 Asia/Shanghai — E4-R1 R0 驱动失败并停止后续阶段
+
+- R0 首次控制会话没有通过硬预检。任务外 `r1-controller.ps1` 把命令参数数组命名为 PowerShell 自动变量 `$Args`，函数体取到空数组：`where.exe` 显示无 pattern 帮助，四个裸 pnpm 调用显示无子命令帮助，随后固定 Node 因未收到 `.mjs` 参数进入交互等待。
+- 该失败发生在 Forge `spawnPackageManager` 同构结果产生前；没有生成 `r0-result.json`，没有到达 `R0_READY` 放行点。唯一 package 预算保持 0/1，package/P1/P2 全部 `not_run`。
+- 本任务已中断唯一控制会话，没有修改产品、测试、wrapper、Forge、依赖、lock、系统 pnpm、用户/系统 PATH 或永久环境。依据任务卡“R0 任一项失败”和“同一 cell 需要第二次执行”停止条件，不把参数名改为其他名称后重跑。
+- 当前只执行安全收口和 evidence 冻结；下一任务若获总控授权，可只把任务外驱动参数名改为非自动变量并从全新 R0 会话开始，仍不得复用本轮为成功证据或修改仓库产品。
+
+### 2026-09-28 16:04 Asia/Shanghai — E4-R1 受阻证据冻结并停止
+
+- 状态：`blocked / finished`。R0 没有达到 ready marker；依据任务卡没有修正 driver 后第二次执行。package 0/1、R2 `not_run`、P1 0/1、P2 0/1；没有启动 Electron、Maris、Host 或 sidecar。
+- 失败后不变性：C 盘 source 198/198、Electron dist 73/73、污染 marker 9/9；lock 不变；node_modules 仍为 12,451 files、570,581,590 bytes，按起点 LF 算法的有序摘要继续为 `f06ce306...00c7`。诊断脚本的 CRLF 摘要差异已确认为算法差异，不是文件漂移。
+- 环境与资源：用户/系统 PATH 摘要前后相同；没有修改系统 pnpm或永久环境。`out=false`、staging=false、transition artifacts=0、owned process/port/window/Tray=0。
+- C 盘证据：R1 `final-evidence.sha256` 覆盖 14 个文件并复算为 14 matched、0 mismatch、0 missing，自身 SHA-256 `8c4ee01f59d70400b5d2003c761ccb8236ac3a27d425f80516c12806aef941a9`；`final-summary.json` SHA-256 `7609f321e28acfc2907abf8ccac65c9cabc90988c07a63b5322422ee22f03abc`；`failure-summary.json` SHA-256 `14b02ff0698f0ccb7bbf68671040da847f84525b147f2de49e93657ae5f14c1d`。
+- 仓库交付：[E4-R1 运行说明](../../b7-r1-e4-r1-pnpm-path-resume-running.md) SHA-256 `ae133ee023de4ee3c6df754086be4e7cd3447ee4c3a7f0af0d732bd9e9625ae7`；[E4-R1 source manifest](../../../apps/desktop/b7-r1-e4-r1-source.sha256) 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`。
+- 文件边界：仓库只新增运行说明与 source manifest，并更新本角色日志；产品、测试、Forge、wrapper、staging、依赖、lock、独立材料、control、overview 和其他角色零变化。没有 Git 写操作，不自动创建或启动下一任务、技术评审或 P4-C12。
 
 ### 2026-09-28 09:11 Asia/Shanghai — P4-B7-R1-E3 接单与动态起点门禁
 
