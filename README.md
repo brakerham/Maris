@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。P4-D13 已裁定 Electron 首个故障为 GPU child `0xC0000135`，具体 DLL/机制未知，并冻结 C 盘 direct→条件 Playwright 的有限诊断路线。当前先执行不启动 Electron 的 H1 Python package resource allowlist/staging，解决 `.pyc`/`.egg-info` 等副产物进入成品的问题；环境动态诊断随后另立任务。24 项 P4-B 独立矩阵仍全部为 `not_run`，P4-C12 未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。H1-R1 已关闭 Python package resource staging 的 `P4-H1-ATOMIC-001`，198 文件 source manifest 全匹配；当前只进行 E3 的 C 盘最小 Electron 三角验证，先 direct 一次，成功后才允许同目录 Playwright 一次。app.asar、最终 EXE、24 项 P4-B 独立矩阵和 P4-C12 均未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -102,6 +102,13 @@
 - [P4-IF-005](docs/phase-4-interface-freeze-005.md)：冻结 Electron Windows 诊断顺序与 Python package resource staging 合同。
 - [P4-B7-R1-H1 执行智能体 Prompt](docs/coordination/prompts/p4-b7-r1-h1-package-hygiene-executor.md)：只实现 allowlist、原子 staging、manifest 与静态测试，不启动 Electron 或 Forge package。
 - [P4-B7-R1-H1 固定输入快照](docs/coordination/snapshots/p4-b7-r1-h1-start.sha256)：绑定 H1 的产品、证据、冻结、角色状态和任务输入文件。
+- [P4-B7-R1-H1 运行说明](docs/b7-r1-h1-package-hygiene-running.md)：记录 allowlist、staging、执行方测试、未运行门禁与资源收口。
+- [P4-B7-R1-H1 总控核对](docs/p4-b7-r1-h1-coordinator-review.md)：接受 H1 有效证据并登记 `P4-H1-ATOMIC-001`。
+- [P4-B7-R1-H1-R1 执行智能体 Prompt](docs/coordination/prompts/p4-b7-r1-h1-r1-staging-atomicity-executor.md)：只修 replacement commit point 与确定性故障注入测试。
+- [P4-B7-R1-H1-R1 固定输入快照](docs/coordination/snapshots/p4-b7-r1-h1-r1-start.sha256)：绑定 H1 终点、总控缺陷核对和 R1 任务输入。
+- [P4-B7-R1-H1-R1 总控核对](docs/p4-b7-r1-h1-r1-coordinator-review.md)：关闭原子替换缺陷并接受 H1 为 E3 输入。
+- [P4-B7-R1-E3 执行智能体 Prompt](docs/coordination/prompts/p4-b7-r1-e3-c-drive-electron-triangle-executor.md)：只运行一次 C 盘 direct，成功后条件运行一次同目录 Playwright。
+- [P4-B7-R1-E3 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e3-start.sha256)：绑定 H1-R1 终点、D13/IF-005、总控核对与 E3 任务卡。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

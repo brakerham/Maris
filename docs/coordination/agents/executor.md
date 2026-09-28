@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7 — Windows Shell、毛毛与模块 UI 实现
-- 状态：`blocked / finished`
-- 最近更新：2026-09-27 17:11，Asia/Shanghai
-- 可修改范围：根 pnpm/Node 配置、`apps/desktop/**`、`tools/openapi/**`、冻结允许的窄 Python desktop transport/API 接线与执行方 Host 测试、B7 运行说明及本文件；禁止修改 migration、Finance/Agent/activity_import/Host 业务实现、独立测试/矩阵、冻结/control/overview/其他角色、`.claude/**` 或 Git 状态。
+- 当前任务：P4-B7-R1-H1-R1 — staging 原子替换返修
+- 状态：`review / finished`
+- 最近更新：2026-09-28 01:16，Asia/Shanghai
+- 可修改范围：staging 脚本、必要时其类型声明、专属 package resource tests、H1 运行说明/source manifest 及本文件；禁止修改 allowlist/staging 根/manifest 格式/Forge 三入口/package wrapper 顺序、lock/依赖、Electron/Python 产品、独立测试/矩阵/报告、冻结/control/overview/其他角色、`.claude/**` 或 Git 状态。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P4-B7 已按供应链 P0 停止并完成资源/证据收口；等待总控与技术顾问发布新冻结或安全裁定
-- 步骤开始时间：2026-09-27 16:27 Asia/Shanghai
-- 最近有效进展：2026-09-27 17:11 Asia/Shanghai（package、packaged app.asar E2E、最终 Maris.exe 自退出 smoke 均通过；`pnpm audit --audit-level high` 发现 1 critical/11 high/3 moderate/1 low，按任务卡 P0 停止）
-- 最近心跳：2026-09-27 17:11 Asia/Shanghai
-- 下一检查点：无；新任务必须先解决冻结 Forge 构建链的 `tar` 与无 patched release 的 `extract-zip` advisory，并固定新的依赖输入
-- 等待对象：头脑风暴总控与技术顾问的供应链裁定；测试智能体和 P4-C12 继续停止
-- 活动进程或会话：无；自有 Uvicorn/Electron/Maris/Playwright 全部退出，owned residual 0；临时工具链、store、node_modules、profile 和 trace 已清理
-- 重试次数：依赖安装因 pnpm Windows 沙箱锁重试 1 次；Electron 官方 GitHub 资产网络失败 2 次后改用镜像并由官方 SHA-256 校验成功；未放宽供应链策略
-- 最近输出：typecheck/lint/generated/peers 均通过；Vitest 9 files/16 passed；Python 15 passed；Playwright 1 passed；Forge package 与 exe smoke 通过；audit 退出 1并触发 P0；源码清单 66 entries、摘要 `de1f80c5...3352a`
+- 当前步骤：H1-R1 commit point、六类确定性故障测试、有限验证、source manifest 与资源清理完成，已停止并提交总控复算
+- 步骤开始时间：2026-09-28 01:04 Asia/Shanghai
+- 最近有效进展：2026-09-28 01:16 Asia/Shanghai（六类 replacement 与原 H1 测试 14 passed，相邻合计 16 passed；真实 source 67 项一致并清理）
+- 最近心跳：2026-09-28 01:16 Asia/Shanghai
+- 下一检查点：头脑风暴总控复算 H1-R1 终点快照；执行智能体不自行启动 E3 或独立验收
+- 等待对象：头脑风暴总控核对返修；技术顾问、测试智能体、E3 和 P4-C12 继续停止
+- 活动进程或会话：无；node_modules、任务工具、staging 和测试输出均已清理，相关产品进程为 0
+- 重试次数：0
+- 最近输出：[H1-R1 追加运行说明](../../b7-r1-h1-package-hygiene-running.md)；[更新后 H1 source manifest](../../../apps/desktop/b7-r1-h1-source.sha256) 198 matched、0 mismatch、0 missing，manifest SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`
 
 ## 待接任务
 
@@ -59,6 +59,162 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-28 01:16 Asia/Shanghai — P4-B7-R1-H1-R1 提交 review 并停止
+
+- 状态：`review / finished`。在新 payload 与 manifest 都安装并重新核对 payload 路径/bytes/hash、manifest 确定性文本后设置唯一 commit point；commit 前失败恢复旧 pair，commit 后 backup 清理失败保留完整新 pair并报告结构化 committed cleanup error，不再进入破坏新 pair 的旧回滚。
+- 六类确定性检查点全部通过：旧 payload 移动后失败、两个旧对象移动后失败、新 payload 安装后失败均恢复完整旧 pair且 transition artifacts 为 0；payload backup 清理失败保留完整新 pair和两个旧 backup；payload backup 已删而 manifest backup 清理失败保留完整新 pair和一个旧 manifest backup；正常成功保留完整新 pair且 temp/backup/lock 为 0。
+- 执行方验证：专属 1 file/14 passed；专属加相邻 toolchain 2 files/16 passed、0 failed、0 skipped；TypeScript 最终通过；lint、两个 Node syntax check、Forge CLI metadata 静态解析均通过。真实 source stage→verify→clean 为 67 entries、67 payload、0 forbidden、0 required missing，manifest SHA-256 `b6657c8342ed15a7256815127a5f642f84760f5aaf4e3bbfaaeef72a13e6f8d7`，最终 staging=false。
+- 最终只读 `git diff --check` 退出 0、无 whitespace error，仅有既有工作树 LF→CRLF 提示；显式 status 另提示用户级 Git ignore 无读取权限但仍返回指定路径状态。没有执行 Git 写操作。
+- 依赖与失败记录：官方 Node 24.21.0 ZIP 37,618,919 bytes/SHA-256 `158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541`；pnpm 12.7.0。沙箱内首次官方下载因 Schannel credential 不可用失败，获准外部下载后摘要匹配；首次离线 frozen install 因 store 缺 `magic-string@1.4.2` tarball 失败，随后按 frozen lock 从官方 registry 安装 275 packages，lifecycle 仅 `esbuild postinstall`。首次 TypeScript 检查发现两个新增测试类型问题，修正后复跑通过。lock 全程保持 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。
+- 文件边界：只修改 staging `.mjs`、其 `.d.mts` 合同、专属测试、H1 追加运行说明、198 文件 source manifest 和本角色日志。新 source manifest 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`；allowlist、staging 根、manifest 外部格式、Forge 三入口、package wrapper 顺序、依赖/lock 和产品代码未变。
+- 资源与边界：根/desktop `node_modules`、`.b7-h1-r1-tools`、`.maris-staging`、out、Vite、test-results、Playwright report 均不存在；预存 `.pnpm-store` 保留。未启动 Electron、Forge package、app.asar、Maris.exe、sidecar、Python、数据库、E3、P4-C12、技术顾问或测试智能体；未修改/运行独立测试，未执行 Git 写操作。
+- 交付：[H1-R1 追加运行说明](../../b7-r1-h1-package-hygiene-running.md)与 [更新后 source manifest](../../../apps/desktop/b7-r1-h1-source.sha256)。该执行方结果不构成独立验收、P4-B complete 或发布验收。
+
+### 2026-09-28 01:04 Asia/Shanghai — P4-B7-R1-H1-R1 接单与起点门禁
+
+- 状态：`in_progress / active`。最新 control `2026-09-28T00:55:00+08:00` 指定执行智能体为 H1-R1 唯一负责人，只关闭 `P4-H1-ATOMIC-001`；E3、技术顾问、测试智能体和 P4-C12 均停止。
+- 起点证据：`p4-b7-r1-h1-r1-start.sha256` 为 209 matched、0 mismatch、0 missing，自身 SHA-256 `cd77aa32af97f6a3b894d05a563583c745c3090b49cea7d47737a5fc697fcbe7`；旧 H1 source 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `9e152288b5b1aaa2cb2fa979c877de617c8cdead08680e3d85430fb0b066f32e`。
+- 固定摘要：H1 报告为 `f11c99898c08565d9c0596b6c79853465cc034a39f3703923c7d05d992cc147d`；`pnpm-lock.yaml` 为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。
+- 环境门禁：相关 Electron、Maris、项目 sidecar 进程为 0；根和 desktop `node_modules`、`.maris-staging` 均不存在。没有启动、停止或清理用户其他进程。
+- 当前步骤：只为 replacement transition 增加明确 commit point、窄文件操作注入和六类确定性故障测试；保持 allowlist、staging 路径、manifest 外部格式、Forge 三入口和 package wrapper 顺序不变。
+- 下一检查点：六类检查点逐项证明最终 pair 完整且同版本，并准确断言 temp/backup/lock 状态；随后才恢复锁定依赖并运行有限验证。
+
+### 2026-09-28 00:32 Asia/Shanghai — P4-B7-R1-H1 提交 review 并停止
+
+- 状态：`review / finished`。完成精确 Python runtime allowlist、确定性 staging、逐文件 SHA-256 manifest、失败原子回滚、reparse/symlink fail-closed、Forge 三入口静态接线和 package wrapper 的 stage→Forge→finally cleanup；Python runtime、migration、Electron 产品与业务语义均未修改。
+- 执行方验证：专属 `package-resources.test.ts` 为 1 file、8 passed；专属加相邻 `toolchain.test.ts` 为 2 files、10 passed、0 failed、0 skipped；TypeScript、desktop lint、两个 Node syntax check 和 Forge CLI metadata 静态解析通过。默认真实 source stage/verify/clean 得到 67 manifest entries、67 payload files、0 forbidden、0 required missing，生成 manifest SHA-256 `b6657c8342ed15a7256815127a5f642f84760f5aaf4e3bbfaaeef72a13e6f8d7`。
+- 供应链证据：Node `24.21.0` 官方 ZIP 摘要 `158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541`；pnpm `12.7.0` registry integrity 匹配；clean frozen install 安装 275 packages，实际 lifecycle 只有 `esbuild postinstall`。`pnpm-lock.yaml` 前后均为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。仅有 7 条下载速度 warning，无安装、来源、版本或 lock 失败。
+- 最终只读 `git diff --check` 退出 0；Git 仅报告 LF→CRLF 提示。显式路径 status 另提示用户级 Git ignore 无读取权限，但仍返回指定文件状态；没有执行 Git 写操作。
+- 文件边界：相对 209 文件起点为 4 个既有文件变化、0 missing；新增 4 个实现/执行方测试文件、H1 运行说明和 source manifest，共 6 个允许文件。H1 source manifest 为 198 entries，最终 198 matched、0 mismatch、0 missing，自身 SHA-256 `9e152288b5b1aaa2cb2fa979c877de617c8cdead08680e3d85430fb0b066f32e`。
+- 资源收口：`node_modules`、`.b7-h1-tools`、`.maris-staging`、out、test-results、Playwright report 和任务临时资源均不存在；任务前已有根 `.pnpm-store` 保持不变；Electron、Maris、项目 Python/Pythonw 相关进程为 0。
+- source allowlist staging 与静态测试已通过；Electron/Forge package、app.asar、fuse、最终 resources 扫描、sidecar 和 EXE 启动均为 `not_run`。该结果没有解除 P4-B 的 Electron 环境阻塞，也不构成发布验收。
+- 交付：[H1 运行说明](../../b7-r1-h1-package-hygiene-running.md)与 [H1 source manifest](../../../apps/desktop/b7-r1-h1-source.sha256)。未运行或修改 `tests/independent/**`，未执行 Git 写操作，未启动 E3、P4-C12、技术顾问或测试智能体。
+
+### 2026-09-27 22:05 Asia/Shanghai — P4-B7-R1-E2 接单与双重起点门禁
+
+- 状态：`in_progress`；运行状态：`active`。用户已发送 E2 完整任务卡；最新 control `2026-09-27T21:53:00+08:00` 指定既有执行智能体为 E2 唯一负责人，测试智能体、技术顾问和 P4-C12 均停止；Docker/PostgreSQL、OpenClaw、微信与 DeepSeek 不在任务范围。
+- 起点证据：`docs/coordination/snapshots/p4-b7-r1-e2-start.sha256` 逐行复算 192 matched、0 mismatch、0 missing，清单自身 SHA-256 `6537cc6c7257f793915f0477e0592b47b16e0dae970fc9da61ff3836f67239b6`；`apps/desktop/b7-r1-e1-source.sha256` 独立复算 186 matched、0 mismatch、0 missing，清单自身 SHA-256 `fd40e4b2d609b998c255c5a33bb172d53d81a043c41c98fc91f01cd5c5afd5fe`。
+- 固定事实：当前 `pnpm-lock.yaml` SHA-256 为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`；E1 已完成 final-lock 审计与 clean frozen install，无需重复；网络门禁已由总控用官方资产 HTTP 206/1 MiB 正文解除。
+- 当前长操作：只在忽略目录 `.b7-e2-tools` 恢复冻结 Node/pnpm，以任务缓存和临时目录执行 clean frozen install，再通过 package 官方入口取得 Electron `44.4.5`。保持当前 TUN 配置原样，不配置第三方 mirror、永久代理或系统设置。
+- 下一检查点：完整官方 ZIP SHA-256 必须为 `11c395820a5aaa8ebcc0686b476d0ac98a730274ebfbdc8cf5538a7c2815cb5d`，`electron.exe` 存在且可报告安全版本，lock 前后完全不变。
+
+### 2026-09-27 22:08 Asia/Shanghai — E2 精确工具与 clean frozen install 通过
+
+- Node 官方 ZIP 摘要 `158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541` 与官方 SHASUMS 匹配；pnpm registry tarball SHA-512 integrity 匹配；实际版本为 Node `v24.21.0`、pnpm `12.7.0`。
+- 安装前再次读取 control `2026-09-27T21:53:00+08:00`，E2 唯一负责人和其他角色停止状态不变。从根与 desktop 均无 `node_modules` 的状态执行 `--frozen-lockfile`，解析 274 项、安装 275 packages、退出 0；实际 lifecycle 只有 `esbuild postinstall`。
+- `pnpm-lock.yaml` 安装前后均为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。当前 Electron package 已安装但 dist 尚未形成，符合显式运行 package 官方安装入口前的预期。
+- 下一长操作：使用冻结 Node 运行 `node_modules/electron/install.js`；任务 cache/temp 位于 `.b7-e2-tools`，不设置 mirror、不修改 TUN/代理/系统配置。下一检查点为完整 ZIP 摘要与 `electron.exe` 版本。
+
+### 2026-09-27 22:10 Asia/Shanghai — Electron 官方归档与运行时门禁通过
+
+- Electron package 官方安装入口首个 E2 检查点退出 0；任务 cache 形成唯一完整 `electron-v44.4.5-win32-x64.zip`，158184819 bytes。
+- 完整归档 SHA-256 为 `11c395820a5aaa8ebcc0686b476d0ac98a730274ebfbdc8cf5538a7c2815cb5d`，与 package/task 冻结值精确一致；没有 mirror、旧 binary、未知 cache 或安全软件例外。
+- `node_modules/electron/dist/electron.exe` 存在，Windows 文件版本与产品版本均为 `44.4.5`；安装后 lock SHA-256 仍为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。版本探测产生的短生命周期 Electron 进程已自然退出，残留 0。
+- 下一步进入 E2 阶段 2：generated drift、TypeScript、desktop lint 和完整 Vitest；任何 suite 失败都按 P0 停止，不沿用 R1/E1 历史结果。
+
+### 2026-09-27 22:26 Asia/Shanghai — desktop core 与真实 composition root 实现检查点
+
+- Python：通用 `/readyz` 恢复只检查完整 Host/provider；新增 `/api/v1/desktop/readyz` 仅在 managed profile、正确 nonce、数据库、Alembic head 与非空 registry 全部满足时成功；`/healthz` 仍只表示进程存活。新增 managed sidecar 只从继承环境读取 nonce/secret，stdout 专用握手只给 protocol、instance、loopback port 与 nonce digest。
+- Electron main：新增真实 child port、single-flight Supervisor、ready 失败 owned cleanup、recover 旧 child 清理/预算/退避、health loop、幂等 stop；新增加密 OwnerSecretStore、HTTP auth adapter、OwnerSession establish/refresh single-flight、严格 HostClient 一次 401 重试，以及唯一 DesktopCompositionRoot。
+- main IPC 已由固定 stopped/空模块替换为真实 runtime、recover 与 Host/compiled registry 交集；runtime publisher 只发送安全枚举与 code。preload/renderer 合同未新增 token、nonce、PID、port、路径、HTTP/Node 能力；统一 quit 先 flush 再停止 owned child。
+- 本轮静态结果：OpenAPI 已重新生成且 drift 检查退出 0；TypeScript 退出 0；扩展 Vitest 为 11 files、22 tests，全部通过。新增测试覆盖 start/owner/refresh single-flight、ready 失败清理、external 不停止、重复 stop、401 单次重试、严格模块 schema、唯一组合关闭和 preload 秘密边界。
+- 下一长操作：按最新 control 只启动测试拥有的 loopback、single-worker、no-reload sidecar，验证真实 handshake、nonce、三个 readiness 语义、owner、modules、stdin shutdown 与端口/PID 收口，然后运行受影响 Python Host 回归。
+
+### 2026-09-27 22:30 Asia/Shanghai — managed sidecar 与执行方回归门禁通过
+
+- 独立启动任务拥有的 loopback、single-worker、no-reload sidecar；machine handshake 的 protocol/instance/loopback port/nonce digest 全部匹配，原始 nonce 未出现在握手，`/healthz` 与 desktop core ready 为 200，通用 `/readyz` 在 provider 未配置时保持 503 `agent_provider_unconfigured`。
+- 使用虚拟 owner 凭据完成 bootstrap-status、initialize、login 和 Bearer modules；模块只返回 `daily_finance`。向专用 stdin 发送 shutdown 后进程退出 0，原端口拒绝连接，owned Python/port 残留为 0。
+- Python compile 退出 0；desktop runtime、sidecar、production、auth、registry 和 Host API 共 55 passed、0 failed/skip，1 条既有 Starlette `BlockingPortal` deprecation warning。
+- OpenAPI drift、TypeScript、desktop lint 再次退出 0；完整 Vitest 11 files、22 passed、0 failed/skip。最新 control 仍为 `2026-09-27T21:53:00+08:00`，E2 唯一负责人和 C12 停止状态不变。
+- 下一长操作：安全清理旧 `out/.vite` 与 Python bytecode 后，在冻结工具链/lock 下执行 Forge package；下一检查点为 ASAR、fuses、资源复制、包扫描和 package 摘要。
+
+### 2026-09-27 22:35 Asia/Shanghai — Forge package、fuses、资源与隐私门禁通过
+
+- 第一次 package 在所有 Vite targets 构建成功后，Packager 默认尝试写用户 Electron cache，被工作区权限以 `EPERM` 拒绝；没有依赖、lock 或产品语义失败。执行方查看当前 `@electron/packager` 官方类型入口，给 packager `download.cacheRoot` 接入任务环境变量，并指向已经核验摘要的工作区官方 cache。
+- 清理第一次构建输出后第二次 Forge package 退出 0；Packager 20 完成 copying、native dependencies 和 finalize。`Maris.exe` 246032896 bytes，SHA-256 `c17cf24c863a8e4b83a9a778a0023f16a7983f1da5b34cc6aaa47f9e2e8f3233`；`app.asar` 757916 bytes，SHA-256 `976f805dd1d70db7390acc65f36b1889c32f27ac58f8b00dc1fc548db1e9f598`。
+- package resources 包含 `alembic.ini`、migrations 和 `src/wife_system/api/desktop_sidecar.py`。fuses：RunAsNode、NodeOptions env、Node inspect 均 Disabled；CookieEncryption、EmbeddedAsarIntegrityValidation、OnlyLoadAppFromAsar 均 Enabled。
+- 解包扫描覆盖 11 个 ASAR files 与 76 个 resources；个人用户名/工作区绝对路径、私钥或 token 样式、自动更新地址、旧六类脆弱依赖、任务工具/cache 和 Python bytecode命中均为 0。
+- 下一长操作：重读 control 后，用隔离 profile 对最终 app.asar 与真实 `Maris.exe` 各运行一次 E2E，验证 sandbox、单窗口/毛毛、真实 sidecar、owner、module、recover 与统一 quit cleanup。
+
+### 2026-09-27 22:50 Asia/Shanghai — P4-B7-R1-E2 app.asar 崩溃阻塞交付
+
+- 状态：`blocked / finished`。最终 `app.asar` 的 Playwright `electron.launch` 在隔离 userData、禁用硬件加速、普通 companion fallback 和修正 Chromium switch 顺序后，仍连续两个检查点返回相同 `Assertion error`，随后 worker 报 `Target crashed`；第二检查点没有有效新输出，按任务卡 P0 条件停止。
+- 用户看到的 `electron.exe` unknown software exception `0x80000003` 弹窗来自本任务首次直接诊断进程。该进程已退出；没有修改系统、TUN 或安全软件，也没有要求用户重复操作。最终 Electron/Maris/Python/Pythonw 进程为 0。
+- 阶段通过：192/192 E2 起点与 186/186 E1 source 双门禁；Node/pnpm 精确工具；275 packages clean frozen install；官方 Electron 158184819 bytes/SHA-256 `11c395820...15cb5d`；lock 前后 `5ddc0a93...dcb4a`；OpenAPI/TypeScript/lint；Vitest 11 files/22 passed；Python 55 passed；真实 managed sidecar owner/modules/shutdown smoke；Forge package/fuses/resources。
+- 最后成功 package 摘要：`Maris.exe` 246032896 bytes/SHA-256 `149ccd6e2d71a8945ffef4ecba81e5121bc19c4816331ed5bcb6e72948174199`；`app.asar` 758263 bytes/SHA-256 `c38cd0c7c5b42e4576d051f936d2942cd6a180b4386c62687a1886e991ae22f6`。真实 `Maris.exe` E2E 为 `not_run`，因为 app.asar 门禁失败后必须停止。
+- 阶段性 package scan 勘误：最终重打包 resources 为 86 files（另有 app.asar），个人路径/credential/更新器/旧依赖/cache pattern 均为 0，但包含 Python smoke 遗留的 11 `.pyc` 与 6 `.egg-info` 文件；没有在强制停止后继续改包或重打包，该 hygiene 缺口已写入运行说明。
+- 最终 source manifest：194 entries、194 matched、0 mismatch、0 missing，自身 SHA-256 `d4a6619ff0769a6d329739543013c4ab279cca515613fa6d5cef88ea32edf715`。完整证据见 [E2 运行说明](../../b7-r1-e2-windows-shell-running.md)与 [E2 source manifest](../../../apps/desktop/b7-r1-e2-source.sha256)。
+- 资源收口：`node_modules=false`、`.b7-e2-tools=false`、package/out=false、profiles/trace/test-results=false、Python `__pycache__=0`；预存 `.pnpm-store` 保持不变。未执行 Git 写操作，未修改/运行独立测试，未启动 Docker/PostgreSQL、OpenClaw、微信、DeepSeek 或 P4-C12。
+- 交接：等待头脑风暴总控复核阻塞现场并发布新的恢复 Prompt；当前执行智能体停止修改。
+
+### 2026-09-27 23:14 Asia/Shanghai — P4-B7-R1-E2-R1 接单与双重门禁
+
+- 状态：`in_progress / active`。最新 control `2026-09-27T23:04:00+08:00` 指定既有执行智能体为 E2-R1 唯一负责人，技术顾问、测试智能体和 P4-C12 均停止；用户已发送完整 R1 任务卡。
+- 起点证据：`p4-b7-r1-e2-r1-start.sha256` 逐行复算 200 matched、0 mismatch、0 missing，清单自身 SHA-256 `b7d975664915a3aaac773dc17d0c3bed5f5fb184a85fe77aa3cceb0baf899674`；E2 source manifest 独立复算 194 matched、0 mismatch、0 missing，摘要 `d4a6619ff0769a6d329739543013c4ab279cca515613fa6d5cef88ea32edf715`。
+- 环境门禁：最终 lock SHA-256 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`；Electron/Maris/Python/Pythonw 相关进程为 0，旧 `out`、`node_modules`、E2/E2-R1 工具目录均不存在，没有未知活动窗口或 Tray 占用。
+- 当前长操作：只在忽略目录 `.b7-e2-r1-tools` 恢复 Node `24.21.0`、pnpm `12.7.0` 和官方 Electron cache，从 clean frozen install 开始。安装前将再次读取 control；不使用第三方 mirror、旧 binary、全局包或未知缓存。
+- 下一检查点：lock 前后完全不变、官方 Electron ZIP 摘要精确匹配；随后只读核对 Playwright launcher 注入参数与最终 fuse，再运行不传 `executablePath` 的最小 fixture。
+
+### 2026-09-27 23:32 Asia/Shanghai — P4-B7-R1-E2-R1 最小 fixture 弹窗阻塞交付
+
+- 状态：`blocked / finished`。精确 Node/pnpm、275 packages clean frozen install 和官方 Electron 归档恢复通过；lock 前后仍为 `5ddc0a93...dcb4a`，Electron ZIP 158184819 bytes/SHA-256 `11c395820...15cb5d`。
+- Launcher 根因：Playwright 1.63 总是注入 `--inspect=0`/`--remote-debugging-port=0`；只有不传 `executablePath` 才通过 `-r .../electron/loader.js` 加载 Electron loader。最终 fused EXE 的 Node inspect fuse 为 Disabled，不能走 `_electron.launch()`，启动分层判断得到本地源码确认。
+- 最小 fixture 单次检查点：不传 `executablePath`，Node debugger 与 renderer CDP 都成功连接；随后 GPU child 以 `-1073741515` 退出，Playwright `_CRSession._onMessage` 抛 `Assertion error`，并显示 `maris-electron-fixture: electron.exe` 的 Windows `0x80000003` 异常弹窗（用户截图位置 `0x00007FF634E1BD39`）。弹窗命中任务卡立即停止条件，没有相邻重试。
+- 收口：Playwright 主进程退出后仍观察到 2 个项目内 Electron child；执行方按 `node_modules/electron/dist` 的精确可执行路径强制终止，最终 Electron/Maris/Python/Pythonw 为 0。`node_modules`、`.b7-e2-r1-tools`、fixture/profile/raw logs、out/test-results 均删除，预存 `.pnpm-store` 保留。
+- 未执行：app.asar、真实 EXE/CDP、package staging/allowlist、单元/静态回归、Forge package 和 hygiene 扫描均为 `not_run`；E2 历史 22 Vitest/55 Python/sidecar/package 只作输入，没有冒充本轮结果。
+- 文件边界：产品、配置、脚本、测试、依赖变化为 0；相对 200 文件起点只有允许的 executor 日志变化，另新增本报告和 R1 manifest。R1 source manifest 194 entries、194 matched、0 mismatch/missing，SHA-256 `d4a6619ff0769a6d329739543013c4ab279cca515613fa6d5cef88ea32edf715`。
+- 交付：[R1 运行说明](../../b7-r1-e2-r1-windows-shell-running.md)与 [R1 source manifest](../../../apps/desktop/b7-r1-e2-r1-source.sha256)。未执行 Git 写操作，未触碰独立测试、Docker/PostgreSQL、OpenClaw、微信、DeepSeek 或 `.claude/**`；P4-C12 保持未启动。
+
+### 2026-09-28 00:18 Asia/Shanghai — P4-B7-R1-H1 接单与双重门禁
+
+- 状态：`in_progress / active`。最新 control `2026-09-28T00:06:00+08:00` 指定执行智能体为 H1 唯一负责人；H1 只做 Python runtime allowlist、确定性 staging、manifest 与静态/单元测试，禁止 Electron/Forge package/app.asar/Maris/sidecar/数据库，E3、P4-C12、技术顾问和测试智能体均停止。
+- 起点证据：`p4-b7-r1-h1-start.sha256` 逐行复算 209 matched、0 mismatch、0 missing，清单 SHA-256 `24dbffd395af61c06a5ac3424163879084d2397576f7da4e4658aadccb1b3921`；E2-R1 source manifest 独立复算 194 matched、0 mismatch、0 missing，摘要 `d4a6619ff0769a6d329739543013c4ab279cca515613fa6d5cef88ea32edf715`。
+- 环境门禁：lock SHA-256 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`；旧任务拥有的 Electron/Maris/project Python 进程为 0，`node_modules=false`、`.maris-staging=false`。
+- 当前步骤：只读审计现有 `extraResource`、migration runtime 输入与 source tree，再实现 staging sibling→验证→原子替换、确定性 manifest、reparse/symlink fail-closed 和专属 Vitest。
+- 下一检查点：污染源树与旧 staging 均不能污染正式目标；失败不能替换旧正式目标；Forge 静态配置只指向 staging 三入口。
+
+### 2026-09-27 20:44 Asia/Shanghai — P4-B7-R1-E1 接单与恢复门禁
+
+- 状态：`in_progress`；运行状态：`active`。用户已发送 E1 完整任务卡；最新 control `2026-09-27T20:38:00+08:00` 指定既有执行智能体为 E1 唯一负责人，测试智能体、技术顾问、P4-C12、Docker/PostgreSQL、OpenClaw、微信和 DeepSeek 均保持停止。
+- 起点证据：`p4-b7-r1-e1-start.sha256` 逐行复算 187 matched、0 mismatch、0 missing，清单自身 SHA-256 `a5309c271da2001c8082cff9d9d54502843b24050fa59f1fbda99377fd4de901`；R1 source manifest 独立复算 182 matched、0 mismatch、0 missing，摘要 `512439d5cb9f75d4d20722dd0bc8c634dc303650be1b4a12e8ddac39060691c9`。
+- 最终 lock 当前 SHA-256 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`，与任务卡一致。R1 候选 lock 的旧审计结果只作历史证据，本轮将对当前最终 lock 重新运行 full/prod audit。
+- 当前长操作：从官方 Node/npm 来源恢复项目本地 Node `24.21.0` 与 pnpm `12.7.0`，随后执行最终 lock 双审计、策略/F04 检查和 clean frozen install 前后摘要门禁。下一检查点为供应链闭环；任一 P0 条件出现立即停止。
+
+### 2026-09-27 21:03 Asia/Shanghai — P4-B7-R1-E1 官方 Electron 链路再次阻塞
+
+- 状态：`blocked / finished`。E1 最终 lock full/prod audit 均为 0 critical/high；F04、旧包消失、peer/exotic/file source 和 lifecycle 策略通过；clean frozen install 安装 275 packages且 lock 前后都为 `5ddc0a93...dcb4a`。
+- Electron 检查点 1：冻结 Node 24 官方安装入口在约六分钟内写入 31,817,728-byte 未校验 partial，但没有完成 cache 或 dist；执行方有界结束 owned 会话，未复用 partial。
+- 脱敏诊断：DNS IPv4 成功、直接 TLS 1.3 成功、cache write 成功；Node 24 对官方 URL redirect HEAD 为 `error.name=TypeError`、`message=fetch failed`、`cause.code=ECONNRESET`，诊断临时 JSON SHA-256 `f6f44096bb96ffd22494bda1f0e4a22b3f7b5cb978beb205135c62bab3d4bd19`。
+- Electron 检查点 2：删除未校验 partial 并重读 control 后，再次从同一官方安装入口开始；立即返回 `TypeError: fetch failed`/exit 1，没有 temp、cache、`electron.exe` 或可校验 archive。按任务卡不进行第三次下载，不换镜像、不复制旧 binary、不改安全软件或系统。
+- 后续门禁：E1 generated/TypeScript/lint/Vitest、desktop readiness/Host composition、Python/sidecar、Forge package、app.asar E2E、真实 EXE 与隐私扫描全部 `not_run`，没有沿用 R1 历史通过冒充本轮结果。
+- 交付：[E1 运行说明](../../b7-r1-e1-windows-shell-running.md)记录全部分组证据和未验证范围；最终 E1 source manifest 为 186 entries，自身 SHA-256 `fd40e4b2d609b998c255c5a33bb172d53d81a043c41c98fc91f01cd5c5afd5fe`。资源收口为 `node_modules=false`、`.b7-e1-tools=false`、owned Node/Electron/Maris=0；预存根 `.pnpm-store` 保持原状。
+- 边界：无产品、依赖、lock、配置、测试或 OpenAPI 文件变化；未运行独立测试，未执行 Git 写操作，未触碰 Docker/PostgreSQL/OpenClaw/微信/DeepSeek 或 `.claude/**`。
+- 交接：等待总控发布新的恢复或网络处置任务；当前执行智能体停止修改，P4-C12 继续未启动。
+
+### 2026-09-27 19:49 Asia/Shanghai — P4-B7-R1 接单与双快照门禁
+
+- 状态：`in_progress`；运行状态：`active`。用户已发送 R1 完整任务卡；最新 control `2026-09-27T19:32:00+08:00` 指定既有执行智能体为唯一负责人，P4-C12、测试智能体、Docker/PostgreSQL、OpenClaw、微信和 DeepSeek 均保持停止。
+- 强制输入已按任务卡核对；`docs/coordination/snapshots/p4-b7-r1-start.sha256` 逐行复算为 182 matched、0 mismatch、0 missing，清单自身 SHA-256 `18ce1e965ea1fca41587a839b4dfff4a2671813315411c3ec4e4a07a9029441a`。
+- 旧 B7 保留实现再次逐行复算：`apps/desktop/b7-source.sha256` 66 matched、0 mismatch、0 missing，清单自身 SHA-256 `de1f80c566faf165d7869bb4641477b3743bea80b72c65f137079e0f3993352a`。
+- 本轮固定顺序：先恢复项目本地精确工具链并只做候选依赖解析、安全门禁；只有冻结图、消失清单、peer/exotic/lifecycle 和 full/prod audit 全部通过，才进入 desktop readiness 与真实 Host composition。
+- 当前长操作准备：安装前再次读取 control；工具和缓存只放工作区临时目录，不改系统 PATH 或全局工具，使用官方来源并核对摘要。下一检查点为 lockfile-only 与供应链门禁结果。
+
+### 2026-09-27 19:53 Asia/Shanghai — 候选 lock 首次解析检查点
+
+- 项目本地工具链已恢复并核验：Node `v24.21.0` 官方 ZIP SHA-256 `158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541`；pnpm `12.7.0` 官方 registry tarball integrity 匹配，包内 `package.json` SHA-256 `9bdc25a9aeca0318030cc4532572938e0b3a6d9d70a6ed8ec04f4e0f26c0c9d6`。只使用工作区 `.b7-tools`，未改系统 PATH 或全局工具。
+- 首次 clean lockfile-only 已解析出 F04 的五个精确值，但 strict peer gate 正确失败：`@testing-library/react@16.3.3` 与 `@testing-library/user-event@14.6.7` 需要项目显式提供 `@testing-library/dom`。没有开启 auto peer，也没有关闭 strict peer。
+- 该失败发生在 Host 接线前，属于依赖声明修正检查点；下一步从官方 registry 固定兼容的精确 `@testing-library/dom`，重新从空 lock 解析并完成旧包、exotic/lifecycle 和 audit 门禁。若冻结 F04 或安全门禁不符，立即停止。
+
+### 2026-09-27 20:10 Asia/Shanghai — P4-B7-R1 Electron 官方资产 P0 阻塞交付
+
+- 状态：`blocked / finished`。没有提交为 `review`，没有进入 desktop sidecar/readiness、Supervisor/owner/HostClient composition、Python/Uvicorn、Forge package、app.asar E2E 或真实 EXE；P4-C12 保持未启动。
+- 供应链有效证据：显式补齐 `@testing-library/dom@10.4.2` 后 clean lock strict peer 通过；Packager 20.3.0、Rebuild 4.2.0、node-gyp 12.4.0、tar 7.5.21、internal extract 1.0.5 精确命中；旧六类依赖、Git/exotic/vendor source 均消失；候选 full/prod audit 均为 0；clean frozen install 安装 275 packages，实际生命周期只有允许的 esbuild。
+- 静态证据：OpenAPI generated、TypeScript、lint 均退出 0。Vitest 为 8 files/15 tests passed、1 suite failed；失败只因 Electron module 自动获取 44.4.5 binary 时 `TypeError: fetch failed`，没有测试断言失败。
+- P0 过程：第一次发生在 Vitest 导入 Electron；复读 control 后使用获准外部网络显式运行 Electron 官方安装入口，未配置任何 Electron 镜像，第二次仍为相同 `fetch failed`，且 `node_modules/electron/dist/electron.exe` 不存在。同一问题连续两个检查点没有有效新输出，按任务卡立即停止；没有使用旧 package、第三方镜像、skip/xfail 或重复成功覆盖失败。
+- 文件与证据：依赖图见 `apps/desktop/b7-r1-dependency-graph.json`；完整事实、限制和摘要见 `docs/b7-r1-windows-shell-running.md`。最终 source manifest 为 182 entries，自身 SHA-256 `512439d5cb9f75d4d20722dd0bc8c634dc303650be1b4a12e8ddac39060691c9`，清单不递归包含自身。
+- 资源：本轮未成功启动 Electron/Maris/Uvicorn/Python sidecar，未操作 Docker/PostgreSQL/OpenClaw/微信/DeepSeek；Electron/Maris 进程均为 0；本轮 `node_modules` 与 `.b7-tools` 已删除。预存根 `.pnpm-store` 起点即存在，未删除或计作本任务残留。没有 Git 写操作或独立测试执行。
+- 交接：等待总控在官方 Electron 44.4.5 发布源可达后另发恢复任务；当前执行智能体停止修改。
 
 ### 2026-09-27 16:27 Asia/Shanghai — P4-B7 接单与里程碑 1 起点
 

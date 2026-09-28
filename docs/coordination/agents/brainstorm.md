@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-H1 — 已接受 D13 并冻结 package resource 静态 staging，等待用户把 H1 Prompt 发给执行智能体
+- 当前任务：P4-B7-R1-E3 — H1-R1 已关闭原子替换缺陷，等待用户把 C 盘最小三角验证 Prompt 发给执行智能体
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-28 00:06，Asia/Shanghai
+- 最近更新：2026-09-28 08:57，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -113,19 +113,42 @@
 - [P4-IF-005](../../phase-4-interface-freeze-005.md)
 - [P4-B7-R1-H1 执行智能体 Prompt](../prompts/p4-b7-r1-h1-package-hygiene-executor.md)
 - [P4-B7-R1-H1 固定输入快照](../snapshots/p4-b7-r1-h1-start.sha256)
+- [P4-B7-R1-H1 运行说明](../../b7-r1-h1-package-hygiene-running.md)
+- [P4-B7-R1-H1 总控核对](../../p4-b7-r1-h1-coordinator-review.md)
+- [P4-B7-R1-H1-R1 执行智能体 Prompt](../prompts/p4-b7-r1-h1-r1-staging-atomicity-executor.md)
+- [P4-B7-R1-H1-R1 固定输入快照](../snapshots/p4-b7-r1-h1-r1-start.sha256)
+- [P4-B7-R1-H1-R1 总控核对](../../p4-b7-r1-h1-r1-coordinator-review.md)
+- [P4-B7-R1-E3 执行智能体 Prompt](../prompts/p4-b7-r1-e3-c-drive-electron-triangle-executor.md)
+- [P4-B7-R1-E3 固定输入快照](../snapshots/p4-b7-r1-e3-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：D13 技术裁定已核对；IF-005、H1 Prompt 与固定输入已生成，等待无 Electron 的静态实现
-- 步骤开始时间：2026-09-28 00:03，Asia/Shanghai
-- 最近有效进展：2026-09-28 00:06，Asia/Shanghai（接受 26 条冻结建议，裁定八个未决问题并先拆出 H1）
-- 最近心跳：2026-09-28 00:06，Asia/Shanghai
-- 下一检查点：既有执行智能体读取 H1 Prompt，复算固定输入并实现 package resource staging
-- 等待对象：用户把 H1 Prompt 全文发送给既有执行智能体；技术顾问和测试智能体保持停止
+- 当前步骤：H1-R1 代码、六类故障边界和 198 文件终点已核对；E3 Prompt 已冻结，准备固定输入快照
+- 步骤开始时间：2026-09-28 08:41，Asia/Shanghai
+- 最近有效进展：2026-09-28 08:57，Asia/Shanghai（209 项起点只有 6 个授权变化；H1 source 198/198 匹配；原缺陷关闭）
+- 最近心跳：2026-09-28 08:57，Asia/Shanghai
+- 下一检查点：既有执行智能体读取 E3 Prompt，在 C 盘先运行唯一一次 A1 direct；只有 A1 成功才运行 A2
+- 等待对象：用户把 E3 Prompt 全文发送给既有执行智能体；技术顾问和测试智能体保持停止
 - 活动进程或会话：B7 启动的 Uvicorn/Electron/Maris/Playwright 均已退出；无项目服务；没有活动依赖安装
 - 重试次数：E2-R1 最小 fixture 只运行一次即因不受控弹窗停止；总控未再次启动 Electron
-- 最近输出：D13 总控审阅、P4-IF-005、H1 Prompt 和 209 文件 H1 固定输入（manifest SHA-256 `24dbffd395af61c06a5ac3424163879084d2397576f7da4e4658aadccb1b3921`）
+- 最近输出：H1-R1 总控核对、E3 Prompt 与固定输入；不启动 Electron 的总控静态核对已完成
+
+### 2026-09-28 08:57 Asia/Shanghai — 接受 H1-R1 并发布 E3
+
+- 复算 H1-R1 起点：203 matched、6 个授权 mismatch、0 missing；六项分别为 staging 脚本、类型声明、专属测试、运行说明、source manifest 与 executor 日志。
+- 复算 H1 source：198 matched、0 mismatch、0 missing，manifest SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`；三个代码/测试摘要与报告一致，lock 仍为 `5ddc0a93...dcb4a`。
+- 定向代码核对确认：新 pair 安装并逐项验证后才进入 committed；pre-commit 失败恢复旧 pair；post-commit backup cleanup 失败保留完整新 pair和可恢复 backup；finally 不再破坏该语义。
+- 六类故障注入分别覆盖旧 payload 已移、两个旧对象已移、新 payload 已装、两种 backup cleanup 失败和正常提交；`P4-H1-ATOMIC-001` 已关闭。H1-R1 接受为 E3 输入，但不宣称 P4-B complete 或独立验收通过。
+- 发布 E3：只允许 C 盘 direct A1 一次；A1 完全成功后允许同目录默认 Playwright A2 一次。禁止 D 基线、Procmon、diagnostic flags、版本遍历、app.asar、EXE 和 P4-C12。
+
+### 2026-09-28 00:55 Asia/Shanghai — H1 总控核对发现原子替换缺口
+
+- 复算 H1 起点：205 matched、4 个授权 mismatch、0 missing；复算 H1 source：198 matched、0 mismatch、0 missing，manifest SHA-256 `9e152288b5b1aaa2cb2fa979c877de617c8cdead08680e3d85430fb0b066f32e`。
+- 报告、executor 日志与 lock 摘要匹配；allowlist、Forge 三入口、10 项执行方测试和资源收口证据有效。
+- 发现 `P4-H1-ATOMIC-001`：新 pair 安装后先删除 payload backup，再删除 manifest backup；第二次删除失败会进入旧回滚，但旧 payload backup 已不存在，可能留下 manifest-only 正式状态。
+- 现有失败测试只在 replacement 前通过 source junction 抛错，未覆盖旧目标移动、新目标安装和 backup cleanup 的 transition failure。
+- H1 保持 `review / needs_fix`，不提交为 complete；发布 H1-R1，只修 commit point、pair 一致性和六类确定性故障注入，不启动 Electron。
 
 ### 2026-09-28 00:06 Asia/Shanghai — 接受 P4-D13 并发布 H1
 
@@ -155,10 +178,10 @@
 
 ## 下一步
 
-1. 用户把 H1 Prompt 全文发送给既有执行智能体。
-2. 执行智能体只实现 package resource staging 与静态测试，不启动 Electron、Forge package、sidecar 或数据库。
-3. 总控核对 H1 后另行生成 E3；技术顾问和测试智能体保持停止，P4-C12 不启动。
-3. 执行智能体和测试智能体保持停止；不得重发 E2-R1/E2/R1/E1，P4-C12 继续未启动。
+1. 用户把 E3 Prompt 全文发送给既有执行智能体。
+2. 执行智能体复算固定现场，在 `C:\MarisE3\<run-id>` 运行唯一一次 A1 direct；只有 A1 完全成功才运行唯一一次 A2 Playwright。
+3. 任一 cell 出现弹窗、非零 child/browser、既有状态码、新异常、日志失败或进程残留即停止并保留受限现场；不得自动进入 F1。
+4. 技术顾问和测试智能体保持停止；不得重发 H1/H1-R1、E2-R1/E2/R1/E1，P4-C12 继续未启动。
 
 ### 2026-09-27 23:40 Asia/Shanghai — 接受 E2-R1 最小复现并发布 D13
 

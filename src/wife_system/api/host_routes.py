@@ -36,6 +36,7 @@ from wife_system.api.host_schemas import (
     SuccessResponse,
     TokenResponse,
 )
+from wife_system.api.desktop_runtime import DesktopReadinessError, DesktopRuntimeGate
 from wife_system.host.auth.errors import AuthError
 from wife_system.host.auth.service import AuthenticatedSession, SessionTokens
 from wife_system.host.context import PrincipalContext
@@ -78,6 +79,10 @@ def get_host_runtime(request: Request) -> HostRuntime:
     if runtime is None:
         raise HostStateError("backend_not_ready", status_code=503, retryable=True)
     return runtime
+
+
+def get_desktop_runtime_gate(request: Request) -> DesktopRuntimeGate:
+    return request.app.state.desktop_runtime_gate
 
 
 def require_host_idempotency_key(
@@ -699,8 +704,26 @@ def put_setting(
 
 
 @router.get("/readyz", response_model=ReadyResponse)
-def readyz(runtime: Annotated[HostRuntime, Depends(get_host_runtime)]) -> ReadyResponse:
+def readyz(
+    runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
+) -> ReadyResponse:
     ready, code = runtime.readiness()
+    if not ready:
+        raise HostStateError(code or "backend_not_ready", status_code=503, retryable=True)
+    return ReadyResponse()
+
+
+@router.get("/api/v1/desktop/readyz", response_model=ReadyResponse)
+def desktop_readyz(
+    runtime: Annotated[HostRuntime, Depends(get_host_runtime)],
+    desktop_gate: Annotated[DesktopRuntimeGate, Depends(get_desktop_runtime_gate)],
+    startup_nonce: Annotated[str | None, Header(alias="X-Maris-Startup-Nonce")] = None,
+) -> ReadyResponse:
+    try:
+        desktop_gate.verify_desktop_ready(startup_nonce)
+    except DesktopReadinessError as exc:
+        raise HostStateError(exc.code, status_code=503, retryable=True) from exc
+    ready, code = runtime.core_readiness()
     if not ready:
         raise HostStateError(code or "backend_not_ready", status_code=503, retryable=True)
     return ReadyResponse()

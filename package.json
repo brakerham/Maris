@@ -1,0 +1,18 @@
+{
+  "name": "maris-workspace",
+  "private": true,
+  "packageManager": "pnpm@12.7.0",
+  "engines": {
+    "node": "24.21.0",
+    "pnpm": "12.7.0"
+  },
+  "scripts": {
+    "desktop:dev": "pnpm --filter @maris/desktop start",
+    "desktop:typecheck": "pnpm --filter @maris/desktop typecheck",
+    "desktop:lint": "pnpm --filter @maris/desktop lint",
+    "desktop:test": "pnpm --filter @maris/desktop test",
+    "desktop:e2e": "pnpm --filter @maris/desktop test:e2e",
+    "desktop:package": "pnpm --filter @maris/desktop package",
+    "check:generated": "pnpm --filter @maris/desktop check:generated"
+  }
+}

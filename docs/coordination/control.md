@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-28T00:06:00+08:00`
+- 指令版本：`2026-09-28T08:57:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：`P4-D13` 已由总控接受并形成 `P4-IF-005`。下一步先执行 `P4-B7-R1-H1`，只实现 Python package resource allowlist、确定性 staging、manifest 和静态测试；H1 不启动 Electron、Forge package、app.asar、Maris.exe、sidecar 或数据库。Electron 动态诊断 E3 在 H1 总控核对后另行派发。
-- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-h1-package-hygiene-executor.md` 全文发送给既有执行智能体。不要再发送 D13、E2-R1/E2/R1/E1，也不要启动技术顾问、测试智能体、E3 或 P4-C12。
+- 当前动作：`P4-B7-R1-H1-R1` 已建立明确 commit point，六类确定性 replacement 测试通过，`P4-H1-ATOMIC-001` 已关闭；H1 接受为 E3 固定输入。下一步只执行 `P4-B7-R1-E3`：C 盘同摘要 Electron 与同一最小 fixture direct 最多一次，只有 direct 完全成功才允许同目录 Playwright 最多一次。
+- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e3-c-drive-electron-triangle-executor.md` 全文发送给既有执行智能体。不要重复 H1/H1-R1、D13、E2-R1/E2/R1/E1，不要启动技术顾问、测试智能体、app.asar/最终 EXE、F1 或 P4-C12。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；P4-A 验收提交 `88fb178` 与 P4-B 头脑风暴提交 `6b0e485` 已推送，远端 `main` 当前为 `6b0e485`。这些仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 
 ## 本地单主人产品范围
@@ -99,7 +99,9 @@
 | P4-B7-R1-E2-R1 启动分层与 package hygiene | 执行智能体；`blocked / finished` | 200/200 起点和 194/194 source 匹配；最小无业务 fixture 的 debugger/CDP 已连接，GPU child 随后以 `0xC0000135` 退出，browser 弹出 `0x80000003`；产品零变化且资源已收口 | 原任务停止；不得再次运行相同 D 盘 fixture、app.asar 或 EXE |
 | P4-D13 Windows 25H2 Electron crash 裁定 | `complete`；总控已接受 | 442 行方案、26 条冻结建议、A1/A2/F1 分支、诊断开关与 hygiene 拆分已核对 | 技术顾问停止；不得继续运行动态诊断或自行创建后续任务 |
 | P4-IF-005 Electron Windows 诊断与 package resource 冻结 | `complete`；头脑风暴总控 | 冻结首故障措辞、C 盘三角验证、安全开关、版本边界、H1 staging 与后续顺序 | 变更必须返回总控与技术顾问；执行方不得自由遍历开关或版本 |
-| P4-B7-R1-H1 Python package resource 静态 staging | 执行智能体；`ready / waiting_user` | 209 文件固定输入 SHA-256 `24dbffd3...b3921`；只允许 allowlist、staging、manifest 和静态/单元测试 | 用户发送 H1 Prompt；不得启动 Electron、Forge package、sidecar、数据库、E3 或 C12 |
+| P4-B7-R1-H1 Python package resource 静态 staging | `review / finished`；总控接受为 E3 输入 | H1-R1 已关闭 `P4-H1-ATOMIC-001`；198/198 source 匹配，执行方专属 14 项、相邻合计 16 项通过 | H1/H1-R1 停止；不得继续改 allowlist/Forge 合同或把静态结果写成 P4-B complete |
+| P4-B7-R1-H1-R1 staging 原子替换返修 | `review / finished`；总控已核对 | 209 项起点只有 6 个授权变化；明确 commit point 与六类故障边界全部匹配报告 | 不重复 H1-R1；结果只作为 E3 输入，独立结论仍等待 P4-C12 |
+| P4-B7-R1-E3 C 盘 Electron 最小三角验证 | 执行智能体；`ready / waiting_user` | 只允许 A1 C direct 一次；A1 完全成功后才允许 A2 同目录默认 Playwright 一次 | 用户发送 E3 Prompt；禁止 D 基线、Procmon、诊断开关、版本遍历、app.asar、EXE 或 C12 |
 | P4-C12 Windows Shell 独立验收 | `not_started`；等待 B7 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定 B7 稳定终点快照后生成 | 测试智能体当前停止；不得提前执行、修改产品或把 D11 设计映射当作通过证据 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |

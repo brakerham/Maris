@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "task": "P4-B7-R1",
+  "lock_sha256": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a",
+  "audit_lock_sha256": "af0da9c6d57ee3fc2c901afa111d22fdb21c591b9bcf2cefb42822d6d2f17b88",
+  "toolchain": {
+    "node": "24.21.0",
+    "pnpm": "12.7.0"
+  },
+  "package_manager_dependencies": {
+    "pnpm": "12.7.0",
+    "@pnpm/exe": "12.7.0"
+  },
+  "forge_cohort": "8.0.0-alpha.10",
+  "nodes": {
+    "@electron/packager": "20.3.0",
+    "@electron/rebuild": "4.2.0",
+    "node-gyp": "12.4.0",
+    "tar": "7.5.21",
+    "@electron-internal/extract-zip": "1.0.5"
+  },
+  "edges": [
+    ["@electron-forge/core@8.0.0-alpha.10", "@electron/packager@20.3.0"],
+    ["@electron-forge/shared-types@8.0.0-alpha.10", "@electron/packager@20.3.0"],
+    ["@electron-forge/core-utils@8.0.0-alpha.10", "@electron/rebuild@4.2.0"],
+    ["@electron-forge/shared-types@8.0.0-alpha.10", "@electron/rebuild@4.2.0"],
+    ["@electron/rebuild@4.2.0", "node-gyp@12.4.0"],
+    ["node-gyp@12.4.0", "tar@7.5.21"],
+    ["@electron/packager@20.3.0", "@electron-internal/extract-zip@1.0.5"],
+    ["electron@44.4.5", "@electron-internal/extract-zip@1.0.5"]
+  ],
+  "forbidden_absent": [
+    "@electron/packager@18.4.4",
+    "extract-zip@2.0.1",
+    "@electron/rebuild@3.7.2",
+    "@electron/node-gyp@10.2.0-electron.1",
+    "tar<7.5.21",
+    "tmp@0.0.33"
+  ],
+  "policy": {
+    "node_linker": "hoisted",
+    "auto_install_peers": false,
+    "strict_peer_dependencies": true,
+    "block_exotic_subdeps": true,
+    "allowed_lifecycle_scripts": ["electron", "esbuild"],
+    "observed_lifecycle_scripts": ["esbuild"],
+    "git_or_exotic_dependencies": 0,
+    "deprecated_transitive_dependencies": []
+  },
+  "audits": {
+    "full": {
+      "exit_code": 0,
+      "critical": 0,
+      "high": 0,
+      "moderate": 0,
+      "low": 0,
+      "raw_sha256": "d20129a79a7582e655a88d5fc089251f59c4fb61d5234ee028cf8000fa0c27ac"
+    },
+    "production": {
+      "exit_code": 0,
+      "critical": 0,
+      "high": 0,
+      "moderate": 0,
+      "low": 0,
+      "raw_sha256": "4c15eda170c34a4224755da68f3bea1320dd4bf7adebd3577d09154a929988c3"
+    }
+  },
+  "list_depth_30_sha256": "390253e44cfa8c615306a2c9690ab1b10f308235432fc356f26d3f3a93db39e1"
+}

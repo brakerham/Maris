@@ -1,0 +1,24 @@
+packages:
+  - apps/desktop
+
+# pnpm 12 reads workspace settings here; .npmrc retains Forge's documented
+# node-linker requirement for tools that inspect npm-style project config.
+nodeLinker: hoisted
+autoInstallPeers: false
+strictPeerDependencies: true
+
+# Reject Git and other exotic transitive sources. Forge 8 resolves its build
+# chain through registry packages, so no local Electron node-gyp override is
+# required.
+blockExoticSubdeps: true
+
+overrides:
+  tar: 7.5.21
+
+allowBuilds:
+  electron: true
+  esbuild: true
+
+peerDependencyRules:
+  allowedVersions:
+    "openapi-typescript>typescript": "6.0.3"

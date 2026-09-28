@@ -14,6 +14,7 @@ from wife_system.agent.finance_tools import FinanceToolAdapter
 from wife_system.agent.pending import PendingActionStore
 from wife_system.agent.providers import ModelProvider
 from wife_system.api.app import create_app
+from wife_system.api.desktop_runtime import DesktopRuntimeGate
 from wife_system.finance import FinanceService, IdempotencyKeys
 from wife_system.finance.db import make_engine, make_session_factory
 from wife_system.host.auth.service import AuthSecrets
@@ -36,6 +37,8 @@ class ProductionConfig:
     agent_digest_key: bytes
     finance_receipt_key: bytes
     alembic_head: str = "p4_host_state"
+    desktop_managed: bool = False
+    desktop_startup_nonce: bytes | None = None
 
     def __post_init__(self) -> None:
         if not self.database_url.strip():
@@ -54,6 +57,13 @@ class ProductionConfig:
                 raise ProductionConfigError(f"invalid_{name}")
         if not self.alembic_head.strip():
             raise ProductionConfigError("invalid_alembic_head")
+        if self.desktop_managed and (
+            not isinstance(self.desktop_startup_nonce, bytes)
+            or len(self.desktop_startup_nonce) < 32
+        ):
+            raise ProductionConfigError("invalid_desktop_startup_nonce")
+        if not self.desktop_managed and self.desktop_startup_nonce is not None:
+            raise ProductionConfigError("unexpected_desktop_startup_nonce")
 
     @classmethod
     def from_environment(
@@ -73,6 +83,10 @@ class ProductionConfig:
                 raise ProductionConfigError(f"invalid_{name.casefold()}")
             return value
 
+        desktop_profile = values.get("WIFE_DESKTOP_PROFILE", "").strip()
+        if desktop_profile not in {"", "managed"}:
+            raise ProductionConfigError("invalid_wife_desktop_profile")
+        nonce = values.get("WIFE_DESKTOP_STARTUP_NONCE")
         return cls(
             database_url=required("WIFE_DATABASE_URL"),
             bootstrap_token=secret("WIFE_BOOTSTRAP_TOKEN"),
@@ -83,6 +97,8 @@ class ProductionConfig:
             agent_digest_key=secret("WIFE_AGENT_DIGEST_KEY"),
             finance_receipt_key=secret("WIFE_FINANCE_RECEIPT_KEY"),
             alembic_head=values.get("WIFE_ALEMBIC_HEAD", "p4_host_state"),
+            desktop_managed=desktop_profile == "managed",
+            desktop_startup_nonce=nonce.encode("utf-8") if nonce is not None else None,
         )
 
 
@@ -127,10 +143,29 @@ def create_production_app(
         host_runtime=runtime,
         agent_application=agent,
         activity_import_service=activity_import,
+        desktop_runtime_gate=DesktopRuntimeGate(
+            managed=resolved.desktop_managed,
+            startup_nonce=resolved.desktop_startup_nonce,
+        ),
     )
     application.state.engine = engine
     application.state.sessions = sessions
     return application
 
 
-__all__ = ["ProductionConfig", "ProductionConfigError", "create_production_app"]
+def create_production_openapi_app() -> FastAPI:
+    """Build the production route graph without opening a database.
+
+    OpenAPI generation inspects route contracts only. Runtime dependencies stay
+    fail-closed and are never invoked by this offline export seam.
+    """
+
+    return create_app()
+
+
+__all__ = [
+    "ProductionConfig",
+    "ProductionConfigError",
+    "create_production_app",
+    "create_production_openapi_app",
+]

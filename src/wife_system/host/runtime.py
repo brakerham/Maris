@@ -29,7 +29,8 @@ class HostRuntime:
     events: InProcessEventBus
     agent_provider_ready: bool = True
 
-    def readiness(self) -> tuple[bool, str | None]:
+    def core_readiness(self) -> tuple[bool, str | None]:
+        """Check the desktop-safe Host core without implying provider readiness."""
         try:
             if not self.registry.module_ids:
                 return False, "registry_unavailable"
@@ -38,8 +39,14 @@ class HostRuntime:
                 revision = session.scalar(text("SELECT version_num FROM alembic_version"))
             if revision != self.alembic_head:
                 return False, "migration_not_current"
-            if not self.agent_provider_ready:
-                return False, "agent_provider_unconfigured"
             return True, None
         except Exception:
             return False, "database_unavailable"
+
+    def readiness(self) -> tuple[bool, str | None]:
+        ready, code = self.core_readiness()
+        if not ready:
+            return ready, code
+        if not self.agent_provider_ready:
+            return False, "agent_provider_unconfigured"
+        return True, None

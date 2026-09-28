@@ -1,0 +1,5 @@
+// @vitest-environment jsdom
+import { render, screen } from "@testing-library/react"; import userEvent from "@testing-library/user-event";
+import { MemoryRouter, Route, Routes } from "react-router"; import { expect, it, vi } from "vitest";
+import { dailyFinanceContribution } from "../../src/modules/daily-finance/contribution"; import { Shell } from "../../src/shell/Shell";
+it("renders accessible shell, privacy and hostile text as text",async()=>{ const onPrivacy=vi.fn(); render(<MemoryRouter initialEntries={["/"]}><Routes><Route path="/" element={<Shell modules={[{...dailyFinanceContribution,navigation:{label:"<img src=x onerror=alert(1)>",order:1}}]} runtime={{state:"offline",mode:"managed",authenticated:false,errorCode:null}} theme="light" privacyMode={false} onTheme={()=>{}} onPrivacy={onPrivacy}/>}><Route index element={<p dir="rtl">مرحبا</p>}/></Route></Routes></MemoryRouter>); expect(screen.getByText("<img src=x onerror=alert(1)>")).toBeTruthy(); expect(document.querySelector("img")).toBeNull(); await userEvent.click(screen.getByLabelText("隐私模式")); expect(onPrivacy).toHaveBeenCalledWith(true); });

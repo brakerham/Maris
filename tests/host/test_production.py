@@ -67,3 +67,23 @@ def test_production_factory_readiness_tracks_provider(tmp_path: Path) -> None:
         )
     )
     assert configured.get("/readyz").status_code == 200
+
+
+def test_managed_desktop_core_ready_does_not_claim_provider_ready(tmp_path: Path) -> None:
+    database_url = _database(tmp_path / "desktop.db")
+    nonce = b"n" * 32
+    config = ProductionConfig(
+        **{
+            **_config(database_url).__dict__,
+            "desktop_managed": True,
+            "desktop_startup_nonce": nonce,
+        }
+    )
+    client = TestClient(create_production_app(config))
+    assert client.get("/healthz").status_code == 200
+    assert client.get("/readyz").json()["error"]["code"] == "agent_provider_unconfigured"
+    response = client.get(
+        "/api/v1/desktop/readyz",
+        headers={"X-Maris-Startup-Nonce": nonce.decode()},
+    )
+    assert response.json() == {"status": "ready"}

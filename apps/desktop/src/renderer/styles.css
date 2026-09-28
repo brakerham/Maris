@@ -1,0 +1,15 @@
+:root { font-family:"Segoe UI",system-ui,sans-serif; color-scheme:light dark; --bg:#f4f7fb; --panel:#fff; --muted:#eef3f9; --text:#16233a; --border:#dce4ef; --accent:#526fe8; --income:#167451; --expense:#a13d46; }
+* { box-sizing:border-box; } body { margin:0; min-width:960px; min-height:680px; background:var(--bg); color:var(--text); }
+.shell { min-height:100vh; display:grid; grid-template:64px minmax(0,1fr) 52px / 220px minmax(480px,1fr) 320px; background:var(--bg); }
+header { grid-column:1/-1; display:flex; justify-content:space-between; align-items:center; padding:0 24px; background:var(--panel); border-bottom:1px solid var(--border); }
+nav { grid-row:2; display:flex; flex-direction:column; gap:8px; padding:20px; background:var(--muted); }
+nav a { color:inherit; padding:10px 12px; border-radius:10px; text-decoration:none; } nav a.active,nav a:focus-visible { background:var(--panel); outline:2px solid var(--accent); }
+.content { grid-row:2; padding:28px; overflow:auto; } aside { grid-row:2; padding:24px; background:var(--panel); border-left:1px solid var(--border); }
+.quick-settings { grid-column:1/-1; display:flex; gap:24px; align-items:center; padding:8px 24px; border-top:1px solid var(--border); background:var(--panel); }
+.placeholder-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; } article { padding:18px; border:1px solid var(--border); border-radius:14px; background:var(--panel); }
+.demo-badge,.privacy-banner { display:inline-block; padding:5px 9px; border-radius:999px; background:var(--muted); }
+[data-theme="dark"] { --bg:#111827; --panel:#192235; --muted:#222d42; --text:#eef4ff; --border:#354158; --accent:#9cacff; }
+[data-theme="high_contrast"] { --bg:#000; --panel:#000; --muted:#111; --text:#fff; --border:#fff; --accent:#ff0; }
+[data-privacy="on"] .sensitive { filter:blur(8px); user-select:none; }
+@media (max-width:1359px) { .shell { grid-template-columns:200px minmax(480px,1fr) 280px; } } @media (max-width:1119px) { .shell { grid-template-columns:184px 1fr; } aside { display:none; } }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; scroll-behavior:auto!important; } }

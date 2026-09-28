@@ -27,6 +27,7 @@ from wife_system.activity_import.service import ActivityImportService
 from wife_system.api.activity_import_routes import router as activity_import_router
 from wife_system.api.agent_routes import AgentIdentity, router as agent_router
 from wife_system.api.host_routes import router as host_router
+from wife_system.api.desktop_runtime import DISABLED_DESKTOP_GATE, DesktopRuntimeGate
 from wife_system.host.auth.errors import AUTH_ERROR_CODES, AuthError, AuthErrorCode
 from wife_system.host.cursor import InvalidCursorError
 from wife_system.host.registry import RegistryStartupError
@@ -131,6 +132,7 @@ def create_app(
     activity_import_service: ActivityImportService | None = None,
     activity_import_identity: ImportIdentity | None = None,
     host_runtime: HostRuntime | None = None,
+    desktop_runtime_gate: DesktopRuntimeGate | None = None,
 ) -> FastAPI:
     if host_runtime is not None and activity_import_identity is not None:
         raise ValueError("HostRuntime and a static activity import identity are mutually exclusive")
@@ -143,6 +145,7 @@ def create_app(
     )
     application.state.activity_import_service = activity_import_service
     application.state.host_runtime = host_runtime
+    application.state.desktop_runtime_gate = desktop_runtime_gate or DISABLED_DESKTOP_GATE
     # A static import identity is a legacy P3 test seam and must always be
     # explicitly injected. Host mode resolves it from the authenticated
     # DeviceSession for every request.

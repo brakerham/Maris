@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-09-28 00:06，Asia/Shanghai
+更新时间：2026-09-28 08:57，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。P4-D13 已把 Electron 故障固定为“GPU child 首先以 `0xC0000135` 退出，具体 DLL/机制未知”，并冻结 C 盘 direct→条件 Playwright 的有限三角验证；D 盘、Playwright、Windows、驱动或 sandbox 均未被预判为根因。总控先派发不启动 Electron 的 H1 package resource staging，解决 `.pyc`/`.egg-info` 等副产物进入 package 的独立缺口；动态 E3 在 H1 核对后另立任务。24 项 P4-B 独立矩阵仍全部是 `not_run`，P4-C12 未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
+P0～P3 和 P4-A 已完成验收。H1-R1 已建立明确 commit point，并通过六类确定性故障注入关闭 `P4-H1-ATOMIC-001`；总控复算 198 文件 source manifest 全匹配，接受该静态切片为 E3 输入。当前只派发 E3 的 C 盘最小 Electron 三角验证：direct 最多一次，成功后 Playwright 最多一次。app.asar、最终 EXE、24 项 P4-B 独立矩阵和 P4-C12 均未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,9 +13,9 @@ P0～P3 和 P4-A 已完成验收。P4-D13 已把 Electron 故障固定为“GPU 
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 接受 D13，发布 IF-005、H1 Prompt 和固定输入 | 2026-09-28 00:06 | 用户把 H1 Prompt 发给既有执行智能体 | [D13 总控审阅](../p4-d13-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | 接受 H1-R1，冻结 E3 的 A1→条件 A2 单次动态矩阵 | 2026-09-28 08:57 | 用户把 E3 Prompt 发给既有执行智能体 | [H1-R1 总控核对](../p4-b7-r1-h1-r1-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D13） | 442 行裁定、26 条冻结建议和 8 个未决项已经总控裁定 | 2026-09-28 00:02 | 保持停止 | [D13 方案](../phase-4-d13-electron-windows-crash-advice.md) |
-| 执行智能体 | `ready / waiting_user`（P4-B7-R1-H1） | E2-R1 保持停止；下一任务只做静态 staging，不启动 Electron | 2026-09-28 00:06 | 接收 H1 Prompt，复算 209 文件固定输入后实现 allowlist | [H1 Prompt](prompts/p4-b7-r1-h1-package-hygiene-executor.md)、[固定输入](snapshots/p4-b7-r1-h1-start.sha256) |
+| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E3） | H1-R1 已停止；下一任务只做 C 盘最小 Electron direct/条件 Playwright | 2026-09-28 08:57 | 接收 E3 Prompt，复算固定现场并执行 A1；仅 A1 成功后执行 A2 | [E3 Prompt](prompts/p4-b7-r1-e3-c-drive-electron-triangle-executor.md) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
@@ -89,12 +89,14 @@ P0～P3 和 P4-A 已完成验收。P4-D13 已把 Electron 故障固定为“GPU 
 | P4-B7-R1-E2-R1：启动分层与 package hygiene | 用户启动的既有执行智能体 | `blocked / finished` | 最小无业务 fixture 中 GPU child `0xC0000135`、browser `0x80000003`；产品零修改并安全收口 | [R1 报告](../b7-r1-e2-r1-windows-shell-running.md)、[总控核对](../p4-b7-r1-e2-r1-blocked-coordinator-review.md) |
 | P4-D13：Windows 25H2 Electron crash 裁定 | 用户启动的既有技术顾问 | `complete / finished` | 442 行方案、26 条冻结建议、A1/A2/F1 分支、版本与 hygiene 拆分已由总控接受 | [D13 方案](../phase-4-d13-electron-windows-crash-advice.md)、[总控审阅](../p4-d13-coordinator-review.md) |
 | P4-IF-005：Electron Windows 诊断与 package resource 冻结 | 头脑风暴总控 | `complete` | 冻结环境诊断顺序、安全开关、证据口径和 H1 staging 合同 | [IF-005](../phase-4-interface-freeze-005.md) |
-| P4-B7-R1-H1：Python package resource 静态 staging | 用户启动的既有执行智能体 | `ready / waiting_user` | 209 文件固定输入；只实现 allowlist、原子 staging、manifest 和静态测试，不启动 Electron/Forge package | [H1 Prompt](prompts/p4-b7-r1-h1-package-hygiene-executor.md)、[固定输入](snapshots/p4-b7-r1-h1-start.sha256) |
+| P4-B7-R1-H1：Python package resource 静态 staging | 用户启动的既有执行智能体 | `review / finished`，总控接受为 E3 输入 | H1-R1 已关闭原子性缺陷；198/198 source 匹配，静态结果不代表 P4-B 独立验收 | [H1 报告](../b7-r1-h1-package-hygiene-running.md)、[R1 总控核对](../p4-b7-r1-h1-r1-coordinator-review.md) |
+| P4-B7-R1-H1-R1：staging 原子替换返修 | 用户启动的既有执行智能体 | `review / finished`，总控已核对 | 明确 commit point；六类故障边界与执行方 14/16 项证据通过，`P4-H1-ATOMIC-001` 已关闭 | [H1-R1 总控核对](../p4-b7-r1-h1-r1-coordinator-review.md) |
+| P4-B7-R1-E3：C 盘 Electron 最小三角验证 | 用户启动的既有执行智能体 | `ready / waiting_user` | A1 direct 最多一次；只有 A1 成功才运行同目录 A2 Playwright；不含 app.asar/EXE/F1/C12 | [E3 Prompt](prompts/p4-b7-r1-e3-c-drive-electron-triangle-executor.md) |
 | P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
-- P4-B7 的供应链、完整 Electron 归档、真实 Host/sidecar 和 package 已有执行方证据；最小 fixture 证明当前启动故障独立于 Maris 业务。D13 已冻结首故障与三角验证边界，但具体 DLL/机制仍未知。直接复制 `src/migrations` 带入 `.pyc`/`.egg-info` 的独立缺口先由 H1 静态解决；H1 通过不代表 Electron 环境或最终 package 通过。Forge 8 alpha 仍只用于开发/测试，正式发布前必须升级并复验 beta/rc/stable，优先 stable。
+- H1 的 allowlist 和静态接线有效，但 replacement 的 backup 清理与 rollback 共用异常分支；payload backup 已删除、manifest backup 删除失败时，旧 payload 无法恢复。H1-R1 必须用确定性故障注入覆盖 commit 前后；修复通过仍不代表 Electron 环境或最终 package 通过。
 - P4-C12 不能提前启动：24 项矩阵已经存在，不需要测试智能体再次设计；只有 B7 形成稳定产品快照后，测试智能体才能绑定快照执行独立验收。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
@@ -119,6 +121,6 @@ P0～P3 和 P4-A 已完成验收。P4-D13 已把 Electron 故障固定为“GPU 
 
 ## 下一次总控检查
 
-1. 用户把 `docs/coordination/prompts/p4-b7-r1-h1-package-hygiene-executor.md` 全文发送给既有执行智能体。
-2. 执行智能体复算 H1 固定输入，只实现 allowlist、原子 staging、manifest 与静态/单元测试；Electron、Forge package、sidecar、数据库和外部集成都不启动。
-3. 技术顾问和测试智能体保持停止；不得重新发送 D13、E2-R1/E2/R1/E1，E3 与 P4-C12 继续 `not_started`。
+1. 用户把 `docs/coordination/prompts/p4-b7-r1-h1-r1-staging-atomicity-executor.md` 全文发送给既有执行智能体。
+2. 执行智能体只修 replacement commit point 与六类确定性故障注入；不重做 allowlist，不启动 Electron/Forge package/sidecar/数据库。
+3. 技术顾问和测试智能体保持停止；不得重复 H1/D13/E2 系列，E3 与 P4-C12 继续 `not_started`。
