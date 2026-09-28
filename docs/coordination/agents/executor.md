@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E4-PKG-R2 — 复用已接受预检，只执行一次真实 package
-- 状态：`review / finished`
-- 最近更新：2026-09-29 01:27，Asia/Shanghai（执行方交付）
-- 可修改范围：本角色日志、新增 PKG-R2 运行说明和 source manifest；create-new package-resume-2 证据，现有 wrapper 可生成并清理 workspace staging/out，Forge 可生成 out。只执行一次 package 和成功后的只读静态核对；禁止重跑 Q1～Q6、产品/测试/依赖/lock 修改、永久环境、其他角色和 Git 写操作。
+- 当前任务：P4-B7-R1-E4-DYN-R1 — 固定 package 的 app.asar 与最终 EXE 单次动态门禁
+- 状态：`blocked / finished`
+- 最近更新：2026-09-29 02:08，Asia/Shanghai（P1 失败交付并停止）
+- 可修改范围：本角色日志、新增 DYN-R1 运行说明和 source manifest、create-new `dynamic-resume-1` 外部证据；只读使用固定 package 和既有 PKG-R2/E3 证据。禁止产品、测试、依赖、lock、Forge、package、migration、独立验收、其他角色和 Git 写操作。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：唯一 package 与全部静态门禁通过；证据和资源已收口
-- 步骤开始时间：2026-09-29 01:09 Asia/Shanghai
-- 最近有效进展：package exit 0；out 140 文件/386491445 bytes，fuse 前六项匹配，H1 67/67 精确匹配，污染 0，staging/transition 0；所有冻结输入终点匹配
-- 最近心跳：2026-09-29 01:27 Asia/Shanghai
-- 下一检查点：无自动后续；总控核对 PKG-R2 三文件交付与外部 evidence 后决定一次性动态任务
-- 等待对象：头脑风暴总控；技术顾问、测试、app.asar/EXE/P4-C12 保持停止
-- 活动进程或会话：PowerShell 6424、package native 7340、静态 Node 11552 均结束；已知和固定 C 根自有进程残留 0
-- 重试次数：PKG-R2 package 1/1，成功；Q1～Q6 accepted_from_previous_evidence / not_rerun
-- 最近输出：Maris.exe `149ccd6e...4199`，app.asar `c38cd0c7...22f6`；source/dist/node_modules/lock 不变，PATH/cache 已还原；动态产物和 P4-C12 not_run
+- 当前步骤：P1 唯一动态预算已使用并按失败规则停止；资源和证据已收口
+- 步骤开始时间：2026-09-29 01:46 Asia/Shanghai
+- 最近有效进展：P1 1/1 在窗口/API 断言前因 runner 的 root PID 身份假设失败；实际 browser 子树已按父子关系、固定路径、启动时间和 owner marker receipt 定向清理，终点产品进程/窗口/listener 为 0，固定产物全部不变
+- 最近心跳：2026-09-29 02:08 Asia/Shanghai
+- 下一检查点：无自动后续；总控核对 blocked 证据并决定是否另立具有新动态预算的恢复任务
+- 等待对象：头脑风暴总控；技术顾问、测试和 P4-C12 保持停止
+- 活动进程或会话：P1 runner、Electron browser 子树和 sidecar 均已结束；产品进程、窗口、listener 为 0
+- 重试次数：P1 1/1，失败后未重跑；P2 0/1，`not_run`
+- 最近输出：P1 分类 `p1_harness_root_identity_assumption`、产品结果 `unverified`；外部运行证据 84 条；source/dist/resources/out/EXE/app.asar/fuses 终点全部匹配
 
 ## 待接任务
 
@@ -59,6 +59,32 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-29 02:08 Asia/Shanghai — P4-B7-R1-E4-DYN-R1 blocked 交付并停止
+
+- P1 唯一预算 1/1：默认 Playwright Electron loader、无 `executablePath`、最终 app.asar 应用参数；记录 5,010 ms，未触发 90 秒硬超时。首失败为 runner `root_identity_mismatch`，发生在窗口与 preload API 断言前；`runtime.recover()` 0/1。
+- 只读分类确认 Playwright 返回的短生命周期 PID 已退出，实际 browser 是它的直接子进程并匹配固定 executable、本轮启动时间和 owner marker receipt。结论固定为 `p1_harness_root_identity_assumption`、产品 `unverified`；不把它写成产品通过或产品 crash，也不重跑 P1。
+- runner 初始收口摘要不可信；后续按父子关系、固定路径、启动时间和 owner marker receipt 联合确认并定向清理 6 个本轮进程，命令 exit 0、终点 0。v2 静态读取器确认产品进程 0、窗口 0、listener 0、Tray 推断 0。
+- 终点 198 source、73 dist、67 Python resources、140 out、EXE、app.asar 和 production fuses 全部匹配；捕获日志无冻结 crash/assertion 或秘密模式。隔离 owner session 和虚拟数据库存在，但不能替代未执行的 runtime/modules/security API 断言。
+- P2 依冻结顺序为 `not_run`，预算 0/1；最终 EXE、CDP、P2 recover 和自动退出均未启动。测试、build、package、P4-C12 全部未运行。
+- 静态读取器 v1 的空 listener 查询语法失败，以及首次 v2 literal replacement 未命中均有证据保留；它们没有启动产品或改变动态事实。v2 只读复算通过。
+- 交付：[DYN-R1 运行说明](../../b7-r1-e4-dyn-r1-running.md)、[198 项 source manifest](../../../apps/desktop/b7-r1-e4-dyn-r1-source.sha256) 和本日志。外部运行证据清单 84 条，SHA `db316ae1...b8bf`。
+- 状态 `blocked / finished`。未修改 control/overview、其他角色、产品、测试、依赖、lock、Forge、系统设置或 Git；等待总控决定新的恢复任务，当前不得自行重跑 P1、进入 P2 或启动 P4-C12。
+
+### 2026-09-29 01:49 Asia/Shanghai — P4-B7-R1-E4-DYN-R1 接单与起点门禁
+
+- 最新 control `2026-09-29T02:10:00+08:00` 只授权既有执行智能体复用不可变 package，先运行 P1 app.asar 一次；P1 全部通过并收口后才可运行 P2 最终 EXE 一次。技术顾问、测试和 P4-C12 保持停止。
+- 起点清单 246 unique、246 matched、0 missing/mismatch，SHA-256 `28bc1658df1608164952ffe2369536979e0faaef530fd8c899891d1f7259c58f`。清单路径不是 Ordinal 顺序；该项不属于任务卡起点失败条件，原文件保持不变。
+- 已完整读取任务卡、IF-003/004/005、PKG-R2 执行与总控审阅、E3 总控审阅；只读确认 E3 A2 的默认 Electron loader 成功证据和当前 package 的 E2E 退出入口。
+- 当前尚未创建 `dynamic-resume-1`，也未启动 Electron、Maris.exe、sidecar 或数据库。下一步只读核对 PKG-R2 40/40 evidence、source 198、dist 73、最终 EXE/app.asar、67 项 resources、fuses 和现场残留；全部通过后重读 control，再进入 P1 0/1。
+- 本轮只更新执行角色日志；不修改产品、测试、依赖、lock、Forge、migration、control/overview、其他角色或 Git 状态。
+
+### 2026-09-29 01:56 Asia/Shanghai — P1 单次动态门禁启动前检查点
+
+- `dynamic-resume-1` 已按 create-new 建立。纯静态 preflight 通过：PKG-R2 evidence 40/40、source 198/198、Electron dist 73/73、Python resources 67/67、package out 140/140，0 missing/mismatch；EXE、app.asar、production fuses、默认 Electron loader 和项目 Python 均匹配冻结值。
+- P1 runner 只位于受限外部 evidence，静态语法通过；将使用默认 Playwright Electron loader、不传 `executablePath`，最终 app.asar 为应用参数，隔离 profile/虚拟数据库/动态 loopback/随机 owner marker，硬上限 90 秒。
+- 启动前已再次读取 control `2026-09-29T02:10:00+08:00`，SHA-256 `58a29c4488ef04531e9da63812140605bd2cbdbed6f19563df5dbb273cb951bb`，职责与顺序未变化。当前没有旧任务产品进程、窗口、监听或 Tray 所属进程。
+- 下一检查点：P1 唯一运行结束并完成进程树、端口、窗口、事件、日志、profile 与产物摘要收口。若任一 gate 失败则不进入 P2。
 
 ### 2026-09-29 01:27 Asia/Shanghai — P4-B7-R1-E4-PKG-R2 执行方交付
 

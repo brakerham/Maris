@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-29T02:10:00+08:00`
+- 指令版本：`2026-09-29T02:14:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：`P4-B7-R1-E4-PKG-R2` 的唯一真实 package 已退出 0；最终 EXE/app.asar 摘要、production fuses、67 项 Python resources、零污染、staging 和进程收口均经总控复算接受。发布 `P4-B7-R1-E4-DYN-R1`，禁止重跑预检、测试、build 或 package，只验证同一份不可变产物。
-- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e4-dyn-r1-executor.md` 全文发送给既有执行智能体。技术顾问与测试智能体保持停止；先单次运行 app.asar，只有通过才单次运行最终 EXE。P4-C12 和前端业务实现仍未启动。
+- 当前动作：`P4-B7-R1-E4-DYN-R1` 在调用窗口/preload API 前因 runner 的 `root_identity_mismatch` 停止。总控复算确认 Playwright 返回 PID 已退出，而唯一存活 Electron browser 是其路径、时间、marker 均匹配的直接子进程；84/84 evidence 匹配，未发现 crash。发布 `P4-B7-R1-E4-DYN-R2`，只修任务外 root promotion 并给予新 P1 单次预算。
+- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e4-dyn-r2-executor.md` 全文发送给既有执行智能体。技术顾问与测试智能体保持停止；不得重跑 package。P1 通过后才运行一次最终 EXE，P4-C12 继续停止。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；P4-A 验收提交 `88fb178` 与 P4-B 头脑风暴提交 `6b0e485` 已推送，远端 `main` 当前为 `6b0e485`。这些仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 
 ## 本地单主人产品范围
@@ -109,8 +109,9 @@
 | P4-B7-R1-E4-R0-R1-A1 标准流前置修正 | 执行智能体；`blocked / finished` | 三条标准流显式接管后仍记录 `conhost.exe` 并触发精确进程数门禁；Q1～Q6/package 均 not_run | 唯一修正预算已用完；禁止 attempt-2、synthetic 重跑或继续修改同一 driver |
 | P4-B7-R1-E4-PKG-R1 直接预检结果 | 执行智能体；`blocked / finished` | Q1～Q6 原始真实结果均通过；核对代码错误读取 `inner-0` 后停止，package 0/1 | 禁止重跑预检或修改旧 evidence；总控以原始 inner 证据接受 Q6 |
 | P4-B7-R1-E4-PKG-R2 package-only | 执行智能体；`review / finished`，总控已接受 | 唯一 package 退出 0；140 文件产物、fuses、67 项 Python resources、零污染与进程收口通过 | PKG-R2 停止；禁止重跑 Q1～Q6、package 或修改不可变产物 |
-| P4-B7-R1-E4-DYN-R1 最终动态门禁 | 执行智能体；`ready / waiting_user` | 复用 PKG-R2 package；P1 app.asar 单次通过后，才允许 P2 最终 EXE 单次黑盒门禁 | 用户发送 DYN-R1 Prompt；禁止 install、测试、build、package、产品修改或启动 P4-C12 |
-| P4-C12 Windows Shell 独立验收 | `not_started`；等待 DYN-R1 和 B7 稳定快照 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定动态门禁通过后的稳定终点快照生成 | 测试智能体当前停止；不得提前执行、修改产品或把执行方门禁当作独立通过证据 |
+| P4-B7-R1-E4-DYN-R1 最终动态门禁 | 执行智能体；`blocked / finished` | P1 1/1 在产品 API 前由错误 root PID 假设停止；产品 unverified，P2 0/1 not_run；84/84 evidence 与最终资源收口通过 | DYN-R1 停止；旧 evidence/profile/PID 只读，不得补跑或复用 |
+| P4-B7-R1-E4-DYN-R2 root promotion 恢复 | 执行智能体；`ready / waiting_user` | 新 runner 允许唯一匹配 Electron 子进程提升为 browser root；新 P1 通过后才执行 P2 | 用户发送 DYN-R2 Prompt；若所有权问题再次阻塞，终止当前自动动态路线，不创建同类 DYN-R3 |
+| P4-C12 Windows Shell 独立验收 | `not_started`；等待 DYN-R2 和 B7 稳定快照 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定动态门禁通过后的稳定终点快照生成 | 测试智能体当前停止；不得提前执行、修改产品或把执行方门禁当作独立通过证据 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |

@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E4-DYN-R1 — 复用已接受 package，条件式验证 app.asar 与最终 EXE
+- 当前任务：P4-B7-R1-E4-DYN-R2 — 修正 browser root 提升后恢复最终动态门禁
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-29 02:10，Asia/Shanghai
+- 最近更新：2026-09-29 02:14，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -147,19 +147,30 @@
 - [P4-B7-R1-E4-PKG-R2 总控核对](../../p4-b7-r1-e4-pkg-r2-coordinator-review.md)
 - [P4-B7-R1-E4-DYN-R1 Prompt](../prompts/p4-b7-r1-e4-dyn-r1-executor.md)
 - [P4-B7-R1-E4-DYN-R1 固定输入快照](../snapshots/p4-b7-r1-e4-dyn-r1-start.sha256)
+- [P4-B7-R1-E4-DYN-R1 阻塞总控核对](../../p4-b7-r1-e4-dyn-r1-blocked-coordinator-review.md)
+- [P4-B7-R1-E4-DYN-R2 Prompt](../prompts/p4-b7-r1-e4-dyn-r2-executor.md)
+- [P4-B7-R1-E4-DYN-R2 固定输入快照](../snapshots/p4-b7-r1-e4-dyn-r2-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：PKG-R2 package 与静态产物已复算接受；DYN-R1 条件式动态门禁已冻结
-- 步骤开始时间：2026-09-29 02:10，Asia/Shanghai
-- 最近有效进展：2026-09-29 02:10，Asia/Shanghai（PKG-R2 evidence 40/40、最终二进制、fuses、67 项 resources 与收口均匹配）
-- 最近心跳：2026-09-29 02:10，Asia/Shanghai
-- 下一检查点：P1 app.asar 单次动态门禁完成；只有通过才进入 P2 最终 EXE
-- 等待对象：用户把 DYN-R1 Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
+- 当前步骤：DYN-R1 runner 编排失败已复算；DYN-R2 root promotion 规则与新 P1 预算已冻结
+- 步骤开始时间：2026-09-29 02:14，Asia/Shanghai
+- 最近有效进展：2026-09-29 02:14，Asia/Shanghai（84/84 evidence 匹配；实际 browser 为返回 PID 的唯一匹配直接子进程；6/6 owned PID 已清理）
+- 最近心跳：2026-09-29 02:14，Asia/Shanghai
+- 下一检查点：DYN-R2 P1 新预算完成；只有全部通过才进入 P2
+- 等待对象：用户把 DYN-R2 Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
 - 活动进程或会话：B7 启动的 Uvicorn/Electron/Maris/Playwright 均已退出；无项目服务；没有活动依赖安装
 - 重试次数：E2-R1 最小 fixture 只运行一次即因不受控弹窗停止；总控未再次启动 Electron
-- 最近输出：PKG-R2 总控核对、DYN-R1 Prompt 与新固定输入；总控只读复算产物，没有启动 Electron、Maris 或 sidecar
+- 最近输出：DYN-R1 阻塞总控核对、DYN-R2 Prompt 与新固定输入；总控只读复算证据，没有启动 Electron、Maris 或 sidecar
+
+### 2026-09-29 02:14 Asia/Shanghai — 接受 DYN-R1 编排失败并发布单次 root promotion 恢复
+
+- 复算 DYN-R1 84/84 runtime evidence；Playwright 返回 PID 已退出，实际 browser 是其唯一匹配的直接子进程。
+- 接受 `p1_harness_root_identity_assumption` 分类；产品保持 `unverified`，没有 crash 或产品缺陷证据。
+- 发布 DYN-R2：不设精确进程数，不新增 synthetic；唯一匹配子进程提升为 browser root，新 P1 通过后才进入 P2。
+- 若所有权识别再次阻塞，不创建同类 DYN-R3，终止当前自动动态路线并重新裁定验收方式。
+- 总控发现 `.pnpm-store/**`、DYN-R1 交付和执行日志存在异常 staged 状态，与执行报告不一致；来源记为 `unverified`。已只撤销 index 暂存，文件内容和缓存未改动，后续任务增加 staged-path 零写入门禁。
 
 ### 2026-09-29 02:10 Asia/Shanghai — 接受唯一 package 并发布条件式动态门禁
 
