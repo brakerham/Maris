@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E3 — H1-R1 已关闭原子替换缺陷，等待用户把 C 盘最小三角验证 Prompt 发给执行智能体
+- 当前任务：P4-B7-R1-E4 — E3 C 盘最小三角验证已接受，等待用户把最终 package/app.asar/EXE 门禁 Prompt 发给执行智能体
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-28 08:57，Asia/Shanghai
+- 最近更新：2026-09-28 12:30，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -120,19 +120,30 @@
 - [P4-B7-R1-H1-R1 总控核对](../../p4-b7-r1-h1-r1-coordinator-review.md)
 - [P4-B7-R1-E3 执行智能体 Prompt](../prompts/p4-b7-r1-e3-c-drive-electron-triangle-executor.md)
 - [P4-B7-R1-E3 固定输入快照](../snapshots/p4-b7-r1-e3-start.sha256)
+- [P4-B7-R1-E3 总控核对](../../p4-b7-r1-e3-coordinator-review.md)
+- [P4-B7-R1-E4 执行智能体 Prompt](../prompts/p4-b7-r1-e4-package-product-gates-executor.md)
+- [P4-B7-R1-E4 固定输入快照](../snapshots/p4-b7-r1-e4-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：H1-R1 代码、六类故障边界和 198 文件终点已核对；E3 Prompt 已冻结，准备固定输入快照
-- 步骤开始时间：2026-09-28 08:41，Asia/Shanghai
-- 最近有效进展：2026-09-28 08:57，Asia/Shanghai（209 项起点只有 6 个授权变化；H1 source 198/198 匹配；原缺陷关闭）
-- 最近心跳：2026-09-28 08:57，Asia/Shanghai
-- 下一检查点：既有执行智能体读取 E3 Prompt，在 C 盘先运行唯一一次 A1 direct；只有 A1 成功才运行 A2
-- 等待对象：用户把 E3 Prompt 全文发送给既有执行智能体；技术顾问和测试智能体保持停止
+- 当前步骤：E3 仓库交付与 39 文件 C 盘外部证据已核对；E4 Prompt 已冻结，正在生成固定输入快照
+- 步骤开始时间：2026-09-28 12:19，Asia/Shanghai
+- 最近有效进展：2026-09-28 12:30，Asia/Shanghai（A1/A2 各一次通过；A1 非零来自 driver 过严断言；198/198 source 与 39/39 evidence 匹配）
+- 最近心跳：2026-09-28 12:30，Asia/Shanghai
+- 下一检查点：既有执行智能体读取 E4 Prompt，在新的 C 盘源码副本先完成静态与唯一 package；只在前级通过后依次启动 P1/P2
+- 等待对象：用户把 E4 Prompt 全文发送给既有执行智能体；技术顾问和测试智能体保持停止
 - 活动进程或会话：B7 启动的 Uvicorn/Electron/Maris/Playwright 均已退出；无项目服务；没有活动依赖安装
 - 重试次数：E2-R1 最小 fixture 只运行一次即因不受控弹窗停止；总控未再次启动 Electron
-- 最近输出：H1-R1 总控核对、E3 Prompt 与固定输入；不启动 Electron 的总控静态核对已完成
+- 最近输出：E3 总控核对、E4 Prompt 与固定输入；总控未启动 Electron、Maris 或 sidecar
+
+### 2026-09-28 12:30 Asia/Shanghai — 接受 E3 并发布 E4
+
+- 复算 E3 起点：210 matched，唯一授权 mismatch 为 executor 日志，0 missing；复算 E3 source 为 198/198 matched，manifest SHA-256 `04c2e344...6b1dc1`。
+- 只读复算 `C:\MarisE3\E3-20260928-0911`：final evidence 39/39 matched，manifest SHA-256 `4b21b569...5b46`；A1/A2 dist、fixture、marker、日志、Windows 事件和进程收口均符合任务卡。
+- A1 原始 driver 返回 1 是因为额外要求 `before-quit`；fixture 使用 `app.exit(0)`，browser 实际退出 0，真实必需序列 `app-ready → did-finish-load → normal-exit` 完整。原始结果保留且没有重跑，总控按任务合同接受 A1。
+- A2 使用默认 Playwright loader、未传 `executablePath`，连接/关闭与 Electron 退出均为 0。E3 只支持执行位置/ACL/ADS/路径元数据类差异，不宣称具体根因或产品门禁通过。
+- 发布 E4：在新的 C 盘 198 文件源码副本中运行有限静态检查、污染前置和唯一 package；只有 package 通过才单次启动 app.asar，只有 P1 通过才直接启动单次最终 EXE。E4 禁止修改产品，任一级失败立即停止。
 
 ### 2026-09-28 08:57 Asia/Shanghai — 接受 H1-R1 并发布 E3
 
@@ -178,10 +189,10 @@
 
 ## 下一步
 
-1. 用户把 E3 Prompt 全文发送给既有执行智能体。
-2. 执行智能体复算固定现场，在 `C:\MarisE3\<run-id>` 运行唯一一次 A1 direct；只有 A1 完全成功才运行唯一一次 A2 Playwright。
-3. 任一 cell 出现弹窗、非零 child/browser、既有状态码、新异常、日志失败或进程残留即停止并保留受限现场；不得自动进入 F1。
-4. 技术顾问和测试智能体保持停止；不得重发 H1/H1-R1、E2-R1/E2/R1/E1，P4-C12 继续未启动。
+1. 用户把 E4 Prompt 全文发送给既有执行智能体。
+2. 执行智能体复算固定现场，在新的 `C:\MarisE4\<run-id>` 建立 198 文件同摘要源码副本，完成有限静态门禁和唯一 package。
+3. 只有 package 与最终资源完全通过才运行单次 app.asar；只有 P1 完全通过才直接启动单次最终 `Maris.exe`。任一级失败立即停止，不能在 E4 内返修或重跑。
+4. 技术顾问和测试智能体保持停止；不得重发 E3/H1/H1-R1/E2-R1/E2/R1/E1，P4-C12 继续未启动。
 
 ### 2026-09-27 23:40 Asia/Shanghai — 接受 E2-R1 最小复现并发布 D13
 

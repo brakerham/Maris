@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-09-28 08:57，Asia/Shanghai
+更新时间：2026-09-28 12:30，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。H1-R1 已建立明确 commit point，并通过六类确定性故障注入关闭 `P4-H1-ATOMIC-001`；总控复算 198 文件 source manifest 全匹配，接受该静态切片为 E3 输入。当前只派发 E3 的 C 盘最小 Electron 三角验证：direct 最多一次，成功后 Playwright 最多一次。app.asar、最终 EXE、24 项 P4-B 独立矩阵和 P4-C12 均未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
+P0～P3 和 P4-A 已完成验收。H1-R1 已关闭 package staging 原子性缺陷；E3 的 C 盘 direct 与默认 Playwright loader 各一次通过，总控已核对 198/198 仓库 source 和 39/39 C 盘原始证据。当前只派发 E4：在新的 C 盘隔离源码副本中依次执行有限静态门禁、唯一一次 Forge package、单次 app.asar 和单次最终 `Maris.exe` 黑盒门禁。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,9 +13,9 @@ P0～P3 和 P4-A 已完成验收。H1-R1 已建立明确 commit point，并通�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 接受 H1-R1，冻结 E3 的 A1→条件 A2 单次动态矩阵 | 2026-09-28 08:57 | 用户把 E3 Prompt 发给既有执行智能体 | [H1-R1 总控核对](../p4-b7-r1-h1-r1-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | 接受 E3，冻结 E4 的 package→app.asar→最终 EXE 顺序门禁 | 2026-09-28 12:30 | 用户把 E4 Prompt 发给既有执行智能体 | [E3 总控核对](../p4-b7-r1-e3-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D13） | 442 行裁定、26 条冻结建议和 8 个未决项已经总控裁定 | 2026-09-28 00:02 | 保持停止 | [D13 方案](../phase-4-d13-electron-windows-crash-advice.md) |
-| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E3） | H1-R1 已停止；下一任务只做 C 盘最小 Electron direct/条件 Playwright | 2026-09-28 08:57 | 接收 E3 Prompt，复算固定现场并执行 A1；仅 A1 成功后执行 A2 | [E3 Prompt](prompts/p4-b7-r1-e3-c-drive-electron-triangle-executor.md) |
+| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E4） | E3 已停止；下一任务只做 C 盘固定源码的 package、app.asar 与最终 EXE 门禁 | 2026-09-28 12:30 | 接收 E4 Prompt，先复算固定现场；任一级失败即停止 | [E4 Prompt](prompts/p4-b7-r1-e4-package-product-gates-executor.md) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
@@ -91,12 +91,13 @@ P0～P3 和 P4-A 已完成验收。H1-R1 已建立明确 commit point，并通�
 | P4-IF-005：Electron Windows 诊断与 package resource 冻结 | 头脑风暴总控 | `complete` | 冻结环境诊断顺序、安全开关、证据口径和 H1 staging 合同 | [IF-005](../phase-4-interface-freeze-005.md) |
 | P4-B7-R1-H1：Python package resource 静态 staging | 用户启动的既有执行智能体 | `review / finished`，总控接受为 E3 输入 | H1-R1 已关闭原子性缺陷；198/198 source 匹配，静态结果不代表 P4-B 独立验收 | [H1 报告](../b7-r1-h1-package-hygiene-running.md)、[R1 总控核对](../p4-b7-r1-h1-r1-coordinator-review.md) |
 | P4-B7-R1-H1-R1：staging 原子替换返修 | 用户启动的既有执行智能体 | `review / finished`，总控已核对 | 明确 commit point；六类故障边界与执行方 14/16 项证据通过，`P4-H1-ATOMIC-001` 已关闭 | [H1-R1 总控核对](../p4-b7-r1-h1-r1-coordinator-review.md) |
-| P4-B7-R1-E3：C 盘 Electron 最小三角验证 | 用户启动的既有执行智能体 | `ready / waiting_user` | A1 direct 最多一次；只有 A1 成功才运行同目录 A2 Playwright；不含 app.asar/EXE/F1/C12 | [E3 Prompt](prompts/p4-b7-r1-e3-c-drive-electron-triangle-executor.md) |
+| P4-B7-R1-E3：C 盘 Electron 最小三角验证 | 用户启动的既有执行智能体 | `review / finished`，总控已接受 | A1 direct 与 A2 默认 Playwright 各一次通过；198/198 source、39/39 外部证据和零残留通过 | [E3 总控核对](../p4-b7-r1-e3-coordinator-review.md) |
+| P4-B7-R1-E4：package、app.asar 与最终 EXE 恢复门禁 | 用户启动的既有执行智能体 | `ready / waiting_user` | 新 C 盘源码副本；唯一 package，成功后单次 app.asar 与单次最终 EXE；验证中不改产品 | [E4 Prompt](prompts/p4-b7-r1-e4-package-product-gates-executor.md) |
 | P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
-- H1 的 allowlist 和静态接线有效，但 replacement 的 backup 清理与 rollback 共用异常分支；payload backup 已删除、manifest backup 删除失败时，旧 payload 无法恢复。H1-R1 必须用确定性故障注入覆盖 commit 前后；修复通过仍不代表 Electron 环境或最终 package 通过。
+- H1 replacement 原子性缺陷已由 H1-R1 关闭；E3 也证明 C 盘 direct/default Playwright 路线稳定。尚未通过的是最终 package 污染前置、app.asar 真实 Host 链和 production-fused `Maris.exe` 黑盒门禁，E4 必须按顺序各执行一次，不能把 E3 成功外推为产品通过。
 - P4-C12 不能提前启动：24 项矩阵已经存在，不需要测试智能体再次设计；只有 B7 形成稳定产品快照后，测试智能体才能绑定快照执行独立验收。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。

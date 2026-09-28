@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-H1-R1 — staging 原子替换返修
+- 当前任务：P4-B7-R1-E3 — C 盘 Electron 最小三角验证
 - 状态：`review / finished`
-- 最近更新：2026-09-28 01:16，Asia/Shanghai
-- 可修改范围：staging 脚本、必要时其类型声明、专属 package resource tests、H1 运行说明/source manifest 及本文件；禁止修改 allowlist/staging 根/manifest 格式/Forge 三入口/package wrapper 顺序、lock/依赖、Electron/Python 产品、独立测试/矩阵/报告、冻结/control/overview/其他角色、`.claude/**` 或 Git 状态。
+- 最近更新：2026-09-28 10:48，Asia/Shanghai
+- 可修改范围：新增 E3 运行说明、E3 source manifest 及本角色日志；C 盘任务根只保存固定工具、无业务 fixture、profile 和受限原始证据。禁止修改产品/依赖/lock/H1 staging/测试、独立测试/矩阵/报告、冻结/control/overview/其他角色、`.claude/**` 或 Git 状态。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：H1-R1 commit point、六类确定性故障测试、有限验证、source manifest 与资源清理完成，已停止并提交总控复算
-- 步骤开始时间：2026-09-28 01:04 Asia/Shanghai
-- 最近有效进展：2026-09-28 01:16 Asia/Shanghai（六类 replacement 与原 H1 测试 14 passed，相邻合计 16 passed；真实 source 67 项一致并清理）
-- 最近心跳：2026-09-28 01:16 Asia/Shanghai
-- 下一检查点：头脑风暴总控复算 H1-R1 终点快照；执行智能体不自行启动 E3 或独立验收
-- 等待对象：头脑风暴总控核对返修；技术顾问、测试智能体、E3 和 P4-C12 继续停止
-- 活动进程或会话：无；node_modules、任务工具、staging 和测试输出均已清理，相关产品进程为 0
-- 重试次数：0
-- 最近输出：[H1-R1 追加运行说明](../../b7-r1-h1-package-hygiene-running.md)；[更新后 H1 source manifest](../../../apps/desktop/b7-r1-h1-source.sha256) 198 matched、0 mismatch、0 missing，manifest SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`
+- 当前步骤：E3 交付冻结并停止，等待头脑风暴总控复算
+- 步骤开始时间：2026-09-28 10:48 Asia/Shanghai
+- 最近有效进展：2026-09-28 10:48 Asia/Shanghai（A1 与 A2 各一次均通过，运行说明、198 文件 source manifest 和 C 盘最终 evidence manifest 已形成）
+- 最近心跳：2026-09-28 10:48 Asia/Shanghai
+- 下一检查点：总控核对 E3 仓库三文件与保留的 C 盘现场；执行智能体不自行启动 F1、P4-C12、app.asar/package/EXE 或其他诊断
+- 等待对象：头脑风暴总控复算与下一任务；技术顾问、测试智能体、F1、app.asar/EXE 和 P4-C12 继续停止
+- 活动进程或会话：无；A1 PID 25148、A2 PID 22596 均已退出，任务 `electron.exe` 精确路径残留为 0；完整任务根 `C:\MarisE3\E3-20260928-0911` 保留
+- 重试次数：A1 1/1 已使用并通过；A2 1/1 已使用并通过
+- 最近输出：A1 后置 SHA-256 `66ede312...20cb`、A2 后置 SHA-256 `da165cb...001c`；C 盘 evidence 39 文件清单 SHA-256 `4b21b569...5b46`；E3 source 198/198、manifest SHA-256 `04c2e344...dc1`
 
 ## 待接任务
 
@@ -59,6 +59,38 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-28 09:11 Asia/Shanghai — P4-B7-R1-E3 接单与动态起点门禁
+
+- 状态：`in_progress / active`。最新 control `2026-09-28T08:57:00+08:00` 指定执行智能体为 E3 唯一负责人；只允许 C 盘 A1 direct 一次，A1 完全成功后才允许 A2 默认 Playwright 一次。D 基线、Procmon/F1、诊断开关、版本遍历、app.asar、最终 EXE、P4-C12、技术顾问和测试智能体均停止。
+- 起点证据：`p4-b7-r1-e3-start.sha256` 为 211 matched、0 mismatch、0 missing，自身 SHA-256 `b4ac70fa815314da1b3e4dd2341ee758d9e7a1eaa15687e443e15c1a7be62576`；H1 source 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`；lock 为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。
+- 环境门禁：旧任务相关 Electron、Maris、项目 sidecar 进程为 0；候选任务根 `C:\MarisE3\E3-20260928-0911` 不存在，满足全新短 ASCII、无空格要求；没有启动或按名称清理用户其他进程。
+- 当前长操作：重读 control 后，仅从官方来源恢复 Node 24.21.0、pnpm 12.7.0、Electron 44.4.5 与 frozen Playwright 1.63.0，在 C 盘同形 workspace 建立受限证据现场。下一检查点为 lock、archive、dist、fixture、ACL/ADS、环境与 run manifest 全部冻结；首次 Electron 启动前再次读取 control。
+
+### 2026-09-28 09:32 Asia/Shanghai — E3 固定工具与 A1 前证据冻结
+
+- 状态：`in_progress / active`。C 盘任务根仍为 `C:\MarisE3\E3-20260928-0911`；尚未启动任何 Electron cell，A1/A2 重试次数均为 0。
+- 固定工具：官方 Node 24.21.0 ZIP SHA-256 `158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541`；npm registry 元数据确认 pnpm 12.7.0 tarball SHA-1 `2734f196debfb5e42276568a1c9fc57a058263e0`、registry SHA-512 与本地相同；官方 Electron 44.4.5 ZIP 为 158,184,819 bytes、SHA-256 `11c395820a5aaa8ebcc0686b476d0ac98a730274ebfbdc8cf5538a7c2815cb5d`；frozen Playwright 为 1.63.0。
+- 安装与内容：仓库和 C 盘 lock 均为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`；Electron dist 为 73 文件，清单 SHA-256 `ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f`；同一最小 fixture 为 3 文件，清单 SHA-256 `80e74627c3d2225567305e1ce425042b98598b0083556055276860a9ec0257bf`。
+- 证据：任务根与 dist ACL 均为继承规则、未启用 ACL protection；Electron executable、官方 archive 和三个 fixture 文件均只有默认 `:$DATA` stream；路径长度、Windows/display 摘要、脱敏参数与来源已写入 C 盘受限 evidence。原始 owner/ACL 只留在 C 盘，不写入仓库报告。
+- 当前步骤：再次逐文件复算 dist/fixture，重读 control；匹配后执行 A1 direct 唯一一次，硬上限 60 秒，记录 PID、精确时间窗、marker、两类日志、退出码、系统事件和进程收口。
+
+### 2026-09-28 09:42 Asia/Shanghai — E3 A1 direct 通过
+
+- A1 只启动一次：UTC `2026-09-28T01:36:31.690Z` 至 `01:36:36.394Z`，browser PID 25148，退出码 0，未超时。marker 的 status/run-id/cell 与 sandbox 三项均匹配，fixture 依次记录 `app-ready`、`did-finish-load`、`normal-exit`。
+- 证据门禁：driver/electron/fixture/stdout/stderr 均落盘；所有日志对冻结故障码和 gone/assertion/Target crashed 模式命中 0。精确时间窗内 Application 与 Code Integrity 均返回无事件，相关异常为 0；任务 Electron 精确可执行路径的最终进程数为 0。
+- 内容门禁：Electron dist 73 文件前后均为 `ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f`；fixture 3 文件前后均为 `80e74627c3d2225567305e1ce425042b98598b0083556055276860a9ec0257bf`。
+- 驱动勘误：原始 result 将 `before-quit` 误列为必需顺序，因此 driver 自身退出 1；fixture 使用 `app.exit(0)`，而任务合同只要求 ready/load/marker/browser exit/logs。没有重跑 A1；后置汇总按任务卡七项实际条件计算为 true，SHA-256 `66ede312d611251fe7152c4602473b21ad1797df3d8d78fb1820089c506120cb`，原始 result/driver 均保留未覆盖。
+- A1 完全成功，满足 A2 前置条件。当前准备同一 fixture、dist 与基线参数的默认 Playwright loader 驱动；实际 A2 启动前再次读取 control，A2 最多一次且不传 `executablePath`。
+
+### 2026-09-28 10:48 Asia/Shanghai — E3 A2 通过并提交 review
+
+- 状态：`review / finished`。A2 只启动一次：UTC `2026-09-28T02:42:44.078Z` 至 `02:42:47.539Z`，PID 22596；Playwright 1.63.0 默认 `_electron.launch()` connected/close 均为 true，`executablePathOption=false`，默认解析到同一 C 盘 Electron 44.4.5，Electron 退出 0且未超时。
+- A2 marker 和 `app-ready → did-finish-load → normal-exit` 顺序匹配；driver/electron/fixture 日志全部落盘，冻结故障模式命中 0；Application/Code Integrity 精确时间窗事件均为 0；dist/fixture 前后摘要与 A1 基线相同；最终任务 Electron 精确路径残留为 0。A2 后置汇总 SHA-256 `da165cb856a141f10aaf3d0790a6254886de93497304bcc3e307d4b28e66001c`。
+- 解释边界：C 盘同内容 direct 与 Playwright 均稳定；结合既有 D 盘 Playwright 失败，只支持执行位置、继承 ACL、ADS 或路径元数据相关差异，不宣称已经定位根因，也不宣称 P4-B、app.asar、package 或最终 EXE 通过。
+- 仓库交付：[E3 运行说明](../../b7-r1-e3-c-drive-electron-running.md)与 198 文件 E3 source manifest 已形成；source manifest 198 matched、0 mismatch、0 missing，SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`，产品/依赖/lock/H1 staging/测试零变化。
+- 原始现场：`C:\MarisE3\E3-20260928-0911` 完整保留；最终 evidence manifest 覆盖其自身以外 39 个文件，SHA-256 `4b21b569e21a529a4743c53e115d1f035a6c51e75bd916948a2d37ccaac85b46`。未清理 tools/cache/dist/fixture/profile/logs，没有任务进程残留。
+- 停止边界：未启动 D 基线、Procmon/F1、其他开关或版本、app.asar/package/EXE、Host/sidecar、Python/数据库/Docker、外部集成或 P4-C12；未修改或运行独立测试，未执行 Git 写操作。等待总控复算。
 
 ### 2026-09-28 01:16 Asia/Shanghai — P4-B7-R1-H1-R1 提交 review 并停止
 

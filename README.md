@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。H1-R1 已关闭 Python package resource staging 的 `P4-H1-ATOMIC-001`，198 文件 source manifest 全匹配；当前只进行 E3 的 C 盘最小 Electron 三角验证，先 direct 一次，成功后才允许同目录 Playwright 一次。app.asar、最终 EXE、24 项 P4-B 独立矩阵和 P4-C12 均未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。H1-R1 已关闭 Python package resource staging 的 `P4-H1-ATOMIC-001`；E3 的 C 盘 direct 与默认 Playwright loader 各一次通过，198 文件 source 与 39 文件外部证据均已由总控复算。当前只进行 E4 的 C 盘最终构建门禁：唯一一次 Forge package，通过后再各执行一次 app.asar 和最终 `Maris.exe`。24 项 P4-B 独立矩阵和 P4-C12 尚未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -108,6 +108,8 @@
 - [P4-B7-R1-H1-R1 固定输入快照](docs/coordination/snapshots/p4-b7-r1-h1-r1-start.sha256)：绑定 H1 终点、总控缺陷核对和 R1 任务输入。
 - [P4-B7-R1-H1-R1 总控核对](docs/p4-b7-r1-h1-r1-coordinator-review.md)：关闭原子替换缺陷并接受 H1 为 E3 输入。
 - [P4-B7-R1-E3 执行智能体 Prompt](docs/coordination/prompts/p4-b7-r1-e3-c-drive-electron-triangle-executor.md)：只运行一次 C 盘 direct，成功后条件运行一次同目录 Playwright。
+- [P4-B7-R1-E3 总控核对](docs/p4-b7-r1-e3-coordinator-review.md)：接受两次单次动态门禁，登记 A1 driver 过严判定和有限执行位置结论。
+- [P4-B7-R1-E4 执行智能体 Prompt](docs/coordination/prompts/p4-b7-r1-e4-package-product-gates-executor.md)：从新的 C 盘固定源码副本依次执行 package、app.asar 与最终 EXE 门禁，验证中不修改产品。
 - [P4-B7-R1-E3 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e3-start.sha256)：绑定 H1-R1 终点、D13/IF-005、总控核对与 E3 任务卡。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
