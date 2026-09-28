@@ -2,12 +2,31 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E4-DYN-R2 — 修正 browser root 提升后恢复最终动态门禁
+- 当前任务：P4-B7-R1-E5-FINAL — 直接启动最终 Maris.exe 的单次黑盒动态门禁
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-29 02:14，Asia/Shanghai
+- 最近更新：2026-09-29 03:00，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
+
+## 最新协调记录
+
+### 2026-09-29 03:00 Asia/Shanghai — 接受 DYN-R2 阻塞并关闭 Playwright 启动路线
+
+- 总控复算 DYN-R2 的 79 项受限外部 evidence，结果 79/79 匹配；三份仓库交付摘要与报告一致，固定 EXE、app.asar、Electron dist、Python resources、package out 和 fuses 未漂移。
+- 失败发生在任何窗口、preload API、runtime、模块或 recover 检查之前：Playwright 返回的存活 PID 是 `cmd.exe` 包装进程，其唯一直接子进程才是冻结路径的 Electron。执行方按规则停止，产品保持 `unverified`，没有产品 crash 证据。
+- `_electron.launch()` 在 DYN-R1/DYN-R2 已呈现两种互斥包装形态；继续增加 PID 提升分支属于反复修验收工具。总控接受 `automation_route_exhausted=true`，禁止 DYN-R3 和 packaged app.asar 重跑。
+- 发布 `P4-B7-R1-E5-FINAL`：只用 Node `spawn(shell:false)` 直接启动最终 `Maris.exe` 一次，Playwright 只经 loopback CDP 附加 renderer；不安装、不测试、不构建、不打包、不重试。
+- E5-FINAL 通过后才固定 B7 稳定终点并派发 P4-C12；技术顾问和测试智能体当前保持停止。
+- 交付物：[DYN-R2 总控核对](../../p4-b7-r1-e4-dyn-r2-blocked-coordinator-review.md)、[E5-FINAL Prompt](../prompts/p4-b7-r1-e5-final-exe-executor.md)、[E5 起点快照](../snapshots/p4-b7-r1-e5-final-start.sha256)。
+
+### 2026-09-29 02:27 Asia/Shanghai — 冻结真实前端开发提醒门禁
+
+- 用户要求在真正开始编写前端界面时主动提醒此前讨论的模型调整策略，不依赖用户再次提出。
+- 冻结触发点：P4-B 独立验收完成后、首个 P4-C 技术方案或执行 Prompt 生成前。总控必须暂停派发并明确告知用户已进入真实财务驾驶舱开发。
+- 复核内容：两张参考效果图、已确认三栏布局、模块 Agent/毛毛关系、页面与组件切片、真实数据合同、视觉和截图验收标准。
+- 模型候选分工：GPT-6 Astra（或届时最强推理/视觉模型）负责高保真方案、复杂交互和关键审阅；GPT-6 Sol（或届时合适的编码工作模型）负责按冻结设计实现组件、重构与常规测试。实际名称、强度和 token 分配在触发时与用户重新确认。
+- 当前 DYN-R2 与 P4-C12 顺序不变；本记录不授权提前实现 P4-C。
 
 ## 当前交付
 

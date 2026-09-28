@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E4-DYN-R1 — 固定 package 的 app.asar 与最终 EXE 单次动态门禁
+- 当前任务：P4-B7-R1-E4-DYN-R2 — 修正任务外 browser root 提升并恢复最终动态门禁
 - 状态：`blocked / finished`
-- 最近更新：2026-09-29 02:08，Asia/Shanghai（P1 失败交付并停止）
-- 可修改范围：本角色日志、新增 DYN-R1 运行说明和 source manifest、create-new `dynamic-resume-1` 外部证据；只读使用固定 package 和既有 PKG-R2/E3 证据。禁止产品、测试、依赖、lock、Forge、package、migration、独立验收、其他角色和 Git 写操作。
+- 最近更新：2026-09-29 02:55，Asia/Shanghai（DYN-R2 受阻交付）
+- 可修改范围：本角色日志、新增 DYN-R2 运行说明和 source manifest、create-new `dynamic-resume-2` 外部证据；只读使用固定 package、DYN-R1 和 PKG-R2 证据。禁止产品、测试、依赖、lock、Forge、package、migration、独立验收、其他角色和 Git 写操作。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P1 唯一动态预算已使用并按失败规则停止；资源和证据已收口
-- 步骤开始时间：2026-09-29 01:46 Asia/Shanghai
-- 最近有效进展：P1 1/1 在窗口/API 断言前因 runner 的 root PID 身份假设失败；实际 browser 子树已按父子关系、固定路径、启动时间和 owner marker receipt 定向清理，终点产品进程/窗口/listener 为 0，固定产物全部不变
-- 最近心跳：2026-09-29 02:08 Asia/Shanghai
-- 下一检查点：无自动后续；总控核对 blocked 证据并决定是否另立具有新动态预算的恢复任务
+- 当前步骤：DYN-R2 已受阻交付并停止；P1 1/1 ownership gate 失败，P2 0/1 not_run
+- 步骤开始时间：2026-09-29 02:24 Asia/Shanghai
+- 最近有效进展：P1 唯一预算在产品 API 前按冻结规则以 `browser_root_launch_identity_mismatch` 停止；最终产品进程/监听/窗口均为 0，固定产物不变，外部 evidence 79/79 匹配
+- 最近心跳：2026-09-29 02:55 Asia/Shanghai
+- 下一检查点：无；等待头脑风暴总控重新裁定验收方式，不建议或创建 DYN-R3
 - 等待对象：头脑风暴总控；技术顾问、测试和 P4-C12 保持停止
-- 活动进程或会话：P1 runner、Electron browser 子树和 sidecar 均已结束；产品进程、窗口、listener 为 0
-- 重试次数：P1 1/1，失败后未重跑；P2 0/1，`not_run`
-- 最近输出：P1 分类 `p1_harness_root_identity_assumption`、产品结果 `unverified`；外部运行证据 84 条；source/dist/resources/out/EXE/app.asar/fuses 终点全部匹配
+- 活动进程或会话：无活动产品进程或动态 cell；`dynamic-resume-2` 已冻结，P1 1/1，P2 0/1
+- 重试次数：DYN-R2 P1 1/1；P2 0/1；没有重跑
+- 最近输出：`automation_route_exhausted=true`；source manifest 198/198，SHA `5e3b788c...a228`；外部 evidence 79/79，SHA `8872b541...e3aff`
 
 ## 待接任务
 
@@ -59,6 +59,38 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-29 02:26 Asia/Shanghai — P4-B7-R1-E4-DYN-R2 接单与起点门禁
+
+- 最新 control `2026-09-29T02:14:00+08:00` 只授权既有执行智能体修正任务外 browser root promotion，并给予新的 P1 1/1 动态预算；P1 全绿并收口后才允许 P2 1/1。技术顾问、测试和 P4-C12 保持停止。
+- DYN-R2 起点清单 250 unique、250 matched、0 missing/mismatch，SHA-256 `565f91ccca3557c2aa1f955760d31a71c866c45ce6b0604c2de6378c1a5021b8`。清单路径不是 Ordinal 顺序；没有修改冻结清单。
+- 只读 Git 起点检查确认 index staged paths=0；`.pnpm-store/` 和 `.claude/` 不清理、不暂存、不纳入任务摘要。没有执行 Git 写操作。
+- 已完整读取 DYN-R2 任务卡、DYN-R1 总控核对/运行说明、PKG-R2 总控核对和旧动态合同。当前未创建 `dynamic-resume-2`，未启动 Electron、Maris.exe、sidecar 或数据库。
+- 下一步复算 DYN-R1 84 项 evidence 与全部固定产物；通过后只在新外部 evidence 中编写 root promotion runner，静态语法检查不消耗 P1 预算。
+
+### 2026-09-29 02:34 Asia/Shanghai — DYN-R2 runner 冻结与 P1 启动前检查点
+
+- DYN-R1 `runtime-evidence.sha256` 84/84、source 198/198、Electron dist 73/73、Python resources 67/67、package out 140/140 全部匹配；EXE、app.asar 和 production fuses 符合冻结值，旧产品进程/窗口为 0，index staged paths 仍为 0。
+- `dynamic-resume-2` 按 create-new 建立，只含 preflight、run manifest、runner 与代码映射；没有复用旧 profile、owner session、数据库、PID、端口或运行结果。
+- P1 runner 265 行，SHA-256 `fa223794f2f92f1974fd70a20c5bbde603843142ad28626f6b5f7e50eefea02b`，Node 静态语法通过。规则映射：launchPid 第 49 行；存活 launch path/time 第 54～57 行；marker 与唯一直接后代提升第 51～63 行；owned closure/非空 known 集第 65～70、170～173 行；无进程数预算第 169 行；cleanup 联合复核第 82～96 行。
+- 静态扫描无 synthetic、Job Object、controller/worker、固定 PID、`executablePath` 启动选项、`--no-sandbox` 或 inspect；没有运行任何动态自测或预检 cell。
+- 下一检查点：启动前重读 control 并复算摘要/index/资源，然后 P1 1/1。若所有权再次阻塞将写 `automation_route_exhausted=true` 并停止，不建议 DYN-R3。
+
+### 2026-09-29 02:38 Asia/Shanghai — DYN-R2 P1 最终启动门禁
+
+- 启动前重新完整读取最新 control `2026-09-29T02:30:54+08:00`，SHA-256 `649198fcc7baa7592d1980409e59d6724d08258b84dabd822b80d8a5eafffe5a`。总控明确说明协调者只并发修改 control、项目协调文档、阶段脑暴文档和脑暴角色日志，没有改变产品、package 或 evidence；已接受本任务此前完成的 250 项起点门禁，允许继续且不得重复预算。
+- 固定 EXE、app.asar、P1 runner 摘要再次匹配；现场产品进程和窗口均为 0；Git index staged paths=0。协调者并发文档变更保持原样，不纳入执行方产品摘要。
+- 当前即将启动 P1 1/1；该动态 cell 一经启动绝不重跑。P1 只有全部通过且自然收口后才解锁 P2。
+
+### 2026-09-29 02:55 Asia/Shanghai — P4-B7-R1-E4-DYN-R2 受阻交付并停止
+
+- 状态 `blocked / finished`。P1 唯一预算 1/1，记录 3,593 ms，未超时且没有重跑；P2 因冻结顺序保持 0/1 `not_run`。没有启动 P4-C12、测试智能体或技术顾问。
+- P1 首失败为 `browser_root_launch_identity_mismatch`：Playwright `process()` 返回值仍存活但 executable 是命令包装进程，不匹配冻结 Electron path；冻结规则只允许在 launch PID 已退出时提升直接 Electron 子进程，因此 browser root 和 initial known-owned 集合均未建立，产品 API 调用 0、recover 0/1，产品结果为 `unverified`。
+- 按任务卡写入 `automation_route_exhausted=true`，不建议或创建 DYN-R3。这不是产品 crash 或产品通过证据；窗口、安全、runtime、modules 和自然产品退出全部未验证。
+- 收口：固定 Electron/Maris 产品进程 0、关联监听 0、产品窗口 0、Tray 所属进程推断 0；没有广杀进程或额外动态发现。EXE、app.asar、198 项 frozen source、73 项 dist、67 项 resources、140 项 out 和 fuses 均保持冻结值。
+- 日志/事件：Electron 日志只有一条 GPU overlay 信息；stderr 只有调试端点结束提示；冻结 crash/assertion/秘密模式 0，Windows Application/Code Integrity 事件 0。空 crash 记录不能替代未执行的产品 gate。
+- 交付：[DYN-R2 运行说明](../../b7-r1-e4-dyn-r2-running.md)、[198 项 source manifest](../../../apps/desktop/b7-r1-e4-dyn-r2-source.sha256) 和本角色日志。source manifest 198/198、SHA `5e3b788c6ec2f8e125dd345a6e833beb530cd8790de12817f9342711373ea228`；受限外部 evidence 79/79、SHA `8872b541c2505e0a8b11df65c178ee0c7b3ca6d8ac6a66d277a31e48554e3aff`。
+- 边界：没有修改产品、测试、依赖、lock、Forge、package、migration、control/overview 或其他角色，没有安装依赖、运行测试/build/package、接触真实数据或执行 Git 写操作。总控授权的并发协调文件保持原样；最终 index staged paths=0。
 
 ### 2026-09-29 02:08 Asia/Shanghai — P4-B7-R1-E4-DYN-R1 blocked 交付并停止
 

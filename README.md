@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。H1-R1、E3 与 PKG-R2 已通过总控核对；唯一真实 package 成功。DYN-R1 的 app.asar 已启动到隔离 owner/database 写入，但验证器错误要求 Playwright 返回的短生命周期 PID 持续作为 browser root，产品 API 尚未核对。下一步只修正该任务外所有权识别，以新 P1 单次预算恢复动态门禁；不重新 package。24 项 P4-B 独立矩阵和 P4-C12 尚未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。H1-R1、E3 与 PKG-R2 已通过总控核对；唯一真实 package 成功。DYN-R1 与 DYN-R2 都在产品 API 调用前被 Playwright Electron 启动器返回的包装进程身份阻断，产品保持 `unverified`，且没有产品崩溃证据。该自动启动路线已经关闭，不创建 DYN-R3。下一步只直接启动一次最终 `Maris.exe`，Playwright 仅通过 CDP 观察界面；不重新 package。24 项 P4-B 独立矩阵和 P4-C12 尚未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -136,6 +136,10 @@
 - [P4-B7-R1-E4-DYN-R1 阻塞总控核对](docs/p4-b7-r1-e4-dyn-r1-blocked-coordinator-review.md)：确认失败来自 runner 的 browser root PID 假设，产品保持未验证且没有 crash 证据。
 - [P4-B7-R1-E4-DYN-R2 Prompt](docs/coordination/prompts/p4-b7-r1-e4-dyn-r2-executor.md)：固定唯一 Electron 子进程提升规则，以新 P1 单次预算恢复，P1 通过后才运行 P2。
 - [P4-B7-R1-E4-DYN-R2 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e4-dyn-r2-start.sha256)：绑定 DYN-R1 原始证据、总控裁定和一次性恢复边界。
+- [P4-B7-R1-E4-DYN-R2 运行说明](docs/b7-r1-e4-dyn-r2-running.md)：记录存活 `cmd.exe` 包装进程导致 browser root 门禁停止、产品未验证和资源收口。
+- [P4-B7-R1-E4-DYN-R2 阻塞总控核对](docs/p4-b7-r1-e4-dyn-r2-blocked-coordinator-review.md)：接受 79/79 外部证据并关闭 `_electron.launch()` 所有权识别路线。
+- [P4-B7-R1-E5-FINAL Prompt](docs/coordination/prompts/p4-b7-r1-e5-final-exe-executor.md)：直接启动最终 `Maris.exe`，Playwright 仅通过 CDP 附加观察，执行一次真实黑盒动态门禁。
+- [P4-B7-R1-E5-FINAL 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e5-final-start.sha256)：绑定 DYN-R2 交付、总控裁定和最终 EXE 单次验证边界。
 - [P4-B7-R1-E3 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e3-start.sha256)：绑定 H1-R1 终点、D13/IF-005、总控核对与 E3 任务卡。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
