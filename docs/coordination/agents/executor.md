@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E3 — C 盘 Electron 最小三角验证
-- 状态：`review / finished`
-- 最近更新：2026-09-28 10:48，Asia/Shanghai
-- 可修改范围：新增 E3 运行说明、E3 source manifest 及本角色日志；C 盘任务根只保存固定工具、无业务 fixture、profile 和受限原始证据。禁止修改产品/依赖/lock/H1 staging/测试、独立测试/矩阵/报告、冻结/control/overview/其他角色、`.claude/**` 或 Git 状态。
+- 当前任务：P4-B7-R1-E4 — C 盘 package、app.asar 与最终 EXE 恢复门禁
+- 状态：`blocked / finished`
+- 最近更新：2026-09-28 14:12，Asia/Shanghai
+- 可修改范围：新增 E4 运行说明、E4 source manifest 及本角色日志；C 盘全新任务根保存 198 文件固定源码副本、固定工具、依赖、唯一 package、隔离 profile 与受限证据。禁止修改产品/Forge/staging/测试/依赖/lock、独立测试/矩阵/报告、冻结/control/overview/其他角色、`.claude/**` 或 Git 状态。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：E3 交付冻结并停止，等待头脑风暴总控复算
-- 步骤开始时间：2026-09-28 10:48 Asia/Shanghai
-- 最近有效进展：2026-09-28 10:48 Asia/Shanghai（A1 与 A2 各一次均通过，运行说明、198 文件 source manifest 和 C 盘最终 evidence manifest 已形成）
-- 最近心跳：2026-09-28 10:48 Asia/Shanghai
-- 下一检查点：总控核对 E3 仓库三文件与保留的 C 盘现场；执行智能体不自行启动 F1、P4-C12、app.asar/package/EXE 或其他诊断
-- 等待对象：头脑风暴总控复算与下一任务；技术顾问、测试智能体、F1、app.asar/EXE 和 P4-C12 继续停止
-- 活动进程或会话：无；A1 PID 25148、A2 PID 22596 均已退出，任务 `electron.exe` 精确路径残留为 0；完整任务根 `C:\MarisE3\E3-20260928-0911` 保留
-- 重试次数：A1 1/1 已使用并通过；A2 1/1 已使用并通过
-- 最近输出：A1 后置 SHA-256 `66ede312...20cb`、A2 后置 SHA-256 `da165cb...001c`；C 盘 evidence 39 文件清单 SHA-256 `4b21b569...5b46`；E3 source 198/198、manifest SHA-256 `04c2e344...dc1`
+- 当前步骤：E4 已按 P0 停止条件完成安全收口并停止，等待头脑风暴总控复算
+- 步骤开始时间：2026-09-28 14:03 Asia/Shanghai
+- 最近有效进展：2026-09-28 14:12 Asia/Shanghai（三个授权仓库交付已形成；E4 source 198/198、C 盘 evidence 26/26 可复算；out=false、staging=false、owned process=0）
+- 最近心跳：2026-09-28 14:12 Asia/Shanghai
+- 下一检查点：头脑风暴总控核对 E4 失败证据，并决定是否派发最小 pnpm command-resolution 恢复任务
+- 等待对象：头脑风暴总控；技术顾问、测试智能体、P4-C12、OpenClaw、微信、DeepSeek、Docker/PostgreSQL 继续停止
+- 活动进程或会话：无；任务根 `C:\MarisE4\E4-20260928-1255` 完整保留，任务自有进程、端口、窗口和 Tray 均为 0
+- 重试次数：package 1/1 已使用并失败；P1 0/1 `not_run`；P2 0/1 `not_run`
+- 最近输出：Forge 调用 `pnpm config get hoist-pattern` 时命中用户级 pnpm shim，其内部目标命令不可执行；package exit 1、log SHA-256 `e9c841c4...b0d6`；未生成 out，wrapper finally 已清除 staging，任务进程为 0
 
 ## 待接任务
 
@@ -82,6 +82,51 @@
 - 内容门禁：Electron dist 73 文件前后均为 `ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f`；fixture 3 文件前后均为 `80e74627c3d2225567305e1ce425042b98598b0083556055276860a9ec0257bf`。
 - 驱动勘误：原始 result 将 `before-quit` 误列为必需顺序，因此 driver 自身退出 1；fixture 使用 `app.exit(0)`，而任务合同只要求 ready/load/marker/browser exit/logs。没有重跑 A1；后置汇总按任务卡七项实际条件计算为 true，SHA-256 `66ede312d611251fe7152c4602473b21ad1797df3d8d78fb1820089c506120cb`，原始 result/driver 均保留未覆盖。
 - A1 完全成功，满足 A2 前置条件。当前准备同一 fixture、dist 与基线参数的默认 Playwright loader 驱动；实际 A2 启动前再次读取 control，A2 最多一次且不传 `executablePath`。
+
+### 2026-09-28 12:55 Asia/Shanghai — P4-B7-R1-E4 接单与起点门禁
+
+- 状态：`in_progress / active`。最新 control `2026-09-28T12:30:00+08:00` 已接受 E3，并指定执行智能体为 E4 唯一负责人；只允许新的 C 盘源码副本、阶段 A、唯一一次 package，以及 package/P1 顺序通过后的单次 P1/P2。技术顾问、测试智能体和 P4-C12 均停止。
+- 起点证据：`p4-b7-r1-e4-start.sha256` 为 215 matched、0 mismatch、0 missing，自身 SHA-256 `6b51e836d87bf94f10a5bb0daeedee05e8c2c26d44c542f65cac6490162cafcc`；E3 source 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`；lock 为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。
+- E3 固定输入：原始现场只读存在，39/39 evidence 匹配，manifest SHA-256 `4b21b569e21a529a4743c53e115d1f035a6c51e75bd916948a2d37ccaac85b46`；Node 官方 ZIP 与 Electron 官方 ZIP 的大小/摘要匹配冻结值。E3 现场只允许复制已验证官方归档/cache，不修改、补写、清理或复用 package/out/fixture/产品二进制。
+- 环境门禁：旧任务 Electron、Maris、项目 sidecar 相关进程为 0；计划任务根 `C:\MarisE4\E4-20260928-1255` 尚未创建。下一步在再次读取 control 并确认目录仍不存在后，复制 198 文件源码和固定官方归档，建立受限 evidence；不在 D 盘执行 Electron、Forge 或 EXE。
+
+### 2026-09-28 13:02 Asia/Shanghai — E4 C 盘固定源码与工具检查点
+
+- 全新任务根为 `C:\MarisE4\E4-20260928-1255`。按 E3 source 逐文件复制 198 项到同形 workspace，路径、source/destination bytes 与 SHA-256 全部匹配；带 bytes 的 C 盘 copy manifest SHA-256 `4a4a73508d400ddb557de2a3235d6c6cf39c4fecdac01c854c2aea0dc9656ce2`。未复制 `.git`、`.claude`、store、node_modules、旧 out、profile、日志或 E3 产品二进制。
+- 只读复制并重新核验 E3 已验证的官方 Node 24.21.0、pnpm 12.7.0、Electron 44.4.5 归档以及 frozen pnpm store/Electron cache。Node/Electron archive 摘要继续匹配冻结值；pnpm store 为 10,975 files、178,708,341 bytes。
+- 工具编排 warning：registry pnpm tarball 不包含预期根级 `pnpm-native.exe`，第一次版本探针失败；随后改用官方 `bin/pnpm.mjs`，它从 pnpm 官方发布通道取得同版本 Windows binary，版本精确为 12.7.0。该问题发生在 install 前，没有修改源码、lock 或进入阶段 A。
+- 当前长操作：再次读取 control 后，在 C 盘 workspace 执行一次 clean frozen install；安装后核对 lock、固定版本、lifecycle 和 Electron dist，不在 D 盘安装或执行。
+
+### 2026-09-28 13:07 Asia/Shanghai — E4 固定依赖通过并进入阶段 A
+
+- C 盘 clean frozen install 一次通过：275 packages，274 resolved/reused、downloaded 0；使用 pnpm 12.7.0，lock 前后均为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。Electron package 44.4.5、Playwright 1.63.0 精确匹配。
+- 使用已校验官方 cache 运行 Electron 官方 install script，退出 0；dist 为 73 files，manifest SHA-256 `ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f`，与 E3 完全一致；`electron.exe` SHA-256 `bd14928e0728366fd3f41499cb398ff3f4304dab259a3e605077899a6f8c748e`。
+- 当前进入阶段 A。将分别记录 OpenAPI generated drift、TypeScript、lint、desktop 完整 Vitest、H1 package/toolchain 专项、desktop runtime/sidecar/production/auth/registry/API Python 定向、受影响 Python compile 与 `pip check`；任一失败、skip/xfail 或 dependency error 都停止，不运行 package。
+
+### 2026-09-28 13:13 Asia/Shanghai — E4 阶段 A 通过与唯一 package 前置
+
+- 阶段 A 八组全部退出 0：OpenAPI generated artifacts match；TypeScript 与 lint 通过；desktop 完整 Vitest 12 files/36 passed、0 failed/skip；H1 package resource + toolchain 2 files/16 passed、0 failed/skip；Python desktop runtime/sidecar/production/auth/registry/API 六文件 55 passed、0 failed/skip，只有既有 Starlette/AnyIO alias deprecation warning；API compile 通过；`pip check` 为 `No broken requirements found.`。
+- 基础设施编排：第一次 quiet `compileall -q` 实际退出 0但无 stdout，证据 helper 未创建空日志并在摘要阶段报错，导致 pip check 尚未执行。保留原始六组证据后，只把 helper 改为即使空输出也创建日志，重跑 compile 并首次运行 pip check；没有修改产品、测试、参数语义或重跑前六组。
+- 阶段 B 污染前置已建立：9 个纯虚拟 marker 覆盖 `__pycache__/*.pyc`、`.pyo`、`.egg-info`、tests、`.pytest_cache`、build、dist、scratch 与未知扩展；全部仍存在，manifest SHA-256 `b239e272480bdb33b6aa23f380c1a1f1e0c36f7590bc9784e3d32d40799605f8`。
+- 下一操作：再次读取 control 后只运行一次正式 desktop package wrapper，并指向任务内已验证官方 Electron cache。wrapper 失败、staging 残留、fuse 漂移、资源缺失或污染/隐私命中均立即停止，不重跑 package、不启动 P1。
+
+### 2026-09-28 14:03 Asia/Shanghai — E4 唯一 package 失败并停止动态链
+
+- 唯一 package attempt 1/1 已于本地 `14:02:31` 启动，经过项目正式 `package-desktop.mjs` wrapper；Forge 在 `Checking package manager version` 阶段调用 `pnpm config get hoist-pattern`，解析到用户级 pnpm shim，shim 内部目标命令不能由 `cmd.exe` 识别，因此 package exit 1。raw log SHA-256 `e9c841c4d23cbf93a41e62680aaaf493db9ff2764323b4fe41155680afb3b0d6`，只保留在 C 盘 evidence。
+- 失败发生在 Packager/Vite/app.asar/fuse 之前：`out=false`，没有可验证的 Maris.exe 或 app.asar；wrapper `finally` 已收口 `.maris-staging`，transition artifacts 为 0；lock 仍为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`；任务根路径进程为 0。
+- 按 E4 P0 规则，package 次数已经消耗，不修 PATH 后重跑；P1 app.asar 与 P2 最终 EXE 均为 `not_run`，没有启动 Electron、Maris 或 sidecar。缺失的 package/resources/fuses/隐私扫描不能标为通过。
+- 最小复现：在新的 C 盘 fixed source/frozen install 上，以任务内绝对 pnpm 12.7.0 入口调用正式 package wrapper；预期 Forge package manager check 使用同一固定 pnpm，实际其内部裸 `pnpm` 子命令解析到失效的用户级 shim。严重级别 P0（阻断 E4 后续门禁）；影响范围为 package 工具编排，现有证据不支持产品代码缺陷。建议下一张最小恢复任务只固定任务专属 pnpm 命令解析/PATH 并重新授予一次 package 预算，不修改产品、测试、lock 或系统级 pnpm。
+- 当前仅完成安全收口与交付文档，随后停为 `blocked / finished`；不自动创建返修、技术评审或 P4-C12。
+
+### 2026-09-28 14:12 Asia/Shanghai — E4 证据冻结并受阻交付
+
+- 状态：`blocked / finished`。阶段 A 全部通过；唯一 package 1/1 在 Forge package-manager system check 因裸 `pnpm` 命中失效用户级 shim 而退出 1。遵守不可重试规则，没有修 PATH 后重跑；P1 packaged app.asar 与 P2 最终 EXE 均为 `not_run`。
+- 执行方门禁：generated drift、TypeScript、lint、Python compile、pip check 均退出 0；desktop Vitest 36 passed；H1 package/toolchain 16 passed；Python 定向 55 passed。只有一条既有 Starlette/AnyIO alias 弃用 warning，无 failed、skip 或 xfail。
+- 资源收口：`out=false`、`.maris-staging=false`、transition artifacts=0、pollution markers 9/9 保留、任务自有进程/端口/窗口/Tray=0；C 盘任务根完整保留。没有启动 P4-C12、独立测试、技术顾问、Docker/PostgreSQL、OpenClaw、微信或 DeepSeek。
+- 证据：C 盘 `final-evidence.sha256` 覆盖 26 个文件并复算为 26 matched、0 mismatch、0 missing，自身 SHA-256 `5958703ccea01cd0b8ef3bd72b681dfbdb7b5b398c7b8c7bc5ee7cd2fb1ba2d1`；`final-summary.json` SHA-256 `a98c72add2372fa9369cb2b9a3611a6699deabc9ca2cf0e70b419537ffb31c3c`。
+- 仓库边界：相对 215 文件起点为 214 unchanged、1 changed、0 missing；唯一 changed 是本角色日志，另新增 E4 运行说明与 source manifest。任务前已有未跟踪 `.claude/`、`.pnpm-store/` 未触碰；产品、Forge、staging、测试、依赖、lock、独立材料、control 和 overview 零变化，没有 Git 写操作。
+- 交付：[E4 运行说明](../../b7-r1-e4-package-product-gates-running.md) SHA-256 `7eee9462c77fb20582fdacd171540960e1d903254a61f3f98ee64fe62940121e`；[E4 source manifest](../../../apps/desktop/b7-r1-e4-source.sha256) 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`。
+- 交接：缺陷 `P4-E4-PACKAGE-PNPM-PATH-001` 为 P0 package 工具编排阻塞；下一任务应只固定任务专属 pnpm 命令解析/PATH 并重新授予一次 package 预算。执行智能体已停止，不自行启动返修、技术评审或独立验收。
 
 ### 2026-09-28 10:48 Asia/Shanghai — E3 A2 通过并提交 review
 
