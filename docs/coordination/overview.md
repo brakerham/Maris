@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-09-28 20:18，Asia/Shanghai
+更新时间：2026-09-29 00:01，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。R0-R1 attempt-0 在 synthetic combined 中记录到 native `pwsh` 派生的 `conhost.exe`，超过执行方自定的单元预算 2 后安全停止；Q1～Q6 和 package 均未运行。总控接受不可变证据，当前发布 A1 使用尚未消耗的唯一 driver-only 修正预算，显式接管标准流并保持 live 预算不变。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
+P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。R0-R1 attempt-0 与 A1 连续两次被 synthetic 的“Job total 必须恰好为 2”门禁拦住；A1 已显式接管全部标准流，`conhost.exe` 仍出现。两轮均未运行真实 Q1～Q6 或 package，未形成产品、pnpm 或 Forge 缺陷。总控已终止这条验收工具循环，下一步在普通持续会话中直接执行六项预检，全部通过后只执行一次真实 package。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,9 +13,9 @@ P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。R0-R1 attempt-0 在 
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 已接受 R0-R1 安全停止，冻结 attempt-1 的显式标准流修正，2/4 与 live 31 预算不变 | 2026-09-28 20:18 | 用户把 A1 Prompt 发给既有执行智能体 | [R0-R1 阻塞核对](../p4-b7-r1-e4-r0-r1-blocked-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | 已接受 A1 重复停止，终止 synthetic/Job 精确进程数路线并冻结直接预检与唯一 package | 2026-09-29 00:01 | 用户把 PKG-R1 Prompt 发给既有执行智能体 | [A1 阻塞核对](../p4-b7-r1-e4-r0-r1-a1-blocked-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E4-R0-R1-A1） | attempt-0 已 blocked/finished；待在 attempt-1 显式接管三条标准流，synthetic 通过后才运行 Q1～Q6 | 2026-09-28 20:18 | 用户发送 A1 Prompt；先复算 230 项固定快照与旧 evidence | [A1 Prompt](prompts/p4-b7-r1-e4-r0-r1-a1-executor.md)、[固定快照](snapshots/p4-b7-r1-e4-r0-r1-a1-start.sha256) |
+| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E4-PKG-R1） | A1 已 blocked/finished；不再运行 synthetic，待直接执行六项 pnpm/Forge 预检并条件执行唯一 package | 2026-09-29 00:01 | 用户发送 PKG-R1 Prompt；先复算新固定快照 | [PKG-R1 Prompt](prompts/p4-b7-r1-e4-pkg-r1-executor.md)、[固定快照](snapshots/p4-b7-r1-e4-pkg-r1-start.sha256) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
@@ -96,7 +96,8 @@ P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。R0-R1 attempt-0 在 
 | P4-B7-R1-E4-R1：pnpm 路径恢复与最终门禁续跑 | 用户启动的既有执行智能体 | `blocked / finished` | `$Args` 自动变量冲突导致 R0 实参为空；package/P1/P2 均未运行 | [E4-R1 报告](../b7-r1-e4-r1-pnpm-path-resume-running.md)、[总控核对](../p4-b7-r1-e4-r1-blocked-coordinator-review.md) |
 | P4-D14：R0 PowerShell driver 恢复裁定 | 用户启动的 GPT-6 Astra 技术顾问 | `complete / finished` | 677 行方案、21 项冻结内容、ProcessStartInfo/Job Object 与 R0-only 合同已由总控接受 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md)、[总控审阅](../p4-d14-coordinator-review.md) |
 | P4-B7-R1-E4-R0-R1：R0 driver 单独恢复与六项预检 | 用户启动的既有执行智能体 | `blocked / finished` | attempt-0 synthetic 捕获额外 `conhost.exe` 后安全停止；Q1～Q6/package 均 not_run，27 文件 evidence 匹配 | [运行说明](../b7-r1-e4-r0-r1-running.md)、[阻塞核对](../p4-b7-r1-e4-r0-r1-blocked-coordinator-review.md) |
-| P4-B7-R1-E4-R0-R1-A1：标准流前置修正 | 用户启动的既有执行智能体 | `ready / waiting_user` | 唯一 attempt-1；显式重定向 native 与 synthetic 子孙三条流，预算不变；synthetic 通过后才继续 Q1～Q6 | [A1 Prompt](prompts/p4-b7-r1-e4-r0-r1-a1-executor.md)、[230 项快照](snapshots/p4-b7-r1-e4-r0-r1-a1-start.sha256) |
+| P4-B7-R1-E4-R0-R1-A1：标准流前置修正 | 用户启动的既有执行智能体 | `blocked / finished` | 三条标准流接管后仍由 `conhost.exe` 触发精确进程数门禁；Q1～Q6/package not_run，不允许 attempt-2 | [A1 运行说明](../b7-r1-e4-r0-r1-a1-running.md)、[总控核对](../p4-b7-r1-e4-r0-r1-a1-blocked-coordinator-review.md) |
+| P4-B7-R1-E4-PKG-R1：直接预检与唯一 package | 用户启动的既有执行智能体 | `ready / waiting_user` | 不再运行 synthetic；六项真实 pnpm/Forge 预检通过后只执行一次 package，静态核对产物后停止 | [PKG-R1 Prompt](prompts/p4-b7-r1-e4-pkg-r1-executor.md)、[235 项快照](snapshots/p4-b7-r1-e4-pkg-r1-start.sha256) |
 | P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险

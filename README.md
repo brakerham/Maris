@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。H1-R1 与 E3 已通过。R0-R1 首次 synthetic 因 native `pwsh` 派生的 `conhost.exe` 超出执行方自定的 combined 单元预算而安全停止；Q1～Q6 和 package 均未启动，没有形成 pnpm、Forge 或产品缺陷。当前使用尚未消耗的唯一 driver-only 修正预算执行 A1：显式接管 native 与 synthetic 子孙的标准流，预算不变，通过后才继续六项 R0 预检。24 项 P4-B 独立矩阵和 P4-C12 尚未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。H1-R1 与 E3 已通过。R0-R1 与 A1 连续两次被 synthetic 的精确进程数门禁拦住，真实 pnpm 查询和 package 均未启动；A1 已证明显式接管三条标准流仍会记录 `conhost.exe`。总控已终止该验收工具循环，下一步改为普通会话中的六项直接预检，全部通过后只执行一次真实 package。24 项 P4-B 独立矩阵和 P4-C12 尚未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -122,6 +122,10 @@
 - [R0-R1 阻塞总控核对](docs/p4-b7-r1-e4-r0-r1-blocked-coordinator-review.md)：确认控制台宿主属于 harness 路线问题，冻结显式标准流修正且保持 live 预算不变。
 - [P4-B7-R1-E4-R0-R1-A1 Prompt](docs/coordination/prompts/p4-b7-r1-e4-r0-r1-a1-executor.md)：使用唯一 attempt-1 预算恢复 synthetic；通过后才继续 Q1～Q6，仍不打包。
 - [P4-B7-R1-E4-R0-R1-A1 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e4-r0-r1-a1-start.sha256)：230 个冻结输入，包含 attempt-0 的仓库交付与总控裁定。
+- [P4-B7-R1-E4-R0-R1-A1 运行说明](docs/b7-r1-e4-r0-r1-a1-running.md)：三流重定向后仍由精确进程数门禁停止，Q1～Q6 与 package 均未运行。
+- [A1 阻塞总控核对](docs/p4-b7-r1-e4-r0-r1-a1-blocked-coordinator-review.md)：确认验收工具局部循环，终止 synthetic/Job 精确进程数路线和 attempt-2。
+- [P4-B7-R1-E4-PKG-R1 Prompt](docs/coordination/prompts/p4-b7-r1-e4-pkg-r1-executor.md)：以普通持续会话直接运行六项真实预检，全部通过后只执行一次 package。
+- [P4-B7-R1-E4-PKG-R1 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e4-pkg-r1-start.sha256)：235 个冻结输入，绑定 A1 失败现场与新的 package 恢复边界。
 - [P4-B7-R1-E3 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e3-start.sha256)：绑定 H1-R1 终点、D13/IF-005、总控核对与 E3 任务卡。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。

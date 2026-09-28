@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E4-R0-R1 — R0 driver 单独恢复与六项预检
+- 当前任务：P4-B7-R1-E4-R0-R1-A1 — 唯一前置修正预算恢复 attempt-1
 - 状态：`blocked / finished`
-- 最近更新：2026-09-28 20:08，Asia/Shanghai（失败证据交付）
-- 可修改范围：本角色日志、新增 R0-R1 运行说明和 source manifest；旧 E4 根下全新 `r0-driver-recovery-r1` 的支持源码和证据。只运行 synthetic 与 Q1～Q6；禁止 package、产品、测试、依赖、lock、永久环境、其他角色和 Git 写操作。
+- 最近更新：2026-09-28 23:39，Asia/Shanghai（A1 失败交付）
+- 可修改范围：本角色日志、新增 A1 运行说明和 source manifest；仅 create-new 外部 attempt-1 支持源码与证据。修正 native/fixture 的三条标准流和有界 pump；旧 attempt-0 及根级证据只读。预算保持 2/4、6/24/31，跨尝试累计≤35；禁止 attempt-2、package、产品、测试、依赖、lock、永久环境、其他角色和 Git 写操作。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：首次 synthetic 进程预算门禁失败，已停止并交付固定证据；没有启动 Q1
-- 步骤开始时间：2026-09-28 17:15 Asia/Shanghai（首失败）；17:17 资源复算完成，20:08 文档交付
-- 最近有效进展：外部根 27 文件、26 条交付清单；旧 source/dist/marker/evidence/node_modules 不变；Job active=0，记录 PID 全退出
-- 最近心跳：2026-09-28 20:08 Asia/Shanghai
-- 下一检查点：头脑风暴总控核对 P4-E4-R0-R1-HARNESS-PROCESS-001；无新的动态执行
-- 等待对象：头脑风暴总控；技术顾问、测试、package、P1/P2、P4-C12 保持停止
-- 活动进程或会话：无；工具 session 78731 已退出 1，controller PID 31908 已结束，Job 成员 11968/33316/32176 全部退出
-- 重试次数：前置修正 0/1；Q1～Q6 各 0/1；package/P1/P2/P4-C12 均 not_run
-- 最近输出：synthetic Job expected≤2、actual=3，额外 conhost.exe；真实 native exit=null、supervisor=124、timeout=false、forced cleanup=true，cleanup/drain=4/5 ms；Q1～Q6 均 not_run
+- 当前步骤：A1 combined 再出现 conhost，按门禁停止；固定源码和原始证据交回总控
+- 步骤开始时间：2026-09-28 23:34 Asia/Shanghai（唯一动态运行）；23:37:40 资源收口复算完成
+- 最近有效进展：attempt-1 共 40 文件 / 39 条 evidence；旧 26 条证据未变；source/dist/marker/node_modules 不变；记录 PID 和 Job active 均归零
+- 最近心跳：2026-09-28 23:39 Asia/Shanghai
+- 下一检查点：总控核对 P4-E4-R0-R1-A1-HARNESS-PROCESS-001；不再启动目标
+- 等待对象：头脑风暴总控；技术顾问、测试、package/P1/P2/P4-C12 保持停止
+- 活动进程或会话：无；session 16638 已退出 1，controller 23664、Job PID 32040/7932/10136 全部退出
+- 重试次数：前置修正 1/1 已消耗；combined 1/1 失败、timeout 0/1；Q1～Q6 各 0/1；不存在 attempt-2
+- 最近输出：combined Job total 3 > 2；额外 conhost；native exit=null、worker=124、timeout=false，forced cleanup=true，cleanup/drain=4/4 ms；本轮总 4/31，跨尝试 8/35
 
 ## 待接任务
 
@@ -59,6 +59,31 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-28 23:39 Asia/Shanghai — R0-R1-A1 blocked 交付与停止
+
+- 唯一 attempt-1 controller 于 23:34:17 启动；23:34:23 combined Job 记录 worker pwsh 32040、fixture pwsh 7932 与额外 conhost 10136，共 3 > 2。即使显式设置 native 三流重定向与无窗口，本轮仍未通过；充分根因保持 unverified，不归为 pnpm/Forge/产品缺陷。
+- 驱动立即终止 Job：native exit=null、worker exit=124、timeout=false、forced cleanup=true，cleanup/drain=4/4 ms，active=0。combined helper receipt 与正常 pump receipt 未产生；四类 synthetic 为 0/4 通过，专用 timeout not_run。
+- 首 failureCode 为 process_budget_exceeded；summary 的 controller_runtime_failure 是缺失 fixture receipt 导致的次生读取错误。failure-classification.json 分开解释，两份原始文件保持不可变。
+- 修正预算 1/1 已使用；没有改写运行源码、增加预算、过滤 conhost、重跑 combined、启动 timeout/Q 或创建 attempt-2。本轮 controller 1 + Job 3 =4/31；旧历史 4 + 本轮 4 =8/35；Q targets 0/24，Q1～Q6、package、P1/P2、P4-C12 全部 not_run。
+- 23:37:40 收口复算：旧 delivery evidence 26/26，source 198/198、dist 73/73、marker 9/9，node_modules 12,451 files / 570,581,590 bytes / f06ce306...00c7；out/staging=false、transition/owned=0，controller 和 Job PID 全退出；环境摘要还原一致，临时 PATH 配方未创建。
+- [A1 运行说明](../../b7-r1-e4-r0-r1-a1-running.md)、[198 文件 source 清单](../../../apps/desktop/b7-r1-e4-r0-r1-a1-source.sha256)已交付。外部 attempt-1 共 40 文件、39 条 evidence 清单，SHA `ac0da66b9f5e9626bca0d491c675ee4276876ddc248859c739c9cfa89343e87a`；首次运行 34/34 证据保持不变，support 9 文件 SHA `d1b609b3...4823`。
+- 状态 `blocked / finished`，ready marker 不存在，仅保存 R0_FAILED_PACKAGE_NOT_RUN。仓库只更新自身日志并新增 A1 报告/source；旧 evidence、产品、测试、依赖、lock、永久环境和 Git 无写操作。等待总控裁定，不自行创建下一任务。
+
+### 2026-09-28 23:34 Asia/Shanghai — A1 唯一修正源码冻结
+
+- 全现场/node_modules 基线与旧 evidence 通过，out/staging=false、transition/owned=0。create-new attempt-1 后，9 个旧支持文件在 source-copy 原样保存，逐文件摘要 9/9 一致。
+- 修正 worker 的显式 stdin/stdout/stderr 重定向、立即 stdin EOF、双异步 Console pump 与最多 5 秒 drain；synthetic 子孙同样三流重定向并 drain 到 Stream.Null，独立保存子流 receipt。
+- controller 仅同步 A1 control/task 标识、累计审计元数据和新增 pump receipt 门禁；verify 仅将固定起点绑定本轮 230 文件。capture、Job、adapter、Forge probe 和 shim 字节不变；不改变目标预期、live 预算或 Q 顺序。
+- support manifest 共 9 文件，SHA `d1b609b3d46411cf7af9a9ebbdab0e7fa2da8ca7a3269706a267ad4546bf4823`；6 份 PowerShell 静态语法错误为 0。源码执行后不改写，不允许第二修正。
+- 下一检查点：唯一 controller 的 combined/timeout；全部通过才构造一次进程 PATH 并逐项执行 Q1～Q6。任务总 live≤31、历史累计≤35，package/P1/P2/P4-C12 保持 not_run。
+
+### 2026-09-28 23:28 Asia/Shanghai — R0-R1-A1 接单
+
+- 完整读取 A1 任务卡、最新 control 和 blocked 总控核对；A1 使用唯一一次 driver-only 修正预算，当前不授权 package、产品或独立验收。
+- 新固定清单 230 unique、有序路径，230 matched、0 mismatch、0 missing，SHA `74dfb034b57356684f2dd45522e7805da8401dd0ad6687c53b2fb4a8f02de6d7`；control SHA `949e68d5a2b5aa15047d4088aa6bbd31b7cc43908572763189c1eb3b7bda8ba0`。
+- 旧根 26/26 evidence 匹配，SHA `aef1d227...dcbb`；旧 controller/Job PID 均退出；attempt-1 不存在。预算保持 combined 2、timeout 4、harness 6、Q targets 24、controller 1，总 31；旧历史 4 加本轮跨尝试上限 35。
+- 下一步完成全现场/node_modules 只读核对，复制并核对旧支持源码后，仅修正三条标准流与有界 pump；支持组件执行前冻结摘要。若本轮出现任何新缺陷立即停止，不启动 attempt-2。
 
 ### 2026-09-28 20:08 Asia/Shanghai — R0-R1 blocked 交付与停止
 

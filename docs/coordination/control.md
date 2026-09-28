@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-28T20:18:00+08:00`
+- 指令版本：`2026-09-29T00:01:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：`P4-B7-R1-E4-R0-R1` 在首次 synthetic combined 中记录到 worker、fixture 与 `conhost.exe` 共 3 个 Job 成员，超过执行方自定的单元预算 2 后安全停止；Q1～Q6/package 未启动。总控接受证据，发布 `P4-B7-R1-E4-R0-R1-A1` 使用尚未消耗的唯一 driver-only 修正预算，显式接管标准流且不增加 live 预算。
-- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e4-r0-r1-a1-executor.md` 全文发送给既有执行智能体。技术顾问与测试智能体保持停止；package、P1/P2、P4-C12 和前端业务实现均未获准启动。
+- 当前动作：`P4-B7-R1-E4-R0-R1-A1` 在显式接管 native 与 synthetic 子孙三条标准流后，仍记录 worker、fixture 与 `conhost.exe` 三个 Job 成员，第二次被同一精确进程数门禁拦住。总控终止 R0 synthetic/Job driver 路线，不允许 attempt-2；发布 `P4-B7-R1-E4-PKG-R1`，以普通持续会话直接运行六项真实预检，全部通过后只执行一次 package。
+- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e4-pkg-r1-executor.md` 全文发送给既有执行智能体。技术顾问与测试智能体保持停止；app.asar、最终 EXE、P4-C12 和前端业务实现仍未获准启动。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；P4-A 验收提交 `88fb178` 与 P4-B 头脑风暴提交 `6b0e485` 已推送，远端 `main` 当前为 `6b0e485`。这些仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 
 ## 本地单主人产品范围
@@ -106,7 +106,8 @@
 | P4-B7-R1-E4-R1 pnpm 路径恢复与最终门禁续跑 | 执行智能体；`blocked / finished` | R0 driver 的 `$Args` 自动变量冲突吞掉全部实参；package 0/1、P1/P2 not_run，现场与环境不变 | 原执行停止；不得修 driver 后重跑或自动创建 package 续段 |
 | P4-D14 R0 driver 恢复技术裁定 | `complete`；总控已接受 | 677 行方案、21 项冻结内容；接受 ProcessStartInfo/ArgumentList、受限 cmd adapter、Job Object、fresh evidence 与参数计数勘误 | 技术顾问停止；不得运行 R0/package 或自行创建执行任务 |
 | P4-B7-R1-E4-R0-R1 R0 driver 单独恢复与六项预检 | 执行智能体；`blocked / finished` | attempt-0 combined 捕获额外 `conhost.exe` 后以 `process_budget_exceeded` 停止；清理完成，Q1～Q6 全部 not_run | attempt-0 与 27 文件 evidence 只读保留；不得改预算、忽略 console host 或直接进入 Q/package |
-| P4-B7-R1-E4-R0-R1-A1 标准流前置修正 | 执行智能体；`ready / waiting_user` | 使用唯一 1/1 driver 修正预算，在 attempt-1 显式重定向 native 与 synthetic 子孙三条标准流；combined 2、timeout 4 与 live 31 不变 | 用户发送 A1 Prompt；synthetic 再失败立即停止，无 attempt-2；通过后才各一次运行 Q1～Q6 |
+| P4-B7-R1-E4-R0-R1-A1 标准流前置修正 | 执行智能体；`blocked / finished` | 三条标准流显式接管后仍记录 `conhost.exe` 并触发精确进程数门禁；Q1～Q6/package 均 not_run | 唯一修正预算已用完；禁止 attempt-2、synthetic 重跑或继续修改同一 driver |
+| P4-B7-R1-E4-PKG-R1 直接预检与唯一 package | 执行智能体；`ready / waiting_user` | 普通持续会话直接运行六项 pnpm/Forge 预检；全部通过后只运行一次 package，并做静态产物核对 | 用户发送 PKG-R1 Prompt；不启动 app.asar、最终 EXE 或 P4-C12，不以 `conhost.exe` 精确数量作为门禁 |
 | P4-C12 Windows Shell 独立验收 | `not_started`；等待 E4-R1 和 B7 稳定快照 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定 E4-R1 通过后的稳定终点快照生成 | 测试智能体当前停止；不得提前执行、修改产品或把执行方门禁当作独立通过证据 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
