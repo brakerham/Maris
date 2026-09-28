@@ -2,24 +2,24 @@
 
 - 角色：技术选型咨询、工程教学与教学子任务统筹
 - 连接状态：用户侧边栏独立技术顾问已确认接单
-- 当前任务：P4-D13 — Windows 25H2 Electron GPU 启动崩溃裁定
+- 当前任务：P4-D14 — E4-R1 R0 PowerShell driver 恢复裁定
 - 状态：`review`
-- 最近更新：2026-09-28 00:02，Asia/Shanghai
-- 输入版本：`docs/coordination/control.md` 指令版本 `2026-09-27T23:40:00+08:00`、任务卡 `P4-D13`、固定输入 205 文件
-- 可修改范围：仅 `docs/phase-4-d13-electron-windows-crash-advice.md` 与本角色状态文件；产品、测试、依赖/lock、Forge、manifest/snapshot、冻结、控制、总览、矩阵/报告、其他角色、系统设置、外部工具和 Git 状态只读
+- 最近更新：2026-09-28 16:42，Asia/Shanghai
+- 输入版本：control `2026-09-28T16:20:00+08:00`、P4-D14 任务卡、223 文件固定输入及外部 R1 evidence
+- 可修改范围：仅 `docs/phase-4-d14-r0-driver-recovery-advice.md` 与本角色文件；其余项目和外部 evidence 只读，不运行 R0、pnpm、Node probe、package 或产品，不修改 Git
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P4-D13 已提交 review；停止，等待头脑风暴总控审阅和冻结后续路线
-- 步骤开始时间：2026-09-27 23:47 Asia/Shanghai
-- 最近有效进展：2026-09-28 00:02 Asia/Shanghai
-- 最近心跳：2026-09-28 00:02 Asia/Shanghai
-- 下一检查点：头脑风暴总控核对 `P4-D13-F01～F26`、8 个未决问题并决定是否形成后续冻结/任务；技术顾问不自行继续
-- 等待对象：头脑风暴总控审阅
-- 活动进程或会话：无；本任务不启动 Electron、Maris、sidecar 或任何动态诊断
+- 当前步骤：P4-D14 已提交 review 并停止，等待总控冻结 R0-only 合同
+- 步骤开始时间：2026-09-28 16:19 Asia/Shanghai
+- 最近有效进展：2026-09-28 16:42 Asia/Shanghai
+- 最近心跳：2026-09-28 16:42 Asia/Shanghai
+- 下一检查点：总控审阅 P4-D14-F01～F21、config 计数勘误和六项未决决定；没有新指令不继续执行
+- 等待对象：头脑风暴总控审阅与冻结
+- 活动进程或会话：无；未运行 R0 或动态建议代码
 - 重试次数：0
-- 最近输出：`docs/phase-4-d13-electron-windows-crash-advice.md` 已提交 review；442 行，SHA-256 `07ad30b2e9c996e53b2940bca8b6e7835cd23a6e1612c36f6081dcb115d411ca`
+- 最近输出：D14 交付 677 行；SHA-256 `2c067ded273b3286ec911b19316ec054e8b7f32f8a481815de879d21a962af68`；三个 PowerShell 代码块及内嵌 worker AST 解析 0 errors，运行验证未执行
 
 ## P0-P3-D8 分册进度
 
@@ -45,11 +45,49 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 
 ## 待处理事项
 
-- 对 GPU child `0xC0000135` → browser `0x80000003` 失败链按证据强度排序，避免把相似上游 issue 写成本机根因。
-- 冻结一次只改变一个变量的 C/D 盘、direct/Playwright、sandbox/GPU、版本与精确 DLL 取证顺序，并给出弹窗停止、日志保留和 owned process 收口规则。
-- 裁定 package `.pyc`/`.egg-info` allowlist 是否可以拆成不启动 Electron 的独立执行切片；不自行创建后续 Prompt、冻结或 P4-C12。
+- 总控审阅 D14 的21项建议冻结与6项决定，先修正config计数合同，再决定是否派发R0-only。
+- 后续执行方需验证建议代码的动态参数、双流、退出码、Windows Job、超时与后代收口；D14静态通过不代替这些门禁。
+- R0-ready只能作为另立package-only的证据；当前package/P1/P2/C12继续停止，wrapper与产品不修改。
 
 ## 工作日志
+
+### 2026-09-28 16:42 Asia/Shanghai — P4-D14 提交 review 并停止
+
+- 状态：`review / finished`。
+- 交付物：[P4-D14 R0 driver恢复技术裁定](../../phase-4-d14-r0-driver-recovery-advice.md)，SHA-256 `2c067ded273b3286ec911b19316ec054e8b7f32f8a481815de879d21a962af68`。
+- 根因：$Args自动变量冲突解释where/pnpm/Node三类症状；同时裁定位置绑定、数组、cmd quoting、退出码、混流、超时、JSON顺序与ready后package路径等风险。
+- 唯一方案：完整ProcessStartInfo/ArgumentList捕获实现，pnpm受限cmd adapter，双流异步落盘、真实native退出码、任务Job与worker门闩、有界收口；原Forge spawnPackageManager作为最后同构门禁。
+- 必要勘误：config查询3个实参、含executable共4个tokens；不得为任务卡“四参数”补空参数或改变语义，提交总控正式纠正。
+- R0-only：fresh evidence保留旧现场，单会话一次PATH，六项逐一判定；只生成R0_READY_PACKAGE_0_OF_1后退出，不含package路径。wrapper当前不改；未来package-only另授权并验证等价重建环境。
+- 静态验证：677行、25标题、8围栏成对、21唯一连续冻结编号、19个Markdown链接其中6个本地链接均有效、表格列数无错误；3个PowerShell代码块和内嵌worker解析0错误，尾随空白0、UTF-8无BOM、末尾LF有效，git diff --check无文档错误。
+- 固定输入：结束前223/223重新匹配，0 changed/0 missing；198 source及四个外部关键文件摘要在本轮核对一致。最新control仍16:20，唯一负责人未变。
+- 未验证：未执行Add-Type、Run-Captured、synthetic smoke、R0、pnpm、Node probe、package或产品；C#辅助类型未编译运行，Windows Job权限/生命周期及新probe双流捕获仍待下一授权任务验证。
+- 边界：只新增D14文档、更新本人角色文件；外部C盘现场、产品/测试/依赖/lock、wrapper/staging、manifest/snapshot、control/overview、其他角色、用户/系统PATH和Git均未修改。
+- 交接：总控决定21项冻结、6项未决问题及是否建立R0-only；未创建D14-R1、执行Prompt、接口冻结或P4-C12。技术顾问停止。
+
+### 2026-09-28 16:39 Asia/Shanghai — P4-D14 初稿与静态检查
+
+- 交付初稿：`docs/phase-4-d14-r0-driver-recovery-advice.md`，包含12个主章节、完整可复制捕获实现、config参数勘误、six-check严格结果合同、R0-only预算、wrapper触发条件和21个冻结项。
+- 关键边界：捕获采用ProcessStartInfo、受限cmd adapter、Job与worker启动门闩；真实Forge同构调用保持；ready后没有package路径，新package会话需等价重建环境而不能冒称继承旧会话。
+- 静态校验：三个PowerShell代码块解析0错误；本地链接有效；修正finally重复等待drain导致预算增加的风险。内嵌worker与最终内容继续定向核对。
+- 未验证：未执行Add-Type/建议函数/harness smoke/R0/Node/pnpm；Windows Job权限和运行行为留待新授权任务，不把语法通过写成动态通过。
+- 下一步：完成机械检查和control复读，记录交付摘要并停在review/finished。
+
+### 2026-09-28 16:30 Asia/Shanghai — P4-D14 续读与方案里程碑
+
+- 延续 16:22 已有接单，不重建任务。重读 control 16:20、原任务卡和外部四文件；223/223 起点、198/198 source 与四个外部文件摘要仍匹配。
+- 官方语义：核对 Microsoft Automatic Variables、Splatting、call operator、ArgumentList、异步管道和 Process.Kill 文档；改名只修参数冲突，无法补齐超时、双流捕获、子进程生命周期及 ready 后误入 package 的边界。
+- 计数勘误：三个 config 查询均是 3 个实参、连命令名共 4 个 tokens；不得为满足任务卡的 4 参数字样添加空参数或改变查询语义。
+- 方案选择：ProcessStartInfo/ArgumentList 负责原生 exe；裸 pnpm 使用受限 cmd adapter，真实 Forge 同构调用保留其实际跨平台 spawn。考虑到根进程退出不代表后代退出，捕获方案必须有任务专属进程容器与启动门闩，不能只凭父 PID 消失写清理通过。
+- 未运行：R0、pnpm、Node probe、package、Electron、Maris、sidecar；外部现场保持只读。下一检查点为 16:40 文档初稿。
+
+### 2026-09-28 16:22 Asia/Shanghai — P4-D14 接单与现场核对
+
+- 状态：`in_progress / active`；control 16:20 将 P4-D14 唯一分配给技术顾问，用户发送任务卡解除等待。E4-R1 与 package/P1/P2/C12 保持停止。
+- 输入：223 项起点全部匹配；R1 controller、probe、shim 和 failure summary 四文件 SHA-256 均与运行说明一致，均只读。
+- 已发现：`$Args` 自动变量冲突；没有单命令硬超时、stdout/stderr 混流、全部运行后才判断、先解析 JSON 后检查 exit、ready 后仍有 package 执行路径；config 命令实际 3 参数，与 D14 的 4 参数措辞矛盾。
+- 任务边界：只编写 D14 技术裁定并更新本角色；不修复/执行外部脚本，不创建 D14-R1 或后续任务，不改产品或 Git。
+- 下一步：核对 Microsoft 官方语言/.NET 文档，形成明确的唯一实现和可由总控直接冻结的 R0-only 验收合同；不将静态审查写成动态通过。
 
 ### 2026-09-28 00:02 Asia/Shanghai — P4-D13 提交 review 并停止
 

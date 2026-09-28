@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-09-28 16:20，Asia/Shanghai
+更新时间：2026-09-28 16:47，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。E4 在用户级失效 pnpm shim 处停止；E4-R1 又在 package 前因 R0 PowerShell driver 使用自动变量 `$Args` 而吞掉全部命令实参。package 仍为 0/1，产品与既有恢复方案没有被运行或否定。按用户决定，当前暂停普通执行重试，只派发 GPT-6 Astra 的 P4-D14，只读冻结可靠的 R0-only driver 合同。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
+P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。E4 在用户级失效 pnpm shim 处停止；E4-R1 又在 package 前因 R0 PowerShell driver 使用自动变量 `$Args` 而吞掉全部命令实参。package 仍为 0/1，产品与既有恢复方案没有被运行或否定。GPT-6 Astra 的 P4-D14 技术裁定已经总控接受；当前只派发一次 R0-only 恢复任务，验证新 driver 与六项预检，不打包。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,9 +13,9 @@ P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。E4 在用户级失�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 接受 E4-R1 driver 阻塞；停止普通重试并冻结 Astra D14 技术审查 | 2026-09-28 16:20 | 用户把 D14 Prompt 发给 GPT-6 Astra 技术顾问 | [E4-R1 阻塞核对](../p4-b7-r1-e4-r1-blocked-coordinator-review.md) |
-| 技术顾问 | `ready / waiting_user`（P4-D14） | 等待只读审计 R0 driver、定稿参数/超时/证据和 R0-only 合同 | 2026-09-28 16:20 | 使用 GPT-6 Astra high 接收 D14 Prompt | [D14 Prompt](prompts/p4-d14-r0-driver-recovery-technical-adviser.md) |
-| 执行智能体 | `blocked / finished`（P4-B7-R1-E4-R1） | R0 harness 吞掉实参；package 0/1，产品与环境未变，执行已停止 | 2026-09-28 16:04 | 保持停止，等待 D14 与总控新决定 | [E4-R1 报告](../b7-r1-e4-r1-pnpm-path-resume-running.md) |
+| 头脑风暴 | `ready / waiting_user` | 已接受 P4-D14，冻结 R0-only 恢复任务与一次严格受限的 harness 前置修正 | 2026-09-28 16:47 | 用户把 R0-R1 Prompt 发给既有执行智能体 | [D14 总控审阅](../p4-d14-coordinator-review.md) |
+| 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
+| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E4-R0-R1） | 待动态验证新 driver、synthetic self-test 与 Q1～Q6；package 明确禁用 | 2026-09-28 16:47 | 用户发送 R0-R1 Prompt；先复算 226 项固定快照 | [R0-R1 Prompt](prompts/p4-b7-r1-e4-r0-r1-executor.md)、[固定快照](snapshots/p4-b7-r1-e4-r0-r1-start.sha256) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
@@ -94,12 +94,13 @@ P0～P3 和 P4-A 已完成验收。H1-R1 与 E3 已通过。E4 在用户级失�
 | P4-B7-R1-E3：C 盘 Electron 最小三角验证 | 用户启动的既有执行智能体 | `review / finished`，总控已接受 | A1 direct 与 A2 默认 Playwright 各一次通过；198/198 source、39/39 外部证据和零残留通过 | [E3 总控核对](../p4-b7-r1-e3-coordinator-review.md) |
 | P4-B7-R1-E4：package、app.asar 与最终 EXE 恢复门禁 | 用户启动的既有执行智能体 | `blocked / finished` | 阶段 A 全过；唯一 package 在 Forge 裸 `pnpm` 命中失效用户 shim 后退出；P1/P2 未运行，资源已收口 | [E4 阻塞核对](../p4-b7-r1-e4-blocked-coordinator-review.md) |
 | P4-B7-R1-E4-R1：pnpm 路径恢复与最终门禁续跑 | 用户启动的既有执行智能体 | `blocked / finished` | `$Args` 自动变量冲突导致 R0 实参为空；package/P1/P2 均未运行 | [E4-R1 报告](../b7-r1-e4-r1-pnpm-path-resume-running.md)、[总控核对](../p4-b7-r1-e4-r1-blocked-coordinator-review.md) |
-| P4-D14：R0 PowerShell driver 恢复裁定 | 用户启动的 GPT-6 Astra 技术顾问 | `ready / waiting_user` | 只读给出唯一 driver 实现、evidence 合同与 R0-only 路线 | [D14 Prompt](prompts/p4-d14-r0-driver-recovery-technical-adviser.md) |
+| P4-D14：R0 PowerShell driver 恢复裁定 | 用户启动的 GPT-6 Astra 技术顾问 | `complete / finished` | 677 行方案、21 项冻结内容、ProcessStartInfo/Job Object 与 R0-only 合同已由总控接受 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md)、[总控审阅](../p4-d14-coordinator-review.md) |
+| P4-B7-R1-E4-R0-R1：R0 driver 单独恢复与六项预检 | 用户启动的既有执行智能体 | `ready / waiting_user` | 只运行 synthetic self-test 与 Q1～Q6；成功只生成 `R0_READY_PACKAGE_0_OF_1`，package 仍为 0/1 | [R0-R1 Prompt](prompts/p4-b7-r1-e4-r0-r1-executor.md)、[226 项快照](snapshots/p4-b7-r1-e4-r0-r1-start.sha256) |
 | P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
-- H1 replacement 原子性缺陷已关闭，E3 C 盘路线稳定。E4 的 package 未进入 Packager/Vite；E4-R1 又在 R0 harness setup 中因 `$Args` 失败。当前第一风险已从产品变成测试编排反复消耗，因此必须先由 D14 冻结可靠 driver，再决定是否允许 R0-only；不得把本轮失败写成 pnpm 方案或产品失败。
+- H1 replacement 原子性缺陷已关闭，E3 C 盘路线稳定。E4 的 package 未进入 Packager/Vite；E4-R1 又在 R0 harness setup 中因 `$Args` 失败。D14 已冻结可靠 driver；R0-R1 只允许一次 harness 前置修正，Q1 开始后任何失败都停止。该任务不授权 package，也不得把编排失败写成 pnpm 方案或产品失败。
 - P4-C12 不能提前启动：24 项矩阵已经存在，不需要测试智能体再次设计；只有 B7 形成稳定产品快照后，测试智能体才能绑定快照执行独立验收。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。

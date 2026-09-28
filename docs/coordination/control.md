@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-28T16:20:00+08:00`
+- 指令版本：`2026-09-28T16:47:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：`P4-B7-R1-E4-R1` 已在 package 前的 R0 driver 阶段按规则停止；`Run-Captured` 把形参命名为 PowerShell 自动变量 `$Args`，导致 where/pnpm/Node 实参全部丢失。package 仍为 0/1，产品、依赖、lock、PATH 与既有 pnpm 恢复方案均未被修改或实际否定。按用户升级边界，当前不派发第三次普通执行重试，只执行 GPT-6 Astra 的 `P4-D14` 只读技术裁定。
-- 需要用户参与：在技术顾问聊天选择 GPT-6 Astra、reasoning `high`，把 `docs/coordination/prompts/p4-d14-r0-driver-recovery-technical-adviser.md` 全文发送给技术顾问。执行智能体、package、P1/P2、P4-C12 和前端业务实现保持停止；不要修改或重跑外部 R1 driver。
+- 当前动作：GPT-6 Astra 的 `P4-D14` 已完成并由总控接受。当前只派发一次 `P4-B7-R1-E4-R0-R1`：动态验证新 driver、Windows Job/synthetic self-test 和 Q1～Q6 六项 R0 预检；成功只写 `R0_READY_PACKAGE_0_OF_1`，明确不执行 package。
+- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e4-r0-r1-executor.md` 全文发送给既有执行智能体。技术顾问与测试智能体保持停止；package、P1/P2、P4-C12 和前端业务实现都没有在本任务中获准启动。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；P4-A 验收提交 `88fb178` 与 P4-B 头脑风暴提交 `6b0e485` 已推送，远端 `main` 当前为 `6b0e485`。这些仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 
 ## 本地单主人产品范围
@@ -104,7 +104,8 @@
 | P4-B7-R1-E3 C 盘 Electron 最小三角验证 | 执行智能体；`review / finished`，总控已接受 | A1 direct 与 A2 默认 Playwright 各一次通过；198/198 source 与 39/39 外部证据匹配；只支持执行位置类差异 | E3 停止；不得重跑 A1/A2、D 基线、Procmon、诊断开关或版本遍历 |
 | P4-B7-R1-E4 package、app.asar 与最终 EXE 恢复门禁 | 执行智能体；`blocked / finished` | 阶段 A 全过；唯一 package 在 Forge 裸 `pnpm` 命中失效用户 shim 后退出；P1/P2 未运行，资源已收口 | E4 停止；不得直接重跑 package、修改系统 pnpm或把未运行门禁写成通过 |
 | P4-B7-R1-E4-R1 pnpm 路径恢复与最终门禁续跑 | 执行智能体；`blocked / finished` | R0 driver 的 `$Args` 自动变量冲突吞掉全部实参；package 0/1、P1/P2 not_run，现场与环境不变 | 原执行停止；不得修 driver 后重跑或自动创建 package 续段 |
-| P4-D14 R0 driver 恢复技术裁定 | 技术顾问；`ready / waiting_user` | GPT-6 Astra 只读审计参数传递、日志、超时、PID 收口和 R0-only 合同 | 用户发送 D14 Prompt；不得运行 R0/package、修改外部 evidence 或自行创建执行任务 |
+| P4-D14 R0 driver 恢复技术裁定 | `complete`；总控已接受 | 677 行方案、21 项冻结内容；接受 ProcessStartInfo/ArgumentList、受限 cmd adapter、Job Object、fresh evidence 与参数计数勘误 | 技术顾问停止；不得运行 R0/package 或自行创建执行任务 |
+| P4-B7-R1-E4-R0-R1 R0 driver 单独恢复与六项预检 | 执行智能体；`ready / waiting_user` | 只运行 synthetic self-test 与 Q1～Q6；Q1 前仅允许一次保留证据的 driver 前置修正；package 0/1 不消费 | 用户发送 R0-R1 Prompt；成功或失败均停止，不得进入 package、P1/P2 或 C12 |
 | P4-C12 Windows Shell 独立验收 | `not_started`；等待 E4-R1 和 B7 稳定快照 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定 E4-R1 通过后的稳定终点快照生成 | 测试智能体当前停止；不得提前执行、修改产品或把执行方门禁当作独立通过证据 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
