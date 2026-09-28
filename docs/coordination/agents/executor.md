@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E4-DYN-R2 — 修正任务外 browser root 提升并恢复最终动态门禁
+- 当前任务：P4-B7-R1-E5-FINAL — 最终 Maris.exe 单次黑盒动态门禁
 - 状态：`blocked / finished`
-- 最近更新：2026-09-29 02:55，Asia/Shanghai（DYN-R2 受阻交付）
-- 可修改范围：本角色日志、新增 DYN-R2 运行说明和 source manifest、create-new `dynamic-resume-2` 外部证据；只读使用固定 package、DYN-R1 和 PKG-R2 证据。禁止产品、测试、依赖、lock、Forge、package、migration、独立验收、其他角色和 Git 写操作。
+- 最近更新：2026-09-29 03:24，Asia/Shanghai（E5-FINAL 唯一动态运行收口）
+- 可修改范围：本角色日志、新增 E5-FINAL 运行说明和 source manifest、create-new `final-exe-resume-1` 外部证据。禁止产品、测试、依赖、lock、Forge、package、migration、独立验收、control/overview、其他角色和 Git 写操作。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：DYN-R2 已受阻交付并停止；P1 1/1 ownership gate 失败，P2 0/1 not_run
-- 步骤开始时间：2026-09-29 02:24 Asia/Shanghai
-- 最近有效进展：P1 唯一预算在产品 API 前按冻结规则以 `browser_root_launch_identity_mismatch` 停止；最终产品进程/监听/窗口均为 0，固定产物不变，外部 evidence 79/79 匹配
-- 最近心跳：2026-09-29 02:55 Asia/Shanghai
-- 下一检查点：无；等待头脑风暴总控重新裁定验收方式，不建议或创建 DYN-R3
+- 当前步骤：E5-FINAL 唯一动态 cell 1/1 已完成；因 `modules.list()` 唯一观察为空数组而按规则停止
+- 步骤开始时间：2026-09-29 03:02 Asia/Shanghai
+- 最近有效进展：直接启动、CDP、两窗口、bridge/security、首次 runtime、自然退出、事件/资源/产物收口通过；首失败为 `daily_finance_missing`，根因未验证
+- 最近心跳：2026-09-29 03:24 Asia/Shanghai
+- 下一检查点：无；等待总控复算证据并决定是否另行冻结返修任务
 - 等待对象：头脑风暴总控；技术顾问、测试和 P4-C12 保持停止
-- 活动进程或会话：无活动产品进程或动态 cell；`dynamic-resume-2` 已冻结，P1 1/1，P2 0/1
-- 重试次数：DYN-R2 P1 1/1；P2 0/1；没有重跑
-- 最近输出：`automation_route_exhausted=true`；source manifest 198/198，SHA `5e3b788c...a228`；外部 evidence 79/79，SHA `8872b541...e3aff`
+- 活动进程或会话：无；产品进程、受管 sidecar、监听和窗口均为 0
+- 重试次数：E5-FINAL 1/1；没有重跑
+- 最近输出：运行 35,188 ms，自然退出码 0，无 forced cleanup；外部 evidence 82/82 匹配
 
 ## 待接任务
 
@@ -59,6 +59,34 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-29 03:24 Asia/Shanghai — P4-B7-R1-E5-FINAL 阻塞交付并停止
+
+- 状态 `blocked / finished`。最终 EXE 唯一预算 1/1，运行 35,188 ms，低于 120 秒硬上限；没有重跑，没有启动 P4-C12、测试智能体或技术顾问。
+- 直接 `spawn()` 冻结 `Maris.exe`、精确根进程身份、递归 owned set、新 profile 动态 loopback CDP、恰好两个页面、冻结 bridge 键、renderer Node 隔离和未授权 bridge 缺失全部通过。
+- 首次 runtime 明确为 `online / managed / authenticated=true / errorCode=null`。唯一一次 `modules.list()` 返回空数组，首失败为 `daily_finance_missing`；按冻结顺序立即停止，recover 0/1、毛毛 state/openMain、recover 后 runtime/modules 和最终隐私复查均为 `not_run_after_module_stop`。
+- 单次空 module 结果不证明永久缺失；根因固定为 `unverified`。Runner 聚合 `runtime=false` 只表示 runtime/modules/recover 完整阶段未全部完成，不表示首次 runtime 失败。
+- 产品自然退出码 0，无 signal、超时或 forced cleanup；根及后代、受管 Python sidecar、捕获监听、产品窗口和 Tray 所属进程推断均为 0。console/page error/crash event、Windows Application/Code Integrity 和冻结 crash/assertion 模式均为 0，没有产品 crash 证据。
+- 启动后停止点之前的 DOM/storage/bridge/log 隐私观察通过；预期 CDP 调试端点身份只保存在受限 evidence。EXE、app.asar、198 source、73 dist、67 resources、140 out 和 fuses 前后匹配。
+- 唯一产品启动前有一次 PowerShell 只读表达式 parser warning；未启动产品、未消耗预算。拆分静态 Node 检查后门禁通过，没有修改 runner 或重跑产品。
+- 交付：[E5-FINAL 运行说明](../../b7-r1-e5-final-exe-running.md)、[198 项 source manifest](../../../apps/desktop/b7-r1-e5-final-exe-source.sha256) 和本角色日志。source manifest 198/198 匹配，SHA `a45bf73570369c0595da436076949d723b3249dfc2af40a810a0182fcd0ca74e`；外部运行证据 82/82 匹配，SHA `c8f93a29857c0a3dce89a78a72c8e1785be1be907579f10bd4369c19a262f5fc`。
+- 没有修改产品、测试、依赖、lock、Forge、package、migration、control/overview 或其他角色，没有运行测试/build/package/app.asar、接触真实数据或执行 Git 写操作。执行方停止，不创建 E5-R1、DYN-R3 或产品返修。
+
+### 2026-09-29 03:03 Asia/Shanghai — P4-B7-R1-E5-FINAL 接单与起点门禁
+
+- 最新 control `2026-09-29T03:00:00+08:00` 指定既有执行智能体为唯一负责人，只允许 direct `spawn()` 冻结 `Maris.exe` 一次并通过 CDP 观察；DYN-R1/DYN-R2、app.asar、package 和其他智能体保持停止。
+- 已按仓库规则完整读取项目入口、协调规则、最新 control、本角色状态、E5-FINAL 任务卡、DYN-R2 总控核对/运行说明、PKG-R2 总控核对/运行说明和 IF-003/004/005。
+- E5-FINAL 起点清单 254 entries、254 unique、254 matched、0 missing/mismatch，manifest SHA-256 `c8007e18e370004fdae62c3f836b767a69ae2c760d15aed2c5ec42c7705a48bd`。Git index staged paths=0；既有 `.claude/`、`.pnpm-store/` 和旧外部 evidence 保持不动。
+- 当前没有创建新的 evidence、没有启动最终 EXE，也没有运行测试、build、package、app.asar、P4-C12 或外部服务。下一步先复算固定 C 盘产物与旧 evidence，再静态冻结唯一 runner。
+
+### 2026-09-29 03:15 Asia/Shanghai — E5-FINAL runner 冻结与唯一启动前检查点
+
+- 只读外部复算通过：PKG-R2 40/40、DYN-R1 84/84、DYN-R2 79/79；固定 source 198/198、Electron dist 73/73、Python resources 67/67、package out 140/140；EXE、app.asar、production fuses 和 Python 3.14.7 均匹配。启动前产品进程/窗口为 0，index staged paths=0。
+- `final-exe-resume-1` 按 create-new 建立；只包含 preflight、run manifest、runner code map 和 runner，没有旧 profile、数据库、PID、端口或运行结果。
+- Runner 640 行，SHA-256 `a2009876a8b1c2aba230d1573d644a3103109a15610ef129c1a803de790e0658`，固定 Node `--check` 退出 0。静态计数：direct `spawn()` 1、`connectOverCDP()` 1、recover 调用 1、定向 taskkill 收口路径 1；Playwright `_electron`、`--no-sandbox`、`browser.close()`、`app.quit()` 均为 0。
+- 代码映射：direct spawn 第 330 行；root 精确身份第 341 行；fresh `DevToolsActivePort`/loopback 第 355 行；CDP observer 第 372 行；窗口/bridge/隔离第 405 行；runtime/modules 第 451 行；一次 recover 第 470 行；产品 `MARIS_E2E_EXIT_MS` 自然收口第 490 行。
+- 首次最终只读门禁命令在启动产品前因 PowerShell 内联表达式缺少右括号被 parser 拒绝；已写入外部 `prelaunch-reader-failure.json`，动态预算仍为 0/1。把 Node 语法检查拆成独立语句后只重跑静态门禁，没有启动产品或改 runner。
+- 修正后的最终门禁：control 版本/摘要不变，runner SHA/语法匹配，source 198/0 failure、dist 73/0、resources 67/0、out 140/0，EXE/app.asar 匹配；产品进程/窗口 0，index staged paths=0，动态 cell 不存在。下一步执行唯一预算 1/1，任何结果均不重跑。
 
 ### 2026-09-29 02:26 Asia/Shanghai — P4-B7-R1-E4-DYN-R2 接单与起点门禁
 

@@ -2,14 +2,23 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E5-FINAL — 直接启动最终 Maris.exe 的单次黑盒动态门禁
+- 当前任务：P4-B7-R1-E5-R1 — 修复 module Profile 合同并复验最终 EXE
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-29 03:00，Asia/Shanghai
+- 最近更新：2026-09-29 03:33，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-09-29 03:33 Asia/Shanghai — 接受 E5 黑盒结果并冻结 Profile 合同返修
+
+- 总控复算 E5 受限 evidence 为 82/82 匹配。最终 EXE 直接根进程、managed Host、owner 认证、主窗口/毛毛、安全隔离、隐私阶段检查、自然退出和零残留均取得真实证据；不再存在 Electron launcher 阻塞。
+- 唯一 `modules.list()` 返回空数组，执行方在 recover 前按规则停止。总控确认 P0 缺陷 `P4-E5-MODULE-001`：Python Host 与 D11 冻结 Profile 为 `daily_finance.assistant@1`，桌面 contribution 和三个同源 fixture 使用 `daily_finance.default`。
+- 新隔离数据库 `module_setting` 为 0 行，排除禁用 override；冻结 app.asar 中错误别名出现 2 次，正确 Profile 出现 0 次。`intersectModules()` 因 Profile 不匹配按设计过滤模块。
+- 不重新设计 Host，不修改 intersection 算法，不增加别名 fallback。发布 E5-R1：修正真实 ID、补反例和同源盲点，静态回归通过后 package 1/1、最终 EXE 1/1。
+- 技术顾问和测试智能体保持停止；E5-R1 通过并由总控固定 B7 终点后，才派发 P4-C12。
+- 交付物：[E5 总控核对](../../p4-b7-r1-e5-final-blocked-coordinator-review.md)、[E5-R1 Prompt](../prompts/p4-b7-r1-e5-r1-module-contract-executor.md)、[E5-R1 起点快照](../snapshots/p4-b7-r1-e5-r1-start.sha256)。
 
 ### 2026-09-29 03:00 Asia/Shanghai — 接受 DYN-R2 阻塞并关闭 Playwright 启动路线
 

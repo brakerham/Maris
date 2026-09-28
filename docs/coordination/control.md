@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-29T03:00:00+08:00`
+- 指令版本：`2026-09-29T03:33:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：`P4-B7-R1-E4-DYN-R2` 在任何产品 API 前观察到仍存活的 `cmd.exe` 包装进程和唯一直接 Electron 子进程，并因冻结规则不允许提升存活包装进程的子进程而停止。总控复算 79/79 外部证据匹配，未发现产品 crash。`_electron.launch()` 所有权识别路线已关闭，不创建 DYN-R3；发布 `P4-B7-R1-E5-FINAL`，直接启动一次最终 `Maris.exe`，Playwright 只经 CDP 观察。
-- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e5-final-exe-executor.md` 全文发送给既有执行智能体。技术顾问与测试智能体保持停止；不得重跑 package、app.asar 或旧动态 cell。E5-FINAL 形成稳定执行方结果后，总控才决定是否派发 P4-C12。
+- 当前动作：`P4-B7-R1-E5-FINAL` 已证明最终 EXE 直接启动、managed Host、owner 认证、双窗口、preload/renderer 安全边界和自然退出；首个真实产品失败为 `daily_finance_missing`。总控确认 `P4-E5-MODULE-001`：桌面 contribution 和同源测试 fixture 错用 `daily_finance.default`，与后端冻结的 `daily_finance.assistant@1` 不匹配，模块被 strict intersection 过滤。发布 `P4-B7-R1-E5-R1` 做窄返修、一次 package 和一次最终 EXE 复验。
+- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e5-r1-module-contract-executor.md` 全文发送给既有执行智能体。技术顾问与测试智能体保持停止；不得重跑旧 E5、复用旧 package/profile 或提前启动 P4-C12。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；P4-A 验收提交 `88fb178` 与 P4-B 头脑风暴提交 `6b0e485` 已推送，远端 `main` 当前为 `6b0e485`。这些仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 - 前端实现提醒门禁：P4-B Shell 完成独立验收后、创建首个 P4-C 财务驾驶舱技术方案或执行 Prompt 之前，总控必须主动提醒用户进入真实前端界面阶段，并先复核两张既定参考图、高保真信息架构、页面/组件切片、视觉验收方式和模型分工。不得直接沿用 Shell 占位页开始编码；必须让用户先确认当时可用模型及分工策略。当前建议重新评估“强推理/视觉模型（现为 GPT-6 Astra）负责界面方案、复杂交互和关键审阅，编码工作模型（现为 GPT-6 Sol）负责组件实现、重构和常规测试”，模型能力或额度变化时以届时讨论为准。
 
@@ -118,8 +118,9 @@
 | P4-B7-R1-E4-PKG-R2 package-only | 执行智能体；`review / finished`，总控已接受 | 唯一 package 退出 0；140 文件产物、fuses、67 项 Python resources、零污染与进程收口通过 | PKG-R2 停止；禁止重跑 Q1～Q6、package 或修改不可变产物 |
 | P4-B7-R1-E4-DYN-R1 最终动态门禁 | 执行智能体；`blocked / finished` | P1 1/1 在产品 API 前由错误 root PID 假设停止；产品 unverified，P2 0/1 not_run；84/84 evidence 与最终资源收口通过 | DYN-R1 停止；旧 evidence/profile/PID 只读，不得补跑或复用 |
 | P4-B7-R1-E4-DYN-R2 root promotion 恢复 | 执行智能体；`blocked / finished` | 79/79 evidence 匹配；存活 `cmd.exe` 包装进程导致 browser root 门禁按规则停止；产品 `unverified`，无 crash 证据 | DYN-R2 停止；不创建 DYN-R3，不再使用 Playwright Electron launcher 或重跑旧动态 cell |
-| P4-B7-R1-E5-FINAL 最终 EXE 黑盒门禁 | 执行智能体；`ready / waiting_user` | 直接 `spawn()` 冻结 `Maris.exe` 1/1；Playwright 只用 CDP 附加，验证窗口、桥接、runtime、模块、recover 与收口 | 用户发送 E5-FINAL Prompt；不得预跑 app.asar、重新 package、重试或启动其他智能体 |
-| P4-C12 Windows Shell 独立验收 | `not_started`；等待 E5-FINAL 和 B7 稳定快照 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定最终 EXE 门禁后的稳定终点快照生成 | 测试智能体当前停止；不得提前执行、修改产品或把执行方门禁当作独立通过证据 |
+| P4-B7-R1-E5-FINAL 最终 EXE 黑盒门禁 | 执行智能体；`blocked / finished` | EXE/Host/认证/双窗口/安全/自然退出通过；`modules.list()` 为空，首失败 `daily_finance_missing`；82/82 evidence 匹配 | 原任务停止；旧 package、profile、数据库、PID、端口与 evidence 只读，不得重跑 |
+| P4-B7-R1-E5-R1 module Profile 合同返修 | 执行智能体；`ready / waiting_user` | 修正 `daily_finance.assistant@1`、补同源盲点反例；静态回归后 package 1/1、最终 EXE 1/1 | 用户发送 E5-R1 Prompt；任何真实 package/动态失败立即停止，不得自行重试或扩大产品范围 |
+| P4-C12 Windows Shell 独立验收 | `not_started`；等待 E5-R1 和 B7 稳定快照 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定返修后最终 EXE 门禁的稳定终点快照生成 | 测试智能体当前停止；不得提前执行、修改产品或把执行方门禁当作独立通过证据 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |

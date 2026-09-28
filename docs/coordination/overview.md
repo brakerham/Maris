@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-09-29 03:00，Asia/Shanghai
+更新时间：2026-09-29 03:33，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。H1-R1、E3 和 PKG-R2 已通过总控核对。DYN-R2 的 79/79 外部证据已由总控复算；它观察到仍存活的 `cmd.exe` 包装进程及唯一直接 Electron 子进程，并在产品 API 前按冻结规则停止。产品保持未验证且没有 crash 证据。Playwright `_electron.launch()` 路线已经关闭，不创建 DYN-R3。下一步 E5-FINAL 只直接启动一次最终 `Maris.exe`，Playwright 仅通过 CDP 观察。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
+P0～P3 和 P4-A 已完成验收。E5-FINAL 已实际证明最终 `Maris.exe`、managed Host、owner 认证、两个窗口、preload/renderer 隔离和自然退出。首个产品失败是 `modules.list()` 为空。总控通过后端 manifest、D11 冻结合同、全新数据库和 app.asar 内容确认 `P4-E5-MODULE-001`：桌面使用错误 Profile `daily_finance.default`，严格交集过滤了真实 `daily_finance.assistant@1`。下一步 E5-R1 只修此合同和同源测试盲点，随后 package 1/1、最终 EXE 1/1。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,9 +13,9 @@ P0～P3 和 P4-A 已完成验收。H1-R1、E3 和 PKG-R2 已通过总控核对�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 已接受 DYN-R2 编排阻塞并关闭 Playwright Electron 启动路线；发布最终 EXE 单次黑盒门禁 | 2026-09-29 03:00 | 用户把 E5-FINAL Prompt 发给既有执行智能体 | [DYN-R2 阻塞核对](../p4-b7-r1-e4-dyn-r2-blocked-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | 已接受 E5 黑盒证据并确认 Profile ID 接线缺陷；发布窄返修及同任务 package/复验 | 2026-09-29 03:33 | 用户把 E5-R1 Prompt 发给既有执行智能体 | [E5 阻塞核对](../p4-b7-r1-e5-final-blocked-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E5-FINAL） | DYN-R2 已 blocked/finished；79/79 evidence 匹配，产品 unverified，进程和资源已收口 | 2026-09-29 03:00 | 用户发送 E5-FINAL Prompt；直接启动最终 EXE 1/1 | [E5-FINAL Prompt](prompts/p4-b7-r1-e5-final-exe-executor.md)、[固定快照](snapshots/p4-b7-r1-e5-final-start.sha256) |
+| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E5-R1） | E5-FINAL blocked/finished；82/82 evidence 匹配，根因定位为桌面 Profile ID 与后端不一致 | 2026-09-29 03:33 | 用户发送 E5-R1 Prompt；修复、回归、package 1/1、EXE 1/1 | [E5-R1 Prompt](prompts/p4-b7-r1-e5-r1-module-contract-executor.md)、[固定快照](snapshots/p4-b7-r1-e5-r1-start.sha256) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
@@ -101,8 +101,9 @@ P0～P3 和 P4-A 已完成验收。H1-R1、E3 和 PKG-R2 已通过总控核对�
 | P4-B7-R1-E4-PKG-R2：package-only | 用户启动的既有执行智能体 | `review / finished`，总控已接受 | 唯一 package 成功；140 文件产物、fuses、67 项 Python resources、零污染和收口通过 | [运行说明](../b7-r1-e4-pkg-r2-running.md)、[总控核对](../p4-b7-r1-e4-pkg-r2-coordinator-review.md) |
 | P4-B7-R1-E4-DYN-R1：最终动态门禁 | 用户启动的既有执行智能体 | `blocked / finished` | P1 1/1 被错误 root PID 假设提前停止；产品 unverified，P2 not_run，84/84 evidence 匹配 | [运行说明](../b7-r1-e4-dyn-r1-running.md)、[总控核对](../p4-b7-r1-e4-dyn-r1-blocked-coordinator-review.md) |
 | P4-B7-R1-E4-DYN-R2：root promotion 恢复 | 用户启动的既有执行智能体 | `blocked / finished` | 79/79 evidence 匹配；存活 `cmd.exe` 包装进程导致 browser root 门禁停止；产品 unverified，自动启动路线耗尽 | [运行说明](../b7-r1-e4-dyn-r2-running.md)、[总控核对](../p4-b7-r1-e4-dyn-r2-blocked-coordinator-review.md) |
-| P4-B7-R1-E5-FINAL：最终 EXE 黑盒门禁 | 用户启动的既有执行智能体 | `ready / waiting_user` | 直接启动最终 `Maris.exe` 1/1，Playwright 只经 CDP 观察；不运行 app.asar、不打包、不重试 | [E5-FINAL Prompt](prompts/p4-b7-r1-e5-final-exe-executor.md)、[固定快照](snapshots/p4-b7-r1-e5-final-start.sha256) |
-| P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 E5-FINAL 与 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
+| P4-B7-R1-E5-FINAL：最终 EXE 黑盒门禁 | 用户启动的既有执行智能体 | `blocked / finished` | 直接启动、Host/认证、双窗口、安全和自然退出通过；模块为空，82/82 evidence 匹配 | [运行说明](../b7-r1-e5-final-exe-running.md)、[总控核对](../p4-b7-r1-e5-final-blocked-coordinator-review.md) |
+| P4-B7-R1-E5-R1：module Profile 合同返修 | 用户启动的既有执行智能体 | `ready / waiting_user` | 修正真实 Profile 与三处假 fixture；回归后一次 package、一次最终 EXE 复验 | [E5-R1 Prompt](prompts/p4-b7-r1-e5-r1-module-contract-executor.md)、[固定快照](snapshots/p4-b7-r1-e5-r1-start.sha256) |
+| P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 E5-R1 与 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 
