@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E4-R0-R1-A1 — 唯一前置修正预算恢复 attempt-1
+- 当前任务：P4-B7-R1-E4-PKG-R1 — 普通持续会话直接预检与唯一 package
 - 状态：`blocked / finished`
-- 最近更新：2026-09-28 23:39，Asia/Shanghai（A1 失败交付）
-- 可修改范围：本角色日志、新增 A1 运行说明和 source manifest；仅 create-new 外部 attempt-1 支持源码与证据。修正 native/fixture 的三条标准流和有界 pump；旧 attempt-0 及根级证据只读。预算保持 2/4、6/24/31，跨尝试累计≤35；禁止 attempt-2、package、产品、测试、依赖、lock、永久环境、其他角色和 Git 写操作。
+- 最近更新：2026-09-29 00:42，Asia/Shanghai（停止交付）
+- 可修改范围：本角色日志、新增 PKG-R1 运行说明和 source manifest；create-new package-resume-1 证据，现有 wrapper 可生成并清理 workspace staging/out。只直接执行六项预检及一次 package，静态核对产物；禁止旧 synthetic/Job 路线、产品/测试/依赖/lock 修改、永久环境、其他角色和 Git 写操作。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：A1 combined 再出现 conhost，按门禁停止；固定源码和原始证据交回总控
-- 步骤开始时间：2026-09-28 23:34 Asia/Shanghai（唯一动态运行）；23:37:40 资源收口复算完成
-- 最近有效进展：attempt-1 共 40 文件 / 39 条 evidence；旧 26 条证据未变；source/dist/marker/node_modules 不变；记录 PID 和 Job active 均归零
-- 最近心跳：2026-09-28 23:39 Asia/Shanghai
-- 下一检查点：总控核对 P4-E4-R0-R1-A1-HARNESS-PROCESS-001；不再启动目标
-- 等待对象：头脑风暴总控；技术顾问、测试、package/P1/P2/P4-C12 保持停止
-- 活动进程或会话：无；session 16638 已退出 1，controller 23664、Job PID 32040/7932/10136 全部退出
-- 重试次数：前置修正 1/1 已消耗；combined 1/1 失败、timeout 0/1；Q1～Q6 各 0/1；不存在 attempt-2
-- 最近输出：combined Job total 3 > 2；额外 conhost；native exit=null、worker=124、timeout=false，forced cleanup=true，cleanup/drain=4/4 ms；本轮总 4/31，跨尝试 8/35
+- 当前步骤：PKG-R1 证据核对异常后停止；失败说明与不可变交付清单收口
+- 步骤开始时间：2026-09-29 00:36:23 Asia/Shanghai
+- 最近有效进展：Q1～Q5 真实通过；Q6 原生与四个 Forge 查询成功，执行方读取 inner-0 和错误 receipt 字段使会话停止；固定 C 输入完整终点匹配
+- 最近心跳：2026-09-29 00:42 Asia/Shanghai
+- 下一检查点：无自动后续；总控读取运行说明与摘要后决定新任务
+- 等待对象：头脑风暴总控；技术顾问、测试、app.asar/EXE/P4-C12 保持停止
+- 活动进程或会话：普通 PowerShell PID 5348 已结束；native PID 10860/8956/5704/15948/20684/23360 残留 0；固定 C 根自有进程 0
+- 重试次数：六项各执行 1/1；package 0/1；没有重跑或修改冻结 probe/shim
+- 最近输出：out/staging 均不存在，transition 0；PATH/cache 已还原，User/Machine PATH 不变；node_modules 12451 文件/570581590 bytes 聚合不变
 
 ## 待接任务
 
@@ -59,6 +59,23 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-29 00:42 Asia/Shanghai — P4-B7-R1-E4-PKG-R1 失败交付并停止
+
+- 状态 `blocked / finished`。Q1～Q5 stdout 符合冻结值，stderr 0、退出码 0。Q6 冻结 probe 的四个真实 Forge 查询也都 exit 0、stderr 0，参数 1/3/3/3，receipt 为 nodeArgumentCount 3 / scriptArgumentCount 2。
+- 执行方错误：会话读取 inner-0-result.json，而冻结 probe 实际从 inner-1 开始；receipt 核对还误用 argCount/scriptArgCount。原始异常和原始日志保留，不修改或重跑。Q6 独立 result 与精确 native 起止时间未持久化；未补造。
+- package **0/1，not_run**；本轮未启动产品、sidecar、数据库或独立验收。依任务失败即停止规则，未在另一个会话补跑 package。
+- 固定 source 198、dist 73、marker 9、旧证据 26/14/26/39 前后全部匹配；node_modules 12451 文件、570581590 bytes，聚合 `f06ce306456134f7f78176e64d3f9a7e54133607d3e9202ff6bb1a9fcbf800c7` 不变。out/staging/transition 为无/无/0，自有进程 0，临时 PATH/cache 原样还原。
+- 交付：[PKG-R1 运行说明](../../b7-r1-e4-pkg-r1-running.md)、[198 项源码清单](../../../apps/desktop/b7-r1-e4-pkg-r1-source.sha256)；外部仅 package-resume-1 新证据，最终46文件/45清单条目。三个仓库文件最终 SHA 和总摘要见外部 repository-delivery.sha256 与最终交付消息，避免角色日志自身摘要自引用。
+- 同步：共享角色日志提供总控恢复依据；不改 overview/control、其他角色、产品、测试、依赖、lock 或 Git。技术顾问/测试维持停止，等待总控新指令。
+
+
+### 2026-09-29 00:33 Asia/Shanghai — P4-B7-R1-E4-PKG-R1 接单
+
+- 最新 control 明确终止旧 synthetic/Job 路线；本任务使用普通持续 PowerShell 会话直接运行六项真实预检，全部通过后只授权一次 package。console helper 本身不再失败，不创建通用 driver/capture/worker 或新预算控制器。
+- 起点 235 unique、Ordinal 有序路径，235 matched、0 mismatch、0 missing；manifest SHA `815c7210fcf0192dbcdea5c8b6b6ba2f35ae3770e215138e89bbb9d470c8db2f`；control SHA `5d7787aa25399de6defeb2c6101c43db0b0e9f398343b7b1e3904d546e65b48c`。PowerShell 7.6.5，package-resume-1 不存在。
+- 任务卡引用的 docs/b7-r1-h1-r1-staging-atomicity-running.md 不存在；已通过文件搜索定位到 docs/b7-r1-h1-package-hygiene-running.md 第 10 节的完整 H1-R1 追加交付，并读取现有 staging/wrapper/Forge 配置。没有修改任务卡或冻结材料。
+- 下一步完成全现场只读摘要，复制同字节 shim/probe；每项有界执行并记录真实 stdout/stderr/exit/PID。任何预检失败停止，不修复重跑。package 后仅静态资源/fuse/产物核对，不启动 Electron、Maris、sidecar 或独立验收。
 
 ### 2026-09-28 23:39 Asia/Shanghai — R0-R1-A1 blocked 交付与停止
 

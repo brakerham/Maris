@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E4-PKG-R1 — 接受 A1 重复停止，终止 synthetic 循环并恢复真实 package 路径
+- 当前任务：P4-B7-R1-E4-PKG-R2 — 接受六项真实预检证据，只恢复唯一 package
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-29 00:01，Asia/Shanghai
+- 最近更新：2026-09-29 00:52，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -140,19 +140,31 @@
 - [P4-B7-R1-E4-R0-R1-A1 阻塞总控核对](../../p4-b7-r1-e4-r0-r1-a1-blocked-coordinator-review.md)
 - [P4-B7-R1-E4-PKG-R1 Prompt](../prompts/p4-b7-r1-e4-pkg-r1-executor.md)
 - [P4-B7-R1-E4-PKG-R1 固定输入快照](../snapshots/p4-b7-r1-e4-pkg-r1-start.sha256)
+- [P4-B7-R1-E4-PKG-R1 运行说明](../../b7-r1-e4-pkg-r1-running.md)
+- [P4-B7-R1-E4-PKG-R1 阻塞总控核对](../../p4-b7-r1-e4-pkg-r1-blocked-coordinator-review.md)
+- [P4-B7-R1-E4-PKG-R2 Prompt](../prompts/p4-b7-r1-e4-pkg-r2-executor.md)
+- [P4-B7-R1-E4-PKG-R2 固定输入快照](../snapshots/p4-b7-r1-e4-pkg-r2-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：A1 重复进程预算失败已核对；synthetic/Job 路线停止，PKG-R1 直接预检与唯一 package 任务已冻结
-- 步骤开始时间：2026-09-29 00:01，Asia/Shanghai
-- 最近有效进展：2026-09-29 00:01，Asia/Shanghai（A1 外部 evidence 39/39、三份仓库交付摘要匹配；不允许 attempt-2）
-- 最近心跳：2026-09-29 00:01，Asia/Shanghai
-- 下一检查点：六项普通 pnpm/Forge 预检全部真实通过，随后仅执行一次 package
-- 等待对象：用户把 PKG-R1 Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
+- 当前步骤：PKG-R1 原始证据已核对；Q1～Q6 接受为通过，PKG-R2 package-only 任务已冻结
+- 步骤开始时间：2026-09-29 00:52，Asia/Shanghai
+- 最近有效进展：2026-09-29 00:52，Asia/Shanghai（外部 evidence 45/45、Q6 四组 inner 和完整 JSON 均匹配；package 0/1）
+- 最近心跳：2026-09-29 00:52，Asia/Shanghai
+- 下一检查点：不重跑预检，真实 package 唯一一次结束并完成静态产物核对
+- 等待对象：用户把 PKG-R2 Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
 - 活动进程或会话：B7 启动的 Uvicorn/Electron/Maris/Playwright 均已退出；无项目服务；没有活动依赖安装
 - 重试次数：E2-R1 最小 fixture 只运行一次即因不受控弹窗停止；总控未再次启动 Electron
-- 最近输出：A1 阻塞总控核对、PKG-R1 Prompt 与新固定输入；总控没有运行 package、Electron、Maris 或 sidecar
+- 最近输出：PKG-R1 阻塞总控核对、PKG-R2 Prompt 与新固定输入；总控没有运行 package、Electron、Maris 或 sidecar
+
+### 2026-09-29 00:52 Asia/Shanghai — 接受六项真实预检并发布 package-only
+
+- 复算 PKG-R1 三份仓库交付和外部 evidence；45/45 文件匹配，清单 SHA-256 为 `776c5821...4391`，package 仍为 0/1。
+- Q1 第一项精确命中任务 shim；Q2～Q5 分别为 `12.7.0`、`undefined`、`undefined`、`hoisted`。
+- Q6 完整 JSON 与 Q2～Q5 一致；四个 inner result 均 exit 0、resolved true，四个 stderr 均为空，stdout 摘要逐项匹配。
+- 执行方停止原因仅为读取不存在的 `inner-0-result.json` 和错误字段名。总控以原始 evidence 接受 Q6，不要求补跑或补写旧 evidence。
+- 发布 `P4-B7-R1-E4-PKG-R2`：禁止重跑 Q1～Q6，只执行一次 package。package 成功后静态核对脚本允许在不改变产物的前提下纠错，但禁止重新 package。
 
 ### 2026-09-29 00:01 Asia/Shanghai — 接受 A1 重复停止并终止 synthetic 循环
 
