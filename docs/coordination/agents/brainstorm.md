@@ -2,10 +2,10 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E4-R0-R1 — 已接受 P4-D14，派发一次严格 R0-only driver 与六项预检验证
+- 当前任务：P4-B7-R1-E4-R0-R1-A1 — 接受 attempt-0 进程预算停止，使用唯一 driver-only 修正预算显式接管标准流
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-28 16:47，Asia/Shanghai
+- 最近更新：2026-09-28 20:18，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
@@ -133,19 +133,32 @@
 - [P4-D14 总控审阅](../../p4-d14-coordinator-review.md)
 - [P4-B7-R1-E4-R0-R1 执行智能体 Prompt](../prompts/p4-b7-r1-e4-r0-r1-executor.md)
 - [P4-B7-R1-E4-R0-R1 固定输入快照](../snapshots/p4-b7-r1-e4-r0-r1-start.sha256)
+- [P4-B7-R1-E4-R0-R1 运行说明](../../b7-r1-e4-r0-r1-running.md)
+- [P4-B7-R1-E4-R0-R1 阻塞总控核对](../../p4-b7-r1-e4-r0-r1-blocked-coordinator-review.md)
+- [P4-B7-R1-E4-R0-R1-A1 Prompt](../prompts/p4-b7-r1-e4-r0-r1-a1-executor.md)
+- [P4-B7-R1-E4-R0-R1-A1 固定输入快照](../snapshots/p4-b7-r1-e4-r0-r1-a1-start.sha256)
 
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：D14 已验收；R0-R1 Prompt 与 226 项固定输入快照已冻结，等待用户发送给执行智能体
-- 步骤开始时间：2026-09-28 16:47，Asia/Shanghai
-- 最近有效进展：2026-09-28 16:47，Asia/Shanghai（D14 起点 223/223；677 行与三个 PowerShell 代码块静态核对通过；接受 F01～F21；R0-R1 快照 226 项）
-- 最近心跳：2026-09-28 16:47，Asia/Shanghai
-- 下一检查点：执行智能体在 fresh evidence 中完成 synthetic self-test 与 Q1～Q6，并只交付 R0 ready 或首个失败证据
-- 等待对象：用户把 R0-R1 Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
+- 当前步骤：R0-R1 attempt-0 已核对；A1 标准流修正 Prompt 与 230 项固定输入已冻结，等待用户发送
+- 步骤开始时间：2026-09-28 20:18，Asia/Shanghai
+- 最近有效进展：2026-09-28 20:18，Asia/Shanghai（外部 evidence 26/26、source 198/198、三份仓库交付摘要均匹配；A1 快照 230 项）
+- 最近心跳：2026-09-28 20:18，Asia/Shanghai
+- 下一检查点：A1 attempt-1 synthetic combined/timeout 在不增加 live 预算的情况下通过，随后才允许 Q1～Q6 各一次
+- 等待对象：用户把 A1 Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
 - 活动进程或会话：B7 启动的 Uvicorn/Electron/Maris/Playwright 均已退出；无项目服务；没有活动依赖安装
 - 重试次数：E2-R1 最小 fixture 只运行一次即因不受控弹窗停止；总控未再次启动 Electron
-- 最近输出：D14 总控审阅、R0-R1 Prompt 与 226 项固定输入；总控没有运行 R0、package、Electron、Maris 或 sidecar
+- 最近输出：R0-R1 阻塞总控核对、A1 Prompt 与新固定输入；总控没有运行 synthetic、Q1～Q6、package、Electron、Maris 或 sidecar
+
+### 2026-09-28 20:18 Asia/Shanghai — 接受 R0-R1 synthetic 停止并发布 A1
+
+- 复算 226 项起点、198 source、外部 26 项 evidence 与仓库三份交付摘要；执行方停止点、哈希、零残留和 Q1～Q6/package not_run 均与报告一致。
+- 首次 Job 成员为 worker pwsh、fixture pwsh 和其派生 conhost；combined 单元使用 active/total 2，因此第三个关联立即触发预算失败并完成整 Job 收口。
+- 依据 Microsoft Console 与 Job Object 官方语义，conhost 是 console API 宿主，Job 默认接管子进程且 TotalProcesses 包含因限制失败的关联。结合零输出和 total 3，推断 native 标准流未显式接管导致 console host 尝试；该推断留给 A1 动态验证。
+- 不直接把预算改为 3。A1 使用尚未消耗的唯一 driver-only 修正，在 attempt-1 显式重定向 native 和 synthetic 子孙的 stdin/stdout/stderr；combined 2、timeout 4、harness 6、targets 24、live total 31 保持不变。
+- attempt-0 历史观察 4 个进程单独报告；跨尝试累计上限 35，不构成 attempt-1 扩容。A1 synthetic 再失败即停，不允许 attempt-2；通过后才执行 Q1～Q6。
+- A1 固定输入共 230 项，manifest SHA-256 为 `74dfb034b57356684f2dd45522e7805da8401dd0ad6687c53b2fb4a8f02de6d7`。
 
 ### 2026-09-28 16:47 Asia/Shanghai — 接受 P4-D14 并发布 R0-only 恢复任务
 
@@ -222,10 +235,10 @@
 
 ## 下一步
 
-1. 用户把 `docs/coordination/prompts/p4-b7-r1-e4-r0-r1-executor.md` 全文发送给既有执行智能体。
-2. 执行智能体先复算固定快照，再在 fresh evidence 中验证 synthetic self-test 与 Q1～Q6；config 查询按 3 arguments / 4 command tokens 记录。
-3. 六项全部通过时只生成 `R0_READY_PACKAGE_0_OF_1` 并停止；任何真实预检失败立即停止。Q1 前的纯 harness 自检缺陷最多允许一次保留现场的前置修正。
-4. 总控核对 R0-R1 后才决定是否另立 package-only；测试智能体、P4-C12 与业务前端实现继续保持停止。
+1. 用户把 `docs/coordination/prompts/p4-b7-r1-e4-r0-r1-a1-executor.md` 全文发送给既有执行智能体。
+2. 执行智能体先复算新快照与 attempt-0 evidence，再在 create-new attempt-1 中只修改受控标准流和无窗口启动边界。
+3. synthetic combined/timeout 都通过后才各一次运行 Q1～Q6；任何失败立即停止，禁止 attempt-2。全部通过仍只生成 `R0_READY_PACKAGE_0_OF_1`。
+4. 总控核对 A1 后才决定是否另立 package-only；测试智能体、P4-C12 与业务前端实现继续保持停止。
 
 ### 2026-09-27 23:40 Asia/Shanghai — 接受 E2-R1 最小复现并发布 D13
 

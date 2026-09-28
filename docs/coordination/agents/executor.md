@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E4-R1 — 固定 pnpm 子进程解析并恢复最终门禁
+- 当前任务：P4-B7-R1-E4-R0-R1 — R0 driver 单独恢复与六项预检
 - 状态：`blocked / finished`
-- 最近更新：2026-09-28 16:04，Asia/Shanghai
-- 可修改范围：新增 E4-R1 运行说明、E4-R1 source manifest 及本角色日志；在保留的 E4 任务根中新建 `r1-pnpm-resume`，仅保存 task-owned pnpm shim、R0/package/P1/P2 与最终 evidence。禁止修改产品、Forge 配置、package wrapper、staging、测试、依赖、lock、系统 pnpm、永久 PATH、独立材料、control/overview/其他角色、`.claude/**` 或 Git 状态。
+- 最近更新：2026-09-28 20:08，Asia/Shanghai（失败证据交付）
+- 可修改范围：本角色日志、新增 R0-R1 运行说明和 source manifest；旧 E4 根下全新 `r0-driver-recovery-r1` 的支持源码和证据。只运行 synthetic 与 Q1～Q6；禁止 package、产品、测试、依赖、lock、永久环境、其他角色和 Git 写操作。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：E4-R1 已按 R0 停止条件完成证据与资源收口，等待头脑风暴总控复算
-- 步骤开始时间：2026-09-28 15:54 Asia/Shanghai
-- 最近有效进展：2026-09-28 16:04 Asia/Shanghai（R1 evidence 14/14 可复算；source 198/198；out/staging/transition/owned process=0；package/P1/P2 均为 0 次）
-- 最近心跳：2026-09-28 16:04 Asia/Shanghai
-- 下一检查点：头脑风暴总控复算 `P4-E4-R1-R0-DRIVER-ARGS-001`，决定是否发布新的 R0-only 恢复任务
-- 等待对象：头脑风暴总控；技术顾问、测试智能体、P4-C12 及其他外部集成继续停止
-- 活动进程或会话：无；唯一控制会话已中断并返回，task-owned process/port/window/Tray 均为 0
-- 重试次数：R1 package 0/1；P1 0/1；P2 0/1
-- 最近输出：完整 `node_modules` 基线为 12,451 files、570,581,590 bytes、有序摘要 `f06ce306...00c7`；固定 Node、pnpm native、Electron 与 lock 摘要均匹配保留现场
+- 当前步骤：首次 synthetic 进程预算门禁失败，已停止并交付固定证据；没有启动 Q1
+- 步骤开始时间：2026-09-28 17:15 Asia/Shanghai（首失败）；17:17 资源复算完成，20:08 文档交付
+- 最近有效进展：外部根 27 文件、26 条交付清单；旧 source/dist/marker/evidence/node_modules 不变；Job active=0，记录 PID 全退出
+- 最近心跳：2026-09-28 20:08 Asia/Shanghai
+- 下一检查点：头脑风暴总控核对 P4-E4-R0-R1-HARNESS-PROCESS-001；无新的动态执行
+- 等待对象：头脑风暴总控；技术顾问、测试、package、P1/P2、P4-C12 保持停止
+- 活动进程或会话：无；工具 session 78731 已退出 1，controller PID 31908 已结束，Job 成员 11968/33316/32176 全部退出
+- 重试次数：前置修正 0/1；Q1～Q6 各 0/1；package/P1/P2/P4-C12 均 not_run
+- 最近输出：synthetic Job expected≤2、actual=3，额外 conhost.exe；真实 native exit=null、supervisor=124、timeout=false、forced cleanup=true，cleanup/drain=4/5 ms；Q1～Q6 均 not_run
 
 ## 待接任务
 
@@ -59,6 +59,29 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-28 20:08 Asia/Shanghai — R0-R1 blocked 交付与停止
+
+- 首次 synthetic 在 17:15 触发 `process_budget_exceeded`，Job 包含 worker pwsh 11968、fixture pwsh 33316 及其额外 conhost 32176，共 3 个进程，超过冻结首单元 2 进程。Job 关联和成员 ledger 成功；四类 synthetic 尚未通过，不能把本次异常清理替代 timeout 用例。
+- 驱动立即终止整个 Job，真实 native exit=null，worker exit=124，timeout=false，forced cleanup=true；cleanup/drain 分别 4/5 ms，active=0。随后缺失 fixture receipt 导致 summary 的次生 `controller_runtime_failure`，新建分类证明指向原 result 的首失败，没有覆盖原始证据。
+- 首单元预算超限属于任务明确停止门禁；没有增加预算、排除 conhost 或重试。前置修正 0/1，attempt-1 不存在；正式 target 0/24、实际 harness 3、controller 1，累计 4/31；Q1～Q6 dispatch 0 次，临时 PATH 配方分支未执行。
+- 17:17 完整收口复算：source 198/198、dist 73/73、marker 9/9、E4 evidence 26/26、R1 evidence 14/14；node_modules 12,451 files / 570,581,590 bytes / `f06ce306...00c7`；out/staging=false、transition/owned=0，记录 PID 均退出，环境摘要还原一致。动态任务已停止，后续仅整理交付文档。
+- [运行说明](../../b7-r1-e4-r0-r1-running.md)、[source 198 文件清单](../../../apps/desktop/b7-r1-e4-r0-r1-source.sha256)已生成。支持源码 8 + shim 1 共 9 文件，support SHA `70f841cf...4321`；attempt 原证据 21/21；外部根交付 manifest 26 条、总文件 27，SHA `aef1d227edea8b12058bd0323eecbd96cf87e3e50dc22642492c61ae1d2ddcbb`。
+- 状态 `blocked / finished`。未运行 package、P1/P2、P4-C12、产品、独立测试或外部集成；未修改其他角色、control/overview、依赖、lock、永久环境或 Git。等待总控核对预算失败与后续受限修正的裁定，不自行创建下一任务。
+
+### 2026-09-28 17:15 Asia/Shanghai — R0-R1 支持源码冻结
+
+- fresh `r0-driver-recovery-r1/attempt-0` 已创建；8 份支持源码与按字节复制的 pnpm shim 共 9 文件已 SHA-256 冻结，6 份 PowerShell 语法错误为 0。外部源码清单为 `attempt-0/support.sha256`。
+- 大批量源码写入的首次工具进程未能创建（Windows 命令长度限制），没有执行或修改；分组 create-new 落盘成功，没有使用 synthetic 修正预算。
+- 正式 Run-Captured 保持三项 allowlist；共用监督组件通过专用 synthetic 入口测试。前三类合并为 worker+fixture 2 进程，超时树为 worker+父+子+孙 4 进程，总 harness 预算 6；R0 预算 24、controller 1，总预算 31。
+- 下一检查点：完整只读 node_modules 与固定现场复算；同一 controller 内 synthetic 通过后才构造一次临时 PATH 并执行六项预检。不等待 GO，不启动 package；任一 Q 失败立即停止。
+
+### 2026-09-28 — P4-B7-R1-E4-R0-R1 接单门禁
+
+- 最新 control `2026-09-28T16:47:00+08:00` 已接受 D14；本任务只授权 R0-only。完整读取任务卡、D14 方案和总控审阅，旧 E4-R1 失败与未消费 package 预算保持原样。
+- 新起点 226 unique、有序路径：226 matched、0 mismatch、0 missing。PowerShell 7.6.5 Core executable SHA-256 `362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139`。
+- 旧现场 source 198/198、dist 73/73、marker 9/9、E4 evidence 26/26、R1 evidence 14/14；lock 符合冻结值，out/staging=false、transition/owned process=0；新目录不存在。
+- 沙箱拒绝只读虚拟 `.pytest_cache` marker，使用任务授权的固定目录只读检查后通过；没有修改 ACL。下一步先 hash 全部新支持源码，再完成四类 synthetic；Q1 之前最多一次 fresh 修正，Q1 之后不重试。
 
 ### 2026-09-28 15:36 Asia/Shanghai — P4-B7-R1-E4-R1 接单与起点门禁
 
