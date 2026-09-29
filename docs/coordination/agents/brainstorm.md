@@ -2,14 +2,23 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E5-R2 — 同步 canonical Profile parser 并完成最终门禁
+- 当前任务：P4-B7-R1-E5-PKG-FINAL — 重建隔离依赖并完成 package 与最终 EXE 门禁
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-29 08:37，Asia/Shanghai
+- 最近更新：2026-09-29 10:45，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-09-29 10:45 Asia/Shanghai — 接受 E5-R2 parser 修复并隔离 Junction 构建失败
+
+- 总控核对 `registry.ts` 与公开行为测试：TypeScript 正则已精确镜像 Python canonical Profile ASCII 合同，合法、反例、64/65 字符边界和五类 registry 冲突均有覆盖；`P4-E5-PROFILE-PARSER-002` 在代码与执行方回归范围关闭。
+- package 前 OpenAPI、TypeScript、lint、定向 22、desktop 52、Python 29、compileall 和 pip check 全部通过；不在下一任务重复完整回归。
+- 唯一 package 在构建前因 workspace 顶层 `node_modules` 是 Junction 而失败。pnpm 通过 Junction 改写旧 E4 依赖树 43 个 `.bin` shim；仓库源码、lock、Electron dist 和用户数据未受影响。旧 E4/E5 依赖目录只读保留，不恢复、不删除、不复制、不再执行。
+- 发布 E5-PKG-FINAL：从仍完整的 E3 donor 仅物化复制 pnpm store 与 Electron cache，到全新 C 盘任务根；由 pnpm 用 frozen lock 创建普通 hoisted `node_modules`，再各执行一次 package 与最终 EXE 黑盒门禁。
+- 技术顾问和测试智能体保持停止；该任务通过并由总控固定 B7 稳定终点后才派发 P4-C12。高保真前端提醒和模型复核门禁保持不变。
+- 交付物：[E5-R2 总控核对](../../p4-b7-r1-e5-r2-blocked-coordinator-review.md)、[E5-PKG-FINAL Prompt](../prompts/p4-b7-r1-e5-pkg-final-environment-executor.md)、[E5-PKG-FINAL 起点快照](../snapshots/p4-b7-r1-e5-pkg-final-start.sha256)。
 
 ### 2026-09-29 08:37 Asia/Shanghai — 接受 E5-R1 边界并冻结 canonical parser 返修
 
@@ -190,15 +199,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：DYN-R1 runner 编排失败已复算；DYN-R2 root promotion 规则与新 P1 预算已冻结
-- 步骤开始时间：2026-09-29 02:14，Asia/Shanghai
-- 最近有效进展：2026-09-29 02:14，Asia/Shanghai（84/84 evidence 匹配；实际 browser 为返回 PID 的唯一匹配直接子进程；6/6 owned PID 已清理）
-- 最近心跳：2026-09-29 02:14，Asia/Shanghai
-- 下一检查点：DYN-R2 P1 新预算完成；只有全部通过才进入 P2
-- 等待对象：用户把 DYN-R2 Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
-- 活动进程或会话：B7 启动的 Uvicorn/Electron/Maris/Playwright 均已退出；无项目服务；没有活动依赖安装
-- 重试次数：E2-R1 最小 fixture 只运行一次即因不受控弹窗停止；总控未再次启动 Electron
-- 最近输出：DYN-R1 阻塞总控核对、DYN-R2 Prompt 与新固定输入；总控只读复算证据，没有启动 Electron、Maris 或 sidecar
+- 当前步骤：E5-R2 parser 修复与 package 前回归已接受；E5-PKG-FINAL clean install、package 和 EXE 合并续段已冻结
+- 步骤开始时间：2026-09-29 10:45，Asia/Shanghai
+- 最近有效进展：2026-09-29 10:45，Asia/Shanghai（parser 缺陷关闭；Junction 构建失败完成分类；旧 E4 依赖树转为 evidence-only）
+- 最近心跳：2026-09-29 10:45，Asia/Shanghai
+- 下一检查点：E5-PKG-FINAL 在新任务根完成 task-local clean install；其后才允许 package 1/1 与 EXE 1/1
+- 等待对象：用户把 E5-PKG-FINAL Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
+- 活动进程或会话：E5-R2 的 package/Node/Electron/Maris 均已退出；无项目服务；没有活动依赖安装
+- 重试次数：E5-R2 package 1/1 已消耗且不重跑；E5-PKG-FINAL 获得独立 package 1/1 与最终 EXE 1/1
+- 最近输出：E5-R2 阻塞总控核对、E5-PKG-FINAL Prompt 与新固定输入；总控未启动 package、Electron、Maris 或 sidecar
 
 ### 2026-09-29 02:14 Asia/Shanghai — 接受 DYN-R1 编排失败并发布单次 root promotion 恢复
 

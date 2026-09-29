@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const asciiId = /^[a-z][a-z0-9_]{0,63}$/;
-const profileId = /^[a-z][a-z0-9_.-]{0,139}$/;
+const profileId = /^[a-z][a-z0-9_]{0,63}\.[a-z][a-z0-9_]{0,63}@(0|[1-9][0-9]*)$/;
 const semver = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
 const apiPrefix = /^\/api\/v1\/[a-z][a-z0-9_/-]*$/;
 

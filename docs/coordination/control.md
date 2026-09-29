@@ -2,11 +2,11 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-09-29T08:37:19+08:00`
+- 指令版本：`2026-09-29T10:45:39+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：`P4-B7-R1-E5-R1` 已把 production contribution 和三个同源 fixture 修正为真实 Profile `daily_finance.assistant@1`，但定向回归发现新 P0 `P4-E5-PROFILE-PARSER-002`：桌面 `registry.ts` 的旧正则拒绝 Python 已冻结的 `module.local@major` canonical 语法。E5-R1 按边界在 package 0/1、最终 EXE 0/1 时停止。总控发布 `P4-B7-R1-E5-R2`，只同步解析合同并在完整回归后同任务完成一次 package 和一次最终 EXE 门禁。
-- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e5-r2-profile-parser-executor.md` 全文发送给既有执行智能体。技术顾问与测试智能体保持停止；不得重跑旧 E5/E5-R1、复用旧 package/profile、提前启动 P4-C12 或进入高保真前端开发。
-- Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；P4-A 验收提交 `88fb178` 与 P4-B 头脑风暴提交 `6b0e485` 已推送，远端 `main` 当前为 `6b0e485`。这些仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
+- 当前动作：`P4-B7-R1-E5-R2` 已精确同步 TypeScript/Python canonical Profile 语法并通过 OpenAPI、TypeScript、lint、52 项 desktop、29 项 Python 及相关检查，`P4-E5-PROFILE-PARSER-002` 在代码与执行方回归范围关闭。唯一 package 因新 workspace 的顶层 `node_modules` 是 Junction 而在产品构建前失败，并通过该 Junction 改写了旧 E4 依赖树的 43 个 `.bin` shim。总控发布 `P4-B7-R1-E5-PKG-FINAL`：在全新任务根用任务专属 store/cache 创建普通目录依赖，再各执行一次 package 与最终 EXE 黑盒门禁。
+- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e5-pkg-final-environment-executor.md` 全文发送给既有执行智能体。技术顾问与测试智能体保持停止；不得复用、恢复、删除或执行 E4/E5-R1/E5-R2 的旧 `node_modules`，不得提前启动 P4-C12 或进入高保真前端开发。
+- Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；远端 `main` 当前为 `251b4a2`，其后的 E5 协调与返修单元只在本地提交，尚未推送。现有远端与本地提交仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 - 前端实现提醒门禁：P4-B Shell 完成独立验收后、创建首个 P4-C 财务驾驶舱技术方案或执行 Prompt 之前，总控必须主动提醒用户进入真实前端界面阶段，并先复核两张既定参考图、高保真信息架构、页面/组件切片、视觉验收方式和模型分工。不得直接沿用 Shell 占位页开始编码；必须让用户先确认当时可用模型及分工策略。当前建议重新评估“强推理/视觉模型（现为 GPT-6 Astra）负责界面方案、复杂交互和关键审阅，编码工作模型（现为 GPT-6 Sol）负责组件实现、重构和常规测试”，模型能力或额度变化时以届时讨论为准。
 
 ## DYN-R2 运行中协调变更
@@ -120,8 +120,9 @@
 | P4-B7-R1-E4-DYN-R2 root promotion 恢复 | 执行智能体；`blocked / finished` | 79/79 evidence 匹配；存活 `cmd.exe` 包装进程导致 browser root 门禁按规则停止；产品 `unverified`，无 crash 证据 | DYN-R2 停止；不创建 DYN-R3，不再使用 Playwright Electron launcher 或重跑旧动态 cell |
 | P4-B7-R1-E5-FINAL 最终 EXE 黑盒门禁 | 执行智能体；`blocked / finished` | EXE/Host/认证/双窗口/安全/自然退出通过；`modules.list()` 为空，首失败 `daily_finance_missing`；82/82 evidence 匹配 | 原任务停止；旧 package、profile、数据库、PID、端口与 evidence 只读，不得重跑 |
 | P4-B7-R1-E5-R1 module Profile 合同返修 | 执行智能体；`blocked / finished` | 真实 Profile 与 fixture 已修正；旧 desktop parser 拒绝 canonical `@major`，package/EXE 0 次 | 保留交付和失败证据，不得重跑或扩大范围 |
-| P4-B7-R1-E5-R2 canonical parser 返修 | 执行智能体；`ready / waiting_user` | 精确同步 Python ASCII 语法、补正反例；完整回归后 package 1/1、最终 EXE 1/1 | 用户发送 E5-R2 Prompt；真实产品失败立即停止，产品启动前的无副作用编排错误按新任务卡处理 |
-| P4-C12 Windows Shell 独立验收 | `not_started`；等待 E5-R2 和 B7 稳定快照 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定返修后最终 EXE 门禁的稳定终点快照生成 | 测试智能体当前停止；不得提前执行、修改产品或把执行方门禁当作独立通过证据 |
+| P4-B7-R1-E5-R2 canonical parser 返修 | 执行智能体；`blocked / finished`，parser 修复已接受 | canonical parser 与反例已修正；完整 package 前回归通过；package 1/1 因 Junction hoist 目录在构建前失败，最终 EXE 0/1 | 原任务停止；旧 E4/E5 依赖目录全部只读，不得恢复、链接、复制或执行 |
+| P4-B7-R1-E5-PKG-FINAL 隔离依赖、package 与最终 EXE | 执行智能体；`ready / waiting_user` | 在全新任务根物化 task-local store/cache，由 pnpm 创建真实 hoisted `node_modules`；随后 package 1/1、最终 EXE 1/1 | 用户发送新 Prompt；产品/测试只读，失败即安全收口，不启动 P4-C12 |
+| P4-C12 Windows Shell 独立验收 | `not_started`；等待 E5-PKG-FINAL 和 B7 稳定快照 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定最终 package/EXE 门禁的稳定终点快照生成 | 测试智能体当前停止；不得提前执行、修改产品或把执行方门禁当作独立通过证据 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |

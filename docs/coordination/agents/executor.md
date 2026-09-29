@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E5-R1 — daily finance Profile 合同返修与最终 EXE 复验
+- 当前任务：P4-B7-R1-E5-R2 — canonical Profile parser 返修与最终门禁
 - 状态：`blocked / finished`
-- 最近更新：2026-09-29 08:25，Asia/Shanghai（E5-R1 desktop Profile parser 合同阻塞）
-- 可修改范围：任务卡列出的 daily finance contribution、registry/composition-root/HostClient 执行方测试、本角色日志、新增 E5-R1 运行说明和 source manifest，以及 create-new E5-R1 外部构建/evidence。禁止 Python Host、registry 算法、认证、Supervisor、IPC/preload/renderer、依赖/lock/Forge、migration、独立验收、control/overview、其他角色和 Git 写操作。
+- 最近更新：2026-09-29 10:30，Asia/Shanghai（E5-R2 唯一 package 失败并完成安全收口）
+- 可修改范围：任务卡列出的 desktop registry、R1 contribution/三个执行方测试、本角色日志、新增 E5-R2 运行说明和 source manifest，以及 create-new E5-R2 外部构建/evidence。禁止 Python Host、认证、Supervisor、IPC/preload/renderer、依赖/lock/Forge、migration、独立验收、control/overview、其他角色和 Git 写操作。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：定向 Vitest 证明 desktop Profile ID parser 拒绝冻结 canonical ID；按任务停止条件收口
-- 步骤开始时间：2026-09-29 08:13 Asia/Shanghai
-- 最近有效进展：原 Profile ID 与三个 fixture 已修正，旧别名字面量 0 命中；OpenAPI/tsc/lint 通过；定向 Vitest 3 passed、3 failed，首类失败为 canonical `@major` 被 desktop regex 拒绝
-- 最近心跳：2026-09-29 08:25 Asia/Shanghai
-- 下一检查点：无；等待总控冻结允许修改 `registry.ts` 的窄返修任务
+- 当前步骤：唯一 native package 1/1 因 hoisted workspace 目录不是普通目录而退出 1；未重试，最终 EXE 未解锁，证据与资源已收口
+- 步骤开始时间：2026-09-29 09:11 Asia/Shanghai
+- 最近有效进展：parser 修复及全部 package 前回归通过；package 1/1 在 pnpm 安装依赖阶段因 Junction 不满足 hoisted 目录合同失败；冻结 node_modules 43 项 `.bin` 内容漂移已逐项固化，Electron dist 与 262 文件工作副本仍匹配
+- 最近心跳：2026-09-29 10:30 Asia/Shanghai
+- 下一检查点：无；等待头脑风暴总控审阅失败证据并决定新的纯环境续段，不得自行重跑 package
 - 等待对象：头脑风暴总控；技术顾问、测试和 P4-C12 保持停止
-- 活动进程或会话：无；新现场任务/产品进程 0，out/profile/database 不存在，package 0/1，最终 EXE 0/1
-- 重试次数：package 0/1；最终 EXE 0/1
-- 最近输出：失败分类 `desktop_profile_id_regex_rejects_canonical_at_major`；禁止范围 `registry.ts` 未修改；package/最终 EXE 均未启动
+- 活动进程或会话：E5-R2 C 盘 evidence 只读保留；任务/产品进程 0，out/staging/transition 均不存在，package 1/1，最终 EXE 0/1
+- 重试次数：package 1/1 已耗尽；最终 EXE 0/1 未解锁
+- 最近输出：package exit 1、7971 ms；首失败 `workspace_hoist_directory_not_real_directory`；node_modules 43/12451 mismatch、Electron dist 0/73 mismatch、工作副本 0/262 mismatch
 
 ## 待接任务
 
@@ -59,6 +59,31 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-29 10:30 Asia/Shanghai — E5-R2 唯一 package 失败、安全收口并停止
+
+- 状态 `blocked / finished`。canonical Profile regex 已与 Python 冻结语法精确一致；定向 Vitest 22/22、完整 desktop 52/52、Python 相邻 29/29、OpenAPI、tsc、lint、compileall 和 pip check 全部通过，旧别名字面量 0 命中。
+- 唯一实际 package 1/1 于 `2026-09-29T09:24:38.5201032+08:00` 启动，运行 7971 ms 后 exit 1，未超时；首失败为 `Failed to create directory ... workspace hoist directory is not a real directory`。新 workspace 的 `node_modules` 是指向冻结 E4 依赖的 Junction，而项目 `node-linker=hoisted` 要求普通目录。按任务卡没有修复后重跑，package 预算已耗尽。
+- package 没有生成 out、Maris.exe、app.asar、staging、release 或 transition artifact；已知任务和产品进程均为 0。最终 EXE 未解锁，实际次数 0/1；fuse/resources/污染静态检查和所有动态门禁准确记为 `not_run_after_package_failure`。
+- 失败前 pnpm 通过 Junction 改写了冻结 E4 `node_modules`：12451 项中 43 项内容/长度漂移，均是 `.bin` 启动 shim，合计增加 215 bytes；129 项文件时间戳晚于 package 起点。Electron dist 73/73 与 package 前摘要一致，项目 `.pnpm-store` 在起点后 0 项改动，262 文件 C 盘工作副本 0 missing/mismatch。没有执行 restore、删除、重新安装或第二次 package；完整漂移清单保存在 E5-R2 外部 evidence。
+- 静态 runner 初次使用 PowerShell 自动变量 `$args` 导致三次无参数 Node，不计为通过；依赖摘要 reader 与 closeout reader 的参数名/alias 编排错误均在 package 外离线修正并保留原证据，没有消耗产品预算。
+- 交付为 [E5-R2 运行说明](../../b7-r1-e5-r2-profile-parser-running.md)、262 项 source manifest、执行日志和 create-new 外部 evidence。未启动独立验收、P4-C12、高保真前端、微信、DeepSeek、Docker/PostgreSQL 或任何真实账户/个人数据；没有 Git 写操作。执行方停止，等待总控审阅与重新派发。
+
+### 2026-09-29 09:23 Asia/Shanghai — E5-R2 前置回归完成与 package 1/1 检查点
+
+- 产品修复：`registry.ts` 的 Profile regex 已精确同步 Python `module.local@major` ASCII 语法；未使用 `\d`、Unicode flag、trim/lowercase/normalization、fallback 或默认 major，未修改 `intersectModules()`。
+- registry 公开行为新增/保留 22 项定向覆盖：真实 Profile、`@0`、64/65 字符边界、缺版本/前导零/负数/小数/多 `@`/连字符/多点/大写/空白/全角字符、旧形状交集、module major、API prefix、setting version，以及 module/Profile/route/setting/appearance 冲突。定向 Vitest 22/22、完整 desktop 52/52 全部通过。
+- Python Host registry/desktop runtime/sidecar/production 相邻回归 29 passed、0 failed/skip、1 个既有 Starlette/AnyIO alias 弃用 warning。OpenAPI drift、TypeScript、lint、compileall 和 pip check 均通过；compileall 生成的 14 个 pycache 目录已从新 workspace 清理。
+- 最初静态 driver 因 PowerShell 自动变量 `$args` 冲突，三次无参数 Node 均不计为通过；原始零字节日志与修正记录已保留。改名后只重跑静态脚本，没有启动 package 或产品。另有两个只读依赖摘要 reader 编排错误，离线修正后取得真实聚合，不影响产品预算。
+- 新 C 盘现场 262/262 copy 匹配。node_modules 12451 文件/570581590 bytes，聚合 `f06ce306...00c7`；Electron dist 73 文件，聚合 `ffb4b389...f8f`；lock、Node、pnpm、shim 均匹配。旧别名字面量 0，正确 Profile 在 production/fixture 中可见；out 不存在。
+- 下一操作预计小于五分钟但属于唯一不可重试 package：重新读取 control，复核零产品进程/零 staged paths/预算 0/1 后，用进程级 shim+Node PATH 与固定 Electron cache 执行 `pnpm run package` 一次。任何真实 package 失败即收口停止。
+
+### 2026-09-29 09:11 Asia/Shanghai — P4-B7-R1-E5-R2 接单与起点门禁
+
+- 最新 control `2026-09-29T08:37:19+08:00` 明确把 E5-R2 分配给既有执行智能体，只修 `P4-E5-PROFILE-PARSER-002`；完整回归全绿后才允许 package 1/1，产物全绿后才允许最终 EXE 1/1。技术顾问、测试、P4-C12 和高保真前端保持停止。
+- 已按 AGENTS 顺序读取项目入口、协调规则、最新 control、本角色状态、完整任务卡、E5-R1 总控核对/运行说明、E5-FINAL 总控核对、D11 指定章节、IF-003 第 5 节、Python canonical parser 和 R2 起点快照。
+- 起点清单 262 entries、262 unique、262 matched、0 missing/mismatch，manifest SHA-256 `ef39bc87953701db7e076e07b54e811cb3191915ecc8bcaac342328c1a50e36c`；Git index staged paths=0。`.claude/`、`.pnpm-store/` 及旧 E4/E5/E5-R1 C 盘现场全部只读。
+- R1 contribution 与三个 fixture 已作为稳定起点保留。下一步只把 desktop Profile regex 精确同步为 Python `module.local@major` ASCII 语法，并通过公开 `compileRegistry()`/`intersectModules()` 补齐边界、反例和交集回归；当前未创建新现场，未运行 package 或产品。
 
 ### 2026-09-29 08:25 Asia/Shanghai — P4-B7-R1-E5-R1 产品断言阻塞并停止
 
