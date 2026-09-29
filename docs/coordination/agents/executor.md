@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E5-FINAL — 最终 Maris.exe 单次黑盒动态门禁
+- 当前任务：P4-B7-R1-E5-R1 — daily finance Profile 合同返修与最终 EXE 复验
 - 状态：`blocked / finished`
-- 最近更新：2026-09-29 03:24，Asia/Shanghai（E5-FINAL 唯一动态运行收口）
-- 可修改范围：本角色日志、新增 E5-FINAL 运行说明和 source manifest、create-new `final-exe-resume-1` 外部证据。禁止产品、测试、依赖、lock、Forge、package、migration、独立验收、control/overview、其他角色和 Git 写操作。
+- 最近更新：2026-09-29 08:25，Asia/Shanghai（E5-R1 desktop Profile parser 合同阻塞）
+- 可修改范围：任务卡列出的 daily finance contribution、registry/composition-root/HostClient 执行方测试、本角色日志、新增 E5-R1 运行说明和 source manifest，以及 create-new E5-R1 外部构建/evidence。禁止 Python Host、registry 算法、认证、Supervisor、IPC/preload/renderer、依赖/lock/Forge、migration、独立验收、control/overview、其他角色和 Git 写操作。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：E5-FINAL 唯一动态 cell 1/1 已完成；因 `modules.list()` 唯一观察为空数组而按规则停止
-- 步骤开始时间：2026-09-29 03:02 Asia/Shanghai
-- 最近有效进展：直接启动、CDP、两窗口、bridge/security、首次 runtime、自然退出、事件/资源/产物收口通过；首失败为 `daily_finance_missing`，根因未验证
-- 最近心跳：2026-09-29 03:24 Asia/Shanghai
-- 下一检查点：无；等待总控复算证据并决定是否另行冻结返修任务
+- 当前步骤：定向 Vitest 证明 desktop Profile ID parser 拒绝冻结 canonical ID；按任务停止条件收口
+- 步骤开始时间：2026-09-29 08:13 Asia/Shanghai
+- 最近有效进展：原 Profile ID 与三个 fixture 已修正，旧别名字面量 0 命中；OpenAPI/tsc/lint 通过；定向 Vitest 3 passed、3 failed，首类失败为 canonical `@major` 被 desktop regex 拒绝
+- 最近心跳：2026-09-29 08:25 Asia/Shanghai
+- 下一检查点：无；等待总控冻结允许修改 `registry.ts` 的窄返修任务
 - 等待对象：头脑风暴总控；技术顾问、测试和 P4-C12 保持停止
-- 活动进程或会话：无；产品进程、受管 sidecar、监听和窗口均为 0
-- 重试次数：E5-FINAL 1/1；没有重跑
-- 最近输出：运行 35,188 ms，自然退出码 0，无 forced cleanup；外部 evidence 82/82 匹配
+- 活动进程或会话：无；新现场任务/产品进程 0，out/profile/database 不存在，package 0/1，最终 EXE 0/1
+- 重试次数：package 0/1；最终 EXE 0/1
+- 最近输出：失败分类 `desktop_profile_id_regex_rejects_canonical_at_major`；禁止范围 `registry.ts` 未修改；package/最终 EXE 均未启动
 
 ## 待接任务
 
@@ -59,6 +59,25 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-29 08:25 Asia/Shanghai — P4-B7-R1-E5-R1 产品断言阻塞并停止
+
+- 状态 `blocked / finished`。原 `P4-E5-MODULE-001` 的 contribution 与 registry/composition-root/HostClient fixture 已改为 `daily_finance.assistant@1`；registry 新反例证明动态构造的旧别名仍返回空交集，major version 2 仍被拒绝。desktop src/tests 对旧别名字面量为 0 命中。
+- OpenAPI generated drift、TypeScript `tsc --noEmit`、desktop lint 均通过。固定 pnpm 首次编排因用户级 store operation lock 拒绝访问而在项目脚本前退出；未安装依赖。改用固定 Node 直接运行现有脚本和 CLI 后取得上述结果。
+- 三文件定向 Vitest：3 files、6 tests、3 passed、3 failed、0 skipped。HostClient 3/3 通过；registry 2 项和 composition root 1 项因 `compileRegistry()` 的 Profile ID Zod regex 不允许 `@` 而失败。该 desktop regex 与 Python `CANONICAL_ID_PATTERN` 的 `module.local@major` 冻结语法不一致。
+- `apps/desktop/src/modules/registry.ts` 不在允许范围且任务卡明确禁止修改 registry 算法；按“任何产品断言失败立即停止”规则，没有运行完整 Vitest、Python 定向回归、compileall、pip check、package 或最终 EXE，没有自行扩大产品范围。
+- 新 C 盘现场按 create-new 建立，复制当前 258 项固定路径，258/258、0 copy failure，workspace copy manifest SHA `6341e5eccc6328a384f8037e6aa39964674b4e228aab32c40dd542e56ed5ac5e`。固定 Node/pnpm/lock 摘要匹配；依赖只读连接冻结 E4 workspace，没有联网安装。
+- 资源收口：新现场相关任务进程 0、产品进程 0；out/profile/database 均不存在；package 0/1、最终 EXE 0/1。旧 E4/E5 现场只读保留。
+- 交付：[E5-R1 运行说明](../../b7-r1-e5-r1-module-contract-running.md)、待最终复算的 source manifest 和本日志。没有修改 Python Host、registry 算法、认证、Supervisor、IPC/preload/renderer、依赖/lock/Forge、migration、独立测试、control/overview、其他角色或 Git 状态。
+- 执行方停止。等待总控为 desktop canonical Profile parser 发布窄范围返修，不自行重跑测试、进入 package、最终 EXE 或 P4-C12。
+
+### 2026-09-29 08:13 Asia/Shanghai — P4-B7-R1-E5-R1 接单与起点门禁
+
+- 最新 control `2026-09-29T03:33:00+08:00` 明确把 E5-R1 分配给既有执行智能体：只修 `P4-E5-MODULE-001`，完成执行方静态回归后允许 package 1/1，package 全绿后允许最终 EXE 1/1；其他角色和 P4-C12 保持停止。
+- 已按 AGENTS 顺序读取项目入口、协调规则、最新 control、本角色状态、完整任务卡、E5-FINAL 总控核对/运行说明、D11 指定章节、IF-003 第 5 节、PKG-R2 总控核对和起点快照。
+- 起点清单 258 entries、258 unique、258 matched、0 missing/mismatch，manifest SHA-256 `8898793403f5bcc8aafbf969173a870e84f173b8c7cbb96070436840eab63be0`；Git index staged paths=0。既有 `.claude/`、`.pnpm-store/`、旧 E4/E5 evidence/package/profile 保持只读。
+- 根因输入一致：后端和 D11 使用 `daily_finance.assistant@1`，桌面 contribution 与三个测试 fixture 使用 `daily_finance.default`，strict intersection 因 Profile 不匹配而 fail closed。当前未改产品/测试，未创建 C 盘现场，未运行 package、最终 EXE 或外部服务。
+- 下一步仅修改任务卡允许的 contribution 与 registry/composition-root/HostClient 执行方测试；先完成全部静态与执行方回归，再重读 control 并决定是否建立新 C 盘现场。
 
 ### 2026-09-29 03:24 Asia/Shanghai — P4-B7-R1-E5-FINAL 阻塞交付并停止
 

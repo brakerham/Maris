@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-09-29 03:33，Asia/Shanghai
+更新时间：2026-09-29 08:37，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。E5-FINAL 已实际证明最终 `Maris.exe`、managed Host、owner 认证、两个窗口、preload/renderer 隔离和自然退出。首个产品失败是 `modules.list()` 为空。总控通过后端 manifest、D11 冻结合同、全新数据库和 app.asar 内容确认 `P4-E5-MODULE-001`：桌面使用错误 Profile `daily_finance.default`，严格交集过滤了真实 `daily_finance.assistant@1`。下一步 E5-R1 只修此合同和同源测试盲点，随后 package 1/1、最终 EXE 1/1。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
+P0～P3 和 P4-A 已完成验收。E5-FINAL 已实际证明最终 `Maris.exe`、managed Host、owner 认证、两个窗口、preload/renderer 隔离和自然退出。E5-R1 已修正错误 Profile 引用及同源测试盲点，但定向回归发现桌面旧解析器不接受后端冻结的 `module.local@major` 语法，登记为 `P4-E5-PROFILE-PARSER-002`；package 和最终 EXE 均未启动。下一步 E5-R2 精确同步 Python/TypeScript canonical 语法，完整回归通过后在同一任务执行 package 1/1、最终 EXE 1/1。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,9 +13,9 @@ P0～P3 和 P4-A 已完成验收。E5-FINAL 已实际证明最终 `Maris.exe`、
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 已接受 E5 黑盒证据并确认 Profile ID 接线缺陷；发布窄返修及同任务 package/复验 | 2026-09-29 03:33 | 用户把 E5-R1 Prompt 发给既有执行智能体 | [E5 阻塞核对](../p4-b7-r1-e5-final-blocked-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | 已核对 E5-R1 并确认 canonical Profile parser 缺陷；发布 R2 精确修复及同任务 package/复验 | 2026-09-29 08:37 | 用户把 E5-R2 Prompt 发给既有执行智能体 | [E5-R1 阻塞核对](../p4-b7-r1-e5-r1-blocked-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E5-R1） | E5-FINAL blocked/finished；82/82 evidence 匹配，根因定位为桌面 Profile ID 与后端不一致 | 2026-09-29 03:33 | 用户发送 E5-R1 Prompt；修复、回归、package 1/1、EXE 1/1 | [E5-R1 Prompt](prompts/p4-b7-r1-e5-r1-module-contract-executor.md)、[固定快照](snapshots/p4-b7-r1-e5-r1-start.sha256) |
+| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E5-R2） | E5-R1 blocked/finished；四项真实 Profile 修复已保留，桌面 parser 精确合同待同步 | 2026-09-29 08:37 | 用户发送 E5-R2 Prompt；parser、回归、package 1/1、EXE 1/1 | [E5-R2 Prompt](prompts/p4-b7-r1-e5-r2-profile-parser-executor.md)、[固定快照](snapshots/p4-b7-r1-e5-r2-start.sha256) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
@@ -102,8 +102,9 @@ P0～P3 和 P4-A 已完成验收。E5-FINAL 已实际证明最终 `Maris.exe`、
 | P4-B7-R1-E4-DYN-R1：最终动态门禁 | 用户启动的既有执行智能体 | `blocked / finished` | P1 1/1 被错误 root PID 假设提前停止；产品 unverified，P2 not_run，84/84 evidence 匹配 | [运行说明](../b7-r1-e4-dyn-r1-running.md)、[总控核对](../p4-b7-r1-e4-dyn-r1-blocked-coordinator-review.md) |
 | P4-B7-R1-E4-DYN-R2：root promotion 恢复 | 用户启动的既有执行智能体 | `blocked / finished` | 79/79 evidence 匹配；存活 `cmd.exe` 包装进程导致 browser root 门禁停止；产品 unverified，自动启动路线耗尽 | [运行说明](../b7-r1-e4-dyn-r2-running.md)、[总控核对](../p4-b7-r1-e4-dyn-r2-blocked-coordinator-review.md) |
 | P4-B7-R1-E5-FINAL：最终 EXE 黑盒门禁 | 用户启动的既有执行智能体 | `blocked / finished` | 直接启动、Host/认证、双窗口、安全和自然退出通过；模块为空，82/82 evidence 匹配 | [运行说明](../b7-r1-e5-final-exe-running.md)、[总控核对](../p4-b7-r1-e5-final-blocked-coordinator-review.md) |
-| P4-B7-R1-E5-R1：module Profile 合同返修 | 用户启动的既有执行智能体 | `ready / waiting_user` | 修正真实 Profile 与三处假 fixture；回归后一次 package、一次最终 EXE 复验 | [E5-R1 Prompt](prompts/p4-b7-r1-e5-r1-module-contract-executor.md)、[固定快照](snapshots/p4-b7-r1-e5-r1-start.sha256) |
-| P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 E5-R1 与 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
+| P4-B7-R1-E5-R1：module Profile 合同返修 | 用户启动的既有执行智能体 | `blocked / finished` | 四项真实 Profile 修改正确；定向回归 3 passed、3 failed，发现桌面 parser 不接受 canonical `@major`，package/EXE 均 0 次 | [E5-R1 运行说明](../b7-r1-e5-r1-module-contract-running.md)、[总控核对](../p4-b7-r1-e5-r1-blocked-coordinator-review.md) |
+| P4-B7-R1-E5-R2：canonical Profile parser 返修 | 用户启动的既有执行智能体 | `ready / waiting_user` | 精确同步 Python 语法，补正反例；完整回归后 package 1/1、最终 EXE 1/1 | [E5-R2 Prompt](prompts/p4-b7-r1-e5-r2-profile-parser-executor.md)、[固定快照](snapshots/p4-b7-r1-e5-r2-start.sha256) |
+| P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 E5-R2 与 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 

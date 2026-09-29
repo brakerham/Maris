@@ -6,7 +6,7 @@ const modules = [{
   version: "1.0.0",
   display_name: "Daily Finance",
   enabled: true,
-  profile_ids: ["daily_finance.default"],
+  profile_ids: ["daily_finance.assistant@1"],
   api_prefixes: ["/api/v1/finance"],
   settings_schema_version: 1,
 }];

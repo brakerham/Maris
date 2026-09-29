@@ -2,14 +2,22 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E5-R1 — 修复 module Profile 合同并复验最终 EXE
+- 当前任务：P4-B7-R1-E5-R2 — 同步 canonical Profile parser 并完成最终门禁
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-29 03:33，Asia/Shanghai
+- 最近更新：2026-09-29 08:37，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-09-29 08:37 Asia/Shanghai — 接受 E5-R1 边界并冻结 canonical parser 返修
+
+- E5-R1 已把 production contribution 和三个同源 fixture 改为 `daily_finance.assistant@1`；总控复算七项仓库交付摘要与报告一致，package 与最终 EXE 均未启动。
+- 定向 Vitest 的三个失败都来自 `registry.ts` 旧 Profile 正则。Python 唯一合同为 `module.local@major`，旧桌面正则既拒绝 `@major`，又错误接受连字符、多个点和无版本形状；登记 `P4-E5-PROFILE-PARSER-002`。
+- 不重新设计 Host，不增加 alias/fallback。R2 只精确镜像 Python ASCII 语法、补正反例，并在完整回归后同任务完成 package 1/1 和最终 EXE 1/1，防止局部返修继续拆散。
+- 技术顾问和测试智能体保持停止；R2 通过并由总控固定 B7 稳定终点后才派发 P4-C12。
+- 交付物：[E5-R1 总控核对](../../p4-b7-r1-e5-r1-blocked-coordinator-review.md)、[E5-R2 Prompt](../prompts/p4-b7-r1-e5-r2-profile-parser-executor.md)、[E5-R2 起点快照](../snapshots/p4-b7-r1-e5-r2-start.sha256)。
 
 ### 2026-09-29 03:33 Asia/Shanghai — 接受 E5 黑盒结果并冻结 Profile 合同返修
 
