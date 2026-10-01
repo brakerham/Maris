@@ -2,14 +2,24 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：确认 C12 OUTBOX P1 并派发 P4-B7-R2-OUTBOX 窄范围返修
+- 当前任务：R2-OUTBOX交付核对与P4-C12-R1独立复验派发
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-10-01 15:37，Asia/Shanghai
+- 最近更新：2026-10-01 23:37，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-10-01 23:37 Asia/Shanghai — 接受R2修复输入并发布C12-R1
+
+- 角色为头脑风暴总控；读取必读、R2交付与代码、原始自测/EXE结果。未重复产品或测试。
+- 实际复算293/293 source、8/8 delivery、38/38 evidence、140/140新out；290起点286 unchanged、4 authorized changed、0 missing。
+- 核对非terminal保留、严格年龄候选、对象身份确认、串行保存后发布、main异步原生提示及退出停止；独立关闭仍交测试方。
+- 原始完整Vitest JSON90 passed/0 failed/0 pending；定向27通过；package1/1、EXE1/1、19gates通过，恢复1次且自然退出0、零残留。
+- 发布C12-R1：先原PUB-11不变断言、新确认/并发/失败恢复边界，然后继续原24项；原失败材料只读，新证据R1目录。真实老化提示单独设备取证，用户普通窗口反馈不算该项。
+- 执行与技术顾问finished保持停止；测试ready/waiting_user，接单unverified；不宣布P1独立关闭或P4-B complete，不进入高保真UI。
+- 交付：[R2总控核对](../../p4-b7-r2-outbox-coordinator-review.md)、[C12-R1 Prompt](../prompts/p4-c12-r1-outbox-windows-tester.md)、[新起点](../snapshots/p4-c12-r1-start.sha256)。本地checkpoint不推送。
 
 ### 2026-10-01 15:37 Asia/Shanghai — 确认 C12 数据丢失缺陷并派发 outbox 返修
 
@@ -229,15 +239,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：C12 P1 与边界核对完成，R2-OUTBOX 返修范围和稳定起点已冻结
-- 步骤开始时间：2026-10-01 15:29，Asia/Shanghai
-- 最近有效进展：2026-10-01 15:37，Asia/Shanghai（缺陷确认、main 保留/确认合同与任务卡）
-- 最近心跳：2026-10-01 15:37，Asia/Shanghai
-- 下一检查点：用户派发返修后，执行方接单与保留/确认/并发回归
-- 等待对象：用户把 R2-OUTBOX Prompt 发给既有执行智能体；接单 unverified
-- 活动进程或会话：总控未启动产品/测试/服务；C12 已 finished，真实 EXE 0/8
-- 重试次数：总控未重跑失败；原 C12 唯一运行 10 passed、1 failed
-- 最近输出：C12 blocked 核对、窄范围返修 Prompt、固定输入；P4-B blocked
+- 当前步骤：R2代码/证据/产物核对完成，C12-R1任务及新固定起点已准备
+- 步骤开始时间：2026-10-01 23:25，Asia/Shanghai
+- 最近有效进展：2026-10-01 23:37，Asia/Shanghai（293源码、140产物与复验边界）
+- 最近心跳：2026-10-01 23:37，Asia/Shanghai
+- 下一检查点：用户派发C12-R1，测试方登记新起点及原失败节点独立复验
+- 等待对象：用户把C12-R1发给既有测试智能体；接单unverified
+- 活动进程或会话：总控未启动测试/产品；执行方finished，新EXE已自然退出
+- 重试次数：总控未重跑自测或EXE；R2原package/EXE各1次
+- 最近输出：R2核对、C12-R1 Prompt、新快照；P1独立关闭待验
 
 ### 2026-09-29 02:14 Asia/Shanghai — 接受 DYN-R1 编排失败并发布单次 root promotion 恢复
 

@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-01 15:37，Asia/Shanghai
+更新时间：2026-10-01 23:37，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 与 P4-A 已独立验收。LOCALZIP 已真实打包并运行通过；C12 独立检查发现 P1 P4-C12-OUTBOX-001：超过 30 天的未提交消息未经确认被持久删除。P4-B blocked，执行方按 R2-OUTBOX 窄范围返修，测试与技术顾问停止；P4-C/D 尚未开始，前端参考图/模型提醒门禁保持。
+P0～P3 与 P4-A 已独立验收。R2-OUTBOX 完成消息保留/确认修复，定向27项、完整桌面90项通过，新package和EXE真实门禁成功；总控已核对快照及产物。P1 OUTBOX-001仍待C12-R1独立关闭，P4-B未complete。发布C12-R1复验及原24项剩余验收；P4-C/D尚未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,10 +13,10 @@ P0～P3 与 P4-A 已独立验收。LOCALZIP 已真实打包并运行通过；C12
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | C12 P1 已确认，发布 outbox 返修 | 2026-10-01 15:37 | 用户派发 R2-OUTBOX | [总控核对](../p4-c12-outbox-blocked-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R2快照/产物核对通过，发布C12-R1 | 2026-10-01 23:37 | 用户派发独立复验 | [总控核对](../p4-b7-r2-outbox-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | `ready / waiting_user`（R2-OUTBOX） | 原 LOCALZIP 已交付，返修尚未接单 | 2026-10-01 15:37（总控准备） | 保留/确认窄修复，自测与新产物 | [Prompt](prompts/p4-b7-r2-outbox-executor.md) |
-| 测试智能体 | `blocked / finished`（C12） | 10 passed、1 failed；P1 数据丢失；动态 0/8，保持停止 | 2026-10-01 15:23 | 等执行方修复和新固定快照 | [报告](../testing/phase-4-c12-windows-shell-report.md) |
+| 执行智能体 | `review / finished`（R2-OUTBOX） | 修复、自测和新package/EXE通过；停止 | 2026-10-01 23:14 | 等独立复验，不自行继续修改 | [运行说明](../b7-r2-outbox-running.md) |
+| 测试智能体 | `ready / waiting_user`（C12-R1） | 原C12 blocked已停止；新任务未确认接单 | 2026-10-01 23:37（总控准备） | 原失败节点、确认边界与原24项 | [Prompt](prompts/p4-c12-r1-outbox-windows-tester.md) |
 
 ## 阶段 0 任务状态
 
@@ -107,12 +107,13 @@ P0～P3 与 P4-A 已独立验收。LOCALZIP 已真实打包并运行通过；C12
 | P4-B7-R1-E5-PKG-FINAL：隔离依赖与最终产品门禁 | 既有执行智能体 | `blocked / finished`；依赖成果已接受 | 普通依赖/离线安装/dist/22 项通过；package 1/1 fetch failed，EXE 0/1 | [交付说明](../b7-r1-e5-pkg-final-running.md)、[总控核对](../p4-b7-r1-e5-pkg-final-blocked-coordinator-review.md) |
 | P4-B7-R1-E5-LOCALZIP：本地 ZIP 接线与最终门禁 | 既有执行智能体 | `review / finished`，接受为 C12 输入 | 115 evidence、274 source、140 out 匹配；package/EXE 成功 | [总控审阅](../p4-b7-r1-e5-localzip-coordinator-review.md) |
 | P4-C12：Windows Shell 独立验收 | 既有测试智能体 | `blocked / finished` | P1 OUTBOX-001；24 项 1 failed/19 blocked/4 not_run；尚未 EXE | [报告](../testing/phase-4-c12-windows-shell-report.md)、[核对](../p4-c12-outbox-blocked-coordinator-review.md) |
-| P4-B7-R2-OUTBOX：保留与确认返修 | 既有执行智能体 | `ready / waiting_user` | 最小 outbox/main 修复，自测及新 package/EXE；不改独立测试 | [Prompt](prompts/p4-b7-r2-outbox-executor.md)、[起点](snapshots/p4-b7-r2-outbox-start.sha256) |
+| P4-B7-R2-OUTBOX：保留与确认返修 | 既有执行智能体 | `review / finished`，接受为复验输入 | 27/90开发测试、package/EXE成功；293source/140out匹配 | [总控核对](../p4-b7-r2-outbox-coordinator-review.md) |
+| P4-C12-R1：outbox独立复验与剩余Windows验收 | 既有测试智能体 | `ready / waiting_user` | 原PUB-11及确认边界，原24项剩余；新R2产物，不改首次失败 | [Prompt](prompts/p4-c12-r1-outbox-windows-tester.md)、[起点](snapshots/p4-c12-r1-start.sha256) |
 
 ## 当前阻塞与风险
 
-- 当前 P4-B 存在独立确认的 P1 P4-C12-OUTBOX-001：未提交消息 >30天自动删除。R2-OUTBOX 未接单，C12 与技术顾问停止，不提前 complete。
-- 原 C12 输入完成首次测试后因严重缺陷停止。旧 EXE 含缺陷；等待新源码/产物固定后再独立复验，不重用旧任务卡直接续跑。
+- 当前P1 OUTBOX-001已由R2开发修复并通过自测，但独立关闭未完成；C12-R1准备派发，P4-B不提前complete。
+- 原C12首次失败保留，新R2 EXE/asar才是复验对象；真实老化提示和原人工设备项仍待实际证据。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
 - 历史记录：R3 首轮只完成了执行方历史 fixture 和回滚断言准备；总控复核时 Docker Desktop/backend 进程均不存在。migration 摘要仍为起点值，缺陷没有修复。续跑必须使用 131 文件 R3-R1 新快照，不得重用旧 130 文件快照或重写已准备的 fixture。
@@ -136,7 +137,7 @@ P0～P3 与 P4-A 已独立验收。LOCALZIP 已真实打包并运行通过；C12
 
 ## 下一次总控检查
 
-1. 用户把 R2-OUTBOX Prompt 发给执行智能体；测试与技术顾问停止。
-2. 执行方修复消息保留与确认，交付自测、新源码/产物和实际门禁。
-3. 总控核对后派发 C12 定向复验与剩余原矩阵项目；原失败 evidence 不覆盖。
-4. P4-B 独立接受后触发高保真前端与模型策略提醒，再规划 P4-C。
+1. 用户将C12-R1全文发给既有测试智能体；执行与技术顾问保持停止。
+2. 测试方先原失败节点和确认边界，成功后继续原24项，人工设备缺口保留。
+3. 总控核对新快照与独立报告，决定P1关闭及P4-B接受；不重复package。
+4. P4-B独立接受后触发高保真参考图/模型策略提醒，再规划P4-C。

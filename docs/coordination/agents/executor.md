@@ -2,24 +2,36 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E5-LOCALZIP — 本地官方 Electron ZIP 校验、Packager 接线与最终产品门禁
+- 当前任务：P4-B7-R2-OUTBOX — 消息保留与原生确认返修
 - 状态：`review / finished`
-- 最近更新：2026-10-01 12:52，Asia/Shanghai（LOCALZIP package 与最终 EXE 全部通过并收口）
-- 可修改范围：仅限 `apps/desktop/forge.config.ts`、`apps/desktop/scripts/package-desktop.mjs`、必要的新 ZIP helper/声明/单元测试、本角色日志、新运行说明和新 source manifest；只把这些构建变更同步到既有 C 盘隔离 workspace。其他产品、测试、依赖、lock、旧 evidence、control/overview、其他角色和 Git 状态只读。
+- 最近更新：2026-10-01 23:14，Asia/Shanghai
+- 可修改范围：任务卡指定 outbox/main 接线、retention 控制器、两份执行方测试、运行说明/source manifest 与本日志；其他文件只读。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：LOCALZIP 交付已完成并停止；package 1/1 与最终 EXE 1/1 全绿，等待头脑风暴总控复算
-- 步骤开始时间：2026-10-01 12:49 Asia/Shanghai
-- 最近有效进展：最终 EXE 34,796 ms 内一次通过全部动态门禁并自然 exit 0；产品/sidecar/监听/窗口/Tray 已归零，固定产物前后匹配
-- 最近心跳：2026-10-01 12:52 Asia/Shanghai
-- 下一检查点：无执行方操作；由总控核对 source/evidence/repository-delivery manifests 后决定是否派发 P4-C12
-- 等待对象：头脑风暴总控；技术顾问、测试、P4-C12 和高保真前端保持停止
-- 活动进程或会话：任务进程、产品进程、sidecar、监听、窗口均 0；out 成功产物保留，staging/transition 0；无活动会话
-- 重试次数：package 1/1、最终 EXE 1/1，均一次成功且不重跑；install/cache rebuild/network fallback 均 0
-- 最近输出：最终 EXE success=true，所有 19 个结构化 gates 为 true，exit 0、forced cleanup false、remaining processes/listeners/windows 0
+- 当前步骤：R2 修复、自测、新 package 和真实 EXE 已交付 review，停止执行
+- 步骤开始时间：2026-10-01 23:04（真实 EXE 权威启动），Asia/Shanghai
+- 最近有效进展：定向27/27、完整单元90/90、类型/lint通过；package1/1、static7/7、EXE1/1门禁19/19，自有资源零残留
+- 最近心跳：2026-10-01 23:14 Asia/Shanghai
+- 下一检查点：总控核对本轮293项 source快照和8文件交付，另行派发C12独立复验；执行方不续跑
+- 等待对象：总控验收；其他角色后续活动为 unverified，本轮未启动
+- 活动进程或会话：无产品进程；package1/1、EXE1/1均结束，0自有进程/监听/窗口，未强制清理
+- 重试次数：无package/EXE重试；初始repo Vitest配置失败0用例，普通副本后通过
+- 最近输出：[R2运行说明](/D:/CodeX_gap/wife-system/docs/b7-r2-outbox-running.md)、[293项快照](/D:/CodeX_gap/wife-system/apps/desktop/b7-r2-outbox-source.sha256)、C:\MarisOutboxR2\R2-20261001-155509\evidence\closeout.json
 
+### 2026-10-01 23:14 — P4-B7-R2-OUTBOX 交付 review / finished
+
+- 起点290/290匹配；最终8个授权交付文件，起点286精确不变、4授权修改，4新增；source293项排除自身，逐文件及总摘要在外部closeout和repository-delivery清单。未执行任何Git写操作，暂存0。
+- 非terminal自动保留；30天严格边界、24小时terminal边界；冻结候选只删除用户明确确认的未变化draft/queued；串行加密写入成功后发布内存，失败保留并恢复队列。
+- 定向2files/27passed；完整执行方单元唯一一次14files/90passed，0failed/skip；TypeScript/lint exit0；main启动/窗口就绪前退出/未决退出与销毁通过真正导入main的注入端口测试，不是源码匹配。
+- 新ordinary source271/deps12443/dist73/tools3核对；官方ZIP/lock/真实Forge环境通过；旧source269/deps12443/dist73/out140/evidence115前后逐文件不变。
+- package1/1 exit0，10.763s；static7/7、Python67/67、out140/386493002bytes、asar11files；production fuses和零污染/零staging通过。
+- EXE1/1：2026-10-01T23:04:40.518+08:00—23:05:15.411+08:00，34.893s，19/19门禁；managed/online/authenticated，canonical daily_finance.assistant@1，双窗口、毛毛与recover恰好一次；自然exit0，0自有进程/端口/窗口，无forced cleanup。
+- EXE SHA256：8eb56f3f63b923471a9239e2a01f29a8111067a6093d8c9d118e62e1ccfb5c2a；asar：74225ea63dbc7201dc7f7f3299a099ac573f51680ef705536e560a9d9df6b6c7。
+- 用户反馈“有弹窗 是正常的”仅记录可见窗口观察；Windows老化删除确认的设备级独立证据仍unverified，注入adapter已通过；未启动任何独立验收或其他角色。
+- 初始配置失败和stdout会话关闭都保留说明，无重复package/EXE；原始JSON是外部操作时间依据，16:09手工日志计划标注已澄清，未连续观测时段不推断外部活动。
+- 仅安全收口专属tests/tmp，保留证据/profile与旧树；没有install/network、Docker/OpenClaw/微信/DeepSeek/provider。待总控接手固定快照后停止，不宣告独立缺陷关闭或P4-B complete。
 ## 待接任务
 
 - P4-B6-R3 因 Docker Desktop/Engine 单次检查不可达，已按任务卡停止为 `blocked / finished`；migration 未修改，PostgreSQL pytest 未运行。
@@ -59,10 +71,15 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+### 2026-10-01 15:47 Asia/Shanghai — P4-B7-R2-OUTBOX 接单
+
+- 已读取最新 control、任务卡、冻结合同、C12 首次报告/总控核对及 LOCALZIP 接受证据。起点 290/290、0 missing/mismatch；manifest SHA-256 `7b9048400de42eab8c596e126939eff5d3809debbafce6dd80d08053418d2dcd`；Git staged=0。
+- 按既有首次失败证据开发，不重跑独立失败；仅改任务允许的 outbox、main 原生确认接线与执行方测试。保存并发以串行写成功后发布解决；确认快照严格约束候选及其修改版本。
+- package/EXE 新预算各 0/1；旧 LOCALZIP environment/evidence/out/profile 全部只读，稍后创建新 C 盘普通副本。无安装、网络、Docker或真实 provider。
 
 ### 2026-10-01 12:11 Asia/Shanghai — P4-B7-R1-E5-LOCALZIP 接单与输入门禁
 
-- 状态：`in_progress / active`。最新 control `2026-10-01T11:49:13+08:00` 只授权 LOCALZIP，指定既有执行智能体为唯一负责人；旧 E5-PKG-FINAL 保持 `blocked / finished`，技术顾问、测试智能体、P4-C12 和高保真前端均停止。
+- 状态：`review / finished`。最新 control `2026-10-01T11:49:13+08:00` 只授权 LOCALZIP，指定既有执行智能体为唯一负责人；旧 E5-PKG-FINAL 保持 `blocked / finished`，技术顾问、测试智能体、P4-C12 和高保真前端均停止。
 - 已按 AGENTS 顺序读取项目入口、协调规则、最新 control、本角色状态、完整任务卡、E5-PKG-FINAL 总控核对/运行说明、旧最终 EXE 门禁与 E5-FINAL 运行说明。
 - 固定起点清单 270 entries、270 matched、0 missing/mismatch，清单普通 SHA-256 `d5eda74cd1e1eb25f2daf774a8a2aae4604380479a84e2e2704bf40dbccc4edf`；Git index staged paths=0。
 - 既有 C 盘输入初检：旧 evidence 58/58、manifest SHA-256 `072127d72a6d444452b1bbb52f72a33613387954aa8e561c1fa7506b83d6ec4a`；lock `5ddc0a93...cb4a`；Electron dist 73 files；官方 ZIP 158184819 bytes、SHA-256 `11c39582...cb5d`；任务根进程/监听均为 0。
@@ -381,7 +398,7 @@
 
 ### 2026-09-28 15:36 Asia/Shanghai — P4-B7-R1-E4-R1 接单与起点门禁
 
-- 状态：`in_progress / active`。最新 control `2026-09-28T15:25:00+08:00` 只授权既有执行智能体执行 E4-R1；阶段 A、E3、H1/H1-R1 不重复，技术顾问、测试智能体和 P4-C12 保持停止。
+- 状态：`review / finished`。最新 control `2026-09-28T15:25:00+08:00` 只授权既有执行智能体执行 E4-R1；阶段 A、E3、H1/H1-R1 不重复，技术顾问、测试智能体和 P4-C12 保持停止。
 - 仓库起点：`p4-b7-r1-e4-r1-start.sha256` 为 219 matched、0 mismatch、0 missing，自身 SHA-256 `88538b00a627deeecb90f05f65c08a38ab4e6abe8a2da9cc03e569d0d1370fee`；E4 source 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`。
 - E4 保留现场：旧 evidence 26/26、C 盘 source 198/198、Electron dist 73/73、污染 marker 9/9 全部匹配；对应 manifest SHA-256 分别为 `5958703...ba2d1`、`4a4a7350...6ce2`、`ffb4b389...f8f`、`b239e272...05f8`。workspace lock 仍为 `5ddc0a93...cb4a`，`out=false`、staging=false、transition artifacts=0、owned process=0，新的 R1 目录开始前不存在。
 - 固定工具：Node executable SHA-256 `ba4e6d11...c6c32`；pnpm native 为 53,373,952 bytes、SHA-256 `3e1a5bb3...665ce`；Electron executable SHA-256 `bd14928e...748e`。版本文件继续显示 Electron 44.4.5、Playwright 1.63.0、Forge 8.0.0-alpha.10。
@@ -406,14 +423,14 @@
 
 ### 2026-09-28 09:11 Asia/Shanghai — P4-B7-R1-E3 接单与动态起点门禁
 
-- 状态：`in_progress / active`。最新 control `2026-09-28T08:57:00+08:00` 指定执行智能体为 E3 唯一负责人；只允许 C 盘 A1 direct 一次，A1 完全成功后才允许 A2 默认 Playwright 一次。D 基线、Procmon/F1、诊断开关、版本遍历、app.asar、最终 EXE、P4-C12、技术顾问和测试智能体均停止。
+- 状态：`review / finished`。最新 control `2026-09-28T08:57:00+08:00` 指定执行智能体为 E3 唯一负责人；只允许 C 盘 A1 direct 一次，A1 完全成功后才允许 A2 默认 Playwright 一次。D 基线、Procmon/F1、诊断开关、版本遍历、app.asar、最终 EXE、P4-C12、技术顾问和测试智能体均停止。
 - 起点证据：`p4-b7-r1-e3-start.sha256` 为 211 matched、0 mismatch、0 missing，自身 SHA-256 `b4ac70fa815314da1b3e4dd2341ee758d9e7a1eaa15687e443e15c1a7be62576`；H1 source 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`；lock 为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。
 - 环境门禁：旧任务相关 Electron、Maris、项目 sidecar 进程为 0；候选任务根 `C:\MarisE3\E3-20260928-0911` 不存在，满足全新短 ASCII、无空格要求；没有启动或按名称清理用户其他进程。
 - 当前长操作：重读 control 后，仅从官方来源恢复 Node 24.21.0、pnpm 12.7.0、Electron 44.4.5 与 frozen Playwright 1.63.0，在 C 盘同形 workspace 建立受限证据现场。下一检查点为 lock、archive、dist、fixture、ACL/ADS、环境与 run manifest 全部冻结；首次 Electron 启动前再次读取 control。
 
 ### 2026-09-28 09:32 Asia/Shanghai — E3 固定工具与 A1 前证据冻结
 
-- 状态：`in_progress / active`。C 盘任务根仍为 `C:\MarisE3\E3-20260928-0911`；尚未启动任何 Electron cell，A1/A2 重试次数均为 0。
+- 状态：`review / finished`。C 盘任务根仍为 `C:\MarisE3\E3-20260928-0911`；尚未启动任何 Electron cell，A1/A2 重试次数均为 0。
 - 固定工具：官方 Node 24.21.0 ZIP SHA-256 `158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541`；npm registry 元数据确认 pnpm 12.7.0 tarball SHA-1 `2734f196debfb5e42276568a1c9fc57a058263e0`、registry SHA-512 与本地相同；官方 Electron 44.4.5 ZIP 为 158,184,819 bytes、SHA-256 `11c395820a5aaa8ebcc0686b476d0ac98a730274ebfbdc8cf5538a7c2815cb5d`；frozen Playwright 为 1.63.0。
 - 安装与内容：仓库和 C 盘 lock 均为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`；Electron dist 为 73 文件，清单 SHA-256 `ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f`；同一最小 fixture 为 3 文件，清单 SHA-256 `80e74627c3d2225567305e1ce425042b98598b0083556055276860a9ec0257bf`。
 - 证据：任务根与 dist ACL 均为继承规则、未启用 ACL protection；Electron executable、官方 archive 和三个 fixture 文件均只有默认 `:$DATA` stream；路径长度、Windows/display 摘要、脱敏参数与来源已写入 C 盘受限 evidence。原始 owner/ACL 只留在 C 盘，不写入仓库报告。
@@ -429,7 +446,7 @@
 
 ### 2026-09-28 12:55 Asia/Shanghai — P4-B7-R1-E4 接单与起点门禁
 
-- 状态：`in_progress / active`。最新 control `2026-09-28T12:30:00+08:00` 已接受 E3，并指定执行智能体为 E4 唯一负责人；只允许新的 C 盘源码副本、阶段 A、唯一一次 package，以及 package/P1 顺序通过后的单次 P1/P2。技术顾问、测试智能体和 P4-C12 均停止。
+- 状态：`review / finished`。最新 control `2026-09-28T12:30:00+08:00` 已接受 E3，并指定执行智能体为 E4 唯一负责人；只允许新的 C 盘源码副本、阶段 A、唯一一次 package，以及 package/P1 顺序通过后的单次 P1/P2。技术顾问、测试智能体和 P4-C12 均停止。
 - 起点证据：`p4-b7-r1-e4-start.sha256` 为 215 matched、0 mismatch、0 missing，自身 SHA-256 `6b51e836d87bf94f10a5bb0daeedee05e8c2c26d44c542f65cac6490162cafcc`；E3 source 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `04c2e344be3ffdf691a5062b9d623bd71c34016cfa365063e79b59c4a06b1dc1`；lock 为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。
 - E3 固定输入：原始现场只读存在，39/39 evidence 匹配，manifest SHA-256 `4b21b569e21a529a4743c53e115d1f035a6c51e75bd916948a2d37ccaac85b46`；Node 官方 ZIP 与 Electron 官方 ZIP 的大小/摘要匹配冻结值。E3 现场只允许复制已验证官方归档/cache，不修改、补写、清理或复用 package/out/fixture/产品二进制。
 - 环境门禁：旧任务 Electron、Maris、项目 sidecar 相关进程为 0；计划任务根 `C:\MarisE4\E4-20260928-1255` 尚未创建。下一步在再次读取 control 并确认目录仍不存在后，复制 198 文件源码和固定官方归档，建立受限 evidence；不在 D 盘执行 Electron、Forge 或 EXE。
@@ -494,7 +511,7 @@
 
 ### 2026-09-28 01:04 Asia/Shanghai — P4-B7-R1-H1-R1 接单与起点门禁
 
-- 状态：`in_progress / active`。最新 control `2026-09-28T00:55:00+08:00` 指定执行智能体为 H1-R1 唯一负责人，只关闭 `P4-H1-ATOMIC-001`；E3、技术顾问、测试智能体和 P4-C12 均停止。
+- 状态：`review / finished`。最新 control `2026-09-28T00:55:00+08:00` 指定执行智能体为 H1-R1 唯一负责人，只关闭 `P4-H1-ATOMIC-001`；E3、技术顾问、测试智能体和 P4-C12 均停止。
 - 起点证据：`p4-b7-r1-h1-r1-start.sha256` 为 209 matched、0 mismatch、0 missing，自身 SHA-256 `cd77aa32af97f6a3b894d05a563583c745c3090b49cea7d47737a5fc697fcbe7`；旧 H1 source 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `9e152288b5b1aaa2cb2fa979c877de617c8cdead08680e3d85430fb0b066f32e`。
 - 固定摘要：H1 报告为 `f11c99898c08565d9c0596b6c79853465cc034a39f3703923c7d05d992cc147d`；`pnpm-lock.yaml` 为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。
 - 环境门禁：相关 Electron、Maris、项目 sidecar 进程为 0；根和 desktop `node_modules`、`.maris-staging` 均不存在。没有启动、停止或清理用户其他进程。
@@ -571,7 +588,7 @@
 
 ### 2026-09-27 23:14 Asia/Shanghai — P4-B7-R1-E2-R1 接单与双重门禁
 
-- 状态：`in_progress / active`。最新 control `2026-09-27T23:04:00+08:00` 指定既有执行智能体为 E2-R1 唯一负责人，技术顾问、测试智能体和 P4-C12 均停止；用户已发送完整 R1 任务卡。
+- 状态：`review / finished`。最新 control `2026-09-27T23:04:00+08:00` 指定既有执行智能体为 E2-R1 唯一负责人，技术顾问、测试智能体和 P4-C12 均停止；用户已发送完整 R1 任务卡。
 - 起点证据：`p4-b7-r1-e2-r1-start.sha256` 逐行复算 200 matched、0 mismatch、0 missing，清单自身 SHA-256 `b7d975664915a3aaac773dc17d0c3bed5f5fb184a85fe77aa3cceb0baf899674`；E2 source manifest 独立复算 194 matched、0 mismatch、0 missing，摘要 `d4a6619ff0769a6d329739543013c4ab279cca515613fa6d5cef88ea32edf715`。
 - 环境门禁：最终 lock SHA-256 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`；Electron/Maris/Python/Pythonw 相关进程为 0，旧 `out`、`node_modules`、E2/E2-R1 工具目录均不存在，没有未知活动窗口或 Tray 占用。
 - 当前长操作：只在忽略目录 `.b7-e2-r1-tools` 恢复 Node `24.21.0`、pnpm `12.7.0` 和官方 Electron cache，从 clean frozen install 开始。安装前将再次读取 control；不使用第三方 mirror、旧 binary、全局包或未知缓存。
@@ -589,7 +606,7 @@
 
 ### 2026-09-28 00:18 Asia/Shanghai — P4-B7-R1-H1 接单与双重门禁
 
-- 状态：`in_progress / active`。最新 control `2026-09-28T00:06:00+08:00` 指定执行智能体为 H1 唯一负责人；H1 只做 Python runtime allowlist、确定性 staging、manifest 与静态/单元测试，禁止 Electron/Forge package/app.asar/Maris/sidecar/数据库，E3、P4-C12、技术顾问和测试智能体均停止。
+- 状态：`review / finished`。最新 control `2026-09-28T00:06:00+08:00` 指定执行智能体为 H1 唯一负责人；H1 只做 Python runtime allowlist、确定性 staging、manifest 与静态/单元测试，禁止 Electron/Forge package/app.asar/Maris/sidecar/数据库，E3、P4-C12、技术顾问和测试智能体均停止。
 - 起点证据：`p4-b7-r1-h1-start.sha256` 逐行复算 209 matched、0 mismatch、0 missing，清单 SHA-256 `24dbffd395af61c06a5ac3424163879084d2397576f7da4e4658aadccb1b3921`；E2-R1 source manifest 独立复算 194 matched、0 mismatch、0 missing，摘要 `d4a6619ff0769a6d329739543013c4ab279cca515613fa6d5cef88ea32edf715`。
 - 环境门禁：lock SHA-256 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`；旧任务拥有的 Electron/Maris/project Python 进程为 0，`node_modules=false`、`.maris-staging=false`。
 - 当前步骤：只读审计现有 `extraResource`、migration runtime 输入与 source tree，再实现 staging sibling→验证→原子替换、确定性 manifest、reparse/symlink fail-closed 和专属 Vitest。
@@ -1444,3 +1461,25 @@
 - 摘要：10 个产品/测试变更文件的普通逐文件摘要及复算算法见 [S1 运行说明](../../b6-r2-s1-schema-running.md)；有序 10 行总摘要为 `5af6dc68cced09724c53b01c984167da77111ad5e9f546ca6d08646ee5ca8106`。运行说明普通 SHA-256 为 `cabc712a266fac1c8a44059eb7a760e9fed3327c91646e307470968f59e430a3`。
 - 最终 control 复核：版本仍为 `2026-09-26T16:49:00+08:00`，只授权 S1 且禁止 Docker；没有新指令覆盖本交付。
 - 交接：总控可复核 S1 并生成停止修改后的稳定清单；执行智能体等待新的 S2 Prompt，不自行执行 PostgreSQL、独立验收、Git 或外部集成。
+
+### 2026-10-01 15:55 — R2 环境检查点
+- retention/串行持久化与执行方测试已实现；第一次 repo 定向测试配置加载失败 Cannot find module vitest/config，0 用例运行，证据保留。
+- 创建新普通工作副本；若复制核对超过五分钟，下个检查点是 source/node_modules/dist/lock 完整性；package 0/1、EXE 0/1。
+
+### 2026-10-01 16:02 — R2 开发门禁
+- 新普通副本 source 271；node_modules 12443/12443 匹配、0 reparse，lock 固定值匹配。
+- 定向 27 passed / 0 failed / 0 skip，TypeScript exit 0，lint exit 0；首次配置失败保留于 evidence/tests/initial-repo-config-error.txt。
+- main 公开执行接线覆盖启动、就绪前退出、未决确认时退出/销毁；不等待 dialog，未运行独立测试。
+
+### 2026-10-01 16:06 — R2 package 接单检查点
+- full unit 唯一一次 14 files / 90 passed / 0 failed / 0 skip。
+- 新 source 271 匹配；旧 source269/deps12443/dist73/out140/evidence115 全部 matched，3 个工具普通副本完全相同；lock/ZIP/真实 Forge electronZipDir 匹配，download 配置缺席。
+- scripts/Forge/lock 零差异；当前变更仅任务授权四个既有文件和两个新文件；暂存 0。
+- package 1/1 将固定 Node 启动现有 helper，任务根 C:\MarisOutboxR2\R2-20261001-155509，记录 CLI 子进程固定工具环境；超五分钟则检查 package 日志，不追加预算。
+
+### 2026-10-01 16:09 — R2 新产物检查点
+- package 1/1，10.763s，exit 0；真实 Forge CLI execPath 与 PATH 首项均为新根固定工具，未使用复制 .bin。
+- static 7/7；out140、asar11 files、Python67/67、production fuses matched、污染0、staging0。
+- EXE SHA 8eb56f3f63b923471a9239e2a01f29a8111067a6093d8c9d118e62e1ccfb5c2a；asar 74225ea63dbc7201dc7f7f3299a099ac573f51680ef705536e560a9d9df6b6c7。
+- 工具会话一次 stdout 连接关闭；通过已持久化 package-result.json 确认成功，无重新打包。
+- 真实 EXE 接下来仅一次，固定 Node direct spawn、loopback CDP 附加、全新 profile、已验证 Python，120s 上限；失败不重跑。

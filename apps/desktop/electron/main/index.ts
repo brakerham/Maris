@@ -4,6 +4,7 @@ import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage, safeStorage, session, shell, Tray } from "electron";
 import { DeviceSettingsStore, defaultSettings, deviceSettingsSchema, type DeviceSettings } from "./device-settings";
 import { EncryptedOutbox } from "./outbox";
+import { OutboxRetentionController } from "./outbox-retention";
 import { SecureStore } from "./secure-store";
 import { validateIpc, type IpcChannel } from "./ipc-contract";
 import { secureWebPreferences } from "./security";
@@ -45,6 +46,9 @@ const outbox = new EncryptedOutbox({
   read: async () => { try { return await readFile(outboxFile); } catch { return null; } },
   write: async (value) => { await mkdir(path.dirname(outboxFile), { recursive: true }); const temporary = `${outboxFile}.tmp`; await writeFile(temporary, value, { mode: 0o600 }); await rename(temporary, outboxFile); }
 }, encryptedStore);
+const outboxRetention = new OutboxRetentionController(outbox, {
+  showMessageBox: (window, options) => dialog.showMessageBox(window as BrowserWindow, options),
+}, () => quitting);
 
 function createComposition(): DesktopCompositionRoot {
   const projectRoot = process.env.MARIS_HOST_PROJECT_ROOT ?? (app.isPackaged ? process.resourcesPath : path.resolve(app.getAppPath(), "..", ".."));
@@ -100,6 +104,7 @@ function createMainWindow(): BrowserWindow {
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) void window.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   else void window.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   window.once("ready-to-show", () => window.show());
+  outboxRetention.attach(window);
   return window;
 }
 
@@ -152,6 +157,7 @@ function publishRuntime(snapshot: RuntimeSnapshot): void {
 }
 
 async function shutdown(): Promise<void> {
+  outboxRetention.stop();
   if (shutdownComplete) return;
   await composition?.shutdown();
   tray?.destroy();
@@ -193,6 +199,7 @@ else {
   });
   app.on("before-quit", (event) => {
     quitting = true;
+    outboxRetention.stop();
     if (shutdownComplete) return;
     event.preventDefault();
     void shutdown().then(() => app.quit());
