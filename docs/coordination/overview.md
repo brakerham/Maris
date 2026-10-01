@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-09-29 10:45，Asia/Shanghai
+更新时间：2026-10-01 11:49，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。E5-FINAL 已实际证明最终 `Maris.exe`、managed Host、owner 认证、两个窗口、preload/renderer 隔离和自然退出。E5-R2 已精确同步 Python/TypeScript canonical Profile 语法并通过完整 package 前回归，`P4-E5-PROFILE-PARSER-002` 在代码与执行方回归范围关闭。唯一 package 因隔离 workspace 把顶层 `node_modules` 建成 Junction 而在产品构建前停止；旧 E4 依赖树的 43 个 `.bin` shim 被 pnpm 通过 Junction 改写，现只作只读证据。下一步 E5-PKG-FINAL 在全新 C 盘任务根物化独立 store/cache，由 pnpm 创建真实 hoisted 目录，再各执行一次 package 和最终 EXE 门禁。24 项 P4-B 独立矩阵和 P4-C12 仍未启动。GitHub 上的既有提交仍只是保护性检查点；产品尚未发布正式大版本。
+P0～P3 和 P4-A 已完成验收。E5-PKG-FINAL 的普通 hoisted 依赖、离线安装、Electron dist、TypeScript 和 22 项测试已通过；唯一 package 在 Vite production build 后以 fetch failed 结束，最终 EXE 未运行。总控确认冻结 get 的 ZIP cache hit 仍可能重新联网读 SHASUMS256；旧失败 URL 保持 unverified。下一步 E5-LOCALZIP 补本地官方 ZIP 固定校验与 Packager electronZipDir 接线，复用本轮清洁依赖，不重装；各完成一次 package/最终 EXE 后才派发 C12。24 项 P4-B 独立矩阵保持未执行；尚未正式大版本发布。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,9 +13,9 @@ P0～P3 和 P4-A 已完成验收。E5-FINAL 已实际证明最终 `Maris.exe`、
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 已接受 E5-R2 parser 修复并隔离 Junction 构建失败；发布 clean install、package 与最终 EXE 合并续段 | 2026-09-29 10:45 | 用户把 E5-PKG-FINAL Prompt 发给既有执行智能体 | [E5-R2 阻塞核对](../p4-b7-r1-e5-r2-blocked-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | 已核对 58 项 evidence、接受依赖隔离并确认缓存仍联网的代码路径；发布本地 ZIP 恢复 | 2026-10-01 11:49 | 用户把 LOCALZIP Prompt 发给既有执行智能体 | [总控核对](../p4-b7-r1-e5-pkg-final-blocked-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E5-PKG-FINAL） | E5-R2 blocked/finished；parser 与回归已通过，旧 Junction 依赖现场冻结为只读证据 | 2026-09-29 10:45 | 用户发送 E5-PKG-FINAL Prompt；任务专属 clean install、package 1/1、EXE 1/1 | [E5-PKG-FINAL Prompt](prompts/p4-b7-r1-e5-pkg-final-environment-executor.md)、[固定快照](snapshots/p4-b7-r1-e5-pkg-final-start.sha256) |
+| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E5-LOCALZIP） | 原 PKG-FINAL blocked/finished；清洁依赖和定向回归接受 | 2026-10-01 11:49 | ZIP 构建接线、测试、package/EXE 各一次 | [新 Prompt](prompts/p4-b7-r1-e5-localzip-executor.md)、[固定清单](snapshots/p4-b7-r1-e5-localzip-start.sha256) |
 | 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
 
 ## 阶段 0 任务状态
@@ -104,8 +104,9 @@ P0～P3 和 P4-A 已完成验收。E5-FINAL 已实际证明最终 `Maris.exe`、
 | P4-B7-R1-E5-FINAL：最终 EXE 黑盒门禁 | 用户启动的既有执行智能体 | `blocked / finished` | 直接启动、Host/认证、双窗口、安全和自然退出通过；模块为空，82/82 evidence 匹配 | [运行说明](../b7-r1-e5-final-exe-running.md)、[总控核对](../p4-b7-r1-e5-final-blocked-coordinator-review.md) |
 | P4-B7-R1-E5-R1：module Profile 合同返修 | 用户启动的既有执行智能体 | `blocked / finished` | 四项真实 Profile 修改正确；定向回归 3 passed、3 failed，发现桌面 parser 不接受 canonical `@major`，package/EXE 均 0 次 | [E5-R1 运行说明](../b7-r1-e5-r1-module-contract-running.md)、[总控核对](../p4-b7-r1-e5-r1-blocked-coordinator-review.md) |
 | P4-B7-R1-E5-R2：canonical Profile parser 返修 | 用户启动的既有执行智能体 | `blocked / finished`，代码修复接受 | canonical parser 与反例已修正；完整 package 前回归通过；package 因 Junction hoist 目录失败，EXE 未运行 | [E5-R2 运行说明](../b7-r1-e5-r2-profile-parser-running.md)、[总控核对](../p4-b7-r1-e5-r2-blocked-coordinator-review.md) |
-| P4-B7-R1-E5-PKG-FINAL：隔离依赖与最终产品门禁 | 用户启动的既有执行智能体 | `ready / waiting_user` | 全新任务根、task-local store/cache、真实 hoisted 目录；package 1/1、最终 EXE 1/1 | [E5-PKG-FINAL Prompt](prompts/p4-b7-r1-e5-pkg-final-environment-executor.md)、[固定快照](snapshots/p4-b7-r1-e5-pkg-final-start.sha256) |
-| P4-C12：Windows Shell 独立验收 | 用户启动的既有测试智能体 | `not_started` | 等 E5-PKG-FINAL 与 B7 稳定快照后生成任务卡；执行 24 个 P4-B 案例和 Windows 人工门禁 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
+| P4-B7-R1-E5-PKG-FINAL：隔离依赖与最终产品门禁 | 既有执行智能体 | `blocked / finished`；依赖成果已接受 | 普通依赖/离线安装/dist/22 项通过；package 1/1 fetch failed，EXE 0/1 | [交付说明](../b7-r1-e5-pkg-final-running.md)、[总控核对](../p4-b7-r1-e5-pkg-final-blocked-coordinator-review.md) |
+| P4-B7-R1-E5-LOCALZIP：本地 ZIP 接线与最终门禁 | 既有执行智能体 | `ready / waiting_user` | 固定官方 ZIP 校验、electronZipDir、定向测试、package/EXE 各一次 | [Prompt](prompts/p4-b7-r1-e5-localzip-executor.md)、[固定清单](snapshots/p4-b7-r1-e5-localzip-start.sha256) |
+| P4-C12：Windows Shell 独立验收 | 既有测试智能体 | `not_started` | 等 LOCALZIP 全过和稳定 B7 快照后执行既有 24 项矩阵 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
 
 ## 当前阻塞与风险
 

@@ -2,14 +2,23 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E5-PKG-FINAL — 重建隔离依赖并完成 package 与最终 EXE 门禁
+- 当前任务：P4-B7-R1-E5-LOCALZIP — 补齐官方 ZIP 本地校验与构建接线并恢复最终门禁
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-09-29 10:45，Asia/Shanghai
+- 最近更新：2026-10-01 11:49，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-10-01 11:49 Asia/Shanghai — 接受隔离依赖成果并冻结本地 ZIP 恢复
+
+- 读取新交付，复算 58/58 外部 evidence 和三份仓库交付；确认 clean offline install、普通 hoisted 目录、dist、TypeScript 与 22 项测试通过。
+- 唯一 package 的 system/pnpm 与 Vite production build 已通过，Copying files 下 fetch failed；未生成 EXE、未启动最终产品；原任务 blocked/finished 正确。
+- 只读审计实际 Packager/get 源码：cache hit 后仍 validate，缺少显式 checksums 时绕过 cache 请求 SHASUMS256。旧日志无法反推出实际 URL，具体失败请求与代理原因仍 unverified。
+- 核对 Packager 官方 electronZipDir 支持及本地实现分支。发布 LOCALZIP：wrapper 在 staging/Forge 之前验证既有官方 ZIP 的长度和固定 SHA，Forge 显式使用本地 ZIP；不禁用校验、不改版本/fuses/网络设置。
+- 允许复用本轮清洁普通依赖环境，旧 evidence 只读，只有授权的构建文件同步；无需再安装或复制依赖。定向测试后 package/EXE 各一次，通过仍等待 C12。
+- 交付物：[PKG-FINAL 总控核对](../../p4-b7-r1-e5-pkg-final-blocked-coordinator-review.md)、[LOCALZIP Prompt](../prompts/p4-b7-r1-e5-localzip-executor.md)、[LOCALZIP 起点清单](../snapshots/p4-b7-r1-e5-localzip-start.sha256)。
 
 ### 2026-09-29 10:45 Asia/Shanghai — 接受 E5-R2 parser 修复并隔离 Junction 构建失败
 
@@ -199,15 +208,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：E5-R2 parser 修复与 package 前回归已接受；E5-PKG-FINAL clean install、package 和 EXE 合并续段已冻结
-- 步骤开始时间：2026-09-29 10:45，Asia/Shanghai
-- 最近有效进展：2026-09-29 10:45，Asia/Shanghai（parser 缺陷关闭；Junction 构建失败完成分类；旧 E4 依赖树转为 evidence-only）
-- 最近心跳：2026-09-29 10:45，Asia/Shanghai
-- 下一检查点：E5-PKG-FINAL 在新任务根完成 task-local clean install；其后才允许 package 1/1 与 EXE 1/1
-- 等待对象：用户把 E5-PKG-FINAL Prompt 发给既有执行智能体；技术顾问和测试智能体保持停止
-- 活动进程或会话：E5-R2 的 package/Node/Electron/Maris 均已退出；无项目服务；没有活动依赖安装
-- 重试次数：E5-R2 package 1/1 已消耗且不重跑；E5-PKG-FINAL 获得独立 package 1/1 与最终 EXE 1/1
-- 最近输出：E5-R2 阻塞总控核对、E5-PKG-FINAL Prompt 与新固定输入；总控未启动 package、Electron、Maris 或 sidecar
+- 当前步骤：PKG-FINAL evidence/源码核对完成；本地 ZIP 接线、定向测试与单次 package/EXE 续段已冻结
+- 步骤开始时间：2026-10-01 11:49，Asia/Shanghai
+- 最近有效进展：2026-10-01 11:49，Asia/Shanghai（58/58 evidence；确认缓存命中仍联网的代码路径；确定官方本地 ZIP 分支）
+- 最近心跳：2026-10-01 11:49，Asia/Shanghai
+- 下一检查点：执行方完成固定 ZIP 验证与 Forge 实际选项证明；其后 package/EXE 各一次
+- 等待对象：用户把 LOCALZIP Prompt 发给既有执行智能体；技术顾问和测试智能体停止
+- 活动进程或会话：总控本轮仅只读核查；历史交付记录任务进程为零，未启动构建或产品
+- 重试次数：PKG-FINAL package 1/1 已消耗；LOCALZIP 获得新 package 1/1 与 EXE 1/1
+- 最近输出：PKG-FINAL 总控核对、LOCALZIP Prompt 与固定输入；高保真前端门禁保持有效
 
 ### 2026-09-29 02:14 Asia/Shanghai — 接受 DYN-R1 编排失败并发布单次 root promotion 恢复
 

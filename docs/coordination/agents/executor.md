@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E5-R2 — canonical Profile parser 返修与最终门禁
+- 当前任务：P4-B7-R1-E5-PKG-FINAL — 隔离依赖重建、package 与最终 EXE 门禁
 - 状态：`blocked / finished`
-- 最近更新：2026-09-29 10:30，Asia/Shanghai（E5-R2 唯一 package 失败并完成安全收口）
-- 可修改范围：任务卡列出的 desktop registry、R1 contribution/三个执行方测试、本角色日志、新增 E5-R2 运行说明和 source manifest，以及 create-new E5-R2 外部构建/evidence。禁止 Python Host、认证、Supervisor、IPC/preload/renderer、依赖/lock/Forge、migration、独立验收、control/overview、其他角色和 Git 写操作。
+- 最近更新：2026-09-29 18:16，Asia/Shanghai（E5-PKG-FINAL 唯一 package fetch failed 并安全收口）
+- 可修改范围：只允许本角色日志、新增 E5-PKG-FINAL 运行说明和 source manifest，以及全新 C 盘任务根中的 cache、node_modules、out、profile、数据库、runner 与 evidence。产品、测试、依赖声明、lock、Forge、staging、Python、migration、独立验收、control/overview、其他角色和 Git 状态全部只读。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：唯一 native package 1/1 因 hoisted workspace 目录不是普通目录而退出 1；未重试，最终 EXE 未解锁，证据与资源已收口
-- 步骤开始时间：2026-09-29 09:11 Asia/Shanghai
-- 最近有效进展：parser 修复及全部 package 前回归通过；package 1/1 在 pnpm 安装依赖阶段因 Junction 不满足 hoisted 目录合同失败；冻结 node_modules 43 项 `.bin` 内容漂移已逐项固化，Electron dist 与 262 文件工作副本仍匹配
-- 最近心跳：2026-09-29 10:30 Asia/Shanghai
-- 下一检查点：无；等待头脑风暴总控审阅失败证据并决定新的纯环境续段，不得自行重跑 package
+- 当前步骤：唯一 package 1/1 在 Forge `Copying files` 阶段因 `fetch failed` 退出 1；未重试，最终 EXE 未解锁，完整性与资源已收口
+- 步骤开始时间：2026-09-29 17:31 Asia/Shanghai
+- 最近有效进展：task-local clean install、普通 node_modules、pnpm list、Electron dist、typecheck 与 22 项定向 Vitest均通过；package 进入 Windows x64 finalize 后在 Copying files 报 `TypeError: fetch failed`
+- 最近心跳：2026-09-29 18:16 Asia/Shanghai
+- 下一检查点：无；等待头脑风暴总控审阅新的 package 网络/缓存失败，不得自行重跑或启动最终 EXE
 - 等待对象：头脑风暴总控；技术顾问、测试和 P4-C12 保持停止
-- 活动进程或会话：E5-R2 C 盘 evidence 只读保留；任务/产品进程 0，out/staging/transition 均不存在，package 1/1，最终 EXE 0/1
-- 重试次数：package 1/1 已耗尽；最终 EXE 0/1 未解锁
-- 最近输出：package exit 1、7971 ms；首失败 `workspace_hoist_directory_not_real_directory`；node_modules 43/12451 mismatch、Electron dist 0/73 mismatch、工作副本 0/262 mismatch
+- 活动进程或会话：新任务 evidence 只读保留；任务进程 0、out 0、`.maris-staging` 0，只有 10 项 Vite 构建中间产物；package 1/1、最终 EXE 0/1
+- 重试次数：pnpm install 1 次成功、网络 fallback 0；Electron dist recovery 1/1 成功；package 1/1 已耗尽；最终 EXE 0/1 未解锁
+- 最近输出：package 51257 ms、exit 1、首失败 `forge_fetch_failed_during_copying_files`；source/donor/active cache/node_modules/Electron dist 全部无漂移
 
 ## 待接任务
 
@@ -59,6 +59,57 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-09-29 17:32 Asia/Shanghai — P4-B7-R1-E5-PKG-FINAL 接单与起点门禁
+
+- 最新 control `2026-09-29T10:45:39+08:00` 已发布本任务并指定既有执行智能体为唯一负责人。用户发送完整任务卡后启动条件满足；技术顾问、测试智能体、P4-C12 和高保真前端保持停止。
+- 已按 AGENTS 顺序读取项目入口、协调规则、最新 control、本角色状态、完整任务卡、E5-R2 总控核对/运行说明、E5-R1 总控核对、E4-PKG-R2 总控核对、E5-FINAL 运行说明和固定起点快照。
+- 起点清单 266 entries、266 unique、266 matched、0 missing/mismatch，manifest SHA-256 `3f60f4e8df0b1f0fb01111f91d5804813524ee00ff3ed6760f75b4ae1ab9e7e4`；Git index staged paths=0。E5-R2 parser 与完整回归直接接受，不重复 52 项 desktop 或 29 项 Python。
+- 本任务只允许新 C 盘任务根、执行日志、运行说明和 source manifest；产品、测试、依赖声明、lock、Forge 与 Git 状态只读。E4/E5-R1/E5-R2 `node_modules` 不恢复、不复制、不链接、不执行。
+- 下一步只读盘点 E3 的 pnpm store 与 Electron cache；通过后创建新任务根并在日志登记可能超过五分钟的物化复制及下一检查点。
+
+### 2026-09-29 17:34 Asia/Shanghai — donor 只读摘要编排检查点
+
+- 首次内存式 donor 逐文件摘要会话运行超过一分钟后结束但没有返回可用 stdout；没有修改 donor、仓库或旧任务现场，也没有启动 install/package/产品。
+- 该步骤属于 package 前无副作用 evidence 编排。只纠正一次为流式写入新任务 evidence manifest，使进度和结果可复算；预计可能超过五分钟，下一检查点是 pnpm store 与 Electron cache 的文件数、总字节、普通目录/reparse 状态和 manifest SHA-256。
+
+### 2026-09-29 17:36 Asia/Shanghai — donor 门禁通过与物化复制长操作检查点
+
+- 新根 `C:\MarisE5Final\E5-PKG-FINAL-20260929-1732` 按 create-new 建立。E3 pnpm store 是普通目录、10975 files、178708341 bytes，manifest SHA-256 `14063134e63517e2b5f40a67c0d0c8c729bbb5bd9e1a2fa734d9651bee87c651`；Electron cache 是普通目录、1 file、158184819 bytes，manifest SHA-256 `f9acc87b5d549090034a170b86f02b2d68fe02861609e1bf24a264cfd4f9a29e`。
+- 流式盘点的文件 manifests 一次生成成功；结构化 v1 summary 因 PowerShell 函数进度输出被捕获为 pnpm 数组而保留 warning，随后只用已完成 manifest 离线生成 v2 summary，没有重新遍历或修改 donor。
+- 下一长操作只把两套 donor cache 物化复制到新根 active cache，并按 266 项固定路径从当前仓库复制 source workspace；不复制任何旧 node_modules。预计可能超过五分钟，每个阶段输出可观察检查点。完成条件为 active/donor 逐项匹配、workspace 266/266、donor 起点再次匹配以及安装前顶层 node_modules 不存在。
+
+### 2026-09-29 17:50 Asia/Shanghai — active cache/source/tools 通过与离线 install 检查点
+
+- pnpm cache 物化复制 exit 1（robocopy 成功含义），Electron cache 复制 exit 1；active pnpm 10975 files/178708341 bytes 与 donor 逐行差异 0，active Electron 1 file/158184819 bytes 与 donor 差异 0，二者顶层均为普通目录、无 LinkType。
+- 固定 source workspace 最终为 266/266、0 missing/mismatch，manifest SHA-256 `0629bcaa4f39d308bf06d438d705f12218805afbc3dc2f04a7ae7af18f8d2771`；安装前顶层 node_modules 不存在。
+- workspace 中执行日志的 Git blob 是全 LF，而起点快照绑定的是执行方历史形成的混合行尾。两次仅限新 workspace 的行尾物化尝试未命中预期，均保留摘要；最终从当前混合行尾工作树副本精确反向去掉本任务日志改动，恢复原 221987 bytes 与 SHA `f4df31b9...da13`。产品源码未变。
+- 固定 Node v24.21.0 与 pnpm 12.7.0 已物化到新任务根，SHA 分别为 `ba4e6d11...c6c32`、`3e1a5bb3...665ce`；只使用进程级 PATH，不改 User/Machine PATH。
+- 下一操作预计可能超过五分钟：重新读取最新 control，复核 lock、manifests、普通 active cache、node_modules 不存在与零任务进程后，执行唯一离线 frozen install 1/1。下一检查点是 install 退出码、首失败或成功后的普通目录与 task-local `.modules.yaml` 证明；只有明确 offline store 缺失才可能解锁一次网络 fallback。
+
+### 2026-09-29 17:54 Asia/Shanghai — 离线 install 成功与 Electron dist 环境恢复检查点
+
+- 唯一 offline frozen install 1/1 于 `2026-09-29T17:51:22.1589401+08:00` 启动，4053 ms 后 exit 0，stderr 0、downloaded 0、275 packages added、任务残留进程 0；网络 fallback 0 次且不再解锁。
+- 顶层 node_modules 是普通目录、无 LinkType/reparse。`.modules.yaml` 实际为 JSON 格式；首次按 line-oriented YAML 读取产生空字段并保留 v1 warning，随后只离线解析同一文件确认 `nodeLinker=hoisted`、`packageManager=pnpm@12.7.0`，storeDir 与 virtualStoreDir 均位于新任务根且旧任务路径 0 命中。`pnpm list --depth Infinity` exit 0、stderr 0。
+- pnpm install 成功但 Electron package 的发布清单没有 postinstall script，因此 `node_modules/electron/dist` 尚不存在。E3 已接受的同版本供应路线是用固定 Node 直接运行冻结 `electron/install.js`；该脚本读取 `electron_config_cache`，使用包内 `checksums.json` 校验 cache hit，无需远程 checksum。新 active cache 中官方 ZIP 为 158184819 bytes、SHA `11c39582...cb5d`。
+- 下一步重新读取 control 后，仅用 task-local Node、task-local 官方 cache 同时设置任务卡要求的 `ELECTRON_CACHE` 与 installer 实际读取的 `electron_config_cache`，执行 dist recovery 1/1。它属于依赖环境供应，不计 package；失败即停止，不下载或重跑。
+
+### 2026-09-29 18:07 Asia/Shanghai — 安装后全部门禁通过与 package 1/1 检查点
+
+- Electron recovery 首次 pre-launch 只读检查误用了不存在的 `Select-Object -Single`，在 Process.Start 前停止：started/result evidence 不存在、dist 不存在、任务进程 0、预算仍 0/1；修正为 bounded collection 后唯一实际 recovery 1/1 于 1380 ms、exit 0、stdout/stderr 0、残留进程 0。
+- Electron dist 73 files、385243397 bytes，与 E3 冻结清单逐行集合差异 0。首次派生 manifest 使用 Ordinal 排序得到 `3e0f...`，而冻结 E3 使用 PowerShell `Sort-Object` 文化排序；保留错误派生清单后按冻结算法复算为 `ffb4b389...f8f`，没有修改 dist。
+- 安装后 node_modules 为普通目录，12443 files/570582052 bytes；`.modules.yaml` 的 task-local store/virtual store、hoisted 和 pnpm 12.7.0 全部通过。donor pnpm/Electron manifest 差异 0，source 266/266、lock/manifests 0 mismatch；`pnpm list --depth Infinity` exit 0。
+- 只运行任务卡允许的 package 前回归：TypeScript `tsc --noEmit` exit 0，stderr 15 bytes 仅为 lifecycle 命令回显；registry/composition-root/HostClient 定向 Vitest 为 3 files、22 passed、0 failed/skip。没有重复完整 52 desktop 或 29 Python。
+- 下一步创建 task-local `pnpm.exe` 二进制别名并复核版本，随后重新读取 control、source/lock/dist/donor/普通目录/out/进程/staged/预算。全部通过后执行唯一 package 1/1；任何真实失败立即停止，不修改后重打包。
+
+### 2026-09-29 18:16 Asia/Shanghai — E5-PKG-FINAL 唯一 package 失败、安全收口并停止
+
+- 状态 `blocked / finished`。package 前 control `2026-09-29T10:45:39+08:00` 仍授权本任务；task-local `pnpm.exe` 解析为 12.7.0，source 266/266、lock、普通 node_modules、task-local `.modules.yaml`、Electron dist、donor、零 out/进程/staged 全部通过。
+- 唯一 package 1/1 于 `2026-09-29T18:08:45.9026694+08:00` 启动，51257 ms 后 exit 1，未超时；Forge 已通过 system check、pnpm 12.7.0、Vite main/preload/两个 renderer build，并进入 win32 x64 packaging。首个真实失败是 `Copying files [FAILED: fetch failed]`，随后 native dependencies/finalize 被同一失败取消，最终为 `TypeError: fetch failed`。请求的远端 artifact 未由原始日志标识，根因保持 `unverified`。
+- 按任务卡没有修改后重打包。package 终点任务进程 0，User/Machine PATH 不变；out、Maris.exe、app.asar 和 `.maris-staging` 不存在，Vite 中间产物为 10 files/755009 bytes。最终 EXE 未解锁，0/1；fuses、67 resources、app.asar/污染及全部动态门禁准确记为 `not_run_after_package_failure`。
+- package 后复算：source 266/266、0 mismatch；donor pnpm 10975 项与 Electron cache 1 项起终点差异 0；active caches 差异 0；node_modules 12443 files/570582052 bytes、摘要与 package 前相同；Electron dist 73 files/385243397 bytes、冻结摘要 `ffb4b389...f8f`。Git index staged paths 0，旧 E4/E5 node_modules 未读取、复制、链接、恢复或执行。
+- 首次 package 后 closeout reader 只有 PowerShell foreach 静态语法错误，未运行任何产品动作；保留 warning 后修正派生读取一次，没有重跑 package。没有独立验收、P4-C12、高保真前端、微信、DeepSeek、Docker/PostgreSQL 或真实个人数据操作。
+- 交付为 [E5-PKG-FINAL 运行说明](../../b7-r1-e5-pkg-final-running.md)、266 项 source manifest、执行日志及 create-new 外部 evidence。执行方停止，等待总控审阅并决定新的环境/网络续段。
 
 ### 2026-09-29 10:30 Asia/Shanghai — E5-R2 唯一 package 失败、安全收口并停止
 

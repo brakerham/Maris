@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：阶段 0、P1 数据层、P2-A 财务 Agent、P3 活动 Markdown 导入和 P4-A Host/身份/通用状态地基均已完成独立验收。最终 `Maris.exe` 已实际通过直接启动、Host/认证、两个窗口、preload 安全隔离和自然退出门禁。E5-R2 已关闭桌面 canonical Profile parser 缺陷，package 前完整回归全部通过；本轮 package 因隔离工作区错误使用 Junction 形式的 `node_modules` 而在产品构建前停止。下一步 E5-PKG-FINAL 在全新 C 盘任务根用任务专属 pnpm store 建立普通目录依赖，再各执行一次 package 和最终 EXE 黑盒门禁。24 项 P4-B 独立矩阵和 P4-C12 尚未启动。P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。检查点 `checkpoint/p3-foundation` 固定在提交 `6e89762`，P4 仍处于正式发布前开发阶段。
+当前阶段：P0～P3 和 P4-A 地基已经完成独立验收。E5-R2 的 canonical Profile 修复已通过回归；E5-PKG-FINAL 已解决 Junction/hoisted 依赖隔离，离线安装、TypeScript 与 22 项定向测试通过，但唯一 package 在 Vite production build 后出现未标识请求的 fetch failed。总控从实际依赖源码确认缓存命中仍可能联网读取 SHASUMS256；下一步 E5-LOCALZIP 补官方 ZIP 固定校验与 electronZipDir 接线，并各执行一次 package 和最终 EXE。P4-C12 及 24 项 P4-B 独立矩阵尚未启动；P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。P4 仍处于发布前开发。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -153,6 +153,10 @@
 - [P4-B7-R1-E5-PKG-FINAL Prompt](docs/coordination/prompts/p4-b7-r1-e5-pkg-final-environment-executor.md)：在全新任务根物化独立 store/cache，建立真实 hoisted 依赖并完成 package 与最终 EXE 门禁。
 - [P4-B7-R1-E5-PKG-FINAL 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e5-pkg-final-start.sha256)：绑定 parser 修复、总控核对、协调状态和最终续跑边界。
 - [P4-B7-R1-E3 固定输入快照](docs/coordination/snapshots/p4-b7-r1-e3-start.sha256)：绑定 H1-R1 终点、D13/IF-005、总控核对与 E3 任务卡。
+- [E5-PKG-FINAL 交付说明](docs/b7-r1-e5-pkg-final-running.md)：普通依赖/回归通过，package fetch failed。
+- [E5-PKG-FINAL 总控核对](docs/p4-b7-r1-e5-pkg-final-blocked-coordinator-review.md)：核对缓存重新取校验文件的路径，冻结本地 ZIP 恢复。
+- [E5-LOCALZIP 执行 Prompt](docs/coordination/prompts/p4-b7-r1-e5-localzip-executor.md)：补固定官方 ZIP 校验及 Packager 接线，继续 package/EXE 门禁。
+- [E5-LOCALZIP 固定清单](docs/coordination/snapshots/p4-b7-r1-e5-localzip-start.sha256)：绑定最新交付、审阅与任务边界。
 - [智能体进度总览](docs/coordination/overview.md)：各角色接单、进行、阻塞、交付与验收状态。
 - [任务智能体 Prompt 模板](docs/coordination/task-prompt-template.md)：用户或总控派发技术顾问、执行和测试任务时使用的可验收任务卡。
 

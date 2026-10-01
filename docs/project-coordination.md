@@ -24,7 +24,7 @@ P4-B 当前实现的是可运行的 Windows Shell、Host 接线、模块容器�
 4. 在派发前端实现前重新讨论模型分工和 token 使用。当前讨论方向是：强推理与视觉能力更强的模型（现为 GPT-6 Astra）负责界面方案、复杂交互、关键组件设计和视觉审阅；编码工作模型（现为 GPT-6 Sol）负责按冻结设计实现组件、类型、状态管理、重构和常规测试。若届时模型、额度或任务复杂度变化，先调整分工，不把当前名称永久写死为唯一选择。
 5. 用户确认设计与模型策略后，总控才生成前端任务卡；任务卡必须附参考图、页面状态、组件边界、数据合同和截图/实机验收标准。
 
-这项门禁由头脑风暴总控负责触发，不依赖用户再次记得提醒。它不改变当前 E5-PKG-FINAL、P4-C12 与 P4-C 的执行顺序。
+这项门禁由头脑风暴总控负责触发，不依赖用户再次记得提醒。它不改变当前 E5-LOCALZIP、P4-C12 与 P4-C 的执行顺序。
 
 ## 开发、自测与独立验收的边界
 
@@ -132,7 +132,7 @@ Git 写操作集中由头脑风暴总控负责。执行、测试、技术顾问�
 | 阶段 2 财务 Agent 工具 | `complete`（P2-A 本地与 PostgreSQL 冻结范围） | C6/D6 已完成；DATA-R2 的 P2 SPG 4/4 通过，`PG-C7-DATA-001` 已关闭；DeepSeek、桌面与微信扩展仍按独立阶段推进 |
 | P3 活动 Markdown 导入 | `complete` | B5-R1 固定快照通过 C9-R2 独立验收；89/89 项、执行方 PostgreSQL 9/9、独立 PostgreSQL 10/10 通过 |
 | P4-A Host、身份和通用状态地基 | `complete` | C11-R2 关闭 PostgreSQL 历史迁移 P0；P4-A 64/64 passed，最终 134 文件快照已固定 |
-| P4-B Windows Shell、模块 UI 与毛毛 | `ready / waiting_user` | E5-R2 已关闭 canonical parser 缺陷并通过完整 package 前回归；唯一 package 因隔离目录把 `node_modules` 建成 Junction 而在构建前停止。E5-PKG-FINAL 将用任务专属 store 创建真实依赖目录，并各执行一次 package 与最终 EXE 门禁；24 项独立矩阵仍未启动 |
+| P4-B Windows Shell、模块 UI 与毛毛 | `ready / waiting_user` | E5-PKG-FINAL 已解决依赖隔离并通过 TypeScript/22 项测试，package 在 Vite build 后 fetch failed。E5-LOCALZIP 补本地 ZIP 固定校验与官方 Packager 接线，随后 package/最终 EXE 各一次；24 项独立矩阵仍未启动 |
 | P4-C 财务驾驶舱 / P4-D 财富管理 | `not_started` | 等 P4-B Shell 完成独立验收后推进；不得在 B7 中伪造真实业务数据或提前实现 |
 
 此前已经有临时子智能体参与微信资料核实和学习路线审阅；这些调查结果不代表编码、账号接入或部署已完成。
