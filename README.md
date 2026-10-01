@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3 和 P4-A 已完成独立验收。LOCALZIP 本地官方 ZIP 校验、真实 package 与最终 EXE 门禁已通过；总控复算 115 项 evidence、274 项 source 和 140 项产物全部匹配。恢复前后 Host 在线且认证成功，daily_finance、毛毛、安全与退出清理取得真实证据。P4-B 保持 review，发布 P4-C12 复用既有 24 项独立矩阵；P4-C/D 尚未开始，尚未正式大版本发布。
+当前阶段：P0～P3 与 P4-A 已独立验收。LOCALZIP 已真实打包并运行通过；C12 独立检查发现 P1 P4-C12-OUTBOX-001：超过 30 天的未提交消息未经确认被持久删除。P4-B blocked，执行方按 R2-OUTBOX 窄范围返修，测试与技术顾问停止；P4-C/D 尚未开始，前端参考图/模型提醒门禁保持。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -165,3 +165,6 @@ P4 头脑风暴仍是可修改的讨论稿，不代表候选框架或部署服�
 
 - [LOCALZIP 总控审阅](docs/p4-b7-r1-e5-localzip-coordinator-review.md)：真实 package/EXE 通过，尚待独立接受。
 - [P4-C12 独立验收 Prompt](docs/coordination/prompts/p4-c12-windows-shell-tester.md)：原 24 项桌面矩阵，区分自动/人工。
+
+- [C12 outbox 缺陷总控核对](docs/p4-c12-outbox-blocked-coordinator-review.md)：P1 已确认，停止验收。
+- [R2-OUTBOX 返修 Prompt](docs/coordination/prompts/p4-b7-r2-outbox-executor.md)：消息保留、原生确认、自测与新产物。

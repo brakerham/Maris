@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-01 14:30，Asia/Shanghai
+更新时间：2026-10-01 15:37，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成独立验收。LOCALZIP 本地官方 ZIP 校验、真实 package 与最终 EXE 门禁已通过；总控复算 115 项 evidence、274 项 source 和 140 项产物全部匹配。恢复前后 Host 在线且认证成功，daily_finance、毛毛、安全与退出清理取得真实证据。P4-B 保持 review，发布 P4-C12 复用既有 24 项独立矩阵；P4-C/D 尚未开始，尚未正式大版本发布。
+P0～P3 与 P4-A 已独立验收。LOCALZIP 已真实打包并运行通过；C12 独立检查发现 P1 P4-C12-OUTBOX-001：超过 30 天的未提交消息未经确认被持久删除。P4-B blocked，执行方按 R2-OUTBOX 窄范围返修，测试与技术顾问停止；P4-C/D 尚未开始，前端参考图/模型提醒门禁保持。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,10 +13,10 @@ P0～P3 和 P4-A 已完成独立验收。LOCALZIP 本地官方 ZIP 校验、真�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | LOCALZIP 复算完成，接受为 C12 输入 | 2026-10-01 14:30 | 用户派发 C12，核对独立结果 | [总控审阅](../p4-b7-r1-e5-localzip-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | C12 P1 已确认，发布 outbox 返修 | 2026-10-01 15:37 | 用户派发 R2-OUTBOX | [总控核对](../p4-c12-outbox-blocked-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | `review / finished`（LOCALZIP） | ZIP 接线、package 和最终 EXE 全过；保持停止 | 2026-10-01 12:54 | 等待 C12，不自行修改 | [运行说明](../b7-r1-e5-localzip-running.md) |
-| 测试智能体 | `ready / waiting_user`（P4-C12） | 尚未确认接单；原 24 项仍 not_run | 2026-10-01 14:30（总控准备） | 按 C12 登记接单与独立取证 | [Prompt](prompts/p4-c12-windows-shell-tester.md) |
+| 执行智能体 | `ready / waiting_user`（R2-OUTBOX） | 原 LOCALZIP 已交付，返修尚未接单 | 2026-10-01 15:37（总控准备） | 保留/确认窄修复，自测与新产物 | [Prompt](prompts/p4-b7-r2-outbox-executor.md) |
+| 测试智能体 | `blocked / finished`（C12） | 10 passed、1 failed；P1 数据丢失；动态 0/8，保持停止 | 2026-10-01 15:23 | 等执行方修复和新固定快照 | [报告](../testing/phase-4-c12-windows-shell-report.md) |
 
 ## 阶段 0 任务状态
 
@@ -106,12 +106,13 @@ P0～P3 和 P4-A 已完成独立验收。LOCALZIP 本地官方 ZIP 校验、真�
 | P4-B7-R1-E5-R2：canonical Profile parser 返修 | 用户启动的既有执行智能体 | `blocked / finished`，代码修复接受 | canonical parser 与反例已修正；完整 package 前回归通过；package 因 Junction hoist 目录失败，EXE 未运行 | [E5-R2 运行说明](../b7-r1-e5-r2-profile-parser-running.md)、[总控核对](../p4-b7-r1-e5-r2-blocked-coordinator-review.md) |
 | P4-B7-R1-E5-PKG-FINAL：隔离依赖与最终产品门禁 | 既有执行智能体 | `blocked / finished`；依赖成果已接受 | 普通依赖/离线安装/dist/22 项通过；package 1/1 fetch failed，EXE 0/1 | [交付说明](../b7-r1-e5-pkg-final-running.md)、[总控核对](../p4-b7-r1-e5-pkg-final-blocked-coordinator-review.md) |
 | P4-B7-R1-E5-LOCALZIP：本地 ZIP 接线与最终门禁 | 既有执行智能体 | `review / finished`，接受为 C12 输入 | 115 evidence、274 source、140 out 匹配；package/EXE 成功 | [总控审阅](../p4-b7-r1-e5-localzip-coordinator-review.md) |
-| P4-C12：Windows Shell 独立验收 | 既有测试智能体 | `ready / waiting_user` | 最新快照及最终 EXE，原 24 项矩阵；尚未接单 | [Prompt](prompts/p4-c12-windows-shell-tester.md)、[起点](snapshots/p4-c12-windows-shell-start.sha256) |
+| P4-C12：Windows Shell 独立验收 | 既有测试智能体 | `blocked / finished` | P1 OUTBOX-001；24 项 1 failed/19 blocked/4 not_run；尚未 EXE | [报告](../testing/phase-4-c12-windows-shell-report.md)、[核对](../p4-c12-outbox-blocked-coordinator-review.md) |
+| P4-B7-R2-OUTBOX：保留与确认返修 | 既有执行智能体 | `ready / waiting_user` | 最小 outbox/main 修复，自测及新 package/EXE；不改独立测试 | [Prompt](prompts/p4-b7-r2-outbox-executor.md)、[起点](snapshots/p4-b7-r2-outbox-start.sha256) |
 
 ## 当前阻塞与风险
 
-- 当前 P4-B 无执行方阻塞；LOCALZIP 已真实跑通。剩余为 C12 独立验收及人工设备证据，P4-B 不提前 complete。历史 driver/Electron/package 失败只保留，不继续旧恢复任务。
-- C12 输入已满足且 Prompt 已发布，24 项矩阵不重做。人工/硬件子项未实测时不报 passed，高保真 UI 待独立接受后提醒并复核模型策略。
+- 当前 P4-B 存在独立确认的 P1 P4-C12-OUTBOX-001：未提交消息 >30天自动删除。R2-OUTBOX 未接单，C12 与技术顾问停止，不提前 complete。
+- 原 C12 输入完成首次测试后因严重缺陷停止。旧 EXE 含缺陷；等待新源码/产物固定后再独立复验，不重用旧任务卡直接续跑。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
 - 历史记录：R3 首轮只完成了执行方历史 fixture 和回滚断言准备；总控复核时 Docker Desktop/backend 进程均不存在。migration 摘要仍为起点值，缺陷没有修复。续跑必须使用 131 文件 R3-R1 新快照，不得重用旧 130 文件快照或重写已准备的 fixture。
@@ -135,7 +136,7 @@ P0～P3 和 P4-A 已完成独立验收。LOCALZIP 本地官方 ZIP 校验、真�
 
 ## 下一次总控检查
 
-1. 用户将 C12 Prompt 全文发给既有测试智能体，等待登记接单；执行与技术顾问停止。
-2. 测试方独立执行原 24 项，区分自动/人工/兼容证据，缺陷与未测子项保留真实状态。
-3. 总控核对稳定输入、独立报告和资源收口；必要人工项另行安排，不重复 package 或旧任务。
-4. P4-B 接受后触发真实前端提醒，复核参考图、模型与视觉验收，再创建 P4-C 任务。
+1. 用户把 R2-OUTBOX Prompt 发给执行智能体；测试与技术顾问停止。
+2. 执行方修复消息保留与确认，交付自测、新源码/产物和实际门禁。
+3. 总控核对后派发 C12 定向复验与剩余原矩阵项目；原失败 evidence 不覆盖。
+4. P4-B 独立接受后触发高保真前端与模型策略提醒，再规划 P4-C。

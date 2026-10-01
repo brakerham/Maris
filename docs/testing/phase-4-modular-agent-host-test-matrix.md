@@ -191,35 +191,43 @@
 
 | ID | 切片 | 需求/冻结来源 | 层级 | 环境 | 自动/人工 | 前置条件 | 输入摘要 | 步骤 | 预期结果与禁止副作用 | 风险 | 执行状态 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| P4B-SEC-01 | B | F11 | security/manual | Windows/Electron | auto | 固定 Electron 构建 | BrowserWindow 配置与运行时 renderer | 静态检查并在 renderer 探测 | sandbox/contextIsolation 开启、nodeIntegration 关闭；无 `require/process/fs/child_process` 或任意 preload 对象 | P0 | not_run |
-| P4B-SEC-02 | B | F11 | security/manual | Windows/Electron | auto | CSP/导航 allowlist 冻结 | inline script、data/javascript URL、未知 origin、新窗口、外链 | 从不可信内容触发导航/打开 | CSP 阻止执行；未知导航/窗口拒绝；获准外链只由 main 安全打开，不加载进应用权限域 | P0 | not_run |
-| P4B-SEC-03 | B | F11 | contract/unit | contract | auto | preload 类型合同可导入 | 枚举 contextBridge 暴露对象 | 与 allowlist 对比并尝试直接 ipcRenderer/send/invoke | 只暴露窄 typed 方法；无通用 channel、Node require、密钥或进程控制 | P0 | not_run |
-| P4B-SEC-04 | B | F11 | security/manual | Windows/Electron | auto | IPC handlers 已注册 | 伪造 sender、错 origin、额外/错型参数、未知 channel、重复调用 | 逐项 invoke/send | sender 与参数双校验；稳定拒绝；不得启动进程、改设置、打开窗口或泄露异常 | P0 | not_run |
-| P4B-SEC-05 | B | F07/F11 | security/manual | Windows/Electron | auto | 假 token 与假 API key | localStorage/sessionStorage/IndexedDB/renderer 内存转储、main safeStorage | 登录/刷新/重启并检查各层 | refresh/device token 与 API key 只在 main/OS 保护边界；renderer 无持久原文；日志与 crash dump 无值 | P0 | not_run |
-| P4B-SEC-06 | B | F11 | API/integration | Windows/Electron | auto | 后端绑定随机 loopback port | 只知道端口、错 nonce、错 origin、过期 access、远程地址 | 绕过 main 直连 Host | 端口不是认证；nonce/origin/token 均校验；只绑定 loopback，远程连接拒绝 | P0 | not_run |
-| P4B-SEC-07 | B | F11/F12 | security/manual | Windows/Electron | auto | 模块标签、错误、消息均含虚拟恶意 HTML | script/img/event handler/RTL/超长文本 | 渲染导航、通知、Agent panel、错误 | 文本安全编码、布局有界且不执行；不得改变 IPC、模块注册或权限 | P0 | not_run |
-| P4B-SEC-08 | B | F11 | desktop/e2e | Windows/Electron | auto | 可注入 preload/backend/lazy-load 故障 | 内部路径、SQL、堆栈、token canary | 触发并查看 UI、console、日志 | 用户只见稳定安全错误和 request ID；renderer console/日志无秘密或未授权数据 | P0 | not_run |
-| P4B-SUP-01 | B | D9 BackendSupervisor | desktop/e2e | Windows/Electron | auto | supervisor 可记录 PID+nonce | 自己启动、手工启动、伪造同 PID | 请求停止/应用退出 | 只停止 PID+nonce 匹配且由本实例启动的子进程；手工/他实例进程保持 | P0 | not_run |
-| P4B-SUP-02 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 端口分配与 ready 协议冻结 | 端口冲突、无 ready、坏 nonce、ready 超时 | 启动后端 | 使用随机可用 loopback 端口；超时进入离线/诊断并清理自有子进程，不把 health 当 ready | P1 | not_run |
-| P4B-SUP-03 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 假后端可崩溃 | 启动前崩溃、ready 后崩溃、连续崩溃 | 观察重启策略 | 状态转 offline；重启次数/退避有界，不形成重启风暴或重复 run；用户可恢复 | P1 | not_run |
-| P4B-SUP-04 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 已有手动后端或两个 app 启动请求 | 重复启动、开发连接模式 | 启动/关闭两个客户端 | 不产生重复 owned 后端；连接手动后端时不取得停止权；状态可区分 | P1 | not_run |
+| P4B-SEC-01 | B | F11 | security/manual | Windows/Electron | auto | 固定 Electron 构建 | BrowserWindow 配置与运行时 renderer | 静态检查并在 renderer 探测 | sandbox/contextIsolation 开启、nodeIntegration 关闭；无 `require/process/fs/child_process` 或任意 preload 对象 | P0 | blocked |
+| P4B-SEC-02 | B | F11 | security/manual | Windows/Electron | auto | CSP/导航 allowlist 冻结 | inline script、data/javascript URL、未知 origin、新窗口、外链 | 从不可信内容触发导航/打开 | CSP 阻止执行；未知导航/窗口拒绝；获准外链只由 main 安全打开，不加载进应用权限域 | P0 | blocked |
+| P4B-SEC-03 | B | F11 | contract/unit | contract | auto | preload 类型合同可导入 | 枚举 contextBridge 暴露对象 | 与 allowlist 对比并尝试直接 ipcRenderer/send/invoke | 只暴露窄 typed 方法；无通用 channel、Node require、密钥或进程控制 | P0 | blocked |
+| P4B-SEC-04 | B | F11 | security/manual | Windows/Electron | auto | IPC handlers 已注册 | 伪造 sender、错 origin、额外/错型参数、未知 channel、重复调用 | 逐项 invoke/send | sender 与参数双校验；稳定拒绝；不得启动进程、改设置、打开窗口或泄露异常 | P0 | blocked |
+| P4B-SEC-05 | B | F07/F11 | security/manual | Windows/Electron | auto | 假 token 与假 API key | localStorage/sessionStorage/IndexedDB/renderer 内存转储、main safeStorage | 登录/刷新/重启并检查各层 | refresh/device token 与 API key 只在 main/OS 保护边界；renderer 无持久原文；日志与 crash dump 无值 | P0 | blocked |
+| P4B-SEC-06 | B | F11 | API/integration | Windows/Electron | auto | 后端绑定随机 loopback port | 只知道端口、错 nonce、错 origin、过期 access、远程地址 | 绕过 main 直连 Host | 端口不是认证；nonce/origin/token 均校验；只绑定 loopback，远程连接拒绝 | P0 | blocked |
+| P4B-SEC-07 | B | F11/F12 | security/manual | Windows/Electron | auto | 模块标签、错误、消息均含虚拟恶意 HTML | script/img/event handler/RTL/超长文本 | 渲染导航、通知、Agent panel、错误 | 文本安全编码、布局有界且不执行；不得改变 IPC、模块注册或权限 | P0 | blocked |
+| P4B-SEC-08 | B | F11 | desktop/e2e | Windows/Electron | auto | 可注入 preload/backend/lazy-load 故障 | 内部路径、SQL、堆栈、token canary | 触发并查看 UI、console、日志 | 用户只见稳定安全错误和 request ID；renderer console/日志无秘密或未授权数据 | P0 | blocked |
+| P4B-SUP-01 | B | D9 BackendSupervisor | desktop/e2e | Windows/Electron | auto | supervisor 可记录 PID+nonce | 自己启动、手工启动、伪造同 PID | 请求停止/应用退出 | 只停止 PID+nonce 匹配且由本实例启动的子进程；手工/他实例进程保持 | P0 | blocked |
+| P4B-SUP-02 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 端口分配与 ready 协议冻结 | 端口冲突、无 ready、坏 nonce、ready 超时 | 启动后端 | 使用随机可用 loopback 端口；超时进入离线/诊断并清理自有子进程，不把 health 当 ready | P1 | blocked |
+| P4B-SUP-03 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 假后端可崩溃 | 启动前崩溃、ready 后崩溃、连续崩溃 | 观察重启策略 | 状态转 offline；重启次数/退避有界，不形成重启风暴或重复 run；用户可恢复 | P1 | blocked |
+| P4B-SUP-04 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 已有手动后端或两个 app 启动请求 | 重复启动、开发连接模式 | 启动/关闭两个客户端 | 不产生重复 owned 后端；连接手动后端时不取得停止权；状态可区分 | P1 | blocked |
 | P4B-SUP-05 | B | D9 lifecycle | security/manual | Windows/Electron | manual | 目标 Windows，后端含子线程/连接 | 正常退出、强关主窗口、系统注销 | 检查进程树/端口/文件锁 | 自有后端按冻结时限退出，无僵尸/孤儿/占用端口；未拥有进程不受影响 | P1 | not_run |
-| P4B-SUP-06 | B | D9 offline recovery | desktop/e2e | Windows/Electron | auto | renderer 有未发送虚拟消息 | 后端离线→恢复、应用重启、重复点击 | 发送并观察 client_event_id/GET | 未发送内容和同一 ID 保留；恢复后只提交一次；UI 不凭新 ID 制造重复账候选 | P0 | not_run |
+| P4B-SUP-06 | B | D9 offline recovery | desktop/e2e | Windows/Electron | auto | renderer 有未发送虚拟消息 | 后端离线→恢复、应用重启、重复点击 | 发送并观察 client_event_id/GET | 未发送内容和同一 ID 保留；恢复后只提交一次；UI 不凭新 ID 制造重复账候选 | P0 | failed |
 
 #### 模块 UI、主题、Tray 与毛毛
 
 | ID | 切片 | 需求/冻结来源 | 层级 | 环境 | 自动/人工 | 前置条件 | 输入摘要 | 步骤 | 预期结果与禁止副作用 | 风险 | 执行状态 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| P4B-UI-01 | B | F12 | contract/unit | contract | auto | compiled registry 与 `/modules` fixture | 后端启用/禁用、桌面缺失、版本不兼容、未知模块 | 计算交集 | 只渲染两侧均存在且兼容的模块；未知/禁用不导航、不预加载 | P1 | not_run |
-| P4B-UI-02 | B | F12 | desktop/e2e | Windows/Electron | auto | 两个 lazy route | chunk 加载失败、重试成功、切换模块 | 导航并恢复 | 局部错误边界可重试，Shell/登录/其他模块可用；不循环加载或丢当前会话 | P1 | not_run |
-| P4B-UI-03 | B | F12 | contract/unit | contract | auto | 冻结 OpenAPI 与生成命令 | 后端 DTO 字段/枚举/required 改变；生成物陈旧 | CI 比较生成差异并编译 | 漂移门禁失败并定位；不得靠手写 API 类型掩盖差异或运行时下载 schema | P1 | not_run |
-| P4B-UI-04 | B | F12 | contract/unit | contract | auto | UI contribution 合同冻结 | hostUiMajor、route/path/setting/profile/companion 冲突 | 编译期注册和启动验证 | 不兼容或冲突稳定失败；Shell 无 `if moduleId` 业务分支 | P1 | not_run |
-| P4B-CMP-01 | B | F13；U02 | desktop/e2e | Windows/Electron | auto | daily/wealth contributions 与假状态流 | 切换模块及 idle/thinking/tool/confirmation/error/offline | 观察窗口、Profile 和状态 | 始终只有一个毛毛窗口/Agent 入口；主形态随 contribution，子状态不创建第二 Agent或触发写入 | P1 | not_run |
-| P4B-CMP-02 | B | U01/F13 | desktop/e2e | Windows/Electron | auto | 新设备设置 | 首次和第二次关闭主窗口 | 关闭、从 Tray 恢复、再次关闭 | 首次隐藏并只提示一次；第二次不重复提示；Host/毛毛按设置驻留且无数据丢失 | P1 | not_run |
-| P4B-CMP-03 | B | U01 | desktop/e2e | Windows/Electron | auto | 关闭策略可切换 | 退出/每次询问/隐藏，Tray 打开/隐藏 | 每种设置执行关闭与取消 | 行为精确对应设置；“退出”清理自有后端；询问取消不退出；Tray 状态一致 | P1 | not_run |
+| P4B-UI-01 | B | F12 | contract/unit | contract | auto | compiled registry 与 `/modules` fixture | 后端启用/禁用、桌面缺失、版本不兼容、未知模块 | 计算交集 | 只渲染两侧均存在且兼容的模块；未知/禁用不导航、不预加载 | P1 | blocked |
+| P4B-UI-02 | B | F12 | desktop/e2e | Windows/Electron | auto | 两个 lazy route | chunk 加载失败、重试成功、切换模块 | 导航并恢复 | 局部错误边界可重试，Shell/登录/其他模块可用；不循环加载或丢当前会话 | P1 | blocked |
+| P4B-UI-03 | B | F12 | contract/unit | contract | auto | 冻结 OpenAPI 与生成命令 | 后端 DTO 字段/枚举/required 改变；生成物陈旧 | CI 比较生成差异并编译 | 漂移门禁失败并定位；不得靠手写 API 类型掩盖差异或运行时下载 schema | P1 | blocked |
+| P4B-UI-04 | B | F12 | contract/unit | contract | auto | UI contribution 合同冻结 | hostUiMajor、route/path/setting/profile/companion 冲突 | 编译期注册和启动验证 | 不兼容或冲突稳定失败；Shell 无 `if moduleId` 业务分支 | P1 | blocked |
+| P4B-CMP-01 | B | F13；U02 | desktop/e2e | Windows/Electron | auto | daily/wealth contributions 与假状态流 | 切换模块及 idle/thinking/tool/confirmation/error/offline | 观察窗口、Profile 和状态 | 始终只有一个毛毛窗口/Agent 入口；主形态随 contribution，子状态不创建第二 Agent或触发写入 | P1 | blocked |
+| P4B-CMP-02 | B | U01/F13 | desktop/e2e | Windows/Electron | auto | 新设备设置 | 首次和第二次关闭主窗口 | 关闭、从 Tray 恢复、再次关闭 | 首次隐藏并只提示一次；第二次不重复提示；Host/毛毛按设置驻留且无数据丢失 | P1 | blocked |
+| P4B-CMP-03 | B | U01 | desktop/e2e | Windows/Electron | auto | 关闭策略可切换 | 退出/每次询问/隐藏，Tray 打开/隐藏 | 每种设置执行关闭与取消 | 行为精确对应设置；“退出”清理自有后端；询问取消不退出；Tray 状态一致 | P1 | blocked |
 | P4B-CMP-04 | B | U05 | security/manual | Windows/Electron | manual | 新安装测试 profile | 首次运行、显式启用/禁用开机启动 | 检查 OS 启动项和 UI | 默认关闭且无启动项；只有明确操作才创建；禁用清理本应用项，不改其他应用 | P1 | not_run |
 | P4B-CMP-05 | B | F13 | desktop/e2e | external/manual | manual | 多显示器/缩放/全屏测试设备 | 拖动、置顶、重启、拔屏、分辨率变化、全屏、隐私、键盘 | 逐项操作并重启 | 位置用临时文件原子替换并恢复/夹取；全屏按规则隐藏；隐私不显示金额；键盘入口可达 | P1 | not_run |
 | P4B-CMP-06 | B | U02；主题要求 | desktop/e2e | external/manual | manual | 支持/不支持透明窗口设备 | 透明失败、普通迷你窗降级；light/dark/system/high-contrast/reduced-motion；中外行情色 | 切换设备条件和主题 | 可安全降级且合同不变；文本对比/焦点可辨；reduced motion 生效；收入/支出色不复用涨跌色 | P2 | not_run |
+
+#### C12 独立执行状态备注（2026-10-01）
+
+- 本轮停在 `blocked / finished`，未判定 P4-B complete。P4-B 为 **0 passed、1 failed、19 blocked、4 not_run**；其余切片状态保持原样。
+- `P4B-SUP-06`：独立 `C12-PUB-06～10` 五项逻辑断言通过；`C12-PUB-11` 失败。未确认删除的 draft/queued 在 30 天 + 1ms 后被 startup cleanup 永久清空，登记 P1 `P4-C12-OUTBOX-001`。原案例风险 P0 保持；五个通过子条件不能覆盖内容丢失失败。
+- `P4B-SEC-01/02/04/05/08`、`P4B-UI-01` 有局部公开行为/模拟证据，全部不足整项验收，因此仍 blocked；其他自动项目因严重缺陷停止规则未执行。没有以执行方 LOCALZIP 成功替代独立 passed。
+- 四项 manual `P4B-SUP-05`、`P4B-CMP-04/05/06` 保留 not_run；Tray、注销、开机启动、多屏与主题设备条件见 [人工清单](phase-4-c12-manual-checklist.md)。本轮未要求用户操作。
+- 独立公开行为实际运行 11 节点：10 passed、1 failed；执行方兼容重跑 0/30；真实 EXE 启动 0/8。细分步骤、完整原预期和停止原因见 [C12 报告](phase-4-c12-windows-shell-report.md)，证据见 `tests/independent/desktop/evidence/`。
 
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 

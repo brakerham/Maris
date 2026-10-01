@@ -1,25 +1,28 @@
 # 测试智能体状态
 
-- 角色：独立测试、边界检查、回归验证和限定范围的结构优化
-- 连接状态：已确认；用户启动的侧边栏独立测试智能体已接单
-- 当前任务：P4-C11-R2 — PostgreSQL 历史迁移独立复验
-- 状态：`review`
-- 最近更新：2026-09-27 12:49，Asia/Shanghai
-- 可修改范围：`tests/independent/host/test_postgresql_acceptance.py`、必要时的 `tests/independent/host/history_fixtures.py`、R2 验收报告、C11 主报告、P4 测试矩阵和本状态文件；产品、migration、执行方测试、依赖、Compose、冻结/运行说明、控制/总览、快照、其他角色状态和 Git 只读
+- 角色：独立测试、边界检查、回归验证
+- 连接状态：已确认；用户启动的既有测试智能体已接单
+- 当前任务：P4-C12 — Windows Shell 独立验收
+- 状态：`blocked`
+- 最近更新：2026-10-01 15:23，Asia/Shanghai
+- 可修改范围：新 `tests/independent/desktop/**`、C12 报告与人工清单、P4-B 矩阵状态和必要证据备注、本状态文件；产品与执行方文件只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P4-C11-R2 交付完成，停在 `review`；不继续扩大回归或操作 Docker
-- 步骤开始时间：2026-09-27 12:49 Asia/Shanghai
-- 最近有效进展：2026-09-27 12:49 Asia/Shanghai
-- 最近心跳：2026-09-27 12:49 Asia/Shanghai
-- 下一检查点：等待头脑风暴总控核对 R2 报告、关闭建议和 P4-A 最终接受；测试智能体不自行宣布 `complete`
-- 等待对象：头脑风暴总控
-- 活动进程或会话：无；`finance-postgres` 已普通 compose down，最终 `COMPOSE_SERVICES_EMPTY`；专用测试临时目录已清理
-- 重试次数：1（独立 SQLite 文件首次因仓库内 basetemp 父目录不存在产生 3 个 setup error，未进入测试断言；创建专用父目录后同一文件 3 passed）
-- 最近输出：独立 PG 4 passed、独立 SQLite 3 passed；执行方 PG 11 passed、SQLite 8 passed；P4-A 64 passed，DB-05/06 已更新为 passed；129 unchanged、4 authorized changed、0 missing/非授权 mismatch
+- 当前步骤：C12 blocked / finished；P1 复现、24 项状态、报告、人工清单及边界证据已交付，停止
+- 步骤开始时间：2026-10-01 15:23 Asia/Shanghai
+- 最近有效进展：2026-10-01 15:23 Asia/Shanghai
+- 最近心跳：2026-10-01 15:23 Asia/Shanghai
+- 下一检查点：等待总控确认缺陷并提供新返修/复验任务；本任务不自动继续
+- 等待对象：总控；P4-C12-OUTBOX-001（P1）未解决
+- 活动进程或会话：无；独立 Vitest 已退出 1；产品启动次数 0/8，无外部 profile/Host/窗口/端口
+- 重试次数：0；没有重跑失败或重新 package
+- 最近输出：独立节点 10 passed、1 failed；P4-B 0 passed、1 failed、19 blocked、4 not_run；终点 276 unchanged/1 授权变化/0 非授权 mismatch/0 missing，staged 0
+
 ## 任务与后续
+
+- P4-C12 交付 [独立报告](../../testing/phase-4-c12-windows-shell-report.md)、[人工清单](../../testing/phase-4-c12-manual-checklist.md)、[P4-B 状态](../../testing/phase-4-modular-agent-host-test-matrix.md)和 `tests/independent/desktop/` 独立复现/证据；停止于 blocked / finished，等待总控裁定 P1 草稿自动删除缺陷。P4-A 64 passed、P4-C/D 32 not_run 保持。
 
 - P4-C10 已提交 [模块化 Agent Host 独立验收矩阵](../../testing/phase-4-modular-agent-host-test-matrix.md)：120 个唯一案例全部 `not_run`，等待总控验收并形成正式 P4 接口冻结。
 - P3-C9-R2 已提交 [独立复验报告](../../testing/phase-3-c9-r2-activity-import-report.md)、[最终 89 项矩阵](../../testing/phase-3-activity-import-test-matrix.md)和补强后的 [独立 PostgreSQL 案例](../../../tests/independent/activity_import/test_postgresql_contract.py)；`P3-C9-PG-001` 已关闭，建议总控接受 P3-B5-R1。
@@ -34,6 +37,38 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-10-01 15:23 Asia/Shanghai — C12 blocked / finished 交付与停止
+
+- 缺陷：P4-C12-OUTBOX-001（P1）；未确认删除的 30 天 + 1ms draft/queued 启动清理后持久化 2→0。首次证据保留，无产品修改或失败重跑
+- 独立节点：11 executed、10 passed、1 failed；原 P4-B 24 项：0 passed、1 failed、19 blocked、4 not_run，原 ID/预期保持；P4-A 64 passed、P4-C/D 32 not_run 不变
+- 交付：[C12 报告](../../testing/phase-4-c12-windows-shell-report.md)、[人工清单](../../testing/phase-4-c12-manual-checklist.md)、原矩阵 B 段状态、新 `tests/independent/desktop/` 用例/配置/audit 与 JSON/log/baseline 证据
+- 起点：277/277 matched；终点：277 entries、276 unchanged、1 清单内授权变化（矩阵）、0 非授权 mismatch/missing。tester 未列入固定清单，作为第二个允许修改路径另行核对；清单 dfcd5a21...bc081 不变
+- EXE/asar/lock 三项固定摘要精确不变；Git staged 0，diff --check 退出 0；只有全局 ignore 权限及既有 LF→CRLF warning，没有 Git 写操作
+- 收口：产品启动 0/8，执行方兼容复跑 0/30；无新 C:\MarisC12 profile/database/session，無 Host/窗口/端口需终止；唯一 Vitest runner 已退出 1，新自有 .cache 核对绝对路径后删除，证据保留
+- 边界：只更新允许文件，没有 Docker/PG、OpenClaw/微信、DeepSeek/provider、安装/build/package、用户 OS 启动项/显示器/注销等操作
+- 记录限制：14:51 后报告编写期间未按十分钟刷新角色心跳，本条补记；期间有矩阵、报告和人工清单的新输出，不属于连续两检查点无进展。严重缺陷后从未扩大测试
+- 交接：总控确认返修边界和新快照后再安排复验；本轮不创建 C12-R1、不派发 P4-C、不宣告 P4-B complete，安全停止
+
+
+### 2026-10-01 14:51 Asia/Shanghai — C12 独立用例里程碑与严重缺陷停止
+
+- EXE、app.asar、workspace lock 三项摘要均匹配任务卡；固定 Node v24.21.0 和 Vitest 5.0.2，只读复用清洁依赖
+- 新独立公开行为测试一次运行：11 节点，10 passed、1 failed；保留 JSON 和首次原始虚拟数据输出在 `tests/independent/desktop/evidence/`
+- 缺陷 P4-C12-OUTBOX-001（P1）：IF-003 §10 规定 30 天后提示确认删除；实际 cleanup 自动删除未提交 draft/queued 并持久化，main 启动直接调用，无删除确认
+- 最小复现：虚拟时间 30 天边界保持 2 条，再推进 1ms，load → cleanup → 再 load 后为 0 条；无真实数据、无 provider、无产品 EXE 启动
+- 按 C12 严重缺陷规则停止扩大测试；未运行执行方 30 项或真实 Windows 场景，无新外部 profile/进程/端口需要清理
+- 下一检查点：仅完成报告、人工清单、P4-B 状态和不变性门禁；交回总控，停止在 blocked / finished
+
+
+### 2026-10-01 14:42 Asia/Shanghai — P4-C12 接单
+
+- control：2026-10-01T14:30:33+08:00，测试智能体唯一负责人；执行智能体与技术顾问停止
+- 固定起点：277/277 matched、0 mismatch/missing；清单 SHA-256 dfcd5a21fc34e36155e90d9fb1862ea878a664d438cf422e0ad8f537e68bc081；Git staged paths 0
+- 范围：复用原 24 个 P4B ID；独立公开行为、最终 EXE 有界真实场景、人工未覆盖条件分别记录
+- 资源：只读复用 E5Final 环境与 package；新 profile/evidence 只在审批后的 C:\MarisC12 专属根；不安装/build/package，不改产品或 Git
+- 下一检查点：产物摘要和测试设计/driver preflight；产品尚未启动
+
 
 ### 2026-09-27 12:49 Asia/Shanghai — P4-C11-R2 review / finished
 

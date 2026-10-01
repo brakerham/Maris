@@ -1,0 +1,31 @@
+{
+  "manifest_sha256": "dfcd5a21fc34e36155e90d9fb1862ea878a664d438cf422e0ad8f537e68bc081",
+  "entries": 277,
+  "unchanged": 276,
+  "authorized_changed": [
+    "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+  ],
+  "unauthorized_mismatch": [],
+  "missing": [],
+  "artifacts": [
+    {
+      "path": "C:\\MarisE5Final\\E5-PKG-FINAL-20260929-1732\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\Maris.exe",
+      "expected": "f5cf7ad3b4d89a02cca925152ec8d7b5554ccba6ebff025bf04eb24195405641",
+      "actual": "f5cf7ad3b4d89a02cca925152ec8d7b5554ccba6ebff025bf04eb24195405641"
+    },
+    {
+      "path": "C:\\MarisE5Final\\E5-PKG-FINAL-20260929-1732\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\resources\\app.asar",
+      "expected": "bcdf6f889a5be95d7270fb249db8eff45b1421a5fdd7879d2342cb333d7f1274",
+      "actual": "bcdf6f889a5be95d7270fb249db8eff45b1421a5fdd7879d2342cb333d7f1274"
+    },
+    {
+      "path": "C:\\MarisE5Final\\E5-PKG-FINAL-20260929-1732\\workspace\\pnpm-lock.yaml",
+      "expected": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a",
+      "actual": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+    }
+  ],
+  "staged_paths": [],
+  "git_warning": "warning: unable to access 'C:\\Users\\xuhaolin/.config/git/ignore': Permission denied",
+  "product_launches": 0,
+  "external_profile_created": false
+}

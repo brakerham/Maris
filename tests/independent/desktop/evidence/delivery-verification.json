@@ -1,0 +1,75 @@
+{
+  "checked_at": "2026-10-01T15:24:47+08:00",
+  "unique_matrix_ids": 120,
+  "original_p4b_cases": 24,
+  "original_p4b_expectations_preserved": true,
+  "outside_p4b_unchanged": true,
+  "matrix_counts": {
+    "A": {
+      "passed": 64
+    },
+    "B": {
+      "blocked": 19,
+      "not_run": 4,
+      "failed": 1
+    },
+    "C": {
+      "not_run": 20
+    },
+    "D": {
+      "not_run": 12
+    }
+  },
+  "independent_test_counts": {
+    "executed": 11,
+    "passed": 10,
+    "failed": 1
+  },
+  "product_launches": 0,
+  "files": [
+    {
+      "path": "docs/testing/phase-4-c12-windows-shell-report.md",
+      "sha256": "dc3214c50779e4a7afeb0a0b3833983e7d503f79836e4074498cddca7f657f22"
+    },
+    {
+      "path": "docs/testing/phase-4-c12-manual-checklist.md",
+      "sha256": "b2fd6c384329138547649d76349961f5874d316d6ca9aee615357e879bf62723"
+    },
+    {
+      "path": "docs/testing/phase-4-modular-agent-host-test-matrix.md",
+      "sha256": "613adae5a4af03b7a8c29c054ca2c3fe53659d560d4ddf23f8ae2ab742239e0c"
+    },
+    {
+      "path": "docs/coordination/agents/tester.md",
+      "sha256": "76b0f7abaa50a9677e33926f731c4d496fc251f23285f4893fbb5febdea6df5d"
+    },
+    {
+      "path": "tests/independent/desktop/audit_inputs.py",
+      "sha256": "598dab4871c088102af827e9d07703600216145f5f429b8222f9c7008a5c2124"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/final-input-audit.json",
+      "sha256": "dc8dcaa04b15bffcc915fb30d41f24ac882da10097f42c66b3ffe08cfab59b46"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/matrix-original-cases.json",
+      "sha256": "b7361cc804894904285e7055c37706e98e7ff75b30b072208a64049eaf502806"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/public-boundaries.json",
+      "sha256": "2917d087e4776574b9ff5d6436fcaf4083d33df188ac1c36ff9f289199b07b98"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/public-boundaries.log",
+      "sha256": "e5ab630b3d89aab7459e43257ec635a0612a910901ea60097eac47c55e827904"
+    },
+    {
+      "path": "tests/independent/desktop/public-boundaries.test.ts",
+      "sha256": "916ba8f7a3f16304cd509a5962540de68afba93df5e14af299f476c88dcd9a49"
+    },
+    {
+      "path": "tests/independent/desktop/vitest.config.mjs",
+      "sha256": "0cf5486fdabdbb042e88658ae80ba2863cff4c1d40a183d3db233d43ff6103e8"
+    }
+  ]
+}

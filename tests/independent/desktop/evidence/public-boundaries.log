@@ -1,0 +1,67 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+stdout | public-boundaries.test.ts > C12 independent public boundaries (virtual adapters only; stop at first failure) > C12-PUB-11 | SUP-06 | old unsubmitted drafts survive startup cleanup without deletion consent
+C12 aging evidence {"before":2,"after":0,"persisted":0,"statesBefore":["draft","queued"],"elapsedMilliseconds":2592000001,"userDeletionConsent":false,"actualIds":[],"expectedIds":["virtual-event-1","virtual-event-2"]}
+
+ ❯ public-boundaries.test.ts (11 tests | 1 failed) 25ms
+   ❯ C12 independent public boundaries (virtual adapters only; stop at first failure) (11)
+     ✓ C12-PUB-01 | SEC-05 partial | unavailable crypto fails closed 2ms
+     ✓ C12-PUB-02 | SEC-05 partial | encrypted roundtrip and safe corruption error 4ms
+     ✓ C12-PUB-03 | SEC-01/02 partial | production preferences and CSP 1ms
+     ✓ C12-PUB-04 | SEC-04 partial | wrong sender, frame, origin and parameters reject 3ms
+     ✓ C12-PUB-05 | UI-01 partial | host intersection excludes incompatible contributions 2ms
+     ✓ C12-PUB-06 | SUP-06 partial | concurrent identical draft retains one ID and one entry 2ms
+     ✓ C12-PUB-07 | SUP-06 partial | encrypted reload retains payload and event ID 0ms
+     ✓ C12-PUB-08 | SUP-06 partial | changing submitted body derives a new ID 0ms
+     ✓ C12-PUB-09 | SUP-06 partial | capacity refusal preserves all 20 entries on reload 1ms
+     ✓ C12-PUB-10 | SUP-06 partial | terminal retention boundary and fresh unsent entry 1ms
+     × C12-PUB-11 | SUP-06 | old unsubmitted drafts survive startup cleanup without deletion consent 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  public-boundaries.test.ts > C12 independent public boundaries (virtual adapters only; stop at first failure) > C12-PUB-11 | SUP-06 | old unsubmitted drafts survive startup cleanup without deletion consent
+AssertionError: expected [] to deeply equal [ { …(7) }, { …(7) } ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "body": "VIRTUAL_OLD_DRAFT",
+-     "clientEventId": "virtual-event-1",
+-     "createdAt": 1767225600000,
+-     "digest": "1c35bd9d6d205c4e1e1628e11a9d1313458583d119afd5ff1d5b3580aba29019",
+-     "draftId": "virtual-old-draft",
+-     "state": "draft",
+-     "updatedAt": 1767225600000,
+-   },
+-   {
+-     "body": "VIRTUAL_OLD_QUEUE",
+-     "clientEventId": "virtual-event-2",
+-     "createdAt": 1767225600000,
+-     "digest": "581ac063a411791c9fc8ea6c2888d3442f45172eb9ba7a533e21ece41fafad2d",
+-     "draftId": "virtual-old-queue",
+-     "state": "queued",
+-     "updatedAt": 1767225600000,
+-   },
+- ]
++ []
+
+ ❯ public-boundaries.test.ts:169:30
+    167|       userDeletionConsent: false, actualIds: persisted.list().map(x =>…
+    168|       expectedIds: [draft.clientEventId, queued.clientEventId] }));
+    169|     expect(persisted.list()).toEqual(expected);
+       |                              ^
+    170|   });
+    171| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 passed (11)
+   Start at  14:50:04
+   Duration  2.74s (import 91%, transform 7%, worker 2%, tests 1%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/public-boundaries.json

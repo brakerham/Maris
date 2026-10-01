@@ -2,14 +2,24 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：LOCALZIP 总控审阅、固定 P4-B 交接与派发 P4-C12
+- 当前任务：确认 C12 OUTBOX P1 并派发 P4-B7-R2-OUTBOX 窄范围返修
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-10-01 14:30，Asia/Shanghai
+- 最近更新：2026-10-01 15:37，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-10-01 15:37 Asia/Shanghai — 确认 C12 数据丢失缺陷并派发 outbox 返修
+
+- 本轮角色为头脑风暴总控；读取控制面、C12 任务与交付、产品 outbox/main 接线和 IF-003。未执行产品或独立测试。
+- 实际复算 verification 的 11 项交付全匹配；277 起点仅矩阵变化，276 unchanged、0 missing；JSON/log 为 10 passed、1 failed，24 项矩阵 1 failed、19 blocked、4 not_run。
+- 确认 P1 P4-C12-OUTBOX-001：cleanup 自动过滤 >30天非 terminal 并保存，main 启动/退出均调用，独立虚拟消息 2→0 与代码一致。C12 blocked/finished 正确。
+- 冻结最小修复：自动保留全部非 terminal；main 原生提示默认保留，只有明确确认才能删除已提示且未变化的过期 draft/queued；sending/新内容/取消/存储失败不丢数据。
+- 发布 R2-OUTBOX，将产品、自测和新 package/EXE 收口放在一项任务；不重设计 Host、不派技术顾问、不进入驾驶舱，不启动测试角色。
+- 执行返修 ready/waiting_user，尚未核实接单；测试与技术顾问停止。原 C12 evidence 和旧 LOCALZIP 原始证据保留，后续独立复验另绑定新快照。
+- 交付：[C12 总控核对](../../p4-c12-outbox-blocked-coordinator-review.md)、[返修 Prompt](../prompts/p4-b7-r2-outbox-executor.md)、[返修起点](../snapshots/p4-b7-r2-outbox-start.sha256)。本地缺陷 checkpoint 不推送，不作为验收提交。
 
 ### 2026-10-01 14:30 Asia/Shanghai — 接受 LOCALZIP 门禁并发布 C12 独立验收
 
@@ -219,15 +229,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：LOCALZIP 审阅与产物复算完成；C12 任务和固定起点已准备
-- 步骤开始时间：2026-10-01 13:04，Asia/Shanghai
-- 最近有效进展：2026-10-01 14:30，Asia/Shanghai（交付复算、C12 边界与证据分层）
-- 最近心跳：2026-10-01 14:30，Asia/Shanghai
-- 下一检查点：用户派发 C12 后，测试方登记接单并核对稳定起点
-- 等待对象：用户把 C12 Prompt 发给既有测试智能体；接单 unverified
-- 活动进程或会话：总控本轮未启动产品/服务/测试；执行方已 finished
-- 重试次数：总控未重跑 package/EXE；LOCALZIP package 1/1、EXE 1/1 已成功
-- 最近输出：LOCALZIP 总控审阅、C12 Prompt 与稳定输入；高保真前端提醒继续有效
+- 当前步骤：C12 P1 与边界核对完成，R2-OUTBOX 返修范围和稳定起点已冻结
+- 步骤开始时间：2026-10-01 15:29，Asia/Shanghai
+- 最近有效进展：2026-10-01 15:37，Asia/Shanghai（缺陷确认、main 保留/确认合同与任务卡）
+- 最近心跳：2026-10-01 15:37，Asia/Shanghai
+- 下一检查点：用户派发返修后，执行方接单与保留/确认/并发回归
+- 等待对象：用户把 R2-OUTBOX Prompt 发给既有执行智能体；接单 unverified
+- 活动进程或会话：总控未启动产品/测试/服务；C12 已 finished，真实 EXE 0/8
+- 重试次数：总控未重跑失败；原 C12 唯一运行 10 passed、1 failed
+- 最近输出：C12 blocked 核对、窄范围返修 Prompt、固定输入；P4-B blocked
 
 ### 2026-09-29 02:14 Asia/Shanghai — 接受 DYN-R1 编排失败并发布单次 root promotion 恢复
 
