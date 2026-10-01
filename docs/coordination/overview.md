@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-01 11:49，Asia/Shanghai
+更新时间：2026-10-01 14:30，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 和 P4-A 已完成验收。E5-PKG-FINAL 的普通 hoisted 依赖、离线安装、Electron dist、TypeScript 和 22 项测试已通过；唯一 package 在 Vite production build 后以 fetch failed 结束，最终 EXE 未运行。总控确认冻结 get 的 ZIP cache hit 仍可能重新联网读 SHASUMS256；旧失败 URL 保持 unverified。下一步 E5-LOCALZIP 补本地官方 ZIP 固定校验与 Packager electronZipDir 接线，复用本轮清洁依赖，不重装；各完成一次 package/最终 EXE 后才派发 C12。24 项 P4-B 独立矩阵保持未执行；尚未正式大版本发布。
+P0～P3 和 P4-A 已完成独立验收。LOCALZIP 本地官方 ZIP 校验、真实 package 与最终 EXE 门禁已通过；总控复算 115 项 evidence、274 项 source 和 140 项产物全部匹配。恢复前后 Host 在线且认证成功，daily_finance、毛毛、安全与退出清理取得真实证据。P4-B 保持 review，发布 P4-C12 复用既有 24 项独立矩阵；P4-C/D 尚未开始，尚未正式大版本发布。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,10 +13,10 @@ P0～P3 和 P4-A 已完成验收。E5-PKG-FINAL 的普通 hoisted 依赖、离�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 已核对 58 项 evidence、接受依赖隔离并确认缓存仍联网的代码路径；发布本地 ZIP 恢复 | 2026-10-01 11:49 | 用户把 LOCALZIP Prompt 发给既有执行智能体 | [总控核对](../p4-b7-r1-e5-pkg-final-blocked-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | LOCALZIP 复算完成，接受为 C12 输入 | 2026-10-01 14:30 | 用户派发 C12，核对独立结果 | [总控审阅](../p4-b7-r1-e5-localzip-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | `ready / waiting_user`（P4-B7-R1-E5-LOCALZIP） | 原 PKG-FINAL blocked/finished；清洁依赖和定向回归接受 | 2026-10-01 11:49 | ZIP 构建接线、测试、package/EXE 各一次 | [新 Prompt](prompts/p4-b7-r1-e5-localzip-executor.md)、[固定清单](snapshots/p4-b7-r1-e5-localzip-start.sha256) |
-| 测试智能体 | `complete / finished`（P4-C11-R2） | 当前停止；P4-B 的 24 项仍全部 `not_run` | 2026-09-27 12:55 | 等 B7 稳定终点快照和总控 C12 任务卡 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md)、[角色日志](agents/tester.md) |
+| 执行智能体 | `review / finished`（LOCALZIP） | ZIP 接线、package 和最终 EXE 全过；保持停止 | 2026-10-01 12:54 | 等待 C12，不自行修改 | [运行说明](../b7-r1-e5-localzip-running.md) |
+| 测试智能体 | `ready / waiting_user`（P4-C12） | 尚未确认接单；原 24 项仍 not_run | 2026-10-01 14:30（总控准备） | 按 C12 登记接单与独立取证 | [Prompt](prompts/p4-c12-windows-shell-tester.md) |
 
 ## 阶段 0 任务状态
 
@@ -105,21 +105,21 @@ P0～P3 和 P4-A 已完成验收。E5-PKG-FINAL 的普通 hoisted 依赖、离�
 | P4-B7-R1-E5-R1：module Profile 合同返修 | 用户启动的既有执行智能体 | `blocked / finished` | 四项真实 Profile 修改正确；定向回归 3 passed、3 failed，发现桌面 parser 不接受 canonical `@major`，package/EXE 均 0 次 | [E5-R1 运行说明](../b7-r1-e5-r1-module-contract-running.md)、[总控核对](../p4-b7-r1-e5-r1-blocked-coordinator-review.md) |
 | P4-B7-R1-E5-R2：canonical Profile parser 返修 | 用户启动的既有执行智能体 | `blocked / finished`，代码修复接受 | canonical parser 与反例已修正；完整 package 前回归通过；package 因 Junction hoist 目录失败，EXE 未运行 | [E5-R2 运行说明](../b7-r1-e5-r2-profile-parser-running.md)、[总控核对](../p4-b7-r1-e5-r2-blocked-coordinator-review.md) |
 | P4-B7-R1-E5-PKG-FINAL：隔离依赖与最终产品门禁 | 既有执行智能体 | `blocked / finished`；依赖成果已接受 | 普通依赖/离线安装/dist/22 项通过；package 1/1 fetch failed，EXE 0/1 | [交付说明](../b7-r1-e5-pkg-final-running.md)、[总控核对](../p4-b7-r1-e5-pkg-final-blocked-coordinator-review.md) |
-| P4-B7-R1-E5-LOCALZIP：本地 ZIP 接线与最终门禁 | 既有执行智能体 | `ready / waiting_user` | 固定官方 ZIP 校验、electronZipDir、定向测试、package/EXE 各一次 | [Prompt](prompts/p4-b7-r1-e5-localzip-executor.md)、[固定清单](snapshots/p4-b7-r1-e5-localzip-start.sha256) |
-| P4-C12：Windows Shell 独立验收 | 既有测试智能体 | `not_started` | 等 LOCALZIP 全过和稳定 B7 快照后执行既有 24 项矩阵 | [P4-B 矩阵](../testing/phase-4-modular-agent-host-test-matrix.md) |
+| P4-B7-R1-E5-LOCALZIP：本地 ZIP 接线与最终门禁 | 既有执行智能体 | `review / finished`，接受为 C12 输入 | 115 evidence、274 source、140 out 匹配；package/EXE 成功 | [总控审阅](../p4-b7-r1-e5-localzip-coordinator-review.md) |
+| P4-C12：Windows Shell 独立验收 | 既有测试智能体 | `ready / waiting_user` | 最新快照及最终 EXE，原 24 项矩阵；尚未接单 | [Prompt](prompts/p4-c12-windows-shell-tester.md)、[起点](snapshots/p4-c12-windows-shell-start.sha256) |
 
 ## 当前阻塞与风险
 
-- H1 replacement 原子性缺陷已关闭，E3 C 盘路线稳定。R0-R1 首次 synthetic 已证明 Job 关联和异常收口工作，但 native console host 超出执行方自定单元预算；四类 synthetic 仍为 0/4。A1 使用唯一前置修正预算显式接管标准流，不提高 live 预算；再次失败就停止。该任务仍不授权 package，也不得把 harness 失败写成 pnpm 或产品失败。
-- P4-C12 不能提前启动：24 项矩阵已经存在，不需要测试智能体再次设计；只有 B7 形成稳定产品快照后，测试智能体才能绑定快照执行独立验收。
+- 当前 P4-B 无执行方阻塞；LOCALZIP 已真实跑通。剩余为 C12 独立验收及人工设备证据，P4-B 不提前 complete。历史 driver/Electron/package 失败只保留，不继续旧恢复任务。
+- C12 输入已满足且 Prompt 已发布，24 项矩阵不重做。人工/硬件子项未实测时不报 passed，高保真 UI 待独立接受后提醒并复核模型策略。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
-- R3 首轮只完成了执行方历史 fixture 和回滚断言准备；总控复核时 Docker Desktop/backend 进程均不存在。migration 摘要仍为起点值，缺陷没有修复。续跑必须使用 131 文件 R3-R1 新快照，不得重用旧 130 文件快照或重写已准备的 fixture。
-- R3-R1 被提前发送给执行智能体时 Docker 仍未启动，因此第二次在相同环境门禁处停止；131 个输入起终点一致。下一次不再先派任务：用户先启动 Desktop，头脑风暴总控验证 Engine 可达和 Compose 状态后才发布恢复指令。
+- 历史记录：R3 首轮只完成了执行方历史 fixture 和回滚断言准备；总控复核时 Docker Desktop/backend 进程均不存在。migration 摘要仍为起点值，缺陷没有修复。续跑必须使用 131 文件 R3-R1 新快照，不得重用旧 130 文件快照或重写已准备的 fixture。
+- 历史记录：R3-R1 被提前发送给执行智能体时 Docker 仍未启动，因此第二次在相同环境门禁处停止；131 个输入起终点一致。下一次不再先派任务：用户先启动 Desktop，头脑风暴总控验证 Engine 可达和 Compose 状态后才发布恢复指令。
 - E1 是 R3 系列中第一次实际修改 migration 的任务：旧实现的 PostgreSQL UPDATE→ALTER 顺序被替换为临时 UUID default+NOT NULL DDL 并立即移除 default；两类非法历史原子回滚测试补齐。R3 和 R3-R1 是环境停止点，不是两次代码返修。
 - 旧 P2 测试的取消后错误从 `confirmation_required` 更新为 `pending_action_cancelled`，与 D10 冻结的 P4 合同一致；R1 只要求报告准确说明这是一项合同演进并继续证明零财务写入。
 - Docker Desktop 已由 4.91.0 原位升级到 `4.92.0.240144`，双启动门禁和 T2 17 个真实 PG 用例均通过；执行方普通 down 后项目 Compose 服务为空。C11 可使用该环境，但 Engine 不可达时只能检查一次并停止，不重启 Desktop 或恢复 socket。
-- R2 的三个冻结结构缺口已由 S1 关闭，执行方真实 PostgreSQL 门禁已由 T2 收口；当前剩余门禁是 C11 对迁移、事务、约束、多连接竞争和用户隔离给出独立证据。
+- 历史记录：R2 的三个冻结结构缺口已由 S1 关闭，执行方真实 PostgreSQL 门禁已由 T2 收口；当前剩余门禁是 C11 对迁移、事务、约束、多连接竞争和用户隔离给出独立证据。
 - S1 报告中 10 个单文件摘要全部正确，但 10 行聚合值不可复算；总控按声明算法给出勘误 `583cac21...6a10`，并直接从实际 101 个文件生成 S2 manifest `8e926713...e74969`。
 - S2 的 103 项终点摘要 `b1c4c80d...d5b18` 可复算。唯一失败用例把 code 创建时间固定为 `2026-09-26T02:00Z`，HTTP 路由却读取真实 UTC；两枚 code 在竞争前均过期。这是测试时钟漂移，不是产品并发缺陷。
 - R2 报告的 99 个普通文件哈希、报告普通哈希和有序清单总摘要可复算；自引用 canonical 哈希不可按声明算法复算。S1 改用总控生成的独立 100 文件普通摘要清单，避免自引用。
@@ -135,6 +135,7 @@ P0～P3 和 P4-A 已完成验收。E5-PKG-FINAL 的普通 hoisted 依赖、离�
 
 ## 下一次总控检查
 
-1. 用户把 `docs/coordination/prompts/p4-b7-r1-h1-r1-staging-atomicity-executor.md` 全文发送给既有执行智能体。
-2. 执行智能体只修 replacement commit point 与六类确定性故障注入；不重做 allowlist，不启动 Electron/Forge package/sidecar/数据库。
-3. 技术顾问和测试智能体保持停止；不得重复 H1/D13/E2 系列，E3 与 P4-C12 继续 `not_started`。
+1. 用户将 C12 Prompt 全文发给既有测试智能体，等待登记接单；执行与技术顾问停止。
+2. 测试方独立执行原 24 项，区分自动/人工/兼容证据，缺陷与未测子项保留真实状态。
+3. 总控核对稳定输入、独立报告和资源收口；必要人工项另行安排，不重复 package 或旧任务。
+4. P4-B 接受后触发真实前端提醒，复核参考图、模型与视觉验收，再创建 P4-C 任务。

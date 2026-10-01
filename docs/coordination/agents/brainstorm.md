@@ -2,14 +2,25 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：P4-B7-R1-E5-LOCALZIP — 补齐官方 ZIP 本地校验与构建接线并恢复最终门禁
+- 当前任务：LOCALZIP 总控审阅、固定 P4-B 交接与派发 P4-C12
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-10-01 11:49，Asia/Shanghai
+- 最近更新：2026-10-01 14:30，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-10-01 14:30 Asia/Shanghai — 接受 LOCALZIP 门禁并发布 C12 独立验收
+
+- 本轮角色为头脑风暴总控，读取最新控制面与交付，对源码及原始 evidence 只读复算；未启动产品或测试。
+- 实际结果：115/115 外部 evidence、8/8 仓库交付、274/274 source、140/140 真实 package out 匹配；270 起点为 267 unchanged、3 authorized changed、0 missing。
+- 唯一 package/EXE 均 exit 0；最终 19 gates 全 true，daily_finance/canonical Profile、managed Host、毛毛和一次 recover 实测成功，安全退出零残留。
+- 接受为 C12 输入，LOCALZIP/整体 P4-B 保持 review；不重复 package、EXE 或全量测试，不把执行方结果作为独立验收。
+- 发布 C12 Prompt，复用原 24 项矩阵并区分自动/人工证据；对目标启动前无副作用编排错误允许一次定向修正，避免验收工具循环。
+- 测试智能体 ready/waiting_user，接单仍 unverified；执行智能体与技术顾问停止。未写其他角色日志。
+- 真实前端提醒门禁保持，C12 接受后再主动复核参考图与届时模型策略；当前不派发 P4-C。
+- 交付：[总控审阅](../../p4-b7-r1-e5-localzip-coordinator-review.md)、[C12 Prompt](../prompts/p4-c12-windows-shell-tester.md)、[C12 起点](../snapshots/p4-c12-windows-shell-start.sha256)。本地 checkpoint 不推送、不宣布 P4-B complete。
 
 ### 2026-10-01 11:49 Asia/Shanghai — 接受隔离依赖成果并冻结本地 ZIP 恢复
 
@@ -208,15 +219,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：PKG-FINAL evidence/源码核对完成；本地 ZIP 接线、定向测试与单次 package/EXE 续段已冻结
-- 步骤开始时间：2026-10-01 11:49，Asia/Shanghai
-- 最近有效进展：2026-10-01 11:49，Asia/Shanghai（58/58 evidence；确认缓存命中仍联网的代码路径；确定官方本地 ZIP 分支）
-- 最近心跳：2026-10-01 11:49，Asia/Shanghai
-- 下一检查点：执行方完成固定 ZIP 验证与 Forge 实际选项证明；其后 package/EXE 各一次
-- 等待对象：用户把 LOCALZIP Prompt 发给既有执行智能体；技术顾问和测试智能体停止
-- 活动进程或会话：总控本轮仅只读核查；历史交付记录任务进程为零，未启动构建或产品
-- 重试次数：PKG-FINAL package 1/1 已消耗；LOCALZIP 获得新 package 1/1 与 EXE 1/1
-- 最近输出：PKG-FINAL 总控核对、LOCALZIP Prompt 与固定输入；高保真前端门禁保持有效
+- 当前步骤：LOCALZIP 审阅与产物复算完成；C12 任务和固定起点已准备
+- 步骤开始时间：2026-10-01 13:04，Asia/Shanghai
+- 最近有效进展：2026-10-01 14:30，Asia/Shanghai（交付复算、C12 边界与证据分层）
+- 最近心跳：2026-10-01 14:30，Asia/Shanghai
+- 下一检查点：用户派发 C12 后，测试方登记接单并核对稳定起点
+- 等待对象：用户把 C12 Prompt 发给既有测试智能体；接单 unverified
+- 活动进程或会话：总控本轮未启动产品/服务/测试；执行方已 finished
+- 重试次数：总控未重跑 package/EXE；LOCALZIP package 1/1、EXE 1/1 已成功
+- 最近输出：LOCALZIP 总控审阅、C12 Prompt 与稳定输入；高保真前端提醒继续有效
 
 ### 2026-09-29 02:14 Asia/Shanghai — 接受 DYN-R1 编排失败并发布单次 root promotion 恢复
 

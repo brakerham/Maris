@@ -2,23 +2,23 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R1-E5-PKG-FINAL — 隔离依赖重建、package 与最终 EXE 门禁
-- 状态：`blocked / finished`
-- 最近更新：2026-09-29 18:16，Asia/Shanghai（E5-PKG-FINAL 唯一 package fetch failed 并安全收口）
-- 可修改范围：只允许本角色日志、新增 E5-PKG-FINAL 运行说明和 source manifest，以及全新 C 盘任务根中的 cache、node_modules、out、profile、数据库、runner 与 evidence。产品、测试、依赖声明、lock、Forge、staging、Python、migration、独立验收、control/overview、其他角色和 Git 状态全部只读。
+- 当前任务：P4-B7-R1-E5-LOCALZIP — 本地官方 Electron ZIP 校验、Packager 接线与最终产品门禁
+- 状态：`review / finished`
+- 最近更新：2026-10-01 12:52，Asia/Shanghai（LOCALZIP package 与最终 EXE 全部通过并收口）
+- 可修改范围：仅限 `apps/desktop/forge.config.ts`、`apps/desktop/scripts/package-desktop.mjs`、必要的新 ZIP helper/声明/单元测试、本角色日志、新运行说明和新 source manifest；只把这些构建变更同步到既有 C 盘隔离 workspace。其他产品、测试、依赖、lock、旧 evidence、control/overview、其他角色和 Git 状态只读。
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：唯一 package 1/1 在 Forge `Copying files` 阶段因 `fetch failed` 退出 1；未重试，最终 EXE 未解锁，完整性与资源已收口
-- 步骤开始时间：2026-09-29 17:31 Asia/Shanghai
-- 最近有效进展：task-local clean install、普通 node_modules、pnpm list、Electron dist、typecheck 与 22 项定向 Vitest均通过；package 进入 Windows x64 finalize 后在 Copying files 报 `TypeError: fetch failed`
-- 最近心跳：2026-09-29 18:16 Asia/Shanghai
-- 下一检查点：无；等待头脑风暴总控审阅新的 package 网络/缓存失败，不得自行重跑或启动最终 EXE
-- 等待对象：头脑风暴总控；技术顾问、测试和 P4-C12 保持停止
-- 活动进程或会话：新任务 evidence 只读保留；任务进程 0、out 0、`.maris-staging` 0，只有 10 项 Vite 构建中间产物；package 1/1、最终 EXE 0/1
-- 重试次数：pnpm install 1 次成功、网络 fallback 0；Electron dist recovery 1/1 成功；package 1/1 已耗尽；最终 EXE 0/1 未解锁
-- 最近输出：package 51257 ms、exit 1、首失败 `forge_fetch_failed_during_copying_files`；source/donor/active cache/node_modules/Electron dist 全部无漂移
+- 当前步骤：LOCALZIP 交付已完成并停止；package 1/1 与最终 EXE 1/1 全绿，等待头脑风暴总控复算
+- 步骤开始时间：2026-10-01 12:49 Asia/Shanghai
+- 最近有效进展：最终 EXE 34,796 ms 内一次通过全部动态门禁并自然 exit 0；产品/sidecar/监听/窗口/Tray 已归零，固定产物前后匹配
+- 最近心跳：2026-10-01 12:52 Asia/Shanghai
+- 下一检查点：无执行方操作；由总控核对 source/evidence/repository-delivery manifests 后决定是否派发 P4-C12
+- 等待对象：头脑风暴总控；技术顾问、测试、P4-C12 和高保真前端保持停止
+- 活动进程或会话：任务进程、产品进程、sidecar、监听、窗口均 0；out 成功产物保留，staging/transition 0；无活动会话
+- 重试次数：package 1/1、最终 EXE 1/1，均一次成功且不重跑；install/cache rebuild/network fallback 均 0
+- 最近输出：最终 EXE success=true，所有 19 个结构化 gates 为 true，exit 0、forced cleanup false、remaining processes/listeners/windows 0
 
 ## 待接任务
 
@@ -59,6 +59,41 @@
 - 未验证：真实 DeepSeek 联网调用、具体线上模型版本、FastAPI 与微信探针 B2、跨进程请求去重；不得据此宣称阶段 0 完成。
 
 ## 工作日志
+
+### 2026-10-01 12:11 Asia/Shanghai — P4-B7-R1-E5-LOCALZIP 接单与输入门禁
+
+- 状态：`in_progress / active`。最新 control `2026-10-01T11:49:13+08:00` 只授权 LOCALZIP，指定既有执行智能体为唯一负责人；旧 E5-PKG-FINAL 保持 `blocked / finished`，技术顾问、测试智能体、P4-C12 和高保真前端均停止。
+- 已按 AGENTS 顺序读取项目入口、协调规则、最新 control、本角色状态、完整任务卡、E5-PKG-FINAL 总控核对/运行说明、旧最终 EXE 门禁与 E5-FINAL 运行说明。
+- 固定起点清单 270 entries、270 matched、0 missing/mismatch，清单普通 SHA-256 `d5eda74cd1e1eb25f2daf774a8a2aae4604380479a84e2e2704bf40dbccc4edf`；Git index staged paths=0。
+- 既有 C 盘输入初检：旧 evidence 58/58、manifest SHA-256 `072127d72a6d444452b1bbb52f72a33613387954aa8e561c1fa7506b83d6ec4a`；lock `5ddc0a93...cb4a`；Electron dist 73 files；官方 ZIP 158184819 bytes、SHA-256 `11c39582...cb5d`；任务根进程/监听均为 0。
+- 当前步骤：逐文件复算 12,443 项 node_modules 与 73 项 dist；通过后 create-new 建立 `localzip-resume-1`，保存同步前原件与摘要，再进入允许的四个构建路径和新测试。package/最终 EXE 预算均未使用。
+
+### 2026-10-01 12:39 Asia/Shanghai — LOCALZIP 实现、自测与唯一 package 长操作检查点
+
+- 已新增生产 ZIP helper/声明和 10 项专属测试；Forge 本地模式只设置 `electronZipDir`，wrapper 在 staging/Forge 前验证绝对普通目录、固定普通文件、长度和流式 SHA，并显式传递进程环境。未加入 checksum 绕过、镜像、版本 fallback 或新依赖。
+- 首次 TypeScript 因新测试未收窄可选 `packagerConfig` 得到 4 个 TS18048，原始日志保留；只修正测试类型断言后 TypeScript 退出 0。lint 退出 0；ZIP、package-resources、toolchain 共 3 files/30 tests 全通过。
+- 真实官方 ZIP 生产验证通过：158184819 bytes、固定 SHA-256、v44.4.5/win32/x64；Forge 自身 config loader 得到相同目录且 `download` 未设置。package 前 node_modules 12,443、dist 73、lock 均无漂移，out/staging/transition、任务进程为 0。
+- 两次 source evidence 编排分别误用不存在的 workspace 内最终 manifest、以及含最终执行日志的仓库 manifest，均在 package 前保留为 warning；第三版使用旧 evidence 的 `workspace-copy.sha256` 正确证明 266 项中 264 unchanged、仅 Forge/wrapper 2 changed，另 3 个授权文件新增。
+- 即将执行预计可能超过五分钟的唯一 package 1/1；可观察对象为 C 盘 workspace 与 `localzip-resume-1/package-*` 原始日志。下一检查点是 package exit/首失败，成功时进入静态产物门禁；任何真实失败不重试，最终 EXE 保持 0/1。
+
+### 2026-10-01 12:48 Asia/Shanghai — package 与静态产物通过、最终 EXE 长操作检查点
+
+- 唯一 package 1/1 于 12:40:48 启动、12:41:00 结束，12,701 ms、exit 0。wrapper 首行记录生产 ZIP 验证；Packager DEBUG 明确选项含本地 `electronZipDir`、无 `download`，并从固定官方 ZIP 解压；旧 `Copying files / fetch failed` 节点本轮通过。
+- 产物共 140 files/386491523 bytes。Maris.exe 246032896 bytes、SHA `f5cf7ad3b4d89a02cca925152ec8d7b5554ccba6ebff025bf04eb24195405641`；app.asar 758341 bytes、SHA `bcdf6f889a5be95d7270fb249db8eff45b1421a5fdd7879d2342cb333d7f1274`。
+- production fuses V1 前六项 48/49/48/48/49/49；Python resources 67/67，missing/extra/mismatch/forbidden 均 0；asar 11 files、0 links、0 unpacked；秘密/个人路径/evidence/pyc/egg-info 污染 0；staging/transition 0。
+- app.asar 正确 Profile `daily_finance.assistant@1` 命中 2，旧别名 `daily_finance.default` 和错误 semver Profile 均 0。package 后 lock、node_modules 12,443、dist 73、隔离 source 269、Git index、任务进程均无漂移/残留。
+- 从已接受的 640 行 direct-spawn/CDP runner 生成任务本地副本，SHA `8839f9d324cd7eca1243a09fe69ce0a5829406994e6c9384cf28bc4f580f1e30`；direct spawn/connectOverCDP/recover 各 1、Playwright `_electron` 0，并补齐唯一 daily_finance 及 `profile_ids` 包含 canonical Profile、runtime mode=managed 断言。
+- 下一长操作为最终 EXE 1/1，硬上限 120 秒、产品自带 30 秒退出链。下一检查点为动态全部门禁与资源收口；任何真实断言失败立即停止，不启动第二次产品。
+
+### 2026-10-01 12:52 Asia/Shanghai — LOCALZIP 执行方交付
+
+- 状态：`review / finished`。本地官方 ZIP 校验/接线、package 1/1、静态产物门禁和最终 EXE 1/1 全部通过；不宣布 P4-B complete，不启动 P4-C12 或其他角色。
+- 唯一 package：12,701 ms、exit 0；DEBUG 证明 Packager 选项使用本地 `electronZipDir`、无 `download`，并从固定 ZIP 解压。产物 140 files/386491523 bytes；EXE SHA `f5cf7ad3...5641`，app.asar SHA `bcdf6f88...1274`。
+- 静态门禁：Fuse V1 前六项匹配；Python resources 67/67；asar 11 files/0 links/0 unpacked；canonical Profile 命中 2、旧别名 0；污染、staging、transition 均 0。
+- 最终 EXE：direct `spawn(shell:false)` + connectOverCDP，34,796 ms、exit 0；根所有权、loopback CDP、主/毛毛双窗口、冻结 bridge、Node/IPC 隔离、managed/authenticated runtime、唯一 daily_finance 与 `daily_finance.assistant@1`、毛毛 getState/openMain、recover 精确 1 次、隐私、console/page/crash/Windows events、自然退出全部通过。用户实际看到前端窗口弹出。
+- 收口：forced cleanup=false；产品/sidecar/任务进程、监听、窗口和 Tray 推断均 0；EXE/app.asar、269 隔离 source、73 dist、67 resources、140 out 和 fuses 前后匹配。
+- warning：首次 TypeScript 仅为新测试可选类型收窄，修正后通过；两次 package 前 source 读取器基准选择错误均保留，v3 正确；Git 用户级 ignore 读取提示不影响 staged=0；raw runner task 标签沿用接受的 E5-FINAL schema，已离线归类为 metadata warning。failed=0、skip=0。
+- 交付：[LOCALZIP 运行说明](../../b7-r1-e5-localzip-running.md)、`apps/desktop/b7-r1-e5-localzip-source.sha256`、本角色日志和外部 `localzip-resume-1` evidence。没有执行 Git 写操作、依赖安装、网络补装、P4-C12、Docker、OpenClaw、微信或 DeepSeek。
 
 ### 2026-09-29 17:32 Asia/Shanghai — P4-B7-R1-E5-PKG-FINAL 接单与起点门禁
 

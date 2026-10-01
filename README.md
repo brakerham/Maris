@@ -1,6 +1,6 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3 和 P4-A 地基已经完成独立验收。E5-R2 的 canonical Profile 修复已通过回归；E5-PKG-FINAL 已解决 Junction/hoisted 依赖隔离，离线安装、TypeScript 与 22 项定向测试通过，但唯一 package 在 Vite production build 后出现未标识请求的 fetch failed。总控从实际依赖源码确认缓存命中仍可能联网读取 SHASUMS256；下一步 E5-LOCALZIP 补官方 ZIP 固定校验与 electronZipDir 接线，并各执行一次 package 和最终 EXE。P4-C12 及 24 项 P4-B 独立矩阵尚未启动；P4-C 财务驾驶舱和 P4-D 财富管理尚未开始。P4 仍处于发布前开发。
+当前阶段：P0～P3 和 P4-A 已完成独立验收。LOCALZIP 本地官方 ZIP 校验、真实 package 与最终 EXE 门禁已通过；总控复算 115 项 evidence、274 项 source 和 140 项产物全部匹配。恢复前后 Host 在线且认证成功，daily_finance、毛毛、安全与退出清理取得真实证据。P4-B 保持 review，发布 P4-C12 复用既有 24 项独立矩阵；P4-C/D 尚未开始，尚未正式大版本发布。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 
@@ -162,3 +162,6 @@
 
 P4 头脑风暴仍是可修改的讨论稿，不代表候选框架或部署服务已经接入。P0～P3 的实现、测试证据和教材按各自状态文件记录。真实账单、个人活动资料和密钥将作为运行数据管理，不提交到代码仓库。
 # Maris
+
+- [LOCALZIP 总控审阅](docs/p4-b7-r1-e5-localzip-coordinator-review.md)：真实 package/EXE 通过，尚待独立接受。
+- [P4-C12 独立验收 Prompt](docs/coordination/prompts/p4-c12-windows-shell-tester.md)：原 24 项桌面矩阵，区分自动/人工。

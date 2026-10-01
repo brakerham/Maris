@@ -2,6 +2,9 @@ import type { ForgeConfig } from "@electron-forge/shared-types";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { VitePlugin } from "@electron-forge/plugin-vite";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
+import { parseElectronZipDirectory } from "./scripts/verify-electron-zip.mjs";
+
+const electronZipDir = parseElectronZipDirectory(process.env.MARIS_ELECTRON_ZIP_DIR);
 
 const config: ForgeConfig = {
   packagerConfig: {
@@ -13,7 +16,11 @@ const config: ForgeConfig = {
       ".maris-staging/python-runtime/migrations",
       ".maris-staging/python-runtime/src"
     ],
-    ...(process.env.MARIS_ELECTRON_CACHE ? { download: { cacheRoot: process.env.MARIS_ELECTRON_CACHE } } : {})
+    ...(electronZipDir
+      ? { electronZipDir }
+      : process.env.MARIS_ELECTRON_CACHE
+        ? { download: { cacheRoot: process.env.MARIS_ELECTRON_CACHE } }
+        : {})
   },
   makers: [],
   plugins: [

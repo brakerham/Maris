@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-10-01T11:49:13+08:00`
+- 指令版本：`2026-10-01T14:30:33+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：E5-PKG-FINAL 已解决 Junction/hoisted 隔离依赖问题，离线安装、TypeScript 和 22 项定向回归通过；唯一 package 在 Vite production build 后因未标识 URL 的 fetch failed 停止。总控核对 58/58 evidence 并确认冻结 @electron/get 的缓存命中仍可能联网取得 SHASUMS256。发布 `P4-B7-R1-E5-LOCALZIP`，只补本地官方 ZIP 校验和 electronZipDir 构建接线，再各执行一次 package 与最终 EXE；旧失败的具体 URL/代理根因仍为 unverified。
-- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r1-e5-localzip-executor.md` 全文发送给既有执行智能体。技术顾问与测试智能体保持停止；不得复用污染的 E4/E5-R1/E5-R2 依赖树，不提前启动 P4-C12 或高保真前端。
+- 当前动作：LOCALZIP 已 review/finished；总控接受其真实 package/EXE 成功及源码/证据作为稳定 C12 输入，整体 P4-B 尚未 complete。发布 P4-C12：执行既有 24 项独立矩阵，区分自动/人工/执行方证据，不重做矩阵、package 或 P0～P3 全量回归。
+- 需要用户参与：把 `docs/coordination/prompts/p4-c12-windows-shell-tester.md` 全文发给既有测试智能体。派发状态 ready/waiting_user，尚未确认接单；执行智能体与技术顾问停止。未验证的人工设备场景先交回总控，不要求重复微信或扫码。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；远端 `main` 当前为 `251b4a2`，其后的 E5 协调与返修单元只在本地提交，尚未推送。现有远端与本地提交仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 - 前端实现提醒门禁：P4-B Shell 完成独立验收后、创建首个 P4-C 财务驾驶舱技术方案或执行 Prompt 之前，总控必须主动提醒用户进入真实前端界面阶段，并先复核两张既定参考图、高保真信息架构、页面/组件切片、视觉验收方式和模型分工。不得直接沿用 Shell 占位页开始编码；必须让用户先确认当时可用模型及分工策略。当前建议重新评估“强推理/视觉模型（现为 GPT-6 Astra）负责界面方案、复杂交互和关键审阅，编码工作模型（现为 GPT-6 Sol）负责组件实现、重构和常规测试”，模型能力或额度变化时以届时讨论为准。
 
@@ -122,8 +122,8 @@
 | P4-B7-R1-E5-R1 module Profile 合同返修 | 执行智能体；`blocked / finished` | 真实 Profile 与 fixture 已修正；旧 desktop parser 拒绝 canonical `@major`，package/EXE 0 次 | 保留交付和失败证据，不得重跑或扩大范围 |
 | P4-B7-R1-E5-R2 canonical parser 返修 | 执行智能体；`blocked / finished`，parser 修复已接受 | canonical parser 与反例已修正；完整 package 前回归通过；package 1/1 因 Junction hoist 目录在构建前失败，最终 EXE 0/1 | 原任务停止；旧 E4/E5 依赖目录全部只读，不得恢复、链接、复制或执行 |
 | P4-B7-R1-E5-PKG-FINAL 隔离依赖、package 与最终 EXE | 执行智能体；`blocked / finished`；依赖成果已接受 | 普通 node_modules、离线安装、dist、TypeScript/22 项通过；package 1/1 在 Vite build 后 fetch failed；EXE 0/1 | 原 evidence 只读；不得自行重跑，清洁依赖可作为 LOCALZIP 输入 |
-| P4-B7-R1-E5-LOCALZIP 本地 ZIP 构建接线与最终门禁 | 执行智能体；`ready / waiting_user` | 固定官方 ZIP 长度/SHA 校验后走官方 electronZipDir；补构建测试，package 1/1、EXE 1/1 | 唯一构建文件边界见新 Prompt；不重装依赖、不改业务/锁/代理，不启动 C12 |
-| P4-C12 Windows Shell 独立验收 | `not_started`；等待 E5-LOCALZIP 和 B7 稳定快照 | 现有矩阵已有 24 个 P4-B 案例；正式任务卡必须绑定最终 package/EXE 门禁的稳定终点快照生成 | 测试智能体当前停止；不得提前执行、修改产品或把执行方门禁当作独立通过证据 |
+| P4-B7-R1-E5-LOCALZIP 本地 ZIP 构建接线与最终门禁 | 执行智能体；`review / finished`，总控接受为 C12 输入 | package 1/1、EXE 1/1 成功；115 evidence、274 source、140 out 精确匹配 | 停止；不重复打包/启动；等待 C12 独立结论 |
+| P4-C12 Windows Shell 独立验收 | 既有测试智能体；`ready / waiting_user` | 固定 C12 起点与已通过 LOCALZIP 产物；既有 24 个 P4-B ID | 按新 Prompt 独立取证；不得修改产品或把执行方门禁当作独立 passed |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |
