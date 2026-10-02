@@ -1,0 +1,11 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+ ✓ r3-path.test.ts (9 tests) 10ms
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  18:48:20
+   Duration  349ms (import 70%, transform 23%, tests 4%, worker 2%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r3/path-independent/result.json

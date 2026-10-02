@@ -2,23 +2,23 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12-R2 — registry 独立复验与未执行 Windows 验收
+- 当前任务：P4-C12-R3 — 路径独立复验与剩余Windows验收
 - 状态：`blocked`
-- 最近更新：2026-10-02 15:48 Asia/Shanghai
-- 可修改范围：仅新增 r2-*、evidence/r2、新R2报告；旧主报告/清单只追加、矩阵仅B状态备注、自身角色；旧R1及产品只读
+- 最近更新：2026-10-02 21:55 Asia/Shanghai
+- 可修改范围：仅新增r3-*、evidence/r3、新R3报告；旧主报告/清单追加、矩阵B状态备注、自身角色；所有旧测试/报告/evidence及产品只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：C12-R2脱敏报告与24项完整映射交付；原setting建议关闭，新path P1阻塞，停止
-- 步骤开始时间：2026-10-02 15:48 Asia/Shanghai
-- 最近有效进展：2026-10-02 15:48 Asia/Shanghai
-- 最近心跳：2026-10-02 15:48 Asia/Shanghai
-- 下一检查点：已安全停止；等待总控接收报告和裁定新路径P1，不自行续跑
-- 等待对象：总控裁定新P1与交付
-- 活动进程或会话：无；全部Vitest已退出，产品0/8、辅助Electron0/4；未创建外部profile
+- 当前步骤：blocked / finished交付与停止
+- 步骤开始时间：2026-10-02 21:55 Asia/Shanghai
+- 最近有效进展：2026-10-02 21:55 Asia/Shanghai
+- 最近心跳：2026-10-02 21:55 Asia/Shanghai
+- 下一检查点：已停止，等待总控验收/裁定
+- 等待对象：总控
+- 活动进程或会话：无；产品0/8、辅助Electron0/4
 - 重试次数：0
-- 最近输出：独立16：15 passed/1 failed；兼容26 passed；终点327：323 unchanged+4 authorized changed、0非授权/缺失、staged0；旧独立32项与EXE/asar/lock/fuses保持，追加/矩阵边界通过
+- 最近输出：独立28：27 passed/1 failed；开发52passed；终点356=352不变+4授权、0非授权/缺失、staged0；原54独立与包/fuses保持
 
 ## 任务与后续
 
@@ -39,6 +39,33 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-10-02 21:55 Asia/Shanghai — C12-R3 blocked / finished交付与停止
+
+- [R3完整报告](../../testing/phase-4-c12-r3-route-windows-report.md)和原24项映射已交付，旧主报告/人工清单只追加，矩阵仅B状态备注；UI-02失败，UI-04阻塞，A64/C-D32保持。\n- PATH-001原断言+新路径9通过建议关闭，canonical1/设置3/ZIP6/staging7通过；新P1 P4-C12-R3-LAZY-001首次失败已保留，独立28 unique 27pass/1fail，开发52单列。\n- 起终审计：356集352 unchanged+4授权变化，无非授权或missing，旧独立54不变；source352/out140/resources67、EXE/asar/lock/fuses保持，120ID/12列/原前11列/B外字节/追加prefix保持；staged0，diff-check退出0（仅LF→CRLF提示）。\n- 产品0/8、辅助Electron0/4，全部Vitest已退出，无owned窗口/监听/进程；真实Windows/native/人工未执行。新tmp/cache已核对专属绝对路径无reparse后清理，首次log/JSON永久保留；无产品或Git写操作。\n- 长心跳空档如实记录，目标P1后已停止，后续只收口审计。交总控裁定PATH关闭与lazy新P1；不创建任务/角色/P4-C，不自行续跑。
+
+
+### 2026-10-02 21:53 Asia/Shanghai — C12-R3 新P1后已停止；报告生成后补记心跳空档，仅交付审计
+
+- 18:53首次lazy P1后已停止扩大测试；截至21:52报告与24项映射落盘，期间缺少连续心跳，不能声称持续可观测运行。两个检查点没有连续输出的安全要求按已停止目标落实；不恢复测试，仅安全交付。\n- 最后脱敏业务错误：Shell必须保留但DOM为null。新报告生成完成；已有方法是真实renderer/jsdom+virtual bridge+lazy import故障一次复现，未重试。可能原因定位父route errorElement替换Shell，最终原因与返修范围待总控裁定。\n- 新report/旧文档追加/B状态已准备，下一步只清理新tmp/cache并审计；产品0/8、辅助0/4，未创建外部profile。
+
+
+### 2026-10-02 18:53 Asia/Shanghai — C12-R3 发现新P1 lazy故障替换整个Shell，停止扩展并编写报告
+
+- R3-UI-02-LAZY首次失败：实际renderer+React Router+Shell，仅lazy页面import故障/bridge端口虚拟；错误页存在但Shell/nav/Agent面板均消失。P1 P4-C12-R3-LAZY-001，按任务卡停止，不重跑覆盖。\n- PATH原1+新9、ASCII1、settings/ZIP/staging16通过，兼容52单列；Windows与辅助Electron0，不创建外部profile。下一步24项报告及终点边界。
+
+
+### 2026-10-02 18:48 Asia/Shanghai — C12-R3 原路径复验与新增九项通过，进入未覆盖公开行为
+
+- 原R2-UI-04-PATH不变断言一次通过；新增path双顺序/同模块/末尾/route ID/输入不变与失败恢复9项通过，建议关闭PATH-001仅路径边界。开发52一次兼容单列；不重跑outbox/setting成功节点。下一步未覆盖公开边界，必要Windows随后。
+
+
+### 2026-10-02 18:46 Asia/Shanghai — C12-R3 接单与新起点核对通过
+
+- control 2026-10-02T18:25:00+08:00：唯一测试负责人，R4为稳定输入，旧OUTBOX/setting已关闭不重复。
+- 新起点/source/out/resources/包/fuses已独立复算，新start-audit和baseline保存；先原R2-UI-04-PATH一次，新增路径边界和必要未覆盖条件，随后Windows。
+- 写入限r3新增/证据/新报告、旧主报告和清单追加、B矩阵和自身状态；无外部profile或目标启动。
+
 
 ### 2026-10-02 15:48 Asia/Shanghai — C12-R2 blocked / finished交付与停止
 

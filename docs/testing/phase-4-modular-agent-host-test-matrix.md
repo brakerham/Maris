@@ -211,9 +211,9 @@
 | ID | 切片 | 需求/冻结来源 | 层级 | 环境 | 自动/人工 | 前置条件 | 输入摘要 | 步骤 | 预期结果与禁止副作用 | 风险 | 执行状态 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | P4B-UI-01 | B | F12 | contract/unit | contract | auto | compiled registry 与 `/modules` fixture | 后端启用/禁用、桌面缺失、版本不兼容、未知模块 | 计算交集 | 只渲染两侧均存在且兼容的模块；未知/禁用不导航、不预加载 | P1 | blocked |
-| P4B-UI-02 | B | F12 | desktop/e2e | Windows/Electron | auto | 两个 lazy route | chunk 加载失败、重试成功、切换模块 | 导航并恢复 | 局部错误边界可重试，Shell/登录/其他模块可用；不循环加载或丢当前会话 | P1 | blocked |
+| P4B-UI-02 | B | F12 | desktop/e2e | Windows/Electron | auto | 两个 lazy route | chunk 加载失败、重试成功、切换模块 | 导航并恢复 | 局部错误边界可重试，Shell/登录/其他模块可用；不循环加载或丢当前会话 | P1 | failed |
 | P4B-UI-03 | B | F12 | contract/unit | contract | auto | 冻结 OpenAPI 与生成命令 | 后端 DTO 字段/枚举/required 改变；生成物陈旧 | CI 比较生成差异并编译 | 漂移门禁失败并定位；不得靠手写 API 类型掩盖差异或运行时下载 schema | P1 | blocked |
-| P4B-UI-04 | B | F12 | contract/unit | contract | auto | UI contribution 合同冻结 | hostUiMajor、route/path/setting/profile/companion 冲突 | 编译期注册和启动验证 | 不兼容或冲突稳定失败；Shell 无 `if moduleId` 业务分支 | P1 | failed |
+| P4B-UI-04 | B | F12 | contract/unit | contract | auto | UI contribution 合同冻结 | hostUiMajor、route/path/setting/profile/companion 冲突 | 编译期注册和启动验证 | 不兼容或冲突稳定失败；Shell 无 `if moduleId` 业务分支 | P1 | blocked |
 | P4B-CMP-01 | B | F13；U02 | desktop/e2e | Windows/Electron | auto | daily/wealth contributions 与假状态流 | 切换模块及 idle/thinking/tool/confirmation/error/offline | 观察窗口、Profile 和状态 | 始终只有一个毛毛窗口/Agent 入口；主形态随 contribution，子状态不创建第二 Agent或触发写入 | P1 | blocked |
 | P4B-CMP-02 | B | U01/F13 | desktop/e2e | Windows/Electron | auto | 新设备设置 | 首次和第二次关闭主窗口 | 关闭、从 Tray 恢复、再次关闭 | 首次隐藏并只提示一次；第二次不重复提示；Host/毛毛按设置驻留且无数据丢失 | P1 | blocked |
 | P4B-CMP-03 | B | U01 | desktop/e2e | Windows/Electron | auto | 关闭策略可切换 | 退出/每次询问/隐藏，Tray 打开/隐藏 | 每种设置执行关闭与取消 | 行为精确对应设置；“退出”清理自有后端；询问取消不退出；Tray 状态一致 | P1 | blocked |
@@ -244,6 +244,14 @@
 - 原setting REGISTRY-001原断言唯一一次通过，建议关闭；新P1 `P4-C12-R2-REGISTRY-PATH-001`：不同route ID同path被接受，原UI-04仍failed；历史首次失败/备注不改写。
 - 独立16 unique executed：15 passed、1 failed；开发registry26 passed兼容单列。整项仍0 passed、1 failed、19 blocked、4 not_run；产品0/8、辅助Electron0/4，因新P1停止，不将部分成功计入整项。
 - 旧outbox42不重跑；原生老化提示unverified、真实Windows及原人工条件未执行。[R2完整报告](phase-4-c12-r2-registry-windows-report.md)逐项保留完整原预期、历史部分、本轮执行和缺口。停止blocked / finished，最终接受归总控。
+
+
+#### C12-R3 最新状态备注（2026-10-02）
+
+- PATH-001原断言与新路径9通过，建议关闭；新增ASCII1/设置3/ZIP6/staging7通过。旧OUTBOX/setting保持关闭，不重跑已过节点。
+- 新P1 `P4-C12-R3-LAZY-001`：实际renderer/jsdom的lazy故障替换整个Shell，导航和Agent入口消失。UI-02 blocked→failed；UI-04路径通过但完整独立复核因新P1停止，failed→blocked。历史备注不改写。
+- 独立28 unique：27 passed/1 failed；开发52兼容单列。B整项仍0 passed/1 failed/19 blocked/4 not_run；产品0/8、辅助Electron0/4，Windows/native/人工条件未验，停止blocked / finished。
+- [R3报告](phase-4-c12-r3-route-windows-report.md)保留24项完整原预期/历史/本轮/缺口，实际审计在evidence/r3，最终接受属总控。
 
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 

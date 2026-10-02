@@ -1,0 +1,23 @@
+[
+  {
+    "removed": true,
+    "boundary_verified": true,
+    "path": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r3\\tmp",
+    "files_removed": 103,
+    "reparse_points": 0
+  },
+  {
+    "removed": true,
+    "boundary_verified": true,
+    "path": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r3\\cache",
+    "files_removed": 1,
+    "reparse_points": 0
+  },
+  {
+    "removed": true,
+    "boundary_verified": true,
+    "path": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r3\\compat-cache",
+    "files_removed": 1,
+    "reparse_points": 0
+  }
+]

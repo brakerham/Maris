@@ -1,0 +1,14 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+stdout | r2-remaining.test.ts > R2-UI-04-PATH | different route IDs sharing a route path must fail closed
+{"caseId":"R2-UI-04-PATH","path":"/virtual_shared","routeIds":["virtual_left_route","virtual_right_route"],"expected":"desktop_registry_conflict","actual":"desktop_registry_conflict","data":"virtual_only"}
+
+ ✓ r2-remaining.test.ts (1 test) 6ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  18:47:55
+   Duration  2.68s (import 93%, transform 4%, worker 2%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r3/original-path/result.json

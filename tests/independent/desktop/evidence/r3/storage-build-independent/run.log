@@ -1,0 +1,11 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+ ✓ r3-storage-build.test.ts (16 tests) 1063ms
+
+ Test Files  1 passed (1)
+      Tests  16 passed (16)
+   Start at  18:51:47
+   Duration  1.47s (tests 80%, import 15%, transform 5%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r3/storage-build-independent/result.json

@@ -1,0 +1,14 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+stdout | r3-ui04.test.ts > R3-UI04-ASCII-01 | module ID with a terminal newline is not a canonical ASCII identifier
+{"caseId":"R3-UI04-ASCII-01","inputModuleId":"virtual_left\n","expected":"rejected","actual":"rejected","returnedModuleId":null,"inputUnchanged":true,"data":"virtual_only"}
+
+ ✓ r3-ui04.test.ts (1 test) 7ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  18:49:40
+   Duration  345ms (import 74%, transform 21%, tests 4%, worker 2%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r3/ui04-independent/result.json

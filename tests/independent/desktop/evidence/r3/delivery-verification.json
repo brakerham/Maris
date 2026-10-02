@@ -1,0 +1,106 @@
+{
+  "matrix_unique_ids": 120,
+  "columns": 12,
+  "all_original_first_11_columns_preserved": true,
+  "outside_b_byte_prefix_suffix_preserved": true,
+  "counts": {
+    "A": {
+      "passed": 64,
+      "failed": 0,
+      "blocked": 0,
+      "not_run": 0
+    },
+    "B": {
+      "passed": 0,
+      "failed": 1,
+      "blocked": 19,
+      "not_run": 4
+    },
+    "C": {
+      "passed": 0,
+      "failed": 0,
+      "blocked": 0,
+      "not_run": 20
+    },
+    "D": {
+      "passed": 0,
+      "failed": 0,
+      "blocked": 0,
+      "not_run": 12
+    }
+  },
+  "case_status": {
+    "P4B-SEC-01": "blocked",
+    "P4B-SEC-02": "blocked",
+    "P4B-SEC-03": "blocked",
+    "P4B-SEC-04": "blocked",
+    "P4B-SEC-05": "blocked",
+    "P4B-SEC-06": "blocked",
+    "P4B-SEC-07": "blocked",
+    "P4B-SEC-08": "blocked",
+    "P4B-SUP-01": "blocked",
+    "P4B-SUP-02": "blocked",
+    "P4B-SUP-03": "blocked",
+    "P4B-SUP-04": "blocked",
+    "P4B-SUP-05": "not_run",
+    "P4B-SUP-06": "blocked",
+    "P4B-UI-01": "blocked",
+    "P4B-UI-02": "failed",
+    "P4B-UI-03": "blocked",
+    "P4B-UI-04": "blocked",
+    "P4B-CMP-01": "blocked",
+    "P4B-CMP-02": "blocked",
+    "P4B-CMP-03": "blocked",
+    "P4B-CMP-04": "not_run",
+    "P4B-CMP-05": "not_run",
+    "P4B-CMP-06": "not_run"
+  },
+  "append_files": {
+    "docs/testing/phase-4-c12-windows-shell-report.md": {
+      "original_prefix_bytes": 32410,
+      "original_prefix_sha256": "160056fc1f0f2c83edc9fa9babf9d2cfc1f33f9296a39381e2a743421fde7ecd",
+      "prefix_preserved": true,
+      "appended_bytes": 961
+    },
+    "docs/testing/phase-4-c12-manual-checklist.md": {
+      "original_prefix_bytes": 10424,
+      "original_prefix_sha256": "b4d1129e516e90fba173a2e81c7c09c638fbb847c0f7b63a2329adb2f9ee6aaf",
+      "prefix_preserved": true,
+      "appended_bytes": 961
+    }
+  },
+  "new_files_sha256": {
+    "docs/testing/phase-4-c12-r3-route-windows-report.md": "538d885d41e3b8e70cba8d4c9e81a6c4661a790f08420ebcf0055952a14c756b",
+    "tests/independent/desktop/evidence/r3/baseline.json": "2a8ca7994eb19462701f07e03e5a26b3ec2cb726f6d122cbed5975a4ed484938",
+    "tests/independent/desktop/evidence/r3/diff-check.log": "77b58c58c002627399a26f24ed95806370ef4032178522178de2e49c38c1476a",
+    "tests/independent/desktop/evidence/r3/end-audit.json": "27e43595429860cdc403563ba2e6eefa4547a0378bcac50ad9e23b0e5c5f63ec",
+    "tests/independent/desktop/evidence/r3/executor-compat/result.json": "f665e3dd9a7ddeee0e428fa805e107b7526c34046ef1539b92430e02510e8a09",
+    "tests/independent/desktop/evidence/r3/executor-compat/run.log": "ba06f1071bab9c03a27f1f5d3442cc56d827db9e6732dcf592857f88d3a046cc",
+    "tests/independent/desktop/evidence/r3/initial-audit-failure.json": "17f04a5405b0eadd80f7e6eaf428f8276566bc42792a8d4e4ea9e534a3ccf078",
+    "tests/independent/desktop/evidence/r3/node-index.json": "8d78f69bb9354a4056c778bebc686cd34bea090175d3b63049d62565d78ed48b",
+    "tests/independent/desktop/evidence/r3/original-path/result.json": "6a3d11dd7c7a14120d37cef81bf7c29b79ebc77b7fe18a58bba3fe824b7b3f00",
+    "tests/independent/desktop/evidence/r3/original-path/run.log": "3a99419203882cda74649c7797a7e07ca5b5caeae93abf1bc017fd88ca3cfe90",
+    "tests/independent/desktop/evidence/r3/path-independent/result.json": "3395e85b5b70b77f3ad42995a6a374baa09e095f44560902e642fc69cd9d7c16",
+    "tests/independent/desktop/evidence/r3/path-independent/run.log": "f86d233a9aa3ad80e90aad823983cf65775f1ca1a66d8aa8e85a96d54068ba6a",
+    "tests/independent/desktop/evidence/r3/remaining-independent/result.json": "8e1fa03bcff2478ad42b0830a739e4f7ec78b85a574fe2ea17cce994543217f5",
+    "tests/independent/desktop/evidence/r3/remaining-independent/run.log": "fe2a618e782f2b9f053c3bc79333326ece3d2e20a4ed4fa6404d20303a2652ad",
+    "tests/independent/desktop/evidence/r3/start-audit.json": "bd1505540e07c4fff65c9c358b02704c9ef3cd6ff9b54e9e397164230fd94718",
+    "tests/independent/desktop/evidence/r3/storage-build-independent/result.json": "065e9277519446c6407d31447c106759c2793d341466f07bfad10684afd8fd38",
+    "tests/independent/desktop/evidence/r3/storage-build-independent/run.log": "f5432189818d214cc024cb2afc0f18ca48e0e67a4f88cd29e45bc7cc3590fd54",
+    "tests/independent/desktop/evidence/r3/temp-cleanup.json": "c9e6f716135955a877fb555ce98935c82cfc49ed62f53af482ebcce9c272a374",
+    "tests/independent/desktop/evidence/r3/ui04-independent/result.json": "9f4425709f4eae8ca6dc40087b7960014ca425e464286e7f7c6c276f98229e79",
+    "tests/independent/desktop/evidence/r3/ui04-independent/run.log": "490514c05812a7618e714e0937e732c135f425d95955e5841d86f3431d1ffdd4",
+    "tests/independent/desktop/r3-audit.py": "9299c20d085888a6e13656dca14369a0cb27ac0a144192965ee097d0b3c0c7d2",
+    "tests/independent/desktop/r3-compat-vitest.config.mjs": "c7d2c00f088577dc7d372ebcc07c75a72874b95231ba8d9f78265f01b9519b4e",
+    "tests/independent/desktop/r3-delivery.py": "5283b927eed337d6e074b570debc1bcd828edf554b8e6576f885bfb6fabc616f",
+    "tests/independent/desktop/r3-path.test.ts": "1ba392cb216157e3fbd4344ed61b7473a2b265b55c219ec3aced21fe87d5c731",
+    "tests/independent/desktop/r3-remaining.test.tsx": "343c8624e425174d87e763037a602467cf0cc0d831fd6ea15c7169018793edcc",
+    "tests/independent/desktop/r3-storage-build.test.ts": "1c3ea26bafb6ce4b4b399205addc1d926691713e6730b06451b64221e0d28bf0",
+    "tests/independent/desktop/r3-ui04.test.ts": "341fea47c9465da46b4501a843dd709ee417b1c401cf1735d85865bc4446ad4e",
+    "tests/independent/desktop/r3-vitest.config.mjs": "e1e5719fb07ce07c221f2838ed33865822f739a7b76dddbe59458e2227f45458"
+  },
+  "product_starts": 0,
+  "auxiliary_electron_starts": 0,
+  "owned_resources": "not_started; not a successful cleanup test",
+  "git_writes": 0
+}

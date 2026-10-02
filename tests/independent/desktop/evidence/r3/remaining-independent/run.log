@@ -1,0 +1,25 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+stdout | r3-remaining.test.tsx > R3-UI-02-LAZY | lazy chunk failure leaves Shell and other navigation available
+{"caseId":"R3-UI-02-LAZY","chunkFailureShown":true,"shellPresent":false,"navigationPresent":false,"agentPanelPresent":false,"data":"virtual_only","evidenceLayer":"real_renderer_in_jsdom_with_virtual_bridge_and_failed_chunk"}
+
+ ❯ r3-remaining.test.tsx (1 test | 1 failed) 2001ms
+   × R3-UI-02-LAZY | lazy chunk failure leaves Shell and other navigation available 1996ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  r3-remaining.test.tsx > R3-UI-02-LAZY | lazy chunk failure leaves Shell and other navigation available
+AssertionError: UI-02 requires local error isolation; Shell must remain usable: expected null not to be null
+ ❯ r3-remaining.test.tsx:18:88
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  18:52:03
+   Duration  21.65s (import 90%, tests 9%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r3/remaining-independent/result.json

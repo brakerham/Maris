@@ -1,0 +1,62 @@
+{
+  "entries": 356,
+  "matched": 356,
+  "mismatch": [],
+  "missing": [],
+  "manifest_sha256": "4b6dcb45d27cb5a277636278564dcf8489e244929db9fa46cf7c4ca2bba32b0f",
+  "staged_paths": [],
+  "historical_repository_source": {
+    "entries": 353,
+    "matched": 348,
+    "mismatch": [
+      "README.md",
+      "docs/coordination/agents/brainstorm.md",
+      "docs/coordination/control.md",
+      "docs/coordination/overview.md",
+      "docs/project-coordination.md"
+    ],
+    "missing": [],
+    "manifest_sha256": "606048c192bf7cb19852407dee924e30d10562ce26abf35de240af3be436a27f",
+    "classification": "five coordinator dispatch documents; all match authoritative new 356-file task snapshot"
+  },
+  "source": {
+    "entries": 352,
+    "matched": 352,
+    "mismatch": [],
+    "missing": [],
+    "manifest_sha256": "b16283e1f881054afd8d555dd43e81d55fa60eebfe86006b1565f97465531900"
+  },
+  "out": {
+    "entries": 140,
+    "matched": 140,
+    "mismatch": [],
+    "missing": [],
+    "manifest_sha256": "3e00e2a4851181ba7b6351ce9b0e6c1523f320b002f500403ffa654f08a942df"
+  },
+  "resources": {
+    "entries": 67,
+    "matched": 67,
+    "mismatch": [],
+    "missing": [],
+    "manifest_sha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1"
+  },
+  "artifacts": {
+    "apps/desktop/out/Maris-win32-x64/Maris.exe": "d5868736cbdf63f717f0ea853141b980d06cefc10a3c05196e8856cbe3a4de2b",
+    "apps/desktop/out/Maris-win32-x64/resources/app.asar": "9a4da50b2c5583e6f2337bdff43e399cd454c360fa6169b1667a1e4506c337d4",
+    "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+  },
+  "fuses": {
+    "version": 1,
+    "wire": [
+      48,
+      49,
+      48,
+      48,
+      49,
+      49,
+      48,
+      49,
+      49
+    ]
+  }
+}

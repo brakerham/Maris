@@ -1,6 +1,9 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收。OUTBOX-001和设置键REGISTRY-001独立关闭；R4路径修复、自测及新包已由总控核对为稳定输入，PATH-001尚待独立关闭。发布C12-R3，先原路径节点复验再剩余Windows条件；P4-B未complete，P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，OUTBOX-001、设置键REGISTRY-001及PATH-001已独立关闭。C12-R3发现P1 LAZY-001：模块页面故障替换整个Shell。发布R5-LAZY修复局部隔离及UI-02完整恢复；Windows未验，P4-B未complete，P4-C/D未开始。
+
+- [C12-R3总控核对](docs/p4-c12-r3-lazy-blocked-coordinator-review.md)：路径独立关闭，新lazy局部隔离P1。
+- [R5-LAZY执行任务](docs/coordination/prompts/p4-b7-r5-lazy-executor.md)：模块错误隔离、局部重试、健康页面切换和状态保持。
 
 - [R4总控核对](docs/p4-b7-r4-route-coordinator-review.md)：353源码、5交付、59证据、140产物匹配，UI-04开发映射已交付。
 - [C12-R3独立续跑任务](docs/coordination/prompts/p4-c12-r3-route-windows-tester.md)：路径复验及未执行Windows，不重复已关闭缺陷。

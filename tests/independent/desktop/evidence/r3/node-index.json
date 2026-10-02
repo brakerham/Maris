@@ -1,0 +1,370 @@
+[
+  {
+    "phase": "original-path",
+    "start_time_epoch_ms": 1790938075296,
+    "nodes": [
+      {
+        "name": "R2-UI-04-PATH | different route IDs sharing a route path must fail closed",
+        "status": "passed"
+      }
+    ],
+    "passed": 1,
+    "failed": 0
+  },
+  {
+    "phase": "path-independent",
+    "start_time_epoch_ms": 1790938100511,
+    "nodes": [
+      {
+        "name": "R3-PATH-01/reverse=false | cross-module identical string path rejects",
+        "status": "passed"
+      },
+      {
+        "name": "R3-PATH-01/reverse=true | cross-module identical string path rejects",
+        "status": "passed"
+      },
+      {
+        "name": "R3-PATH-02/reverse=false | same module different route IDs same path rejects",
+        "status": "passed"
+      },
+      {
+        "name": "R3-PATH-02/reverse=true | same module different route IDs same path rejects",
+        "status": "passed"
+      },
+      {
+        "name": "R3-PATH-03 | last module last route collision gives no partial return",
+        "status": "passed"
+      },
+      {
+        "name": "R3-PATH-04/reverse=false | route ID collision still rejects with distinct paths",
+        "status": "passed"
+      },
+      {
+        "name": "R3-PATH-04/reverse=true | route ID collision still rejects with distinct paths",
+        "status": "passed"
+      },
+      {
+        "name": "R3-PATH-05 | distinct paths compile preserving input and exact strings",
+        "status": "passed"
+      },
+      {
+        "name": "R3-PATH-06 | frozen conflicting inputs stay unchanged and subsequent legal compile works",
+        "status": "passed"
+      }
+    ],
+    "passed": 9,
+    "failed": 0
+  },
+  {
+    "phase": "ui04-independent",
+    "start_time_epoch_ms": 1790938180881,
+    "nodes": [
+      {
+        "name": "R3-UI04-ASCII-01 | module ID with a terminal newline is not a canonical ASCII identifier",
+        "status": "passed"
+      }
+    ],
+    "passed": 1,
+    "failed": 0
+  },
+  {
+    "phase": "storage-build-independent",
+    "start_time_epoch_ms": 1790938307107,
+    "nodes": [
+      {
+        "name": "R3-SET-01 | missing/corrupt/extra-field settings load safe defaults",
+        "status": "passed"
+      },
+      {
+        "name": "R3-SET-02 | valid device settings survive fresh store with no temporary residue",
+        "status": "passed"
+      },
+      {
+        "name": "R3-SET-03 | forbidden secret/extra fields reject before overwriting valid settings",
+        "status": "passed"
+      },
+      {
+        "name": "R3-ZIP-01 | ordinary absent environment preserves compatibility; empty rejects",
+        "status": "passed"
+      },
+      {
+        "name": "R3-ZIP-02 | whitespace/NUL are rejected without silent normalization",
+        "status": "passed"
+      },
+      {
+        "name": "R3-ZIP-03/valid | virtual archive contract is enforced offline",
+        "status": "passed"
+      },
+      {
+        "name": "R3-ZIP-03/missing | virtual archive contract is enforced offline",
+        "status": "passed"
+      },
+      {
+        "name": "R3-ZIP-03/length | virtual archive contract is enforced offline",
+        "status": "passed"
+      },
+      {
+        "name": "R3-ZIP-03/digest | virtual archive contract is enforced offline",
+        "status": "passed"
+      },
+      {
+        "name": "R3-STAGE-01 | allowlist/hash manifest excludes Python caches and metadata; traversal rejected",
+        "status": "passed"
+      },
+      {
+        "name": "R3-STAGE-02/move-old-payload | failed replacement retains complete old/new pair by commit point",
+        "status": "passed"
+      },
+      {
+        "name": "R3-STAGE-02/move-old-manifest | failed replacement retains complete old/new pair by commit point",
+        "status": "passed"
+      },
+      {
+        "name": "R3-STAGE-02/install-new-payload | failed replacement retains complete old/new pair by commit point",
+        "status": "passed"
+      },
+      {
+        "name": "R3-STAGE-02/install-new-manifest | failed replacement retains complete old/new pair by commit point",
+        "status": "passed"
+      },
+      {
+        "name": "R3-STAGE-02/remove-payload-backup | failed replacement retains complete old/new pair by commit point",
+        "status": "passed"
+      },
+      {
+        "name": "R3-STAGE-02/remove-manifest-backup | failed replacement retains complete old/new pair by commit point",
+        "status": "passed"
+      }
+    ],
+    "passed": 16,
+    "failed": 0
+  },
+  {
+    "phase": "remaining-independent",
+    "start_time_epoch_ms": 1790938323677,
+    "nodes": [
+      {
+        "name": "R3-UI-02-LAZY | lazy chunk failure leaves Shell and other navigation available",
+        "status": "failed"
+      }
+    ],
+    "passed": 0,
+    "failed": 1
+  },
+  {
+    "phase": "executor-compat",
+    "start_time_epoch_ms": 1790938102676,
+    "nodes": [
+      {
+        "name": "desktop module registry rejects cross-module identical paths with distinct route IDs (reverse=false)",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects cross-module identical paths with distinct route IDs (reverse=true)",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry accepts the Python canonical Profile grammar and its length boundaries",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant@01\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant@-1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant@1.0\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant@1@2\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily-finance.assistant@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant-name@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant.extra@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"Daily_finance.assistant@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.Assistant@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \" daily_finance.assistant@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant@1 \"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance．assistant@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant＠1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects module and local names longer than 64 ASCII characters",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry strictly intersects compatible Host modules",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects extra fields and every registry conflict without partial output",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects cross-module setting collisions regardless of version/order: {\"schemaVersion\":1,\"reverse\":false}",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects cross-module setting collisions regardless of version/order: {\"schemaVersion\":1,\"reverse\":true}",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects cross-module setting collisions regardless of version/order: {\"schemaVersion\":2,\"reverse\":false}",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects cross-module setting collisions regardless of version/order: {\"schemaVersion\":2,\"reverse\":true}",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects repeated keys within one module with schemaVersion 1",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects repeated keys within one module with schemaVersion 2",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry accepts distinct global keys without changing daily finance or Host intersection",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry does not mutate input or retain seen state after a rejected compilation",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects identical paths within one module with distinct IDs (reverse=false)",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects identical paths within one module with distinct IDs (reverse=true)",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects a path collision in the last route of the last module without output or mutation",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry continues to reject equal route IDs even when paths differ",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry accepts distinct paths and keeps route ID and path namespaces separate",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry preserves input paths exactly without normalizing case or trailing slashes",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry excludes missing Host modules from the compatible registry",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry excludes disabled Host modules from the compatible registry",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry strictly validates ASCII module identifiers without normalization",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry strictly validates ASCII route identifiers without normalization",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry strictly validates ASCII setting identifiers without normalization",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry strictly validates ASCII appearance identifiers without normalization",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects noncanonical SemVer \"01.0.0\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects noncanonical SemVer \"1.01.0\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects noncanonical SemVer \"1.0.01\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects noncanonical SemVer \"1.0\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects noncanonical SemVer \"1.0.0-beta\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects noncanonical SemVer \" 1.0.0\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects noncanonical SemVer \"1.0.0\\n\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects noncanonical SemVer \"１.0.0\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects incompatible or mistyped hostUiMajor 0",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects incompatible or mistyped hostUiMajor 2",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects incompatible or mistyped hostUiMajor \"1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects undeclared nested contribution fields",
+        "status": "passed"
+      }
+    ],
+    "passed": 52,
+    "failed": 0
+  }
+]

@@ -1,0 +1,11 @@
+
+ RUN  v5.0.2 C:/MarisRouteR4/R4-20261002-164600/workspace/apps/desktop
+
+ ✓ tests/unit/registry.test.ts (52 tests) 21ms
+
+ Test Files  1 passed (1)
+      Tests  52 passed (52)
+   Start at  18:48:22
+   Duration  416ms (import 62%, transform 29%, tests 8%, worker 1%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r3/executor-compat/result.json
