@@ -1,0 +1,57 @@
+{
+  "sample": {
+    "caseId": "R4-R1-UI-02-OBSERVED-FAILURE",
+    "stopReason": "fault_hit_alert_missing",
+    "state": {
+      "mockHits": 1,
+      "hash": "#/daily",
+      "alertShown": false,
+      "shellPresent": true,
+      "navigationPresent": true,
+      "agentPanelPresent": true,
+      "contentHasText": true,
+      "publicStatusCount": 1
+    },
+    "calls": {
+      "runtime": 2,
+      "modules": 2,
+      "subscribe": 2,
+      "unsubscribe": 1,
+      "activeSubscriptions": 1
+    },
+    "hostSummary": {
+      "moduleId": "daily_finance",
+      "enabled": true,
+      "profileIds": [
+        "daily_finance.assistant@1"
+      ],
+      "apiPrefixCount": 1,
+      "schemaVersion": 1
+    },
+    "elapsedSinceEntryMs": 5016,
+    "elapsedTotalMs": 5409,
+    "exceededOld200Ms": true,
+    "faultReceipts": [
+      {
+        "stage": "virtual_page_factory_throw",
+        "count": 1,
+        "epochMs": 1790956538349
+      }
+    ],
+    "events": [],
+    "data": "virtual_only"
+  },
+  "cleanup": {
+    "caseId": "R4-R1-UI-02-OBSERVED-FAILURE",
+    "stage": "cleanup",
+    "rootUnmounted": true,
+    "rootEmpty": true,
+    "activeSubscriptions": 0,
+    "subscriptions": 2,
+    "unsubscribe": 2,
+    "domClosed": true,
+    "globalsRestored": true,
+    "events": [],
+    "data": "virtual_only"
+  }
+}

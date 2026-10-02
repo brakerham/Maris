@@ -1,6 +1,9 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收；outbox、设置键、路径缺陷已独立关闭。R5-LAZY修复待独立验收，C12-R4原节点未观测到预设故障提示，尚不能判定原因或关闭LAZY-001。发布C12-R4-R1，只补故障命中/异步完成观察，成功后接续恢复及Windows；产品/包保持不变，P4-B未complete、P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R5修复待验；C12-R4-R1已证实故障factory命中、5秒无错误提示，异常传播终态仍未定位。发布P4-D15最多三项虚拟诊断，停止重复等待/产品启动；LAZY-001未关闭、P4-B未complete、P4-C/D未开始。
+
+- [R4-R1传播阻塞总控核对](docs/p4-c12-r4-r1-propagation-coordinator-review.md)：故障命中，import/loader/Router/DOM终态仍须区分。
+- [P4-D15技术顾问任务](docs/coordination/prompts/p4-d15-lazy-propagation-technical-adviser.md)：有限异常传播诊断，不改产品/旧测试，不打包或启动Electron。
 
 - [C12-R4观察阻塞总控核对](docs/p4-c12-r4-observation-blocked-coordinator-review.md)：原首次失败保留，故障是否触发尚未确认，不新增产品缺陷。
 - [C12-R4-R1观察与续跑任务](docs/coordination/prompts/p4-c12-r4-r1-observation-tester.md)：先观察故障命中，再验证隔离/恢复，不改产品或重打包。

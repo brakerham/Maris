@@ -2,23 +2,23 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12-R4 — lazy隔离独立复验与剩余Windows验收
+- 当前任务：P4-C12-R4-R1 — 可观察故障复验与原R4续跑
 - 状态：`blocked`
-- 最近更新：2026-10-02 23:37 Asia/Shanghai
-- 可修改范围：仅新增r4-*、evidence/r4、新R4报告；旧主报告/清单追加、矩阵B状态备注、自身角色；旧public/r1/r2/r3及产品只读
+- 最近更新：2026-10-03 00:02 Asia/Shanghai
+- 可修改范围：仅新增r4-r1-*、evidence/r4-r1、新R4-R1报告；旧主报告/清单追加、矩阵B状态备注、自身角色；旧public/r1/r2/r3/r4及产品只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
 - 当前步骤：blocked / finished交付并停止
-- 步骤开始时间：2026-10-02 23:37 Asia/Shanghai
-- 最近有效进展：2026-10-02 23:37 Asia/Shanghai
-- 最近心跳：2026-10-02 23:37 Asia/Shanghai
+- 步骤开始时间：2026-10-03 00:02 Asia/Shanghai
+- 最近有效进展：2026-10-03 00:02 Asia/Shanghai
+- 最近心跳：2026-10-03 00:02 Asia/Shanghai
 - 下一检查点：已停止，交总控验收/裁定
 - 等待对象：总控
-- 活动进程或会话：见本轮evidence/r4；目标未启动时产品0/8、辅助0/4
+- 活动进程或会话：无活动session；真实jsdom root已卸载、订阅0，产品0/8、辅助0/4
 - 重试次数：0
-- 最近输出：原1 executed：0passed/1failed，故障alert未观测/原因unverified；终点393=389未变+4授权，0越界/缺失，旧独立82不变，产品0/8、辅助0/4
+- 最近输出：OBS1 failed：mock1、#/daily、5016ms无alert；cleanup rootEmpty/订阅0；410=406未变+4授权，旧独立95保持，产品0/8辅助0/4
 
 ## 任务与后续
 
@@ -39,6 +39,23 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-10-03 00:02 Asia/Shanghai — C12-R4-R1 blocked / finished交付并停止
+
+- [R4-R1报告](../../testing/phase-4-c12-r4-r1-observation-windows-report.md)与24项完整映射交付。新增OBS节点只一次，原四业务要求保留；mock真实命中1但5秒无alert，旧失败不改写、LAZY-001不建议关闭，实际终态原因unverified、不新增已定级P1。\n- 真实root unmount/rootEmpty、订阅2/unsubscribe2/active0、DOM/global清理完成，安全Console/拒绝事件0；所有Vitest已exit1，无活动session。后续恢复/兼容/Windows未执行，产品0/8、辅助0/4、请求注入0。\n- 终点410：406 unchanged+4授权变化，无非授权/missing，旧独立95不变；包/asar/lock/fuses和source389/out140/resources67保持；120ID/12列/原前11列/所有状态/B外bytes/旧文档prefix保持，staged0、diff-check exit0仅LF→CRLF提示。\n- 仅清理本轮cache且验证绝对专属边界无reparse；所有首次log/JSON/回执永久保留，没有外部profile或用户数据/服务操作，没有产品或Git写入。\n- 交总控：在新mock命中证据下裁定有限Router错误终态/传播核对范围。停在blocked / finished，不自行延时/重启/派发角色或P4-C。
+
+
+### 2026-10-02 23:57 Asia/Shanghai — C12-R4-R1 观察节点首次失败，mock已命中但五秒无alert；停止并报告
+
+- 新OBS节点唯一一次，原四业务要求不改；mock factory真实命中1、公开hash #/daily，runtime/modules/subscribe各2（StrictMode）、终态alert在5016ms未出现，首个文本断言失败，其他三断言未进入但DOM采样为true。\n- 不能再将问题直接归于200ms；本次更长条件观察仍未建立预期错误终态。实际错误处理分支/原因待核对，不凭factory一次推断全部Router流程，不新增未经定位产品P1。\n- 清理真实desktopRoot成功、rootEmpty=true、subscribe2/unsubscribe2/active0，DOM关闭/global恢复；所有Vitest已退出，无虚拟控制台/拒绝事件。\n- 按结果分类2停止扩大，后续恢复/兼容/Windows未执行。接下来只读证据、24项报告和终点，不修目标重跑。
+
+
+### 2026-10-02 23:55 Asia/Shanghai — C12-R4-R1 接单与权威新起点通过
+
+- control 2026-10-02T23:46:00+08:00，既有测试唯一负责人；R5稳定输入、旧OUTBOX/setting/PATH不重开。
+- 新起点及外部不可变包输入分开核对，无历史协调漂移误assert。接下来原lazy失败一次，再独立恢复，后续未执行公开/Windows。
+- 原public/r1/r2/r3/r4测试/报告/evidence只读；新增r4输出与自身日志，动态根需要审批且不使用真实AppData。
+
 
 ### 2026-10-02 23:37 Asia/Shanghai — C12-R4 blocked / finished交付并停止
 

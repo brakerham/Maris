@@ -1,0 +1,28 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+stdout | r4-r1-observed.test.tsx > R4-R1-UI-02-OBSERVED-FAILURE | original production entry and four business assertions with observed page fault
+{"caseId":"R4-R1-UI-02-OBSERVED-FAILURE","stopReason":"fault_hit_alert_missing","state":{"mockHits":1,"hash":"#/daily","alertShown":false,"shellPresent":true,"navigationPresent":true,"agentPanelPresent":true,"contentHasText":true,"publicStatusCount":1},"calls":{"runtime":2,"modules":2,"subscribe":2,"unsubscribe":1,"activeSubscriptions":1},"hostSummary":{"moduleId":"daily_finance","enabled":true,"profileIds":["daily_finance.assistant@1"],"apiPrefixCount":1,"schemaVersion":1},"elapsedSinceEntryMs":5016,"elapsedTotalMs":5409,"exceededOld200Ms":true,"faultReceipts":[{"stage":"virtual_page_factory_throw","count":1,"epochMs":1790956538349}],"events":[],"data":"virtual_only"}
+
+stdout | r4-r1-observed.test.tsx > R4-R1-UI-02-OBSERVED-FAILURE | original production entry and four business assertions with observed page fault
+{"caseId":"R4-R1-UI-02-OBSERVED-FAILURE","stage":"cleanup","rootUnmounted":true,"rootEmpty":true,"activeSubscriptions":0,"subscriptions":2,"unsubscribe":2,"domClosed":true,"globalsRestored":true,"events":[],"data":"virtual_only"}
+
+ ❯ r4-r1-observed.test.tsx (1 test | 1 failed) 5425ms
+   × R4-R1-UI-02-OBSERVED-FAILURE | original production entry and four business assertions with observed page fault 5416ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  r4-r1-observed.test.tsx > R4-R1-UI-02-OBSERVED-FAILURE | original production entry and four business assertions with observed page fault
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ r4-r1-observed.test.tsx:35:32
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  23:55:36
+   Duration  6.55s (tests 84%, import 15%, transform 1%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r4-r1/observed-failure/result.json

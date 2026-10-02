@@ -402,3 +402,11 @@ Warning：只读 Git 命令提示用户全局 Git ignore 无读取权限；命�
 - 独立0 passed/1 failed；新增恢复/兼容均not_run。按原失败门禁停止，产品0/8、辅助Electron0/4、Windows chunk注入0；真实Windows/native/人工条件仍未执行。
 - 旧OUTBOX/setting/PATH保持关闭，旧27成功与outbox42不重跑；B仍0 passed/1 failed/19 blocked/4 not_run。原首次代码/报告/evidence保持，当前主报告和清单仅追加。
 - 首次JSON/log在evidence/r4/original-lazy，静态来源/观察限制在readonly-source-observation.json；交总控裁定有限测试观察契约，未改产品或Git。
+
+
+## C12-R4-R1 可观察复验追加（2026-10-02）
+
+- [R4-R1报告](phase-4-c12-r4-r1-observation-windows-report.md)：blocked / finished。新OBS节点一次0 passed/1 failed，确认mock factory1、#/daily，但5016ms仍无alert；Shell/nav/Agent在，原四条要求不降级，旧R4首次失败不改写。
+- 原因不再能直接归于200ms，当前预期错误终态/错误传播原因仍unverified，不新增未经定位产品P1、不建议关闭LAZY-001。真实root卸载/订阅2→0/DOM/global清理有首次回执。
+- 后续独立恢复/兼容/Windows未执行，产品0/8、辅助0/4、chunk注入0；旧已通过outbox/setting/path不重跑。B仍0 passed/1 failed/19 blocked/4 not_run，人工条件保持。
+- 新首次log/JSON与observation-receipts在evidence/r4-r1，原所有资料不变；交总控裁定有限观察/核对范围，不改产品或Git、不自行续跑。

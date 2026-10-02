@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-10-02T23:46:00+08:00`
+- 指令版本：`2026-10-03T00:13:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：C12-R4 blocked/finished已核对：原节点0 passed/1 failed，alert未观测但Shell/nav/Agent采样存在；故障命中/终态未记录，原因unverified，不新增产品缺陷或关闭LAZY-001。393起点389未变/4授权变化，旧测试/包保持。发布C12-R4-R1，仅补故障观察与条件等待，原四条业务断言不降级；通过后同任务接续恢复/Windows。P4-B未complete。
-- 需要用户参与：把 `docs/coordination/prompts/p4-c12-r4-r1-observation-tester.md` 全文发给既有测试智能体。新任务ready/waiting_user、接单unverified；旧R4/执行/顾问停止。无需现在点击窗口；不要求产品返修、重打包或重复微信/已关闭缺陷。
+- 当前动作：C12-R4-R1 blocked/finished核对：mock1、#/daily、5016ms无alert，root/订阅正常收口；410输入406未变/4授权变化，15新增摘要匹配，旧95独立/包不变。异常传播终态未定位，不新增已定级产品缺陷、不关闭LAZY-001。发布D15最多3虚拟诊断，分辨import→实际loader→Router状态→DOM；不再延时重试或打包，P4-B未complete。
+- 需要用户参与：把 `docs/coordination/prompts/p4-d15-lazy-propagation-technical-adviser.md` 全文发给既有技术顾问。D15 ready/waiting_user、接单unverified；测试R4-R1与执行停止。不需要点击窗口，不启动Electron/EXE/sidecar/微信，不重打包。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；远端 `main` 当前为 `251b4a2`，其后的 E5 协调与返修单元只在本地提交，尚未推送。现有远端与本地提交仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 - 前端实现提醒门禁：P4-B Shell 完成独立验收后、创建首个 P4-C 财务驾驶舱技术方案或执行 Prompt 之前，总控必须主动提醒用户进入真实前端界面阶段，并先复核两张既定参考图、高保真信息架构、页面/组件切片、视觉验收方式和模型分工。不得直接沿用 Shell 占位页开始编码；必须让用户先确认当时可用模型及分工策略。当前建议重新评估“强推理/视觉模型（现为 GPT-6 Astra）负责界面方案、复杂交互和关键审阅，编码工作模型（现为 GPT-6 Sol）负责组件实现、重构和常规测试”，模型能力或额度变化时以届时讨论为准。
 
@@ -132,7 +132,8 @@
 | P4-C12-R3 路径复验与剩余Windows | 既有测试智能体；`blocked / finished` | 独立27 passed/1 failed，兼容52 passed；LAZY-001新P1，产品/辅助0次 | 原首次失败和已通过材料只读；停止，等修复快照 |
 | P4-B7-R5-LAZY 模块故障局部隔离与恢复 | 既有执行智能体；`review / finished` | 390源码/7交付/60证据/140产物匹配；132开发回归、新包及19项EXE门禁记录通过；独立输入接受 | 停止产品修改；LAZY-001未关闭，不自行启动后续 |
 | P4-C12-R4 lazy复验与Windows续跑 | 既有测试智能体；`blocked / finished` | 原节点一次0pass/1fail，未观测alert，故障命中未证实；首次记录保留，无新增产品缺陷 | 原任务停止；不重跑覆盖或宣布关闭 |
-| P4-C12-R4-R1 故障观察与原R4续跑 | 既有测试智能体；`ready / waiting_user`，接单unverified | 新增真实入口mock命中回执/5秒条件等待，原四条业务要求；通过后同任务恢复/Windows | 不改产品/旧测试/包；一次观察，不无限等待/重启；P4-B最终接受由总控 |
+| P4-C12-R4-R1 故障观察与原R4续跑 | 既有测试智能体；`blocked / finished` | mock1命中、5秒无alert，异常终态未定位，未新定级缺陷；首次结果保留 | 停止；不得再延时重试/自行恢复Windows |
+| P4-D15 异常传播有限诊断 | 既有技术顾问；`ready / waiting_user`，接单unverified | 静态链与最多3个隔离虚拟探针；每层终态/证据/反证及窄后续建议 | 不改产品/旧测试/依赖，不Electron/EXE/package、不独立关闭或创建后续任务 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |

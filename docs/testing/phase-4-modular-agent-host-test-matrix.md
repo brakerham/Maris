@@ -260,6 +260,13 @@
 - 第一阶段失败即停止：独立0 passed/1 failed，新恢复/兼容not_run，产品0/8、辅助0/4、chunk注入0。B整体仍0 passed/1 failed/19 blocked/4 not_run；UI-02旧failed未关闭，UI-04blocked与人工not_run保持。
 - 旧已通过outbox/setting/path不重跑、不重开。[R4完整报告](phase-4-c12-r4-lazy-windows-report.md)逐项保留预期/历史/本次/缺口。交blocked / finished等待总控裁定观察契约，不修改产品或Git。
 
+
+#### C12-R4-R1 最新状态备注（2026-10-02）
+
+- 新OBS节点一次失败：mock1、#/daily、5016ms无alert，Shell/nav/Agent在，root卸载/订阅0；原四业务要求不降级，旧首次失败保留。
+- 属于结果分类2：故障端口已触发，预期错误终态未观测；LAZY-001/UI-02不关闭，不新增未经定位P1。后续独立/兼容/Windows停止；B0 passed/1 failed/19 blocked/4 not_run保持。
+- 产品0/8、辅助0/4、请求注入0；旧已过节点不重跑。[R4-R1报告](phase-4-c12-r4-r1-observation-windows-report.md)保留24项完整预期/历史/本次/缺口，交blocked / finished等总控裁定。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复

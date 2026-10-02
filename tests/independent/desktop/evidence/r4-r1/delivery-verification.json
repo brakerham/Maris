@@ -1,0 +1,42 @@
+{
+  "matrix_unique_ids": 120,
+  "columns": 12,
+  "all_original_first_11_columns_preserved": true,
+  "all_case_statuses_preserved": true,
+  "outside_b_bytes_preserved": true,
+  "append_files": {
+    "docs/testing/phase-4-c12-windows-shell-report.md": {
+      "prefix_preserved": true,
+      "original_bytes": 34241,
+      "original_sha256": "bac294d8526fab8dcd73fe672bc1e552729493880a2fa0c80f6c477140a14b4b",
+      "appended_bytes": 896
+    },
+    "docs/testing/phase-4-c12-manual-checklist.md": {
+      "prefix_preserved": true,
+      "original_bytes": 12255,
+      "original_sha256": "83b34bebd9b18fdf80fae6b6364d9cdc3a992cae7af7857efe841f14c261ec95",
+      "appended_bytes": 896
+    }
+  },
+  "new_files_sha256": {
+    "docs/testing/phase-4-c12-r4-r1-observation-windows-report.md": "4a3988fdd6f981b061fecbcba9b4a749beae337c0ad759ad97469057c6fc3ec2",
+    "tests/independent/desktop/evidence/r4-r1/baseline.json": "f225e8e8b384dfcf26dfa638f4c91b109afc509bcc33fbfe55ed33450f84b847",
+    "tests/independent/desktop/evidence/r4-r1/diff-check.log": "77b58c58c002627399a26f24ed95806370ef4032178522178de2e49c38c1476a",
+    "tests/independent/desktop/evidence/r4-r1/end-audit.json": "8055d4cd2781a4c4c8d07b36796011562b97726b51f5dbf7dcfa89e50345fec0",
+    "tests/independent/desktop/evidence/r4-r1/node-index.json": "7eec8529bf6dd00f96e50688776056080991f95986ea6d14bef0e21b5f1d5c82",
+    "tests/independent/desktop/evidence/r4-r1/observation-receipts.json": "03df3f3ccecf8a0f15007df33657b1377887b4b73482939cbfe61db27e5eedf5",
+    "tests/independent/desktop/evidence/r4-r1/observed-failure/result.json": "b710db5aa29178f8c9c7b540b7d6b68d3f960c731df8bed0ab9c433b9c91e3b9",
+    "tests/independent/desktop/evidence/r4-r1/observed-failure/run.log": "52e8cde2901083d64802056a9a8f9039a0d67e3cde222a953f958f8ea1862660",
+    "tests/independent/desktop/evidence/r4-r1/start-audit.json": "476d6d66e090e29c09f828201c5d8da1d4f4606e44bf732be5eff08314a5c7b2",
+    "tests/independent/desktop/evidence/r4-r1/temp-cleanup.json": "b757898559d7132d07e2ec1e166cbfb53d056305e1540c18898e3ffcdfb658c8",
+    "tests/independent/desktop/r4-r1-audit.py": "45ab861142bbaf92b87ee26f3e8221f7813960d28c89a077fe23506e022f6f24",
+    "tests/independent/desktop/r4-r1-delivery.py": "60b6a885f94def335a2e4d3c1cc7234b63d9ca4c3fd12a0ed22cf28f6c2313a8",
+    "tests/independent/desktop/r4-r1-handoff.py": "654ae7920bd80f4dea35b4f09b1d3c383809b2df3ad5c19eb1230fd83186dce5",
+    "tests/independent/desktop/r4-r1-observed.test.tsx": "beeb360b01445de4bd570191dbcc3e5fdb5cd2cac37d1dc45e4481288f68d563",
+    "tests/independent/desktop/r4-r1-vitest.config.mjs": "572225c8570de25b679842787d1974913ad1d21aacadf0664355056278435b40"
+  },
+  "product_starts": 0,
+  "auxiliary_starts": 0,
+  "owned_resources": "not_started, not successful cleanup evidence",
+  "git_writes": 0
+}

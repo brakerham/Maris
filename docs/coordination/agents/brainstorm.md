@@ -2,14 +2,23 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：C12-R4首次复验观察阻塞核对及R4-R1观察/续跑任务准备
+- 当前任务：C12-R4-R1传播阻塞核对及P4-D15有限技术诊断准备
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-10-02 23:46，Asia/Shanghai
+- 最近更新：2026-10-03 00:13，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-10-03 00:13 Asia/Shanghai — 故障命中但传播未定位，发布D15
+
+- 总控读取必读、R4-R1任务/报告/实际新测试/原日志回执、产品main/module-routes/Shell与安装mock/Router源码；未运行测试/产品/构建。
+- 新节点一次0pass/1fail，mock1、#/daily、5016ms无alert；root卸载/订阅0。不能再称故障未命中或只需等更久，未新增已定级缺陷、LAZY-001不关闭。
+- 复算410输入406 unchanged、4授权变化，15新增摘要匹配，两份prefix保持；95旧独立规范化Git内容不变、120矩阵原预期/状态保持、EXE/asar匹配。
+- 静态真实loader catch和子errorElement存在，mocker包装异常、Router状态transition只作调查位置，不声称根因。发布D15最多3个虚拟探针：直接import、实际内置loader、实际main/Router状态/DOM。
+- 新任务只改顾问报告/自己日志/专属诊断目录，不产品/旧测试/依赖，不Electron/EXE/package；测试/执行停止，顾问ready/waiting_user、接单unverified。
+- 只读搜索首次glob路径参数和源码行范围错误已定向改为目录/范围读取，未运行目标。保存未验收本地checkpoint；前端参考图与模型策略提醒保持。
 
 ### 2026-10-02 23:46 Asia/Shanghai — 核对R4观察阻塞，补故障命中契约
 
@@ -330,15 +339,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：C12-R4观察阻塞核对完成；R4-R1观察与续跑准备就绪
-- 步骤开始时间：2026-10-02 23:38，Asia/Shanghai
-- 最近有效进展：2026-10-02 23:46，Asia/Shanghai（393边界/13摘要/原失败与故障观察契约）
-- 最近心跳：2026-10-02 23:46，Asia/Shanghai
-- 下一检查点：用户派发R4-R1，测试方核对新起点并记录真实故障命中
-- 等待对象：用户把R4-R1发给既有测试智能体；接单unverified
-- 活动进程或会话：总控未启动产品/测试；旧R4 blocked/finished、R5执行和顾问停止
-- 重试次数：总控未复跑目标；只读摘要编码/台账字段定位各修正一次
-- 最近输出：R4核对、R4-R1 Prompt与新起点，LAZY-001未关闭
+- 当前步骤：R4-R1传播阻塞核对完成；D15技术诊断准备就绪
+- 步骤开始时间：2026-10-03 00:03，Asia/Shanghai
+- 最近有效进展：2026-10-03 00:13，Asia/Shanghai（410边界/15摘要/链路静态检查及D15）
+- 最近心跳：2026-10-03 00:13，Asia/Shanghai
+- 下一检查点：用户派发D15，顾问核对新起点并提交分层传播诊断
+- 等待对象：用户把D15发给既有技术顾问；接单unverified
+- 活动进程或会话：总控未运行产品/测试；测试R4-R1与执行finished停止
+- 重试次数：总控未重跑目标；只读搜索参数与源码范围各修正一次
+- 最近输出：R4-R1核对、D15 Prompt与新起点；LAZY-001未关闭
 
 ### 2026-09-29 02:14 Asia/Shanghai — 接受 DYN-R1 编排失败并发布单次 root promotion 恢复
 
@@ -454,9 +463,9 @@
 
 ## 下一步
 
-1. 用户把 `docs/coordination/prompts/p4-c12-r4-r1-observation-tester.md` 全文发给既有测试智能体；接单unverified。
-2. 测试方绑定新起点，记录真实故障命中，保留原四条业务要求；条件观察通过后同任务续恢复/Windows。
-3. 总控核对新证据，分别判断观察原因、LAZY-001及UI-02/P4-B状态；设备缺口如实保留。
+1. 用户把 `docs/coordination/prompts/p4-d15-lazy-propagation-technical-adviser.md` 全文发给既有技术顾问；接单unverified。
+2. 顾问绑定新起点，静态链/最多三项虚拟探针，分辨import、loader、Router状态与DOM终态，不改产品/旧测试或启动Electron。
+3. 总控依据诊断裁定最小测试接线或产品修复；原失败不改，LAZY-001/UI-02/P4-B不提前关闭。
 4. P4-B独立接受后先触发参考图/模型策略提醒，再规划P4-C。
 
 ### 2026-09-27 23:40 Asia/Shanghai — 接受 E2-R1 最小复现并发布 D13
