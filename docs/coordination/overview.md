@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-03 00:13，Asia/Shanghai
+更新时间：2026-10-03 01:07，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。R4-R1已证实页面故障factory命中，5秒无alert；异常从import到loader/Router/DOM的终态未定位。发布D15有限诊断，暂停测试与执行，不再重复等待/产品启动。LAZY-001未关闭，P4-B未complete、P4-C/D未开始。
+P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。D15直接import和实际loader拒绝链已取得证据；P3生产入口观察硬限且无持久阶段回执，未定位根因。发布D15-R1前置即时取证，测试与执行继续停止，不改产品、不加时或重打包。LAZY-001未关闭，P4-B未complete、P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,8 +13,8 @@ P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。R4-R1已证�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R4-R1证据核对，发布D15诊断 | 2026-10-03 00:13 | 用户派发既有技术顾问 | [核对](../p4-c12-r4-r1-propagation-coordinator-review.md) |
-| 技术顾问 | D14历史已接受；D15 `ready / waiting_user` | 异常传播有限诊断，接单unverified | 2026-10-03 00:13（总控准备） | 新起点/静态链/最多3探针 | [Prompt](prompts/p4-d15-lazy-propagation-technical-adviser.md) |
+| 头脑风暴 | `ready / waiting_user` | D15交付核对，发布前置增量取证 | 2026-10-03 01:07 | 用户派发既有技术顾问 | [核对](../p4-d15-bootstrap-coordinator-review.md) |
+| 技术顾问 | D15 `blocked / finished`；D15-R1 `ready / waiting_user` | 前置阶段journal，接单unverified | 2026-10-03 01:07（总控准备） | 新起点/实际导出/main及act独立终态 | [Prompt](prompts/p4-d15-r1-bootstrap-technical-adviser.md) |
 | 执行智能体 | `review / finished`（R5-LAZY） | 局部隔离/恢复、132回归、新包及19项EXE门禁交付 | 2026-10-02（最终交付已核对） | 停止，等待独立结论 | [运行说明](../b7-r5-lazy-running.md) |
 | 测试智能体 | `blocked / finished`（C12-R4-R1） | mock命中、5秒无alert；恢复/Windows未执行 | 2026-10-03 00:02（交付已核对） | 停止，等待诊断/新裁定 | [报告](../testing/phase-4-c12-r4-r1-observation-windows-report.md) |
 
@@ -116,11 +116,12 @@ P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。R4-R1已证�
 | P4-B7-R5-LAZY：模块错误局部恢复 | 既有执行智能体 | `review / finished` | 稳定独立输入接受；132开发回归、新包及19项EXE门禁已核对 | [核对](../p4-b7-r5-lazy-coordinator-review.md) |
 | P4-C12-R4：lazy复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | 原节点0pass/1fail；故障命中未证实，未新增产品缺陷，Windows0次 | [报告](../testing/phase-4-c12-r4-lazy-windows-report.md) |
 | P4-C12-R4-R1：观察与续跑 | 既有测试智能体 | `blocked / finished` | mock1、#/daily、5016ms无alert；异常终态未定位 | [报告](../testing/phase-4-c12-r4-r1-observation-windows-report.md) |
-| P4-D15：异常传播有限诊断 | 既有技术顾问 | `ready / waiting_user` | 最多3虚拟探针，不改产品/旧测试；终态与窄后续建议 | [Prompt](prompts/p4-d15-lazy-propagation-technical-adviser.md)、[起点](snapshots/p4-d15-start.sha256) |
+| P4-D15：异常传播有限诊断 | 既有技术顾问 | `blocked / finished` | import/默认loader拒绝成立；P3超时无阶段回执，原证据保留 | [报告](../phase-4-d15-lazy-propagation-advice.md)、[总控核对](../p4-d15-bootstrap-coordinator-review.md) |
+| P4-D15-R1：前置阶段取证 | 既有技术顾问 | `ready / waiting_user` | 即时journal定位实际Router导出/main/act等待，真实main最多一次，不加时 | [Prompt](prompts/p4-d15-r1-bootstrap-technical-adviser.md)、[起点](snapshots/p4-d15-r1-start.sha256) |
 
 ## 当前阻塞与风险
 
-- OUTBOX/setting/PATH已独立关闭；LAZY-001待关闭、UI-02 failed/UI-04 blocked保持。R4-R1已证实故障factory，但import/loader/Router/DOM终态未知；D15分层诊断，不把Shell采样或静态catch存在当故障隔离通过。
+- OUTBOX/setting/PATH已独立关闭；LAZY-001待关闭、UI-02 failed/UI-04 blocked保持。D15 P1/P2证实各自实例的import/loader拒绝；P3无持久阶段回执，bootstrap/main/Router/DOM未知。D15-R1先修正观察完整性，不把其他实例或Shell采样当独立通过。
 - 原C12/R1/R2/R3首次失败与通过材料保留，本轮只使用R5新EXE/asar独立复验；真实老化提示、Windows chunk故障恢复及原人工设备项仍待实际证据。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
@@ -145,7 +146,7 @@ P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。R4-R1已证�
 
 ## 下一次总控检查
 
-1. 用户将D15全文发给既有技术顾问；测试与执行停止，顾问接单unverified。
-2. 顾问绑定新起点，静态追踪及最多3项虚拟探针判断异常停止层；不改产品/旧独立测试，不启动Electron/打包。
-3. 总控核对独立报告，决定新P1关闭及P4-B接受；真实原生提示和人工设备缺口如实保留，不重复package。
+1. 用户将D15-R1全文发给既有技术顾问；原D15、测试与执行停止，顾问新任务接单unverified。
+2. 顾问绑定新起点，用即时journal区分worker/setup/mock实际导出/body/main/act等待，不重复P1/P2，不改产品/旧材料，不启动Windows/打包。
+3. 总控根据同一实例持久阶段裁定观察或测试接线、产品返修或新独立复验；根因未定位前不关闭P1或接受P4-B，真实设备缺口保持。
 4. P4-B独立接受后触发高保真参考图/模型策略提醒，再规划P4-C。

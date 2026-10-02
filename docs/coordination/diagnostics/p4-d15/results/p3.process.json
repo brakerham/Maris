@@ -1,0 +1,16 @@
+{
+  "probe": "p3",
+  "invocation": 1,
+  "startedUtc": "2026-10-02T16:32:19.4947188Z",
+  "durationMs": 15051,
+  "exitCode": -1,
+  "timedOut": true,
+  "rootPid": 33224,
+  "rootExited": true,
+  "workerPid": null,
+  "workerExited": null,
+  "stdoutBytes": 26,
+  "stderrBytes": 0,
+  "testTimeoutMs": 10000,
+  "processDeadlineMs": 15000
+}

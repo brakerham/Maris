@@ -1,0 +1,29 @@
+{
+  "warnings": [
+    {
+      "action": "not_required_no_install",
+      "safeError": "optional_top_level_vitest_runner_not_found",
+      "stage": "readonly_package_lookup"
+    },
+    {
+      "action": "read_actual_exports_index_js_no_target_retry",
+      "safeError": "router_index_mjs_not_found",
+      "stage": "readonly_source_lookup"
+    },
+    {
+      "action": "discard_empty_count; use_Get_Process_metadata",
+      "safeError": "CIM_access_denied",
+      "stage": "resource_query"
+    },
+    {
+      "action": "no_git_config_or_write",
+      "safeError": "LF_to_CRLF_warning_for_role",
+      "stage": "git_read_check"
+    }
+  ],
+  "firstTargetStop": "P3_process_deadline_15000ms; root_exit_minus_1; controller_d15_first_nonclean_result_stop",
+  "configurationCorrectionsBeforeTarget": 0,
+  "targetRetries": 0,
+  "phase3Entrypoint": "unverified_no_incremental_receipt",
+  "probeBodyCleanup": "P3_unverified"
+}

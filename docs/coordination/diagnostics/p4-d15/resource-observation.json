@@ -1,0 +1,49 @@
+{
+  "method": "Get-Process metadata read-only",
+  "nodes": [
+    {
+      "pid": 3904,
+      "startUtc": "2026-10-02T13:55:28.8131019Z",
+      "r5NodePath": false,
+      "pathReadable": true
+    },
+    {
+      "pid": 13288,
+      "startUtc": "2026-10-02T13:49:55.1137098Z",
+      "r5NodePath": false,
+      "pathReadable": true
+    },
+    {
+      "pid": 16332,
+      "startUtc": "2026-10-02T14:15:32.6404573Z",
+      "r5NodePath": false,
+      "pathReadable": true
+    },
+    {
+      "pid": 22048,
+      "startUtc": "2026-10-02T13:47:32.9937277Z",
+      "r5NodePath": false,
+      "pathReadable": true
+    },
+    {
+      "pid": 26092,
+      "startUtc": "2026-10-02T13:48:41.2064649Z",
+      "r5NodePath": false,
+      "pathReadable": true
+    },
+    {
+      "pid": 34748,
+      "startUtc": "2026-10-02T16:12:17.3897274Z",
+      "r5NodePath": false,
+      "pathReadable": true
+    },
+    {
+      "pid": 35208,
+      "startUtc": "2026-10-02T16:15:58.9779053Z",
+      "r5NodePath": false,
+      "pathReadable": true
+    }
+  ],
+  "cimEnumeration": "denied; empty collection discarded",
+  "scope": "not full ancestry or commandline proof"
+}

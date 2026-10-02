@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "repositoryInputs": {
+    "total": 429,
+    "matched": 429,
+    "authorizedChanged": [],
+    "unauthorizedChanged": [],
+    "missing": [],
+    "invalid": [],
+    "manifestSha256": "583d21945b0d1e307374f34f4cca04f88fb4d862cad32c2e09844f017b7e43af"
+  },
+  "frozenProbeSource": {
+    "total": 8,
+    "matched": 8,
+    "authorizedChanged": [],
+    "unauthorizedChanged": [],
+    "missing": [],
+    "invalid": [],
+    "manifestSha256": "583897cd18ecc891000f036fddaa802e551f62c8c76c081ca109c66ae7e8a3fd"
+  },
+  "externalBuildSource": {
+    "total": 389,
+    "matched": 389,
+    "authorizedChanged": [],
+    "unauthorizedChanged": [],
+    "missing": [],
+    "invalid": [],
+    "manifestSha256": "8d104d1e84382cb1fe0228618545d0e7585f3f91a2b3f387f067e2e50e148af9"
+  },
+  "externalOut": {
+    "total": 140,
+    "matched": 140,
+    "authorizedChanged": [],
+    "unauthorizedChanged": [],
+    "missing": [],
+    "invalid": [],
+    "manifestSha256": "e73d6d9d9d1906c47fcfc133459fae37afade9c1691de6d165cbe738fa96be19"
+  },
+  "externalPackages": [
+    {
+      "package": "vitest",
+      "version": "5.0.2",
+      "originalShaMatched": true
+    },
+    {
+      "package": "vite",
+      "version": "7.3.6",
+      "originalShaMatched": true
+    },
+    {
+      "package": "react",
+      "version": "19.3.0",
+      "originalShaMatched": true
+    },
+    {
+      "package": "react-dom",
+      "version": "19.3.0",
+      "originalShaMatched": true
+    },
+    {
+      "package": "react-router",
+      "version": "8.4.0",
+      "originalShaMatched": true
+    },
+    {
+      "package": "jsdom",
+      "version": "30.1.1",
+      "originalShaMatched": true
+    },
+    {
+      "package": "@vitest/mocker",
+      "version": "5.0.2",
+      "originalShaMatched": true
+    },
+    {
+      "package": "typescript",
+      "version": "6.0.3",
+      "originalShaMatched": true
+    }
+  ],
+  "nodeOriginalShaMatched": true,
+  "stagedCount": 0,
+  "gitReadExit": 0,
+  "gitReadWarningPresent": true,
+  "scope": "original fixed inputs and fixed external manifests; no full dependency graph acceptance"
+}

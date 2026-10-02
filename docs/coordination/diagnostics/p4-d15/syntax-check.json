@@ -1,0 +1,22 @@
+{
+  "kind": "syntax_only_no_target_execution",
+  "typescriptVersion": "6.0.3",
+  "results": [
+    {
+      "file": "observations.ts",
+      "syntacticErrors": []
+    },
+    {
+      "file": "p1.test.ts",
+      "syntacticErrors": []
+    },
+    {
+      "file": "p2.test.ts",
+      "syntacticErrors": []
+    },
+    {
+      "file": "p3.test.tsx",
+      "syntacticErrors": []
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "completed": false,
+  "actualInvocations": 3,
+  "durationMs": 22663,
+  "sessionDeadlineMs": 60000,
+  "targets": [
+    {
+      "probe": "p1",
+      "invocation": 1,
+      "startedUtc": "2026-10-02T16:32:11.9425542Z",
+      "durationMs": 4069,
+      "exitCode": 0,
+      "timedOut": false,
+      "rootPid": 35224,
+      "rootExited": true,
+      "workerPid": 4008,
+      "workerExited": true,
+      "stdoutBytes": 937,
+      "stderrBytes": 0,
+      "testTimeoutMs": 10000,
+      "processDeadlineMs": 15000
+    },
+    {
+      "probe": "p2",
+      "invocation": 1,
+      "startedUtc": "2026-10-02T16:32:16.0485919Z",
+      "durationMs": 3443,
+      "exitCode": 0,
+      "timedOut": false,
+      "rootPid": 644,
+      "rootExited": true,
+      "workerPid": 36472,
+      "workerExited": true,
+      "stdoutBytes": 976,
+      "stderrBytes": 0,
+      "testTimeoutMs": 10000,
+      "processDeadlineMs": 15000
+    },
+    {
+      "probe": "p3",
+      "invocation": 1,
+      "startedUtc": "2026-10-02T16:32:19.4947188Z",
+      "durationMs": 15051,
+      "exitCode": -1,
+      "timedOut": true,
+      "rootPid": 33224,
+      "rootExited": true,
+      "workerPid": null,
+      "workerExited": null,
+      "stdoutBytes": 26,
+      "stderrBytes": 0,
+      "testTimeoutMs": 10000,
+      "processDeadlineMs": 15000
+    }
+  ],
+  "retries": 0,
+  "productStarts": 0,
+  "electronStarts": 0,
+  "packages": 0
+}

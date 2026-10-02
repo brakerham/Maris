@@ -1,0 +1,54 @@
+{
+  "control": "2026-10-03T00:13:00+08:00",
+  "inputCount": 429,
+  "inputMatched": 429,
+  "inputManifestSha256": "583d21945b0d1e307374f34f4cca04f88fb4d862cad32c2e09844f017b7e43af",
+  "nodeVersion": "v24.21.0",
+  "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+  "packages": [
+    {
+      "package": "vitest",
+      "version": "5.0.2",
+      "packageSha256": "943ddc2cfd3676087e243b5adc450ea8c25ad941ba678b48a679b68f67ef297a"
+    },
+    {
+      "package": "vite",
+      "version": "7.3.6",
+      "packageSha256": "e5ed0f85215f871fe22a48987dcd77fcfbe14064a53c0c9f7f48186a6b7e2cf0"
+    },
+    {
+      "package": "react",
+      "version": "19.3.0",
+      "packageSha256": "6e003e4e9ed25afa7fdd55613f8aa877cefa9b359d9c13f81ee704030248e24e"
+    },
+    {
+      "package": "react-dom",
+      "version": "19.3.0",
+      "packageSha256": "136d4af63de473392ea79d6a21932b0ed9eb37fe518ce70f4621250f3d79e9bb"
+    },
+    {
+      "package": "react-router",
+      "version": "8.4.0",
+      "packageSha256": "41a544b0e3d42034cbef64e7003ce7a7543d863d323c7b4e762a3debd61b90a0"
+    },
+    {
+      "package": "jsdom",
+      "version": "30.1.1",
+      "packageSha256": "72dff7780a7791071ebd9cb219262522fc28d0ce5570c41dc7bb69b2700db067"
+    },
+    {
+      "package": "@vitest/mocker",
+      "version": "5.0.2",
+      "packageSha256": "4aa5d7be7dd8ab783788818a85e7fd4ef5e23e7277f1e2b31dcbe9e385dc031d"
+    },
+    {
+      "package": "typescript",
+      "version": "6.0.3",
+      "packageSha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9"
+    }
+  ],
+  "probeManifestSha256": "583897cd18ecc891000f036fddaa802e551f62c8c76c081ca109c66ae7e8a3fd",
+  "targetInvocations": 0,
+  "staged": 0,
+  "readonlySearchWarning": "optional @vitest/runner top-level package missing; not needed or installed"
+}

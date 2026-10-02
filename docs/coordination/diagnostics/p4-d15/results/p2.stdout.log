@@ -1,0 +1,13 @@
+
+ RUN  v5.0.2 <D15_ROOT>
+
+stdout | p2.test.ts > D15-P2 | actual contribution route and default builtin loader terminal
+{"probe":"p2","data":"virtual_only","workerPid":36472,"workerParentPid":644,"startedEpochMs":1790958739421,"routeTarget":true,"defaultBuiltinLoader":true,"faultHits":1,"faultElapsedMs":[1],"result":{"terminal":"reject","error":{"kind":"Error","safeModuleCode":true,"safeRenderCode":false,"virtualFault":false,"mockWrapper":false,"virtualCause":false}},"bounded":{"observedMs":31,"deadlineMs":5000,"terminalWithinDeadline":true},"timeline":[{"stage":"loader_enter","elapsedMs":0},{"stage":"loader_reject","elapsedMs":1,"detail":{"kind":"Error","safeModuleCode":true,"safeRenderCode":false,"virtualFault":false,"mockWrapper":false,"virtualCause":false}}],"uiStarted":false,"routerStarted":false}
+
+ ✓ p2.test.ts (1 test) 37ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  00:32:17
+   Duration  2.35s (import 93%, transform 5%, tests 2%)
+

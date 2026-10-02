@@ -1,0 +1,47 @@
+{
+  "probe": "p1",
+  "data": "virtual_only",
+  "workerPid": 4008,
+  "workerParentPid": 35224,
+  "startedEpochMs": 1790958735882,
+  "faultHits": 1,
+  "faultElapsedMs": [
+    0
+  ],
+  "result": {
+    "terminal": "reject",
+    "error": {
+      "kind": "Error",
+      "safeModuleCode": false,
+      "safeRenderCode": false,
+      "virtualFault": false,
+      "mockWrapper": true,
+      "virtualCause": true
+    }
+  },
+  "bounded": {
+    "observedMs": 23,
+    "deadlineMs": 5000,
+    "terminalWithinDeadline": true
+  },
+  "timeline": [
+    {
+      "stage": "import_enter",
+      "elapsedMs": 0
+    },
+    {
+      "stage": "import_reject",
+      "elapsedMs": 0,
+      "detail": {
+        "kind": "Error",
+        "safeModuleCode": false,
+        "safeRenderCode": false,
+        "virtualFault": false,
+        "mockWrapper": true,
+        "virtualCause": true
+      }
+    }
+  ],
+  "uiStarted": false,
+  "routerStarted": false
+}

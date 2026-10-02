@@ -2,24 +2,24 @@
 
 - 角色：技术选型咨询、工程教学与教学子任务统筹
 - 连接状态：用户侧边栏独立技术顾问已确认接单
-- 当前任务：P4-D14 — E4-R1 R0 PowerShell driver 恢复裁定
-- 状态：`review`
-- 最近更新：2026-09-28 16:42，Asia/Shanghai
-- 输入版本：control `2026-09-28T16:20:00+08:00`、P4-D14 任务卡、223 文件固定输入及外部 R1 evidence
-- 可修改范围：仅 `docs/phase-4-d14-r0-driver-recovery-advice.md` 与本角色文件；其余项目和外部 evidence 只读，不运行 R0、pnpm、Node probe、package 或产品，不修改 Git
+- 当前任务：P4-D15 — 异常传播链有限诊断
+- 状态：`blocked`
+- 最近更新：2026-10-03 00:54，Asia/Shanghai
+- 输入版本：control `2026-10-03T00:13:00+08:00`、P4-D15 任务卡、429 项固定输入、R4/R4-R1 首次观察与 R5 实际源码
+- 可修改范围：仅 `docs/phase-4-d15-lazy-propagation-advice.md`、本角色文件及 `docs/coordination/diagnostics/p4-d15/**`；产品、旧测试/证据、依赖和外部 R5 根只读。不调用其他智能体，不运行 Electron/EXE/sidecar/package，不修改 Git
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P4-D14 已提交 review 并停止，等待总控冻结 R0-only 合同
-- 步骤开始时间：2026-09-28 16:19 Asia/Shanghai
-- 最近有效进展：2026-09-28 16:42 Asia/Shanghai
-- 最近心跳：2026-09-28 16:42 Asia/Shanghai
-- 下一检查点：总控审阅 P4-D14-F01～F21、config 计数勘误和六项未决决定；没有新指令不继续执行
-- 等待对象：头脑风暴总控审阅与冻结
-- 活动进程或会话：无；未运行 R0 或动态建议代码
+- 当前步骤：D15有限诊断材料已交总控，blocked/finished停止；目标传播归因仍unknown，不再运行或修改
+- 步骤开始时间：2026-10-03 00:54 Asia/Shanghai
+- 最近有效进展：2026-10-03 00:54 Asia/Shanghai
+- 最近心跳：2026-10-03 00:54 Asia/Shanghai
+- 下一检查点：总控审阅两段已证实终态、P3首次超时/取证缺口和唯一下一观察问题；新指令前不继续
+- 等待对象：头脑风暴总控裁定；没有活动目标或外部操作
+- 活动进程或会话：session 25323 已 exit1；P1/P2原生exit0，P3到15秒硬限后Kill(entireProcessTree)并root exit-1；不再启动诊断
 - 重试次数：0
-- 最近输出：D14 交付 677 行；SHA-256 `2c067ded273b3286ec911b19316ec054e8b7f32f8a481815de879d21a962af68`；三个 PowerShell 代码块及内嵌 worker AST 解析 0 errors，运行验证未执行
+- 最近输出：D15文档168行/10主节/43本地链接均有效；文档SHA-256 `0f3792bf8289a7be505aec7f92c2309d8c450bb959fd59f2aa53209fbd2d2895`。429固定输入、8冻结源码、389外部构建source、140out及工具摘要匹配；temp已清理，首次结果保留，staged=0
 
 ## P0-P3-D8 分册进度
 
@@ -45,11 +45,57 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 
 ## 待处理事项
 
-- 总控审阅 D14 的21项建议冻结与6项决定，先修正config计数合同，再决定是否派发R0-only。
-- 后续执行方需验证建议代码的动态参数、双流、退出码、Windows Job、超时与后代收口；D14静态通过不代替这些门禁。
-- R0-ready只能作为另立package-only的证据；当前package/P1/P2/C12继续停止，wrapper与产品不修改。
+- D14 已由总控接受，历史交付只读保留，不重复执行。
+- D15一次性预算已用：P1/P2/P3各1次、0重试，总22.663秒。P1/P2证实真实拒绝链，P3首次硬限无回执，不能修改后重跑或加第4项。
+- 总控决定唯一下一观察问题的前置增量回执合同；尚无充分证据裁定旧测试接线或产品根因，不自行关闭 LAZY-001/UI-02/P4-B或创建后续任务。
 
 ## 工作日志
+
+### 2026-10-03 00:54 Asia/Shanghai — P4-D15 交付blocked/finished并停止
+
+- 状态：`blocked / finished`；有限诊断材料交总控审阅，目标归因仍被P3观察通道缺失阻塞，未冒称review通过/独立验收。
+- 文档：[D15异常传播有限诊断](../../phase-4-d15-lazy-propagation-advice.md)，168行、10主节，SHA-256 `0f3792bf8289a7be505aec7f92c2309d8c450bb959fd59f2aa53209fbd2d2895`；新源码/脱敏首次结果/核对脚本在[专属目录](../diagnostics/p4-d15/probe-plan.md)，逐文件摘要见[delivery.sha256](../diagnostics/p4-d15/delivery.sha256)。
+- 实际次数与终态：P1直接原模块import当毫秒reject、factory1次、wrapper/cause虚拟错误匹配；P2默认内置loader在1msreject并安全映射；P3一次15.051秒进程硬限、无JSON/仅RUN、root实际exit-1。总会话22.663秒，三个CLI各1次、0重试、无第4项；P1/P2的诊断pass不计独立验收案例。
+- 首次失败与卡点：P3只在finally末尾写内存时间线，超时丢失前置事件；不能证明body/观察包装/main到哪一步。不认定Vitest/Router/StrictMode/transition或产品为根因，未利用目标前配置修正例外重跑。
+- 后续唯一问题：生产入口观察通道是否越过实际react-router导出解析并到达main启动入口；总控决定前置阶段增量、安全回执合同，当前不建议产品返修、改旧测试断言或打包。保留四条原断言和全部旧失败证据。
+- 不变核对：[end-audit.json](../diagnostics/p4-d15/end-audit.json)证实429/429固定输入不变，技术顾问角色不在该清单中、授权更新另列；8/8冻结探针源码、外部389/389构建source、140/140out、Node与8个包元数据摘要匹配，staged=0。不宣称完整依赖图新增验收。
+- 机械验证：四TS/MJS/PowerShell语法通过；43本地链接/代码行锚点有效、表格列/尾随空白/敏感模式0、UTF-8无BOM/末尾换行；定向git diff --check无内容错误，仅角色LF→CRLF环境提示。
+- 收口：全部已知root和P1/P2worker退出；Get-Process路径元数据0个固定R5 Node存活。CIM拒绝的空结果弃用，不能声明完整ancestry或P3正常finally；无按名称kill。仅解析绝对专属边界/无reparse后删除temp两文件，首次stdout/stderr/process/session与源码全部保留。
+- 边界：只新增D15文档/专属诊断并更新本人角色。产品/旧测试/证据/矩阵/依赖/外部R5/control/overview/snapshot/其他角色只读；不调用其他智能体，不运行Electron/EXE/sidecar/旧节点/开发回归/package/外部服务/用户点击，不执行Git写操作。
+- 交接与停止：由总控核对交付并决定后续；LAZY-001/UI-02/P4-B不关闭、不创建D15-R1/IF/执行或测试Prompt。技术顾问在本任务停止。
+
+### 2026-10-03 00:47 Asia/Shanghai — P4-D15 文档与unknown裁定里程碑
+
+- 文档：[D15有限传播诊断](../../phase-4-d15-lazy-propagation-advice.md) 已形成10节，包括实际位置/Promise/catch/Outlet、P1/P2明确结果、P3首次超时、假设支持/反证、开发八项与独立入口差异及保留四条原断言。
+- 明确取证缺口：P3阶段事件只存内存，finally末尾才落盘；超时无JSON不能判断body/观察包装/main是否进入，不能证实收集死锁或任何框架/产品根因。不修改冻结探针或追加运行。
+- 唯一后续观察问题：生产入口观察通道是否越过实际react-router导出解析并到达main启动入口；交总控决定前置增量回执合同，当前不建议产品返修或关闭旧缺陷。
+- 资源补证：Get-Process元数据可读，0个可见node使用固定R5 executable；已知root/登记worker均退出，其余node早于本会话、路径不同。CIM拒绝仍保留，不把无效空结果当零残留，不声称P3正常finally/完整ancestry。
+- 新只读搜索警告：Router8实际exports为index.js，猜index.mjs不存在；按package元数据修正读取，不是目标前修正/目标重试。
+- 下一步：核对429固定输入不变（角色授权更新另列）、固定工具/产物、Markdown链接与首次源码摘要，安全清理自有temp，生成逐文件交付摘要；停在blocked/finished。
+
+### 2026-10-03 00:36 Asia/Shanghai — P4-D15 首次结果与动态安全停止
+
+- 一次会话：P1/P2/P3各启动1次、0重试，总22.663秒；P1/P2exit0且worker退出，P3首次无JSON/仅RUN，15.051秒进程硬限，Kill(true)后root实际exit-1；controller按首次非清洁结果exit1。
+- 有效分流：P1 factory1次，import当毫秒reject，Vitest wrapper/cause虚拟错误布尔匹配；P2实际内置loader在1ms reject并转为desktop_module_unavailable。前两项不含Router/UI，不证明P3现场终态。
+- P3限制：无factory/loader/Router/DOM入口或finally回执，不能判断测试是否进入body，不把收集死锁、Router/React或产品当已证实根因。不修后重跑、不加第4项。
+- 资源：已知三个root及P1/P2已登记worker的PID均不存活；只读CIM进程枚举拒绝访问，空结果无效，不声称完整进程树零残留。继续只读核验，未知所有权下不按名称kill。
+- 已安全停止动态部分，保留首次stdout/stderr/process/session；接下来编写因果链、反证及唯一未决观察，交总控，不动产品/旧测试/依赖。
+
+### 2026-10-03 00:32 Asia/Shanghai — P4-D15 静态链与探针冻结里程碑
+
+- 静态：main → DesktopApp → Host交集 → createHashRouter → 真实模块loader → 原DailyFinancePage动态import → 安全catch → 子route errorElement → Shell Outlet。R4-R1未记录factory与实际Promise/Router终态之间的证据；StrictMode/transition/包装异常仅调查位置，尚不定根因。
+- 输入：实际Node24.21.0、Vitest5.0.2、Vite7.3.6、React/React DOM19.3.0、Router8.4.0、jsdom30.1.1；复用R5普通依赖，不安装或改版本。可选@vitest/runner顶层包查询缺失，已保留脱敏说明，不需要它、不安装。
+- 新专属源码：P1直接import、P2默认内置loader、P3真实main+原Router订阅及原Promise旁路观察；预期与8源码摘要在首次目标前固定。四TS/MJS/PowerShell静态语法均通过，未执行目标。
+- 限制：每项一次/观察5秒/test10秒/进程15秒含加载退出，总会话60秒；首次分流结果、双流和真实exit保留。P3观察函数身份和微任务存在时序局限，不能倒推旧现场或替代独立验收。
+- 下一检查点：00:37 收到首次终态与清理证据；无其他智能体/产品/旧测试/外部服务操作。
+
+### 2026-10-03 00:22 Asia/Shanghai — P4-D15 接单与固定起点核对
+
+- 状态：`in_progress / active`；最新 control 00:13 唯一分配既有技术顾问，用户发送任务卡解除 waiting_user。测试 R4-R1 与执行方保持停止。
+- 输入：按顺序读取协作规则、控制文件、本角色与 D15 任务；429/429 起点全部匹配，0 changed/missing/invalid，staged=0；manifest SHA-256 `583d21945b0d1e307374f34f4cca04f88fb4d862cad32c2e09844f017b7e43af`。
+- 固定事实：R4-R1 mock factory 命中1次、5016ms 无 alert；尚缺 import、实际 loader、Router 错误槽及 DOM 提交之间的终态证据，不能把 factory 命中当拒绝已传播。
+- 边界：仅新 D15 文档、本角色、新诊断专属目录；不改产品/旧测试/证据/依赖/控制/快照/其他角色，不调用其他智能体，不打包/启动产品或操作 Git。
+- 下一检查点：00:32 静态因果链与至多三项一次性探针设计；达到里程碑及时更新，不延时重试旧节点。
 
 ### 2026-09-28 16:42 Asia/Shanghai — P4-D14 提交 review 并停止
 

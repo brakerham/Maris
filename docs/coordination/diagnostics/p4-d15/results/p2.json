@@ -1,0 +1,49 @@
+{
+  "probe": "p2",
+  "data": "virtual_only",
+  "workerPid": 36472,
+  "workerParentPid": 644,
+  "startedEpochMs": 1790958739421,
+  "routeTarget": true,
+  "defaultBuiltinLoader": true,
+  "faultHits": 1,
+  "faultElapsedMs": [
+    1
+  ],
+  "result": {
+    "terminal": "reject",
+    "error": {
+      "kind": "Error",
+      "safeModuleCode": true,
+      "safeRenderCode": false,
+      "virtualFault": false,
+      "mockWrapper": false,
+      "virtualCause": false
+    }
+  },
+  "bounded": {
+    "observedMs": 31,
+    "deadlineMs": 5000,
+    "terminalWithinDeadline": true
+  },
+  "timeline": [
+    {
+      "stage": "loader_enter",
+      "elapsedMs": 0
+    },
+    {
+      "stage": "loader_reject",
+      "elapsedMs": 1,
+      "detail": {
+        "kind": "Error",
+        "safeModuleCode": true,
+        "safeRenderCode": false,
+        "virtualFault": false,
+        "mockWrapper": false,
+        "virtualCause": false
+      }
+    }
+  ],
+  "uiStarted": false,
+  "routerStarted": false
+}

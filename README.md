@@ -1,6 +1,9 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R5修复待验；C12-R4-R1已证实故障factory命中、5秒无错误提示，异常传播终态仍未定位。发布P4-D15最多三项虚拟诊断，停止重复等待/产品启动；LAZY-001未关闭、P4-B未complete、P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。D15已证实直接import拒绝和实际默认loader安全映射；生产入口探针硬限前没有持久阶段回执，根因仍未知。发布D15-R1即时前置取证，先定位观察通道的等待位置；不改产品、不加时或重打包。LAZY-001未关闭、P4-B未complete、P4-C/D未开始。
+
+- [D15交付总控核对](docs/p4-d15-bootstrap-coordinator-review.md)：429输入、31交付、8冻结源码匹配；P3证据与资源限制保留。
+- [D15-R1技术顾问任务](docs/coordination/prompts/p4-d15-r1-bootstrap-technical-adviser.md)：worker/真实Router导出/main/act分阶段即时记录，不重复P1/P2或独立验收。
 
 - [R4-R1传播阻塞总控核对](docs/p4-c12-r4-r1-propagation-coordinator-review.md)：故障命中，import/loader/Router/DOM终态仍须区分。
 - [P4-D15技术顾问任务](docs/coordination/prompts/p4-d15-lazy-propagation-technical-adviser.md)：有限异常传播诊断，不改产品/旧测试，不打包或启动Electron。
