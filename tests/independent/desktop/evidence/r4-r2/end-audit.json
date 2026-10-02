@@ -1,0 +1,42 @@
+{
+  "entries": 507,
+  "unchanged": 503,
+  "authorizedChanged": [
+    "docs/coordination/agents/tester.md",
+    "docs/testing/phase-4-c12-manual-checklist.md",
+    "docs/testing/phase-4-c12-windows-shell-report.md",
+    "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+  ],
+  "unauthorizedMismatch": [],
+  "missing": [],
+  "stagedPaths": [],
+  "manifestSha256": "fac063506c7aa11be925655b7001a0493c93d172bccb9a2e749544d687faa2b0",
+  "artifacts": {
+    "apps/desktop/out/Maris-win32-x64/Maris.exe": "64ce71f3a7b3055f9ad27f6d611e28c4af7e9ba8b86d8b21399b7b422844a80e",
+    "apps/desktop/out/Maris-win32-x64/resources/app.asar": "5ba47909537e1419dc275fa3ca1e5e076a1aa6d5c0205229f91defb92ddd0931",
+    "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+  },
+  "fuses": {
+    "version": 1,
+    "wire": [
+      48,
+      49,
+      48,
+      48,
+      49,
+      49,
+      48,
+      49,
+      49
+    ]
+  },
+  "packageInputsMatched": {
+    "source": 389,
+    "out": 140,
+    "resources": 67
+  },
+  "oldIndependentFilesUnchanged": 110,
+  "oldD15DiagnosticFilesUnchanged": 69,
+  "frozenColdSourceFilesMatched": 11,
+  "fixedDependencyMetadataMatched": 7
+}

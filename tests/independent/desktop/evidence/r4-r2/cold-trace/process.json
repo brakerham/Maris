@@ -1,0 +1,47 @@
+{
+  "phase": "cold-trace",
+  "invocation": 1,
+  "startedUtc": "2026-10-02T19:34:50.9610088+00:00",
+  "rootPid": 30912,
+  "rootExited": true,
+  "rootExitCode": 1,
+  "workerPid": 28308,
+  "workerParentVerified": true,
+  "workerExited": true,
+  "workerExitEventCount": 0,
+  "timedOut": false,
+  "forcedRootTermination": false,
+  "forcedWorkerTermination": false,
+  "streamsComplete": true,
+  "durationMs": 7623,
+  "processDeadlineMs": 15000,
+  "testTimeoutMs": 10000,
+  "sessionDeadlineMs": 60000,
+  "mainImportRequests": 1,
+  "lastWorkerStage": "body_finished",
+  "journalSequenceValid": true,
+  "failureCode": null,
+  "safeFailure": null,
+  "streams": [
+    {
+      "stream": "stdout",
+      "rawBytes": 78,
+      "savedBytes": 78,
+      "redactedLines": 0,
+      "complete": true
+    },
+    {
+      "stream": "stderr",
+      "rawBytes": 0,
+      "savedBytes": 0,
+      "redactedLines": 0,
+      "complete": true
+    }
+  ],
+  "totalCliInvocationsThisPhase": 1,
+  "correctionBudgetUsed": 0,
+  "cleanupEvidenceScope": "owned_root_and_registered_worker_only",
+  "electronStarts": 0,
+  "servicesStarted": 0,
+  "packages": 0
+}

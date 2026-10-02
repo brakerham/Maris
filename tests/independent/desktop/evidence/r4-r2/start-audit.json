@@ -1,0 +1,48 @@
+{
+  "entries": 507,
+  "matched": 507,
+  "mismatch": [],
+  "missing": [],
+  "manifest_sha256": "fac063506c7aa11be925655b7001a0493c93d172bccb9a2e749544d687faa2b0",
+  "source": {
+    "entries": 389,
+    "matched": 389,
+    "mismatch": [],
+    "missing": [],
+    "manifest_sha256": "8d104d1e84382cb1fe0228618545d0e7585f3f91a2b3f387f067e2e50e148af9"
+  },
+  "out": {
+    "entries": 140,
+    "matched": 140,
+    "mismatch": [],
+    "missing": [],
+    "manifest_sha256": "e73d6d9d9d1906c47fcfc133459fae37afade9c1691de6d165cbe738fa96be19"
+  },
+  "resources": {
+    "entries": 67,
+    "matched": 67,
+    "mismatch": [],
+    "missing": [],
+    "manifest_sha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1"
+  },
+  "artifacts": {
+    "apps/desktop/out/Maris-win32-x64/Maris.exe": "64ce71f3a7b3055f9ad27f6d611e28c4af7e9ba8b86d8b21399b7b422844a80e",
+    "apps/desktop/out/Maris-win32-x64/resources/app.asar": "5ba47909537e1419dc275fa3ca1e5e076a1aa6d5c0205229f91defb92ddd0931",
+    "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+  },
+  "fuses": {
+    "version": 1,
+    "wire": [
+      48,
+      49,
+      48,
+      48,
+      49,
+      49,
+      48,
+      49,
+      49
+    ]
+  },
+  "staged_paths": []
+}

@@ -1,0 +1,34 @@
+{
+  "startTime": 1790969691549,
+  "endTime": 1790969698491,
+  "numTotalTests": 1,
+  "numPassedTests": 0,
+  "numFailedTests": 1,
+  "numPendingTests": 0,
+  "moduleErrorCount": 0,
+  "unhandledErrorCount": 0,
+  "nodes": [
+    {
+      "name": "R4-R2-UI-02-COLD-TRACE | cold actual main, original page fault and four assertions",
+      "status": "failed",
+      "durationMs": 5601.6854,
+      "errorCount": 3,
+      "errors": [
+        {
+          "kind": "AssertionError",
+          "timeout": false
+        },
+        {
+          "kind": "AssertionError",
+          "timeout": false
+        },
+        {
+          "kind": "AssertionError",
+          "timeout": false
+        }
+      ]
+    }
+  ],
+  "data": "virtual_only",
+  "rawExceptionTextRecorded": false
+}

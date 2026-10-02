@@ -1,0 +1,37 @@
+{
+  "independentExecuted": 1,
+  "passed": 0,
+  "failed": 1,
+  "nodes": [
+    {
+      "name": "R4-R2-UI-02-COLD-TRACE | cold actual main, original page fault and four assertions",
+      "status": "failed",
+      "durationMs": 5601.6854,
+      "errorCount": 3,
+      "errors": [
+        {
+          "kind": "AssertionError",
+          "timeout": false
+        },
+        {
+          "kind": "AssertionError",
+          "timeout": false
+        },
+        {
+          "kind": "AssertionError",
+          "timeout": false
+        }
+      ]
+    }
+  ],
+  "B": "not_run",
+  "recoveryExecuted": 0,
+  "executorCompatibilityExecuted": 0,
+  "vitestCliStarts": 1,
+  "actualMainRequests": 1,
+  "preMainCorrectionWorkers": 0,
+  "nativeStaticFormatCorrections": 1,
+  "productStarts": 0,
+  "auxiliaryStarts": 0,
+  "chunkRequestInjections": 0
+}

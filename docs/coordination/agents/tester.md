@@ -2,23 +2,23 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12-R4-R1 — 可观察故障复验与原R4续跑
+- 当前任务：P4-C12-R4-R2 — 冷入口传播复验与原R4续跑
 - 状态：`blocked`
-- 最近更新：2026-10-03 00:02 Asia/Shanghai
-- 可修改范围：仅新增r4-r1-*、evidence/r4-r1、新R4-R1报告；旧主报告/清单追加、矩阵B状态备注、自身角色；旧public/r1/r2/r3/r4及产品只读
+- 最近更新：2026-10-03 03:43 Asia/Shanghai
+- 可修改范围：仅新增r4-r2-*、evidence/r4-r2、新R4-R2报告；旧主报告/清单追加、矩阵B状态备注、自身角色；旧public/r1/r2/r3/r4及产品只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
 - 当前步骤：blocked / finished交付并停止
-- 步骤开始时间：2026-10-03 00:02 Asia/Shanghai
-- 最近有效进展：2026-10-03 00:02 Asia/Shanghai
-- 最近心跳：2026-10-03 00:02 Asia/Shanghai
+- 步骤开始时间：2026-10-03 03:43 Asia/Shanghai
+- 最近有效进展：2026-10-03 03:43 Asia/Shanghai
+- 最近心跳：2026-10-03 03:43 Asia/Shanghai
 - 下一检查点：已停止，交总控验收/裁定
 - 等待对象：总控
-- 活动进程或会话：无活动session；真实jsdom root已卸载、订阅0，产品0/8、辅助0/4
+- 活动进程或会话：无活动目标/session；自有CLI30912与登记worker28308已结束；系统后代枚举unverified；产品0/8、辅助0/4
 - 重试次数：0
-- 最近输出：OBS1 failed：mock1、#/daily、5016ms无alert；cleanup rootEmpty/订阅0；410=406未变+4授权，旧独立95保持，产品0/8辅助0/4
+- 最近输出：A1 failed；34记录定位取消reject与活跃resolve，B/后续not_run；507终点503保持+4授权，37交付；110旧独立/69旧D15/11冷源码/7包元数据保持；资源CLI/worker结束，系统枚举unverified，待总控review
 
 ## 任务与后续
 
@@ -39,6 +39,44 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-10-03 03:43 Asia/Shanghai — C12-R4-R2 blocked / finished交付并停止
+
+- [R2独立报告](../../testing/phase-4-c12-r4-r2-cold-entry-windows-report.md)与24项完整原预期/历史/本轮/缺口已交付；原四断言实际执行：alert failed、Shell/nav/Agent passed，A节点整体failed，不关闭LAZY-001。
+- 冷main/act完成，原factory1命中，同Router有效尝试resolved且错误槽0；取消请求的safe reject不能认定当前产品缺陷。需总控裁定有效请求故障接线，第二次import解析机制待核实，不建议延时/预热/bootstrap/打包或自行返修。
+- A一次CLI exit1正常7623ms、main1、目标重试0、额外前置worker0；普通静态ESM格式修正1首次保留。B、独立恢复、开发兼容、Windows未执行，产品0/8辅助0/4注入0。
+- 实际root/观察/bridge订阅清理；自有CLI30912和登记worker28308结束，worker退出码unknown，系统枚举CimException不能宣称全树0。仅清理本轮cache1文件，首次证据保留。
+- 交付新增r4-r2测试/观察工具/evidence、新报告、旧报告/清单只追加、矩阵B仅备注；终点实测507=503保持+4授权，固定包及389/140/67、120ID/12列/原前11列/状态/非B字节/原文prefix由终点工具实测通过；110旧独立/69旧D15诊断文件不变，11冷入口源码与7包元数据保持，37项交付独立复核。diff-check exit0仅Git环境warning，staged0。无产品、Git或其他角色修改。
+- stopped，等待总控review；终点/交付复算完成后保持停止，不扩大测试/启动产品或下个任务。
+
+
+### 2026-10-03 03:35 Asia/Shanghai — C12-R4-R2 A首次失败，已停止扩大；同实例取消尝试与成功尝试已区分
+
+- 同一Router两次目标loader；原factory1命中，attempt1先abort后safe reject；attempt2未abort且resolved，当前目标match/idle/errors0，不将旧请求reject补签成活跃错误。
+- 四业务断言全部实际执行：alert失败，Shell/nav/Agent通过；活跃错误槽及有效reject两项附加关联断言失败。没有新定级P0/P1，LAZY-001未关闭。
+- 真root已unmount、观察已退订、bridge2进2出/active0；CLI与登记worker都结束，无强制收口，后续只做报告/追加/矩阵B备注和起终核对。
+
+
+### 2026-10-03 03:34 Asia/Shanghai — C12-R4-R2 静态通过并冻结，执行唯一一次冷main观察A
+
+- 507起点/389源/140out/67资源匹配；普通固定Node及7包版本核对。
+- 静态工具首次Windows路径格式错误已保存源码与脱敏类型，改为file URL；没有目标、worker或main启动，不是业务重跑。
+- 即将A一次：5秒条件观察/test10秒/CLI15秒，双流与同步journal、真实exit、自有root和journal worker收口；A失败即B/恢复/兼容/Windows未执行。
+
+
+### 2026-10-03 03:33 Asia/Shanghai — C12-R4-R2 同步观察源码与冷入口配置准备，静态核对后冻结
+
+- 保留原main/默认loader/StrictMode/空hash/factory；A同步透传门面只增监听与loader函数身份，B直接真实包。
+- 原生setup先于模块收集同步journal；controller沿用已经证实的ReadWrite共享读取，只保存安全JSON/双流和自有PID，不执行旧诊断。
+- 下一检查点：静态解析/alias无循环/单包元数据、冻结新源码，然后A唯一一次，失败不进入B。
+
+
+### 2026-10-03 03:27 Asia/Shanghai — C12-R4-R2 接单与权威新起点通过
+
+- control 2026-10-03T03:16:00+08:00，既有测试唯一负责人；R5稳定输入、旧OUTBOX/setting/PATH不重开。
+- 新起点及外部不可变包输入分开核对，无历史协调漂移误assert。接下来A同步门面冷main一次；A通过后B无门面冷main一次，两者通过才进入独立恢复/Windows。
+- 原public/r1/r2/r3/r4/r4-r1和D15/D15-R1全部只读；新增r4输出与自身日志，动态根需要审批且不使用真实AppData。
+
 
 ### 2026-10-03 00:02 Asia/Shanghai — C12-R4-R1 blocked / finished交付并停止
 

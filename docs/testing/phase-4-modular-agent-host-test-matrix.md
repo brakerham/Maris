@@ -267,6 +267,13 @@
 - 属于结果分类2：故障端口已触发，预期错误终态未观测；LAZY-001/UI-02不关闭，不新增未经定位P1。后续独立/兼容/Windows停止；B0 passed/1 failed/19 blocked/4 not_run保持。
 - 产品0/8、辅助0/4、请求注入0；旧已过节点不重跑。[R4-R1报告](phase-4-c12-r4-r1-observation-windows-report.md)保留24项完整预期/历史/本次/缺口，交blocked / finished等总控裁定。
 
+
+#### C12-R4-R2 冷入口最新状态备注（2026-10-03）
+
+- [R2完整报告](phase-4-c12-r4-r2-cold-entry-windows-report.md)：A唯一一次0 passed/1 failed；main/act完成，Router1目标attempt1先abort后安全reject，attempt2未abort且resolve，活跃target match/idle/errors0，DOM无alert，Shell/nav/Agent三断言通过。取消错误不补签活跃目标；LAZY-001不关闭，无新增已定级产品缺陷。
+- B无门面节点及恢复/剩余公开/兼容/Windows均not_run；产品0/8、辅助0/4、实际注入0，旧成功证据只读沿用。B仍0 passed/1 failed/19 blocked/4 not_run，A64 passed/C20/D12 not_run及所有原预期保持。
+- 原四要求全部保留，首次A/旧R4/R4-R1与D15材料不改；真实root、观察、bridge已收口，已登记CLI/worker结束；系统枚举权限错误保持unverified。交blocked / finished等总控针对有效请求故障接线裁定，不自动续跑。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复

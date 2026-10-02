@@ -410,3 +410,11 @@ Warning：只读 Git 命令提示用户全局 Git ignore 无读取权限；命�
 - 原因不再能直接归于200ms，当前预期错误终态/错误传播原因仍unverified，不新增未经定位产品P1、不建议关闭LAZY-001。真实root卸载/订阅2→0/DOM/global清理有首次回执。
 - 后续独立恢复/兼容/Windows未执行，产品0/8、辅助0/4、chunk注入0；旧已通过outbox/setting/path不重跑。B仍0 passed/1 failed/19 blocked/4 not_run，人工条件保持。
 - 新首次log/JSON与observation-receipts在evidence/r4-r1，原所有资料不变；交总控裁定有限观察/核对范围，不改产品或Git、不自行续跑。
+
+
+## C12-R4-R2 冷入口复验追加（2026-10-03）
+
+- [R2独立报告](phase-4-c12-r4-r2-cold-entry-windows-report.md)：blocked / finished；A唯一一次0 passed/1 failed，B及后续not_run，LAZY-001未关闭。
+- main/act完成，同一Router1的attempt1被取消后安全拒绝、attempt2未取消成功resolve，活跃目标idle/errors0，无alert；Shell/nav/Agent三断言通过，不能把取消错误补签为当前有效请求故障。
+- 本次未建立活跃请求错误前置，不新增已定级产品P0/P1；第二次import解析原因仍unverified，交总控裁定测试接线。不继续延时/预热/重打包，不重跑首次结果。
+- 产品0/8、辅助0/4、chunk注入0；系统枚举CimException明确未核实全树，已登记CLI/worker结束、真实root及订阅清理有记录。旧证据和24项原要求保持，人工条件不要求现在操作。

@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-03T03:37:08.9663644+08:00",
+  "ownedRootPid": 30912,
+  "registeredWorkerPid": 28308,
+  "rootGone": true,
+  "workerGone": true,
+  "childEnumerationVerified": false,
+  "directOwnedParentChildren": [],
+  "limitation": "only explicitly created CLI and journal-registered worker plus current direct-child parent references; not a historical full process census",
+  "safeErrorKind": "CimException"
+}

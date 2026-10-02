@@ -1,0 +1,34 @@
+{
+  "matrixUniqueIds": 120,
+  "columns": 12,
+  "firstElevenColumnsPreserved": true,
+  "allStatusesPreserved": true,
+  "outsideBBytesPreserved": true,
+  "appendFiles": {
+    "docs/testing/phase-4-c12-windows-shell-report.md": {
+      "prefixPreserved": true,
+      "originalBytes": 35137,
+      "appendedBytes": 885
+    },
+    "docs/testing/phase-4-c12-manual-checklist.md": {
+      "prefixPreserved": true,
+      "originalBytes": 13151,
+      "appendedBytes": 885
+    }
+  },
+  "reportFullCaseMappings": 24,
+  "A": "failed",
+  "B": "not_run",
+  "vitestCliStarts": 1,
+  "mainRequests": 1,
+  "targetRetries": 0,
+  "preMainCorrectionWorkers": 0,
+  "nativeStaticFormatCorrections": 1,
+  "productStarts": 0,
+  "auxiliaryStarts": 0,
+  "chunkInjections": 0,
+  "gitWrites": 0,
+  "diffCheckExitCode": 0,
+  "gitWarning": true,
+  "resourceScope": "owned CLI and journal worker exited; DOM/observer/bridge cleaned; OS enumeration unverified"
+}

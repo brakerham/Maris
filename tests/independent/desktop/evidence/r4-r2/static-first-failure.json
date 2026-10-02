@@ -1,0 +1,10 @@
+{
+  "stage": "native_static_verifier_import",
+  "kind": "Error",
+  "code": "ERR_UNSUPPORTED_ESM_URL_SCHEME",
+  "mainStarts": 0,
+  "vitestCliStarts": 0,
+  "workers": 0,
+  "firstSourceSha256": "fd514227f2f5da381282dfd3d47de44511e0fcf73efec9ce26319a06b6327301",
+  "fix": "native ESM TypeScript import uses file URL"
+}

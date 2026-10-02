@@ -1,0 +1,99 @@
+{
+  "caseId": "R4-R2-UI-02-COLD-TRACE",
+  "classification": "cancelled_attempt_rejected_live_attempt_resolved_no_active_error",
+  "events": 34,
+  "mainResolved": true,
+  "actReturned": true,
+  "routerInstances": 1,
+  "factoryHits": 1,
+  "attempts": [
+    {
+      "routerSeq": 1,
+      "attemptSeq": 1,
+      "aborted": true,
+      "terminal": "rejected",
+      "safeModuleCode": true
+    },
+    {
+      "routerSeq": 1,
+      "attemptSeq": 2,
+      "aborted": false,
+      "terminal": "resolved"
+    }
+  ],
+  "activeRouterTerminal": {
+    "seq": 25,
+    "elapsedMs": 1744.2627,
+    "stage": "router_state",
+    "pid": 28308,
+    "parentPid": 30912,
+    "routerSeq": 1,
+    "active": true,
+    "initialized": true,
+    "navigation": "idle",
+    "targetMatch": true,
+    "targetError": false,
+    "safeModuleCode": false,
+    "errorCount": 0
+  },
+  "dom": {
+    "seq": 27,
+    "elapsedMs": 6737.8634,
+    "stage": "observation_finished",
+    "pid": 28308,
+    "parentPid": 30912,
+    "mockHits": 1,
+    "alertShown": false,
+    "alertTextSafe": false,
+    "shellPresent": true,
+    "navigationPresent": true,
+    "agentPanelPresent": true,
+    "dailyHash": true,
+    "traceEnabled": true,
+    "routerSeq": 1,
+    "activeTargetError": false,
+    "observationMs": 5013.5722000000005
+  },
+  "cleanup": {
+    "seq": 33,
+    "elapsedMs": 6772.1485,
+    "stage": "dom_globals_restored",
+    "pid": 28308,
+    "parentPid": 30912,
+    "rootEmpty": true,
+    "globalsRestored": true,
+    "domClosed": true,
+    "rootUnmounted": true,
+    "runtimeCalls": 2,
+    "moduleCalls": 2,
+    "subscriptions": 2,
+    "unsubscribe": 2,
+    "activeBridgeSubscriptions": 0,
+    "settingsWrites": 0
+  },
+  "originalFourAssertions": {
+    "alert": "failed",
+    "shell": "passed",
+    "navigation": "passed",
+    "agentPanel": "passed"
+  },
+  "additionalFailedAssertions": [
+    "active target error slot",
+    "unaborted active attempt safely rejected"
+  ],
+  "additionalPassedAssertions": [
+    "factory hit",
+    "router initialized",
+    "navigation idle",
+    "root empty",
+    "globals restored",
+    "bridge subscriptions zero"
+  ],
+  "productDefectNewlyGraded": false,
+  "lazy001ClosureSuggested": false,
+  "secondImportResolutionMechanism": "unverified",
+  "B": "not_run",
+  "recovery": "not_run",
+  "compatibility": "not_run",
+  "windows": "not_run"
+}

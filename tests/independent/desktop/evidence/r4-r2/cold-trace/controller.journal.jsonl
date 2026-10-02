@@ -1,0 +1,5 @@
+{"seq":1,"stage":"controller_ready","elapsedMs":14,"testTimeoutMs":10000,"processDeadlineMs":15000,"collectionReserveMs":500,"sessionDeadlineMs":60000,"correctionBudgetUsed":0,"mainBudget":1}
+{"seq":2,"stage":"root_started","elapsedMs":55,"rootPid":30912}
+{"seq":3,"stage":"worker_registered","elapsedMs":757,"ownershipVerified":true,"workerPid":28308,"parentPid":30912}
+{"seq":4,"stage":"exit_checked","elapsedMs":7576,"rootExited":true,"workerRegistered":true,"workerExited":true}
+{"seq":5,"stage":"controller_finished","elapsedMs":7629,"durationMs":7629,"mainImportRequests":1}
