@@ -1,0 +1,11 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+ ✓ public-boundaries.test.ts (11 tests | 1 skipped) 13ms
+
+ Test Files  1 passed (1)
+      Tests  10 passed | 1 skipped (11)
+   Start at  23:52:05
+   Duration  384ms (import 73%, transform 21%, tests 4%, worker 1%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r1/remaining-original/result.json

@@ -2,25 +2,27 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12 — Windows Shell 独立验收
+- 当前任务：P4-C12-R1 — outbox 独立复验与剩余 Windows Shell 验收
 - 状态：`blocked`
-- 最近更新：2026-10-01 15:23，Asia/Shanghai
+- 最近更新：2026-10-02 10:57 Asia/Shanghai
 - 可修改范围：新 `tests/independent/desktop/**`、C12 报告与人工清单、P4-B 矩阵状态和必要证据备注、本状态文件；产品与执行方文件只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：C12 blocked / finished；P1 复现、24 项状态、报告、人工清单及边界证据已交付，停止
-- 步骤开始时间：2026-10-01 15:23 Asia/Shanghai
-- 最近有效进展：2026-10-01 15:23 Asia/Shanghai
-- 最近心跳：2026-10-01 15:23 Asia/Shanghai
-- 下一检查点：等待总控确认缺陷并提供新返修/复验任务；本任务不自动继续
-- 等待对象：总控；P4-C12-OUTBOX-001（P1）未解决
-- 活动进程或会话：无；独立 Vitest 已退出 1；产品启动次数 0/8，无外部 profile/Host/窗口/端口
-- 重试次数：0；没有重跑失败或重新 package
-- 最近输出：独立节点 10 passed、1 failed；P4-B 0 passed、1 failed、19 blocked、4 not_run；终点 276 unchanged/1 授权变化/0 非授权 mismatch/0 missing，staged 0
+- 当前步骤：C12-R1 blocked / finished已交付；建议关闭旧OUTBOX-001，新REGISTRY-001等待总控，停止
+- 步骤开始时间：2026-10-01 23:51 Asia/Shanghai
+- 最近有效进展：2026-10-02 10:57 Asia/Shanghai
+- 最近心跳：2026-10-02 10:57 Asia/Shanghai
+- 下一检查点：等待总控确认缺陷/新快照/后续任务；不自动继续
+- 等待对象：总控裁定P4-C12-R1-REGISTRY-001返修与新快照；本任务停止测试扩展
+- 活动进程或会话：无；所有Vitest已退出，产品0/8、辅助Electron0/4，无owned Host/窗口/端口或新外部profile
+- 重试次数：0
+- 最近输出：独立60 executed（59 passed/1 failed）、执行方27 passed；292 unchanged/4授权变化/0非授权差异/0missing，原8项不变，staged0
 
 ## 任务与后续
+
+- P4-C12-R1交付 [R1报告](../../testing/phase-4-c12-r1-outbox-windows-report.md)、原报告/人工清单追加、P4-B状态及 `tests/independent/desktop/evidence/r1/`；原OUTBOX-001建议关闭，新REGISTRY-001为P1，停在blocked / finished。真实Windows/老化原生提示未执行，不能宣布SUP-06或P4-B通过。
 
 - P4-C12 交付 [独立报告](../../testing/phase-4-c12-windows-shell-report.md)、[人工清单](../../testing/phase-4-c12-manual-checklist.md)、[P4-B 状态](../../testing/phase-4-modular-agent-host-test-matrix.md)和 `tests/independent/desktop/` 独立复现/证据；停止于 blocked / finished，等待总控裁定 P1 草稿自动删除缺陷。P4-A 64 passed、P4-C/D 32 not_run 保持。
 
@@ -37,6 +39,65 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-10-02 10:57 Asia/Shanghai — C12-R1 blocked / finished交付与停止
+
+- 原P1关闭建议：原PUB-11一次不变断言通过，2→2持久化；原其他10+新增outbox26+可执行main5均passed。链接 [原失败复验](../../../tests/independent/desktop/evidence/r1/original-node/run.log)
+- 新P1：P4-C12-R1-REGISTRY-001，跨module同setting key被接受，IF-003全局唯一fail-closed失败；[首次复现](../../../tests/independent/desktop/evidence/r1/matrix-independent/run.log)
+- 独立60 unique executed：59 passed/1 failed；执行方定向27 passed单列，未重跑完整90或旧audit；原8项独立材料精确只读
+- [R1报告](../../testing/phase-4-c12-r1-outbox-windows-report.md)给出24项完整原预期/实测/缺口；原报告和人工清单只追加，矩阵仅B状态/备注，A64 passed/C-D32 not_run保持
+- 起终点清单0922a37c...bd15：起点296 matched；终点292 unchanged+4授权变更，0missing/非授权mismatch；EXE/asar/lock和fuse bytes保持，staged0，diff --check退出0，仅既有LF→CRLF等warning
+- 产品0/8、辅助Electron0/4；无真实native dialog/UIA/CDP/Tray或新外部profile/db/session，真实老化提示unverified，其他人工条件not_run保持，无用户即时操作要求
+- 自有R1 cache/compat-cache已核对绝对范围后清除；所有结果JSON/log/baseline/审计保留，原材料未清理，没有产品/执行方/依赖/冻结/控制/其他角色或Git写操作
+- 交接总控：确认旧P1关闭与新registry返修，形成新固定快照后安排独立复验/剩余Windows。此角色停止，不创建新任务、不派发P4-C、不宣告P4-Bcomplete
+
+
+### 2026-10-02 10:55 Asia/Shanghai — R1 报告与终点边界里程碑
+
+- [R1报告](../../testing/phase-4-c12-r1-outbox-windows-report.md)和原报告/人工清单追加已完成，保留首次失败字节prefix与原8项独立交付
+- 新终点296项：292 unchanged、4授权变化（tester/原报告/人工清单/矩阵）、0非授权mismatch/missing；EXE/asar/lock摘要不变，fuses v1 [48,49,48,48,49,49,48,49,49]符合冻结且EXE字节保持；staged0
+- 24项最新仍0 passed/1 failed/19 blocked/4 not_run；SUP-06 failed→blocked、UI-04 blocked→failed，原120 ID/预期及A/C/D保持
+- 严重缺陷后未执行任何新行为测试或产品/辅助启动；仅文档/审计，所有Vitest已退出
+- 记录限制：报告编写期间快照心跳超过十分钟，本条按实际工具控制返回和已取得新输出补记；期间持续生成矩阵/R1报告/历史追加与终点证据，并非连续两个检查点无新输出。原阶段跨日工具间外部状态不推断
+- 最后只做自有cache安全清理及交付一致性验证，然后停止交回总控
+
+
+### 2026-10-02 10:33 Asia/Shanghai — R1 新P1缺陷与停止
+
+- 第二阶段18节点：17 passed、1 failed；独立总计60 executed、59 passed、1 failed（原11未重复计数），执行方27 passed另列
+- P4-C12-R1-REGISTRY-001（P1）：两虚拟module的settings key同为virtual_shared_setting；compileRegistry返回2模块且无错误，违反IF-003 §5 setting全局唯一与冲突整体fail-closed；映射P4B-UI-04
+- 根因：seen key使用setting:<moduleId>:<key>，同名键跨模块不冲突；不推断当前单daily_finance已发生数据覆盖或权限漏洞
+- 原OUTBOX-001复验通过，建议独立关闭原P1；整个SUP-06仍缺真实设备/恢复提交证据，不称passed
+- 按任务卡立即停止扩大测试；产品0/8、辅助Electron0/4，无新外部profile/Host/窗口/端口需清理，没有修改产品或重跑失败
+- 剩余Windows与老化原生提示/Tray/多屏/OS项交回总控；当前只完成报告与静态交付门禁
+
+
+### 2026-10-02 10:32 Asia/Shanghai — R1 第一阶段全过并进入剩余矩阵
+
+- 原PUB-11 1、原其他10、新outbox26、新main5，独立共42 passed、0 failed；每组一次，新目录分开保留
+- 可执行main真实导入5项：Host启动不等待dialog、ready前退出、未决dialog退出/销毁保留、明确确认仅删除old draft/queued；OS/文件/Host ports为虚拟，不冒充Windows设备验证
+- 执行方仅复跑定向2文件27项，一次27 passed；不重复完整90或Python/Host全量
+- 建议P1 OUTBOX-001公开持久化逻辑已关闭，最终交接时链接实际复验；整个SUP-06/Windows提示仍未接受
+- 进入第二阶段独立安全/模块边界；产品0/8、辅助Electron0/4，无外部profile或端口
+
+
+### 2026-10-02 10:25 Asia/Shanghai — R1 原失败节点与相邻十项通过
+
+- 原 PUB-11 不变断言唯一一次 1 passed；30天+1ms load/cleanup/reload 仍2条、原ID/正文/digest保留，原失败 evidence 不变
+- 原其他10节点唯一一次 10 passed；filter 的未选节点单独统计，不属于降低断言/skip，也未重复 PUB-11
+- 新公开行为用例已编写：年龄/候选/默认保留/明确删除/生命周期停用/对象身份/保存失败/串行容量/加密；准备运行
+- 当前产品0/8、辅助0/4；原生设备提示仍未验证，原P1持久清理复验通过不能代替整个SUP-06通过
+
+
+### 2026-10-01 23:51 Asia/Shanghai — C12-R1 接单与新起点通过
+
+- control 2026-10-01T23:37:56+08:00：测试智能体唯一负责人；执行智能体/技术顾问停止，原 C12 失败材料只读
+- 新清单296/296 matched、0 missing/mismatch，SHA-256 0922a37c45e42fb28be69a2405eac8b6de8b05ea9e22d22309a5a74be767bd15；Git staged 0
+- 新 R2 EXE 8eb56f3f...b5c2a、asar 74225ea6...6b6c7、lock 5ddc0a93...b4a 均精确匹配
+- 仅新增 R1 用例/config/audit/runner 和 evidence/r1；允许追加报告/人工清单与 B 段状态、自身日志；不修改原8项独立交付或产品/执行方文件
+- 顺序：原 PUB-11 唯一次→其余十项→新增 outbox/原生 adapter/main 生命周期→剩余矩阵；第一阶段全部通过后才进入 Windows
+- 产品/辅助启动均0；不运行旧 audit，不覆盖首次失败，不安装/build/package/网络或 Git 写操作
+
 
 ### 2026-10-01 15:23 Asia/Shanghai — C12 blocked / finished 交付与停止
 

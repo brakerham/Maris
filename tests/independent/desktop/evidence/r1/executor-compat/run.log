@@ -1,0 +1,12 @@
+
+ RUN  v5.0.2 C:/MarisOutboxR2/R2-20261001-155509/workspace/apps/desktop
+
+ ✓ tests/unit/supervisor-outbox.test.ts (13 tests) 13ms
+ ✓ tests/unit/outbox-retention.test.ts (14 tests) 248ms
+
+ Test Files  2 passed (2)
+      Tests  27 passed (27)
+   Start at  10:29:10
+   Duration  746ms (tests 49%, import 35%, transform 14%, worker 1%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r1/executor-compat/result.json

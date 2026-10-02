@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-01 23:37，Asia/Shanghai
+更新时间：2026-10-02 11:05，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 与 P4-A 已独立验收。R2-OUTBOX 完成消息保留/确认修复，定向27项、完整桌面90项通过，新package和EXE真实门禁成功；总控已核对快照及产物。P1 OUTBOX-001仍待C12-R1独立关闭，P4-B未complete。发布C12-R1复验及原24项剩余验收；P4-C/D尚未开始。
+P0～P3 与 P4-A 已独立验收。C12-R1独立59 passed/1 failed、兼容27 passed；总控关闭OUTBOX-001持久删除逻辑，接受REGISTRY-001设置键全局冲突P1。R3-REGISTRY已ready待用户派发，测试停止；SUP-06设备及剩余Windows未验收，P4-B未complete，P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,10 +13,10 @@ P0～P3 与 P4-A 已独立验收。R2-OUTBOX 完成消息保留/确认修复，�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R2快照/产物核对通过，发布C12-R1 | 2026-10-01 23:37 | 用户派发独立复验 | [总控核对](../p4-b7-r2-outbox-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | 核对C12-R1，关闭旧P1，冻结新registry返修 | 2026-10-02 11:05 | 用户派发R3-REGISTRY | [总控核对](../p4-c12-r1-registry-blocked-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | `review / finished`（R2-OUTBOX） | 修复、自测和新package/EXE通过；停止 | 2026-10-01 23:14 | 等独立复验，不自行继续修改 | [运行说明](../b7-r2-outbox-running.md) |
-| 测试智能体 | `ready / waiting_user`（C12-R1） | 原C12 blocked已停止；新任务未确认接单 | 2026-10-01 23:37（总控准备） | 原失败节点、确认边界与原24项 | [Prompt](prompts/p4-c12-r1-outbox-windows-tester.md) |
+| 执行智能体 | R2已停止；R3 `ready / waiting_user` | 新返修只registry.ts/开发测试；接单未确认 | 2026-10-02 11:05（总控准备） | 全局设置键冲突与新版产物 | [Prompt](prompts/p4-b7-r3-registry-executor.md) |
+| 测试智能体 | `blocked / finished`（C12-R1） | 原outbox复验通过，新REGISTRY-001导致停止 | 2026-10-02 10:57 | 等修复/新快照，不自行继续Windows | [报告](../testing/phase-4-c12-r1-outbox-windows-report.md) |
 
 ## 阶段 0 任务状态
 
@@ -108,11 +108,12 @@ P0～P3 与 P4-A 已独立验收。R2-OUTBOX 完成消息保留/确认修复，�
 | P4-B7-R1-E5-LOCALZIP：本地 ZIP 接线与最终门禁 | 既有执行智能体 | `review / finished`，接受为 C12 输入 | 115 evidence、274 source、140 out 匹配；package/EXE 成功 | [总控审阅](../p4-b7-r1-e5-localzip-coordinator-review.md) |
 | P4-C12：Windows Shell 独立验收 | 既有测试智能体 | `blocked / finished` | P1 OUTBOX-001；24 项 1 failed/19 blocked/4 not_run；尚未 EXE | [报告](../testing/phase-4-c12-windows-shell-report.md)、[核对](../p4-c12-outbox-blocked-coordinator-review.md) |
 | P4-B7-R2-OUTBOX：保留与确认返修 | 既有执行智能体 | `review / finished`，接受为复验输入 | 27/90开发测试、package/EXE成功；293source/140out匹配 | [总控核对](../p4-b7-r2-outbox-coordinator-review.md) |
-| P4-C12-R1：outbox独立复验与剩余Windows验收 | 既有测试智能体 | `ready / waiting_user` | 原PUB-11及确认边界，原24项剩余；新R2产物，不改首次失败 | [Prompt](prompts/p4-c12-r1-outbox-windows-tester.md)、[起点](snapshots/p4-c12-r1-start.sha256) |
+| P4-C12-R1：outbox独立复验与剩余Windows验收 | 既有测试智能体 | `blocked / finished` | 原P1独立关闭；新REGISTRY-001为P1，59 passed/1 failed，尚未Windows | [核对](../p4-c12-r1-registry-blocked-coordinator-review.md) |
+| P4-B7-R3-REGISTRY：设置键全局冲突返修 | 既有执行智能体 | `ready / waiting_user` | 窄范围实现及开发回归、新package/EXE；不改已关闭outbox | [Prompt](prompts/p4-b7-r3-registry-executor.md)、[起点](snapshots/p4-b7-r3-registry-start.sha256) |
 
 ## 当前阻塞与风险
 
-- 当前P1 OUTBOX-001已由R2开发修复并通过自测，但独立关闭未完成；C12-R1准备派发，P4-B不提前complete。
+- OUTBOX-001已独立关闭；当前阻塞是REGISTRY-001：不同模块同名setting未整体拒绝。R3只修注册器，不重新设计合同，P4-B不提前complete。
 - 原C12首次失败保留，新R2 EXE/asar才是复验对象；真实老化提示和原人工设备项仍待实际证据。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
@@ -137,7 +138,7 @@ P0～P3 与 P4-A 已独立验收。R2-OUTBOX 完成消息保留/确认修复，�
 
 ## 下一次总控检查
 
-1. 用户将C12-R1全文发给既有测试智能体；执行与技术顾问保持停止。
-2. 测试方先原失败节点和确认边界，成功后继续原24项，人工设备缺口保留。
-3. 总控核对新快照与独立报告，决定P1关闭及P4-B接受；不重复package。
+1. 用户将R3-REGISTRY全文发给既有执行智能体；测试与技术顾问保持停止。修复后仅复验registry失败及必要相邻回归，再继续未执行Windows，不重复不受影响的outbox42独立节点。
+2. R3自测和新产物通过后，总控绑定新快照再派测试方复验REGISTRY-001及原24项未执行条件；原outbox首次失败/通过证据均保留。
+3. 总控核对独立报告，决定新P1关闭及P4-B接受；真实原生提示和人工设备缺口如实保留，不重复package。
 4. P4-B独立接受后触发高保真参考图/模型策略提醒，再规划P4-C。

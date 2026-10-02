@@ -1,0 +1,14 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+stdout | public-boundaries.test.ts > C12 independent public boundaries (virtual adapters only; stop at first failure) > C12-PUB-11 | SUP-06 | old unsubmitted drafts survive startup cleanup without deletion consent
+C12 aging evidence {"before":2,"after":2,"persisted":2,"statesBefore":["draft","queued"],"elapsedMilliseconds":2592000001,"userDeletionConsent":false,"actualIds":["virtual-event-1","virtual-event-2"],"expectedIds":["virtual-event-1","virtual-event-2"]}
+
+ ✓ public-boundaries.test.ts (11 tests | 10 skipped) 6ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 10 skipped (11)
+   Start at  23:51:42
+   Duration  465ms (import 77%, transform 20%, tests 2%, worker 1%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r1/original-node/result.json

@@ -204,7 +204,7 @@
 | P4B-SUP-03 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 假后端可崩溃 | 启动前崩溃、ready 后崩溃、连续崩溃 | 观察重启策略 | 状态转 offline；重启次数/退避有界，不形成重启风暴或重复 run；用户可恢复 | P1 | blocked |
 | P4B-SUP-04 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 已有手动后端或两个 app 启动请求 | 重复启动、开发连接模式 | 启动/关闭两个客户端 | 不产生重复 owned 后端；连接手动后端时不取得停止权；状态可区分 | P1 | blocked |
 | P4B-SUP-05 | B | D9 lifecycle | security/manual | Windows/Electron | manual | 目标 Windows，后端含子线程/连接 | 正常退出、强关主窗口、系统注销 | 检查进程树/端口/文件锁 | 自有后端按冻结时限退出，无僵尸/孤儿/占用端口；未拥有进程不受影响 | P1 | not_run |
-| P4B-SUP-06 | B | D9 offline recovery | desktop/e2e | Windows/Electron | auto | renderer 有未发送虚拟消息 | 后端离线→恢复、应用重启、重复点击 | 发送并观察 client_event_id/GET | 未发送内容和同一 ID 保留；恢复后只提交一次；UI 不凭新 ID 制造重复账候选 | P0 | failed |
+| P4B-SUP-06 | B | D9 offline recovery | desktop/e2e | Windows/Electron | auto | renderer 有未发送虚拟消息 | 后端离线→恢复、应用重启、重复点击 | 发送并观察 client_event_id/GET | 未发送内容和同一 ID 保留；恢复后只提交一次；UI 不凭新 ID 制造重复账候选 | P0 | blocked |
 
 #### 模块 UI、主题、Tray 与毛毛
 
@@ -213,7 +213,7 @@
 | P4B-UI-01 | B | F12 | contract/unit | contract | auto | compiled registry 与 `/modules` fixture | 后端启用/禁用、桌面缺失、版本不兼容、未知模块 | 计算交集 | 只渲染两侧均存在且兼容的模块；未知/禁用不导航、不预加载 | P1 | blocked |
 | P4B-UI-02 | B | F12 | desktop/e2e | Windows/Electron | auto | 两个 lazy route | chunk 加载失败、重试成功、切换模块 | 导航并恢复 | 局部错误边界可重试，Shell/登录/其他模块可用；不循环加载或丢当前会话 | P1 | blocked |
 | P4B-UI-03 | B | F12 | contract/unit | contract | auto | 冻结 OpenAPI 与生成命令 | 后端 DTO 字段/枚举/required 改变；生成物陈旧 | CI 比较生成差异并编译 | 漂移门禁失败并定位；不得靠手写 API 类型掩盖差异或运行时下载 schema | P1 | blocked |
-| P4B-UI-04 | B | F12 | contract/unit | contract | auto | UI contribution 合同冻结 | hostUiMajor、route/path/setting/profile/companion 冲突 | 编译期注册和启动验证 | 不兼容或冲突稳定失败；Shell 无 `if moduleId` 业务分支 | P1 | blocked |
+| P4B-UI-04 | B | F12 | contract/unit | contract | auto | UI contribution 合同冻结 | hostUiMajor、route/path/setting/profile/companion 冲突 | 编译期注册和启动验证 | 不兼容或冲突稳定失败；Shell 无 `if moduleId` 业务分支 | P1 | failed |
 | P4B-CMP-01 | B | F13；U02 | desktop/e2e | Windows/Electron | auto | daily/wealth contributions 与假状态流 | 切换模块及 idle/thinking/tool/confirmation/error/offline | 观察窗口、Profile 和状态 | 始终只有一个毛毛窗口/Agent 入口；主形态随 contribution，子状态不创建第二 Agent或触发写入 | P1 | blocked |
 | P4B-CMP-02 | B | U01/F13 | desktop/e2e | Windows/Electron | auto | 新设备设置 | 首次和第二次关闭主窗口 | 关闭、从 Tray 恢复、再次关闭 | 首次隐藏并只提示一次；第二次不重复提示；Host/毛毛按设置驻留且无数据丢失 | P1 | blocked |
 | P4B-CMP-03 | B | U01 | desktop/e2e | Windows/Electron | auto | 关闭策略可切换 | 退出/每次询问/隐藏，Tray 打开/隐藏 | 每种设置执行关闭与取消 | 行为精确对应设置；“退出”清理自有后端；询问取消不退出；Tray 状态一致 | P1 | blocked |
@@ -228,6 +228,15 @@
 - `P4B-SEC-01/02/04/05/08`、`P4B-UI-01` 有局部公开行为/模拟证据，全部不足整项验收，因此仍 blocked；其他自动项目因严重缺陷停止规则未执行。没有以执行方 LOCALZIP 成功替代独立 passed。
 - 四项 manual `P4B-SUP-05`、`P4B-CMP-04/05/06` 保留 not_run；Tray、注销、开机启动、多屏与主题设备条件见 [人工清单](phase-4-c12-manual-checklist.md)。本轮未要求用户操作。
 - 独立公开行为实际运行 11 节点：10 passed、1 failed；执行方兼容重跑 0/30；真实 EXE 启动 0/8。细分步骤、完整原预期和停止原因见 [C12 报告](phase-4-c12-windows-shell-report.md)，证据见 `tests/independent/desktop/evidence/`。
+
+#### C12-R1 最新状态备注（2026-10-02）
+
+- R1 停在 `blocked / finished`：原 P1 `P4-C12-OUTBOX-001` 公开持久化逻辑复验通过，建议关闭；新 P1 `P4-C12-R1-REGISTRY-001` 尚未解决。原 C12 备注属于首次历史，不改写原失败。
+- `P4B-SUP-06` 从 failed 改为 blocked：原 PUB-11 不变断言唯一一次通过；新增26项outbox与5项可执行main接线通过。真实Windows老化原生提示、恢复后提交一次/GET/UI仍未验证，不整项passed；原风险P0不变。
+- `P4B-UI-04` 从 blocked 改为 failed：两个不同虚拟module共享setting key时compileRegistry仍返回两模块，违反IF-003 §5全局唯一与冲突整体拒绝；节点R1-SHELL-13首次失败，不改产品或重跑。
+- 独立共60个唯一执行节点：59 passed、1 failed；执行方定向27 passed另列。原P4-B整项仍0 passed、1 failed、19 blocked、4 not_run；部分主preload/HostClient/session/supervisor/registry结果不替代全部子条件。
+- 新EXE产品0/8、辅助Electron0/4；因新P1停止在动态前。真实原生提示 unverified，Tray/注销/多屏/OS启动项等not_run保持，不能由模拟main窗口推导设备通过。
+- [R1完整报告](phase-4-c12-r1-outbox-windows-report.md)给出24项原预期、证据/缺口与原P1关闭建议；新结果在 `tests/independent/desktop/evidence/r1/`，原8项测试/首次交付只读。
 
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 

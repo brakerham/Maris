@@ -1,6 +1,9 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3 与 P4-A 已独立验收。R2-OUTBOX 完成消息保留/确认修复，定向27项、完整桌面90项通过，新package和EXE真实门禁成功；总控已核对快照及产物。P1 OUTBOX-001仍待C12-R1独立关闭，P4-B未complete。发布C12-R1复验及原24项剩余验收；P4-C/D尚未开始。
+当前阶段：P0～P3 与 P4-A 已独立验收。C12-R1已独立复验并由总控关闭OUTBOX-001；SUP-06真实原生提示等仍未覆盖。新增P1 REGISTRY-001：跨模块同名设置键未整体拒绝。测试停止，发布R3-REGISTRY窄范围返修；P4-B未complete，P4-C/D尚未开始。
+
+- [C12-R1总控核对](docs/p4-c12-r1-registry-blocked-coordinator-review.md)：关闭旧outbox P1，接受新注册合同P1。
+- [R3-REGISTRY执行任务](docs/coordination/prompts/p4-b7-r3-registry-executor.md)：只修设置键全局冲突及开发回归，完成新版产物后交独立复验。
 
 项目有三个目标：通过活动、账目和可更新计划管理大学生活开支；建立覆盖日常管钱与财富管理的个人 AI 系统；围绕真实代码学习可扩展 Agent Host、模块 Agent、工具、记忆、workflow、前后端和工程验证。财务是第一组内置应用，架构为以后新增 AI 应用模块保留受控接入面。
 

@@ -367,3 +367,14 @@ Warning：只读 Git 命令提示用户全局 Git ignore 无读取权限；命�
 更新交付：P4 矩阵仅 B 段；测试智能体自身状态/日志。无产品、执行方测试、依赖/lock、冻结、snapshot、control/overview、其他角色、OpenClaw 或 Git 写操作。
 
 下一步交给总控：确认 P1 缺陷和草稿删除确认合同的返修边界，安排执行方修复与新快照，然后指定复验和剩余 Windows/人工门禁。人工清单不要求用户现在注销、改显示器或改启动项。本轮安全停在 `blocked / finished`，不宣布 P4-B complete，不继续 P4-C。
+
+## C12-R1 独立复验追加（2026-10-02）
+
+原正文、首次10 passed/1 failed、OUTBOX-001缺陷和2→0证据保持历史原样。新版本与任务见 [C12-R1独立报告](phase-4-c12-r1-outbox-windows-report.md)。
+
+- 原PUB-11不变断言一次通过：30天+1ms后持久化仍2条，正文/digest/原ID保持；[新输出](../../tests/independent/desktop/evidence/r1/original-node/run.log)与[result](../../tests/independent/desktop/evidence/r1/original-node/result.json)。
+- 原其他10项、新outbox26、新可执行main5均通过。建议总控关闭原P1 OUTBOX-001公开持久删除逻辑；真实Windows老化原生提示仍unverified，SUP-06仅改blocked，不整项passed。
+- 本轮独立60个唯一执行节点：59 passed、1 failed；执行方定向27 passed另列。
+- 新P1 P4-C12-R1-REGISTRY-001：跨module相同setting key仍接受，违反IF-003 §5全局唯一；[首次新失败](../../tests/independent/desktop/evidence/r1/matrix-independent/run.log)。UI-04变failed，其他不完整案例仍blocked/manual not_run。
+- R1整体blocked / finished，P4-B仍0 passed、1 failed、19 blocked、4 not_run；产品0/8、辅助Electron0/4，未进入Windows，不用原执行方EXE证据代替独立通过。
+- 原8项测试/首次交付不变，新清单/产物和授权边界见R1审计。本轮没有修产品或Git写操作，交回总控返修registry并安排剩余验收。

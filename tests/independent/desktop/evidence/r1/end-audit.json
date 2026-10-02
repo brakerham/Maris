@@ -1,0 +1,58 @@
+{
+  "manifest_sha256": "0922a37c45e42fb28be69a2405eac8b6de8b05ea9e22d22309a5a74be767bd15",
+  "entries": 296,
+  "unchanged": 292,
+  "authorized_changed": [
+    "docs/coordination/agents/tester.md",
+    "docs/testing/phase-4-c12-manual-checklist.md",
+    "docs/testing/phase-4-c12-windows-shell-report.md",
+    "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+  ],
+  "unauthorized_mismatch": [],
+  "missing": [],
+  "old_independent_files_unchanged": [
+    "tests/independent/desktop/audit_inputs.py",
+    "tests/independent/desktop/evidence/delivery-verification.json",
+    "tests/independent/desktop/evidence/final-input-audit.json",
+    "tests/independent/desktop/evidence/matrix-original-cases.json",
+    "tests/independent/desktop/evidence/public-boundaries.json",
+    "tests/independent/desktop/evidence/public-boundaries.log",
+    "tests/independent/desktop/public-boundaries.test.ts",
+    "tests/independent/desktop/vitest.config.mjs"
+  ],
+  "artifacts": [
+    {
+      "path": "apps/desktop/out/Maris-win32-x64/Maris.exe",
+      "expected": "8eb56f3f63b923471a9239e2a01f29a8111067a6093d8c9d118e62e1ccfb5c2a",
+      "actual": "8eb56f3f63b923471a9239e2a01f29a8111067a6093d8c9d118e62e1ccfb5c2a"
+    },
+    {
+      "path": "apps/desktop/out/Maris-win32-x64/resources/app.asar",
+      "expected": "74225ea63dbc7201dc7f7f3299a099ac573f51680ef705536e560a9d9df6b6c7",
+      "actual": "74225ea63dbc7201dc7f7f3299a099ac573f51680ef705536e560a9d9df6b6c7"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "expected": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a",
+      "actual": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+    }
+  ],
+  "fuses": {
+    "version": 1,
+    "states": [
+      48,
+      49,
+      48,
+      48,
+      49,
+      49,
+      48,
+      49,
+      49
+    ]
+  },
+  "staged_paths": [],
+  "git_warning": "warning: unable to access 'C:\\Users\\xuhaolin/.config/git/ignore': Permission denied",
+  "product_launches": 0,
+  "auxiliary_electron_launches": 0
+}

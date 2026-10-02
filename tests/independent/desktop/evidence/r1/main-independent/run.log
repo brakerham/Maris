@@ -1,0 +1,12 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+ ✓ r1-main.test.ts (5 tests) 517ms
+   ✓ R1-MAIN-01 | real main starts Host before native dialog response; cancel preserves disk 486ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  10:27:41
+   Duration  828ms (tests 74%, import 15%, transform 10%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r1/main-independent/result.json

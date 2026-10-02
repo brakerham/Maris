@@ -1,0 +1,307 @@
+{
+  "executed_unique": 60,
+  "passed": 59,
+  "failed": 1,
+  "nodes": [
+    {
+      "phase": "original-node",
+      "title": "C12-PUB-11 | SUP-06 | old unsubmitted drafts survive startup cleanup without deletion consent",
+      "status": "passed"
+    },
+    {
+      "phase": "remaining-original",
+      "title": "C12-PUB-01 | SEC-05 partial | unavailable crypto fails closed",
+      "status": "passed"
+    },
+    {
+      "phase": "remaining-original",
+      "title": "C12-PUB-02 | SEC-05 partial | encrypted roundtrip and safe corruption error",
+      "status": "passed"
+    },
+    {
+      "phase": "remaining-original",
+      "title": "C12-PUB-03 | SEC-01/02 partial | production preferences and CSP",
+      "status": "passed"
+    },
+    {
+      "phase": "remaining-original",
+      "title": "C12-PUB-04 | SEC-04 partial | wrong sender, frame, origin and parameters reject",
+      "status": "passed"
+    },
+    {
+      "phase": "remaining-original",
+      "title": "C12-PUB-05 | UI-01 partial | host intersection excludes incompatible contributions",
+      "status": "passed"
+    },
+    {
+      "phase": "remaining-original",
+      "title": "C12-PUB-06 | SUP-06 partial | concurrent identical draft retains one ID and one entry",
+      "status": "passed"
+    },
+    {
+      "phase": "remaining-original",
+      "title": "C12-PUB-07 | SUP-06 partial | encrypted reload retains payload and event ID",
+      "status": "passed"
+    },
+    {
+      "phase": "remaining-original",
+      "title": "C12-PUB-08 | SUP-06 partial | changing submitted body derives a new ID",
+      "status": "passed"
+    },
+    {
+      "phase": "remaining-original",
+      "title": "C12-PUB-09 | SUP-06 partial | capacity refusal preserves all 20 entries on reload",
+      "status": "passed"
+    },
+    {
+      "phase": "remaining-original",
+      "title": "C12-PUB-10 | SUP-06 partial | terminal retention boundary and fresh unsent entry",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-01/draft | start/exit/reload preserve every nonterminal age",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-01/queued | start/exit/reload preserve every nonterminal age",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-01/sending | start/exit/reload preserve every nonterminal age",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-02 | terminal cutoff retains exactly 24h then removes after 1ms",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-03 | strict age, eligible states and fresh entries constrain candidates",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-04 | no candidates produces no dialog, even after duplicate attach",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-05 | one prompt, safe count only, explicit default/cancel retain",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-06/response=0 | nonexplicit response preserves persisted content",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-06/response=-1 | nonexplicit response preserves persisted content",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-06/response=2 | nonexplicit response preserves persisted content",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-07 | dialog rejection preserves data without logging raw error",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-08/stop | unresolved dialog cannot delete after lifecycle stop",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-08/quitting | unresolved dialog cannot delete after lifecycle stop",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-08/destroyed | unresolved dialog cannot delete after lifecycle stop",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-08/closed | unresolved dialog cannot delete after lifecycle stop",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-09 | stop/destroy before ready cannot prompt or delete",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-10 | explicit consent deletes only unchanged shown candidates, persisted after reload",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-11 | same-clock same-state update invalidates old consent identity",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-12 | reload invalidates old consent, repeats cannot delete newer old items",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-13/prepare | write failure keeps memory/disk consistent and queue recoverable",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-13/state | write failure keeps memory/disk consistent and queue recoverable",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-13/cleanup | write failure keeps memory/disk consistent and queue recoverable",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-13/delete | write failure keeps memory/disk consistent and queue recoverable",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-14 | pending save publishes no premature state; concurrent operations serialize",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-15 | concurrent capacity limit refuses overflow without loss, encrypted blob stays opaque",
+      "status": "passed"
+    },
+    {
+      "phase": "outbox-independent",
+      "title": "R1-OB-16 | inactive consent and dialog save failure retain content",
+      "status": "passed"
+    },
+    {
+      "phase": "main-independent",
+      "title": "R1-MAIN-01 | real main starts Host before native dialog response; cancel preserves disk",
+      "status": "passed"
+    },
+    {
+      "phase": "main-independent",
+      "title": "R1-MAIN-02 | before-quit before window ready stops retention and runs persistence cleanup",
+      "status": "passed"
+    },
+    {
+      "phase": "main-independent",
+      "title": "R1-MAIN-03 | before-quit while dialog pending ignores later affirmative response",
+      "status": "passed"
+    },
+    {
+      "phase": "main-independent",
+      "title": "R1-MAIN-04 | main destruction during dialog preserves all virtual data",
+      "status": "passed"
+    },
+    {
+      "phase": "main-independent",
+      "title": "R1-MAIN-05 | real native adapter affirmative deletes exactly aged draft/queued",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-01 | HostClient accepts only HTTP IPv4 loopback",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-02 | concurrent 401 shares refresh, retries once using main-only bearer",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-03 | expired refresh revokes and exposes only safe error",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-04/503 | backend failures do not expose body/exception",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-04/invalid-dto | backend failures do not expose body/exception",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-04/network | backend failures do not expose body/exception",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-05 | local owner bootstrap single-flight, refresh and revoke states",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-06 | managed start/recover single-flight and bounded retry",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-07 | bad managed nonce is rejected and candidate cleaned",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-08 | external observation never acquires stop rights",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-09 | preload exports narrow typed methods, no generic IPC",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-10 | two distinct virtual contributions compile, no product module created",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-11/module | duplicate identity fails closed",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-11/profile | duplicate identity fails closed",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-11/route | duplicate identity fails closed",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-11/appearance | duplicate identity fails closed",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-12 | incompatible UI major and noncanonical ASCII/version reject",
+      "status": "passed"
+    },
+    {
+      "phase": "matrix-independent",
+      "title": "R1-SHELL-13 | UI-04 | setting keys must be globally unique across contributions",
+      "status": "failed"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+stdout | r1-shell-boundaries.test.ts > R1 remaining Shell boundaries; virtual ports, no desktop or network > R1-SHELL-13 | UI-04 | setting keys must be globally unique across contributions
+R1 registry collision evidence {"globalSettingKey":"virtual_shared_setting","moduleIds":["virtual_alpha","virtual_beta"],"accepted":true,"acceptedModules":2,"rejectionCode":null,"contract":"IF-003 section 5 global setting uniqueness"}
+
+ ❯ r1-shell-boundaries.test.ts (18 tests | 1 failed) 65ms
+   ❯ R1 remaining Shell boundaries; virtual ports, no desktop or network (18)
+     ✓ R1-SHELL-01 | HostClient accepts only HTTP IPv4 loopback 5ms
+     ✓ R1-SHELL-02 | concurrent 401 shares refresh, retries once using main-only bearer 18ms
+     ✓ R1-SHELL-03 | expired refresh revokes and exposes only safe error 1ms
+     ✓ R1-SHELL-04/503 | backend failures do not expose body/exception 1ms
+     ✓ R1-SHELL-04/invalid-dto | backend failures do not expose body/exception 1ms
+     ✓ R1-SHELL-04/network | backend failures do not expose body/exception 0ms
+     ✓ R1-SHELL-05 | local owner bootstrap single-flight, refresh and revoke states 1ms
+     ✓ R1-SHELL-06 | managed start/recover single-flight and bounded retry 3ms
+     ✓ R1-SHELL-07 | bad managed nonce is rejected and candidate cleaned 0ms
+     ✓ R1-SHELL-08 | external observation never acquires stop rights 0ms
+     ✓ R1-SHELL-09 | preload exports narrow typed methods, no generic IPC 25ms
+     ✓ R1-SHELL-10 | two distinct virtual contributions compile, no product module created 2ms
+     ✓ R1-SHELL-11/module | duplicate identity fails closed 0ms
+     ✓ R1-SHELL-11/profile | duplicate identity fails closed 0ms
+     ✓ R1-SHELL-11/route | duplicate identity fails closed 0ms
+     ✓ R1-SHELL-11/appearance | duplicate identity fails closed 0ms
+     ✓ R1-SHELL-12 | incompatible UI major and noncanonical ASCII/version reject 1ms
+     × R1-SHELL-13 | UI-04 | setting keys must be globally unique across contributions 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  r1-shell-boundaries.test.ts > R1 remaining Shell boundaries; virtual ports, no desktop or network > R1-SHELL-13 | UI-04 | setting keys must be globally unique across contributions
+AssertionError: expected undefined to be 'desktop_registry_conflict' // Object.is equality
+
+- Expected:
+"desktop_registry_conflict"
+
++ Received:
+undefined
+
+ ❯ r1-shell-boundaries.test.ts:141:30
+    139|       moduleIds: [first.moduleId, second.moduleId], accepted: !failure…
+    140|       rejectionCode: failure?.message ?? null, contract: 'IF-003 secti…
+    141|     expect(failure?.message).toBe('desktop_registry_conflict');
+       |                              ^
+    142|   });
+    143| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 17 passed (18)
+   Start at  10:32:11
+   Duration  647ms (import 64%, transform 23%, tests 13%, worker 1%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r1/matrix-independent/result.json

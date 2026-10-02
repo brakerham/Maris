@@ -1,0 +1,158 @@
+{
+  "verified_at": "2026-10-02T10:57:06+08:00",
+  "unique_matrix_ids": 120,
+  "p4b_original_expectations": 24,
+  "p4b_first_11_columns_preserved": true,
+  "outside_p4b_unchanged": true,
+  "append_only_prefixes_preserved": {
+    "phase-4-c12-windows-shell-report.md": true,
+    "phase-4-c12-manual-checklist.md": true
+  },
+  "matrix_counts": {
+    "A": {
+      "passed": 64
+    },
+    "B": {
+      "blocked": 19,
+      "not_run": 4,
+      "failed": 1
+    },
+    "C": {
+      "not_run": 20
+    },
+    "D": {
+      "not_run": 12
+    }
+  },
+  "independent_nodes": {
+    "executed_unique": 60,
+    "passed": 59,
+    "failed": 1
+  },
+  "executor_compat": {
+    "passed": 27,
+    "failed": 0
+  },
+  "original_evidence_counts": {
+    "passed": 10,
+    "failed": 1
+  },
+  "product_launches": 0,
+  "auxiliary_electron_launches": 0,
+  "new_files": [
+    {
+      "path": "docs/testing/phase-4-c12-r1-outbox-windows-report.md",
+      "sha256": "5558c6beff80be8688b84191555bdc5de0ea46e27cd8b124e32575685679de8f"
+    },
+    {
+      "path": "tests/independent/desktop/r1-audit-inputs.py",
+      "sha256": "c9d1068c0cca9fd6f58d6b51fadbce1f16f86844b645e15b7dd73a614444a853"
+    },
+    {
+      "path": "tests/independent/desktop/r1-compat-vitest.config.mjs",
+      "sha256": "7d6a5eaa40fa839cf0f894833383224a3d9c2a602fba21b27cdbe7a7100159f8"
+    },
+    {
+      "path": "tests/independent/desktop/r1-fixtures.ts",
+      "sha256": "8a87da9b351bb373813581074c1b683aa1768099401190d35f4c1b1536026296"
+    },
+    {
+      "path": "tests/independent/desktop/r1-main.test.ts",
+      "sha256": "15e4cb407db73ac710a60fdebab1a558c6a79283662da4150621da3556e6c53b"
+    },
+    {
+      "path": "tests/independent/desktop/r1-outbox.test.ts",
+      "sha256": "335c1c761cf26ae82fc63361a133a845768b8cdb51ac068e91b834604008da18"
+    },
+    {
+      "path": "tests/independent/desktop/r1-shell-boundaries.test.ts",
+      "sha256": "2911091194b3306e52ef47b4689e21dc895d351f631cca7abb643b7a57864378"
+    },
+    {
+      "path": "tests/independent/desktop/r1-vitest.config.mjs",
+      "sha256": "90f249bb5399f2f56800c0cb8f9aaf37941afd2ab52e2f5349b617f201931203"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/end-audit.json",
+      "sha256": "96151da3d09681a022b845920d35b8eeeb0f976a7d425b524faf3c7d727ff058"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/executor-compat/result.json",
+      "sha256": "7e203c925281ef3f365cb0a8a95fcb1637679bfadb951f46e24d7829df5577f8"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/executor-compat/run.log",
+      "sha256": "7c4ac2435a0e6636c918918620d06ed2b9cbb3d69f7d5ef43f430dcddc96f477"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/main-independent/result.json",
+      "sha256": "1cc9adee8b69b32101eabba53e66f9d89b4dc27403661b0c74e3c56f1e4dc0d1"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/main-independent/run.log",
+      "sha256": "74561cfe9f318d8f3da3453d12e3fc2a4f46d991db7abf2b5c7df22d629c03dd"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/matrix-baseline.json",
+      "sha256": "cdbb14f1d316157874b890ed41ca7a912a513cad9d951806dd69ba6493f9ea35"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/matrix-independent/result.json",
+      "sha256": "112411f7c64ef67c02ef27832235244ac5ac0377a883986276d2fbd96310d8d0"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/matrix-independent/run.log",
+      "sha256": "55e44600983ea0561cad1b0f4e57c7fed57c44784414260fe8d519da10f42fab"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/node-index.json",
+      "sha256": "9ccc36b49fd65e8f3a893dc7b4c96e9ee9cac1478f43c3a43fc08ef2ee4ea157"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/original-node/result.json",
+      "sha256": "40d79347dc889aa4fe4388f091b99b8011beb99d3c074a115235fbb8520e0da5"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/original-node/run.log",
+      "sha256": "17a92849637b1a213c544d9c55a6ffc8a336335f8282387f55338f50be849c17"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/outbox-independent/result.json",
+      "sha256": "9ef6f58d7efb1f88b8f6a545553c05bd595f708c5d9f1d4123e340b77cfba694"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/outbox-independent/run.log",
+      "sha256": "f126638ea69a38330519d812c25fbb0dbc992edd52dcb2bb25a1452fb76b6100"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/remaining-original/result.json",
+      "sha256": "17bd798dffe0acc586a8866c88507d1b082a022de72c79000d4c006dd0a0119f"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/remaining-original/run.log",
+      "sha256": "78a5ea869f2fae78076b6deafd2c4db1ee15cbfebec76de4c877b8ed64c0c5a8"
+    },
+    {
+      "path": "tests/independent/desktop/evidence/r1/start-audit.json",
+      "sha256": "344692370387aa2a1a2937d60fb830e9d20d06d5a7911bbbfc5100bd0ca00307"
+    }
+  ],
+  "updated_files": [
+    {
+      "path": "docs/coordination/agents/tester.md",
+      "sha256": "5bd9717f123110ade123bd66f4d70c39162653a18b057aa7352347786ea061e1"
+    },
+    {
+      "path": "docs/testing/phase-4-c12-windows-shell-report.md",
+      "sha256": "1e0ad10e663258c74ba1ab6bce21d00ad878ed2ba1398db7a1428ac46e8db740"
+    },
+    {
+      "path": "docs/testing/phase-4-c12-manual-checklist.md",
+      "sha256": "03c46f064c14befe1ca0640ced3048da344e6918770480449f3bb5852c06bd65"
+    },
+    {
+      "path": "docs/testing/phase-4-modular-agent-host-test-matrix.md",
+      "sha256": "5605ee048c1af90e22c08319863637380775fc4b2b21f146829eb3a7b3d78761"
+    }
+  ]
+}

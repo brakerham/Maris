@@ -46,3 +46,21 @@ ZIP/staging 的附加检查、UI-03/04 冲突与漂移门禁、HostClient/sessio
 没有注销/重启 Windows、修改 OS 启动项、拔屏/改显示器、强关真实程序、扫码/微信、Docker/PG、DeepSeek/provider 操作。没有新外部 profile、测试数据库或 owned Host。仅独立 Vitest runner 正常退出为失败状态，保留首次复现证据。
 
 本清单交给总控安排后续步骤；本轮不向用户索要立即操作，也不派发返修任务。只有获得实际现场证据后，才允许逐子条件更新对应矩阵状态。
+
+## C12-R1 状态与证据追加（2026-10-02）
+
+以上C12首次现场缺口完整保留。本轮真实Windows人工条件仍未执行，也不要求用户现在操作；新完整结果见 [R1报告](phase-4-c12-r1-outbox-windows-report.md)。
+
+| 条件 / 案例 | R1实际进展 | 当前现场状态与剩余条件 |
+| --- | --- | --- |
+| 原OUTBOX-001持久删除逻辑 / SUP-06 | 原PUB-11一次通过、新outbox26和实际main5通过，建议关闭原P1；证据在 `tests/independent/desktop/evidence/r1/` | SUP-06 blocked；真实native dialog仍unverified，需真实safeStorage隔离seed/read，以及owned UIA保留/关闭和明确删除有限集合；模拟AES-GCM不得输入真实app。 |
+| 全局setting冲突 / UI-04 | 新P1 REGISTRY-001，R1-SHELL-13首次失败；两module同key被接受 | failed；先交总控返修/新快照，本轮停止扩展。 |
+| 主preload、HostClient/session/supervisor | 独立部分公开行为通过；main/retention生命周期只有fake OS/FS/Host ports | 原SEC/SUP案例仍blocked，实际renderer/owned进程/端口/秘密隔离未验证。 |
+| 原生提示、普通close/Tray / CMP-02/03 | 无产品启动，未进行CDP/UIA/Tray操作 | blocked；仍需普通关闭策略、首次提示/重复关闭、Tray恢复及owned退出；E2E timer不替代。 |
+| OS退出/注销 / SUP-05 | 仅main mock before-quit/Hostshutdown通过，非Windows | not_run；正常退出/强关/注销与真实树/端口/锁仍缺，注销须后续明确安排。 |
+| OS开机启动 / CMP-04 | 没有修改实际启动项，setLoginItemSettings只mock | not_run；真实OS默认无项、显式启/禁只影响本应用仍缺，E2E抑制无证明力。 |
+| 多屏/主题/透明 / CMP-05/06 | 没有实际窗口或系统配置改变 | not_run；原多屏/DPI/拔屏/隐私/键盘/透明fallback/焦点/动效/色彩语义缺口全部保持。 |
+
+产品启动0/8、辅助Electron0/4。任务卡允许的真实safeStorage辅助seed/read和新EXE原生提示未执行，原因是新P1严重缺陷停止门禁，不能将其记录为环境不可用/审批拒绝或设备passed。没有新C:\MarisC12 profile/database/session，也没有用户真实AppData读取。
+
+总控确认registry返修和新快照后再安排复验及剩余现场场景。本测试智能体不派发新任务、不向用户要求立即点删除、改显示器/启动项或注销。本轮停在blocked / finished。
