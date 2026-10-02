@@ -1,0 +1,215 @@
+[
+  {
+    "phase": "original-registry",
+    "started_epoch_ms": 1790926569353,
+    "selected_executed": 1,
+    "passed": 1,
+    "failed": 0,
+    "nodes": [
+      {
+        "name": "R1 remaining Shell boundaries; virtual ports, no desktop or network R1-SHELL-13 | UI-04 | setting keys must be globally unique across contributions",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "phase": "adjacent-original",
+    "started_epoch_ms": 1790926583708,
+    "selected_executed": 6,
+    "passed": 6,
+    "failed": 0,
+    "nodes": [
+      {
+        "name": "R1 remaining Shell boundaries; virtual ports, no desktop or network R1-SHELL-10 | two distinct virtual contributions compile, no product module created",
+        "status": "passed"
+      },
+      {
+        "name": "R1 remaining Shell boundaries; virtual ports, no desktop or network R1-SHELL-11/module | duplicate identity fails closed",
+        "status": "passed"
+      },
+      {
+        "name": "R1 remaining Shell boundaries; virtual ports, no desktop or network R1-SHELL-11/profile | duplicate identity fails closed",
+        "status": "passed"
+      },
+      {
+        "name": "R1 remaining Shell boundaries; virtual ports, no desktop or network R1-SHELL-11/route | duplicate identity fails closed",
+        "status": "passed"
+      },
+      {
+        "name": "R1 remaining Shell boundaries; virtual ports, no desktop or network R1-SHELL-11/appearance | duplicate identity fails closed",
+        "status": "passed"
+      },
+      {
+        "name": "R1 remaining Shell boundaries; virtual ports, no desktop or network R1-SHELL-12 | incompatible UI major and noncanonical ASCII/version reject",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "phase": "registry-independent",
+    "started_epoch_ms": 1790926642358,
+    "selected_executed": 8,
+    "passed": 8,
+    "failed": 0,
+    "nodes": [
+      {
+        "name": "R2-REG-01/reverse=false/schema=1 | cross-module setting rejects atomically",
+        "status": "passed"
+      },
+      {
+        "name": "R2-REG-01/reverse=true/schema=1 | cross-module setting rejects atomically",
+        "status": "passed"
+      },
+      {
+        "name": "R2-REG-01/reverse=false/schema=2 | cross-module setting rejects atomically",
+        "status": "passed"
+      },
+      {
+        "name": "R2-REG-01/reverse=true/schema=2 | cross-module setting rejects atomically",
+        "status": "passed"
+      },
+      {
+        "name": "R2-REG-02/schema=1 | duplicate key within one module rejects",
+        "status": "passed"
+      },
+      {
+        "name": "R2-REG-02/schema=2 | duplicate key within one module rejects",
+        "status": "passed"
+      },
+      {
+        "name": "R2-REG-03 | distinct global keys remain legal in both module orders",
+        "status": "passed"
+      },
+      {
+        "name": "R2-REG-04 | failed compilation cannot poison subsequent legal registry or mutate frozen input",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "phase": "remaining-independent",
+    "started_epoch_ms": 1790926911765,
+    "selected_executed": 1,
+    "passed": 0,
+    "failed": 1,
+    "nodes": [
+      {
+        "name": "R2-UI-04-PATH | different route IDs sharing a route path must fail closed",
+        "status": "failed"
+      }
+    ]
+  },
+  {
+    "phase": "executor-compat",
+    "started_epoch_ms": 1790926661884,
+    "selected_executed": 26,
+    "passed": 26,
+    "failed": 0,
+    "nodes": [
+      {
+        "name": "desktop module registry accepts the Python canonical Profile grammar and its length boundaries",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant@01\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant@-1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant@1.0\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant@1@2\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily-finance.assistant@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant-name@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant.extra@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"Daily_finance.assistant@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.Assistant@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \" daily_finance.assistant@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant@1 \"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance．assistant@1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects non-canonical Profile \"daily_finance.assistant＠1\"",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects module and local names longer than 64 ASCII characters",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry strictly intersects compatible Host modules",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects extra fields and every registry conflict without partial output",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects cross-module setting collisions regardless of version/order: {\"schemaVersion\":1,\"reverse\":false}",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects cross-module setting collisions regardless of version/order: {\"schemaVersion\":1,\"reverse\":true}",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects cross-module setting collisions regardless of version/order: {\"schemaVersion\":2,\"reverse\":false}",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects cross-module setting collisions regardless of version/order: {\"schemaVersion\":2,\"reverse\":true}",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects repeated keys within one module with schemaVersion 1",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry rejects repeated keys within one module with schemaVersion 2",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry accepts distinct global keys without changing daily finance or Host intersection",
+        "status": "passed"
+      },
+      {
+        "name": "desktop module registry does not mutate input or retain seen state after a rejected compilation",
+        "status": "passed"
+      }
+    ]
+  }
+]

@@ -1,6 +1,9 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3 与 P4-A 已独立验收，OUTBOX-001已独立关闭。R3-REGISTRY完成设置键全局唯一修复、98项开发回归、新package及真实EXE；总控已核对稳定输入。REGISTRY-001仍待C12-R2独立关闭，随后继续未执行Windows/设备条件；P4-B未complete，P4-C/D尚未开始。
+当前阶段：P0～P3 与 P4-A 已独立验收，OUTBOX-001及设置键REGISTRY-001已独立关闭。C12-R2确认新P1 REGISTRY-PATH-001：不同路由ID共享path未被拒绝。发布R4路径返修，先对照UI-04完整已定义注册条件，再新产物验证；Windows未执行，P4-B未complete，P4-C/D尚未开始。
+
+- [C12-R2总控核对](docs/p4-c12-r2-route-blocked-coordinator-review.md)：关闭设置键缺陷，确认原UI-04路径冲突P1。
+- [R4-ROUTE执行任务](docs/coordination/prompts/p4-b7-r4-route-executor.md)：路径查重返修及打包前完整UI-04开发对照。
 
 - [R3总控核对](docs/p4-b7-r3-registry-coordinator-review.md)：324源码、5交付、52证据、140产物匹配。
 - [C12-R2独立续跑任务](docs/coordination/prompts/p4-c12-r2-registry-windows-tester.md)：原设置键失败复验及未执行Windows验收，不重复outbox42独立节点。

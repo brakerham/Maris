@@ -1,0 +1,14 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+stdout | r1-shell-boundaries.test.ts > R1 remaining Shell boundaries; virtual ports, no desktop or network > R1-SHELL-13 | UI-04 | setting keys must be globally unique across contributions
+R1 registry collision evidence {"globalSettingKey":"virtual_shared_setting","moduleIds":["virtual_alpha","virtual_beta"],"accepted":false,"acceptedModules":0,"rejectionCode":"desktop_registry_conflict","contract":"IF-003 section 5 global setting uniqueness"}
+
+ ✓ r1-shell-boundaries.test.ts (18 tests | 17 skipped) 6ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 17 skipped (18)
+   Start at  15:36:09
+   Duration  539ms (import 73%, transform 24%, tests 2%, worker 1%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r2/original-registry/result.json

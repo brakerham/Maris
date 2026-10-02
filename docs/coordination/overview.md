@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-02 15:22，Asia/Shanghai
+更新时间：2026-10-02 16:34，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3 与 P4-A 已独立验收，OUTBOX-001已独立关闭。R3设置键全局唯一修复及98开发回归、新package/EXE通过，总控核对324源码/140产物。C12-R2 ready待用户派发，先registry独立复验再未执行Windows；REGISTRY-001未独立关闭，SUP-06设备缺口保持，P4-B未complete，P4-C/D未开始。
+P0～P3与P4-A已独立验收，OUTBOX-001和设置键REGISTRY-001独立关闭。C12-R2新增REGISTRY-PATH-001 P1：不同routeId同path漏拒绝；独立15passed/1failed、兼容26passed。R4路径返修及UI-04完整已定义条件开发核对ready，测试停止；Windows仍未执行，P4-B未complete，P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,10 +13,10 @@ P0～P3 与 P4-A 已独立验收，OUTBOX-001已独立关闭。R3设置键全局
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R3核对通过，发布C12-R2与新起点 | 2026-10-02 15:22 | 用户派发独立续跑 | [总控核对](../p4-b7-r3-registry-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | C12-R2核对，关闭setting缺陷，冻结path及UI-04开发对照 | 2026-10-02 16:34 | 用户派发R4返修 | [总控核对](../p4-c12-r2-route-blocked-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | `review / finished`（R3） | 窄修复、开发自测、新包/EXE通过；停止 | 2026-10-02 15:01（收口记录） | 等独立复验，不自行继续 | [运行说明](../b7-r3-registry-running.md) |
-| 测试智能体 | 旧C12-R1停止；C12-R2 `ready / waiting_user` | 新任务准备完成，接单unverified | 2026-10-02 15:22（总控准备） | 原registry失败/相邻与Windows剩余 | [Prompt](prompts/p4-c12-r2-registry-windows-tester.md) |
+| 执行智能体 | 旧R3停止；R4 `ready / waiting_user` | path最小修复及UI-04完整开发对照，接单unverified | 2026-10-02 16:34（总控准备） | 打包前注册合同覆盖，再新产物 | [Prompt](prompts/p4-b7-r4-route-executor.md) |
+| 测试智能体 | `blocked / finished`（C12-R2） | setting复验通过，新path P1导致停止 | 2026-10-02 15:48 | 等新修复/快照，不自行继续 | [报告](../testing/phase-4-c12-r2-registry-windows-report.md) |
 
 ## 阶段 0 任务状态
 
@@ -109,12 +109,13 @@ P0～P3 与 P4-A 已独立验收，OUTBOX-001已独立关闭。R3设置键全局
 | P4-C12：Windows Shell 独立验收 | 既有测试智能体 | `blocked / finished` | P1 OUTBOX-001；24 项 1 failed/19 blocked/4 not_run；尚未 EXE | [报告](../testing/phase-4-c12-windows-shell-report.md)、[核对](../p4-c12-outbox-blocked-coordinator-review.md) |
 | P4-B7-R2-OUTBOX：保留与确认返修 | 既有执行智能体 | `review / finished`，接受为复验输入 | 27/90开发测试、package/EXE成功；293source/140out匹配 | [总控核对](../p4-b7-r2-outbox-coordinator-review.md) |
 | P4-C12-R1：outbox独立复验与剩余Windows验收 | 既有测试智能体 | `blocked / finished` | 原P1独立关闭；新REGISTRY-001为P1，59 passed/1 failed，尚未Windows | [核对](../p4-c12-r1-registry-blocked-coordinator-review.md) |
-| P4-B7-R3-REGISTRY：设置键全局冲突返修 | 既有执行智能体 | `review / finished`，接受为独立输入 | 定向28、完整98通过，新包/EXE通过；324source、140out匹配 | [核对](../p4-b7-r3-registry-coordinator-review.md) |
-| P4-C12-R2：设置键复验与Windows续跑 | 既有测试智能体 | `ready / waiting_user` | 原失败断言及相邻公开行为，再原24项未执行条件 | [Prompt](prompts/p4-c12-r2-registry-windows-tester.md)、[起点](snapshots/p4-c12-r2-start.sha256) |
+| P4-B7-R3-REGISTRY：设置键全局冲突返修 | 既有执行智能体 | 设置键修复已独立接受，旧执行finished | C12-R2原断言、相邻6、新8通过；setting缺陷关闭，不等于UI-04通过 | [R2核对](../p4-c12-r2-route-blocked-coordinator-review.md) |
+| P4-C12-R2：设置键复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | setting独立关闭；新增path P1，独立15passed/1failed，尚未Windows | [核对](../p4-c12-r2-route-blocked-coordinator-review.md) |
+| P4-B7-R4-ROUTE：路径冲突返修 | 既有执行智能体 | `ready / waiting_user` | 路径查重/开发测试；UI-04完整对照先于package | [Prompt](prompts/p4-b7-r4-route-executor.md)、[起点](snapshots/p4-b7-r4-route-start.sha256) |
 
 ## 当前阻塞与风险
 
-- OUTBOX-001已独立关闭；REGISTRY-001已由R3开发修复，等待C12-R2独立关闭。真实设备缺口仍存在，P4-B不提前complete。
+- OUTBOX-001和setting REGISTRY-001已独立关闭；当前path REGISTRY-PATH-001待修。UI-04仍failed；先完整开发对照再新包，设备缺口保留，P4-B不提前complete。
 - 原C12首次失败保留，新R2 EXE/asar才是复验对象；真实老化提示和原人工设备项仍待实际证据。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
@@ -139,7 +140,7 @@ P0～P3 与 P4-A 已独立验收，OUTBOX-001已独立关闭。R3设置键全局
 
 ## 下一次总控检查
 
-1. 用户将C12-R2全文发给既有测试智能体；执行与技术顾问停止。新任务接单unverified，使用新R3产物和固定起点。
-2. 测试方先原registry失败及相邻，成功后继续原24项未执行条件；不重复outbox42独立节点，旧失败与通过证据保留。
+1. 用户将R4-ROUTE全文发给既有执行智能体；测试与技术顾问停止，新任务接单unverified。
+2. 路径修复和完整UI-04已定义注册条件开发核对通过后生成新包；总控绑定新快照再派路径独立复验/未执行Windows，不重复不受影响的outbox42。
 3. 总控核对独立报告，决定新P1关闭及P4-B接受；真实原生提示和人工设备缺口如实保留，不重复package。
 4. P4-B独立接受后触发高保真参考图/模型策略提醒，再规划P4-C。

@@ -1,0 +1,74 @@
+{
+  "matrix_unique_ids": 120,
+  "columns": 12,
+  "counts": {
+    "A": {
+      "passed": 64,
+      "failed": 0,
+      "blocked": 0,
+      "not_run": 0
+    },
+    "B": {
+      "passed": 0,
+      "failed": 1,
+      "blocked": 19,
+      "not_run": 4
+    },
+    "C": {
+      "passed": 0,
+      "failed": 0,
+      "blocked": 0,
+      "not_run": 20
+    },
+    "D": {
+      "passed": 0,
+      "failed": 0,
+      "blocked": 0,
+      "not_run": 12
+    }
+  },
+  "original_b_first_11_columns_preserved": true,
+  "outside_b_prefix_suffix_preserved": true,
+  "append_files": {
+    "docs/testing/phase-4-c12-windows-shell-report.md": {
+      "original_prefix_sha256": "1e0ad10e663258c74ba1ab6bce21d00ad878ed2ba1398db7a1428ac46e8db740",
+      "original_prefix_bytes": 31409,
+      "appended_bytes": 1001,
+      "prefix_preserved": true
+    },
+    "docs/testing/phase-4-c12-manual-checklist.md": {
+      "original_prefix_sha256": "03c46f064c14befe1ca0640ced3048da344e6918770480449f3bb5852c06bd65",
+      "original_prefix_bytes": 9423,
+      "appended_bytes": 1001,
+      "prefix_preserved": true
+    }
+  },
+  "new_files_sha256": {
+    "docs/testing/phase-4-c12-r2-registry-windows-report.md": "a9c861d28241adfd2b5da7919b6828c995364ddb0f8a320c20a771cae927417e",
+    "tests/independent/desktop/evidence/r2/adjacent-original/result.json": "fdd2b0d563418dd4be6363076fab2428f418aa4fc663ee74cb01e9c14c3d9e2a",
+    "tests/independent/desktop/evidence/r2/adjacent-original/run.log": "9fb3149d8abb74c0914518dac37236edb6bc8366c855cb269b38aa456c19e307",
+    "tests/independent/desktop/evidence/r2/cache-cleanup.json": "be75aac7da0f324c73c15355def80806ed6a31d947110057872023ae25bb6df1",
+    "tests/independent/desktop/evidence/r2/diff-check.log": "77b58c58c002627399a26f24ed95806370ef4032178522178de2e49c38c1476a",
+    "tests/independent/desktop/evidence/r2/end-audit.json": "95acabe2d1d66dbbc9b3fd9ba07d33f698484ab50c9d05bbdac031fd7df7d32c",
+    "tests/independent/desktop/evidence/r2/executor-compat/result.json": "8266d7e57f5e513db51d7778878595ad43dc05c6e50db55cfdf8d5f16b7e954b",
+    "tests/independent/desktop/evidence/r2/executor-compat/run.log": "8f69a33fb7665536562867700afce954d3ba9cf5f5796cf476a8acc13789fdf0",
+    "tests/independent/desktop/evidence/r2/matrix-baseline.json": "838bb717f86897a289cd0407a588acee45dbe0856a4154ac151ddc8dad4c75d7",
+    "tests/independent/desktop/evidence/r2/node-index.json": "bde03508bb637a681005825c19cec8a9728e6485b72b1b4fdf9ecd2383deeb72",
+    "tests/independent/desktop/evidence/r2/original-registry/result.json": "3b742e045d884482f13adfb8999af8caa2294c10b4527dd2dd8accd3c6a1e21e",
+    "tests/independent/desktop/evidence/r2/original-registry/run.log": "881291ae7ebe5ea738ff3e8a3623ef503f03a8dee9b5f42156ba619f2af92559",
+    "tests/independent/desktop/evidence/r2/registry-independent/result.json": "eff64a65762ee2bc38386588122e407c58c22b8ddcbd584fc98b3d9c51db429d",
+    "tests/independent/desktop/evidence/r2/registry-independent/run.log": "303f2cbba0ef36f7b162d44db9c4bee07923b4cb195a5767b3625a7c8cbefb69",
+    "tests/independent/desktop/evidence/r2/remaining-independent/result.json": "20c03d42c5d0dc8a25058d4eb0112b06e9e114471d3dc567aa5458e579c4880d",
+    "tests/independent/desktop/evidence/r2/remaining-independent/run.log": "868d0741cc959346db427d9c581149d4986f6071895a46ad278775fb7b125917",
+    "tests/independent/desktop/evidence/r2/start-audit.json": "0352f89a82cbd51475f1815832228ca9b68c929bce0dd8d6bd52773357b47109",
+    "tests/independent/desktop/r2-compat-vitest.config.mjs": "ae6f90253e85c1e8662dc667e42fac465f58147bbb3afb96ef45b11239b9c884",
+    "tests/independent/desktop/r2-delivery.py": "57f185cec09af30f698a79f87f0e172569c6b926dbed5b17a70bd4260e6cf926",
+    "tests/independent/desktop/r2-registry.test.ts": "f7a656934cc4fa498e9d3a9a6627379570c63bac0a82d091a60651c94af988f4",
+    "tests/independent/desktop/r2-remaining.test.ts": "fa1462917a40b18e1fe0ea84f3b1c62e884fd0ad2a2774b4bc04176684998718",
+    "tests/independent/desktop/r2-vitest.config.mjs": "eb8b47d055c5e98abcc89ee383f056e8a98739ea562cfd5b19c3f836fb942aa2"
+  },
+  "product_starts": 0,
+  "auxiliary_electron_starts": 0,
+  "owned_resources": "not_started; not a cleanup test",
+  "git_writes": 0
+}

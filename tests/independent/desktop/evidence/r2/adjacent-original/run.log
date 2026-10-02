@@ -1,0 +1,11 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+ ✓ r1-shell-boundaries.test.ts (18 tests | 12 skipped) 10ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed | 12 skipped (18)
+   Start at  15:36:23
+   Duration  507ms (import 73%, transform 24%, tests 3%, worker 1%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r2/adjacent-original/result.json

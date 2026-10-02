@@ -2,23 +2,23 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12-R1 — outbox 独立复验与剩余 Windows Shell 验收
+- 当前任务：P4-C12-R2 — registry 独立复验与未执行 Windows 验收
 - 状态：`blocked`
-- 最近更新：2026-10-02 10:57 Asia/Shanghai
-- 可修改范围：新 `tests/independent/desktop/**`、C12 报告与人工清单、P4-B 矩阵状态和必要证据备注、本状态文件；产品与执行方文件只读
+- 最近更新：2026-10-02 15:48 Asia/Shanghai
+- 可修改范围：仅新增 r2-*、evidence/r2、新R2报告；旧主报告/清单只追加、矩阵仅B状态备注、自身角色；旧R1及产品只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：C12-R1 blocked / finished已交付；建议关闭旧OUTBOX-001，新REGISTRY-001等待总控，停止
-- 步骤开始时间：2026-10-01 23:51 Asia/Shanghai
-- 最近有效进展：2026-10-02 10:57 Asia/Shanghai
-- 最近心跳：2026-10-02 10:57 Asia/Shanghai
-- 下一检查点：等待总控确认缺陷/新快照/后续任务；不自动继续
-- 等待对象：总控裁定P4-C12-R1-REGISTRY-001返修与新快照；本任务停止测试扩展
-- 活动进程或会话：无；所有Vitest已退出，产品0/8、辅助Electron0/4，无owned Host/窗口/端口或新外部profile
+- 当前步骤：C12-R2脱敏报告与24项完整映射交付；原setting建议关闭，新path P1阻塞，停止
+- 步骤开始时间：2026-10-02 15:48 Asia/Shanghai
+- 最近有效进展：2026-10-02 15:48 Asia/Shanghai
+- 最近心跳：2026-10-02 15:48 Asia/Shanghai
+- 下一检查点：已安全停止；等待总控接收报告和裁定新路径P1，不自行续跑
+- 等待对象：总控裁定新P1与交付
+- 活动进程或会话：无；全部Vitest已退出，产品0/8、辅助Electron0/4；未创建外部profile
 - 重试次数：0
-- 最近输出：独立60 executed（59 passed/1 failed）、执行方27 passed；292 unchanged/4授权变化/0非授权差异/0missing，原8项不变，staged0
+- 最近输出：独立16：15 passed/1 failed；兼容26 passed；终点327：323 unchanged+4 authorized changed、0非授权/缺失、staged0；旧独立32项与EXE/asar/lock/fuses保持，追加/矩阵边界通过
 
 ## 任务与后续
 
@@ -39,6 +39,32 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-10-02 15:48 Asia/Shanghai — C12-R2 blocked / finished交付与停止
+
+- [R2完整报告](../../testing/phase-4-c12-r2-registry-windows-report.md)含24项完整原预期/历史部分/本次执行/具体缺口，原主报告和人工清单仅追加；矩阵仅B备注、状态仍0 passed/1 failed/19 blocked/4 not_run。
+- 原REGISTRY-001独立建议关闭：原13一次通过，相邻6、新registry8通过；新P1 P4-C12-R2-REGISTRY-PATH-001首次accepted:2，日志/JSON和最小复现保留，未改产品或重跑失败。开发26兼容单列；旧outbox42不重复。
+- 产品0/8、辅助Electron0/4；无外部profile/窗口/端口或owned进程，所有Vitest命令已退出。实际native dialog unverified，Windows与人工条件未执行。
+- 终点审核以 [end-audit](../../../tests/independent/desktop/evidence/r2/end-audit.json) 和 [delivery verification](../../../tests/independent/desktop/evidence/r2/delivery-verification.json) 为准；旧独立/R1报告/evidence精确保留，EXE/asar/lock/fuses不变；只清理本轮缓存，结果永久保留。
+- 交接总控：关闭旧设置键缺陷建议与新路由路径P1分别裁定；不派发后续角色、不进入P4-C、不Git写入，停在blocked / finished。
+
+
+### 2026-10-02 15:44 Asia/Shanghai — 原registry复验通过与新P1停止
+
+- 原R1-SHELL-13一次不变断言通过，相邻10/11/12共6通过，新增registry8通过；开发registry26一次兼容通过。
+- 新R2-UI-04-PATH首次失败：不同route ID同/virtual_shared path仍accepted:2，登记P1 P4-C12-R2-REGISTRY-PATH-001；停止扩大测试，原日志/JSON永久保留。
+- 原REGISTRY-001建议关闭仅setting边界，UI-04仍failed；后续自动/Windows未执行，不降低预期。
+- 产品0/8、辅助Electron0/4；没有owned窗口/端口/进程或外部profile需要关闭；所有Vitest退出。进入脱敏报告和终点审核，不修产品、不Git写入。
+
+
+### 2026-10-02 15:35 Asia/Shanghai — C12-R2接单与新起点通过
+
+- control 2026-10-02T15:22:00+08:00：既有测试智能体唯一负责人，R3输入已接受；OUTBOX-001关闭，执行与技术顾问停止
+- 新起点327/327 matched，0 missing/mismatch，清单0547e289b34619b491478fedc153a3f0c169635550ab9d4f881343ce1d613b9b；Git staged0；EXE/asar/lock固定摘要匹配
+- 新输出仅r2-*与evidence/r2，新报告/旧主报告及清单追加/矩阵B状态/自身日志；所有旧R1测试配置、报告和证据只读
+- 顺序：原设置键失败唯一节点→原registry相邻→新增边界/开发26兼容→原24项未覆盖自动条件→获准Windows；不重跑outbox42、旧60或完整98
+- 产品0/8、辅助Electron0/4；外部profile需新根并按工具审批，尚未创建或启动
+
 
 ### 2026-10-02 10:57 Asia/Shanghai — C12-R1 blocked / finished交付与停止
 

@@ -378,3 +378,11 @@ Warning：只读 Git 命令提示用户全局 Git ignore 无读取权限；命�
 - 新P1 P4-C12-R1-REGISTRY-001：跨module相同setting key仍接受，违反IF-003 §5全局唯一；[首次新失败](../../tests/independent/desktop/evidence/r1/matrix-independent/run.log)。UI-04变failed，其他不完整案例仍blocked/manual not_run。
 - R1整体blocked / finished，P4-B仍0 passed、1 failed、19 blocked、4 not_run；产品0/8、辅助Electron0/4，未进入Windows，不用原执行方EXE证据代替独立通过。
 - 原8项测试/首次交付不变，新清单/产物和授权边界见R1审计。本轮没有修产品或Git写操作，交回总控返修registry并安排剩余验收。
+
+
+## C12-R2 独立追加（2026-10-02）
+
+- [R2完整报告](phase-4-c12-r2-registry-windows-report.md)：blocked / finished。原setting REGISTRY-001不变断言一次通过、独立相邻共15 passed；新P1 P4-C12-R2-REGISTRY-PATH-001，同路径不同route ID仍accepted:2，首次失败已保留。开发26 passed单列，不抵消路径失败。
+- P4-B仍0 passed、1 failed、19 blocked、4 not_run；UI-04 failed原因现为path冲突，旧setting首次失败保持历史原样；OUTBOX-001关闭及旧outbox42证据不重复。
+- 产品0/8、辅助Electron0/4，因新P1停止。真实老化原生提示unverified，Windows/Tray/启动项/多屏/主题等原人工步骤继续not_run，未要求用户立即操作；未执行设置/安全/HTML/lazy/generated/ZIP/staging新门禁。
+- 证据：`tests/independent/desktop/evidence/r2/original-registry/`及`remaining-independent/`首次log/JSON；原文prefix、旧R1报告/evidence不改写。没有产品或Git写操作，交总控裁定。

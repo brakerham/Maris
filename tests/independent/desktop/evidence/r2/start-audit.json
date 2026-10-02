@@ -1,0 +1,11 @@
+{
+  "entries": 327,
+  "matched": 327,
+  "mismatch": [],
+  "missing": [],
+  "manifest_sha256": "0547e289b34619b491478fedc153a3f0c169635550ab9d4f881343ce1d613b9b",
+  "staged_paths": [],
+  "apps/desktop/out/Maris-win32-x64/Maris.exe": "1df694c0ca39818d1b2af7aad09eefa13383af186a8d0638d96a13882d604a94",
+  "apps/desktop/out/Maris-win32-x64/resources/app.asar": "64f84ddde164c4dea81ab3fcb6933728eda5acf3cfe4917828fe0f4f6dc3e161",
+  "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+}

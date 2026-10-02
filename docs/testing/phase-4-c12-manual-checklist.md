@@ -64,3 +64,11 @@ ZIP/staging 的附加检查、UI-03/04 冲突与漂移门禁、HostClient/sessio
 产品启动0/8、辅助Electron0/4。任务卡允许的真实safeStorage辅助seed/read和新EXE原生提示未执行，原因是新P1严重缺陷停止门禁，不能将其记录为环境不可用/审批拒绝或设备passed。没有新C:\MarisC12 profile/database/session，也没有用户真实AppData读取。
 
 总控确认registry返修和新快照后再安排复验及剩余现场场景。本测试智能体不派发新任务、不向用户要求立即点删除、改显示器/启动项或注销。本轮停在blocked / finished。
+
+
+## C12-R2 独立追加（2026-10-02）
+
+- [R2完整报告](phase-4-c12-r2-registry-windows-report.md)：blocked / finished。原setting REGISTRY-001不变断言一次通过、独立相邻共15 passed；新P1 P4-C12-R2-REGISTRY-PATH-001，同路径不同route ID仍accepted:2，首次失败已保留。开发26 passed单列，不抵消路径失败。
+- P4-B仍0 passed、1 failed、19 blocked、4 not_run；UI-04 failed原因现为path冲突，旧setting首次失败保持历史原样；OUTBOX-001关闭及旧outbox42证据不重复。
+- 产品0/8、辅助Electron0/4，因新P1停止。真实老化原生提示unverified，Windows/Tray/启动项/多屏/主题等原人工步骤继续not_run，未要求用户立即操作；未执行设置/安全/HTML/lazy/generated/ZIP/staging新门禁。
+- 证据：`tests/independent/desktop/evidence/r2/original-registry/`及`remaining-independent/`首次log/JSON；原文prefix、旧R1报告/evidence不改写。没有产品或Git写操作，交总控裁定。

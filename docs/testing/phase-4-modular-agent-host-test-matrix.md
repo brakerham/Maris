@@ -238,6 +238,13 @@
 - 新EXE产品0/8、辅助Electron0/4；因新P1停止在动态前。真实原生提示 unverified，Tray/注销/多屏/OS启动项等not_run保持，不能由模拟main窗口推导设备通过。
 - [R1完整报告](phase-4-c12-r1-outbox-windows-report.md)给出24项原预期、证据/缺口与原P1关闭建议；新结果在 `tests/independent/desktop/evidence/r1/`，原8项测试/首次交付只读。
 
+
+#### C12-R2 最新状态备注（2026-10-02）
+
+- 原setting REGISTRY-001原断言唯一一次通过，建议关闭；新P1 `P4-C12-R2-REGISTRY-PATH-001`：不同route ID同path被接受，原UI-04仍failed；历史首次失败/备注不改写。
+- 独立16 unique executed：15 passed、1 failed；开发registry26 passed兼容单列。整项仍0 passed、1 failed、19 blocked、4 not_run；产品0/8、辅助Electron0/4，因新P1停止，不将部分成功计入整项。
+- 旧outbox42不重跑；原生老化提示unverified、真实Windows及原人工条件未执行。[R2完整报告](phase-4-c12-r2-registry-windows-report.md)逐项保留完整原预期、历史部分、本轮执行和缺口。停止blocked / finished，最终接受归总控。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复

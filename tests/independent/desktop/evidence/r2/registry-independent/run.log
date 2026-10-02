@@ -1,0 +1,11 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+ ✓ r2-registry.test.ts (8 tests) 8ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  15:37:22
+   Duration  287ms (import 75%, transform 19%, tests 5%, worker 2%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r2/registry-independent/result.json

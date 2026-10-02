@@ -2,14 +2,32 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：R3-REGISTRY交付核对与C12-R2独立复验/Windows续跑派发
+- 当前任务：C12-R2核对、关闭设置键缺陷、冻结R4路由路径及UI-04完整开发验证
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-10-02 15:22，Asia/Shanghai
+- 最近更新：2026-10-02 16:34，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-10-02 16:34 Asia/Shanghai — 发布R4并保留新旧独立证据
+
+- 创建[C12-R2核对](../../p4-c12-r2-route-blocked-coordinator-review.md)、[R4 Prompt](../prompts/p4-b7-r4-route-executor.md)及[新起点](../snapshots/p4-b7-r4-route-start.sha256)，同步README/control/overview/project-coordination。
+- 路径合同限已复现完全相同path全局查重，保留routeId/setting等现有规则；同模块/跨模块、顺序/末尾冲突/合法输入和失败恢复补开发回归。
+- package前列UI-04完整已定义注册条件→代码/节点/结果，已有断言复用；未定义路由歧义或必须越界的真实缺口先取证交总控，不顺带改路由算法或真实业务UI。
+- R4仅registry.ts/registry.test.ts和交付路径，普通隔离副本沿用已验证工具/ZIP，新package/EXE各一次；原C12/R1/R2独立材料、旧失败与通过证据保持只读。
+- 测试C12-R2 blocked/finished、技术顾问停止；执行R4 ready/waiting_user、接单unverified。设置键和outbox缺陷关闭，新path待修，UI-04/P4-B未complete。
+- 本地未验收checkpoint，不推送远程；总控未启动任何产品/测试/服务或编辑其他角色日志。
+
+### 2026-10-02 16:29 Asia/Shanghai — 接手C12-R2，新路径冲突独立失败
+
+- 读取必读、C12-R2任务/报告、首次测试/JSON、registry/renderer实际消费者与原UI-04。总控不运行产品或测试。
+- 实际复算22/22新增交付摘要；327起点323 unchanged/4授权文档变化，旧主报告/清单前缀不变，原120 ID/预期保持；新R3 EXE/asar/lock复算一致。
+- 独立16唯一节点15 passed/1 failed，兼容26 passed单列。关闭原REGISTRY-001设置键缺陷：原断言及相邻、新8边界通过；整个UI-04仍failed。
+- 接受新P1 REGISTRY-PATH-001：不同routeId相同path被compileRegistry接受，原UI-04明确包括path冲突；当前实现仅查routeId，首次失败与代码一致。
+- 前轮范围只修setting，未要求完整UI-04开发对照。本轮先冻结路径最小修复和UI-04已定义条件的一次完整开发检查，再允许新package；不改变验收口径或降低严重级别。
+- 当前检查点为R4任务与新起点；测试blocked/finished、执行/技术顾问停止，未接新任务，不进入真实前端。
 
 ### 2026-10-02 15:22 Asia/Shanghai — 发布C12-R2并同步稳定输入
 
@@ -274,15 +292,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：R3证据核对和C12-R2任务/新起点准备完成
-- 步骤开始时间：2026-10-02 15:02，Asia/Shanghai
-- 最近有效进展：2026-10-02 15:22，Asia/Shanghai（324源码、140产物和续跑边界）
-- 最近心跳：2026-10-02 15:22，Asia/Shanghai
-- 下一检查点：用户派发C12-R2，测试方登记新起点并复验原registry失败
-- 等待对象：用户把C12-R2发给既有测试智能体；接单unverified
-- 活动进程或会话：总控未启动产品/测试；执行R3已finished，测试旧C12-R1停止
+- 当前步骤：C12-R2核对完成，setting关闭，R4路径返修及UI-04开发对照准备
+- 步骤开始时间：2026-10-02 16:27，Asia/Shanghai
+- 最近有效进展：2026-10-02 16:34，Asia/Shanghai（22交付、327起点、16独立节点与新返修边界）
+- 最近心跳：2026-10-02 16:34，Asia/Shanghai
+- 下一检查点：用户派发R4，执行登记新起点并在package前完整核对UI-04
+- 等待对象：用户把R4-ROUTE发给既有执行智能体；接单unverified
+- 活动进程或会话：总控未启动产品/测试；测试C12-R2 blocked/finished，执行旧R3停止
 - 重试次数：总控没有复跑测试或启动产品
-- 最近输出：R3总控核对、C12-R2 Prompt及快照；REGISTRY-001独立关闭待验
+- 最近输出：C12-R2总控核对、R4 Prompt及起点；设置键独立关闭、新path缺陷待修
 
 ### 2026-09-29 02:14 Asia/Shanghai — 接受 DYN-R1 编排失败并发布单次 root promotion 恢复
 
