@@ -31,4 +31,10 @@ export function Shell({ modules, runtime, theme, privacyMode, onTheme, onPrivacy
 
 export function EmptyModulePage() { return <section><h1>模块尚未连接</h1><p>连接本地 Host 后，可用模块会出现在导航中。</p></section>; }
 export function SettingsPage() { return <section><h1>设置</h1><p>设备设置保存在本机；不会保存密码、令牌、nonce 或消息正文。</p></section>; }
-export function RouteErrorBoundary() { return <section role="alert"><h1>页面暂时无法打开</h1><p>请重试。错误详情已安全隐藏。</p><button type="button" onClick={() => location.reload()}>重试</button></section>; }
+export function RouteErrorBoundary({ onRetry, isRetrying = false }: Readonly<{
+  onRetry?: () => void; isRetrying?: boolean;
+}> = {}) {
+  return <section role="alert"><h1>页面暂时无法打开</h1><p>请重试。错误详情已安全隐藏。</p>
+    {onRetry && <button type="button" disabled={isRetrying} onClick={onRetry}>{isRetrying ? "正在重试" : "重试"}</button>}
+  </section>;
+}

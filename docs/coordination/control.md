@@ -2,10 +2,10 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-10-02T22:08:00+08:00`
+- 指令版本：`2026-10-02T23:25:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：C12-R3 blocked/finished已核对：28唯一独立节点27 passed/1 failed，兼容52 passed。PATH-001原断言及9边界通过，独立关闭；接受新P1 LAZY-001，父路由错误替换Shell。发布R5-LAZY，先UI-02完整恢复开发验证，再新包；OUTBOX/setting关闭保持，P4-B未complete。
-- 需要用户参与：把 `docs/coordination/prompts/p4-b7-r5-lazy-executor.md` 全文发给既有执行智能体。R5 ready/waiting_user、接单unverified；测试C12-R3与技术顾问停止。无需现在操作窗口，不重复微信或已通过outbox/setting/path独立节点。
+- 当前动作：R5-LAZY review/finished已核对：390源码、7交付、60证据、140产物匹配，387起点384未变/3授权变化。执行方完整132 passed、新包1次、新EXE19/19通过；接受为独立输入，LAZY-001与UI-02尚未独立关闭。发布C12-R4，原失败不变断言→独立恢复边界→剩余Windows。P4-B未complete。
+- 需要用户参与：把 `docs/coordination/prompts/p4-c12-r4-lazy-windows-tester.md` 全文发给既有测试智能体。C12-R4 ready/waiting_user、接单unverified；R5执行与技术顾问finished停止。无需现在操作窗口，不重复微信或已关闭outbox/setting/path独立节点。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；远端 `main` 当前为 `251b4a2`，其后的 E5 协调与返修单元只在本地提交，尚未推送。现有远端与本地提交仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 - 前端实现提醒门禁：P4-B Shell 完成独立验收后、创建首个 P4-C 财务驾驶舱技术方案或执行 Prompt 之前，总控必须主动提醒用户进入真实前端界面阶段，并先复核两张既定参考图、高保真信息架构、页面/组件切片、视觉验收方式和模型分工。不得直接沿用 Shell 占位页开始编码；必须让用户先确认当时可用模型及分工策略。当前建议重新评估“强推理/视觉模型（现为 GPT-6 Astra）负责界面方案、复杂交互和关键审阅，编码工作模型（现为 GPT-6 Sol）负责组件实现、重构和常规测试”，模型能力或额度变化时以届时讨论为准。
 
@@ -130,7 +130,8 @@
 | P4-C12-R2 注册缺陷复验与未执行Windows | 既有测试智能体；`blocked / finished` | 设置键缺陷独立关闭，新路径冲突P1；16唯一节点15passed/1failed，产品/辅助0次 | 原R2首次失败/通过只读，停止；UI-04仍failed，等新修复快照 |
 | P4-B7-R4-ROUTE 路径冲突与UI-04开发核对 | 路径修复独立接受；旧执行finished | C12-R3原路径1/新边界9通过，PATH-001关闭；UI-04完整缺口仍blocked | 不重复path返修或旧package；新lazy问题由R5处理 |
 | P4-C12-R3 路径复验与剩余Windows | 既有测试智能体；`blocked / finished` | 独立27 passed/1 failed，兼容52 passed；LAZY-001新P1，产品/辅助0次 | 原首次失败和已通过材料只读；停止，等修复快照 |
-| P4-B7-R5-LAZY 模块故障局部隔离与恢复 | 既有执行智能体；`ready / waiting_user`，接单unverified | renderer/Shell及必要辅助、开发测试；完整UI-02对照再一次package/EXE | 不改registry/outbox/依赖或高保真业务UI，不独立关闭缺陷、不启动下一任务 |
+| P4-B7-R5-LAZY 模块故障局部隔离与恢复 | 既有执行智能体；`review / finished` | 390源码/7交付/60证据/140产物匹配；132开发回归、新包及19项EXE门禁记录通过；独立输入接受 | 停止产品修改；LAZY-001未关闭，不自行启动后续 |
+| P4-C12-R4 lazy复验与Windows续跑 | 既有测试智能体；`ready / waiting_user`，接单unverified | 新固定清单绑定R5；原失败不变断言、独立恢复行为及剩余24项条件 | 不改产品、不重打包、不重复旧已通过节点，不自行宣布P4-B complete |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |

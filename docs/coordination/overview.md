@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-02 22:08，Asia/Shanghai
+更新时间：2026-10-02 23:25，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，OUTBOX-001、设置键REGISTRY-001和PATH-001独立关闭。C12-R3新增LAZY-001 P1：模块lazy失败使Shell/导航/Agent入口消失。独立27passed/1failed、兼容52passed；发布R5局部隔离及完整UI-02恢复验证。Windows仍未执行，P4-B未complete，P4-C/D未开始。
+P0～P3与P4-A已独立验收，OUTBOX-001、设置键REGISTRY-001和PATH-001独立关闭。R5-LAZY局部隔离/恢复实现已交付，390源码、7交付、60证据、140产物由总控复算匹配。执行方132项开发回归及19项EXE门禁通过；发布C12-R4独立复验，LAZY-001仍待关闭。Windows条件未独立完成，P4-B未complete，P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,10 +13,10 @@ P0～P3与P4-A已独立验收，OUTBOX-001、设置键REGISTRY-001和PATH-001独
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | C12-R3核对，path关闭，发布R5-LAZY | 2026-10-02 22:08 | 用户派发执行任务 | [核对](../p4-c12-r3-lazy-blocked-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R5交付核对，发布C12-R4 | 2026-10-02 23:25 | 用户派发既有测试智能体 | [核对](../p4-b7-r5-lazy-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | 旧R4停止；R5 `ready / waiting_user` | 模块错误隔离/完整恢复验证，接单unverified | 2026-10-02 22:08（总控准备） | 新起点与开发行为 | [Prompt](prompts/p4-b7-r5-lazy-executor.md) |
-| 测试智能体 | `blocked / finished`（C12-R3） | 原path通过，新lazy隔离P1，Windows未启动 | 2026-10-02（最终交付） | 等修复/快照，不自行继续 | [报告](../testing/phase-4-c12-r3-route-windows-report.md) |
+| 执行智能体 | `review / finished`（R5-LAZY） | 局部隔离/恢复、132回归、新包及19项EXE门禁交付 | 2026-10-02（最终交付已核对） | 停止，等待独立结论 | [运行说明](../b7-r5-lazy-running.md) |
+| 测试智能体 | 旧C12-R3停止；C12-R4 `ready / waiting_user` | 原lazy失败复验、独立恢复及剩余Windows；接单unverified | 2026-10-02 23:25（总控准备） | 复算新固定输入后接单 | [Prompt](prompts/p4-c12-r4-lazy-windows-tester.md) |
 
 ## 阶段 0 任务状态
 
@@ -113,12 +113,13 @@ P0～P3与P4-A已独立验收，OUTBOX-001、设置键REGISTRY-001和PATH-001独
 | P4-C12-R2：设置键复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | setting独立关闭；新增path P1，独立15passed/1failed，尚未Windows | [核对](../p4-c12-r2-route-blocked-coordinator-review.md) |
 | P4-B7-R4-ROUTE：路径冲突返修 | 既有执行智能体 | 路径独立接受，旧执行finished | C12-R3原节点及9边界通过，PATH-001关闭；UI-04尚有缺口 | [核对](../p4-c12-r3-lazy-blocked-coordinator-review.md) |
 | P4-C12-R3：路径复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | path关闭，新LAZY-001；独立27passed/1failed，兼容52passed | [报告](../testing/phase-4-c12-r3-route-windows-report.md) |
-| P4-B7-R5-LAZY：模块错误局部恢复 | 既有执行智能体 | `ready / waiting_user` | 局部隔离/显式重试/健康切换/状态保持，UI-02完整开发对照 | [Prompt](prompts/p4-b7-r5-lazy-executor.md)、[起点](snapshots/p4-b7-r5-lazy-start.sha256) |
+| P4-B7-R5-LAZY：模块错误局部恢复 | 既有执行智能体 | `review / finished` | 稳定独立输入接受；132开发回归、新包及19项EXE门禁已核对 | [核对](../p4-b7-r5-lazy-coordinator-review.md) |
+| P4-C12-R4：lazy复验与Windows续跑 | 既有测试智能体 | `ready / waiting_user` | 原失败不变断言、独立恢复边界及剩余设备条件；接单unverified | [Prompt](prompts/p4-c12-r4-lazy-windows-tester.md)、[起点](snapshots/p4-c12-r4-start.sha256) |
 
 ## 当前阻塞与风险
 
-- OUTBOX-001、setting REGISTRY-001、path REGISTRY-PATH-001已独立关闭；LAZY-001新P1，UI-02 failed/UI-04 blocked。R5先完整模块隔离/恢复开发行为，再新包；设备缺口保留，P4-B不提前complete。
-- 原C12/R1/R2首次失败与通过材料保留，本轮只用R4新EXE/asar复验；真实老化提示和原人工设备项仍待实际证据。
+- OUTBOX-001、setting REGISTRY-001、path REGISTRY-PATH-001已独立关闭；LAZY-001已开发修复但待独立复验，UI-02 failed/UI-04 blocked保持测试方最新状态。R5新包已固定，C12-R4不重打包；设备缺口保留，P4-B不提前complete。
+- 原C12/R1/R2/R3首次失败与通过材料保留，本轮只使用R5新EXE/asar独立复验；真实老化提示、Windows chunk故障恢复及原人工设备项仍待实际证据。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
 - 历史记录：R3 首轮只完成了执行方历史 fixture 和回滚断言准备；总控复核时 Docker Desktop/backend 进程均不存在。migration 摘要仍为起点值，缺陷没有修复。续跑必须使用 131 文件 R3-R1 新快照，不得重用旧 130 文件快照或重写已准备的 fixture。
@@ -142,7 +143,7 @@ P0～P3与P4-A已独立验收，OUTBOX-001、设置键REGISTRY-001和PATH-001独
 
 ## 下一次总控检查
 
-1. 用户将R5-LAZY全文发给既有执行智能体；测试C12-R3与技术顾问停止，执行接单unverified。
-2. 执行修复模块局部边界和完整UI-02恢复行为，开发回归通过后一次新package/EXE；总控核对新快照后再安排独立复验。
+1. 用户将C12-R4全文发给既有测试智能体；R5执行与技术顾问停止，测试接单unverified。
+2. 测试方绑定新快照，先原lazy失败不变断言，再独立恢复边界，通过后接续剩余Windows；不重打包或重复未受影响全量回归。
 3. 总控核对独立报告，决定新P1关闭及P4-B接受；真实原生提示和人工设备缺口如实保留，不重复package。
 4. P4-B独立接受后触发高保真参考图/模型策略提醒，再规划P4-C。
