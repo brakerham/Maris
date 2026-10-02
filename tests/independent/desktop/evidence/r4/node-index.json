@@ -1,0 +1,15 @@
+{
+  "independent_executed": 1,
+  "passed": 0,
+  "failed": 1,
+  "nodes": [
+    {
+      "name": "R3-UI-02-LAZY | lazy chunk failure leaves Shell and other navigation available",
+      "status": "failed"
+    }
+  ],
+  "executor_compat_executed": 0,
+  "new_recovery_cases_executed": 0,
+  "product_starts": 0,
+  "auxiliary_electron_starts": 0
+}

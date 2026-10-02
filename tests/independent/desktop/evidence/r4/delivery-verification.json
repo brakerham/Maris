@@ -1,0 +1,40 @@
+{
+  "matrix_unique_ids": 120,
+  "columns": 12,
+  "all_original_first_11_columns_preserved": true,
+  "all_case_statuses_preserved": true,
+  "outside_b_bytes_preserved": true,
+  "append_files": {
+    "docs/testing/phase-4-c12-windows-shell-report.md": {
+      "prefix_preserved": true,
+      "original_bytes": 33371,
+      "original_sha256": "3835ea18282b5f2e3eb3cea14c04e87e55b7cb278c67daa6fa212d7235248663",
+      "appended_bytes": 870
+    },
+    "docs/testing/phase-4-c12-manual-checklist.md": {
+      "prefix_preserved": true,
+      "original_bytes": 11385,
+      "original_sha256": "2e481189a9fa1e38cf16a390e0e58d681905610d4bc1b93c72bbb65387b77b8c",
+      "appended_bytes": 870
+    }
+  },
+  "new_files_sha256": {
+    "docs/testing/phase-4-c12-r4-lazy-windows-report.md": "ca9c530e543f68df117d860c18fb80c6b1cfeed20815a433eef301561045db33",
+    "tests/independent/desktop/evidence/r4/baseline.json": "05d726e8c2c1639608cbfd8537ce926081f478388fcc9ab535dd38de43260955",
+    "tests/independent/desktop/evidence/r4/diff-check.log": "77b58c58c002627399a26f24ed95806370ef4032178522178de2e49c38c1476a",
+    "tests/independent/desktop/evidence/r4/end-audit.json": "e372384d10806b68dce3a597fa7589e4ef808c68ce146406c1804d653c210abd",
+    "tests/independent/desktop/evidence/r4/node-index.json": "dd98f850ca0038446fedcc082f57dbb390145770b82e8883a8a45539f6a825be",
+    "tests/independent/desktop/evidence/r4/original-lazy/result.json": "f3b3d34dfacec1b652a97239ac402c1a71a52676cf197bf905dc29dd6ff8ee52",
+    "tests/independent/desktop/evidence/r4/original-lazy/run.log": "468aa6f8e1289b3d6508f27cbd9999f53b07d622c0b3f18d8b657df0b1160c37",
+    "tests/independent/desktop/evidence/r4/readonly-source-observation.json": "678e2bc7ec9f3c6c385ac8eb842b2c365b07df2eb70eaba98dc587633ba0d895",
+    "tests/independent/desktop/evidence/r4/start-audit.json": "d9132b8d6e5e468244cdc933903106b16a911beefc93a6bb38086cc9306432f9",
+    "tests/independent/desktop/evidence/r4/temp-cleanup.json": "c909489a22368e3e5556539a741b0a391187a1b4373e4d543d84b015b8280f5b",
+    "tests/independent/desktop/r4-audit.py": "b7cbef6a0dda097f44d8636778c63e5d44f3117e280076ceed8ff0ddfb3e6c76",
+    "tests/independent/desktop/r4-delivery.py": "85440a7256c8a3eb5bbd4eb65ddb8e50bd56cf98c756571d0fec70aefa324ccc",
+    "tests/independent/desktop/r4-vitest.config.mjs": "d036bf48d9c00497c043db14e62303b748540abd795cdb4f4b34ec88133dc667"
+  },
+  "product_starts": 0,
+  "auxiliary_starts": 0,
+  "owned_resources": "not_started, not successful cleanup evidence",
+  "git_writes": 0
+}

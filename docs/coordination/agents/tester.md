@@ -2,23 +2,23 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12-R3 — 路径独立复验与剩余Windows验收
+- 当前任务：P4-C12-R4 — lazy隔离独立复验与剩余Windows验收
 - 状态：`blocked`
-- 最近更新：2026-10-02 21:55 Asia/Shanghai
-- 可修改范围：仅新增r3-*、evidence/r3、新R3报告；旧主报告/清单追加、矩阵B状态备注、自身角色；所有旧测试/报告/evidence及产品只读
+- 最近更新：2026-10-02 23:37 Asia/Shanghai
+- 可修改范围：仅新增r4-*、evidence/r4、新R4报告；旧主报告/清单追加、矩阵B状态备注、自身角色；旧public/r1/r2/r3及产品只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：blocked / finished交付与停止
-- 步骤开始时间：2026-10-02 21:55 Asia/Shanghai
-- 最近有效进展：2026-10-02 21:55 Asia/Shanghai
-- 最近心跳：2026-10-02 21:55 Asia/Shanghai
-- 下一检查点：已停止，等待总控验收/裁定
+- 当前步骤：blocked / finished交付并停止
+- 步骤开始时间：2026-10-02 23:37 Asia/Shanghai
+- 最近有效进展：2026-10-02 23:37 Asia/Shanghai
+- 最近心跳：2026-10-02 23:37 Asia/Shanghai
+- 下一检查点：已停止，交总控验收/裁定
 - 等待对象：总控
-- 活动进程或会话：无；产品0/8、辅助Electron0/4
+- 活动进程或会话：见本轮evidence/r4；目标未启动时产品0/8、辅助0/4
 - 重试次数：0
-- 最近输出：独立28：27 passed/1 failed；开发52passed；终点356=352不变+4授权、0非授权/缺失、staged0；原54独立与包/fuses保持
+- 最近输出：原1 executed：0passed/1failed，故障alert未观测/原因unverified；终点393=389未变+4授权，0越界/缺失，旧独立82不变，产品0/8、辅助0/4
 
 ## 任务与后续
 
@@ -39,6 +39,23 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-10-02 23:37 Asia/Shanghai — C12-R4 blocked / finished交付并停止
+
+- [R4报告](../../testing/phase-4-c12-r4-lazy-windows-report.md)和原24项完整预期/证据/缺口交付；旧主报告/人工清单仅追加，矩阵B仅备注且原状态全部保持。\n- 原R3-UI-02-LAZY一次失败：alert absent但Shell/nav/Agent在；不能确认mock命中或加载完成。未建议关闭LAZY-001，未报新产品P0/P1，不重跑或改旧断言。后续独立/兼容/Windows/注入均0 not_run。\n- 终点393：389 unchanged+4授权，无非授权/missing，旧独立82保持；source389/out140/resources67及EXE/asar/lock/fuses保持。120ID/12列/原前11列/所有状态/B外bytes/旧文档prefix保持；staged0，diff-check exit0，仅LF→CRLF warning。\n- 全部Vitest已退出，无活动session；产品0/8、辅助0/4、无外部profile/实际窗口/监听/owned进程；只清理本轮缓存且已验证绝对范围/无reparse，首次log/JSON保留。\n- 交总控：决定有限故障命中与完成观察契约，原因尚unverified。旧OUTBOX/setting/PATH关闭保持，不修改产品或Git，不派发角色/任务、不进入P4-C、不自行续跑。
+
+
+### 2026-10-02 23:32 Asia/Shanghai — C12-R4 原lazy复验首次失败，停止后续；只读判定证据限制并交付
+
+- 原r3-remaining.test.tsx精确节点唯一一次，旧文件/断言不变。actual chunkFailureShown=false、Shell/nav/Agent=true，失败发生在期待错误文本处；未达到原Shell保留断言。\n- 不能从这一结果报新P1或断言原Shell消失仍存在；注入是否命中/200ms观察时限是否足够未证实。任务卡第一阶段失败即停止，不重跑、改断言/目标/扩大测试。\n- 后续独立恢复/兼容/Windows全部未执行；下一步只读来源/首次JSON核对、24项报告及终点，目标已安全停止。
+
+
+### 2026-10-02 23:30 Asia/Shanghai — C12-R4 接单与权威新起点通过
+
+- control 2026-10-02T23:25:00+08:00，既有测试唯一负责人；R5稳定输入、旧OUTBOX/setting/PATH不重开。
+- 新起点及外部不可变包输入分开核对，无历史协调漂移误assert。接下来原lazy失败一次，再独立恢复，后续未执行公开/Windows。
+- 原public/r1/r2/r3测试/报告/evidence只读；新增r4输出与自身日志，动态根需要审批且不使用真实AppData。
+
 
 ### 2026-10-02 21:55 Asia/Shanghai — C12-R3 blocked / finished交付与停止
 

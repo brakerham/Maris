@@ -1,6 +1,9 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，OUTBOX-001、设置键REGISTRY-001及PATH-001已独立关闭。R5-LAZY修复交付已由总控核对为稳定独立输入；LAZY-001仍待C12-R4原断言及恢复行为复验，Windows条件继续验收。P4-B未complete，P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收；outbox、设置键、路径缺陷已独立关闭。R5-LAZY修复待独立验收，C12-R4原节点未观测到预设故障提示，尚不能判定原因或关闭LAZY-001。发布C12-R4-R1，只补故障命中/异步完成观察，成功后接续恢复及Windows；产品/包保持不变，P4-B未complete、P4-C/D未开始。
+
+- [C12-R4观察阻塞总控核对](docs/p4-c12-r4-observation-blocked-coordinator-review.md)：原首次失败保留，故障是否触发尚未确认，不新增产品缺陷。
+- [C12-R4-R1观察与续跑任务](docs/coordination/prompts/p4-c12-r4-r1-observation-tester.md)：先观察故障命中，再验证隔离/恢复，不改产品或重打包。
 
 - [R5-LAZY总控核对](docs/p4-b7-r5-lazy-coordinator-review.md)：390源码、7交付、60证据、140产物匹配，执行方132项开发回归及19项EXE门禁记录已核对。
 - [C12-R4独立复验任务](docs/coordination/prompts/p4-c12-r4-lazy-windows-tester.md)：原lazy失败断言、独立恢复边界及剩余Windows条件，不重打包。

@@ -1,0 +1,25 @@
+
+ RUN  v5.0.2 D:/CodeX_gap/wife-system/tests/independent/desktop
+
+stdout | r3-remaining.test.tsx > R3-UI-02-LAZY | lazy chunk failure leaves Shell and other navigation available
+{"caseId":"R3-UI-02-LAZY","chunkFailureShown":false,"shellPresent":true,"navigationPresent":true,"agentPanelPresent":true,"data":"virtual_only","evidenceLayer":"real_renderer_in_jsdom_with_virtual_bridge_and_failed_chunk"}
+
+ ❯ r3-remaining.test.tsx (1 test | 1 failed) 767ms
+   × R3-UI-02-LAZY | lazy chunk failure leaves Shell and other navigation available 761ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  r3-remaining.test.tsx > R3-UI-02-LAZY | lazy chunk failure leaves Shell and other navigation available
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ r3-remaining.test.tsx:17:32
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  23:30:53
+   Duration  1.91s (import 54%, tests 43%, transform 3%)
+
+JSON report written to D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r4/original-lazy/result.json

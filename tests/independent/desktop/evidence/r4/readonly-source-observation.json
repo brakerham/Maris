@@ -1,0 +1,14 @@
+{
+  "source_sha256": {
+    "tests/independent/desktop/r3-remaining.test.tsx": "343c8624e425174d87e763037a602467cf0cc0d831fd6ea15c7169018793edcc",
+    "apps/desktop/src/renderer/main.tsx": "965fee5324e4ba300c92fbec5c2a5ea6cba9ab2146d099b19c9d375583537246",
+    "apps/desktop/src/renderer/module-routes.tsx": "54978c6a864bba1fed2fb2ac26a47be6a5033c920d51c55c5f053f09e5cdfd8e",
+    "apps/desktop/src/shell/Shell.tsx": "21b5353f6a38b30da185ab4efe667b6dd5db83ddc723c357ab28157edfcfefff"
+  },
+  "entry": "main imports actual DesktopApp + rendererRootOptions from ./module-routes and renders compiled registry",
+  "loader_source": "module-routes builtin daily_finance_home dynamically imports ../modules/daily-finance/DailyFinancePage",
+  "mock_target": "r3 test targets apps/desktop/src/modules/daily-finance/DailyFinancePage",
+  "module_resolution_static": "same canonical source file; not proof mock factory executed",
+  "observation_limit": "old test polls at most 20 iterations * 10ms; no lazy invocation or pending/finished instrumentation in original log",
+  "dynamic_cause": "unverified; no target rerun"
+}

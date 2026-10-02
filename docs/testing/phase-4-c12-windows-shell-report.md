@@ -394,3 +394,11 @@ Warning：只读 Git 命令提示用户全局 Git ignore 无读取权限；命�
 - 独立28 unique：27 passed/1 failed；开发registry52 passed单列。设置3/ZIP6/staging7通过限逻辑证据；产品0/8、辅助Electron0/4，Windows未执行。
 - UI-02现failed；UI-04路径问题复验通过但完整独立复核未完成为blocked，P4-B仍0 passed/1 failed/19 blocked/4 not_run。旧OUTBOX/setting保持关闭，旧outbox42/setting节点不重复。
 - 真实native dialog unverified、Tray/启动项/注销/多屏/主题人工步骤原样保留未执行，不要求用户即时动作。旧正文prefix和旧R1/R2报告/evidence保持。交总控裁定新lazy故障，测试角色停止。
+
+
+## C12-R4 独立追加（2026-10-02）
+
+- [R4报告](phase-4-c12-r4-lazy-windows-report.md)：blocked / finished。原R3-UI-02-LAZY精确节点一次失败，actual alert不存在、Shell/nav/Agent存在；无法确认故障命中/完成，不建议关闭LAZY-001，也不把结果新增定级为产品P1。
+- 独立0 passed/1 failed；新增恢复/兼容均not_run。按原失败门禁停止，产品0/8、辅助Electron0/4、Windows chunk注入0；真实Windows/native/人工条件仍未执行。
+- 旧OUTBOX/setting/PATH保持关闭，旧27成功与outbox42不重跑；B仍0 passed/1 failed/19 blocked/4 not_run。原首次代码/报告/evidence保持，当前主报告和清单仅追加。
+- 首次JSON/log在evidence/r4/original-lazy，静态来源/观察限制在readonly-source-observation.json；交总控裁定有限测试观察契约，未改产品或Git。

@@ -253,6 +253,13 @@
 - 独立28 unique：27 passed/1 failed；开发52兼容单列。B整项仍0 passed/1 failed/19 blocked/4 not_run；产品0/8、辅助Electron0/4，Windows/native/人工条件未验，停止blocked / finished。
 - [R3报告](phase-4-c12-r3-route-windows-report.md)保留24项完整原预期/历史/本轮/缺口，实际审计在evidence/r3，最终接受属总控。
 
+
+#### C12-R4 最新状态备注（2026-10-02）
+
+- 原lazy失败节点唯一一次复验失败：未观测alert，Shell/nav/Agent在；未确认注入命中/完成，不能建议关闭LAZY-001，也不报新已定级产品P1。
+- 第一阶段失败即停止：独立0 passed/1 failed，新恢复/兼容not_run，产品0/8、辅助0/4、chunk注入0。B整体仍0 passed/1 failed/19 blocked/4 not_run；UI-02旧failed未关闭，UI-04blocked与人工not_run保持。
+- 旧已通过outbox/setting/path不重跑、不重开。[R4完整报告](phase-4-c12-r4-lazy-windows-report.md)逐项保留预期/历史/本次/缺口。交blocked / finished等待总控裁定观察契约，不修改产品或Git。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复
