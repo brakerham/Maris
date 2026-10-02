@@ -2,24 +2,44 @@
 
 - 角色：代码实现、自测、集成和执行子任务管理
 - 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R3-REGISTRY — 设置键全局唯一返修
-- 状态：`review / finished`
-- 最近更新：2026-10-02 14:46，Asia/Shanghai
-- 可修改范围：registry.ts、registry.test.ts、本轮运行说明/source清单与本日志；其他文件只读。
+- 当前任务：P4-B7-R4-ROUTE — 路由路径冲突返修与 UI-04 完整开发核对
+- 状态：review / finished
+- 最近更新：2026-10-02 17:26，Asia/Shanghai
+- 可修改范围：registry.ts（仅 path 查重）、registry.test.ts、R4 运行说明/source 清单与本日志；已停止修改。
 
 ## 当前执行快照
 
-- 运行状态：`finished`
-- 当前步骤：R3 registry修复、自测、新package/EXE交付review，停止执行
-- 步骤开始时间：2026-10-02 14:40（真实EXE启动），Asia/Shanghai
-- 最近有效进展：修复前4项红灯保留；修复后定向28/28、完整98/98、类型/lint通过；package1/1、static7/7、EXE1/1门禁19/19
-- 最近心跳：2026-10-02 14:46 Asia/Shanghai
-- 下一检查点：总控核对324项source快照和5文件交付，再派REGISTRY-001独立复验；本执行方不续跑
-- 等待对象：总控；后续测试活动unverified，本轮未启动任何其他角色
-- 活动进程或会话：产品已自然exit0，无timeout/forced cleanup；0自有进程/监听/窗口；package1/1、EXE1/1均结束
-- 重试次数：无package/EXE重试；一次目标启动前pnpm数组误报修正已用完，首次记录保留
-- 最近输出：[R3运行说明](D:/CodeX_gap/wife-system/docs/b7-r3-registry-running.md)、[324项清单](D:/CodeX_gap/wife-system/apps/desktop/b7-r3-registry-source.sha256)、C:\MarisRegistryR3\R3-20261002-111556\evidence\closeout.json
+- 运行状态：finished
+- 当前步骤：路径最小修复/UI-04 完整映射/有限自测/新包与真实 EXE 交付 review，停止执行
+- 步骤开始时间：2026-10-02 17:20:24.275（真实 EXE 实际启动），Asia/Shanghai
+- 最近有效进展：红灯2保留；定向54 passed、唯一完整14files/124passed、类型/lint通过；package1/1、static7/7、EXE1/1门禁19/19，自然exit0；旧树/新输入收口复算全匹配
+- 最近心跳：2026-10-02 17:26，Asia/Shanghai
+- 下一检查点：总控核对353项source和5文件交付，再派PATH-001独立复验；本执行方不启动其他任务
+- 等待对象：总控；其他角色后续状态 unverified，本轮没有启动任何其他角色
+- 活动进程或会话：package/EXE/审计会话均结束，0自有进程/监听/窗口，无forced cleanup/timeout，tests/tmp已安全删除
+- 重试次数：package/EXE没有重试；目标前工具复制1次纠正，后目标只读证据脚本转义错误补证，全部首次/中间材料保留
+- 最近输出：[R4运行说明](D:/CodeX_gap/wife-system/docs/b7-r4-route-running.md)、[353项清单](D:/CodeX_gap/wife-system/apps/desktop/b7-r4-route-source.sha256)、C:\MarisRouteR4\R4-20261002-164600\evidence\closeout.json
 
+### 2026-10-02 17:26 — P4-B7-R4-ROUTE 交付 review / finished
+
+- 起点352/352 matched，SHA256 5a39eb876fef6d4965c5fc89bb1cf3000a098fe56a7d6985e54ffdf2f52964ad，staged=0；最终349起点不变/3授权修改/2新增，5文件交付，source353排除自身。
+- 产品仅registry.ts:40新增route_path token；完全相同path与routeId分开全局查重，既有desktop_registry_conflict/setting/canonical/Host交集保持；未变path schema或归一化语义。
+- 原26断言保留，新增26开发节点；首次跨模块双顺序2failed/26filter未选保留；修复后定向54passed；TypeScript/lint exit0；唯一完整14files/124passed、0failed/skip。独立执行0，重复节点不累加。
+- UI-04完整已定义条件逐项→代码/开发节点/结果列于运行说明，未发现必须越界的明确注册缺口；Shell/main/preload无具体moduleId条件业务分支只读核对，不冒充实际设备/第二模块/lazy错误隔离通过。未定义路径模式/大小写语义不扩大。
+- 新普通source352、deps12443/实际12677、dist73/tools3及fixed lock/ZIP/真实裸pnpm首项/Forge版本全部核验；仅同步两源码。旧R3source323/deps12443/full12677/dist73/out140/evidence52/profile62前后全部matched/无目录增加，旧R2/LOCALZIP无写。
+- package1/1：16:55:28.478—16:55:36.049+08:00，7571ms、exit0、stderr0；static7/7，resources67/67、asar11files/out140/386493060bytes，fuses冻结/污染0/staging0；双bundle来源绑定包含route_path/routeId/globalsetting。
+- EXE1/1：17:20:24.275—17:20:59.110+08:00，34835ms，19/19；directspawn/loopbackCDP、新虚拟profile/Python3.14.7；自然exit0，无timeout/forcedcleanup，0owned进程/监听/窗口，2ownedPython均退出。
+- EXEd5868736cbdf63f717f0ea853141b980d06cefc10a3c05196e8856cbe3a4de2b；asar9a4da50b2c5583e6f2337bdff43e399cd454c360fa6169b1667a1e4506c337d4；outmanifest3e00e2a4851181ba7b6351ce9b0e6c1523f320b002f500403ffa654f08a942df。
+- 所有首次失败/警告保留：复制pnpm-native文件名纠正1次；只读binding命令转义初始/中间语法错误、完整更正调用中断未执行、functions编排解析失败未执行；最终补证成功，无追加目标预算。工具不可用间隔unverified，恢复重读control并更新心跳，未改时钟。
+- 仅删绝对路径检查且无reparse的新tests/tmp，保留profile/包/脱敏证据。原生提示/Tray/注销/启动项/多屏留测试任务；不独立关闭PATH-001或宣称UI-04/P4-B complete。
+- 无Git写操作、独立材料/报告/矩阵/冻结/control/其他角色/其他产品变更；不启动C12-R3/P4-C、Docker/PG/OpenClaw/微信/DeepSeek/provider或用户点击要求；已停止。
+### 2026-10-02 16:43 — P4-B7-R4-ROUTE 接单
+
+- control 2026-10-02T16:34:00+08:00；唯一执行负责人，352 项起点全部匹配，总摘要 5a39eb876fef6d4965c5fc89bb1cf3000a098fe56a7d6985e54ffdf2f52964ad，staged=0。
+- 只读使用 C12-R2 首次 path 失败，未执行独立节点；设置键与 OUTBOX 已独立关闭不重做。
+- 保留 26 原断言，仅加入路径拒绝及必要完整注册边界开发回归；先 UI-04 映射，再决定 package；未定义路径语义不扩展。
+- 新专属 C 根普通复制来源只为 R3 固定工具/依赖，不链接旧树、不安装/联网；旧 R3/R2/LOCALZIP 均只读，禁止其他角色/产品/Git 写操作。
+- 初始只读搜索曾使用 Windows 不支持的 glob 参数、猜错三个文件路径；用 rg --files 和明确路径重新读取，未执行产品或写文件。
 ### 2026-10-02 14:46 — P4-B7-R3-REGISTRY 交付 review / finished
 
 - 起点323/323 matched，摘要bdae626369a75718e7010b336b35fbfb260eaf89e52dc4d998c45ce19cc2ccec；最终5授权文件、320起点不变/3授权修改/2新增，source324项排除自身，全部逐文件及可复算总摘要在清单/closeout/最终消息。
@@ -1536,3 +1556,23 @@
 - 真实EXE仅一次：固定Node direct spawn、Playwright仅loopback CDP附加，323项input/full新profile和已验证Python，30秒原生退出/120秒硬上限；失败不重跑，不要求用户操作。
 
 - R3 最终只读汇总路径纠正：resources/python → resources；首次记录保留，旧树与新依赖字节复算全部成功。无新增测试/package/EXE，review / finished。
+
+### 2026-10-02 16:53 — R4 开发注册门禁
+
+- 原 26 断言保留，新增 26；红灯 2 failed/26 filter未选保留，修复只加入 route_path 独立 token；定向 54 passed，类型/lint exit0。UI-04 完整映射已写 R4 运行说明，无明确越界缺口，静态分支检查不替代运行。
+- 普通 copy 核验 352source/12677actual dep/12443frozen/73dist/3tools，0diff。目标前一次 pnpm-native 文件名纠正已使用；首次手工依赖 copy exit0 记录误填，以 copy-result exit1 成功码为准。
+- package 0/1、EXE 0/1；下一检查点：唯一完整 desktop 回归及固定工具/ZIP/旧树前置，可能超过五分钟的旧树逐文件核验保留会话，返回即更新。
+
+### 2026-10-02 16:55 — R4 package 前完整门禁
+
+- 唯一完整 14files/124passed/0failed/skip（98+新增26），定向54不重复累计；UI-04每项已映射，静态与行为层级区分。产品两文件摘要 a3bc948f...03edf、ddfb2e91...9a8c2b，副本一致。
+- 旧R3source323/deps12443/full12677/dist73/out140/evidence52/profile62精确匹配；新source352/deps/dist、fixed lock/ZIP、裸pnpm第一候选/Forge真实spawn均通过。
+- 最新control16:34未变；进入package唯一1/1，下一检查点是package exit及static7/7，新源码→asar绑定；不改变版本/系统/网络或旧树。
+
+### 2026-10-02 17:17 — R4 外部工具中断后恢复
+- package1/1 exit0（7.571秒）、static7/7 已写；绑定只读脚本存在转义语法错误，初始与中间脚本保留。完整更正工具调用被中断，重新读取确认文件仍是旧错误版本，没有绑定JSON；该调用未落盘，未执行产品。
+- 会话中断期间控制不可用，未连续观测区间unverified；control16:34未变，恢复立即更新心跳。继续仅只读补证，EXE0/1。
+
+### 2026-10-02 17:19 — R4 新包绑定通过及 EXE 检查
+- 双bundle path/routeId/setting token 与新源绑定；asar9a4da50b...337d4，EXEd5868736...4de2b。只读脚本转义首次与中间语法错误保留，没有重跑package；函数工具一次解析失败未执行任何命令。
+- control16:34未变，prelaunch新profile/0owned/fixedPython/352source通过；EXE1/1、120秒硬上限，下一检查点19实际门禁与自然退出、零owned资源。

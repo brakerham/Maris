@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-02 16:34，Asia/Shanghai
+更新时间：2026-10-02 18:25，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，OUTBOX-001和设置键REGISTRY-001独立关闭。C12-R2新增REGISTRY-PATH-001 P1：不同routeId同path漏拒绝；独立15passed/1failed、兼容26passed。R4路径返修及UI-04完整已定义条件开发核对ready，测试停止；Windows仍未执行，P4-B未complete，P4-C/D未开始。
+P0～P3与P4-A已独立验收，OUTBOX-001和设置键REGISTRY-001独立关闭。R4路径修复、UI-04开发映射及新包已核对为稳定输入：353源码/5交付/59证据/140产物匹配，开发124通过。发布C12-R3路径独立复验及剩余Windows；PATH-001/UI-04/P4-B尚未接受，P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,10 +13,10 @@ P0～P3与P4-A已独立验收，OUTBOX-001和设置键REGISTRY-001独立关闭�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | C12-R2核对，关闭setting缺陷，冻结path及UI-04开发对照 | 2026-10-02 16:34 | 用户派发R4返修 | [总控核对](../p4-c12-r2-route-blocked-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R4核对完成，发布C12-R3 | 2026-10-02 18:25 | 用户派发测试任务 | [总控核对](../p4-b7-r4-route-coordinator-review.md) |
 | 技术顾问 | `complete / finished`（P4-D14） | 677 行技术裁定、21 项冻结内容与六项待决策已由总控接受 | 2026-09-28 16:47 | 保持停止；不运行 R0 或创建后续任务 | [D14 技术裁定](../phase-4-d14-r0-driver-recovery-advice.md) |
-| 执行智能体 | 旧R3停止；R4 `ready / waiting_user` | path最小修复及UI-04完整开发对照，接单unverified | 2026-10-02 16:34（总控准备） | 打包前注册合同覆盖，再新产物 | [Prompt](prompts/p4-b7-r4-route-executor.md) |
-| 测试智能体 | `blocked / finished`（C12-R2） | setting复验通过，新path P1导致停止 | 2026-10-02 15:48 | 等新修复/快照，不自行继续 | [报告](../testing/phase-4-c12-r2-registry-windows-report.md) |
+| 执行智能体 | `review / finished`（R4） | path修复与开发完整映射、新包/EXE已交 | 2026-10-02 17:29 | 保持停止，等独立结果 | [运行说明](../b7-r4-route-running.md) |
+| 测试智能体 | 旧R2停止；R3 `ready / waiting_user` | 原path失败及未执行Windows续跑，接单unverified | 2026-10-02 18:25（总控准备） | 新起点/原节点 | [Prompt](prompts/p4-c12-r3-route-windows-tester.md) |
 
 ## 阶段 0 任务状态
 
@@ -111,12 +111,13 @@ P0～P3与P4-A已独立验收，OUTBOX-001和设置键REGISTRY-001独立关闭�
 | P4-C12-R1：outbox独立复验与剩余Windows验收 | 既有测试智能体 | `blocked / finished` | 原P1独立关闭；新REGISTRY-001为P1，59 passed/1 failed，尚未Windows | [核对](../p4-c12-r1-registry-blocked-coordinator-review.md) |
 | P4-B7-R3-REGISTRY：设置键全局冲突返修 | 既有执行智能体 | 设置键修复已独立接受，旧执行finished | C12-R2原断言、相邻6、新8通过；setting缺陷关闭，不等于UI-04通过 | [R2核对](../p4-c12-r2-route-blocked-coordinator-review.md) |
 | P4-C12-R2：设置键复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | setting独立关闭；新增path P1，独立15passed/1failed，尚未Windows | [核对](../p4-c12-r2-route-blocked-coordinator-review.md) |
-| P4-B7-R4-ROUTE：路径冲突返修 | 既有执行智能体 | `ready / waiting_user` | 路径查重/开发测试；UI-04完整对照先于package | [Prompt](prompts/p4-b7-r4-route-executor.md)、[起点](snapshots/p4-b7-r4-route-start.sha256) |
+| P4-B7-R4-ROUTE：路径冲突返修 | 既有执行智能体 | `review / finished`，接受为独立输入 | 路径/完整注册开发对照、新包及19门禁通过 | [核对](../p4-b7-r4-route-coordinator-review.md) |
+| P4-C12-R3：路径复验与Windows续跑 | 既有测试智能体 | `ready / waiting_user` | 原路径断言、必要注册边界及未执行24项条件 | [Prompt](prompts/p4-c12-r3-route-windows-tester.md)、[起点](snapshots/p4-c12-r3-start.sha256) |
 
 ## 当前阻塞与风险
 
-- OUTBOX-001和setting REGISTRY-001已独立关闭；当前path REGISTRY-PATH-001待修。UI-04仍failed；先完整开发对照再新包，设备缺口保留，P4-B不提前complete。
-- 原C12首次失败保留，新R2 EXE/asar才是复验对象；真实老化提示和原人工设备项仍待实际证据。
+- OUTBOX-001和setting REGISTRY-001已独立关闭；path REGISTRY-PATH-001已完成执行方修复、新包及开发映射，等待C12-R3独立关闭。UI-04整项尚未通过，Windows/人工缺口保留，P4-B不提前complete。
+- 原C12/R1/R2首次失败与通过材料保留，本轮只用R4新EXE/asar复验；真实老化提示和原人工设备项仍待实际证据。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
 - 历史记录：R3 首轮只完成了执行方历史 fixture 和回滚断言准备；总控复核时 Docker Desktop/backend 进程均不存在。migration 摘要仍为起点值，缺陷没有修复。续跑必须使用 131 文件 R3-R1 新快照，不得重用旧 130 文件快照或重写已准备的 fixture。
@@ -140,7 +141,7 @@ P0～P3与P4-A已独立验收，OUTBOX-001和设置键REGISTRY-001独立关闭�
 
 ## 下一次总控检查
 
-1. 用户将R4-ROUTE全文发给既有执行智能体；测试与技术顾问停止，新任务接单unverified。
-2. 路径修复和完整UI-04已定义注册条件开发核对通过后生成新包；总控绑定新快照再派路径独立复验/未执行Windows，不重复不受影响的outbox42。
+1. 用户将C12-R3全文发给既有测试智能体；执行R4与技术顾问停止，测试接单unverified。
+2. 测试先原R2路径节点及必要注册边界，通过后接续原24项未执行Windows；不重复已关闭缺陷或构建。
 3. 总控核对独立报告，决定新P1关闭及P4-B接受；真实原生提示和人工设备缺口如实保留，不重复package。
 4. P4-B独立接受后触发高保真参考图/模型策略提醒，再规划P4-C。

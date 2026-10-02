@@ -37,6 +37,7 @@ export function compileRegistry(values: readonly unknown[]): readonly DesktopMod
       `profile:${item.agentPanel.profileId}`,
       `appearance:${item.companion.appearanceId}`,
       ...item.routes.map((route) => `route:${route.routeId}`),
+      ...item.routes.map((route) => `route_path:${route.path}`),
       ...item.settings.map((setting) => `setting:${setting.key}`)
     ];
     for (const key of keys) {

@@ -19,6 +19,12 @@ function compileProfile(profileId: string) {
 }
 
 describe("desktop module registry", () => {
+  it.each([false, true])("rejects cross-module identical paths with distinct route IDs (reverse=%s)", (reverse) => {
+    const conflicting = { ...alternateContribution, routes: [{ routeId: "alternate_home", path: dailyFinanceContribution.routes[0]!.path }] };
+    const values = reverse ? [conflicting, dailyFinanceContribution] : [dailyFinanceContribution, conflicting];
+    expect(() => compileRegistry(values)).toThrow("desktop_registry_conflict");
+  });
+
   it("accepts the Python canonical Profile grammar and its length boundaries", () => {
     const name64 = `a${"b".repeat(63)}`;
     expect(() => compileProfile("daily_finance.assistant@1")).not.toThrow();
@@ -129,5 +135,75 @@ describe("desktop module registry", () => {
     const validBefore = structuredClone(valid);
     expect(compileRegistry(valid)).toEqual(validBefore);
     expect(valid).toEqual(validBefore);
+  });
+
+  it.each([false, true])("rejects identical paths within one module with distinct IDs (reverse=%s)", (reverse) => {
+    const routes = [{ routeId: "virtual_first", path: "/virtual_shared" }, { routeId: "virtual_last", path: "/virtual_shared" }];
+    expect(() => compileRegistry([{ ...alternateContribution, routes: reverse ? routes.toReversed() : routes }])).toThrow("desktop_registry_conflict");
+  });
+
+  it("rejects a path collision in the last route of the last module without output or mutation", () => {
+    const third = { ...alternateContribution, moduleId: "third", agentPanel: { profileId: "third.assistant@1", title: "Third" },
+      settings: [], companion: { appearanceId: "third", label: "Third" },
+      routes: [{ routeId: "third_home", path: "/third" }, { routeId: "third_last", path: "/daily" }] };
+    const values = structuredClone([dailyFinanceContribution, alternateContribution, third]);
+    const before = structuredClone(values);
+    let output: ReturnType<typeof compileRegistry> | undefined;
+    expect(() => { output = compileRegistry(values); }).toThrow("desktop_registry_conflict");
+    expect(output).toBeUndefined();
+    expect(values).toEqual(before);
+    expect(compileRegistry([dailyFinanceContribution, alternateContribution])).toEqual([dailyFinanceContribution, alternateContribution]);
+  });
+
+  it("continues to reject equal route IDs even when paths differ", () => {
+    const conflicting = { ...alternateContribution, routes: [{ routeId: "daily_finance_home", path: "/different" }] };
+    for (const values of [[dailyFinanceContribution, conflicting], [conflicting, dailyFinanceContribution]]) {
+      expect(() => compileRegistry(values)).toThrow("desktop_registry_conflict");
+    }
+  });
+
+  it("accepts distinct paths and keeps route ID and path namespaces separate", () => {
+    const virtual = { ...alternateContribution, routes: [{ routeId: "alternate_home", path: "/route:daily_finance_home" },
+      { routeId: "virtual_extra", path: "/module:daily_finance" }] };
+    const values = [dailyFinanceContribution, virtual];
+    expect(compileRegistry(values)).toEqual(values);
+    expect(compileRegistry(values.toReversed())).toEqual(values.toReversed());
+  });
+
+  it("preserves input paths exactly without normalizing case or trailing slashes", () => {
+    const virtual = { ...alternateContribution, routes: [{ routeId: "virtual_case", path: "/Daily" },
+      { routeId: "virtual_slash", path: "/daily/" }] };
+    expect(compileRegistry([dailyFinanceContribution, virtual])[1]!.routes).toEqual(virtual.routes);
+  });
+
+  it.each(["missing", "disabled"])("excludes %s Host modules from the compatible registry", (mode) => {
+    const registry = compileRegistry([dailyFinanceContribution, alternateContribution]);
+    const summary = { module_id: "daily_finance", version: "1.0.0", enabled: mode !== "disabled", profile_ids: ["daily_finance.assistant@1"],
+      api_prefixes: ["/api/v1/finance"], settings_schema_version: 1 };
+    expect(intersectModules(registry, mode === "missing" ? [] : [summary])).toEqual([]);
+  });
+
+  it.each(["module", "route", "setting", "appearance"])("strictly validates ASCII %s identifiers without normalization", (field) => {
+    for (const id of ["Upper", "virtual-name", " virtual", "virtual ", "virtual\n", "虚拟", "ｖirtual", "", "a".repeat(65)]) {
+      const value = { ...alternateContribution,
+        ...(field === "module" ? { moduleId: id } : {}),
+        ...(field === "route" ? { routes: [{ routeId: id, path: "/alternate" }] } : {}),
+        ...(field === "setting" ? { settings: [{ key: id, schemaVersion: 1 }] } : {}),
+        ...(field === "appearance" ? { companion: { appearanceId: id, label: "Virtual" } } : {}) };
+      expect(() => compileRegistry([value])).toThrow();
+    }
+    expect(() => compileRegistry([{ ...alternateContribution, moduleId: "a".repeat(64) }])).not.toThrow();
+  });
+
+  it.each(["01.0.0", "1.01.0", "1.0.01", "1.0", "1.0.0-beta", " 1.0.0", "1.0.0\n", "１.0.0"])("rejects noncanonical SemVer %j", (version) => {
+    expect(() => compileRegistry([{ ...alternateContribution, version }])).toThrow();
+  });
+
+  it.each([0, 2, "1"])("rejects incompatible or mistyped hostUiMajor %j", (hostUiMajor) => {
+    expect(() => compileRegistry([{ ...alternateContribution, hostUiMajor }])).toThrow();
+  });
+
+  it("rejects undeclared nested contribution fields", () => {
+    expect(() => compileRegistry([{ ...alternateContribution, routes: [{ ...alternateContribution.routes[0], surprise: true }] }])).toThrow();
   });
 });

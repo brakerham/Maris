@@ -2,14 +2,23 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：C12-R2核对、关闭设置键缺陷、冻结R4路由路径及UI-04完整开发验证
+- 当前任务：R4稳定交付核对与C12-R3路径独立复验/Windows续跑派发
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-10-02 16:34，Asia/Shanghai
+- 最近更新：2026-10-02 18:25，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-10-02 18:25 Asia/Shanghai — 核对R4并发布C12-R3
+
+- 角色为头脑风暴总控，读取必读/最新control/任务、源码与原始测试及外部清单，未运行测试、产品、构建或服务。
+- 实际复算353/353 source、5/5 delivery、59/59 evidence、140/140 out；352起点349 unchanged/3授权变化，0missing，原26断言保持。
+- 新path查重独立于route ID/global setting；UI-04开发映射及54定向/124完整结果已交付，结构证据与设备验收分列。package/EXE各一次成功，19门禁和资源原记录通过。
+- 接受R4为独立输入，PATH-001仍待独立关闭，UI-04/P4-B未complete。outbox/setting关闭保持；不重复其独立成功、完整124或构建。
+- 创建[R4核对](../../p4-b7-r4-route-coordinator-review.md)、[C12-R3 Prompt](../prompts/p4-c12-r3-route-windows-tester.md)及新起点；同步入口/control/overview/project-coordination。
+- 执行R4与顾问停止，测试ready/waiting_user接单unverified；不进入P4-C，真实前端/参考图/模型策略提醒门禁保留。只建未验收本地checkpoint，不push、不编辑其他角色。
 
 ### 2026-10-02 16:34 Asia/Shanghai — 发布R4并保留新旧独立证据
 
@@ -292,15 +301,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：C12-R2核对完成，setting关闭，R4路径返修及UI-04开发对照准备
-- 步骤开始时间：2026-10-02 16:27，Asia/Shanghai
-- 最近有效进展：2026-10-02 16:34，Asia/Shanghai（22交付、327起点、16独立节点与新返修边界）
-- 最近心跳：2026-10-02 16:34，Asia/Shanghai
-- 下一检查点：用户派发R4，执行登记新起点并在package前完整核对UI-04
-- 等待对象：用户把R4-ROUTE发给既有执行智能体；接单unverified
-- 活动进程或会话：总控未启动产品/测试；测试C12-R2 blocked/finished，执行旧R3停止
+- 当前步骤：R4核对完成，C12-R3路径复验与Windows续跑准备就绪
+- 步骤开始时间：2026-10-02 18:15，Asia/Shanghai
+- 最近有效进展：2026-10-02 18:25，Asia/Shanghai（353源码/5交付/59证据/140产物匹配，新任务与起点）
+- 最近心跳：2026-10-02 18:25，Asia/Shanghai
+- 下一检查点：用户派发C12-R3；测试登记新起点并运行原路径失败节点
+- 等待对象：用户把C12-R3发给既有测试智能体；接单unverified
+- 活动进程或会话：总控未启动产品/测试，执行R4和顾问finished停止
 - 重试次数：总控没有复跑测试或启动产品
-- 最近输出：C12-R2总控核对、R4 Prompt及起点；设置键独立关闭、新path缺陷待修
+- 最近输出：R4总控核对、C12-R3 Prompt及起点；PATH-001等待独立复验
 
 ### 2026-09-29 02:14 Asia/Shanghai — 接受 DYN-R1 编排失败并发布单次 root promotion 恢复
 
