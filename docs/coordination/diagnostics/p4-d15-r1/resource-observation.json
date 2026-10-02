@@ -1,0 +1,24 @@
+{
+  "scope": "only_owned_roots_and_journal_registered_workers",
+  "processChecks": [
+    {
+      "pid": 38256,
+      "notPresent": true
+    },
+    {
+      "pid": 35256,
+      "notPresent": true
+    },
+    {
+      "pid": 39044,
+      "notPresent": true
+    },
+    {
+      "pid": 38832,
+      "notPresent": true
+    }
+  ],
+  "allFourNotPresent": true,
+  "globalZeroResidualClaim": false,
+  "wholeSystemEnumerationUsed": false
+}

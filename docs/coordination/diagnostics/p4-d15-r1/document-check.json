@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "documentLines": 126,
+  "localLinks": 29,
+  "missingLinks": [],
+  "badTableRows": [],
+  "replacementCharacters": false,
+  "sequenceValid": true,
+  "phasesOrdered": true,
+  "extraMetadataMatched": true,
+  "firstReceipt": {
+    "total": 17,
+    "matched": 17,
+    "failures": [],
+    "manifestSha256": "1eeec3c963dd0bf6178802f82a314687a7b24e88ccf7a8878d614698371c5620"
+  },
+  "currentFrozen": {
+    "total": 6,
+    "matched": 6,
+    "failures": [],
+    "manifestSha256": "4b0519d1bd632343da94ffbeb6d776b069c12cf41e519f046c08ca7dd8ad5427"
+  },
+  "documentSha256": "d31489fa2cedfefe1c814be6ace5104df9efdaf9ba4921ed27a48439d9b09c4a",
+  "deliveryLinkDeferredUntilSeal": true,
+  "targetExecuted": false
+}

@@ -2,24 +2,24 @@
 
 - 角色：技术选型咨询、工程教学与教学子任务统筹
 - 连接状态：用户侧边栏独立技术顾问已确认接单
-- 当前任务：P4-D15 — 异常传播链有限诊断
-- 状态：`blocked`
-- 最近更新：2026-10-03 00:54，Asia/Shanghai
-- 输入版本：control `2026-10-03T00:13:00+08:00`、P4-D15 任务卡、429 项固定输入、R4/R4-R1 首次观察与 R5 实际源码
-- 可修改范围：仅 `docs/phase-4-d15-lazy-propagation-advice.md`、本角色文件及 `docs/coordination/diagnostics/p4-d15/**`；产品、旧测试/证据、依赖和外部 R5 根只读。不调用其他智能体，不运行 Electron/EXE/sidecar/package，不修改 Git
+- 当前任务：P4-D15-R1 — 生产入口观察通道前置阶段取证
+- 状态：`review`
+- 最近更新：2026-10-03 03:05，Asia/Shanghai
+- 输入版本：control `2026-10-03T01:07:00+08:00`、D15-R1任务卡、464项新固定输入、D15总控核对/冻结源码/首次结果及真实入口
+- 可修改范围：仅 `docs/phase-4-d15-r1-bootstrap-advice.md`、本角色文件及 `docs/coordination/diagnostics/p4-d15-r1/**`；旧D15/产品/测试/依赖/外部R5根只读，不调度其他角色，不启动服务/产品或操作Git
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：D15有限诊断材料已交总控，blocked/finished停止；目标传播归因仍unknown，不再运行或修改
-- 步骤开始时间：2026-10-03 00:54 Asia/Shanghai
-- 最近有效进展：2026-10-03 00:54 Asia/Shanghai
-- 最近心跳：2026-10-03 00:54 Asia/Shanghai
-- 下一检查点：总控审阅两段已证实终态、P3首次超时/取证缺口和唯一下一观察问题；新指令前不继续
-- 等待对象：头脑风暴总控裁定；没有活动目标或外部操作
-- 活动进程或会话：session 25323 已 exit1；P1/P2原生exit0，P3到15秒硬限后Kill(entireProcessTree)并root exit-1；不再启动诊断
-- 重试次数：0
-- 最近输出：D15文档168行/10主节/43本地链接均有效；文档SHA-256 `0f3792bf8289a7be505aec7f92c2309d8c450bb959fd59f2aa53209fbd2d2895`。429固定输入、8冻结源码、389外部构建source、140out及工具摘要匹配；temp已清理，首次结果保留，staged=0
+- 当前步骤：P4-D15-R1报告与即时证据交付review，执行停止；最终逐文件摘要收口
+- 步骤开始时间：2026-10-03 03:05 Asia/Shanghai
+- 最近有效进展：2026-10-03 03:05 Asia/Shanghai
+- 最近心跳：2026-10-03 03:05 Asia/Shanghai
+- 下一检查点：无主动执行检查点；由头脑风暴总控核对本交付，不自行复验或创建续段
+- 等待对象：头脑风暴总控的证据核对和后续裁定；其当前处理状态unverified
+- 活动进程或会话：无；attempt-0 root38256/worker39044、attempt-1 root35256/worker38832均已退出；原D15保持停止
+- 重试次数：前置观察工具修正1/1；Vitest CLI2次，实际main1次；不第三次
+- 最近输出：新报告126行/29本地链接，正文/代码行号/表格/阶段顺序检查通过，SHA-256 `d31489fa2cedfefe1c814be6ace5104df9efdaf9ba4921ed27a48439d9b09c4a`；actual/main/act分别resolve、四个自有PID退出，完整首次材料17/17、当前源码6/6及固定输入核对通过。main1/1、修正1/1用止；只关闭本任务取证问题，LAZY-001/UI-02/P4-B未关闭
 
 ## P0-P3-D8 分册进度
 
@@ -32,6 +32,7 @@
 
 ## 已有证据
 
+- [P4-D15-R1生产入口前置阶段取证](../../phase-4-d15-r1-bootstrap-advice.md)已提交`review / finished`；[attempt-1原始journal](../diagnostics/p4-d15-r1/attempt-1/results/worker.journal.jsonl)证明同一worker真实Router导出/main/act分别完成；[全部交付摘要](../diagnostics/p4-d15-r1/delivery.sha256)交总控核对。旧P3根因与业务验收仍unverified。
 - [P3-D7 Markdown 活动导入技术方案](../../phase-3-d7-activity-import-advice.md) 已比较解析、持久预览、数据模型、API、幂等、事务、安全与工程边界，并提供总控冻结清单。
 - [P2-D6 财务 Agent 实现后教学](../../phase-2-d6-agent-teaching.md) 已结合固定快照代码和 C6 证据讲解九个主题、逐节示例/误区/练习、Mermaid 数据流、术语表、学习顺序和五道理解题。
 - [P2-D5 财务 Agent 技术边界与教学方案](../../phase-2-d5-finance-agent-advice.md) 已提交最小纵向切片、工具契约、确认恢复、跨渠道来源幂等、循环/进程方案、风险、目录、验收和教学地图。
@@ -47,9 +48,58 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 
 - D14 已由总控接受，历史交付只读保留，不重复执行。
 - D15一次性预算已用：P1/P2/P3各1次、0重试，总22.663秒。P1/P2证实真实拒绝链，P3首次硬限无回执，不能修改后重跑或加第4项。
-- 总控决定唯一下一观察问题的前置增量回执合同；尚无充分证据裁定旧测试接线或产品根因，不自行关闭 LAZY-001/UI-02/P4-B或创建后续任务。
+- D15-R1已交付并停止：CLI2/main1/前置修正1，最后22条证明真实导出与入口/act各自返回；不重复P1/P2/旧P3、独立或Windows。
+- 旧P3为何无阶段仍unknown；R1预热Router改变加载顺序，不倒写旧结论、不关闭LAZY-001/UI-02/P4-B。worker自己exit事件缺失，实际PID退出范围已核对。
+- 本人新接单/交付日志变化单列授权；旧D15 delivery其余30项匹配，不宣称原31项整体仍匹配。后续只等总控，不新建D15-R2或后续Prompt/冻结。
 
 ## 工作日志
+
+### 2026-10-03 03:05 Asia/Shanghai — P4-D15-R1交付review并停止
+
+- 状态：`review / finished`，唯一问题已回答：attempt-1同worker真实Router exports/function成立，actual108.825ms、main482.774ms、act548.285ms各有独立terminal；无剩余bootstrap await。报告[126行/29链接](../../phase-4-d15-r1-bootstrap-advice.md)与journal/controller/双流/真实exit/源码清单均交付，正文摘要 `d31489fa2cedfefe1c814be6ace5104df9efdaf9ba4921ed27a48439d9b09c4a`。
+- 实际运行：CLI2、main1、前置修正1/1，没有第三次；attempt-0 exit-1/724ms保留，首次具体异常unknown；独立原生文件证实Windows共享读冲突后仅修新controller。attempt-1 exit0/6440ms、无超时强杀。process取值合计7164ms/controller末记录合计7176ms，离线聊天间隔另列。
+- 收口：root卸载/DOM与global恢复/bridge2进2出active0/settings0、观察退订；四个自有PID已不存在，worker自身exit机制/exitCode未知，不宣称全系统零残留。新temp绝对边界/no-reparse核对后清理1缓存文件，源码/首次失败/旧材料全部保留。
+- 验证：新固定输入其余463/463、旧D15其余30/30、旧源码8/8、本次首次17/17及当前源码6/6、外部source389/out140、Node及8项元数据一致，staged=0。代码链接/表格/seq/各terminal顺序检查通过。最终逐文件[delivery摘要](../diagnostics/p4-d15-r1/delivery.sha256)核对后不再更新角色或执行目标。
+- 交接：只证明R1观察诊断达成；旧P3因无持久阶段根因unknown，Router前置预热不能当旧冷入口复现。四条原业务断言及重试/持续故障/健康切换/状态保持都未验收，不新定缺陷、不关闭LAZY-001/UI-02/P4-B。
+- 边界：无产品/测试/报告矩阵/依赖/生成物/OpenClaw/控制/其他角色/Git写，无服务/Electron/EXE/sidecar/独立恢复或打包；不创建后续Prompt。由总控决定下一步与观察顺序合同，当前执行停止。
+
+### 2026-10-03 02:59 Asia/Shanghai — R1入口取证达成、运行停止
+
+- attempt-1实际root35256/worker38832父子关系实时登记。CLI退出0、6440ms、双流完整，timeout/forcekill=false。worker原始22条连续同步回执：setup/hoisted/body/virtual bridge→factory/actual resolved→main resolved/root_created→fault1→act_return→root_unmounted/observer_unsubscribed/DOM-global恢复/body_finished。
+- 各自终态：actual108.825ms；main482.774ms；act548.285ms。main导入返回早于act返回，不能合并为同一await。worker_start至body4.686秒，不把此前依赖导入耗时认定根因。
+- 收口：真实root空、global恢复、DOM关闭、bridge2订阅/2退订/active0/settings0；观察订阅取消；controller核对root/登记worker都已退出。worker自身exit事件没有到达，不推断具体自然退出机制或全系统零残留。
+- 总预算已止：CLI2，前置修正1/1，main1/1，原D150重跑，Electron/服务/打包/独立0。累计controller末阶段729+6447=7176ms，process.json时点724+6440=7164ms另列，不含离线整理和用户继续间隔。
+- 本任务问题已解决，接下来只作只读终点核对/允许缓存清理及新报告交付；不观察四条业务断言，不关闭LAZY-001/UI-02/P4-B，完成停review/finished。
+
+### 2026-10-03 02:58 Asia/Shanghai — attempt-1唯一前置修正冻结
+
+- 首次17文件delivery已冻结，SHA-256 `1eeec3c963dd0bf6178802f82a314687a7b24e88ccf7a8878d614698371c5620`。新attempt-1的setup/probe逐字同摘要，仅controller改FileShare.ReadWrite读法与安全异常分类、前置首次材料门禁，config改独立缓存/root标识。
+- 新六项源码与计划重新冻结；TS/MJS/PowerShell静态检查通过。再次463/463其余输入、30/30旧交付、389/389外部源码、140/140产物、Node/依赖元数据匹配，staged=0。
+- 接下来第二个且最后一个Vitest CLI；前置修正预算1/1，main仍0、总最多1。无第三次；新输入/退出/来源问题或main请求之后都只整理交付。检查点仍03:06。
+
+### 2026-10-03 02:56 Asia/Shanghai — R1首次停止、用户继续及前置修正门禁
+
+- attempt-0已在01:27保存双流/controller/worker即时回执，CLI1次、main0，root实际exit-1、724ms。controller首先读journal时失败，只有worker_start/journal_ready；没有hoisted/body/Router/main/act记录。
+- 用户随后发送“继续”。恢复时先读最新control仍01:07；间隔期间没有本任务活动后台进程。状态的01:36检查点未及时刷新如实记录，不把间隔写为持续执行或等待目标；恢复设03:06检查点，不重复旧运行。
+- 退出后重新核对原journal：worker39044/parent38256与controller创建root一致，两个PID已不存在。首次process.json中的worker=null保持原样，另加post-exit门禁证据，不覆盖未知字段。
+- 原读取异常没有保存kind/HResult，不能回填为真实首次异常。新原生虚拟文件（同一PowerShell内、非Vitest/产品目标）重现ReadAllText共享冲突IOException/HResult-2147024864/Win32=32；ReadWrite共享读取成功。该观测器接线问题可仅修新controller读取和错误分类。
+- 已有连续同步落盘、线性Router前置await源码及退出证据证明main严格未请求；固定输入复核后才允许一次attempt-1，首次源码/结果不改。main总1、CLI最多2，不第三次；隔离运行累计预算与离线整理/聊天间隔分别统计。
+
+### 2026-10-03 01:26 Asia/Shanghai — R1观察源码冻结里程碑
+
+- 状态：`in_progress / active`。attempt-0的setup、probe、config、controller、冻结计划、只读核对器已冻结；TS/MJS/PowerShell静态语法通过，没有执行目标。
+- 静态依据：当前Vitest collectTests先await setupFiles再importFile(collect)；vi.mock工厂按请求求值、importOriginal经actual模块解析及cachedRequest返回，不假定它早于body或框架死锁。
+- 观察差异：body中先await同一react-router specifier取得真实导出，再请求实际main；不预加载页面、不改默认loader/route/errorElement/返回Router或StrictMode。去掉旧完整loader/DOM观察，只保留转发与订阅收口。
+- 下一检查点01:36：首次原始journal/双流/真实退出保存，核对main是否开始及收口；已开始或unknown不再修后跑。进程原15秒内留500ms收集，test10秒、main最多1次。
+
+### 2026-10-03 01:16 Asia/Shanghai — P4-D15-R1接单与新起点核对
+
+- 状态：`in_progress / active`；control01:07将D15-R1唯一分配既有技术顾问，用户发送任务卡解除waiting_user；D15与测试/执行旧任务停止。
+- 固定起点：464/464全部匹配，0changed/missing/invalid，manifest SHA-256 `1a170a063dcee793aa0310809da8fe215dbd1a005a6fbdfd33530f5e67b27225`；staged=0，Git ignore权限警告只记录不改配置。
+- 唯一问题：同一worker是否取得真实Router导出并进入main；若未到达，给出最后持久阶段和未完成调用。不能把main import与act整体超时合成同一原因。
+- 文件/预算：仅新R1报告、本角色、新p4-d15-r1目录；原生setupFiles最迟测试模块初始化前即时journal；main总预算1次、进程15秒/test10秒、有限会话60秒。只有严格main前失败且所有权/退出/输入可证明才可一次新attempt-1观察修正，不第三次或新任务循环。
+- 旧材料：D15报告/源码/首次结果/清单只读；原顾问角色的本人授权日志变化另列，不重写旧delivery。无其他角色、服务、产品、旧测试或Git写操作。
+- 下一检查点：01:26完成静态依赖追踪与首次新源码冻结；不会在缺前置回执时猜测mock/框架根因。
 
 ### 2026-10-03 00:54 Asia/Shanghai — P4-D15 交付blocked/finished并停止
 

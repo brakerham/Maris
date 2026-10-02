@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-03 01:07，Asia/Shanghai
+更新时间：2026-10-03 03:16，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。D15直接import和实际loader拒绝链已取得证据；P3生产入口观察硬限且无持久阶段回执，未定位根因。发布D15-R1前置即时取证，测试与执行继续停止，不改产品、不加时或重打包。LAZY-001未关闭，P4-B未complete、P4-C/D未开始。
+P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。D15-R1有限取证已接受：真实Router/main/act分别完成；预热改变加载顺序，旧超时和冷入口业务结论保留。发布C12-R4-R2直接接回独立冷入口传播复验，成功后同任务续恢复/剩余Windows，不重打包或加时。LAZY-001未关闭，P4-B未complete、P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,10 +13,10 @@ P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。D15直接imp
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | D15交付核对，发布前置增量取证 | 2026-10-03 01:07 | 用户派发既有技术顾问 | [核对](../p4-d15-bootstrap-coordinator-review.md) |
-| 技术顾问 | D15 `blocked / finished`；D15-R1 `ready / waiting_user` | 前置阶段journal，接单unverified | 2026-10-03 01:07（总控准备） | 新起点/实际导出/main及act独立终态 | [Prompt](prompts/p4-d15-r1-bootstrap-technical-adviser.md) |
+| 头脑风暴 | `ready / waiting_user` | D15-R1有限接受，发布冷入口独立复验 | 2026-10-03 03:16 | 用户派发既有测试智能体 | [核对](../p4-d15-r1-bootstrap-coordinator-review.md) |
+| 技术顾问 | D15-R1有限范围`complete`；本人交付`review / finished`保留 | 40交付核对，actual/main/act完成，旧超时未知 | 2026-10-03 03:05（交付已核对） | 停止，不继续诊断或业务复验 | [报告](../phase-4-d15-r1-bootstrap-advice.md) |
 | 执行智能体 | `review / finished`（R5-LAZY） | 局部隔离/恢复、132回归、新包及19项EXE门禁交付 | 2026-10-02（最终交付已核对） | 停止，等待独立结论 | [运行说明](../b7-r5-lazy-running.md) |
-| 测试智能体 | `blocked / finished`（C12-R4-R1） | mock命中、5秒无alert；恢复/Windows未执行 | 2026-10-03 00:02（交付已核对） | 停止，等待诊断/新裁定 | [报告](../testing/phase-4-c12-r4-r1-observation-windows-report.md) |
+| 测试智能体 | 旧R4-R1`blocked / finished`；新R4-R2`ready / waiting_user` | 冷入口传播取证及无门面四断言，接单unverified | 2026-10-03 03:16（总控准备） | 新起点→A/B冷节点→成功后恢复/Windows | [Prompt](prompts/p4-c12-r4-r2-cold-entry-tester.md) |
 
 ## 阶段 0 任务状态
 
@@ -117,11 +117,12 @@ P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。D15直接imp
 | P4-C12-R4：lazy复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | 原节点0pass/1fail；故障命中未证实，未新增产品缺陷，Windows0次 | [报告](../testing/phase-4-c12-r4-lazy-windows-report.md) |
 | P4-C12-R4-R1：观察与续跑 | 既有测试智能体 | `blocked / finished` | mock1、#/daily、5016ms无alert；异常终态未定位 | [报告](../testing/phase-4-c12-r4-r1-observation-windows-report.md) |
 | P4-D15：异常传播有限诊断 | 既有技术顾问 | `blocked / finished` | import/默认loader拒绝成立；P3超时无阶段回执，原证据保留 | [报告](../phase-4-d15-lazy-propagation-advice.md)、[总控核对](../p4-d15-bootstrap-coordinator-review.md) |
-| P4-D15-R1：前置阶段取证 | 既有技术顾问 | `ready / waiting_user` | 即时journal定位实际Router导出/main/act等待，真实main最多一次，不加时 | [Prompt](prompts/p4-d15-r1-bootstrap-technical-adviser.md)、[起点](snapshots/p4-d15-r1-start.sha256) |
+| P4-D15-R1：前置阶段取证 | 既有技术顾问 | `complete`（有限取证目标） | 40交付、CLI2/main1/修正1合规；真实导出/main/act完成，旧根因未知 | [总控接受](../p4-d15-r1-bootstrap-coordinator-review.md)、[报告](../phase-4-d15-r1-bootstrap-advice.md) |
+| P4-C12-R4-R2：冷入口传播复验与续跑 | 既有测试智能体 | `ready / waiting_user` | 同步透传观察A及无门面冷B保留四断言，均通过后续恢复/Windows，不打包 | [Prompt](prompts/p4-c12-r4-r2-cold-entry-tester.md)、[起点](snapshots/p4-c12-r4-r2-start.sha256) |
 
 ## 当前阻塞与风险
 
-- OUTBOX/setting/PATH已独立关闭；LAZY-001待关闭、UI-02 failed/UI-04 blocked保持。D15 P1/P2证实各自实例的import/loader拒绝；P3无持久阶段回执，bootstrap/main/Router/DOM未知。D15-R1先修正观察完整性，不把其他实例或Shell采样当独立通过。
+- OUTBOX/setting/PATH已独立关闭；LAZY-001待关闭、UI-02 failed/UI-04 blocked保持。D15-R1预热后的actual/main/act完成，冷入口的loader→Router→DOM尚待业务证据；R4-R2禁止人工预热，四断言必须在观察和无门面冷节点分别取得，不把其他实例或Shell采样当通过。
 - 原C12/R1/R2/R3首次失败与通过材料保留，本轮只使用R5新EXE/asar独立复验；真实老化提示、Windows chunk故障恢复及原人工设备项仍待实际证据。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。
@@ -146,7 +147,7 @@ P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。D15直接imp
 
 ## 下一次总控检查
 
-1. 用户将D15-R1全文发给既有技术顾问；原D15、测试与执行停止，顾问新任务接单unverified。
-2. 顾问绑定新起点，用即时journal区分worker/setup/mock实际导出/body/main/act等待，不重复P1/P2，不改产品/旧材料，不启动Windows/打包。
-3. 总控根据同一实例持久阶段裁定观察或测试接线、产品返修或新独立复验；根因未定位前不关闭P1或接受P4-B，真实设备缺口保持。
+1. 用户将C12-R4-R2全文发给既有测试智能体；旧任务、顾问和执行停止，测试新任务接单unverified。
+2. 测试绑定新起点，冷main同实例传播观察A及无门面冷B各一次，保留原四断言；不重复D15/旧成功回归或打包。
+3. A/B通过后同任务继续独立恢复与剩余Windows；失败则按实际传播阶段交总控，不只延时或继续bootstrap。缺陷关闭/完整矩阵/真实设备缺口分别裁定。
 4. P4-B独立接受后触发高保真参考图/模型策略提醒，再规划P4-C。

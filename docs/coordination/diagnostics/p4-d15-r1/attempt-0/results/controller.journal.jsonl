@@ -1,0 +1,5 @@
+{"seq":1,"stage":"controller_ready","elapsedMs":14,"sessionDeadlineMs":60000,"collectionReserveMs":500,"processDeadlineMs":15000,"testTimeoutMs":10000,"mainBudget":1}
+{"seq":2,"stage":"root_started","elapsedMs":39,"rootPid":38256}
+{"seq":3,"stage":"controller_failure","elapsedMs":638,"journalInvalid":false,"ownershipVerified":false}
+{"seq":4,"stage":"exit_checked","elapsedMs":687,"workerExited":false,"rootExited":true,"workerRegistered":false}
+{"seq":5,"stage":"controller_finished","elapsedMs":729,"mainImportRequests":0,"durationMs":728}

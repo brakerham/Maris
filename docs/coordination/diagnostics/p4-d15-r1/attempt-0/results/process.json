@@ -1,0 +1,43 @@
+{
+  "attempt": 0,
+  "invocation": 1,
+  "rootPid": 38256,
+  "rootExited": true,
+  "rootExitCode": -1,
+  "workerPid": null,
+  "workerParentVerified": null,
+  "workerExited": null,
+  "workerExitEventCount": 0,
+  "timedOut": false,
+  "forcedRootTermination": true,
+  "forcedWorkerTermination": false,
+  "streamsComplete": true,
+  "durationMs": 724,
+  "processDeadlineMs": 15000,
+  "testTimeoutMs": 10000,
+  "sessionDeadlineMs": 60000,
+  "mainImportRequests": 0,
+  "lastWorkerStage": "journal_ready",
+  "journalSequenceValid": true,
+  "failureCode": "controller_or_observer_failure",
+  "streams": [
+    {
+      "stream": "stdout",
+      "rawBytes": 90,
+      "savedBytes": 39,
+      "redactedLines": 0,
+      "complete": true
+    },
+    {
+      "stream": "stderr",
+      "rawBytes": 0,
+      "savedBytes": 0,
+      "redactedLines": 0,
+      "complete": true
+    }
+  ],
+  "cleanupEvidenceScope": "owned_root_and_registered_worker_only",
+  "electronStarts": 0,
+  "servicesStarted": 0,
+  "packages": 0
+}

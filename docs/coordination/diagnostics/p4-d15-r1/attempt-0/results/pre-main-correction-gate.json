@@ -1,0 +1,26 @@
+{
+  "kind": "new_native_file_sharing_tooling_only_no_target",
+  "originalJournalIntact": true,
+  "originalExceptionCaptured": false,
+  "originalExceptionKind": "unknown",
+  "newProofException": {
+    "kind": "IOException",
+    "hresult": -2147024864,
+    "win32LowWord": 32
+  },
+  "readWriteSharedReadWorked": true,
+  "workerPid": 39044,
+  "workerParentPid": 38256,
+  "rootPid": 38256,
+  "parentMatchesOwnedRoot": true,
+  "registeredAfterFirstExit": true,
+  "workerExited": true,
+  "rootExited": true,
+  "stages": [
+    "worker_start",
+    "journal_ready"
+  ],
+  "mainImportRequests": 0,
+  "sequenceComplete": true,
+  "interpretation": "first live read exception not captured; Windows shared-read incompatibility independently reproduced; fix observer reader and preserve original failure"
+}

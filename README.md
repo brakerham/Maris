@@ -1,6 +1,9 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。D15已证实直接import拒绝和实际默认loader安全映射；生产入口探针硬限前没有持久阶段回执，根因仍未知。发布D15-R1即时前置取证，先定位观察通道的等待位置；不改产品、不加时或重打包。LAZY-001未关闭、P4-B未complete、P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。D15-R1有限取证已接受：真实Router导出、main导入与act分别完成；它预热Router，不能代替原冷入口的业务验收。发布C12-R4-R2冷入口传播复验，通过后同任务续恢复与剩余Windows，不加时或重打包。LAZY-001未关闭、P4-B未complete、P4-C/D未开始。
+
+- [D15-R1总控接受与冷入口裁定](docs/p4-d15-r1-bootstrap-coordinator-review.md)：40交付与预算核对，有限取证complete，旧超时与业务结论保留。
+- [C12-R4-R2测试任务](docs/coordination/prompts/p4-c12-r4-r2-cold-entry-tester.md)：同步透传观察和无门面独立冷节点保留四断言，不预热Router。
 
 - [D15交付总控核对](docs/p4-d15-bootstrap-coordinator-review.md)：429输入、31交付、8冻结源码匹配；P3证据与资源限制保留。
 - [D15-R1技术顾问任务](docs/coordination/prompts/p4-d15-r1-bootstrap-technical-adviser.md)：worker/真实Router导出/main/act分阶段即时记录，不重复P1/P2或独立验收。

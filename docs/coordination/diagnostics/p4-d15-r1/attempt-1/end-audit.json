@@ -1,0 +1,120 @@
+{
+  "passed": true,
+  "inputs": {
+    "total": 464,
+    "matched": 463,
+    "authorizedChanged": [
+      "docs/coordination/agents/technical-adviser.md"
+    ],
+    "changed": [],
+    "missing": [],
+    "invalid": [],
+    "manifestSha256": "1a170a063dcee793aa0310809da8fe215dbd1a005a6fbdfd33530f5e67b27225"
+  },
+  "oldDelivery": {
+    "total": 31,
+    "matched": 30,
+    "authorizedChanged": [
+      "docs/coordination/agents/technical-adviser.md"
+    ],
+    "changed": [],
+    "missing": [],
+    "invalid": [],
+    "manifestSha256": "1d80751b735a27d89ff942f7df864f0c049eb4007e1c1afa2c22ea5d32f45d87"
+  },
+  "oldFrozen": {
+    "total": 8,
+    "matched": 8,
+    "authorizedChanged": [],
+    "changed": [],
+    "missing": [],
+    "invalid": [],
+    "manifestSha256": "583897cd18ecc891000f036fddaa802e551f62c8c76c081ca109c66ae7e8a3fd"
+  },
+  "externalSource": {
+    "total": 389,
+    "matched": 389,
+    "authorizedChanged": [],
+    "changed": [],
+    "missing": [],
+    "invalid": [],
+    "manifestSha256": "8d104d1e84382cb1fe0228618545d0e7585f3f91a2b3f387f067e2e50e148af9"
+  },
+  "externalOut": {
+    "total": 140,
+    "matched": 140,
+    "authorizedChanged": [],
+    "changed": [],
+    "missing": [],
+    "invalid": [],
+    "manifestSha256": "e73d6d9d9d1906c47fcfc133459fae37afade9c1691de6d165cbe738fa96be19"
+  },
+  "packages": [
+    {
+      "name": "vitest",
+      "version": "5.0.2",
+      "matched": true
+    },
+    {
+      "name": "vite",
+      "version": "7.3.6",
+      "matched": true
+    },
+    {
+      "name": "react",
+      "version": "19.3.0",
+      "matched": true
+    },
+    {
+      "name": "react-dom",
+      "version": "19.3.0",
+      "matched": true
+    },
+    {
+      "name": "react-router",
+      "version": "8.4.0",
+      "matched": true
+    },
+    {
+      "name": "jsdom",
+      "version": "30.1.1",
+      "matched": true
+    },
+    {
+      "name": "@vitest/mocker",
+      "version": "5.0.2",
+      "matched": true
+    },
+    {
+      "name": "typescript",
+      "version": "6.0.3",
+      "matched": true
+    }
+  ],
+  "extraPackages": [
+    {
+      "name": "typescript",
+      "version": "6.0.3",
+      "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9"
+    },
+    {
+      "name": "@vitest/mocker",
+      "version": "5.0.2",
+      "sha256": "4aa5d7be7dd8ab783788818a85e7fd4ef5e23e7277f1e2b31dcbe9e385dc031d"
+    }
+  ],
+  "nodeMatched": true,
+  "frozen": {
+    "total": 6,
+    "matched": 6,
+    "authorizedChanged": [],
+    "changed": [],
+    "missing": [],
+    "invalid": [],
+    "manifestSha256": "4b0519d1bd632343da94ffbeb6d776b069c12cf41e519f046c08ca7dd8ad5427"
+  },
+  "stagedCount": 0,
+  "gitReadExit": 0,
+  "gitReadWarning": true,
+  "scope": "fixed manifests and package metadata; own role changes explicitly authorized; no full dependency graph claim"
+}
