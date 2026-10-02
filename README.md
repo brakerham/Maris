@@ -1,6 +1,9 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3 与 P4-A 已独立验收。C12-R1已独立复验并由总控关闭OUTBOX-001；SUP-06真实原生提示等仍未覆盖。新增P1 REGISTRY-001：跨模块同名设置键未整体拒绝。测试停止，发布R3-REGISTRY窄范围返修；P4-B未complete，P4-C/D尚未开始。
+当前阶段：P0～P3 与 P4-A 已独立验收，OUTBOX-001已独立关闭。R3-REGISTRY完成设置键全局唯一修复、98项开发回归、新package及真实EXE；总控已核对稳定输入。REGISTRY-001仍待C12-R2独立关闭，随后继续未执行Windows/设备条件；P4-B未complete，P4-C/D尚未开始。
+
+- [R3总控核对](docs/p4-b7-r3-registry-coordinator-review.md)：324源码、5交付、52证据、140产物匹配。
+- [C12-R2独立续跑任务](docs/coordination/prompts/p4-c12-r2-registry-windows-tester.md)：原设置键失败复验及未执行Windows验收，不重复outbox42独立节点。
 
 - [C12-R1总控核对](docs/p4-c12-r1-registry-blocked-coordinator-review.md)：关闭旧outbox P1，接受新注册合同P1。
 - [R3-REGISTRY执行任务](docs/coordination/prompts/p4-b7-r3-registry-executor.md)：只修设置键全局冲突及开发回归，完成新版产物后交独立复验。

@@ -2,14 +2,32 @@
 
 - 角色：需求头脑风暴、总计划和跨角色协调
 - 连接状态：已确认；当前对话
-- 当前任务：C12-R1证据核对、关闭OUTBOX-001并冻结R3-REGISTRY窄范围返修
+- 当前任务：R3-REGISTRY交付核对与C12-R2独立复验/Windows续跑派发
 - 状态：`ready / waiting_user`
 - 开始时间：2026-09-13，Asia/Shanghai
-- 最近更新：2026-10-02 11:05，Asia/Shanghai
+- 最近更新：2026-10-02 15:22，Asia/Shanghai
 - 可修改范围：项目计划、协调文档；必要的只读代码与验证核查
 - 默认不负责：阶段 0 业务代码实现
 
 ## 最新协调记录
+
+### 2026-10-02 15:22 Asia/Shanghai — 发布C12-R2并同步稳定输入
+
+- 已完成[R3核对](../../p4-b7-r3-registry-coordinator-review.md)、[C12-R2 Prompt](../prompts/p4-c12-r2-registry-windows-tester.md)及[新起点](../snapshots/p4-c12-r2-start.sha256)，同步README、control、overview与project-coordination。
+- 新任务先原R1-SHELL-13不变断言与registry相邻，成功后原24项未执行Windows/公开行为；原outbox42独立节点、旧C12/R1失败/通过材料全部保留，不重复全量回归或构建。
+- 新R3包与固定工具/依赖只读，新虚拟profile与证据独立；最多8有计划产品场景/4辅助fixture，真实老化原生提示与人工设备缺口不得用模拟替代。
+- 对话中断后15:21恢复只读核对状态；中间未连续观察外部状态，不推断持续执行。总控没有启动产品、测试或后台操作，不把中断记作项目缺陷。
+- R3接受为独立输入，REGISTRY-001等待关闭、P4-B未complete。测试ready/waiting_user、接单unverified；执行与技术顾问finished停止，不进入真实UI。
+- 本地checkpoint保存未验收修复与交接，不推送远程；没有编辑其他角色日志。
+
+### 2026-10-02 15:04 Asia/Shanghai — 接手R3交付，核对稳定产物
+
+- 角色为头脑风暴总控；读取必读、R3任务/报告、registry差异和新增开发断言、原始JSON/外部清单。没有运行测试或产品。
+- 实际复算324/324 source、5/5 delivery、52/52 evidence、140/140新out；323起点320 unchanged，3变化严格为registry.ts/registry.test.ts/executor。
+- 产品只改setting seen key去module前缀，保留其他合同；新增8测试保持原18断言。原始红灯4failed且22filter未选，后定向28/full98 passed，无failed/skip。
+- package1次exit0、static7/7；新EXE1次19/19、recover1次、自然exit0、零owned进程/监听/窗口。新asar的main/renderer全局setting token与源摘要绑定。
+- 接受为C12-R2独立输入，REGISTRY-001仍待独立关闭，P4-B未complete；准备只复验注册缺陷/相邻行为并接续未执行Windows，不重复已通过outbox42独立节点。
+- 执行与技术顾问finished保持停止；测试新任务尚未派发，接单unverified。正在生成Prompt和新起点并同步控制面。
 
 ### 2026-10-02 11:05 Asia/Shanghai — 发布R3-REGISTRY并冻结独立失败输入
 
@@ -256,15 +274,15 @@
 ## 当前执行快照
 
 - 运行状态：`waiting_user`
-- 当前步骤：C12-R1核对完成，OUTBOX-001关闭，R3-REGISTRY任务和新固定起点准备
-- 步骤开始时间：2026-10-02 10:58，Asia/Shanghai
-- 最近有效进展：2026-10-02 11:05，Asia/Shanghai（28交付、296起点、60独立节点与窄返修）
-- 最近心跳：2026-10-02 11:05，Asia/Shanghai
-- 下一检查点：用户派发R3，执行方登记起点并只返修registry及开发测试
-- 等待对象：用户把R3-REGISTRY发给既有执行智能体；接单unverified
-- 活动进程或会话：总控未启动产品/测试；测试blocked/finished，执行R2已停止
+- 当前步骤：R3证据核对和C12-R2任务/新起点准备完成
+- 步骤开始时间：2026-10-02 15:02，Asia/Shanghai
+- 最近有效进展：2026-10-02 15:22，Asia/Shanghai（324源码、140产物和续跑边界）
+- 最近心跳：2026-10-02 15:22，Asia/Shanghai
+- 下一检查点：用户派发C12-R2，测试方登记新起点并复验原registry失败
+- 等待对象：用户把C12-R2发给既有测试智能体；接单unverified
+- 活动进程或会话：总控未启动产品/测试；执行R3已finished，测试旧C12-R1停止
 - 重试次数：总控没有复跑测试或启动产品
-- 最近输出：C12-R1总控核对、R3 Prompt及快照；旧P1关闭，新P1待修
+- 最近输出：R3总控核对、C12-R2 Prompt及快照；REGISTRY-001独立关闭待验
 
 ### 2026-09-29 02:14 Asia/Shanghai — 接受 DYN-R1 编排失败并发布单次 root promotion 恢复
 

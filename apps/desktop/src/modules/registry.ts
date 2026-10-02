@@ -37,7 +37,7 @@ export function compileRegistry(values: readonly unknown[]): readonly DesktopMod
       `profile:${item.agentPanel.profileId}`,
       `appearance:${item.companion.appearanceId}`,
       ...item.routes.map((route) => `route:${route.routeId}`),
-      ...item.settings.map((setting) => `setting:${item.moduleId}:${setting.key}`)
+      ...item.settings.map((setting) => `setting:${setting.key}`)
     ];
     for (const key of keys) {
       if (seen.has(key)) throw new Error("desktop_registry_conflict");

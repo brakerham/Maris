@@ -83,4 +83,51 @@ describe("desktop module registry", () => {
       ]
     }])).toThrow("desktop_registry_conflict");
   });
+
+  it.each([
+    { schemaVersion: 1, reverse: false },
+    { schemaVersion: 1, reverse: true },
+    { schemaVersion: 2, reverse: false },
+    { schemaVersion: 2, reverse: true }
+  ])("rejects cross-module setting collisions regardless of version/order: %j", ({ schemaVersion, reverse }) => {
+    const conflicting = {
+      ...alternateContribution,
+      settings: [{ key: dailyFinanceContribution.settings[0]!.key, schemaVersion }]
+    };
+    const values = reverse ? [conflicting, dailyFinanceContribution] : [dailyFinanceContribution, conflicting];
+    expect(() => compileRegistry(values)).toThrow("desktop_registry_conflict");
+  });
+
+  it.each([1, 2])("rejects repeated keys within one module with schemaVersion %i", (schemaVersion) => {
+    expect(() => compileRegistry([{
+      ...alternateContribution,
+      settings: [{ key: "virtual_shared", schemaVersion: 1 }, { key: "virtual_shared", schemaVersion }]
+    }])).toThrow("desktop_registry_conflict");
+  });
+
+  it("accepts distinct global keys without changing daily finance or Host intersection", () => {
+    const registry = compileRegistry([dailyFinanceContribution, alternateContribution]);
+    expect(registry).toEqual([dailyFinanceContribution, alternateContribution]);
+    expect(Object.isFrozen(registry)).toBe(true);
+    expect(registry[0]!.settings).toEqual([{ key: "preferences", schemaVersion: 1 }]);
+    expect(registry[0]!.agentPanel.profileId).toBe("daily_finance.assistant@1");
+    expect(intersectModules(registry, [{
+      module_id: "daily_finance", version: "1.0.0", enabled: true,
+      profile_ids: ["daily_finance.assistant@1"], api_prefixes: ["/api/v1/finance"], settings_schema_version: 1
+    }])).toEqual([dailyFinanceContribution]);
+  });
+
+  it("does not mutate input or retain seen state after a rejected compilation", () => {
+    const valid = structuredClone([dailyFinanceContribution, alternateContribution]);
+    const conflicting = [structuredClone(dailyFinanceContribution), {
+      ...structuredClone(alternateContribution),
+      settings: [{ key: "preferences", schemaVersion: 2 }]
+    }];
+    const before = structuredClone(conflicting);
+    expect(() => compileRegistry(conflicting)).toThrow("desktop_registry_conflict");
+    expect(conflicting).toEqual(before);
+    const validBefore = structuredClone(valid);
+    expect(compileRegistry(valid)).toEqual(validBefore);
+    expect(valid).toEqual(validBefore);
+  });
 });
