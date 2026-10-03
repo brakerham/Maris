@@ -1,0 +1,6 @@
+{"seq":1,"stage":"worker_start","elapsedMs":0.1137,"pid":31888,"parentPid":29088}
+{"seq":2,"stage":"journal_ready","elapsedMs":3.4212,"pid":31888,"parentPid":29088}
+{"seq":3,"stage":"test_module_evaluation_complete","elapsedMs":887.4822,"pid":31888,"parentPid":29088}
+{"seq":4,"stage":"test_registration_complete","elapsedMs":891.3649,"pid":31888,"parentPid":29088}
+{"seq":5,"stage":"body_enter","elapsedMs":899.2905,"pid":31888,"parentPid":29088}
+{"seq":6,"stage":"body_finished","elapsedMs":902.9506,"pid":31888,"parentPid":29088}

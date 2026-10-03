@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-10-03T23:32:40.0789128+08:00",
+  "scope": "owned_root_and_registered_worker_only",
+  "terminationPerformed": false,
+  "cimQuery": "access_denied",
+  "fullSystemEnumeration": "unverified",
+  "processes": [
+    {
+      "present": false,
+      "phase": "e1",
+      "historicalExitVerified": true,
+      "pid": 19044
+    },
+    {
+      "present": false,
+      "phase": "e1",
+      "historicalExitVerified": true,
+      "pid": 4792
+    },
+    {
+      "present": false,
+      "phase": "e2",
+      "historicalExitVerified": true,
+      "pid": 29088
+    },
+    {
+      "present": false,
+      "phase": "e2",
+      "historicalExitVerified": true,
+      "pid": 31888
+    }
+  ],
+  "workerOwnExitCode": "unknown"
+}

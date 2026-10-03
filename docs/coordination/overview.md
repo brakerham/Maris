@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-03 16:08，Asia/Shanghai
+更新时间：2026-10-03 23:49，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。R4-R3 的 52 交付与 15 冻结源码已核对；持续注入 P 通过，观察 A 在正文前初始化超时、main 为 0，B/Windows 未运行。发布 P4-D16 给既有 Astra 技术顾问，定位基础设施停点并审查 A→B 必经依赖，交付可冻结验收路线。不重复 P 或旧 A/B，不改产品或打包；LAZY-001/UI-02/P4-B 未关闭，P4-C/D 未开始。
+P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。D16 有限技术裁定已接受，39交付/两次实验核对，旧A根因unknown。公开B独立执行、A按需归因已冻结；发布R5-PUBLIC，本次持续故障/冷入口四断言通过后同任务续恢复和原Windows。不重复P或旧A/B、不改产品或打包；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。R4-R3 的 52
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R4-R3 证据核对，准备 D16 技术裁定与固定起点 | 2026-10-03 16:08 | 用户派发既有技术顾问；收到交付后裁定 | [核对](../p4-c12-r4-r3-initialization-coordinator-review.md) |
-| 技术顾问 | D16 `ready / waiting_user`，接单 unverified；旧 D15-R1 有限 complete 保留 | 使用用户选择的 Astra 核对初始化阶段与验收依赖；尚未运行 | 2026-10-03 16:08（总控准备） | 新起点核对→静态审计→有限新诊断→路线交付 | [任务](prompts/p4-d16-harness-and-acceptance-technical-adviser.md) |
+| 头脑风暴 | `ready / waiting_user` | D16交付接受，冻结公开B路线与新任务起点 | 2026-10-03 23:49 | 用户派发既有测试方；收到交付再核对 | [接受](../p4-d16-harness-and-acceptance-coordinator-review.md) |
+| 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
 | 执行智能体 | `review / finished`（R5-LAZY） | 局部隔离/恢复、132回归、新包及19项EXE门禁交付 | 2026-10-02（最终交付已核对） | 停止，等待独立结论 | [运行说明](../b7-r5-lazy-running.md) |
-| 测试智能体 | R4-R3 `blocked / finished` | P 已通过；A 正文前超时；B/恢复/Windows 未运行 | 2026-10-03 15:36（交付已核对） | 停止，等待 D16 裁定与总控新授权 | [报告](../testing/phase-4-c12-r4-r3-persistent-import-windows-report.md) |
+| 测试智能体 | 旧R4-R3`blocked / finished`；新R5-PUBLIC`ready / waiting_user`，接单unverified | 公开B独立取得自身来源/四断言，不需A先通过 | 2026-10-03 23:49（总控准备） | 新起点→B→成功后同任务续恢复/Windows | [任务](prompts/p4-c12-r5-public-tester.md) |
 
-当前唯一新任务是 P4-D16。顾问只能修改新裁定、新诊断目录和本人日志；最多三次新基础设施 CLI，不导入产品 main，不修改旧独立材料或运行 B。A/B 是否解耦由顾问提出方案、总控冻结后再派发，尚未授权独立验收继续。
+当前唯一新任务是 P4-C12-R5-PUBLIC，由既有测试方执行。A/B执行依赖已解耦，公开要求没有删减；新B只实际main一次，初始化/正文/清理分段15/10/2秒且整体30秒，UI仍5秒。通过后同任务接原恢复/Windows；旧P/A/B、顾问实验及产品/依赖/受验包只读。顾问与执行继续停止。
 
 ## 阶段 0 任务状态
 

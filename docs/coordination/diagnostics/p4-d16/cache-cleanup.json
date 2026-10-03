@@ -1,0 +1,30 @@
+{
+  "scope": "only_d16_cache_and_config_scaffold",
+  "absoluteBoundaryVerified": true,
+  "checkedAt": "2026-10-03T23:32:40.0642211+08:00",
+  "firstEvidenceDeleted": false,
+  "noReparseVerified": true,
+  "sourceDeleted": false,
+  "targets": [
+    {
+      "relativePath": "e1/cache",
+      "removedFiles": 1,
+      "absentAfter": true
+    },
+    {
+      "relativePath": "e1/node_modules",
+      "removedFiles": 0,
+      "absentAfter": true
+    },
+    {
+      "relativePath": "e2/cache",
+      "removedFiles": 1,
+      "absentAfter": true
+    },
+    {
+      "relativePath": "e2/node_modules",
+      "removedFiles": 0,
+      "absentAfter": true
+    }
+  ]
+}

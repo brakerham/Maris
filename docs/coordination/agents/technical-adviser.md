@@ -2,24 +2,24 @@
 
 - 角色：技术选型咨询、工程教学与教学子任务统筹
 - 连接状态：用户侧边栏独立技术顾问已确认接单
-- 当前任务：P4-D15-R1 — 生产入口观察通道前置阶段取证
+- 当前任务：P4-D16 — 测试初始化定位与独立验收路线裁定
 - 状态：`review`
-- 最近更新：2026-10-03 03:05，Asia/Shanghai
-- 输入版本：control `2026-10-03T01:07:00+08:00`、D15-R1任务卡、464项新固定输入、D15总控核对/冻结源码/首次结果及真实入口
-- 可修改范围：仅 `docs/phase-4-d15-r1-bootstrap-advice.md`、本角色文件及 `docs/coordination/diagnostics/p4-d15-r1/**`；旧D15/产品/测试/依赖/外部R5根只读，不调度其他角色，不启动服务/产品或操作Git
+- 最近更新：2026-10-03 23:34，Asia/Shanghai
+- 输入版本：control `2026-10-03T16:08:00+08:00`、D16任务卡、596项固定起点；R4-R3/D15-R1/R4-R2既有证据只读
+- 可修改范围：仅 `docs/phase-4-d16-harness-and-acceptance-advice.md`、本角色文件及 `docs/coordination/diagnostics/p4-d16/**`；其余产品/测试/旧证据/依赖/外部根/控制及Git只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：P4-D15-R1报告与即时证据交付review，执行停止；最终逐文件摘要收口
-- 步骤开始时间：2026-10-03 03:05 Asia/Shanghai
-- 最近有效进展：2026-10-03 03:05 Asia/Shanghai
-- 最近心跳：2026-10-03 03:05 Asia/Shanghai
-- 下一检查点：无主动执行检查点；由头脑风暴总控核对本交付，不自行复验或创建续段
-- 等待对象：头脑风暴总控的证据核对和后续裁定；其当前处理状态unverified
-- 活动进程或会话：无；attempt-0 root38256/worker39044、attempt-1 root35256/worker38832均已退出；原D15保持停止
-- 重试次数：前置观察工具修正1/1；Vitest CLI2次，实际main1次；不第三次
-- 最近输出：新报告126行/29本地链接，正文/代码行号/表格/阶段顺序检查通过，SHA-256 `d31489fa2cedfefe1c814be6ace5104df9efdaf9ba4921ed27a48439d9b09c4a`；actual/main/act分别resolve、四个自有PID退出，完整首次材料17/17、当前源码6/6及固定输入核对通过。main1/1、修正1/1用止；只关闭本任务取证问题，LAZY-001/UI-02/P4-B未关闭
+- 当前步骤：D16裁定交付review并停止；B独立验收路线待总控审阅冻结
+- 步骤开始时间：2026-10-03 23:34 Asia/Shanghai
+- 最近有效进展：2026-10-03 23:34 Asia/Shanghai
+- 最近心跳：2026-10-03 23:34 Asia/Shanghai
+- 下一检查点：无自动运行检查点；总控发出新指令后再恢复
+- 等待对象：总控审阅；其接单/冻结状态unverified
+- 活动进程或会话：无；E1 root19044/worker4792与E2 root29088/worker31888均已退出
+- 重试次数：D16诊断CLI 2/3后停止，工具修正0，main/loader/fixture请求0；不消耗第3次盲试
+- 最近输出：正式报告、两次首次记录、源码冻结及终点审计交付；29链接/7表格、E1源码10项/E2源码11项、journal连续性与身份检查通过。固定起点595未变+本人授权日志1项，R3交付52/源码15、旧D15-R1其余39、外部389+140与依赖元数据保持。旧A根因unknown；不关闭LAZY-001/UI-02/P4-B
 
 ## P0-P3-D8 分册进度
 
@@ -32,6 +32,7 @@
 
 ## 已有证据
 
+- [P4-D16初始化与独立验收路线裁定](../../phase-4-d16-harness-and-acceptance-advice.md)、[静态交付校验](../diagnostics/p4-d16/document-check.json)、[终点审计](../diagnostics/p4-d16/end-audit.json)与[最终交付摘要](../diagnostics/p4-d16/delivery.sha256)提交review；仅建议B独立执行、A按需归因，不代表已经执行或通过独立B。
 - [P4-D15-R1生产入口前置阶段取证](../../phase-4-d15-r1-bootstrap-advice.md)已提交`review / finished`；[attempt-1原始journal](../diagnostics/p4-d15-r1/attempt-1/results/worker.journal.jsonl)证明同一worker真实Router导出/main/act分别完成；[全部交付摘要](../diagnostics/p4-d15-r1/delivery.sha256)交总控核对。旧P3根因与业务验收仍unverified。
 - [P3-D7 Markdown 活动导入技术方案](../../phase-3-d7-activity-import-advice.md) 已比较解析、持久预览、数据模型、API、幂等、事务、安全与工程边界，并提供总控冻结清单。
 - [P2-D6 财务 Agent 实现后教学](../../phase-2-d6-agent-teaching.md) 已结合固定快照代码和 C6 证据讲解九个主题、逐节示例/误区/练习、Mermaid 数据流、术语表、学习顺序和五道理解题。
@@ -46,6 +47,7 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 
 ## 待处理事项
 
+- D16已交付并停止：CLI2/3，工具修正0，main/loader/fixture/旧目标0；两次动态合计8685ms（controller末记录8699ms）。总控需裁定A/B解耦及分层关闭口径、未来节点15/10/2秒与总体30秒预算和新文件所有权。本任务不创建后续Prompt、不自动派发或执行。
 - D14 已由总控接受，历史交付只读保留，不重复执行。
 - D15一次性预算已用：P1/P2/P3各1次、0重试，总22.663秒。P1/P2证实真实拒绝链，P3首次硬限无回执，不能修改后重跑或加第4项。
 - D15-R1已交付并停止：CLI2/main1/前置修正1，最后22条证明真实导出与入口/act各自返回；不重复P1/P2/旧P3、独立或Windows。
@@ -53,6 +55,48 @@ P2-D6 只形成基于已验收本地快照的教学材料，没有修改 Agent�
 - 本人新接单/交付日志变化单列授权；旧D15 delivery其余30项匹配，不宣称原31项整体仍匹配。后续只等总控，不新建D15-R2或后续Prompt/冻结。
 
 ## 工作日志
+
+### 2026-10-03 23:34 Asia/Shanghai — P4-D16交付review并停止
+
+- 正式报告提供真实初始化顺序、候选/反证、最多两个残余假设、两项首次实验、A/B路线比较、最小源码/配置差异、原四条公开断言、冷入口与持续故障合同、预算和分层停止条件。旧A具体依赖/内部根因保持unknown，两个最小实验成功不能倒写旧A通过。
+- 校验：29本地链接/7表格，E1源码10/E2源码11均匹配，worker/server/controller分别10/17/5与6/17/5条连续有效。终点595固定输入+本人1项授权变化、旧R3交付52/源码15、旧D15-R1其余39、外部source389/out140、Node/7包元数据保持；staged0。
+- 收口：四个已登记PID定向查询不存在，保留原实时父子身份和退出证据；CIM查询被拒绝访问，因此全系统枚举unverified，worker自身exitCode未知。只清理本任务e1/e2 cache与配置空node_modules，核实绝对边界/无reparse，首次源码和记录全部保留。
+- 交接：报告/全部新材料及本状态文件按仓库相对路径生成原始字节SHA-256交付清单，UTF-8无BOM、LF与排序，排除清单自身；封存后停止。未改产品/独立测试/旧证据/依赖/控制/其他角色或Git，无产品/旧目标/服务/Windows运行，不新增矩阵passed。
+- 状态review / finished；只等总控审阅两项必要决定，LAZY-001/UI-02/P4-B仍未关闭，不创建D16-R1或后续任务卡。
+
+### 2026-10-03 23:32 Asia/Shanghai — 恢复交付收尾
+
+- 用户继续后复读AGENTS、control、本人状态与原D16卡，control仍为16:08，所有权未变化。上次收口工具的cell已不存在，未收到完成回执；目录中没有cache-cleanup/resource-observation/end-audit，不能补写上次成功。
+- 16:41至本次恢复之间未连续持有执行控制，不把聊天间隔计作动态运行或心跳。E1/E2首次材料和报告均保留，动态预算保持2次并停止；本次仅完成任务目录收口、静态校验和review交接。
+
+### 2026-10-03 16:41 Asia/Shanghai — E2反证与动态诊断停止
+
+- E2为新的极小静态依赖模块，不含旧A正文/产品请求，CLI1703ms/exit0，worker31888父29088实时登记并核对退出；worker6/server17/controller5条，无超时/强杀/越界事件。
+- 静态依赖887.482ms完成，body899.291→902.951ms；与E1相比依赖形式和运行时点不同，操作系统文件缓存未清空，所以不能凭速度差认定某一种导入方式更快或旧A仅需加时。
+- 共用工具与两次源冻结保持，E2后起点其余595/R3交付52/源码15/旧D15-R1其余39/外部389+140和元数据通过。累计CLI2、动态process8685ms（controller末记录8699ms），main/loader/fixture/旧目标0，工具修正0；按计划停止，不跑第3次重复探针。
+- 路线草案：B在固定P接线及自身冷入口/持续故障/四公开断言证据齐全时独立运行，A为失败因果诊断而非B通行证。保留当前有效请求证据边界：B不伪造A的abort/Router遥测；持续真实ESM故障、本worker命中和当前目标局部错误共同支撑公开行为，内部逐请求归因若仍缺只能标unknown。
+- 报告将区分已确认的阶段可观测性/预算与A→B门禁问题，以及旧A根因unknown的最多两个残余假设；给未来源码/配置/时间分段/失败停止合同，不启动B或创建任务卡。下一检查点16:51。
+
+### 2026-10-03 16:38 Asia/Shanghai — E1分段初始化证据及E2新问题
+
+- E1首次CLI exit0/6982ms，root19044/worker4792父子身份与退出确认；worker10条/server17条/controller5条即时回执，无scope_violation、无产品main/loader/fixture、无超时强杀。
+- jsdom import enter54.144→resolved5957.493，耗时5903.349ms；React5970.741→5986.744，16.004ms；test模块完成5991.276、body6000.794→6003.124。配置与setup/收集/正文可以区分，不把6秒收集归类为test body超时。
+- E1后固定输入595其余/R3交付52/源码15/旧D15-R1其余39/source389/out140/包元数据保持。此结果未复现旧A，不证明它只是慢，也没有Router预热。
+- E2新问题：旧A相同vitest/jsdom/React静态依赖形式是否可完成收集？新极小模块/独立worker/cache，所有共同工具保持E1冻结；不复制旧A正文或运行产品。若静态形式也通过则停止实验，保留旧根因unknown并交付具体验收路线，不盲耗第3次。
+
+### 2026-10-03 16:34 Asia/Shanghai — D16静态边界和最小实验计划
+
+- 原回执/代码证明旧A已完成setup，未进入body；Vitest collectTests的importFile(collect)在setup之后、body之前，testTimeout不覆盖该全部初始化。A只有vitest/jsdom/React静态运行时依赖，Router/main在body动态链后；原记录没有证明哪个依赖pending。
+- 旧A→B强制前置在原controller读取prior cold-trace result/process处，导致辅助观察初始化阻止无门面业务判断；这是需总控冻结改变的流程设计，不把它当产品错误。
+- [probe-plan](../diagnostics/p4-d16/probe-plan.md)已列E1分段顶层依赖、按证据选择静态形式反证的E2及最多3次边界。新config/plugin和native setup逐事件同步记录，plugin拒绝apps/src/旧独立目标；不复制完整A、不触达产品main/loader/fixture。
+- 基线audit通过：595其余输入、52 R3交付、15源码、39旧D15-R1其余交付、389外部source/140out及版本；React DOM/Router指向同一React实路径，staged0。本人新日志唯一授权变更。下一检查点16:44，当前CLI0。
+
+### 2026-10-03 16:24 Asia/Shanghai — P4-D16接单与起点核对
+
+- 当前唯一负责人为既有技术顾问；control16:08明确执行/测试旧任务停止。用户发送D16卡解除waiting_user，本轮只做初始化诊断和可冻结验收路线，不接管测试或实现。
+- 起点596/596精确字节SHA-256匹配，0变化/缺失；清单UTF-8无BOM、LF结尾、ordinal路径排序，摘要`26bc182348d17ec4832125289adc8a0d2f1595f5ac402e445d2563c660391d23`；staged=0。本人状态文件包含在起点，更新接单/交付日志作为唯一授权变化另列，不改起点或旧清单。
+- 任务预算：新基础设施CLI最多3次，每次总体120秒、累计动态6分钟，main/页面loader/故障fixture/旧P-A-B零请求。先读原材料、静态审计和probe-plan，源码检查冻结后再运行；新工具自误保留首次材料可在预算内修正，不另建D16-R1。
+- 下个检查点16:34：定位配置/plugin、setup、收集/依赖到body的缺失边界并冻结最小新问题。连续两检查点无新证据或输入/所有权/收口问题停止动态，但仍交付已有分析和验收路线。
 
 ### 2026-10-03 03:05 Asia/Shanghai — P4-D15-R1交付review并停止
 

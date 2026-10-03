@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。C12-R4-R3 的持续故障注入 P 已通过；冷观察 A 在测试正文前超时，产品 main 未运行，B 和 Windows 未执行。发布 P4-D16，由既有技术顾问使用用户选择的 GPT-6 Astra 定位测试初始化并审查观察门禁对公开验收的阻断；不重复 P 或旧 A/B，不改产品或打包。LAZY-001 未关闭、P4-B 未 complete、P4-C/D 未开始。
+当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。D16 有限技术裁定已接受，两次最小初始化实验成功，旧 A 超时根因仍 unknown。发布 P4-C12-R5-PUBLIC：公开 B 独立验收自身持续故障、冷入口和四条界面要求，不再等待辅助 A；通过后同任务续恢复及原 Windows 范围。P 成功不重做，不改产品或打包。LAZY-001/UI-02 未关闭、P4-B 未 complete、P4-C/D 未开始。
+
+- [D16 总控接受与路线冻结](docs/p4-d16-harness-and-acceptance-coordinator-review.md)：39 交付、两次实际实验与资源限制核对，公开验收和辅助归因分离。
+- [R5-PUBLIC 独立测试任务](docs/coordination/prompts/p4-c12-r5-public-tester.md)：本次故障来源、无包装冷入口、分段预算、恢复和剩余 Windows 条件，既有测试方待接单。
 
 - [R4-R3 初始化阻塞总控核对](docs/p4-c12-r4-r3-initialization-coordinator-review.md)：52 交付与 15 冻结源码匹配，P 成功保留，A 停点与未知根因分开记录。
-- [P4-D16 技术顾问任务](docs/coordination/prompts/p4-d16-harness-and-acceptance-technical-adviser.md)：有限的新基础设施诊断与可执行验收路线裁定，既有顾问待接单。
+- [P4-D16 技术顾问任务](docs/coordination/prompts/p4-d16-harness-and-acceptance-technical-adviser.md)：有限技术裁定已接受，旧根因未知保持，顾问停止。
 
 - [R4-R2传播总控核对](docs/p4-c12-r4-r2-cold-entry-coordinator-review.md)：37交付与507起点、取消/有效请求及固定工具源码核对，产品结论保留。
 - [R4-R3持续导入独立复验](docs/coordination/prompts/p4-c12-r4-r3-persistent-import-tester.md)：精确故障模块、独立注入节点、两个全新冷main，不重复旧目标或修改产品。

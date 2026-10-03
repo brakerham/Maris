@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "localLinks": 29,
+  "tables": 7,
+  "phases": [
+    {
+      "phase": "e1",
+      "sourceMatched": 10,
+      "journals": {
+        "worker": 10,
+        "server": 17,
+        "controller": 5
+      },
+      "durationMs": 6982
+    },
+    {
+      "phase": "e2",
+      "sourceMatched": 11,
+      "journals": {
+        "worker": 6,
+        "server": 17,
+        "controller": 5
+      },
+      "durationMs": 1703
+    }
+  ],
+  "failures": [],
+  "deferredUntilSeal": [
+    "delivery.sha256",
+    "document-check.json"
+  ],
+  "scope": "static_only_no_target_execution"
+}

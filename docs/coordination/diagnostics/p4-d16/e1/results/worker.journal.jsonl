@@ -1,0 +1,10 @@
+{"seq":1,"stage":"worker_start","elapsedMs":0.1194,"pid":4792,"parentPid":19044}
+{"seq":2,"stage":"journal_ready","elapsedMs":3.506,"pid":4792,"parentPid":19044}
+{"seq":3,"stage":"test_module_evaluation_enter","elapsedMs":51.015,"pid":4792,"parentPid":19044}
+{"seq":4,"stage":"jsdom_import_enter","elapsedMs":54.1441,"pid":4792,"parentPid":19044}
+{"seq":5,"stage":"jsdom_import_resolved","elapsedMs":5957.4928,"pid":4792,"parentPid":19044,"jsdomIsFunction":true,"consoleIsFunction":true}
+{"seq":6,"stage":"react_import_enter","elapsedMs":5970.7405,"pid":4792,"parentPid":19044}
+{"seq":7,"stage":"react_import_resolved","elapsedMs":5986.7443,"pid":4792,"parentPid":19044,"actIsFunction":true}
+{"seq":8,"stage":"test_module_evaluation_complete","elapsedMs":5991.2757,"pid":4792,"parentPid":19044}
+{"seq":9,"stage":"body_enter","elapsedMs":6000.7942,"pid":4792,"parentPid":19044}
+{"seq":10,"stage":"body_finished","elapsedMs":6003.1236,"pid":4792,"parentPid":19044}

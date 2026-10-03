@@ -1,0 +1,17 @@
+{"seq":1,"stage":"config_evaluation_enter","elapsedMs":0.1593,"pid":19044,"parentPid":29720}
+{"seq":2,"stage":"config_object_ready","elapsedMs":3.6245,"pid":19044,"parentPid":29720}
+{"seq":3,"stage":"config_resolved","elapsedMs":16.0631,"pid":19044,"parentPid":29720}
+{"seq":4,"stage":"server_configured","elapsedMs":28.2536,"pid":19044,"parentPid":29720}
+{"seq":5,"stage":"run_start","elapsedMs":79.4503,"pid":19044,"parentPid":29720}
+{"seq":6,"stage":"resolve_hook_seen","elapsedMs":194.2981,"pid":19044,"parentPid":29720,"ordinal":4}
+{"seq":7,"stage":"resolve_hook_seen","elapsedMs":200.3743,"pid":19044,"parentPid":29720,"ordinal":4}
+{"seq":8,"stage":"load_hook_seen","elapsedMs":203.6412,"pid":19044,"parentPid":29720,"ordinal":4}
+{"seq":9,"stage":"transform_pre_seen","elapsedMs":206.3631,"pid":19044,"parentPid":29720,"ordinal":4}
+{"seq":10,"stage":"transform_post_seen","elapsedMs":208.4473,"pid":19044,"parentPid":29720,"ordinal":4}
+{"seq":11,"stage":"resolve_hook_seen","elapsedMs":277.733,"pid":19044,"parentPid":29720,"ordinal":1}
+{"seq":12,"stage":"load_hook_seen","elapsedMs":280.5004,"pid":19044,"parentPid":29720,"ordinal":1}
+{"seq":13,"stage":"transform_pre_seen","elapsedMs":282.3684,"pid":19044,"parentPid":29720,"ordinal":1}
+{"seq":14,"stage":"transform_post_seen","elapsedMs":288.8886,"pid":19044,"parentPid":29720,"ordinal":1}
+{"seq":15,"stage":"resolve_hook_seen","elapsedMs":290.937,"pid":19044,"parentPid":29720,"ordinal":2}
+{"seq":16,"stage":"test_module_collected","elapsedMs":6265.8913,"pid":19044,"parentPid":29720}
+{"seq":17,"stage":"run_end","elapsedMs":6282.3878,"pid":19044,"parentPid":29720,"moduleCount":1,"unhandledCount":0}
