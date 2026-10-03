@@ -1,0 +1,17 @@
+{
+  "task": "review_test_handoff",
+  "scope": "read-only canonical ID / zero-import fixture review",
+  "receivedFindings": [
+    "Vite resolves relative dynamic dependency to absolute before request",
+    "Vitest Windows IDs use /@id/ wrapper; Vite may use /@fs/",
+    "relative-only aliases are insufficient unless tied to true importer",
+    "absolute ID must not require importer because moduleGraph may replace it",
+    "pure JS .tsx fixture avoids derived .mjs URL shape"
+  ],
+  "runtimeTargetsExecuted": 0,
+  "writesAuthorized": false,
+  "finalCurrentSourceReview": "unverified; no final receipt",
+  "lastObservedStatus": "pending_init",
+  "interruptedByParent": true,
+  "notIndependentAcceptance": true
+}

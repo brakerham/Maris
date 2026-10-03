@@ -1,0 +1,13 @@
+{"seq":1,"elapsedMs":0.0976,"stage":"worker_start","pid":19592,"parentPid":3920}
+{"seq":2,"elapsedMs":11.758,"stage":"journal_ready","pid":19592,"parentPid":3920}
+{"seq":3,"elapsedMs":73.6849,"stage":"body_enter","pid":19592,"parentPid":3920}
+{"seq":4,"elapsedMs":3150.5863,"stage":"p_call_enter","pid":19592,"parentPid":3920,"callSeq":1,"defaultLoader":true}
+{"seq":5,"elapsedMs":3154.0704,"stage":"p_call_enter","pid":19592,"parentPid":3920,"callSeq":2,"defaultLoader":true}
+{"seq":6,"elapsedMs":3174.7209,"stage":"fixture_evaluation_enter","pid":19592,"parentPid":3920,"fixtureOrdinal":1,"count":1}
+{"seq":7,"elapsedMs":3178.3604,"stage":"p_call_terminal","pid":19592,"parentPid":3920,"callSeq":1,"rejected":true,"safeModuleCode":true,"virtualRawError":false}
+{"seq":8,"elapsedMs":3180.586,"stage":"p_call_terminal","pid":19592,"parentPid":3920,"callSeq":2,"rejected":true,"safeModuleCode":true,"virtualRawError":false}
+{"seq":9,"elapsedMs":3182.7076,"stage":"p_call_enter","pid":19592,"parentPid":3920,"callSeq":3,"defaultLoader":true}
+{"seq":10,"elapsedMs":3184.4206,"stage":"p_call_terminal","pid":19592,"parentPid":3920,"callSeq":3,"rejected":true,"safeModuleCode":true,"virtualRawError":false}
+{"seq":11,"elapsedMs":3186.3051,"stage":"assertions_enter","pid":19592,"parentPid":3920}
+{"seq":12,"elapsedMs":3189.4401,"stage":"assertions_finished","pid":19592,"parentPid":3920}
+{"seq":13,"elapsedMs":3191.5125,"stage":"body_finished","pid":19592,"parentPid":3920}

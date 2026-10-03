@@ -1,0 +1,21 @@
+{
+  "startTime": 1791011893255,
+  "endTime": 1791011897119,
+  "numTotalTests": 1,
+  "numPassedTests": 1,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "moduleErrorCount": 0,
+  "unhandledErrorCount": 0,
+  "nodes": [
+    {
+      "name": "R4-R3-INJECTION-PERSISTENT | default route loader two concurrent and one subsequent imports reject",
+      "status": "passed",
+      "durationMs": 3129.6583,
+      "errorCount": 0,
+      "errors": []
+    }
+  ],
+  "data": "virtual_only",
+  "rawExceptionTextRecorded": false
+}

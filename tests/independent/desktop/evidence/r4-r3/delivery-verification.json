@@ -1,0 +1,54 @@
+{
+  "matrixUniqueIds": 120,
+  "columns": 12,
+  "firstElevenColumnsPreserved": true,
+  "allStatusesPreserved": true,
+  "matrixStates": {
+    "A": {
+      "passed": 64
+    },
+    "B": {
+      "blocked": 19,
+      "not_run": 4,
+      "failed": 1
+    },
+    "C": {
+      "not_run": 20
+    },
+    "D": {
+      "not_run": 12
+    }
+  },
+  "outsideBBytesPreserved": true,
+  "appendFiles": {
+    "docs/testing/phase-4-c12-windows-shell-report.md": {
+      "prefixPreserved": true,
+      "originalBytes": 36022,
+      "appendedBytes": 980
+    },
+    "docs/testing/phase-4-c12-manual-checklist.md": {
+      "prefixPreserved": true,
+      "originalBytes": 14036,
+      "appendedBytes": 980
+    }
+  },
+  "reportFullCaseMappings": 24,
+  "P": "1 passed",
+  "A": "blocked_pre_body_timeout",
+  "B": "not_run",
+  "vitestCliStarts": 2,
+  "workerStarts": 2,
+  "mainRequests": 0,
+  "uiAssertionsExecuted": 0,
+  "targetRetries": 0,
+  "preMainCorrectionWorkers": 0,
+  "ordinaryStaticCorrections": 1,
+  "productStarts": 0,
+  "auxiliaryStarts": 0,
+  "chunkInjections": 0,
+  "gitWrites": 0,
+  "diffCheckExitCode": 0,
+  "gitWarning": true,
+  "newFileWhitespaceCheckPassed": true,
+  "resourceScope": "four owned CLI/registered worker PIDs gone; worker exit codes and full descendant enumeration unverified"
+}

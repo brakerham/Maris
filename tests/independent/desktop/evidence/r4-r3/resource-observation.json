@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-03T15:22:13.8980466+08:00",
+  "phases": [
+    {
+      "rootExit": 0,
+      "workerExit": null,
+      "workerPid": 19592,
+      "phase": "injection",
+      "rootGone": true,
+      "rootPid": 3920,
+      "workerGone": true
+    },
+    {
+      "rootExit": -1,
+      "workerExit": null,
+      "workerPid": 16464,
+      "phase": "cold-trace",
+      "rootGone": true,
+      "rootPid": 15796,
+      "workerGone": true
+    }
+  ],
+  "enumerationVerified": false,
+  "directOwnedParentChildren": [],
+  "limitation": "known created CLI and journal-registered workers only; historical full descendant enumeration unverified",
+  "safeErrorKind": "CimException"
+}

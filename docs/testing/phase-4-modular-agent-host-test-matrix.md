@@ -274,6 +274,13 @@
 - B无门面节点及恢复/剩余公开/兼容/Windows均not_run；产品0/8、辅助0/4、实际注入0，旧成功证据只读沿用。B仍0 passed/1 failed/19 blocked/4 not_run，A64 passed/C20/D12 not_run及所有原预期保持。
 - 原四要求全部保留，首次A/旧R4/R4-R1与D15材料不改；真实root、观察、bridge已收口，已登记CLI/worker结束；系统枚举权限错误保持unverified。交blocked / finished等总控针对有效请求故障接线裁定，不自动续跑。
 
+
+#### C12-R4-R3 持续导入最新状态备注（2026-10-03）
+
+- [R3完整报告](phase-4-c12-r4-r3-persistent-import-windows-report.md)：P工具注入1 passed，默认loader两并发+随后3/3 safe reject、fixture1、精确映射1，不计UI通过。A首次在正文前初始化硬限，journal只worker_start/journal_ready，main/fixture/loader0、四原断言not_run；无runner JSON，不伪造failed业务节点。
+- B/独立恢复/剩余公开/开发兼容/Windows均not_run，产品0/8、辅助0/4、真实网络注入0；LAZY-001不关闭，无新增产品缺陷。原B0 passed/1 failed/19 blocked/4 not_run及所有原要求保持，A64/C20/D12保持。
+- 首次材料保留；已登记CLI/worker结束、完整系统后代枚举未核实；额外前置worker/目标重试0，普通静态修正1。交blocked / finished等总控针对正文前初始化阶段裁定，不自动扩大或重跑。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复

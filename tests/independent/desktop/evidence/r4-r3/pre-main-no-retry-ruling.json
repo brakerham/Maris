@@ -1,0 +1,15 @@
+{
+  "phase": "cold-trace",
+  "bodyEntered": false,
+  "fixtureEvaluations": 0,
+  "loaderCalls": 0,
+  "mainRequests": 0,
+  "runnerJsonProduced": false,
+  "lastPersistentStage": "journal_ready",
+  "rootExited": true,
+  "registeredWorkerExited": true,
+  "targetCodeChanged": false,
+  "extraWorkerUsed": false,
+  "correctionPermittedOnThisEvidence": false,
+  "reason": "no identified pure tool configuration error; do not use pre-body timeout as blind retry authorization"
+}

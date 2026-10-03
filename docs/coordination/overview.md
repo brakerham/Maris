@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-03 03:56，Asia/Shanghai
+更新时间：2026-10-03 16:08，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。C12-R4-R2已确认取消请求拒绝、有效请求成功，当前故障前置未建立；不新定产品缺陷。发布R4-R3，真实ESM故障模块先验证默认loader并发/重复拒绝，再两个全新冷main四断言，均通过后续恢复/剩余Windows。不重打包或加时，LAZY-001未关闭、P4-B未complete、P4-C/D未开始；D15-R1有限接受与旧诊断限制保持。
+P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。R4-R3 的 52 交付与 15 冻结源码已核对；持续注入 P 通过，观察 A 在正文前初始化超时、main 为 0，B/Windows 未运行。发布 P4-D16 给既有 Astra 技术顾问，定位基础设施停点并审查 A→B 必经依赖，交付可冻结验收路线。不重复 P 或旧 A/B，不改产品或打包；LAZY-001/UI-02/P4-B 未关闭，P4-C/D 未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,10 +13,12 @@ P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。C12-R4-R2已
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R4-R2传播核对，发布持续导入故障独立复验 | 2026-10-03 03:56 | 用户派发既有测试智能体 | [核对](../p4-c12-r4-r2-cold-entry-coordinator-review.md) |
-| 技术顾问 | D15-R1有限范围`complete`；本人交付`review / finished`保留 | 40交付核对，actual/main/act完成，旧超时未知 | 2026-10-03 03:05（交付已核对） | 停止，不继续诊断或业务复验 | [报告](../phase-4-d15-r1-bootstrap-advice.md) |
+| 头脑风暴 | `ready / waiting_user` | R4-R3 证据核对，准备 D16 技术裁定与固定起点 | 2026-10-03 16:08 | 用户派发既有技术顾问；收到交付后裁定 | [核对](../p4-c12-r4-r3-initialization-coordinator-review.md) |
+| 技术顾问 | D16 `ready / waiting_user`，接单 unverified；旧 D15-R1 有限 complete 保留 | 使用用户选择的 Astra 核对初始化阶段与验收依赖；尚未运行 | 2026-10-03 16:08（总控准备） | 新起点核对→静态审计→有限新诊断→路线交付 | [任务](prompts/p4-d16-harness-and-acceptance-technical-adviser.md) |
 | 执行智能体 | `review / finished`（R5-LAZY） | 局部隔离/恢复、132回归、新包及19项EXE门禁交付 | 2026-10-02（最终交付已核对） | 停止，等待独立结论 | [运行说明](../b7-r5-lazy-running.md) |
-| 测试智能体 | R4-R2`blocked / finished`；新R4-R3`ready / waiting_user` | P持续注入验证→冷A/B→成功后原续跑，接单unverified | 2026-10-03 03:56（总控准备） | 新起点→默认loader真实拒绝→有效请求四断言 | [Prompt](prompts/p4-c12-r4-r3-persistent-import-tester.md) |
+| 测试智能体 | R4-R3 `blocked / finished` | P 已通过；A 正文前超时；B/恢复/Windows 未运行 | 2026-10-03 15:36（交付已核对） | 停止，等待 D16 裁定与总控新授权 | [报告](../testing/phase-4-c12-r4-r3-persistent-import-windows-report.md) |
+
+当前唯一新任务是 P4-D16。顾问只能修改新裁定、新诊断目录和本人日志；最多三次新基础设施 CLI，不导入产品 main，不修改旧独立材料或运行 B。A/B 是否解耦由顾问提出方案、总控冻结后再派发，尚未授权独立验收继续。
 
 ## 阶段 0 任务状态
 

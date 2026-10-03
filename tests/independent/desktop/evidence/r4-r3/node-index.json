@@ -1,0 +1,21 @@
+{
+  "injectionNodesExecuted": 1,
+  "injectionPassed": 1,
+  "injectionFailed": 0,
+  "uiNodesExecuted": 0,
+  "uiPassed": 0,
+  "uiFailed": 0,
+  "AInvocationStatus": "blocked_pre_body_timeout",
+  "B": "not_run",
+  "vitestCliStarts": 2,
+  "workersStarted": 2,
+  "actualMainRequests": 0,
+  "extraPreMainWorkers": 0,
+  "targetRetries": 0,
+  "ordinaryStaticMappingCorrections": 1,
+  "recoveryNodesExecuted": 0,
+  "executorCompatibilityExecuted": 0,
+  "productStarts": 0,
+  "auxiliaryStarts": 0,
+  "chunkNetworkInjections": 0
+}

@@ -418,3 +418,11 @@ Warning：只读 Git 命令提示用户全局 Git ignore 无读取权限；命�
 - main/act完成，同一Router1的attempt1被取消后安全拒绝、attempt2未取消成功resolve，活跃目标idle/errors0，无alert；Shell/nav/Agent三断言通过，不能把取消错误补签为当前有效请求故障。
 - 本次未建立活跃请求错误前置，不新增已定级产品P0/P1；第二次import解析原因仍unverified，交总控裁定测试接线。不继续延时/预热/重打包，不重跑首次结果。
 - 产品0/8、辅助0/4、chunk注入0；系统枚举CimException明确未核实全树，已登记CLI/worker结束、真实root及订阅清理有记录。旧证据和24项原要求保持，人工条件不要求现在操作。
+
+
+## C12-R4-R3 持续导入复验追加（2026-10-03）
+
+- [R3报告](phase-4-c12-r4-r3-persistent-import-windows-report.md)：blocked / finished；P工具前置1 passed，真实默认loader两并发及随后3/3safe reject，零import ESM求值1/精确映射1；不是网络chunk404或UI通过。
+- 全新A首次停在worker_start/journal_ready，正文/main/fixture/loader均0，CLI14595ms硬限定向收口；无runner JSON，四原断言not_run，不编造failed产品节点。B、恢复、兼容和Windows未执行，产品0/8、辅助0/4。
+- 没有明确纯工具配置错误，不消耗额外前置worker盲重试；原P/A首次材料完整保留，LAZY-001/UI-02/P4-B未关闭，无新增产品缺陷。已登记CLI/worker结束，完整系统后代枚举CimException保持unverified。
+- 原24项完整预期/历史保持，普通静态映射修正1与目标更正0分列；用户继续后的长可见性空档如实记录。交总控review后停止，不自动续跑。

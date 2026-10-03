@@ -1,0 +1,78 @@
+{
+  "P": {
+    "caseId": "R4-R3-INJECTION-PERSISTENT",
+    "status": "passed",
+    "calls": [
+      {
+        "seq": 7,
+        "elapsedMs": 3178.3604,
+        "stage": "p_call_terminal",
+        "pid": 19592,
+        "parentPid": 3920,
+        "callSeq": 1,
+        "rejected": true,
+        "safeModuleCode": true,
+        "virtualRawError": false
+      },
+      {
+        "seq": 8,
+        "elapsedMs": 3180.586,
+        "stage": "p_call_terminal",
+        "pid": 19592,
+        "parentPid": 3920,
+        "callSeq": 2,
+        "rejected": true,
+        "safeModuleCode": true,
+        "virtualRawError": false
+      },
+      {
+        "seq": 10,
+        "elapsedMs": 3184.4206,
+        "stage": "p_call_terminal",
+        "pid": 19592,
+        "parentPid": 3920,
+        "callSeq": 3,
+        "rejected": true,
+        "safeModuleCode": true,
+        "virtualRawError": false
+      }
+    ],
+    "fixtureEvaluations": 1,
+    "mappingRecords": [
+      {
+        "seq": 1,
+        "elapsedMs": 2441.9821999999995,
+        "stage": "target_module_mapping",
+        "pid": 3920,
+        "parentPid": 21552,
+        "targetOrdinal": 1,
+        "fixtureOrdinal": 1,
+        "absoluteRequest": false,
+        "relativeRequest": true,
+        "knownExtension": false,
+        "importerBound": true,
+        "unsupportedQuery": false
+      }
+    ],
+    "mainRequests": 0,
+    "isUiAcceptance": false
+  },
+  "A": {
+    "caseId": "R4-R3-UI-02-COLD-TRACE",
+    "status": "blocked_pre_body_timeout",
+    "lastPersistentStage": "journal_ready",
+    "bodyEntered": false,
+    "mainRequests": 0,
+    "fixtureEvaluations": 0,
+    "loaderCalls": 0,
+    "originalFourAssertions": "not_run",
+    "runnerJsonProduced": false,
+    "productConclusion": "unverified"
+  },
+  "B": "not_run",
+  "recovery": "not_run",
+  "compatibility": "not_run",
+  "windows": "not_run",
+  "newProductDefects": 0,
+  "lazy001ClosureSuggested": false
+}

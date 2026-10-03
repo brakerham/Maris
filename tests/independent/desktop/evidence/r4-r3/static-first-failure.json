@@ -1,0 +1,13 @@
+{
+  "stage": "pure_static_resolver_predicate_check",
+  "safeCode": "known_canonical_id_missing",
+  "kind": "Error",
+  "vitestCliStarts": 0,
+  "workers": 0,
+  "fixtureEvaluations": 0,
+  "loaderCalls": 0,
+  "mainRequests": 0,
+  "firstResolverSha256": "0df38d8bb523e666a3e43f824b0c32b4163ad233bc4575e56081ce840a81fb70",
+  "cause": "known five-character Vite wrapper sliced at six",
+  "correction": "strip exactly five characters, retain exact target comparison"
+}

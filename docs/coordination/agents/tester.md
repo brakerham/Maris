@@ -2,23 +2,23 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12-R4-R2 — 冷入口传播复验与原R4续跑
+- 当前任务：P4-C12-R4-R3 — 持续导入故障与冷入口复验与原R4续跑
 - 状态：`blocked`
-- 最近更新：2026-10-03 03:43 Asia/Shanghai
-- 可修改范围：仅新增r4-r2-*、evidence/r4-r2、新R4-R2报告；旧主报告/清单追加、矩阵B状态备注、自身角色；旧public/r1/r2/r3/r4及产品只读
+- 最近更新：2026-10-03 15:36 Asia/Shanghai
+- 可修改范围：仅新增r4-r3-*、evidence/r4-r3、新R4-R3报告；旧主报告/清单追加、矩阵B状态备注、自身角色；旧public/r1/r2/r3/r4/r4-r1/r4-r2/D15与产品全部只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：blocked / finished交付并停止
-- 步骤开始时间：2026-10-03 03:43 Asia/Shanghai
-- 最近有效进展：2026-10-03 03:43 Asia/Shanghai
-- 最近心跳：2026-10-03 03:43 Asia/Shanghai
+- 当前步骤：blocked / finished最终交付并停止
+- 步骤开始时间：2026-10-03 15:36 Asia/Shanghai
+- 最近有效进展：2026-10-03 15:36 Asia/Shanghai
+- 最近心跳：2026-10-03 15:36 Asia/Shanghai
 - 下一检查点：已停止，交总控验收/裁定
 - 等待对象：总控
-- 活动进程或会话：无活动目标/session；自有CLI30912与登记worker28308已结束；系统后代枚举unverified；产品0/8、辅助0/4
+- 活动进程或会话：无活动目标；本轮4个已登记CLI/worker均已结束；完整历史后代枚举unverified；产品0/8、辅助0/4
 - 重试次数：0
-- 最近输出：A1 failed；34记录定位取消reject与活跃resolve，B/后续not_run；507终点503保持+4授权，37交付；110旧独立/69旧D15/11冷源码/7包元数据保持；资源CLI/worker结束，系统枚举unverified，待总控review
+- 最近输出：540/544保持+4授权，0越界/缺失；52项交付摘要；P1 passed，A正文前blocked，B/后续未执行；完整24项映射，目标保持停止
 
 ## 任务与后续
 
@@ -39,6 +39,64 @@
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
 ## 工作日志
+
+### 2026-10-03 15:36 Asia/Shanghai — C12-R4-R3 blocked / finished最终交付并停止
+
+- [R3独立报告](../../testing/phase-4-c12-r4-r3-persistent-import-windows-report.md)、原报告/人工清单追加、P4-B备注与24项完整原预期/历史/本轮/缺口已交付。P只有1个前置节点passed，A正文前硬限blocked/main0，四业务断言not_run；B/恢复/兼容/Windows停止，不关闭LAZY-001/UI-02/P4-B。
+- 终点实测544=540保持+4授权，0越界/缺失/staged；389源/140out/67资源、固定包/fuses/7包元数据/15冻结目标源码保持，143旧独立与69旧D15文件保持，旧R2交付33保持+4授权共享文档变化。
+- 120唯一ID/12列/前11列/所有原状态/非B字节、旧报告与清单原prefix保持，各追加980bytes；52项交付摘要逐项核对。diff-check exit0含环境warning；新增全文件及授权新段行尾扫描通过。
+- 四个已登记CLI/worker已结束，新cache1文件清理；完整历史后代枚举CimException，worker exit code unknown，不补签全树零残留。子任务只读建议已记录，最终复核unverified并中断，没有目标或写入。
+- stopped，交总控review。A模块初始化硬限15秒，最后脱敏持久阶段journal_ready，无正文异常可报告；已保留首轮/身份/双流/同步journal/修正裁定，未定位纯配置错误，不使用额外worker或盲重跑。需总控共同裁定下一步；不改产品、依赖、Git，不建后续任务。
+
+
+### 2026-10-03 15:35 Asia/Shanghai — C12-R4-R3 blocked / finished交付，目标停止，仅终点核对
+
+- 首次P1passed和A正文前硬限分开统计，main0，不构造产品失败或UI通过。B/恢复/兼容/Windows按任务停止，LAZY-001/UI-02/P4-B未关闭。
+- 新报告、旧报告/人工清单追加、矩阵B备注与24项完整原预期/证据/缺口交付；目标已停止，最终仅材料审计。
+- 子任务只读建议已记录，最终源码复核unverified并中断；四个登记PID已结束，新cache清理，完整历史后代枚举CimException，未知部分保留。
+- 交总控review，阻塞原因是A测试模块初始化15秒CLI硬限，最后持久阶段journal_ready；没有定位到纯工具配置错误，不使用额外worker/加时/缓存重置盲重跑。
+
+
+### 2026-10-03 15:31 Asia/Shanghai — C12-R4-R3 报告和24项映射已交付，核对终点摘要
+
+- P持续注入1 passed；A正文前硬限blocked，四业务断言not_run。B/恢复/兼容/Windows停止，未新增产品缺陷。
+- 只读子任务已收到规范解析建议；当前冻结源码最终回执unverified，pending_init后中断，没有写入或执行目标。父任务保留预算和独立结论。
+- 四个已登记CLI/worker已结束，自有新cache清理；系统全树枚举CimException，未知部分不写零。继续仅交付复算，不启动测试。
+
+
+### 2026-10-03 15:21 Asia/Shanghai — C12-R4-R3 P通过；A首轮停在模块初始化硬限，停止B及后续
+
+- P成功与A阻塞分开统计；A没有runner JSON、没有正文或四业务断言，不编造failed/passed节点。A硬限首次材料完整保留，不回填P的故障事件。
+- 没有可定位的纯工具配置错误，不能用目标尚未开始作为盲重试理由；额外前置worker/目标修正0，不重跑或加时。B/恢复/兼容/Windows停止，LAZY-001未关闭，无新增产品缺陷。
+- P父CLI3920与worker19592自然结束；A父CLI15796和worker16464已登记/结束，父exit-1不复制给worker，正文前没有真实root/订阅创建。下一步只读首次材料、资源限制、24项报告和终点复算。
+
+
+### 2026-10-03 15:19 Asia/Shanghai — C12-R4-R3 P持续注入通过，唯一一次全新冷main观察A
+
+- P首次13条worker记录与1条resolver记录，call1/2并发完成后call3，全部安全拒绝，不输出原错误；真实ESM求值故障而非网络404。
+- P工作进程及CLI结束，缓存/状态不传A；下一步全新A冷main，5秒条件/test10秒/CLI15秒。原四断言必须全部执行，并关联未取消目标safe reject与同实例错误槽。
+
+
+### 2026-10-03 15:18 Asia/Shanghai — C12-R4-R3 静态通过并冻结，唯一一次P持续导入验证
+
+- P使用全新worker/cache、真实compileRegistry/contribution/createModuleRoutes默认loader，目标两并发+随后一次，必须3个safe reject；不导入main，不计UI通过。
+- 静态谓词首次known_canonical_id_missing已保存源码/安全错误，修正五字符包装截取；fixture/loader/main/worker均0，目标前更正worker预算0。
+- 同步journal与resolver独立日志披露不同时间轴；双流/真实CLI与登记worker收口，test10秒/CLI15秒，失败不重跑或启动A/B。
+
+
+### 2026-10-03 15:16 Asia/Shanghai — C12-R4-R3 用户继续后恢复静态核对，尚未启动任何P/A/B目标
+
+- 可见控制/聊天间隔从原接单至15:15存在长空档，未连续记录两个检查点；不宣称期间持续执行或外部角色活动。本轮尚无Vitest/fixture/loader/main目标，处于安全位置。
+- 用户继续后先重读control；只恢复既有任务，不重启旧目标，重新设置十分钟检查点。任何实际节点失败仍按原任务立即停止。
+- 子任务review_test_handoff只读给出规范ID和Vite单层/@id/、/@fs/建议；父任务持有全部目标预算。新fixture使用纯JS .tsx/零JSX，避免派生未知扩展，全部尚未动态验证。
+
+
+### 2026-10-03 04:08 Asia/Shanghai — C12-R4-R3 接单与权威新起点通过
+
+- control 2026-10-03T03:56:00+08:00，既有测试唯一负责人；R5稳定输入、旧OUTBOX/setting/PATH不重开。
+- 新起点及外部不可变包输入分开核对，无历史协调漂移误assert。先P默认loader两并发+随后调用一次都安全拒绝，再全新worker冷main A/B；全部通过才进入独立恢复/Windows。
+- 原public/r1/r2/r3/r4/r4-r1和D15/D15-R1全部只读；新增r4输出与自身日志，动态根需要审批且不使用真实AppData。
+
 
 ### 2026-10-03 03:43 Asia/Shanghai — C12-R4-R2 blocked / finished交付并停止
 

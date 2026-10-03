@@ -1,0 +1,5 @@
+tests/independent/desktop/evidence/r4-r3/cold-trace/controller.journal.jsonl	25a7705f9691bc90dffed8b877dd42176b6347c779df7e3d6ee1d33b817fba9e
+tests/independent/desktop/evidence/r4-r3/cold-trace/process.json	55d33da543e0ccb4e9357858faa4c4b73bd0c5ba76ae62ad712137d18afc3c71
+tests/independent/desktop/evidence/r4-r3/cold-trace/stderr.log	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+tests/independent/desktop/evidence/r4-r3/cold-trace/stdout.log	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+tests/independent/desktop/evidence/r4-r3/cold-trace/worker.journal.jsonl	e467ee6e042f666762d3b1e662887e2812ecc01c872b1f17ead3438477990cb4

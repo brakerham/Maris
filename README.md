@@ -1,6 +1,9 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。C12-R4-R2冷入口已定位取消加载拒绝、有效加载成功，故障前置未建立；原首次结果保留，不新增产品缺陷。发布C12-R4-R3：真实ESM持续导入失败先做并发/重复注入验证，再用两个新冷入口保留四断言，通过后续恢复和Windows。不加时或重打包，LAZY-001未关闭、P4-B未complete、P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。C12-R4-R3 的持续故障注入 P 已通过；冷观察 A 在测试正文前超时，产品 main 未运行，B 和 Windows 未执行。发布 P4-D16，由既有技术顾问使用用户选择的 GPT-6 Astra 定位测试初始化并审查观察门禁对公开验收的阻断；不重复 P 或旧 A/B，不改产品或打包。LAZY-001 未关闭、P4-B 未 complete、P4-C/D 未开始。
+
+- [R4-R3 初始化阻塞总控核对](docs/p4-c12-r4-r3-initialization-coordinator-review.md)：52 交付与 15 冻结源码匹配，P 成功保留，A 停点与未知根因分开记录。
+- [P4-D16 技术顾问任务](docs/coordination/prompts/p4-d16-harness-and-acceptance-technical-adviser.md)：有限的新基础设施诊断与可执行验收路线裁定，既有顾问待接单。
 
 - [R4-R2传播总控核对](docs/p4-c12-r4-r2-cold-entry-coordinator-review.md)：37交付与507起点、取消/有效请求及固定工具源码核对，产品结论保留。
 - [R4-R3持续导入独立复验](docs/coordination/prompts/p4-c12-r4-r3-persistent-import-tester.md)：精确故障模块、独立注入节点、两个全新冷main，不重复旧目标或修改产品。
