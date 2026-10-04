@@ -2,23 +2,23 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12-R4-R3 — 持续导入故障与冷入口复验与原R4续跑
+- 当前任务：P4-C12-R5-PUBLIC — 无包装公开冷入口与剩余独立验收
 - 状态：`blocked`
-- 最近更新：2026-10-03 15:36 Asia/Shanghai
-- 可修改范围：仅新增r4-r3-*、evidence/r4-r3、新R4-R3报告；旧主报告/清单追加、矩阵B状态备注、自身角色；旧public/r1/r2/r3/r4/r4-r1/r4-r2/D15与产品全部只读
+- 最近更新：2026-10-04 00:49 Asia/Shanghai
+- 可修改范围：仅新增r5-public-*、evidence/r5-public、新R5-PUBLIC报告；旧主报告/清单追加、矩阵B状态备注、自身角色；产品及旧测试/证据/顾问材料只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
 - 当前步骤：blocked / finished最终交付并停止
-- 步骤开始时间：2026-10-03 15:36 Asia/Shanghai
-- 最近有效进展：2026-10-03 15:36 Asia/Shanghai
-- 最近心跳：2026-10-03 15:36 Asia/Shanghai
-- 下一检查点：已停止，交总控验收/裁定
+- 步骤开始时间：2026-10-04 00:49 Asia/Shanghai
+- 最近有效进展：2026-10-04 00:49 Asia/Shanghai
+- 最近心跳：2026-10-04 00:49 Asia/Shanghai
+- 下一检查点：已停止，交总控review/裁定；不启动目标或下一任务
 - 等待对象：总控
-- 活动进程或会话：无活动目标；本轮4个已登记CLI/worker均已结束；完整历史后代枚举unverified；产品0/8、辅助0/4
+- 活动进程或会话：无活动目标；CLI16336/worker14076明确不存在；完整历史后代未核实；产品0/8、辅助0/4
 - 重试次数：0
-- 最近输出：540/544保持+4授权，0越界/缺失；52项交付摘要；P1 passed，A正文前blocked，B/后续未执行；完整24项映射，目标保持停止
+- 最近输出：638=634保持+4授权，0越界/缺失/staged；41项交付摘要、24项完整映射；B initialization_blocked/main0/四断言not_run，两登记PID已结束
 
 ## 任务与后续
 
@@ -38,7 +38,61 @@
 - C2-B2a 已提交 [FastAPI 探针独立 HTTP 验收报告](../../testing/phase-0-c2-b2-report.md)和 [`test_c2_b2_api.py`](../../../tests/independent/test_c2_b2_api.py)；功能契约通过，1 项 TestClient/AnyIO 兼容性警告待总控分级。
 - 并发用例的 `Barrier(2)` 已改为 Event 同步；记录为测试基础设施修正，不能归为产品修复。
 
+
+## R5-PUBLIC 子任务快照
+
+| 子任务 | 任务状态 | 运行状态 | 当前步骤 | 最近心跳 | 下一检查点 | 等待对象 | 会话/证据 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| r5_public_contract_review | review | finished | 只读合同/新工具静态问题已交付；父任务修正后冻结 | 2026-10-04 00:32 Asia/Shanghai | 无；已停止 | 父任务记录 | evidence/r5-public/subagent-read-only-receipt.json；0写入/目标，不计动态验收 |
+
 ## 工作日志
+
+### 2026-10-04 00:49 Asia/Shanghai — C12-R5-PUBLIC blocked / finished最终交付并停止
+
+- [本轮独立报告](../../testing/phase-4-c12-r5-public-windows-report.md)、原报告/人工清单只追加、矩阵B证据备注、原24项完整预期/历史/本轮/缺口已交付。公开B实际独立启动，不依赖A；CLI1/worker1/main0，最后jsdom_import_enter缺少terminal，classification initialization_blocked，四原断言及来源/公开结果未执行。没有runner JSON，不签产品failed或passed。
+- 实际初始化14953ms内进入收口，登记CLI/worker退出检查57ms，controller总开销15120ms；worker exit code未知，全系统/历史后代未核实，父exit不复制。没有正文/DOM/root/订阅创建，不伪造UI cleanup；cache未生成/deleted0。保留六首次文件/10源码及静态首次谓词问题，普通静态更正1、额外worker/目标重试0。
+- 终点638=634保持+4授权，0越界/缺失/staged；389源/140out/67资源、固定包/fuses/7包元数据/10本轮源码保持，191旧独立/69旧D15保持。原P交付48保持+4共享授权变化、旧P15源码保持，D16交付39保持。120唯一ID/12列/前11列/全部状态/非B字节与旧文档prefix保持，各追加1027bytes，41项交付摘要逐项核对。diff-check exit0含环境warning，新增全文件与授权新段行尾扫描通过。
+- 子任务只读意见/冻结前修正已记录，0写入/目标，不算动态验收；状态写入OSError errno22由限定自身文件补丁收口，无目标重启。最后脱敏失败是initialization deadline，并无jsdom rejected原异常，根因unknown；已有分段日志和独立worker仍未取得terminal，需总控根据首次阶段决定下一步。
+- stopped，供总控review。恢复/兼容/剩余公开/Windows not_run，产品0/8、辅助0/4、chunk注入0；LAZY-001/UI-02/P4-B未关闭。不重复P/旧A/B/D16，不盲重跑/加时/缓存重置，不改产品/依赖/包或Git，不创建后续任务/P4-C/D。
+
+### 2026-10-04 00:44 Asia/Shanghai — C12-R5-PUBLIC 初始化阻塞报告及24项映射交付
+
+- [本轮报告](../../testing/phase-4-c12-r5-public-windows-report.md)、原报告/人工清单追加及B备注已交付。B独立启动，初始化14953ms内收口，controller完整开销15120ms；四断言not_run，不签产品失败/通过。来源/公开结果未计算，P/旧A/B/D16不重跑。
+- 两登记PID明确不存在；cache未生成/deleted0，UI资源尚未创建，完整系统/历史后代不签零。首次六文件、10冻结源码及首次静态谓词更正保留。额外worker/目标重试0，unknown初始化超时不授权更正。
+- 状态写入曾遇OSError/errno22，原角色文件保持；用限定文件补丁恢复日志，无目标重启/输入修改。该交付工具异常与jsdom缺失terminal分开，不用它推断初始化根因。
+- 目标已停止；最终仅输入/文档边界/交付摘要审计，交总控review，恢复/兼容/公开余项/Windows未执行，LAZY-001/UI-02/P4-B未关闭。
+
+### 2026-10-04 00:35 Asia/Shanghai — C12-R5-PUBLIC B首次初始化阻塞，停止全部目标并整理交付
+
+- R5-PUBLIC首次新B在body前初始化限停止，无runner JSON；不能写成failed产品节点或四条断言失败。当前错误原因unknown，没有可定位纯工具配置错误，额外worker0，不延时/预热/缓存重置/重跑。恢复、兼容、公开余项和Windows全部not_run。
+
+
+### 2026-10-04 00:33 Asia/Shanghai — C12-R5-PUBLIC 静态通过并冻结，执行唯一一次公开冷入口B
+
+- 原生setup与分段jsdom/React、真实Router/单React根、默认loader/main一次、空hash；本次自身mapping/worker求值与来源计算独立于四公开断言。阶段15/10/2、总体30秒，Vitest12秒包含finally，UI5秒。失败不重跑；全部通过且收口才续恢复。
+
+
+### 2026-10-04 00:29 Asia/Shanghai — C12-R5-PUBLIC 冻结前静态问题已修正，解析与输入复核
+
+- 静态协作指出的工具问题在首次目标前修正：可构造网络阻断、阶段切换先验旧预算、退出前门禁、权限空集保留未知、产品unmount退订与救援分列、全公开console参数/DOM属性及清理后累计安全检查。无目标或更正worker，运行前设计修正不冒称产品修复。
+
+
+### 2026-10-04 00:19 Asia/Shanghai — C12-R5-PUBLIC 新公开源码已形成，准备静态解析和冻结
+
+- 只读协作复核完成，四项旧B观测不足已落实；未执行目标或写其他角色。真实MarisBridge全部方法、未知请求与fetch/XHR/socket出口计数；auth/provider/财务无独立bridge API，以冻结入口图和可达出口覆盖说明，不伪造未监测零计数。
+
+
+### 2026-10-04 00:09 Asia/Shanghai — C12-R5-PUBLIC 固定输入通过，编写分段公开冷入口与安全断言
+
+- 新起点638项通过，公开B独立授权；故障来源与四公开断言分开，实际default loader/main/StrictMode，Router直连无包装。工具初始化分段15/正文10/清理2/总30秒，UI5秒，不重复P/旧A/B/D16。
+
+
+### 2026-10-04 00:05 Asia/Shanghai — C12-R5-PUBLIC 接单与权威新起点通过
+
+- control 2026-10-03T23:49:00+08:00，既有测试唯一负责人；公开B已独立授权，不依赖A。
+- 新起点及外部不可变包输入分开核对，无历史协调漂移误assert。P52/15只读复核，不运行P/旧A/B/D16；本轮B全新worker冷main一次，15/10/2阶段、30秒总体，UI5秒。通过且收口后同任务恢复/Windows。
+- 原public/r1/r2/r3/r4/r4-r1和D15/D15-R1全部只读；新增r5-public输出与自身日志，不使用真实AppData；虚拟数据。
+
 
 ### 2026-10-03 15:36 Asia/Shanghai — C12-R4-R3 blocked / finished最终交付并停止
 

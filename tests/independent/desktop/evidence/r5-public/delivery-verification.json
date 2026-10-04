@@ -1,0 +1,59 @@
+{
+  "matrixUniqueIds": 120,
+  "columns": 12,
+  "firstElevenColumnsPreserved": true,
+  "allStatusesPreserved": true,
+  "matrixStates": {
+    "A": {
+      "passed": 64
+    },
+    "B": {
+      "blocked": 19,
+      "not_run": 4,
+      "failed": 1
+    },
+    "C": {
+      "not_run": 20
+    },
+    "D": {
+      "not_run": 12
+    }
+  },
+  "outsideBBytesPreserved": true,
+  "appendFiles": {
+    "docs/testing/phase-4-c12-windows-shell-report.md": {
+      "prefixPreserved": true,
+      "originalBytes": 37002,
+      "appendedBytes": 1027
+    },
+    "docs/testing/phase-4-c12-manual-checklist.md": {
+      "prefixPreserved": true,
+      "originalBytes": 15016,
+      "appendedBytes": 1027
+    }
+  },
+  "reportFullCaseMappings": 24,
+  "B": "initialization_blocked",
+  "faultSourceValid": "not_evaluated",
+  "publicTargetResult": "not_evaluated",
+  "vitestCliStarts": 1,
+  "workerStarts": 1,
+  "mainRequests": 0,
+  "uiAssertionsExecuted": 0,
+  "targetRetries": 0,
+  "preMainCorrectionWorkers": 0,
+  "ordinaryStaticCorrections": 1,
+  "initializationMsBeforeTermination": 14953,
+  "ownedShutdownMs": 57,
+  "controllerTotalMsIncludingReport": 15120,
+  "priorPFrozenSourceMatched": 15,
+  "oldD16DeliveryMatched": 39,
+  "productStarts": 0,
+  "auxiliaryStarts": 0,
+  "chunkInjections": 0,
+  "gitWrites": 0,
+  "diffCheckExitCode": 0,
+  "gitWarning": true,
+  "newFileWhitespaceCheckPassed": true,
+  "resourceScope": "created CLI and registered worker gone; worker exit code and full historical descendants unverified"
+}

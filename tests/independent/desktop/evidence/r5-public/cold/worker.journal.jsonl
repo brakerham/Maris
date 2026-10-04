@@ -1,0 +1,4 @@
+{"seq":1,"elapsedMs":0.1214,"stage":"worker_start","pid":14076,"parentPid":16336}
+{"seq":2,"elapsedMs":12.3208,"stage":"journal_ready","pid":14076,"parentPid":16336}
+{"seq":3,"elapsedMs":1236.5875,"stage":"test_module_enter","pid":14076,"parentPid":16336}
+{"seq":4,"elapsedMs":1249.3182,"stage":"jsdom_import_enter","pid":14076,"parentPid":16336}

@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-03 23:49，Asia/Shanghai
+更新时间：2026-10-04 19:53，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。D16 有限技术裁定已接受，39交付/两次实验核对，旧A根因unknown。公开B独立执行、A按需归因已冻结；发布R5-PUBLIC，本次持续故障/冷入口四断言通过后同任务续恢复和原Windows。不重复P或旧A/B、不改产品或打包；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
+P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。R5-PUBLIC已独立启动，但jsdom导入等待无终态，产品入口/故障模块/四断言均0，初始化根因unknown。41交付已核对，原任务blocked/finished。发布R6-ENV，在新测试setup用Node原生加载同一jsdom，保留真实产品冷入口/故障来源/四断言；通过后同任务续恢复/Windows。不重复P/A/D16、不改产品或打包；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。D16 有限�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | D16交付接受，冻结公开B路线与新任务起点 | 2026-10-03 23:49 | 用户派发既有测试方；收到交付再核对 | [接受](../p4-d16-harness-and-acceptance-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R5-PUBLIC阻塞已核对，R6-ENV环境恢复范围冻结 | 2026-10-04 19:53 | 用户派发既有测试方；收到交付再核对 | [核对与裁定](../p4-c12-r5-public-initialization-coordinator-review.md) |
 | 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
 | 执行智能体 | `review / finished`（R5-LAZY） | 局部隔离/恢复、132回归、新包及19项EXE门禁交付 | 2026-10-02（最终交付已核对） | 停止，等待独立结论 | [运行说明](../b7-r5-lazy-running.md) |
-| 测试智能体 | 旧R4-R3`blocked / finished`；新R5-PUBLIC`ready / waiting_user`，接单unverified | 公开B独立取得自身来源/四断言，不需A先通过 | 2026-10-03 23:49（总控准备） | 新起点→B→成功后同任务续恢复/Windows | [任务](prompts/p4-c12-r5-public-tester.md) |
+| 测试智能体 | R5-PUBLIC`blocked / finished`；新R6-ENV`ready / waiting_user`，接单unverified | 原生固定jsdom加载与同次公开B，不需A先通过 | 2026-10-04 19:53（总控准备） | 新起点→环境与B→成功后同任务续恢复/Windows | [任务](prompts/p4-c12-r6-env-tester.md) |
 
-当前唯一新任务是 P4-C12-R5-PUBLIC，由既有测试方执行。A/B执行依赖已解耦，公开要求没有删减；新B只实际main一次，初始化/正文/清理分段15/10/2秒且整体30秒，UI仍5秒。通过后同任务接原恢复/Windows；旧P/A/B、顾问实验及产品/依赖/受验包只读。顾问与执行继续停止。
+当前唯一新任务是 P4-C12-R6-ENV，由既有测试方执行。jsdom改用Node原生入口是待验证的工具恢复；不是旧根因已定位。新B只实际main一次，初始化/正文/清理分段60/10/2秒且整体75秒，UI仍5秒；明确前置工具错误可同任务更正一次，未知超时不能盲试。通过后同任务接原恢复/Windows；旧证据和产品/依赖/受验包只读，顾问与执行停止。
 
 ## 阶段 0 任务状态
 

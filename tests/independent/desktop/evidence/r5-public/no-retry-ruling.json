@@ -1,0 +1,14 @@
+{
+  "classification": "initialization_blocked",
+  "lastPersistentStage": "jsdom_import_enter",
+  "bodyEntered": false,
+  "mainRequests": 0,
+  "fixtureEvaluations": 0,
+  "resolverRecords": 0,
+  "rootExited": true,
+  "registeredWorkerExited": true,
+  "identifiedPureToolConfigurationError": false,
+  "extraWorkerUsed": false,
+  "targetRetryUsed": false,
+  "reason": "unknown initialization timeout is not tool correction authorization"
+}

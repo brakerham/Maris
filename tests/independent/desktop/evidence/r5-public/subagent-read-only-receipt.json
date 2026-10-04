@@ -1,0 +1,24 @@
+{
+  "task": "r5_public_contract_review",
+  "scope": "read-only contract and new source static review",
+  "targetExecutions": 0,
+  "writes": 0,
+  "status": "finished",
+  "initialFindings": [
+    "global rather than local UI query",
+    "hard prerequisite skipped four assertions",
+    "unsafe boundaries not asserted",
+    "unmount exception skipped cleanup"
+  ],
+  "newDraftFindings": [
+    "constructors must count before throwing",
+    "phase transitions must validate prior budget",
+    "permission empty results must remain unknown",
+    "record unmount subscription state before rescue",
+    "all console and cleanup cumulative safety",
+    "tail journal and stream errors must preserve report"
+  ],
+  "parentCorrectionsBeforeFreeze": true,
+  "lastDeltaReviewedByParent": "shared complete-newline final read and WaitAll exception preservation",
+  "dynamicAcceptanceBySubagent": false
+}

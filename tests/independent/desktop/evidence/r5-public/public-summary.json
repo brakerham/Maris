@@ -1,0 +1,26 @@
+{
+  "classification": "initialization_blocked",
+  "lastPersistentStage": "jsdom_import_enter",
+  "jsdomTerminal": "not_received",
+  "reactImport": "not_entered",
+  "body": "not_entered",
+  "faultSourceValid": "not_evaluated",
+  "publicTargetResult": "not_evaluated",
+  "sourceMappingRecords": 0,
+  "workerEvaluationRecords": 0,
+  "currentHash": "not_sampled",
+  "fourAssertions": {
+    "safeAlert": "not_run",
+    "shell": "not_run",
+    "moduleNavigation": "not_run",
+    "unifiedAgentPanel": "not_run"
+  },
+  "safetyAssertions": "not_run",
+  "uiCleanup": "not_run_resources_not_created",
+  "internalRouterAndAbort": "not_collected",
+  "controllerInitializationMs": 14953,
+  "controllerShutdownToExitCheckedMs": 57,
+  "controllerTotalMsIncludingReporting": 15120,
+  "newProductDefects": 0,
+  "lazy001ClosureSuggested": false
+}

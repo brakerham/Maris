@@ -281,6 +281,13 @@
 - B/独立恢复/剩余公开/开发兼容/Windows均not_run，产品0/8、辅助0/4、真实网络注入0；LAZY-001不关闭，无新增产品缺陷。原B0 passed/1 failed/19 blocked/4 not_run及所有原要求保持，A64/C20/D12保持。
 - 首次材料保留；已登记CLI/worker结束、完整系统后代枚举未核实；额外前置worker/目标重试0，普通静态修正1。交blocked / finished等总控针对正文前初始化阶段裁定，不自动扩大或重跑。
 
+
+#### C12-R5-PUBLIC 独立公开最新备注（2026-10-04）
+
+- [本轮报告](phase-4-c12-r5-public-windows-report.md)：公开B不依赖A，首次停在jsdom_import_enter未返回，初始化阻塞；正文/main/fixture0、来源与公开结果未计算，四断言not_run，没有runner JSON，不伪造failed节点或从P补签。
+- 恢复/开发兼容/公开余项/Windows均not_run；产品0/8、辅助0/4、真实chunk注入0，LAZY-001/UI-02/P4-B未关闭。原120ID/12列/完整预期和原B0 passed/1 failed/19 blocked/4 not_run保持，A64/C20/D12保持。
+- 固定源码先冻结，首次材料保留；CLI与登记worker已结束，worker exit code和完整历史后代未知。普通静态谓词更正1、额外worker/重试0；unknown初始化原因不授权盲重跑，交blocked / finished供总控review。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复

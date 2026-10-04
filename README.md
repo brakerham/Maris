@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。D16 有限技术裁定已接受，两次最小初始化实验成功，旧 A 超时根因仍 unknown。发布 P4-C12-R5-PUBLIC：公开 B 独立验收自身持续故障、冷入口和四条界面要求，不再等待辅助 A；通过后同任务续恢复及原 Windows 范围。P 成功不重做，不改产品或打包。LAZY-001/UI-02 未关闭、P4-B 未 complete、P4-C/D 未开始。
+当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R5-PUBLIC 已独立启动，但停在测试环境 jsdom 导入等待，产品入口与四条界面断言均未执行，根因仍 unknown。发布 P4-C12-R6-ENV：用原生 Node 加载同一固定 jsdom，初始化与业务预算分开；公开 B 通过后同任务继续恢复及原 Windows 范围。不重做 P/A/D16，不改产品或打包。LAZY-001/UI-02 未关闭、P4-B 未 complete、P4-C/D 未开始。
+
+- [R5-PUBLIC 阻塞总控核对](docs/p4-c12-r5-public-initialization-coordinator-review.md)：41 项交付及首次停点核对，区分环境恢复与根因定位。
+- [R6-ENV 测试环境恢复与验收任务](docs/coordination/prompts/p4-c12-r6-env-tester.md)：原生加载固定 jsdom，产品冷入口与原断言保持；既有测试方待接单。
 
 - [D16 总控接受与路线冻结](docs/p4-d16-harness-and-acceptance-coordinator-review.md)：39 交付、两次实际实验与资源限制核对，公开验收和辅助归因分离。
-- [R5-PUBLIC 独立测试任务](docs/coordination/prompts/p4-c12-r5-public-tester.md)：本次故障来源、无包装冷入口、分段预算、恢复和剩余 Windows 条件，既有测试方待接单。
+- [R5-PUBLIC 独立测试任务](docs/coordination/prompts/p4-c12-r5-public-tester.md)：已 blocked/finished，首次源码与结果保留；后续以 R6-ENV 为准。
 
 - [R4-R3 初始化阻塞总控核对](docs/p4-c12-r4-r3-initialization-coordinator-review.md)：52 交付与 15 冻结源码匹配，P 成功保留，A 停点与未知根因分开记录。
 - [P4-D16 技术顾问任务](docs/coordination/prompts/p4-d16-harness-and-acceptance-technical-adviser.md)：有限技术裁定已接受，旧根因未知保持，顾问停止。

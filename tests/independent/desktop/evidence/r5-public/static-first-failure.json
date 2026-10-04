@@ -1,0 +1,9 @@
+{
+  "stage": "static_predicate",
+  "safeCode": "r5_public_main_budget",
+  "reason": "text regex counted erased typeof import as runtime import; use AST CallExpression only",
+  "workers": 0,
+  "mainStarts": 0,
+  "fixtureEvaluations": 0,
+  "ordinaryStaticCorrections": 1
+}

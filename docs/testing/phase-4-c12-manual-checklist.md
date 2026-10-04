@@ -112,3 +112,11 @@ ZIP/staging 的附加检查、UI-03/04 冲突与漂移门禁、HostClient/sessio
 - 全新A首次停在worker_start/journal_ready，正文/main/fixture/loader均0，CLI14595ms硬限定向收口；无runner JSON，四原断言not_run，不编造failed产品节点。B、恢复、兼容和Windows未执行，产品0/8、辅助0/4。
 - 没有明确纯工具配置错误，不消耗额外前置worker盲重试；原P/A首次材料完整保留，LAZY-001/UI-02/P4-B未关闭，无新增产品缺陷。已登记CLI/worker结束，完整系统后代枚举CimException保持unverified。
 - 原24项完整预期/历史保持，普通静态映射修正1与目标更正0分列；用户继续后的长可见性空档如实记录。交总控review后停止，不自动续跑。
+
+
+## C12-R5-PUBLIC 公开冷入口追加（2026-10-04）
+
+- [R5-PUBLIC报告](phase-4-c12-r5-public-windows-report.md)：blocked / finished；公开B独立启动，不依赖A。唯一新CLI/worker停在jsdom_import_enter缺少terminal，initialization_blocked；正文/main/fixture0，四断言not_run，没有runner JSON或产品failed节点。
+- 主进程启动→初始化收口14953ms，process15113ms、controller_finished15120ms；正文/观察/UI cleanup未开始，自有CLI/登记worker已结束。worker exit code unknown，完整系统后代未核实；缓存未生成/未删除，首次六文件及10源码保留。
+- 来源与公开结果都未计算，P旧成功只读不补签；恢复/兼容/剩余公开/Windows停止，产品0/8、辅助0/4、网络chunk注入0。普通静态谓词更正1、额外worker/目标重试0；根因unknown不作为工具重试授权。
+- 原24项要求与状态保持，LAZY-001/UI-02/P4-B未关闭。只交总控review，不改产品/依赖/Git、不自动启动A或新任务。

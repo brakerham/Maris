@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-10-04T00:38:35.4351264+08:00",
+  "createdProcesses": [
+    {
+      "kind": "cli",
+      "pid": 16336,
+      "gone": true,
+      "safeFailure": null
+    },
+    {
+      "kind": "worker",
+      "pid": 14076,
+      "gone": true,
+      "safeFailure": null
+    }
+  ],
+  "fullSystemEnumerationAttempted": false,
+  "fullHistoricalDescendantsVerified": false,
+  "workerExitCode": null,
+  "scope": "created_cli_and_journal_registered_worker_only"
+}

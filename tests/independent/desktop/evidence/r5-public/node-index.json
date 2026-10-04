@@ -1,0 +1,23 @@
+{
+  "nodeId": "R5-PUBLIC-UI-02-COLD",
+  "invocationStatus": "initialization_blocked",
+  "runnerJsonProduced": false,
+  "testNodesExecuted": 0,
+  "passed": 0,
+  "failed": 0,
+  "cliStarts": 1,
+  "forkWorkers": 1,
+  "mainRequests": 0,
+  "fixtureEvaluations": 0,
+  "originalFourAssertions": "not_run",
+  "extraPreMainWorkers": 0,
+  "targetRetries": 0,
+  "ordinaryStaticPredicateCorrections": 1,
+  "recovery": "not_run",
+  "compatibility": "not_run",
+  "remainingPublic": "not_run",
+  "windows": "not_run",
+  "productStarts": 0,
+  "auxiliaryStarts": 0,
+  "chunkInjections": 0
+}
