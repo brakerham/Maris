@@ -1,0 +1,14 @@
+{
+  "files": 63,
+  "sha256": "efb4f2af1539b9133d7701303b485a6fd685262db0ab489e290e1ad7eeb25bfa",
+  "encoding": "UTF-8 without BOM; sorted repo relative paths; TAB; LF",
+  "excludedSelfReferences": [
+    "delivery.sha256",
+    "delivery-verification.json"
+  ],
+  "inputAudit": "end-audit.json",
+  "targetReruns": 0,
+  "gitWrites": 0,
+  "status": "blocked / finished",
+  "requiresCoordinatorReview": true
+}

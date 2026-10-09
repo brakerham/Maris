@@ -1,0 +1,44 @@
+{
+  "controlVersion": "2026-10-04T19:53:00+08:00",
+  "start": {
+    "count": 679,
+    "matched": 679,
+    "sha256": "3a1adb3b69f0c17d593c497149897e80d50d99a6e170c558035f18df41d3b966"
+  },
+  "r5Delivery": {
+    "count": 41,
+    "matched": 41,
+    "sha256": "89adf287912140c8dce66264fcf57f0d7e4168d00437c71a8bc3b57afdf0c0fe"
+  },
+  "r5Source": {
+    "count": 10,
+    "matched": 10,
+    "sha256": "e511ee663e4518e2db1dcd0f9dbb7ea8c80e8f954a9745f868aef77ae47ac271"
+  },
+  "r5First": {
+    "count": 6,
+    "matched": 6,
+    "sha256": "1d7789bc84fcbfaeafd06824146d2785e7db7fa579b25aeeb93839434582fcac"
+  },
+  "source": {
+    "count": 389,
+    "matched": 389,
+    "sha256": "8d104d1e84382cb1fe0228618545d0e7585f3f91a2b3f387f067e2e50e148af9"
+  },
+  "out": {
+    "count": 140,
+    "matched": 140,
+    "sha256": "e73d6d9d9d1906c47fcfc133459fae37afade9c1691de6d165cbe738fa96be19"
+  },
+  "resources": {
+    "count": 67,
+    "matched": 67,
+    "sha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1"
+  },
+  "artifacts": {
+    "apps/desktop/out/Maris-win32-x64/Maris.exe": "64ce71f3a7b3055f9ad27f6d611e28c4af7e9ba8b86d8b21399b7b422844a80e",
+    "apps/desktop/out/Maris-win32-x64/resources/app.asar": "5ba47909537e1419dc275fa3ca1e5e076a1aa6d5c0205229f91defb92ddd0931",
+    "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+  },
+  "staged": []
+}

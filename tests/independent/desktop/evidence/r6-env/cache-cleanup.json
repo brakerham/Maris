@@ -1,0 +1,10 @@
+{
+  "scope": "r6-env/cache only",
+  "absoluteBoundaryVerified": true,
+  "ancestorsAndDescendantsNoReparse": true,
+  "filesRemoved": 2,
+  "firstCacheResultsPreserved": true,
+  "existsAfter": false,
+  "targetsRunning": false,
+  "fullSystemState": "unverified"
+}

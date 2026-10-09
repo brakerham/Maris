@@ -1,0 +1,47 @@
+[
+  {
+    "file": "r6-env-cold.config.mjs",
+    "identifierOnly": true,
+    "differenceLines": 0
+  },
+  {
+    "file": "r6-env-cold.test.tsx",
+    "identifierOnly": false,
+    "differenceLines": 14
+  },
+  {
+    "file": "r6-env-config-factory.mjs",
+    "identifierOnly": true,
+    "differenceLines": 0
+  },
+  {
+    "file": "r6-env-failing-page.tsx",
+    "identifierOnly": true,
+    "differenceLines": 0
+  },
+  {
+    "file": "r6-env-reporter.mjs",
+    "identifierOnly": true,
+    "differenceLines": 0
+  },
+  {
+    "file": "r6-env-resolver.mjs",
+    "identifierOnly": true,
+    "differenceLines": 0
+  },
+  {
+    "file": "r6-env-run-once.ps1",
+    "identifierOnly": false,
+    "differenceLines": 60
+  },
+  {
+    "file": "r6-env-setup.mjs",
+    "identifierOnly": false,
+    "differenceLines": 57
+  },
+  {
+    "file": "r6-env-verify.mjs",
+    "identifierOnly": false,
+    "differenceLines": 61
+  }
+]

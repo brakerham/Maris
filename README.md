@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R5-PUBLIC 已独立启动，但停在测试环境 jsdom 导入等待，产品入口与四条界面断言均未执行，根因仍 unknown。发布 P4-C12-R6-ENV：用原生 Node 加载同一固定 jsdom，初始化与业务预算分开；公开 B 通过后同任务继续恢复及原 Windows 范围。不重做 P/A/D16，不改产品或打包。LAZY-001/UI-02 未关闭、P4-B 未 complete、P4-C/D 未开始。
+当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6-ENV公开冷入口B首次通过，安全错误提示、Shell、导航和Agent四项要求及来源/清理已获总控核对；恢复第1组失败但具体比较值缺失，归因未核实。发布P4-C12-R7-RECOVERY：补齐逐断言安全证据，按固定初始基线和显式重试增量验收恢复，通过后同任务继续必要兼容与原Windows范围。不重跑B/P/A/D16，不改产品或打包；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
+
+- [R6总控核对与恢复断言裁定](docs/p4-c12-r6-env-recovery-coordinator-review.md)：接受B的有限结论，恢复失败不猜定产品原因。
+- [R7恢复独立验收任务](docs/coordination/prompts/p4-c12-r7-recovery-tester.md)：逐断言即时记录，同一次生命周期检查5组恢复；既有测试方待接单。
 
 - [R5-PUBLIC 阻塞总控核对](docs/p4-c12-r5-public-initialization-coordinator-review.md)：41 项交付及首次停点核对，区分环境恢复与根因定位。
-- [R6-ENV 测试环境恢复与验收任务](docs/coordination/prompts/p4-c12-r6-env-tester.md)：原生加载固定 jsdom，产品冷入口与原断言保持；既有测试方待接单。
+- [R6-ENV 原任务](docs/coordination/prompts/p4-c12-r6-env-tester.md)：blocked/finished，B通过而恢复未完成；首次结果与源码保留。
 
 - [D16 总控接受与路线冻结](docs/p4-d16-harness-and-acceptance-coordinator-review.md)：39 交付、两次实际实验与资源限制核对，公开验收和辅助归因分离。
 - [R5-PUBLIC 独立测试任务](docs/coordination/prompts/p4-c12-r5-public-tester.md)：已 blocked/finished，首次源码与结果保留；后续以 R6-ENV 为准。

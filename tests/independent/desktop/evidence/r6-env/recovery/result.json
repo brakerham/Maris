@@ -1,0 +1,26 @@
+{
+  "startTime": 1791116150533,
+  "endTime": 1791116151805,
+  "numTotalTests": 1,
+  "numPassedTests": 0,
+  "numFailedTests": 1,
+  "numPendingTests": 0,
+  "moduleErrorCount": 0,
+  "unhandledErrorCount": 0,
+  "nodes": [
+    {
+      "name": "R6-ENV-RECOVERY-01 | explicit recovery, navigation and state through real DesktopApp",
+      "status": "failed",
+      "durationMs": 346.90420000000006,
+      "errorCount": 1,
+      "errors": [
+        {
+          "kind": "AssertionError",
+          "timeout": false
+        }
+      ]
+    }
+  ],
+  "data": "virtual_only",
+  "rawExceptionTextRecorded": false
+}

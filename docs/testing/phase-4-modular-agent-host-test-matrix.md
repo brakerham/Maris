@@ -288,6 +288,13 @@
 - 恢复/开发兼容/公开余项/Windows均not_run；产品0/8、辅助0/4、真实chunk注入0，LAZY-001/UI-02/P4-B未关闭。原120ID/12列/完整预期和原B0 passed/1 failed/19 blocked/4 not_run保持，A64/C20/D12保持。
 - 固定源码先冻结，首次材料保留；CLI与登记worker已结束，worker exit code和完整历史后代未知。普通静态谓词更正1、额外worker/重试0；unknown初始化原因不授权盲重跑，交blocked / finished供总控review。
 
+#### C12-R6-ENV 最新增量（2026-10-04）
+
+- [R6增量报告](phase-4-c12-r6-env-windows-report.md)：原生固定jsdom成功；真实main/default loader冷入口1/1 passed，四原断言4/4，故障来源与公开结果分别true，安全/订阅/清理通过。旧R5首次阻塞保留。
+- 已同任务继续恢复，R6-ENV-RECOVERY-01首场景AssertionError，具体比较值未保留，产品归因unverified；后4场景、相邻兼容/公开余项/Windows未执行。main总计1、B不重跑，动态更正0。
+- UI-02仅初始隔离子条件新通过；恢复、真实chunk/session及其余设备要求未闭环，不关闭LAZY-001，不把原failed改为整项passed。SEC-08新增虚拟持续故障DOM/console安全部分证据；其他B整项状态保持。
+- B仍0 passed/1 failed/19 blocked/4 not_run；A/C/D及原预期保持。产品0/8、辅助0/4，四登记PID已退出，worker自身exit code/历史系统状态未核实；blocked / finished，交总控review。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复

@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-04 19:53，Asia/Shanghai
+更新时间：2026-10-09 09:21，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。R5-PUBLIC已独立启动，但jsdom导入等待无终态，产品入口/故障模块/四断言均0，初始化根因unknown。41交付已核对，原任务blocked/finished。发布R6-ENV，在新测试setup用Node原生加载同一jsdom，保留真实产品冷入口/故障来源/四断言；通过后同任务续恢复/Windows。不重复P/A/D16、不改产品或打包；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
+P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6-ENV公开冷入口B首次通过，安全错误提示、Shell、导航和Agent四项要求及来源/清理已获总控核对；恢复第1组失败但具体比较值缺失，归因未核实。发布P4-C12-R7-RECOVERY：补齐逐断言安全证据，按固定初始基线和显式重试增量验收恢复，通过后同任务继续必要兼容与原Windows范围。不重跑B/P/A/D16，不改产品或打包；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收，OUTBOX/设置键/PATH独立关闭。R5-PUBLIC已
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R5-PUBLIC阻塞已核对，R6-ENV环境恢复范围冻结 | 2026-10-04 19:53 | 用户派发既有测试方；收到交付再核对 | [核对与裁定](../p4-c12-r5-public-initialization-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | 接受R6冷入口子条件，冻结R7恢复断言合同 | 2026-10-09 09:21 | 既有测试方接单；交付后核对 | [核对与裁定](../p4-c12-r6-env-recovery-coordinator-review.md) |
 | 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
 | 执行智能体 | `review / finished`（R5-LAZY） | 局部隔离/恢复、132回归、新包及19项EXE门禁交付 | 2026-10-02（最终交付已核对） | 停止，等待独立结论 | [运行说明](../b7-r5-lazy-running.md) |
-| 测试智能体 | R5-PUBLIC`blocked / finished`；新R6-ENV`ready / waiting_user`，接单unverified | 原生固定jsdom加载与同次公开B，不需A先通过 | 2026-10-04 19:53（总控准备） | 新起点→环境与B→成功后同任务续恢复/Windows | [任务](prompts/p4-c12-r6-env-tester.md) |
+| 测试智能体 | R6-ENV `blocked / finished`；新R7-RECOVERY `ready / waiting_user`，接单unverified | B通过，恢复具体assert未知；补齐安全比较值并继续恢复 | 2026-10-09 09:21（总控准备） | 新起点→恢复5组→通过后同任务必要兼容/Windows | [任务](prompts/p4-c12-r7-recovery-tester.md) |
 
-当前唯一新任务是 P4-C12-R6-ENV，由既有测试方执行。jsdom改用Node原生入口是待验证的工具恢复；不是旧根因已定位。新B只实际main一次，初始化/正文/清理分段60/10/2秒且整体75秒，UI仍5秒；明确前置工具错误可同任务更正一次，未知超时不能盲试。通过后同任务接原恢复/Windows；旧证据和产品/依赖/受验包只读，顾问与执行停止。
+当前唯一新任务是P4-C12-R7-RECOVERY，既有测试方唯一负责人。B四条公开要求已独立通过，不重新启动冷main；恢复5组在一次挂载生命周期执行，每条断言即时保留ID/期望/实际，原R6失败不覆盖。两个旧绝对总数仅对照，固定基线无增长、明确retry增量1及全部安全/业务条件仍为门禁。通过后同任务接必要兼容与未完成Windows；实际运行unverified，顾问和执行保持停止。
 
 ## 阶段 0 任务状态
 

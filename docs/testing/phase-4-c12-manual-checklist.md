@@ -120,3 +120,12 @@ ZIP/staging 的附加检查、UI-03/04 冲突与漂移门禁、HostClient/sessio
 - 主进程启动→初始化收口14953ms，process15113ms、controller_finished15120ms；正文/观察/UI cleanup未开始，自有CLI/登记worker已结束。worker exit code unknown，完整系统后代未核实；缓存未生成/未删除，首次六文件及10源码保留。
 - 来源与公开结果都未计算，P旧成功只读不补签；恢复/兼容/剩余公开/Windows停止，产品0/8、辅助0/4、网络chunk注入0。普通静态谓词更正1、额外worker/目标重试0；根因unknown不作为工具重试授权。
 - 原24项要求与状态保持，LAZY-001/UI-02/P4-B未关闭。只交总控review，不改产品/依赖/Git、不自动启动A或新任务。
+
+
+## P4-C12-R6-ENV 增量（2026-10-04）
+
+- [R6独立报告](phase-4-c12-r6-env-windows-report.md)：原生固定jsdom已返回；公开B首次1/1 passed，main1/fixture1、四原断言4/4、同次来源/安全/清理通过。旧R5初始化阻塞证据不倒写。
+- 同任务已继续独立恢复，首场景出现AssertionError，runner1 failed；具体比较值未留存，产品归因unverified，第2～5场景及相邻兼容/Windows未执行。目标已进入，不自动重跑。
+- root/worker均已退出，界面卸载/退订/global/console/DOM实际清理；全系统历史后代及worker自身exit code未核实。缓存仅清理本轮专属路径，首次材料保留。
+- B整项0 passed/1 failed/19 blocked/4 not_run保持；Windows0/8、辅助0/4、真实chunk0。实际Tray、老化原生提示、session/系统注销/启动项/多屏/OS主题等原缺口保持，不要求用户现在操作。
+- blocked / finished，供总控review；LAZY-001/UI-02/P4-B未关闭，未修改产品/依赖或Git，不进入P4-C/D。

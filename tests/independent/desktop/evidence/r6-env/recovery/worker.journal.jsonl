@@ -1,0 +1,16 @@
+{"seq":1,"elapsedMs":0.1135,"stage":"worker_start","pid":31692,"parentPid":13964}
+{"seq":2,"elapsedMs":4.1249,"stage":"journal_ready","pid":31692,"parentPid":13964}
+{"seq":3,"elapsedMs":9.1352,"stage":"native_jsdom_identity","pid":31692,"parentPid":13964,"identityMatched":true}
+{"seq":4,"elapsedMs":12.2177,"stage":"native_jsdom_enter","pid":31692,"parentPid":13964}
+{"seq":5,"elapsedMs":659.237,"stage":"native_jsdom_resolved","pid":31692,"parentPid":13964,"referencesValid":true}
+{"seq":6,"elapsedMs":755.1783,"stage":"test_module_enter","pid":31692,"parentPid":13964}
+{"seq":7,"elapsedMs":759.274,"stage":"react_import_enter","pid":31692,"parentPid":13964}
+{"seq":8,"elapsedMs":767.6509,"stage":"react_import_resolved","pid":31692,"parentPid":13964}
+{"seq":9,"elapsedMs":770.2656,"stage":"test_module_ready","pid":31692,"parentPid":13964}
+{"seq":10,"elapsedMs":775.0618,"stage":"body_enter","pid":31692,"parentPid":13964}
+{"seq":11,"elapsedMs":841.8302,"stage":"recovery_product_import_enter","pid":31692,"parentPid":13964}
+{"seq":12,"elapsedMs":1056.2789,"stage":"recovery_product_import_resolved","pid":31692,"parentPid":13964}
+{"seq":13,"elapsedMs":1062.0844,"stage":"recovery_scenario_enter","pid":31692,"parentPid":13964,"ordinal":1}
+{"seq":14,"elapsedMs":1109.8617,"stage":"recovery_scenario_failed","pid":31692,"parentPid":13964,"ordinal":1}
+{"seq":15,"elapsedMs":1111.7015,"stage":"cleanup_enter","pid":31692,"parentPid":13964,"bodyMs":335.0611}
+{"seq":16,"elapsedMs":1114.2937,"stage":"cleanup_finished","pid":31692,"parentPid":13964,"unmounted":true,"closed":true,"listenersRemoved":true,"restored":true,"restoreFailed":false,"activeAfterUnmount":0,"rescueUnsubscribe":0,"subscribe":2,"unsubscribe":2,"denied":0,"consoleLeak":false,"incomplete":false,"jsdomErrors":0,"cleanupMs":1.0800999999999021}

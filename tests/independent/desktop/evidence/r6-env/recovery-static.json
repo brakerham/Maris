@@ -1,0 +1,19 @@
+{
+  "sources": [
+    "r6-env-recovery-reporter.mjs",
+    "r6-env-recovery-run.ps1",
+    "r6-env-recovery-setup.mjs",
+    "r6-env-recovery.config.mjs",
+    "r6-env-recovery.test.tsx"
+  ],
+  "syntax": true,
+  "mainImports": 0,
+  "realDesktopApp": true,
+  "scenarios": 5,
+  "virtualRoutes": 2,
+  "bodyBudgetMs": 10000,
+  "overallBudgetMs": 75000,
+  "phase": "recovery",
+  "coldFrozenUnchanged": true,
+  "targetInvocationsBeforeRun": 0
+}

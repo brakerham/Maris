@@ -2,23 +2,23 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12-R5-PUBLIC — 无包装公开冷入口与剩余独立验收
+- 当前任务：P4-C12-R6-ENV — 原生测试环境加载与公开验收续跑
 - 状态：`blocked`
-- 最近更新：2026-10-04 00:49 Asia/Shanghai
-- 可修改范围：仅新增r5-public-*、evidence/r5-public、新R5-PUBLIC报告；旧主报告/清单追加、矩阵B状态备注、自身角色；产品及旧测试/证据/顾问材料只读
+- 最近更新：2026-10-05 16:53 Asia/Shanghai
+- 可修改范围：仅新增r6-env-*、evidence/r6-env、新R6-ENV报告；旧主报告/清单追加、矩阵B状态备注、自身角色；产品及所有旧源码/证据只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：blocked / finished最终交付并停止
-- 步骤开始时间：2026-10-04 00:49 Asia/Shanghai
-- 最近有效进展：2026-10-04 00:49 Asia/Shanghai
-- 最近心跳：2026-10-04 00:49 Asia/Shanghai
-- 下一检查点：已停止，交总控review/裁定；不启动目标或下一任务
-- 等待对象：总控
-- 活动进程或会话：无活动目标；CLI16336/worker14076明确不存在；完整历史后代未核实；产品0/8、辅助0/4
+- 当前步骤：交付核验完成，blocked / finished停止，提交总控review
+- 步骤开始时间：2026-10-05 16:53 Asia/Shanghai
+- 最近有效进展：2026-10-05 16:53 Asia/Shanghai
+- 最近心跳：2026-10-05 16:53 Asia/Shanghai
+- 下一检查点：已停止；由总控review并裁定恢复断言最小取证范围
+- 等待对象：总控review及恢复断言取证裁定
+- 活动进程或会话：无活动测试目标；四登记PID在执行后的定向检查已确认退出；worker自身exit code/历史系统状态未核实
 - 重试次数：0
-- 最近输出：638=634保持+4授权，0越界/缺失/staged；41项交付摘要、24项完整映射；B initialization_blocked/main0/四断言not_run，两登记PID已结束
+- 最近输出：679=675保持+4授权、旧R5源码10/首次6保持；本轮cold9/recovery7首次保持；63项交付核验通过，矩阵120/12与旧报告prefix保持，staged0
 
 ## 任务与后续
 
@@ -46,6 +46,61 @@
 | r5_public_contract_review | review | finished | 只读合同/新工具静态问题已交付；父任务修正后冻结 | 2026-10-04 00:32 Asia/Shanghai | 无；已停止 | 父任务记录 | evidence/r5-public/subagent-read-only-receipt.json；0写入/目标，不计动态验收 |
 
 ## 工作日志
+
+### 2026-10-05 16:53 Asia/Shanghai — C12-R6-ENV 最终摘要核验通过并停止
+
+- [end-audit.json](../../../tests/independent/desktop/evidence/r6-env/end-audit.json)实际通过：679项起点675不变+4授权共享变化；旧R5交付37保持+4共享变化，冻结源码10/首次6保持；外部389/140/67、EXE/asar/lock/fuses、7依赖元数据及jsdom API保持。
+- 本轮冷源码9、恢复源码5、cold首次9、recovery首次7逐项匹配；120唯一ID/12列/原行状态/B外字节保持，原主报告和人工清单分别追加1034bytes且原prefix保持，24项增量映射完整；diff-check exit0、staged0。
+- [63项交付清单](../../../tests/independent/desktop/evidence/r6-env/delivery.sha256)与[摘要复算结果](../../../tests/independent/desktop/evidence/r6-env/delivery-verification.json)交付。日志/报告最后收口后仅刷新摘要，不运行测试目标。最终blocked / finished，供总控review；冷B通过、恢复原因unknown、Windows未执行，边界不扩大。
+
+
+### 2026-10-05 16:51 Asia/Shanghai — C12-R6-ENV blocked / finished交付与停止
+
+- [R6增量报告](../../testing/phase-4-c12-r6-env-windows-report.md)、[P4矩阵B备注](../../testing/phase-4-modular-agent-host-test-matrix.md)及原主报告/人工清单追加完成，原24项逐项状态与缺口保留。冷B唯一首次1 passed、四原断言4/4、来源/安全/清理通过；同任务恢复首次1 failed、第2～5场景未执行，不伪写完整UI-02/LAZY/P4-B通过。
+- 最后脱敏错误为恢复scenario1 AssertionError，具体比较值缺失，产品严重级别/因果unverified；只读journal/runner/缓存/静态定位仍不足。须总控决定最小断言取证范围，未自建后续任务或重启目标。
+- 动态CLI共2（B1+恢复1）、main总1、额外工具worker/动态重试0，Windows0/8、辅助0/4；开发兼容和剩余公开验收未执行。普通静态编码更正1，首次静态与动态材料均保留。
+- 实际UI卸载/退订/DOM/global/console恢复，两轮root及登记worker退出；只删除已核对绝对路径/无reparse的本轮cache2文件，原cache结果副本保留。无用户操作/系统修改、产品/依赖/Git写入。最终仅运行不启动目标的r6-env-delivery.py核对输入、prefix、矩阵与交付摘要，实际值记录于evidence/r6-env/end-audit.json与delivery-verification.json，不在核对前签成功。
+
+
+### 2026-10-05 16:48 Asia/Shanghai — C12-R6-ENV 用户继续后的交付收口
+
+- 用户再次继续，重读control/自身状态/停止门禁；控制版本未变。上轮动态已全部退出，原检查点之后会话未产生心跳，不能据旧active标签推断持续运行；本次只恢复报告与审计收口，不启动目标。
+- 报告、24项增量、B状态备注及原文档追加已落盘；首次冷B通过与恢复失败仍分列。下一检查点完成679输入、旧R5和本轮首次摘要、120矩阵结构、原文档prefix与交付清单核对，然后blocked / finished交总控review。
+
+
+### 2026-10-04 20:17 Asia/Shanghai — C12-R6-ENV 恢复首次失败，停止动态扩展
+
+- 恢复CLI1、独立节点1 failed，scenario1进入后记录AssertionError/非timeout；scenario2～5未进入。主入口没有再次导入，真实DesktopApp已加载。首次脱敏reporter只保留错误类型，未保留具体断言比较，因此不臆测实际load计数、hash或其他字段，不签产品P1；属恢复验收未通过且定位证据不足。
+- 原生jsdom返回647.02ms、React8.38ms、初始化1348ms、正文约335.06ms、cleanup1.08ms、总计1781ms；root exit1、worker已结束，未强杀。root/DOM/global/console恢复，退订2/2、rescue0、denied0、无console泄漏/jsdomError。worker自身exit code/历史全系统未核实。
+- 所有首次材料冻结；目标已进入，不符合前置工具更正重跑条件，不修脚本后重跑，不重复B或P/A/D16。恢复/开发兼容/公开余项/Windows后续停止。最后脱敏错误AssertionError；原因可能是未冻结的工具精确次数预期或产品行为，当前证据无法区分，须总控共同裁定定位方案。
+
+
+### 2026-10-04 20:15 Asia/Shanghai — C12-R6-ENV 独立恢复首次执行
+
+- 新恢复节点由真实DesktopApp/Router/Shell/compileRegistry装配两个虚拟route，覆盖初始隔离、状态保持与显式恢复、持续失败与健康/settings导航、并发点击与在途离开、render边界与retry。仅可信loader/bridge虚拟；默认main不再导入。
+- 5项恢复源码静态核验与冻结，同一原生环境入口；60/10/2/75秒预算。一次静态UTF8/GBK读取工具错误未写入/运行目标，首次五源码/静态材料已保留，明确UTF8后加入既定rejected terminal与备用退订，最终语法通过。动态更正/重试0。
+- 两分钟内检查首轮恢复结果、隐私/额外调用/订阅与进程清理；通过后接开发兼容和Windows，任何真实失败停止扩大。
+
+
+### 2026-10-04 20:11 Asia/Shanghai — C12-R6-ENV 公开B首次通过并继续恢复
+
+- CLI1/main1/fixture1；result 1 passed/0 failed、四原断言4/4，faultSourceValid与publicTargetResult分别true。DOM/console安全、10类额外调用零、真实退订2/2且rescue0；UI清理8.32ms。原生jsdom约18178ms返回，React47.94ms返回，实际正文已进入。
+- controller初始化22479ms、正文阶段3274ms、总计25881ms；root exit0、已登记worker退出，无强制终止，worker自身退出码未核实。两个PID后续NoProcessFound；额外进程身份读取发生退出后，不能补签exe/startTime或全系统零残留。来源有CLI/worker父子与创建句柄证据。
+- cold首次文件冻结；不回写旧R5通过，不宣称已证明旧超时根因。按同任务授权继续真实DesktopApp/Router/Shell、可信loader恢复；Windows仍须恢复门禁。
+
+
+### 2026-10-04 20:09 Asia/Shanghai — C12-R6-ENV 静态门禁通过与动态检查点
+
+- 9项新源码冻结于cold-source.sha256。createRequire锚定固定jsdom package.json绝对file URL，静态仅resolve/读摘要；未预加载DOM/React/产品。正文、精确resolver和持续throw fixture除新标识外保持，差异表/static-preflight已保存。静态工具更正0、目标启动0。
+- 现在执行单次公开B，外部controller独立60/10/2/75秒预算，UI5秒、Vitest外层12秒。两分钟内核验首次阶段、四断言及资源。若未知初始化超时不自动使用更正预算；通过才同任务接恢复与Windows。
+
+
+### 2026-10-04 20:06 Asia/Shanghai — C12-R6-ENV 接单与固定起点门禁通过
+
+- control 2026-10-04T19:53:00+08:00，既有测试智能体唯一负责人，新任务替换旧R5环境入口与初始化预算。679/679及旧R5 41/10/6原字节匹配；外部389源码/140产物/67资源、EXE/asar/lock匹配，staged0。见 evidence/r6-env/start-audit.json。
+- 本轮只在新setup以createRequire加载固定jsdom原始引用；React/产品冷入口和四断言保持。静态核验与冻结后一次B，60/10/2/75秒、UI5秒；正文通过并收口才接恢复/Windows。未知超时不重试，不重复P/A/D16，不改产品/依赖或Git。
+- 尚无活动目标；下一检查点核对静态差异与原生依赖身份。不委派子任务，旧子任务记录仅保留历史。
+
 
 ### 2026-10-04 00:49 Asia/Shanghai — C12-R5-PUBLIC blocked / finished最终交付并停止
 

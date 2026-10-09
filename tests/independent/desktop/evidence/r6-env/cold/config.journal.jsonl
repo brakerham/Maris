@@ -1,0 +1,4 @@
+{"seq":1,"stage":"config_evaluation_enter","elapsedMs":0.29759999999987485,"pid":32404,"parentPid":28984}
+{"seq":2,"stage":"config_object_ready","elapsedMs":5.3904,"pid":32404,"parentPid":28984}
+{"seq":3,"stage":"config_resolved","elapsedMs":20.322400000000016,"pid":32404,"parentPid":28984}
+{"seq":4,"stage":"server_configured","elapsedMs":39.04419999999982,"pid":32404,"parentPid":28984}

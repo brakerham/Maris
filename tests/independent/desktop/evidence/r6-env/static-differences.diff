@@ -1,0 +1,192 @@
+--- r5-public-cold.test.tsx (IDs translated)
++++ r6-env-cold.test.tsx
+@@ -1,10 +1,7 @@
+ import { expect, test, vi } from 'vitest';
+ const record = (globalThis as any).__r6EnvRecord;
+ record('test_module_enter');
+-record('jsdom_import_enter');
+-let domModule: typeof import('jsdom');
+-try { domModule = await import('jsdom'); record('jsdom_import_resolved'); }
+-catch { record('jsdom_import_rejected'); throw Error('r6_env_jsdom_import_failed'); }
++const domModule: Pick<typeof import('jsdom'), 'JSDOM' | 'VirtualConsole'> = (globalThis as any).__r6EnvDom;
+ record('react_import_enter');
+ let reactModule: typeof import('react');
+ try { reactModule = await import('react'); record('react_import_resolved'); }
+--- r5-public-run-once.ps1 (IDs translated)
++++ r6-env-run-once.ps1
+@@ -8,7 +8,7 @@
+     if($item.Attributes -band [IO.FileAttributes]::ReparsePoint){throw 'c12_reparse'}
+ }
+ $control = Get-Content -LiteralPath 'D:\CodeX_gap\wife-system\docs\coordination\control.md' -Raw
+-if (-not $control.Contains('2026-10-03T23:49:00+08:00')) { throw 'c12_r6_env_control_changed' }
++if (-not $control.Contains('2026-10-04T19:53:00+08:00')) { throw 'c12_r6_env_control_changed' }
+ foreach ($line in Get-Content -LiteralPath (Join-Path $evidenceRoot 'cold-source.sha256')) {
+     $parts = $line -split "`t"
+     if ($parts.Count -ne 2) { throw 'c12_r6_env_bad_manifest' }
+@@ -59,8 +59,8 @@
+ $workerObservationFailed=$false; $cleanupObservationFailed=$false; $evidenceReadUnverified=$false; $journalTruncated=$false
+ function Current-Limit {
+     $now=$sessionClock.ElapsedMilliseconds
+-    if($now -ge 29500){return 'overall'}
+-    if($stage -eq 'initialization' -and $now-$rootStartedAt -ge 14950){return 'initialization'}
++    if($now -ge 74500){return 'overall'}
++    if($stage -eq 'initialization' -and $now-$rootStartedAt -ge 59950){return 'initialization'}
+     if($stage -eq 'body' -and $now-$bodyAt -ge 10000){return 'body'}
+     if($stage -eq 'cleanup' -and $now-$cleanupAt -ge 1900){return 'cleanup'}
+     return $null
+@@ -75,7 +75,7 @@
+         return $null
+     }
+ }
+-Record-Control 'controller_ready' @{processDeadlineMs=30000; initializationMs=15000; bodyMs=10000; cleanupMs=2000; testTimeoutMs=12000; mainBudget=1; correctionBudgetUsed=0; nativeConfigLoader=$true}
++Record-Control 'controller_ready' @{processDeadlineMs=75000; initializationMs=60000; bodyMs=10000; cleanupMs=2000; testTimeoutMs=12000; mainBudget=1; correctionBudgetUsed=0; nativeConfigLoader=$true}
+ try {
+     if (-not $process.Start()) { throw 'c12_r6_env_start_failed' }
+     $rootStarted=$true; $rootPid=$process.Id; $rootStartedAt=$sessionClock.ElapsedMilliseconds
+@@ -147,7 +147,7 @@
+     Record-Control 'controller_failure' @{journalInvalid=$journalInvalid; ownershipVerified=($owned -eq $true)}
+ } finally {
+     $cleanupBoundAt=if($null -ne $cleanupAt){$cleanupAt}elseif($null -ne $terminationAt){$terminationAt}else{$sessionClock.ElapsedMilliseconds}
+-    $resourceDeadline=[Math]::Min(29800,$cleanupBoundAt+2000)
++    $resourceDeadline=[Math]::Min(74800,$cleanupBoundAt+2000)
+     if ($rootStarted) {
+         try {
+             if (-not $process.HasExited) { $forcedRoot=$true; $process.Kill($true) }
+@@ -217,7 +217,7 @@
+     $record=[ordered]@{phase=$phase; invocation=1; nodeId='R6-ENV-UI-02-COLD'; startedUtc=$startedUtc; rootPid=$rootPid; rootExited=$rootExited; rootExitCode=$exitCode;
+         workerPid=$workerPid; workerParentVerified=$owned; workerExited=$workerExited; workerExitEventCount=$workerExitEvents.Count;
+         timedOut=$timeout; forcedRootTermination=$forcedRoot; forcedWorkerTermination=$forcedWorker; streamsComplete=$streamComplete;
+-        durationMs=$sessionClock.ElapsedMilliseconds; processDeadlineMs=30000; testTimeoutMs=12000; initializationBudgetMs=15000; bodyBudgetMs=10000; cleanupBudgetMs=2000; controllerBodyAtMs=$bodyAt; controllerCleanupAtMs=$cleanupAt; initializationDurationMs=if($null -ne $bodyAt){$bodyAt-$rootStartedAt}else{$null}; controllerBodyDurationMs=if($null -ne $cleanupAt -and $null -ne $bodyAt){$cleanupAt-$bodyAt}else{$null}; limitStage=$limitStage;
++        durationMs=$sessionClock.ElapsedMilliseconds; processDeadlineMs=75000; testTimeoutMs=12000; initializationBudgetMs=60000; bodyBudgetMs=10000; cleanupBudgetMs=2000; controllerBodyAtMs=$bodyAt; controllerCleanupAtMs=$cleanupAt; initializationDurationMs=if($null -ne $bodyAt){$bodyAt-$rootStartedAt}else{$null}; controllerBodyDurationMs=if($null -ne $cleanupAt -and $null -ne $bodyAt){$cleanupAt-$bodyAt}else{$null}; limitStage=$limitStage;
+         mainImportRequests=$mainCount; fixtureEvaluations=@($events | Where-Object stage -eq 'fixture_evaluation_enter').Count; lastWorkerStage=if ($events.Count) {$events[-1].stage} else {$null};
+         journalSequenceValid=(-not $journalInvalid); failureCode=$failureCode; safeFailure=$safeFailure; streams=$streamResults;
+         totalCliInvocationsThisPhase=1; correctionBudgetUsed=0;
+@@ -226,8 +226,8 @@
+     $record['cleanupObservationUnverified']=$cleanupObservationFailed
+     $record['evidenceReadUnverified']=$evidenceReadUnverified
+     $record['journalTruncated']=$journalTruncated
+-    $record['reportingWithinOverallBudget']=($sessionClock.ElapsedMilliseconds -lt 30000)
+-    if($sessionClock.ElapsedMilliseconds -ge 29800){$record['reportingBudgetExceeded']=$true}
++    $record['reportingWithinOverallBudget']=($sessionClock.ElapsedMilliseconds -lt 75000)
++    if($sessionClock.ElapsedMilliseconds -ge 74800){$record['reportingBudgetExceeded']=$true}
+     Write-New (Join-Path $resultRoot 'process.json') (($record | ConvertTo-Json -Depth 6)+"`n")
+     Record-Control 'controller_finished' @{durationMs=$sessionClock.ElapsedMilliseconds; mainImportRequests=$mainCount}
+     $controllerStream.Dispose(); if($workerHandle){$workerHandle.Dispose()}; $process.Dispose()
+--- r5-public-setup.mjs (IDs translated)
++++ r6-env-setup.mjs
+@@ -1,7 +1,8 @@
+ import { openSync, writeSync, fsyncSync, closeSync, readFileSync, realpathSync } from 'node:fs';
+ import { createHash } from 'node:crypto';
+ import path from 'node:path';
+-import { fileURLToPath } from 'node:url';
++import { fileURLToPath, pathToFileURL } from 'node:url';
++import { createRequire } from 'node:module';
+ const own = path.dirname(fileURLToPath(import.meta.url));
+ const root = path.resolve(own, '../../..');
+ const evidence = path.join(own, 'evidence/r6-env');
+@@ -11,7 +12,7 @@
+ const started = process.hrtime.bigint();
+ let seq = 0;
+ const evaluations = [];
+-const safeValues = new Set(['Error', 'TypeError', 'AssertionError', 'other']);
++const safeValues = new Set(['Error', 'TypeError', 'AssertionError', 'ERR_REQUIRE_ESM', 'ERR_REQUIRE_ASYNC_MODULE', 'MODULE_NOT_FOUND', 'ERR_MODULE_NOT_FOUND', 'other']);
+ function record(stage, detail = {}) {
+   try {
+     if (!/^[a-z][a-z0-9_]*$/.test(stage)) throw Error('r6_env_bad_stage');
+@@ -53,3 +54,35 @@
+ record('worker_start');
+ record('journal_ready');
+ process.once('exit', exitCode => { record('worker_exit', { exitCode }); closeSync(fd); });
++
++// Native environment entry only. No DOM, React, Router or product evaluation here.
++const packagePath = 'C:/MarisLazyR5/R5-20261002-222300/workspace/node_modules/jsdom/package.json';
++const packageUrl = pathToFileURL(packagePath);
++const nativeRequire = createRequire(packageUrl);
++const expectedApi = path.join(path.dirname(packagePath), 'lib/api.js');
++const nativeIdentity = JSON.parse(readFileSync(path.join(evidence, 'static-preflight.json'), 'utf8')).nativeJsdom;
++try {
++  const packageBytes = readFileSync(packagePath);
++  const metadata = JSON.parse(packageBytes);
++  const resolvedApi = nativeRequire.resolve('./lib/api.js');
++  const physicalApi = realpathSync(resolvedApi);
++  const identityMatched = metadata.version === '30.1.1' && metadata.type === 'commonjs' && metadata.main === './lib/api.js'
++    && realpathSync(packagePath) === nativeIdentity.packageRealPath
++    && physicalApi === realpathSync(expectedApi) && physicalApi === nativeIdentity.apiRealPath
++    && sha(packageBytes) === nativeIdentity.packageSha256 && sha(readFileSync(physicalApi)) === nativeIdentity.apiSha256;
++  record('native_jsdom_identity', { identityMatched });
++  if (!identityMatched) throw Error('r6_env_jsdom_identity_mismatch');
++  record('native_jsdom_enter');
++  const api = nativeRequire(resolvedApi);
++  const referencesValid = typeof api.JSDOM === 'function' && typeof api.VirtualConsole === 'function';
++  if (!referencesValid) throw TypeError('r6_env_jsdom_api_invalid');
++  Object.defineProperty(globalThis, '__r6EnvDom', {
++    value: { JSDOM: api.JSDOM, VirtualConsole: api.VirtualConsole }, configurable: true
++  });
++  record('native_jsdom_resolved', { referencesValid });
++} catch (error) {
++  const kind = ['Error', 'TypeError'].includes(error?.name) ? error.name : 'other';
++  const code = ['ERR_REQUIRE_ESM', 'ERR_REQUIRE_ASYNC_MODULE', 'MODULE_NOT_FOUND', 'ERR_MODULE_NOT_FOUND'].includes(error?.code) ? error.code : 'other';
++  record('native_jsdom_rejected', { kind, code });
++  throw Error('r6_env_native_jsdom_failed');
++}
+--- r5-public-verify.mjs (IDs translated)
++++ r6-env-verify.mjs
+@@ -1,6 +1,7 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
+-import { fileURLToPath } from 'node:url';
++import { fileURLToPath, pathToFileURL } from 'node:url';
++import { createRequire } from 'node:module';
+ import { createHash } from 'node:crypto';
+ import { spawnSync } from 'node:child_process';
+ import ts from 'file:///C:/MarisLazyR5/R5-20261002-222300/workspace/node_modules/typescript/lib/typescript.js';
+@@ -29,7 +30,7 @@
+     if (name.includes('failing-page')) must(imports.length === 0 && !result.outputText.includes('import ') && source.includes("throw new Error('VIRTUAL_CHUNK_UNAVAILABLE')"), 'r6_env_zero_import_fixture');
+     if (name.includes('cold.test')) {
+       must(JSON.stringify(imports) === '["vitest"]', 'r6_env_preload_violation');
+-      must(source.includes("await import('jsdom')") && source.includes("await import('react')"), 'r6_env_segmented_imports');
++      must(!source.includes("await import('jsdom')") && source.includes("await import('react')") && source.includes('__r6EnvDom'), 'r6_env_segmented_imports');
+       const runtimeImports = [];
+       const visit = node => {
+         if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) runtimeImports.push(node.arguments[0]?.text);
+@@ -37,7 +38,7 @@
+       };
+       visit(ast);
+       must(runtimeImports.filter(name => name === '../../../apps/desktop/src/renderer/main').length === 1, 'r6_env_main_budget');
+-      must(runtimeImports.every(name => ['jsdom', 'react', '../../../apps/desktop/src/renderer/main'].includes(name)), 'r6_env_other_product_preload');
++      must(runtimeImports.every(name => ['react', '../../../apps/desktop/src/renderer/main'].includes(name)), 'r6_env_other_product_preload');
+       must(source.includes("shell?.querySelector('.content [role=\"alert\"]')") && source.includes('const final = sample();'), 'r6_env_local_sample');
+       must(source.indexOf('expect.soft(final.alertText)') < source.indexOf('let proof:'), 'r6_env_four_assertions_first');
+       const definition = source.slice(source.indexOf('const faultSourceValid ='), source.indexOf("record('fault_source'"));
+@@ -89,10 +90,28 @@
+ must(main.includes('compileRegistry([dailyFinanceContribution])') && main.includes('<StrictMode><DesktopApp registry={compiled} /></StrictMode>'), 'r6_env_main_contract');
+ must(routes.includes('loaders = builtinPageLoaders') && routes.includes('...createModuleRoutes(modules, loaders)') && routes.includes('await import("../modules/daily-finance/DailyFinancePage")'), 'r6_env_default_loader_contract');
+ const controller = fs.readFileSync(path.join(own, 'r6-env-run-once.ps1'), 'utf8');
+-must(controller.includes("'--configLoader','native'") && controller.includes('processDeadlineMs=30000') && controller.includes("$row.stage -eq 'body_enter'") && controller.includes("$row.stage -eq 'cleanup_enter'") && !controller.includes('priorPhase'), 'r6_env_stage_controller');
+-const result = { syntax, versions, node: process.version, productFiles, defaultLoaderAndEntryUnmodified: true,
++must(controller.includes("'--configLoader','native'") && controller.includes('processDeadlineMs=75000') && controller.includes("$row.stage -eq 'body_enter'") && controller.includes("$row.stage -eq 'cleanup_enter'") && !controller.includes('priorPhase'), 'r6_env_stage_controller');
++// Resolve and hash only; never load jsdom or a target during static verification.
++const packagePath = path.join(deps, 'jsdom/package.json');
++const packageBytes = fs.readFileSync(packagePath), metadata = JSON.parse(packageBytes);
++const nativeRequire = createRequire(pathToFileURL(packagePath));
++const resolvedApi = nativeRequire.resolve('./lib/api.js');
++must(metadata.version === '30.1.1' && metadata.type === 'commonjs' && metadata.main === './lib/api.js', 'r6_env_native_package');
++must(fs.realpathSync(resolvedApi) === fs.realpathSync(path.join(deps, 'jsdom/lib/api.js')), 'r6_env_native_api_path');
++const nativeJsdom = { version: metadata.version, type: metadata.type, main: metadata.main,
++  packageRealPath: fs.realpathSync(packagePath), apiRealPath: fs.realpathSync(resolvedApi),
++  packageSha256: sha(packageBytes), apiSha256: sha(fs.readFileSync(resolvedApi)), loadedDuringStaticCheck: false };
++const setup = fs.readFileSync(path.join(own, 'r6-env-setup.mjs'), 'utf8');
++must(setup.includes('createRequire(packageUrl)') && setup.includes('const api = nativeRequire(resolvedApi)') && setup.indexOf("record('journal_ready')") < setup.indexOf("record('native_jsdom_enter')"), 'r6_env_native_entry');
++must(!setup.includes('new JSDOM') && !setup.includes('await import(') && !setup.includes('Object.freeze('), 'r6_env_no_preload_or_api_wrap');
++// Cold body and fault predicate remain byte-equivalent after identifier translation.
++const translate = source => source.replaceAll('r5-public','r6-env').replaceAll('R5-PUBLIC','R6-ENV').replaceAll('__r5Public','__r6Env').replaceAll('r5_public','r6_env').replaceAll('R5_PUBLIC','R6_ENV');
++const previousTest = translate(fs.readFileSync(path.join(own, 'r5-public-cold.test.tsx'), 'utf8'));
++const currentTest = fs.readFileSync(path.join(own, 'r6-env-cold.test.tsx'), 'utf8');
++must(previousTest.slice(previousTest.indexOf("test('R6-ENV-UI-02-COLD")) === currentTest.slice(currentTest.indexOf("test('R6-ENV-UI-02-COLD")), 'r6_env_body_changed');
++const result = { syntax, versions, nativeJsdom, coldBodyUnchanged: true, node: process.version, productFiles, defaultLoaderAndEntryUnmodified: true,
+   fixtureZeroImportsAndJsx: true, noCacheOrSuccessSubstitute: true, resolverPredicateIdentical: true,
+-  realRouterDirect: true, reactSinglePhysicalRoot: true, phaseBudgets: { initialization: 15000, body: 10000, cleanup: 2000, overall: 30000, observation: 5000, vitestOuter: 12000 },
++  realRouterDirect: true, reactSinglePhysicalRoot: true, phaseBudgets: { initialization: 60000, body: 10000, cleanup: 2000, overall: 75000, observation: 5000, vitestOuter: 12000 },
+   nativeConfigLoader: true, configTemporaryFiles: 'none', productMainRequests: 0,
+   disclosedDisturbances: ['synchronous safe journal writes', 'config and resolver stage hooks', 'virtual bridge and denied network boundaries', 'all console arguments inspected in memory', 'bounded condition polling without Router telemetry'] };
+ fs.writeFileSync(path.join(evidence, 'static-preflight.json'), JSON.stringify(result, null, 2) + '\n', { flag: 'wx' });

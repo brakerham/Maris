@@ -1,0 +1,34 @@
+[
+  {
+    "phase": "recovery",
+    "sha256": "52f482bfd881f2dc14dada95e44fc5acf50da82f989972b84e5271fb06aaf8f2",
+    "structure": {
+      "version": "str",
+      "results": [
+        [
+          "str",
+          {
+            "duration": "float",
+            "failed": "bool"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "phase": "cold",
+    "sha256": "a07a797b24694bc39c5b971ae49d25a53747d90095ffc2847dfe52e4b6916ccf",
+    "structure": {
+      "version": "str",
+      "results": [
+        [
+          "str",
+          {
+            "duration": "float",
+            "failed": "bool"
+          }
+        ]
+      ]
+    }
+  }
+]

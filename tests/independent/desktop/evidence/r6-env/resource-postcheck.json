@@ -1,0 +1,37 @@
+{
+  "queriedUtc": "2026-10-04T12:17:06.1362008+00:00",
+  "observations": [
+    {
+      "pid": 32404,
+      "observation": "explicitly_absent",
+      "safeErrorId": "NoProcessFoundForGivenId"
+    },
+    {
+      "pid": 35656,
+      "observation": "explicitly_absent",
+      "safeErrorId": "NoProcessFoundForGivenId"
+    },
+    {
+      "pid": 13964,
+      "observation": "explicitly_absent",
+      "safeErrorId": "NoProcessFoundForGivenId"
+    },
+    {
+      "pid": 31692,
+      "observation": "explicitly_absent",
+      "safeErrorId": "NoProcessFoundForGivenId"
+    }
+  ],
+  "scope": "four_registered_pids_only",
+  "historicalDescendants": "unverified",
+  "caches": [
+    {
+      "phase": "cold",
+      "exists": true
+    },
+    {
+      "phase": "recovery",
+      "exists": true
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "safeError": "UnicodeDecodeError default gbk reading UTF8 new test",
+  "originalFileWrittenByFailedCommand": false,
+  "fix": "explicit UTF8; apply planned rejection marker and fallback cleanup before first execution",
+  "firstStaticFrozenCopies": "recovery-static-first",
+  "targetRuns": 0,
+  "coldEvidenceChanged": false
+}

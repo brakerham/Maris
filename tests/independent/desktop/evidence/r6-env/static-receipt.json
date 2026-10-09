@@ -1,0 +1,9 @@
+{
+  "time": "2026-10-04 20:09 Asia/Shanghai",
+  "mjsTsxVerified": true,
+  "powershellParserErrors": 0,
+  "frozenSources": 9,
+  "staticCorrections": 0,
+  "targetCliInvocationsBeforeRun": 0,
+  "coldSourceManifestSha256": "d953dab1701a4baef604604998d1e383292ddc0de09176fb5ff82a5ba62be39b"
+}
