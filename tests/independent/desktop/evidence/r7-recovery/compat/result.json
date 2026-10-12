@@ -1,0 +1,81 @@
+{
+  "started": 1791510244484,
+  "ended": 1791510252965,
+  "nodes": [
+    {
+      "file": "composition-root.test.ts",
+      "name": "single-flights composition, intersects modules, publishes safe state, and shuts down once",
+      "state": "pass",
+      "durationMs": 4.290099999999995,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "recovers a transient import via one explicit loader retry while preserving Shell state and subscriptions",
+      "state": "pass",
+      "durationMs": 359.16370000000006,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "keeps persistent failures local without looping and permits healthy/settings navigation and return",
+      "state": "pass",
+      "durationMs": 448.3324999999995,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "bounds pending retry to one loader call even with repeated clicks and can leave the failing route",
+      "state": "pass",
+      "durationMs": 220.17299999999977,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "isolates a module render error and retries its real loader to reset the local boundary",
+      "state": "pass",
+      "durationMs": 92.35010000000057,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "keeps the empty Host intersection and settings available without calling a page loader",
+      "state": "pass",
+      "durationMs": 92.34259999999995,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "does not load a disabled module even when its contribution and page port exist",
+      "state": "pass",
+      "durationMs": 14.190300000000207,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "fails closed for an unregistered trusted page port without importing a renderer-supplied path",
+      "state": "pass",
+      "durationMs": 78.30599999999959,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "keeps the actual production entry and builtin daily page success path working",
+      "state": "pass",
+      "durationMs": 140.79910000000018,
+      "errors": []
+    },
+    {
+      "file": "shell.test.tsx",
+      "name": "renders accessible shell, privacy and hostile text as text",
+      "state": "pass",
+      "durationMs": 122.73070000000007,
+      "errors": []
+    }
+  ],
+  "total": 10,
+  "passed": 10,
+  "failed": 0,
+  "moduleErrors": 0,
+  "unhandled": 0
+}

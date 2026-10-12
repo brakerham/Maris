@@ -1,0 +1,8 @@
+{"seq":1,"stage":"controller_ready","elapsedMs":31,"testTimeoutMs":12000,"initializationMs":60000,"nativeConfigLoader":true,"cleanupMs":2000,"processDeadlineMs":75000,"mainBudget":0,"correctionBudgetUsed":0,"bodyMs":10000}
+{"seq":2,"stage":"root_started","elapsedMs":70,"rootPid":17700}
+{"seq":3,"stage":"worker_identity_checked","elapsedMs":4129,"timeWindowMatched":true,"workerPid":18984,"executableMatched":true}
+{"seq":4,"stage":"worker_registered","elapsedMs":4132,"ownershipVerified":true,"workerPid":18984,"parentPid":17700}
+{"seq":5,"stage":"body_stage_received","elapsedMs":25119,"controllerBodyAtMs":25119,"initializationMs":25049}
+{"seq":6,"stage":"cleanup_stage_received","elapsedMs":29775,"controllerBodyMs":4656,"controllerCleanupAtMs":29775}
+{"seq":7,"stage":"exit_checked","elapsedMs":29848,"workerExited":true,"rootExited":true,"workerRegistered":true}
+{"seq":8,"stage":"controller_finished","elapsedMs":29895,"mainImportRequests":0,"durationMs":29895}

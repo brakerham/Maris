@@ -1,0 +1,16 @@
+{"id":"R7-PUB-STRICT-top","stage":"assert_enter","expected":1}
+{"id":"R7-PUB-STRICT-top","stage":"assert_pass","expected":1,"actual":1}
+{"id":"R7-PUB-STRICT-navigation","stage":"assert_enter","expected":1}
+{"id":"R7-PUB-STRICT-navigation","stage":"assert_pass","expected":1,"actual":1}
+{"id":"R7-PUB-STRICT-route","stage":"assert_enter","expected":1}
+{"id":"R7-PUB-STRICT-route","stage":"assert_pass","expected":1,"actual":1}
+{"id":"R7-PUB-STRICT-agentPanel","stage":"assert_enter","expected":1}
+{"id":"R7-PUB-STRICT-agentPanel","stage":"assert_pass","expected":1,"actual":1}
+{"id":"R7-PUB-STRICT-setting","stage":"assert_enter","expected":1}
+{"id":"R7-PUB-STRICT-setting","stage":"assert_pass","expected":1,"actual":1}
+{"id":"R7-PUB-STRICT-companion","stage":"assert_enter","expected":1}
+{"id":"R7-PUB-STRICT-companion","stage":"assert_pass","expected":1,"actual":1}
+{"id":"R7-PUB-REQUIRED","stage":"assert_enter","expected":6}
+{"id":"R7-PUB-REQUIRED","stage":"assert_pass","expected":6,"actual":6}
+{"id":"R7-PUB-SHAPE","stage":"assert_enter","expected":6}
+{"id":"R7-PUB-SHAPE","stage":"assert_pass","expected":6,"actual":6}

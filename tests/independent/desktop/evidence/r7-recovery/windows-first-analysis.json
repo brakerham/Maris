@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-12T11:12:30.079585+08:00",
+  "firstFailure": {
+    "stage": "runtime",
+    "id": "W1-DAILY-PAGE",
+    "kind": "other",
+    "code": "operation_error"
+  },
+  "assertionsEntered": 14,
+  "assertionsPassed": 13,
+  "assertionsFailed": 1,
+  "failureExpected": true,
+  "failureActual": "unknown",
+  "observationElapsedMs": 5008.648400000002,
+  "limitations": [
+    "locator wait did not return a sampled boolean; no post-failure DOM count/visibility/hash screenshot was taken",
+    "error name outside reporter allowlist became other; no exception text saved",
+    "first_failure journal event was overwritten by detail.stage runtime; result.json retains firstFailure explicitly",
+    "root was intentionally force-cleaned after first failed observation; no normal exit acceptance",
+    "own registered tree checked absent; no historical descendant census or individual descendant exit codes",
+    "static one-shot modules read and runtime-only subscription suggest readiness timing, but no first-render module payload was recorded"
+  ],
+  "productDefectClassification": "candidate_P1_unverified_cause",
+  "laterScenarios": "not_run_stop_after_first_target_failure",
+  "productStarts": 1,
+  "helperStarts": 0,
+  "fixedExeNotRetried": true
+}

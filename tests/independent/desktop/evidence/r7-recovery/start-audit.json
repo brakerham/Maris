@@ -1,0 +1,101 @@
+{
+  "start": {
+    "entries": 743,
+    "matched": 743,
+    "sha256": "244d5246c6c7a8479c40fb2d13388badfc78701fc081aba22cad1fa5682b8842"
+  },
+  "controlVersion": "2026-10-09T09:21:45+08:00",
+  "r6Delivery": {
+    "entries": 63,
+    "matched": 63,
+    "sha256": "efb4f2af1539b9133d7701303b485a6fd685262db0ab489e290e1ad7eeb25bfa"
+  },
+  "r6ColdSource": {
+    "entries": 9,
+    "matched": 9,
+    "sha256": "d953dab1701a4baef604604998d1e383292ddc0de09176fb5ff82a5ba62be39b"
+  },
+  "r6RecoverySource": {
+    "entries": 5,
+    "matched": 5,
+    "sha256": "240095a226af75193a3a08465c73a28201f0b7d8a5c3566ffc6a5d2908373352"
+  },
+  "r6ColdFirst": {
+    "entries": 9,
+    "matched": 9,
+    "sha256": "56e2e3f87fb4f351d5456f119ab0dd0fc9c4f3119c89add31cb6d1f54ca877fa"
+  },
+  "r6RecoveryFirst": {
+    "entries": 7,
+    "matched": 7,
+    "sha256": "1e760059dfc4f60a48d9f4d2b86bebebae6e0d361ebe4f797c8a05246d6c09eb"
+  },
+  "source": {
+    "entries": 389,
+    "matched": 389,
+    "sha256": "8d104d1e84382cb1fe0228618545d0e7585f3f91a2b3f387f067e2e50e148af9"
+  },
+  "out": {
+    "entries": 140,
+    "matched": 140,
+    "sha256": "e73d6d9d9d1906c47fcfc133459fae37afade9c1691de6d165cbe738fa96be19"
+  },
+  "resources": {
+    "entries": 67,
+    "matched": 67,
+    "sha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1"
+  },
+  "artifacts": {
+    "apps/desktop/out/Maris-win32-x64/Maris.exe": "64ce71f3a7b3055f9ad27f6d611e28c4af7e9ba8b86d8b21399b7b422844a80e",
+    "apps/desktop/out/Maris-win32-x64/resources/app.asar": "5ba47909537e1419dc275fa3ca1e5e076a1aa6d5c0205229f91defb92ddd0931",
+    "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+  },
+  "versions": {
+    "vitest": {
+      "version": "5.0.2",
+      "packageJsonSha256": "943ddc2cfd3676087e243b5adc450ea8c25ad941ba678b48a679b68f67ef297a",
+      "physicalRoot": "C:\\MarisLazyR5\\R5-20261002-222300\\workspace\\node_modules\\vitest"
+    },
+    "vite": {
+      "version": "7.3.6",
+      "packageJsonSha256": "e5ed0f85215f871fe22a48987dcd77fcfbe14064a53c0c9f7f48186a6b7e2cf0",
+      "physicalRoot": "C:\\MarisLazyR5\\R5-20261002-222300\\workspace\\node_modules\\vite"
+    },
+    "react": {
+      "version": "19.3.0",
+      "packageJsonSha256": "6e003e4e9ed25afa7fdd55613f8aa877cefa9b359d9c13f81ee704030248e24e",
+      "physicalRoot": "C:\\MarisLazyR5\\R5-20261002-222300\\workspace\\node_modules\\react"
+    },
+    "react-dom": {
+      "version": "19.3.0",
+      "packageJsonSha256": "136d4af63de473392ea79d6a21932b0ed9eb37fe518ce70f4621250f3d79e9bb",
+      "physicalRoot": "C:\\MarisLazyR5\\R5-20261002-222300\\workspace\\node_modules\\react-dom"
+    },
+    "react-router": {
+      "version": "8.4.0",
+      "packageJsonSha256": "41a544b0e3d42034cbef64e7003ce7a7543d863d323c7b4e762a3debd61b90a0",
+      "physicalRoot": "C:\\MarisLazyR5\\R5-20261002-222300\\workspace\\node_modules\\react-router"
+    },
+    "jsdom": {
+      "version": "30.1.1",
+      "packageJsonSha256": "72dff7780a7791071ebd9cb219262522fc28d0ce5570c41dc7bb69b2700db067",
+      "physicalRoot": "C:\\MarisLazyR5\\R5-20261002-222300\\workspace\\node_modules\\jsdom"
+    },
+    "typescript": {
+      "version": "6.0.3",
+      "packageJsonSha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+      "physicalRoot": "C:\\MarisLazyR5\\R5-20261002-222300\\workspace\\node_modules\\typescript"
+    }
+  },
+  "nativeJsdom": {
+    "version": "30.1.1",
+    "type": "commonjs",
+    "main": "./lib/api.js",
+    "packageRealPath": "C:\\MarisLazyR5\\R5-20261002-222300\\workspace\\node_modules\\jsdom\\package.json",
+    "apiRealPath": "C:\\MarisLazyR5\\R5-20261002-222300\\workspace\\node_modules\\jsdom\\lib\\api.js",
+    "packageSha256": "72dff7780a7791071ebd9cb219262522fc28d0ce5570c41dc7bb69b2700db067",
+    "apiSha256": "bcf577e0fe48db5b9b6a917228f8be8e62d83696b87eb6711d705d28772adba7",
+    "loadedDuringStaticCheck": false
+  },
+  "staged": []
+}

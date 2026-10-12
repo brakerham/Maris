@@ -1,0 +1,89 @@
+{
+  "id": "W1",
+  "startedUtc": "2026-10-12T03:10:19.527Z",
+  "durationMs": 30075.4259,
+  "firstFailure": {
+    "stage": "runtime",
+    "id": "W1-DAILY-PAGE",
+    "kind": "other",
+    "code": "operation_error"
+  },
+  "cleanupError": null,
+  "timeout": false,
+  "forced": true,
+  "rootPid": 3448,
+  "rootExit": {
+    "code": 1,
+    "signal": null,
+    "elapsedMs": 26816.5788
+  },
+  "normalClose": false,
+  "registered": [
+    {
+      "pid": 3448,
+      "parentPid": 24532,
+      "created": "2026-10-12T03:10:19.5663900Z",
+      "kind": "product"
+    },
+    {
+      "pid": 30676,
+      "parentPid": 3448,
+      "created": "2026-10-12T03:10:20.9045850Z",
+      "kind": "product"
+    },
+    {
+      "pid": 11772,
+      "parentPid": 3448,
+      "created": "2026-10-12T03:10:20.9167050Z",
+      "kind": "product"
+    },
+    {
+      "pid": 30204,
+      "parentPid": 3448,
+      "created": "2026-10-12T03:10:21.0249440Z",
+      "kind": "python"
+    },
+    {
+      "pid": 26472,
+      "parentPid": 30204,
+      "created": "2026-10-12T03:10:21.0805110Z",
+      "kind": "conhost"
+    },
+    {
+      "pid": 17068,
+      "parentPid": 30204,
+      "created": "2026-10-12T03:10:21.1119310Z",
+      "kind": "python"
+    },
+    {
+      "pid": 13752,
+      "parentPid": 3448,
+      "created": "2026-10-12T03:10:21.7977930Z",
+      "kind": "product"
+    },
+    {
+      "pid": 31220,
+      "parentPid": 3448,
+      "created": "2026-10-12T03:10:21.7979470Z",
+      "kind": "product"
+    }
+  ],
+  "stdoutBytes": 2,
+  "stderrBytes": 100,
+  "rawLogsSaved": false,
+  "consoleEvents": [
+    {
+      "type": "error",
+      "secretPattern": false,
+      "internalPath": false
+    }
+  ],
+  "pageErrors": 0,
+  "productStarts": 1,
+  "helperStarts": 0,
+  "chunkInjectionCount": 0,
+  "profileAlias": "new_R7_main",
+  "remainingOwned": 0,
+  "remainingListeners": 0,
+  "passed": false
+}

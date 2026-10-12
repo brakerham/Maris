@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6-ENV公开冷入口B首次通过，安全错误提示、Shell、导航和Agent四项要求及来源/清理已获总控核对；恢复第1组失败但具体比较值缺失，归因未核实。发布P4-C12-R7-RECOVERY：补齐逐断言安全证据，按固定初始基线和显式重试增量验收恢复，通过后同任务继续必要兼容与原Windows范围。不重跑B/P/A/D16，不改产品或打包；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6公开冷入口与R7五组恢复正式要求已通过；R7真实Windows首场景停在日常页面就绪观察，actual=unknown，现场根因未证实。总控核对68项交付，发布P4-B7-R6-MODULE-READY：执行方先以首次空模块列表→后台就绪通知的可控顺序复现，确认后最小修复renderer模块同步，同任务开发回归、新包和真实页面门禁。测试方与顾问停止；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
+
+- [R7总控核对与模块就绪裁定](docs/p4-c12-r7-recovery-windows-coordinator-review.md)：接受恢复有限通过，保留Windows现场未知范围。
+- [模块就绪最小执行任务](docs/coordination/prompts/p4-b7-r6-module-ready-executor.md)：可控时序先复现再修复，既有执行方待接单。
 
 - [R6总控核对与恢复断言裁定](docs/p4-c12-r6-env-recovery-coordinator-review.md)：接受B的有限结论，恢复失败不猜定产品原因。
-- [R7恢复独立验收任务](docs/coordination/prompts/p4-c12-r7-recovery-tester.md)：逐断言即时记录，同一次生命周期检查5组恢复；既有测试方待接单。
+- [R7恢复独立验收任务](docs/coordination/prompts/p4-c12-r7-recovery-tester.md)：blocked/finished；恢复正式门禁通过，Windows首场景受阻，首次证据保留。
 
 - [R5-PUBLIC 阻塞总控核对](docs/p4-c12-r5-public-initialization-coordinator-review.md)：41 项交付及首次停点核对，区分环境恢复与根因定位。
 - [R6-ENV 原任务](docs/coordination/prompts/p4-c12-r6-env-tester.md)：blocked/finished，B通过而恢复未完成；首次结果与源码保留。

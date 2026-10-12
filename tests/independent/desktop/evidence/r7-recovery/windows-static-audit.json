@@ -1,0 +1,27 @@
+{
+  "source": {
+    "count": 389,
+    "matched": 389
+  },
+  "out": {
+    "count": 140,
+    "matched": 140
+  },
+  "resources": {
+    "count": 67,
+    "matched": 67
+  },
+  "at": "2026-10-12T11:09:44.357044+08:00",
+  "artifactsMatched": 3,
+  "dependencyMetadataMatched": 7,
+  "productStarts": 0,
+  "externalRootAbsent": true,
+  "staticCorrection": [
+    {
+      "kind": "outer PowerShell here-string collision",
+      "executedProduct": false,
+      "resolved": "native apply_patch writes script without shell quoting"
+    }
+  ],
+  "nodeTsStaticLimitation": "earlier Node --check TS was not a valid parser; first Vitest 8 passed retained"
+}

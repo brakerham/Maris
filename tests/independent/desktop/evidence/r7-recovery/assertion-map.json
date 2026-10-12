@@ -1,0 +1,629 @@
+{
+  "source": "r6-env-recovery.test.tsx",
+  "assertions": [
+    {
+      "id": "WAIT.CONDITION",
+      "originalLine": 59,
+      "originalComparison": "expect(condition(), 'bounded public condition').toBe(true)",
+      "actualExpression": "condition()",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        59
+      ]
+    },
+    {
+      "id": "CLICK.PRESENT",
+      "originalLine": 62,
+      "originalComparison": "expect(element, 'public control exists').not.toBeNull()",
+      "actualExpression": "element !== null",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        62
+      ]
+    },
+    {
+      "id": "SAFETY.SHELL_SAME",
+      "originalLine": 70,
+      "originalComparison": "expect(q('main.shell')).toBe(shell)",
+      "actualExpression": "q('main.shell') === shell",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        70
+      ]
+    },
+    {
+      "id": "SAFETY.NAV_PRESENT",
+      "originalLine": 71,
+      "originalComparison": "expect(q('main.shell nav[aria-label=\"模块导航\"]')).not.toBeNull()",
+      "actualExpression": "q('main.shell nav[aria-label=\"模块导航\"]') !== null",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        71
+      ]
+    },
+    {
+      "id": "SAFETY.AGENT_PRESENT",
+      "originalLine": 72,
+      "originalComparison": "expect(q('main.shell aside[aria-label=\"统一 Agent 面板\"]')).not.toBeNull()",
+      "actualExpression": "q('main.shell aside[aria-label=\"统一 Agent 面板\"]') !== null",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        72
+      ]
+    },
+    {
+      "id": "SAFETY.DOM_LEAK",
+      "originalLine": 73,
+      "originalComparison": "expect(leaked(dom.window.document.documentElement.outerHTML)).toBe(false)",
+      "actualExpression": "leaked(dom.window.document.documentElement.outerHTML)",
+      "expectedExpression": "false",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        73
+      ]
+    },
+    {
+      "id": "SAFETY.CONSOLE_LEAK",
+      "originalLine": 74,
+      "originalComparison": "expect(consoleLeak || incomplete).toBe(false)",
+      "actualExpression": "consoleLeak || incomplete",
+      "expectedExpression": "false",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        74
+      ]
+    },
+    {
+      "id": "SAFETY.JSDOM_ERRORS",
+      "originalLine": 75,
+      "originalComparison": "expect(jsdomErrors).toBe(0)",
+      "actualExpression": "jsdomErrors",
+      "expectedExpression": "0",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        75
+      ]
+    },
+    {
+      "id": "SAFETY.DENIED",
+      "originalLine": 76,
+      "originalComparison": "expect(counts.denied).toBe(0)",
+      "actualExpression": "counts.denied",
+      "expectedExpression": "0",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        76
+      ]
+    },
+    {
+      "id": "STABLE.SNAPSHOTS",
+      "originalLine": 82,
+      "originalComparison": "expect(counts.snapshots).toBe(baseline.snapshots)",
+      "actualExpression": "counts.snapshots",
+      "expectedExpression": "baseline.snapshots",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        82
+      ]
+    },
+    {
+      "id": "STABLE.MODULES",
+      "originalLine": 82,
+      "originalComparison": "expect(counts.modules).toBe(baseline.modules)",
+      "actualExpression": "counts.modules",
+      "expectedExpression": "baseline.modules",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        82
+      ]
+    },
+    {
+      "id": "STABLE.SUBSCRIBE",
+      "originalLine": 83,
+      "originalComparison": "expect(counts.subscribe).toBe(baseline.subscribe)",
+      "actualExpression": "counts.subscribe",
+      "expectedExpression": "baseline.subscribe",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        83
+      ]
+    },
+    {
+      "id": "STABLE.UNSUBSCRIBE",
+      "originalLine": 83,
+      "originalComparison": "expect(counts.unsubscribe).toBe(baseline.unsubscribe)",
+      "actualExpression": "counts.unsubscribe",
+      "expectedExpression": "baseline.unsubscribe",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        83
+      ]
+    },
+    {
+      "id": "STABLE.ACTIVE",
+      "originalLine": 84,
+      "originalComparison": "expect(callbacks.size).toBe(1)",
+      "actualExpression": "callbacks.size",
+      "expectedExpression": "1",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        84
+      ]
+    },
+    {
+      "id": "STABLE.SETTINGS_WRITES",
+      "originalLine": 84,
+      "originalComparison": "expect(counts.writes).toBe(2)",
+      "actualExpression": "counts.writes",
+      "expectedExpression": "2",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        84
+      ]
+    },
+    {
+      "id": "STABLE.THEME",
+      "originalLine": 85,
+      "originalComparison": "expect(q('main.shell')?.getAttribute('data-theme')).toBe('dark')",
+      "actualExpression": "q('main.shell')?.getAttribute('data-theme')",
+      "expectedExpression": "'dark'",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        85
+      ]
+    },
+    {
+      "id": "STABLE.PRIVACY",
+      "originalLine": 86,
+      "originalComparison": "expect(q('main.shell')?.getAttribute('data-privacy')).toBe('on')",
+      "actualExpression": "q('main.shell')?.getAttribute('data-privacy')",
+      "expectedExpression": "'on'",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        86
+      ]
+    },
+    {
+      "id": "STABLE.RUNTIME_OFFLINE",
+      "originalLine": 87,
+      "originalComparison": "expect(q('main.shell header [role=\"status\"]')?.textContent).toContain('offline')",
+      "actualExpression": "Boolean(q('main.shell header [role=\"status\"]')?.textContent?.includes('offline'))",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        87
+      ]
+    },
+    {
+      "id": "SETTINGS.PAYLOAD",
+      "originalLine": 120,
+      "originalComparison": "expect(value).toEqual(counts.writes === 1 ? { theme: 'dark' } : { privacyMode: true })",
+      "actualExpression": "matchesUpdate(value, counts.writes === 1 ? { theme: 'dark' } : { privacyMode: true })",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        120
+      ]
+    },
+    {
+      "id": "legacy_initial_exact_1",
+      "originalLine": 140,
+      "originalComparison": "expect(counts.loads).toBe(1)",
+      "actualExpression": "counts.loads",
+      "expectedExpression": "1",
+      "operator": "eq",
+      "kind": "legacy",
+      "originalLines": [
+        140
+      ]
+    },
+    {
+      "id": "G1.HASH",
+      "originalLine": 141,
+      "originalComparison": "expect(dom.window.location.hash).toBe('#/broken')",
+      "actualExpression": "dom.window.location.hash",
+      "expectedExpression": "'#/broken'",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        141
+      ]
+    },
+    {
+      "id": "legacy_first_retry_total_2",
+      "originalLine": 148,
+      "originalComparison": "expect(counts.loads).toBe(2)",
+      "actualExpression": "counts.loads",
+      "expectedExpression": "2",
+      "operator": "eq",
+      "kind": "legacy",
+      "originalLines": [
+        148
+      ]
+    },
+    {
+      "id": "G3.QUIET_INITIAL",
+      "originalLine": 154,
+      "originalComparison": "expect(counts.loads).toBe(initialFailureLoads)",
+      "actualExpression": "counts.loads",
+      "expectedExpression": "initialFailureLoads",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        154
+      ]
+    },
+    {
+      "id": "G3.RETRY_TOTAL",
+      "originalLine": 156,
+      "originalComparison": "expect(counts.loads).toBe(initialFailureLoads + 1)",
+      "actualExpression": "counts.loads",
+      "expectedExpression": "initialFailureLoads + 1",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        156
+      ]
+    },
+    {
+      "id": "G4.PENDING_DISABLED",
+      "originalLine": 163,
+      "originalComparison": "expect(retry()?.disabled).toBe(true)",
+      "actualExpression": "retry()?.disabled",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        163
+      ]
+    },
+    {
+      "id": "G4.SINGLE_INFLIGHT",
+      "originalLine": 163,
+      "originalComparison": "expect(counts.loads).toBe(beforePending + 1)",
+      "actualExpression": "counts.loads",
+      "expectedExpression": "beforePending + 1",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        163
+      ]
+    },
+    {
+      "id": "G4.SETTLER_PRESENT",
+      "originalLine": 165,
+      "originalComparison": "expect(settleOld).toBeTypeOf('function')",
+      "actualExpression": "typeof settleOld === 'function'",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        165
+      ]
+    },
+    {
+      "id": "G4.HEALTHY_VISIBLE",
+      "originalLine": 166,
+      "originalComparison": "expect(content()).toContain('R6 healthy page')",
+      "actualExpression": "content().includes('R6 healthy page')",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        166
+      ]
+    },
+    {
+      "id": "G4.STALE_ABSENT",
+      "originalLine": 166,
+      "originalComparison": "expect(content()).not.toContain('R6 stale page')",
+      "actualExpression": "content().includes('R6 stale page')",
+      "expectedExpression": "false",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        166
+      ]
+    },
+    {
+      "id": "G4.HASH",
+      "originalLine": 167,
+      "originalComparison": "expect(dom.window.location.hash).toBe('#/healthy')",
+      "actualExpression": "dom.window.location.hash",
+      "expectedExpression": "'#/healthy'",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        167
+      ]
+    },
+    {
+      "id": "G5.RETRY_TOTAL",
+      "originalLine": 172,
+      "originalComparison": "expect(counts.loads).toBe(beforeRenderRetry + 1)",
+      "actualExpression": "counts.loads",
+      "expectedExpression": "beforeRenderRetry + 1",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        172
+      ]
+    },
+    {
+      "id": "BODY.BUDGET",
+      "originalLine": 174,
+      "originalComparison": "expect(performance.now() - bodyStart).toBeLessThanOrEqual(10000)",
+      "actualExpression": "performance.now() - bodyStart",
+      "expectedExpression": "10000",
+      "operator": "lte",
+      "kind": "gate",
+      "originalLines": [
+        174
+      ]
+    },
+    {
+      "id": "CLEANUP.RESOURCES",
+      "originalLine": 200,
+      "originalComparison": "expect.soft(unmounted && closed && listenersRemoved && restored && !restoreFailed).toBe(true)",
+      "actualExpression": "unmounted && closed && listenersRemoved && restored && !restoreFailed",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        200
+      ]
+    },
+    {
+      "id": "CLEANUP.ACTIVE",
+      "originalLine": 201,
+      "originalComparison": "expect.soft(activeAfterUnmount).toBe(0)",
+      "actualExpression": "activeAfterUnmount",
+      "expectedExpression": "0",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        201
+      ]
+    },
+    {
+      "id": "CLEANUP.RESCUE",
+      "originalLine": 201,
+      "originalComparison": "expect.soft(rescueUnsubscribe).toBe(0)",
+      "actualExpression": "rescueUnsubscribe",
+      "expectedExpression": "0",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        201
+      ]
+    },
+    {
+      "id": "CLEANUP.UNSUBSCRIBE",
+      "originalLine": 201,
+      "originalComparison": "expect.soft(counts.subscribe).toBe(counts.unsubscribe)",
+      "actualExpression": "counts.subscribe",
+      "expectedExpression": "counts.unsubscribe",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        201
+      ]
+    },
+    {
+      "id": "CLEANUP.CONSOLE",
+      "originalLine": 202,
+      "originalComparison": "expect.soft(consoleLeak || incomplete).toBe(false)",
+      "actualExpression": "consoleLeak || incomplete",
+      "expectedExpression": "false",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        202
+      ]
+    },
+    {
+      "id": "CLEANUP.JSDOM",
+      "originalLine": 202,
+      "originalComparison": "expect.soft(jsdomErrors).toBe(0)",
+      "actualExpression": "jsdomErrors",
+      "expectedExpression": "0",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        202
+      ]
+    },
+    {
+      "id": "CLEANUP.DENIED",
+      "originalLine": 202,
+      "originalComparison": "expect.soft(counts.denied).toBe(0)",
+      "actualExpression": "counts.denied",
+      "expectedExpression": "0",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        202
+      ]
+    },
+    {
+      "id": "CLEANUP.BUDGET",
+      "originalLine": 203,
+      "originalComparison": "expect.soft(performance.now() - cleanupStart).toBeLessThanOrEqual(2000)",
+      "actualExpression": "performance.now() - cleanupStart",
+      "expectedExpression": "2000",
+      "operator": "lte",
+      "kind": "gate",
+      "originalLines": [
+        203
+      ]
+    },
+    {
+      "id": "G1.POSITIVE_INITIAL",
+      "originalLine": null,
+      "originalComparison": "R7 frozen baseline/action delta contract",
+      "actualExpression": "initialBaseline",
+      "expectedExpression": "0",
+      "operator": "positive_integer",
+      "kind": "gate"
+    },
+    {
+      "id": "G1.FIXED_QUIET",
+      "originalLine": null,
+      "originalComparison": "R7 frozen baseline/action delta contract",
+      "actualExpression": "counts.loads",
+      "expectedExpression": "initialBaseline",
+      "operator": "eq",
+      "kind": "gate"
+    },
+    {
+      "id": "G2.PRE_RETRY_BASELINE",
+      "originalLine": null,
+      "originalComparison": "R7 frozen baseline/action delta contract",
+      "actualExpression": "preRetry",
+      "expectedExpression": "initialBaseline",
+      "operator": "eq",
+      "kind": "gate"
+    },
+    {
+      "id": "G2.RETRY_TOTAL",
+      "originalLine": null,
+      "originalComparison": "R7 frozen baseline/action delta contract",
+      "actualExpression": "postRetry",
+      "expectedExpression": "initialBaseline + 1",
+      "operator": "eq",
+      "kind": "gate"
+    },
+    {
+      "id": "G2.RETRY_DELTA",
+      "originalLine": null,
+      "originalComparison": "R7 frozen baseline/action delta contract",
+      "actualExpression": "postRetry - preRetry",
+      "expectedExpression": "1",
+      "operator": "eq",
+      "kind": "gate"
+    },
+    {
+      "id": "G3.HEALTHY_DELTA",
+      "originalLine": null,
+      "originalComparison": "R7 frozen baseline/action delta contract",
+      "actualExpression": "counts.healthy - beforeHealthy",
+      "expectedExpression": "1",
+      "operator": "eq",
+      "kind": "gate"
+    },
+    {
+      "id": "G3.LEAVE_NO_BROKEN_LOAD",
+      "originalLine": null,
+      "originalComparison": "R7 frozen baseline/action delta contract",
+      "actualExpression": "counts.loads",
+      "expectedExpression": "beforeHealthyLoads",
+      "operator": "eq",
+      "kind": "gate"
+    },
+    {
+      "id": "G3.SETTINGS_NO_LOAD",
+      "originalLine": null,
+      "originalComparison": "R7 frozen baseline/action delta contract",
+      "actualExpression": "counts.loads",
+      "expectedExpression": "beforeSettingsLoads",
+      "operator": "eq",
+      "kind": "gate"
+    },
+    {
+      "id": "G3.SETTINGS_NO_HEALTHY_LOAD",
+      "originalLine": null,
+      "originalComparison": "R7 frozen baseline/action delta contract",
+      "actualExpression": "counts.healthy",
+      "expectedExpression": "beforeSettingsHealthy",
+      "operator": "eq",
+      "kind": "gate"
+    },
+    {
+      "id": "G3.RETURN_DELTA",
+      "originalLine": null,
+      "originalComparison": "R7 frozen baseline/action delta contract",
+      "actualExpression": "counts.loads - beforeReturn",
+      "expectedExpression": "1",
+      "operator": "eq",
+      "kind": "gate"
+    },
+    {
+      "id": "G3.QUIET_AFTER_RETRY",
+      "originalLine": 156,
+      "originalComparison": "expect(counts.loads).toBe(initialFailureLoads + 1)",
+      "actualExpression": "counts.loads",
+      "expectedExpression": "initialFailureLoads + 1",
+      "operator": "eq",
+      "kind": "gate",
+      "originalLines": [
+        156
+      ]
+    },
+    {
+      "id": "SELF.DIFFERENT",
+      "originalLine": null,
+      "originalComparison": "same-worker scalar recorder selftest",
+      "actualExpression": "7",
+      "expectedExpression": "9",
+      "operator": "eq",
+      "kind": "selftest"
+    },
+    {
+      "id": "SELF.BOOLEAN",
+      "originalLine": null,
+      "originalComparison": "same-worker scalar recorder selftest",
+      "actualExpression": "true",
+      "expectedExpression": "true",
+      "operator": "eq",
+      "kind": "selftest"
+    }
+  ],
+  "operationIds": [
+    "OP.CLICK",
+    "OP.CLOSE_DOM",
+    "OP.DOM_SETUP",
+    "OP.IMPORTS",
+    "OP.MOUNT",
+    "OP.PAUSE",
+    "OP.REGISTRY",
+    "OP.REMOVE_LISTENER",
+    "OP.REPEAT_CLICK",
+    "OP.RESTORE_CONSOLE",
+    "OP.RESTORE_GLOBALS",
+    "OP.RUNTIME",
+    "OP.SETTLE_OLD",
+    "OP.THEME",
+    "OP.UNMOUNT",
+    "OP.UNSUBSCRIBE_RESCUE",
+    "OP.WAIT"
+  ],
+  "identity": "fixed ID plus group/operation/assertion sequence",
+  "onlyNonBlockingLegacy": [
+    "legacy_initial_exact_1",
+    "legacy_first_retry_total_2"
+  ]
+}

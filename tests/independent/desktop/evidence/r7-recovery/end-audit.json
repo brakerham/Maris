@@ -1,0 +1,269 @@
+{
+  "start": {
+    "entries": 743,
+    "matched": 739,
+    "authorizedChanges": [
+      "docs/coordination/agents/tester.md",
+      "docs/testing/phase-4-c12-manual-checklist.md",
+      "docs/testing/phase-4-c12-windows-shell-report.md",
+      "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+    ],
+    "sha256": "244d5246c6c7a8479c40fb2d13388badfc78701fc081aba22cad1fa5682b8842"
+  },
+  "source": {
+    "entries": 389,
+    "matched": 389,
+    "authorizedChanges": [],
+    "sha256": "8d104d1e84382cb1fe0228618545d0e7585f3f91a2b3f387f067e2e50e148af9"
+  },
+  "out": {
+    "entries": 140,
+    "matched": 140,
+    "authorizedChanges": [],
+    "sha256": "e73d6d9d9d1906c47fcfc133459fae37afade9c1691de6d165cbe738fa96be19"
+  },
+  "resources": {
+    "entries": 67,
+    "matched": 67,
+    "authorizedChanges": [],
+    "sha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1"
+  },
+  "artifacts": {
+    "apps/desktop/out/Maris-win32-x64/Maris.exe": "64ce71f3a7b3055f9ad27f6d611e28c4af7e9ba8b86d8b21399b7b422844a80e",
+    "apps/desktop/out/Maris-win32-x64/resources/app.asar": "5ba47909537e1419dc275fa3ca1e5e076a1aa6d5c0205229f91defb92ddd0931",
+    "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+  },
+  "fuses": {
+    "version": 1,
+    "wire": [
+      48,
+      49,
+      48,
+      48,
+      49,
+      49,
+      48,
+      49,
+      49
+    ]
+  },
+  "dependencyMetadataMatched": 7,
+  "r6Delivery": {
+    "entries": 63,
+    "matched": 59,
+    "authorizedChanges": [
+      "docs/coordination/agents/tester.md",
+      "docs/testing/phase-4-c12-manual-checklist.md",
+      "docs/testing/phase-4-c12-windows-shell-report.md",
+      "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+    ],
+    "sha256": "efb4f2af1539b9133d7701303b485a6fd685262db0ab489e290e1ad7eeb25bfa"
+  },
+  "r6ColdSource": {
+    "entries": 9,
+    "matched": 9,
+    "authorizedChanges": [],
+    "sha256": "d953dab1701a4baef604604998d1e383292ddc0de09176fb5ff82a5ba62be39b"
+  },
+  "r6RecoverySource": {
+    "entries": 5,
+    "matched": 5,
+    "authorizedChanges": [],
+    "sha256": "240095a226af75193a3a08465c73a28201f0b7d8a5c3566ffc6a5d2908373352"
+  },
+  "r6ColdFirst": {
+    "entries": 9,
+    "matched": 9,
+    "authorizedChanges": [],
+    "sha256": "56e2e3f87fb4f351d5456f119ab0dd0fc9c4f3119c89add31cb6d1f54ca877fa"
+  },
+  "r6RecoveryFirst": {
+    "entries": 7,
+    "matched": 7,
+    "authorizedChanges": [],
+    "sha256": "1e760059dfc4f60a48d9f4d2b86bebebae6e0d361ebe4f797c8a05246d6c09eb"
+  },
+  "recoverySource": {
+    "entries": 7,
+    "matched": 7,
+    "authorizedChanges": [],
+    "sha256": "cd6f95096112c8308758831fb8b0b25a67358d6090a89275110f04a687187787"
+  },
+  "recoveryFirst": {
+    "entries": 7,
+    "matched": 7,
+    "authorizedChanges": [],
+    "sha256": "0e73569db2b046b363dde3464d391f1ebf00f15168b3de4df846e36f10d0eb2b"
+  },
+  "compatSource": {
+    "entries": 4,
+    "matched": 4,
+    "authorizedChanges": [],
+    "sha256": "546fe322356239a18c23569103529d012a745831ad64d5b5a616aafc5fc86758"
+  },
+  "compatFirst": {
+    "entries": 5,
+    "matched": 5,
+    "authorizedChanges": [],
+    "sha256": "ded1f01774ea4d557434ea12892a471a49a9fbcdd7e232fdc61ad79972c0872f"
+  },
+  "publicSource": {
+    "entries": 5,
+    "matched": 5,
+    "authorizedChanges": [],
+    "sha256": "8a0b57204cef38ceeb080f291a15637515d2e01726a6efef5026e82a12efa414"
+  },
+  "publicFirst": {
+    "entries": 6,
+    "matched": 6,
+    "authorizedChanges": [],
+    "sha256": "205c8143528aa9503596afc7faefdc3528034b2d75b5d310d443cc24e8444fa1"
+  },
+  "windowsSource": {
+    "entries": 3,
+    "matched": 3,
+    "authorizedChanges": [],
+    "sha256": "0db31fa207773a459efc6e14af05eb325a36d7b58677fe3ecc9f790e3e66d16f"
+  },
+  "windowsFirst": {
+    "entries": 2,
+    "matched": 2,
+    "authorizedChanges": [],
+    "sha256": "ab5d5186feebba6f2dc3531fc1e7b7247be2826a6a1e9b85e3e8f39763f999f3"
+  },
+  "matrix": {
+    "uniqueIds": 120,
+    "columns": 12,
+    "originalRowsAndStatesPreserved": true,
+    "outsideBPreserved": true,
+    "states": {
+      "A": {
+        "passed": 64
+      },
+      "B": {
+        "blocked": 19,
+        "not_run": 4,
+        "failed": 1
+      },
+      "C": {
+        "not_run": 20
+      },
+      "D": {
+        "not_run": 12
+      }
+    }
+  },
+  "appendFiles": {
+    "docs/testing/phase-4-c12-windows-shell-report.md": {
+      "originalBytes": 39063,
+      "appendedBytes": 1287,
+      "prefixPreserved": true
+    },
+    "docs/testing/phase-4-c12-manual-checklist.md": {
+      "originalBytes": 17077,
+      "appendedBytes": 1287,
+      "prefixPreserved": true
+    }
+  },
+  "incrementalCaseRows": 24,
+  "recovery": {
+    "passedNodes": 1,
+    "groupsPassed": 5,
+    "formalComparisonsPassed": 208,
+    "legacy": [
+      {
+        "id": "legacy_initial_exact_1",
+        "expected": 1,
+        "actual": 2
+      },
+      {
+        "id": "legacy_first_retry_total_2",
+        "expected": 2,
+        "actual": 3
+      }
+    ],
+    "assertionPairs": 212,
+    "rootExitCode": 0,
+    "workerNativeExitCode": 1,
+    "workerExitCause": "unverified"
+  },
+  "compat": {
+    "total": 10,
+    "passed": 10,
+    "files": 3,
+    "rootExitCode": 0,
+    "workers": [
+      {
+        "identityVerified": true,
+        "forced": false,
+        "nativeExitCode": 1,
+        "exited": true,
+        "pid": 29280
+      },
+      {
+        "identityVerified": true,
+        "forced": false,
+        "nativeExitCode": 1,
+        "exited": true,
+        "pid": 23092
+      },
+      {
+        "identityVerified": true,
+        "forced": false,
+        "nativeExitCode": 1,
+        "exited": true,
+        "pid": 21580
+      }
+    ]
+  },
+  "public": {
+    "total": 8,
+    "passed": 8,
+    "files": 1,
+    "rootExitCode": 0,
+    "workers": [
+      {
+        "forced": false,
+        "exited": true,
+        "identityVerified": true,
+        "pid": 28440,
+        "nativeExitCode": 1
+      }
+    ]
+  },
+  "windows": {
+    "productStarts": 1,
+    "helperStarts": 0,
+    "chunkInjectionCount": 0,
+    "passedScenario": false,
+    "passedComparisons": 13,
+    "failedObservations": 1,
+    "firstFailure": {
+      "stage": "runtime",
+      "id": "W1-DAILY-PAGE",
+      "kind": "other",
+      "code": "operation_error"
+    },
+    "actual": "unknown",
+    "forcedCleanup": true,
+    "rootExitCode": 1,
+    "remainingOwned": 0,
+    "remainingListeners": 0,
+    "durationMs": 30075.4259
+  },
+  "limitations": {
+    "namedFilePatternDeviation": [
+      "r7-recovery.config.mjs",
+      "r7-recovery.test.tsx"
+    ],
+    "oldR6FailurePreserved": true,
+    "w1TerminalDomSample": "missing",
+    "w1JournalFailureStageLabel": "overwritten_by_detail_runtime_result_preserves_firstFailure",
+    "publicStaticParser": "Node_check_TS_rejected_outer_shell_continued_first_Vitest_8_passed",
+    "publicProcessScopeLabel": "three_public_files_once_is_incorrect_one_actual_file",
+    "targetReruns": 0,
+    "historicalDescendantExitCodes": "unknown",
+    "virtualProfile": "retained_outside_repo"
+  },
+  "stagedPaths": []
+}

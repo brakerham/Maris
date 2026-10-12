@@ -443,3 +443,11 @@ Warning：只读 Git 命令提示用户全局 Git ignore 无读取权限；命�
 - root/worker均已退出，界面卸载/退订/global/console/DOM实际清理；全系统历史后代及worker自身exit code未核实。缓存仅清理本轮专属路径，首次材料保留。
 - B整项0 passed/1 failed/19 blocked/4 not_run保持；Windows0/8、辅助0/4、真实chunk0。实际Tray、老化原生提示、session/系统注销/启动项/多屏/OS主题等原缺口保持，不要求用户现在操作。
 - blocked / finished，供总控review；LAZY-001/UI-02/P4-B未关闭，未修改产品/依赖或Git，不进入P4-C/D。
+
+
+## P4-C12-R7-RECOVERY 增量（2026-10-12）
+
+- [R7增量报告](phase-4-c12-r7-recovery-windows-report.md)：新恢复合同1节点5/5组通过、208正式比较通过；两个旧计数对照为expected1/actual2、expected2/actual3，旧R6失败保留。独立结构8 passed，必要开发兼容10 passed单列；R6公开冷B不重跑。
+- 真实固定EXE首次W1运行，13比较passed/1观察failed；首ID W1-DAILY-PAGE expected=true actual=unknown，5000ms等待没有页面就绪样本。真实后端online/认证/canonical模块、安全窄bridge/CSP部分通过；未取得页面初读模块/终态DOM，根因和产品定级unverified。
+- 产品1/8、辅助0/4、chunk注入0。首错后停止动态扩大，root3448按已验证身份定向收口，8登记进程与监听均无；这是强制清理，不是正常关闭/Tray通过。虚拟加密profile/db仅在本轮C:/MarisC12专属根保留，仓库无原文。
+- 原24项整项状态保持：B0 passed/1 failed/19 blocked/4 not_run；真实session重启、原生老化提示、关闭策略/单实例、OS注销/启动项/多屏/主题等缺口未通过，不要求用户立即操作。R7首次材料和新命名/取证限制详见报告，交付blocked / finished供总控review；不自动复跑或进入后续场景。

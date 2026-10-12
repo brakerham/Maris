@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-12T11:14:09.4968104+08:00",
+  "observations": [
+    {
+      "pid": 3448,
+      "originalCreation": "2026-10-12T03:10:19.56639Z",
+      "observation": "explicitly_absent"
+    },
+    {
+      "pid": 30676,
+      "originalCreation": "2026-10-12T03:10:20.904585Z",
+      "observation": "explicitly_absent"
+    },
+    {
+      "pid": 11772,
+      "originalCreation": "2026-10-12T03:10:20.916705Z",
+      "observation": "explicitly_absent"
+    },
+    {
+      "pid": 30204,
+      "originalCreation": "2026-10-12T03:10:21.024944Z",
+      "observation": "explicitly_absent"
+    },
+    {
+      "pid": 26472,
+      "originalCreation": "2026-10-12T03:10:21.080511Z",
+      "observation": "explicitly_absent"
+    },
+    {
+      "pid": 17068,
+      "originalCreation": "2026-10-12T03:10:21.111931Z",
+      "observation": "explicitly_absent"
+    },
+    {
+      "pid": 13752,
+      "originalCreation": "2026-10-12T03:10:21.797793Z",
+      "observation": "explicitly_absent"
+    },
+    {
+      "pid": 31220,
+      "originalCreation": "2026-10-12T03:10:21.797947Z",
+      "observation": "explicitly_absent"
+    }
+  ],
+  "scope": "registered_first_windows_tree_only",
+  "individualChildExitCodes": "unknown",
+  "profileRetained": "isolated_virtual_encrypted_fixture_only_not_in_repo",
+  "furtherProductStarts": 0
+}

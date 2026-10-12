@@ -1,0 +1,32 @@
+{
+  "rootExitCode": 0,
+  "streams": [
+    {
+      "name": "stdout",
+      "rawBytes": 58,
+      "complete": true
+    },
+    {
+      "name": "stderr",
+      "rawBytes": 0,
+      "complete": true
+    }
+  ],
+  "durationMs": 646,
+  "rootExited": true,
+  "rootPid": 30000,
+  "failure": null,
+  "timedOut": false,
+  "workers": [
+    {
+      "forced": false,
+      "exited": true,
+      "identityVerified": true,
+      "pid": 28440,
+      "nativeExitCode": 1
+    }
+  ],
+  "scope": "three_public_files_once",
+  "productStarts": 0,
+  "forced": false
+}

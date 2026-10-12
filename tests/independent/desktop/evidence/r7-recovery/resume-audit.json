@@ -1,0 +1,92 @@
+{
+  "resumedAt": "2026-10-12T11:01:30.374111+08:00",
+  "snapshot": {
+    "entries": 743,
+    "matched": 742,
+    "authorizedChanges": [
+      "docs/coordination/agents/tester.md"
+    ],
+    "sha256": "244d5246c6c7a8479c40fb2d13388badfc78701fc081aba22cad1fa5682b8842"
+  },
+  "frozen": {
+    "recovery-source": {
+      "entries": 7,
+      "matched": 7,
+      "authorizedChanges": [],
+      "sha256": "cd6f95096112c8308758831fb8b0b25a67358d6090a89275110f04a687187787"
+    },
+    "recovery-first": {
+      "entries": 7,
+      "matched": 7,
+      "authorizedChanges": [],
+      "sha256": "0e73569db2b046b363dde3464d391f1ebf00f15168b3de4df846e36f10d0eb2b"
+    },
+    "compat-source": {
+      "entries": 4,
+      "matched": 4,
+      "authorizedChanges": [],
+      "sha256": "546fe322356239a18c23569103529d012a745831ad64d5b5a616aafc5fc86758"
+    },
+    "compat-first": {
+      "entries": 5,
+      "matched": 5,
+      "authorizedChanges": [],
+      "sha256": "ded1f01774ea4d557434ea12892a471a49a9fbcdd7e232fdc61ad79972c0872f"
+    },
+    "public-source": {
+      "entries": 5,
+      "matched": 5,
+      "authorizedChanges": [],
+      "sha256": "8a0b57204cef38ceeb080f291a15637515d2e01726a6efef5026e82a12efa414"
+    }
+  },
+  "publicResult": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0
+  },
+  "publicProcess": {
+    "rootExitCode": 0,
+    "streams": [
+      {
+        "name": "stdout",
+        "rawBytes": 58,
+        "complete": true
+      },
+      {
+        "name": "stderr",
+        "rawBytes": 0,
+        "complete": true
+      }
+    ],
+    "durationMs": 646,
+    "rootExited": true,
+    "rootPid": 30000,
+    "failure": null,
+    "timedOut": false,
+    "workers": [
+      {
+        "forced": false,
+        "exited": true,
+        "identityVerified": true,
+        "pid": 28440,
+        "nativeExitCode": 1
+      }
+    ],
+    "scope": "three_public_files_once",
+    "productStarts": 0,
+    "forced": false
+  },
+  "visibilityGap": "2026-10-09 checkpoint to 2026-10-12 user resume; no continuous activity claim",
+  "targetReruns": 0,
+  "staticLimitations": [
+    {
+      "kind": "wrong_static_parser",
+      "actual": "Node --check rejected TS annotation",
+      "sourceCorrection": false,
+      "dynamicResult": "8 passed from first Vitest invocation",
+      "priorShellContinuedAfterNativeNonzero": true
+    }
+  ],
+  "staged": []
+}

@@ -2,23 +2,23 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12-R6-ENV — 原生测试环境加载与公开验收续跑
+- 当前任务：P4-C12-R7-RECOVERY — 恢复逐断言取证与剩余验收
 - 状态：`blocked`
-- 最近更新：2026-10-05 16:53 Asia/Shanghai
-- 可修改范围：仅新增r6-env-*、evidence/r6-env、新R6-ENV报告；旧主报告/清单追加、矩阵B状态备注、自身角色；产品及所有旧源码/证据只读
+- 最近更新：2026-10-12 11:21 Asia/Shanghai
+- 可修改范围：仅新增r7-recovery-*、evidence/r7-recovery、新R7报告；自身角色、原报告/清单追加及矩阵B备注/状态；产品/依赖/所有旧材料只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：交付核验完成，blocked / finished停止，提交总控review
-- 步骤开始时间：2026-10-05 16:53 Asia/Shanghai
-- 最近有效进展：2026-10-05 16:53 Asia/Shanghai
-- 最近心跳：2026-10-05 16:53 Asia/Shanghai
-- 下一检查点：已停止；由总控review并裁定恢复断言最小取证范围
-- 等待对象：总控review及恢复断言取证裁定
-- 活动进程或会话：无活动测试目标；四登记PID在执行后的定向检查已确认退出；worker自身exit code/历史系统状态未核实
+- 当前步骤：终点审计通过，blocked / finished已交总控review并停止
+- 步骤开始时间：2026-10-12 11:20 Asia/Shanghai
+- 最近有效进展：2026-10-12 11:21 Asia/Shanghai
+- 最近心跳：2026-10-12 11:21 Asia/Shanghai
+- 下一检查点：无；等待总控review，不再执行目标或自动创建后续任务
+- 等待对象：总控审阅W1页面就绪观察、静态时序线索和命名/取证限制
+- 活动进程或会话：无活动测试；Windows登记8进程/监听清零；恢复1/公开1/兼容1 CLI均结束；产品1/8、辅助0/4
 - 重试次数：0
-- 最近输出：679=675保持+4授权、旧R5源码10/首次6保持；本轮cold9/recovery7首次保持；63项交付核验通过，矩阵120/12与旧报告prefix保持，staged0
+- 最近输出：743起点739保持+4授权文档；120ID/12列/原行/A/C/D保持；68项交付逐项复算通过，staged0/diff-check0
 
 ## 任务与后续
 
@@ -46,6 +46,74 @@
 | r5_public_contract_review | review | finished | 只读合同/新工具静态问题已交付；父任务修正后冻结 | 2026-10-04 00:32 Asia/Shanghai | 无；已停止 | 父任务记录 | evidence/r5-public/subagent-read-only-receipt.json；0写入/目标，不计动态验收 |
 
 ## 工作日志
+
+### 2026-10-12 11:21 Asia/Shanghai — C12-R7 最终审计通过并停止
+
+- [终点审计](../../../tests/independent/desktop/evidence/r7-recovery/end-audit.json)通过：743起点739不变+4授权共享变化；R6交付59保持+4共享变化，冷/恢复源码9/5和首次9/7保持。本轮恢复/兼容/结构/Windows冻结源码和首次摘要均保持；外部389/140/67、EXE/asar/lock/fuses、7依赖及jsdom API保持。
+- 120唯一ID/12列/原行状态及B外字节保持；原主报告/人工清单prefix保持，24项增量齐全；B仍0passed/1failed/19blocked/4not_run，A64passed/C20及D12not_run。只读diff-check0、staged0。
+- [交付核对](../../../tests/independent/desktop/evidence/r7-recovery/delivery-verification.json)：68项，完整POSIX相对字符串排序、UTF8无BOM/TAB/LF。自身最后审计日志后只刷新清单及复算，不运行目标。首次W1失败及unknown限制保留，产品1/8/辅助0/4，8登记owned与监听清零。最终blocked / finished，提交总控review，停止。
+
+
+### 2026-10-12 11:20 Asia/Shanghai — C12-R7 增量交付与review交接
+
+- 已交付[R7报告](../../testing/phase-4-c12-r7-recovery-windows-report.md)、24项映射、原报告/清单追加及B备注。独立恢复1+结构8=9 passed，必要开发兼容10 passed单列；W1场景未过（13比较passed/1观察failed），后续not_run。原R6 B复用/旧恢复failed均保留，不自行关闭LAZY/UI-02/P4-B。
+- 本轮7恢复源码/首次、4兼容源码/首次、5结构源码/首次、3Windows源码/首次均冻结；报告明确Windows终态unknown、first_failure事件stage覆盖、静态TS解析未阻断执行、public scope误标签，以及两个恢复文件末尾连字符命名偏差。保持真实首次字节，不隐瞒或通过重跑修饰。
+- 8个登记Windows进程按创建时间后检不存在，root强制退出1，正常退出未测；辅助0、注入0。新虚拟加密profile保留仓库外，R7 cache保留；不触碰个人资料/系统配置或旧环境。
+- 动态已停止，交付blocked / finished供总控review；最后只执行r7-recovery-delivery.py复算起终、R6与本轮冻结、矩阵/前缀和交付清单。实际审计结果另以end-audit/delivery-verification记录，不在运行前签成功。无Git写操作/下一任务。
+
+
+### 2026-10-12 11:12 Asia/Shanghai — C12-R7 Windows W1首次失败，停止动态扩大
+
+- 固定EXE直接启动1/8；owned根/loopback CDP、主/毛毛Node隔离与窄bridge、CSP inline/未知新窗拒绝、managed online认证和canonical daily模块均通过。W1-DAILY-PAGE expected=true，locator 5秒等待未返回，actual=unknown；不能写成页面计数0或已证明产品P1。共13个标量比较passed、1failed，不冒充14/15个独立测试。无pageerror，唯一console错误类别无被测秘密/路径特征。
+- 同次UI/hash/visibility缺少终态取样，错误名字白名单将Playwright种类记为other；result保留首错ID，journal first_failure字段被detail.stage覆盖为runtime，属于取证限制，首次不改写。静态DesktopApp只初读modules，runtime订阅只改状态，可能与初始化空交集有关；未取得首读payload，根因和定级unverified。
+- 首错后不继续状态改变/后续启动。root3448与8登记树按身份核实后taskkill /PID /T收口，exit1，30075ms结束，非超时、cleanupError=null，剩余owned/监听0。这是强制清理，普通退出/Tray未执行，不签通过。
+- Windows W2～W5、真实chunk/session/原生老化/关闭与剩余公开门禁not_run；helper0/4、注入0。R7恢复1、公开结构8、兼容10首次通过保持。冻结windows-first.sha256，仅继续报告与摘要。总控需决定页面ready观察/时序的最小后续范围，测试方不改产品或自动复跑。
+
+
+### 2026-10-12 11:09 Asia/Shanghai — C12-R7 Windows 首场景启动前门禁
+
+- 固定外部389源码/140产物/67资源、EXE/asar/lock及依赖元数据重新匹配；windows-plan.json列W1～W5有条件计划，产品最多8/辅助4。新根C:/MarisC12/C12-R7-RECOVERY-20261012-1103，创建前验证绝对边界及无reparse。固定EXE由Node direct spawn(shell:false)，Playwright仅CDP附加。
+- W1验证真实renderer窄bridge/CSP/非法IPC、managed在线/canonical模块、虚拟outbox同ID、设置/隐私和Host拒绝；新虚拟device fixture仅设quit策略用于普通WM_CLOSE退出，不当默认关闭策略通过。E2E仅隔离profile/禁止OS修改，没有产品自动退出timer；90秒触发收口预留120秒总预算。
+- scoped OS helper仅验证本root路径/创建时间/祖先与标记，不按精确进程数/名字全局kill；原生dialog未来只能owned PID/标题/按钮UIA。真实chunk如早已file/asar缓存则保留明确未验证，不盲追加。只读CIM可用。
+- 新辅助脚本生成外层here-string静态解析错误1次，未创建/运行产品；改用apply_patch后语法通过。已通过恢复/兼容/结构不重跑。下一检查点启动后2分钟，任何首次业务失败或失控立即保留并收口。
+
+
+### 2026-10-12 11:01 Asia/Shanghai — C12-R7 用户继续后的现场续接
+
+- 重新读取AGENTS/control/角色/任务卡与协作规则，control仍2026-10-09T09:21:45+08:00，唯一Tester授权保持。743起点742不变+本人角色1授权变化；恢复/兼容源码与首次材料保持。resume-audit.json留存。
+- 10月9日09:57检查点后至本次存在可见性空档，不能声称持续运行；上次公开结构实际8 passed/0 failed，root30000/worker28440已退出，process646ms，无强杀。现在封存首次，不重启任何已通过目标。09:47历史标题误替换恢复里程碑时间，已按09:40原记录更正。
+- 公开脚本生成曾因config点号/连字符路径出现FileNotFoundError，产品未开始时修正1次；随后Node --check不支持该TS注解而报SyntaxError，外层PowerShell未阻止Vitest继续，首次Vitest8 passed保留。静态驱动未正确阻断另记限制，不回写为静态全过，不动态重跑。
+- Windows/辅助仍0/8与0/4，未创建外部profile。继续未测Windows场景；下一检查点11:12，不重复B/P/A/D16，不改产品/依赖/包或Git。
+
+
+### 2026-10-09 09:47 Asia/Shanghai — C12-R7 必要兼容首次通过
+
+- 任务指定三个开发文件各一次：lazy8、Shell1、composition1，共10 passed/0 failed、module/unhandled0，与独立恢复1节点分列。process 8995ms，无timeout/强杀/observer错误；root exit0、三个登记worker身份核实及退出，native exit1原因未核实不混成root退出码。
+- 首次结果与兼容4源码冻结；未重复registry52或旧B/P/A/D16。继续原UI-04尚缺strict贡献结构，再进入固定EXE的真实隔离Windows，所有设备条件需实际证据。下一检查点09:57。
+
+
+### 2026-10-09 09:40 Asia/Shanghai — C12-R7-RECOVERY 首次正式门禁通过，继续同任务
+
+- R7-RECOVERY-01首次1 passed，5组均到达/通过；212对assert enter/terminal完整：208正式通过、2个旧计数对照失败（1对2、2对3）、2个纯标量自检比较，均不另计节点。固定initialBaseline=2，60ms及设置/runtime后不增，一次retry到3/增量1。无首个正式失败/cleanup失败/operation失败。
+- 真实root/DOM/global/console恢复，退订2/2、rescue0、denied0、无console泄漏/jsdomError；清理收尾断言实测46.01ms。controller初始化25049ms、body4656ms，总计约29888ms；root exit0、worker句柄实际exit1分别保留，worker终止原因未核实、非本控制器强杀。固定exe及创建时间窗/父子身份核验true，两登记进程退出。
+- 本次结果只能定位新运行，不补造旧R6比较值或宣布不变旧节点通过。R6公开B仍只读复用。现按新合同继续lazy8及必要Shell/composition各文件一次，兼容单列；然后未完成公开/Windows，实际设备条件不拿jsdom替代。
+
+
+### 2026-10-09 09:37 Asia/Shanghai — C12-R7-RECOVERY 静态门禁通过与首次执行检查点
+
+- assertion-map.json/md完整列53个定义（含helper/回调/finally、11个基线/动作细化及2个自检）、17类操作；每次比较有ID/group/operation/assertion及安全expected/actual，未知值不当通过。仅legacy_initial_exact_1、legacy_first_retry_total_2非阻断。
+- 6新源码+映射共7项冻结；MJS/TSX/PowerShell静态解析和版本/API摘要通过，无目标或依赖练习运行。记录器同步支持ID/operator/白名单枚举，禁止字段在写入前拒绝；同worker正文产品导入前执行一次纯标量自检。
+- 一次恢复挂载，固定N0经60ms观察、设置/runtime后均不得增长，明确retry增量1；失败停止后续状态改变。同一正式节点5组，不计为5个测试。controller独立60/10/2/75秒、UI5秒，新增自有worker固定exe/创建时间窗核验。
+- 开始首次CLI，可观察session/journal；两分钟内收口核验。产品前有证据的纯工具错误才允许一次更正；目标开始后失败或未知超时不重跑。
+
+
+### 2026-10-09 09:29 Asia/Shanghai — C12-R7-RECOVERY 接单与新起点通过
+
+- control 2026-10-09T09:21:45+08:00，既有Tester唯一负责人。743/743、R6交付63/源码9及5/首次9及7与外部389/140/67均原字节匹配；固定包/lock/jsdom API/7依赖元数据保持，staged0。见evidence/r7-recovery/start-audit.json。
+- 普通本地exec在创建进程前两次setup refresh失败；备用已授权执行路径成功恢复文件访问，没有测试尝试或产品启动，不计目标重试。
+- 从一次真实恢复生命周期继续，保持StrictMode/空hash/两虚拟route；所有比较固定ID/operator/安全expected和actual即时落盘，同worker产品前纯标量自检。仅两个旧绝对总数非阻断，固定初始基线及显式retry增量1为正式门禁。
+- B/P/A/D16不重复；60/10/2/75秒、UI5秒，恢复通过后同任务兼容与Windows。不修改产品/依赖或Git，无子任务委派。
+
 
 ### 2026-10-05 16:53 Asia/Shanghai — C12-R6-ENV 最终摘要核验通过并停止
 

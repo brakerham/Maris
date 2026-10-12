@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-09 09:21，Asia/Shanghai
+更新时间：2026-10-12 19:28，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6-ENV公开冷入口B首次通过，安全错误提示、Shell、导航和Agent四项要求及来源/清理已获总控核对；恢复第1组失败但具体比较值缺失，归因未核实。发布P4-C12-R7-RECOVERY：补齐逐断言安全证据，按固定初始基线和显式重试增量验收恢复，通过后同任务继续必要兼容与原Windows范围。不重跑B/P/A/D16，不改产品或打包；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
+P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6公开冷入口与R7五组恢复正式要求已通过；R7真实Windows首场景停在日常页面就绪观察，actual=unknown，现场根因未证实。总控核对68项交付，发布P4-B7-R6-MODULE-READY：执行方先以首次空模块列表→后台就绪通知的可控顺序复现，确认后最小修复renderer模块同步，同任务开发回归、新包和真实页面门禁。测试方与顾问停止；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6-E
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | 接受R6冷入口子条件，冻结R7恢复断言合同 | 2026-10-09 09:21 | 既有测试方接单；交付后核对 | [核对与裁定](../p4-c12-r6-env-recovery-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R7有限通过接受，模块就绪执行范围冻结 | 2026-10-12 19:28 | 执行方接单/交付后核对新包 | [裁定](../p4-c12-r7-recovery-windows-coordinator-review.md) |
 | 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
-| 执行智能体 | `review / finished`（R5-LAZY） | 局部隔离/恢复、132回归、新包及19项EXE门禁交付 | 2026-10-02（最终交付已核对） | 停止，等待独立结论 | [运行说明](../b7-r5-lazy-running.md) |
-| 测试智能体 | R6-ENV `blocked / finished`；新R7-RECOVERY `ready / waiting_user`，接单unverified | B通过，恢复具体assert未知；补齐安全比较值并继续恢复 | 2026-10-09 09:21（总控准备） | 新起点→恢复5组→通过后同任务必要兼容/Windows | [任务](prompts/p4-c12-r7-recovery-tester.md) |
+| 执行智能体 | R5 `review / finished`；R6-MODULE-READY `ready / waiting_user`，接单unverified | 可控时序复现→最小renderer修复→开发/新包/页面门禁 | 2026-10-12 19:28（总控准备） | 起点核对和修复前明确红灯 | [任务](prompts/p4-b7-r6-module-ready-executor.md) |
+| 测试智能体 | R7 `blocked / finished` | 恢复通过、Windows页面样本unknown；原证据保留 | 2026-10-12 11:21（交付已核对） | 停止，等待执行方新交付及总控派发 | [报告](../testing/phase-4-c12-r7-recovery-windows-report.md) |
 
-当前唯一新任务是P4-C12-R7-RECOVERY，既有测试方唯一负责人。B四条公开要求已独立通过，不重新启动冷main；恢复5组在一次挂载生命周期执行，每条断言即时保留ID/期望/实际，原R6失败不覆盖。两个旧绝对总数仅对照，固定基线无增长、明确retry增量1及全部安全/业务条件仍为门禁。通过后同任务接必要兼容与未完成Windows；实际运行unverified，顾问和执行保持停止。
+当前唯一新任务是P4-B7-R6-MODULE-READY，由既有执行方负责。实际DesktopApp只在挂载时读取模块、后台随后发布runtime，存在可构造的同步缺口；先以可控顺序证明再修，不将静态可能性写成W1现场根因。已过恢复与B不重复；新包与一次EXE仅在开发门禁通过后启动，真实页面标量必须可解释。测试方与顾问停止，实际接单unverified。
 
 ## 阶段 0 任务状态
 

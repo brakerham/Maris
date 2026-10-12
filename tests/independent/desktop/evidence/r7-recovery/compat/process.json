@@ -1,0 +1,46 @@
+{
+  "productStarts": 0,
+  "forced": false,
+  "durationMs": 8995,
+  "streams": [
+    {
+      "complete": true,
+      "name": "stdout",
+      "rawBytes": 60
+    },
+    {
+      "complete": true,
+      "name": "stderr",
+      "rawBytes": 0
+    }
+  ],
+  "rootExitCode": 0,
+  "timedOut": false,
+  "workers": [
+    {
+      "identityVerified": true,
+      "forced": false,
+      "nativeExitCode": 1,
+      "exited": true,
+      "pid": 29280
+    },
+    {
+      "identityVerified": true,
+      "forced": false,
+      "nativeExitCode": 1,
+      "exited": true,
+      "pid": 23092
+    },
+    {
+      "identityVerified": true,
+      "forced": false,
+      "nativeExitCode": 1,
+      "exited": true,
+      "pid": 21580
+    }
+  ],
+  "rootExited": true,
+  "rootPid": 11284,
+  "scope": "three_compat_files_once",
+  "failure": null
+}

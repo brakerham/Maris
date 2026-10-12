@@ -1,0 +1,67 @@
+{
+  "started": 1791510373251,
+  "ended": 1791510373525,
+  "nodes": [
+    {
+      "file": "r7-recovery-public.test.ts",
+      "name": "R7-PUB-STRICT-top | unknown field rejected",
+      "state": "pass",
+      "durationMs": 4.580299999999994,
+      "errors": []
+    },
+    {
+      "file": "r7-recovery-public.test.ts",
+      "name": "R7-PUB-STRICT-navigation | unknown field rejected",
+      "state": "pass",
+      "durationMs": 0.6828000000000145,
+      "errors": []
+    },
+    {
+      "file": "r7-recovery-public.test.ts",
+      "name": "R7-PUB-STRICT-route | unknown field rejected",
+      "state": "pass",
+      "durationMs": 0.5313999999999908,
+      "errors": []
+    },
+    {
+      "file": "r7-recovery-public.test.ts",
+      "name": "R7-PUB-STRICT-agentPanel | unknown field rejected",
+      "state": "pass",
+      "durationMs": 0.6616999999999962,
+      "errors": []
+    },
+    {
+      "file": "r7-recovery-public.test.ts",
+      "name": "R7-PUB-STRICT-setting | unknown field rejected",
+      "state": "pass",
+      "durationMs": 1.419399999999996,
+      "errors": []
+    },
+    {
+      "file": "r7-recovery-public.test.ts",
+      "name": "R7-PUB-STRICT-companion | unknown field rejected",
+      "state": "pass",
+      "durationMs": 0.4496000000000038,
+      "errors": []
+    },
+    {
+      "file": "r7-recovery-public.test.ts",
+      "name": "R7-PUB-REQUIRED | missing structural fields rejected",
+      "state": "pass",
+      "durationMs": 0.8719999999999857,
+      "errors": []
+    },
+    {
+      "file": "r7-recovery-public.test.ts",
+      "name": "R7-PUB-SHAPE | empty required arrays and malformed structural scalars rejected",
+      "state": "pass",
+      "durationMs": 0.8242999999999938,
+      "errors": []
+    }
+  ],
+  "total": 8,
+  "passed": 8,
+  "failed": 0,
+  "moduleErrors": 0,
+  "unhandled": 0
+}

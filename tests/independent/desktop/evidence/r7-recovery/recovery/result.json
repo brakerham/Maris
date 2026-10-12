@@ -1,0 +1,88 @@
+{
+  "startTime": 1791509879739,
+  "endTime": 1791509906228,
+  "numTotalTests": 1,
+  "numPassedTests": 1,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "moduleErrorCount": 0,
+  "unhandledErrorCount": 0,
+  "nodes": [
+    {
+      "name": "R7-RECOVERY-01 | explicit recovery, navigation and state through real DesktopApp",
+      "status": "passed",
+      "durationMs": 4702.529599999998,
+      "errorCount": 0,
+      "errors": []
+    }
+  ],
+  "data": "virtual_only",
+  "rawExceptionTextRecorded": false,
+  "firstFormalFailure": null,
+  "cleanupFailures": [],
+  "operationFailures": [],
+  "legacyComparisons": [
+    {
+      "seq": 34,
+      "elapsedMs": 24495.6196,
+      "stage": "assert_fail",
+      "pid": 18984,
+      "parentPid": 17700,
+      "id": "legacy_initial_exact_1",
+      "group": 1,
+      "operation": 5,
+      "assertion": 4,
+      "operator": "eq",
+      "kind": "legacy",
+      "expected": 1,
+      "actual": 2
+    },
+    {
+      "seq": 110,
+      "elapsedMs": 24707.3972,
+      "stage": "assert_fail",
+      "pid": 18984,
+      "parentPid": 17700,
+      "id": "legacy_first_retry_total_2",
+      "group": 2,
+      "operation": 11,
+      "assertion": 35,
+      "operator": "eq",
+      "kind": "legacy",
+      "expected": 2,
+      "actual": 3
+    }
+  ],
+  "groupsEntered": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "groupsPassed": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "recorderSelftest": {
+    "seq": 16,
+    "elapsedMs": 21050.0407,
+    "stage": "recorder_selftest_result",
+    "pid": 18984,
+    "parentPid": 17700,
+    "passed": true,
+    "differentSaved": true,
+    "booleanSaved": true,
+    "rejected": true,
+    "noRawField": true
+  },
+  "assertionRecords": {
+    "entered": 212,
+    "terminal": 212,
+    "complete": true
+  },
+  "journalReadable": true
+}

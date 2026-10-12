@@ -295,6 +295,16 @@
 - UI-02仅初始隔离子条件新通过；恢复、真实chunk/session及其余设备要求未闭环，不关闭LAZY-001，不把原failed改为整项passed。SEC-08新增虚拟持续故障DOM/console安全部分证据；其他B整项状态保持。
 - B仍0 passed/1 failed/19 blocked/4 not_run；A/C/D及原预期保持。产品0/8、辅助0/4，四登记PID已退出，worker自身exit code/历史系统状态未核实；blocked / finished，交总控review。
 
+#### P4-C12-R7-RECOVERY 测试增量（2026-10-12）
+
+[R7报告](phase-4-c12-r7-recovery-windows-report.md)与[终点审计](../../tests/independent/desktop/evidence/r7-recovery/end-audit.json)：新恢复1节点5组/208正式比较通过；两旧总数对照不同仅单列，旧R6 failed不倒写；补充strict注册结构8 passed，必要开发兼容10 passed单列。R6公开B只读复用。
+
+Windows固定EXE W1首次13比较passed/1观察failed，首ID W1-DAILY-PAGE expected=true、actual=unknown，5秒页面等待未返回；managed online/认证和canonical模块已有实际证据，UI初读与终态未完整记录，产品根因/严重级别待定。UI-02正式关闭仍需总控接受及真实设备条件，不自行改变原failed整项。
+
+SEC-01/02/03新增主/毛毛实际窄bridge、Node能力隔离、CSP inline与未知新窗拒绝；SUP-01/02新增owned过程及loopback现场部分证据；这些不补签全项。UI-04新增6处额外字段及必需/非法结构8独立节点；UI-03及其他未到达公开缺口保持。产品1/8、safeStorage辅助0/4、chunk注入0；首错后8登记进程/监听清零，强制收口不是SUP-05/Tray普通退出通过。原生老化、真实session、单实例/关闭、注销/启动项/多屏/OS主题仍未验证。
+
+B继续0 passed、1 failed、19 blocked、4 not_run；120 ID/12列/原预期及A/C/D不变。首次证据永久保留，blocked / finished交总控review，不自动重跑。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复
