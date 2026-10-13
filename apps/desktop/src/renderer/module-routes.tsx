@@ -1,6 +1,6 @@
-import { Component, createContext, useContext, useEffect, useMemo, useRef, useState, type ComponentProps, type ComponentType, type ReactNode } from "react";
+import { Component, createContext, useContext, useEffect, useRef, useState, type ComponentProps, type ComponentType, type ReactNode } from "react";
 import { createHashRouter, Navigate, RouterProvider, useLoaderData, useRevalidator, type RouteObject } from "react-router";
-import { intersectModules, type DesktopModuleContribution, type HostModuleSummary } from "../modules/registry";
+import { intersectModules, type DesktopModuleContribution } from "../modules/registry";
 import { EmptyModulePage, RouteErrorBoundary, SettingsPage, Shell } from "../shell/Shell";
 import type { RuntimeSnapshot, Theme } from "../shared/contracts";
 
@@ -86,9 +86,9 @@ function ConnectedShell() {
   return <Shell {...state} />;
 }
 
-function ModuleIndex() {
-  const state = useContext(ShellStateContext);
-  const firstPath = state?.modules[0]?.routes[0]?.path;
+function ModuleIndex({ modules }: Readonly<{ modules: readonly DesktopModuleContribution[] }>) {
+  // The index belongs to this router's route set, not a newer Shell context.
+  const firstPath = modules[0]?.routes[0]?.path;
   return firstPath ? <Navigate to={firstPath} replace /> : <EmptyModulePage />;
 }
 
@@ -96,39 +96,79 @@ export function DesktopApp({ registry, loaders = builtinPageLoaders }: Readonly<
   registry: readonly DesktopModuleContribution[]; loaders?: ModulePageLoaders;
 }>) {
   const [runtime, setRuntime] = useState<RuntimeSnapshot>({ state: "stopped", mode: "managed", authenticated: false, errorCode: null });
-  const [hostModules, setHostModules] = useState<readonly HostModuleSummary[] | null>(null);
+  const [modules, setModules] = useState<readonly DesktopModuleContribution[] | null>(null);
   const [theme, setTheme] = useState<Theme>("system");
   const [privacyMode, setPrivacyMode] = useState(false);
-  const [router, setRouter] = useState<ReturnType<typeof createHashRouter> | null>(null);
+  const [router, setRouter] = useState<{ instance: ReturnType<typeof createHashRouter>; revision: number } | null>(null);
 
   useEffect(() => {
     let active = true;
-    void window.maris.runtime.getSnapshot().then((value) => { if (active) setRuntime(value); });
-    void window.maris.modules.list().then((value) => { if (active) setHostModules(value); });
-    const unsubscribe = window.maris.runtime.subscribe((value) => { if (active) setRuntime(value); });
+    let notifications = 0;
+    let requested = 0;
+    let reading = false;
+    const readModules = async () => {
+      if (!active || reading) return;
+      reading = true;
+      const generation = requested;
+      try {
+        const summaries = await window.maris.modules.list();
+        if (active && generation === requested) {
+          const next = intersectModules(registry, summaries);
+          // Contribution identity/order is the actual route contract. Fresh or
+          // irrelevant Host summaries must not reset a route or retry its page.
+          setModules((current) => current?.length === next.length && current.every((item, index) => item === next[index]) ? current : next);
+        }
+      } catch {
+        // No raw bridge error enters the DOM/logs; retain a working intersection.
+        if (active && generation === requested) setModules((current) => current ?? []);
+      } finally {
+        reading = false;
+        // Only an intervening ready notification can request another read.
+        if (active && generation !== requested) void readModules();
+      }
+    };
+    const requestModules = () => { requested++; void readModules(); };
+    const unsubscribe = window.maris.runtime.subscribe((value) => {
+      if (!active) return;
+      notifications++;
+      setRuntime(value);
+      // Composition can publish equal fields before and after assigning modules.
+      // Offline observation alone must not clear a usable route or query again.
+      if (value.state === "online" && value.authenticated) requestModules();
+    });
+    void (async () => {
+      try {
+        const value = await window.maris.runtime.getSnapshot();
+        if (active && notifications === 0) setRuntime(value);
+      } catch { /* A later subscription notification remains authoritative. */ }
+    })();
+    if (requested === 0) requestModules();
     return () => { active = false; unsubscribe(); };
-  }, []);
+  }, [registry]);
 
-  const modules = useMemo(() => intersectModules(registry, hostModules ?? []), [registry, hostModules]);
   useEffect(() => {
-    if (hostModules === null) return;
+    if (modules === null) return;
     const next = createHashRouter([{
       path: "/", element: <ConnectedShell />, errorElement: <RouteErrorBoundary />,
       hydrateFallbackElement: <ConnectedShell />,
       children: [
-        { index: true, element: <ModuleIndex /> },
+        { index: true, element: <ModuleIndex modules={modules} /> },
         ...createModuleRoutes(modules, loaders),
-        { path: "settings", element: <SettingsPage /> }
+        { path: "settings", element: <SettingsPage /> },
+        // A previously selected module may leave the effective intersection.
+        { path: "*", element: <EmptyModulePage /> }
       ]
     }]);
-    setRouter(next);
+    // RouterProvider retains match/loader state; a different route set needs a
+    // fresh provider. Equal intersections never reach this effect.
+    setRouter((current) => ({ instance: next, revision: (current?.revision ?? 0) + 1 }));
     return () => { next.dispose(); };
-  }, [modules, loaders, hostModules]);
+  }, [modules, loaders]);
 
-  const state: ShellState = { modules, runtime, theme, privacyMode,
+  const state: ShellState = { modules: modules ?? [], runtime, theme, privacyMode,
     onTheme: (value) => { setTheme(value); void window.maris.settings.update({ theme: value }); },
     onPrivacy: (value) => { setPrivacyMode(value); void window.maris.settings.update({ privacyMode: value }); } };
   return <ShellStateContext.Provider value={state}>
-    {router ? <RouterProvider router={router} /> : <p role="status">正在打开页面</p>}
+    {router ? <RouterProvider key={router.revision} router={router.instance} /> : <p role="status">正在打开页面</p>}
   </ShellStateContext.Provider>;
 }

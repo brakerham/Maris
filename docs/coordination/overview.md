@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-12 19:28，Asia/Shanghai
+更新时间：2026-10-13 13:43，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6公开冷入口与R7五组恢复正式要求已通过；R7真实Windows首场景停在日常页面就绪观察，actual=unknown，现场根因未证实。总控核对68项交付，发布P4-B7-R6-MODULE-READY：执行方先以首次空模块列表→后台就绪通知的可控顺序复现，确认后最小修复renderer模块同步，同任务开发回归、新包和真实页面门禁。测试方与顾问停止；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
+P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6公开冷入口与R7恢复正式要求保留通过证据；Windows W1旧页面观察根因仍未知。P4-B7-R6-MODULE-READY已交review/finished，5文件修复、150开发测试、新包与22项EXE门禁核对后接受为独立输入。发布P4-C12-R8-MODULES，由既有测试方独立验证模块同步和最小邻接行为，随后同任务继续剩余Windows条件；执行方与顾问停止。LAZY-001/UI-02/P4-B仍未关闭，P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R7有限通过接受，模块就绪执行范围冻结 | 2026-10-12 19:28 | 执行方接单/交付后核对新包 | [裁定](../p4-c12-r7-recovery-windows-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R6交付核对，R8独立任务冻结 | 2026-10-13 13:43 | 既有测试方接单 | [核对](../p4-b7-r6-module-ready-coordinator-review.md) |
 | 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
-| 执行智能体 | R5 `review / finished`；R6-MODULE-READY `ready / waiting_user`，接单unverified | 可控时序复现→最小renderer修复→开发/新包/页面门禁 | 2026-10-12 19:28（总控准备） | 起点核对和修复前明确红灯 | [任务](prompts/p4-b7-r6-module-ready-executor.md) |
-| 测试智能体 | R7 `blocked / finished` | 恢复通过、Windows页面样本unknown；原证据保留 | 2026-10-12 11:21（交付已核对） | 停止，等待执行方新交付及总控派发 | [报告](../testing/phase-4-c12-r7-recovery-windows-report.md) |
+| 执行智能体 | R6-MODULE-READY `review / finished` | 修复及150开发、新包/EXE22门禁完成，停止 | 2026-10-13 08:15（交付） | 等待独立结论，不修改产品 | [运行说明](../b7-r6-module-ready-running.md) |
+| 测试智能体 | R7 `blocked / finished`；R8 `ready / waiting_user` | R7历史不改，R8独立模块同步与Windows任务就绪 | 2026-10-13 13:43（总控准备） | 复算新起点并登记接单；实际接单unverified | [任务](prompts/p4-c12-r8-modules-windows-tester.md) |
 
-当前唯一新任务是P4-B7-R6-MODULE-READY，由既有执行方负责。实际DesktopApp只在挂载时读取模块、后台随后发布runtime，存在可构造的同步缺口；先以可控顺序证明再修，不将静态可能性写成W1现场根因。已过恢复与B不重复；新包与一次EXE仅在开发门禁通过后启动，真实页面标量必须可解释。测试方与顾问停止，实际接单unverified。
+当前唯一新任务是P4-C12-R8-MODULES，由既有测试方负责，实际接单unverified。先独立模块同步/最小邻接与必要兼容，通过后同任务新包Windows续验；原B/R7完整集合不重复。具体工具或人工条件不可用不冒充产品失败或通过，已计划无依赖场景可以继续；实际失败及安全/资源门禁保持。执行方和顾问停止，真实前端提醒保留。
 
 ## 阶段 0 任务状态
 
@@ -116,6 +116,8 @@ P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6�
 | P4-B7-R4-ROUTE：路径冲突返修 | 既有执行智能体 | 路径独立接受，旧执行finished | C12-R3原节点及9边界通过，PATH-001关闭；UI-04尚有缺口 | [核对](../p4-c12-r3-lazy-blocked-coordinator-review.md) |
 | P4-C12-R3：路径复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | path关闭，新LAZY-001；独立27passed/1failed，兼容52passed | [报告](../testing/phase-4-c12-r3-route-windows-report.md) |
 | P4-B7-R5-LAZY：模块错误局部恢复 | 既有执行智能体 | `review / finished` | 稳定独立输入接受；132开发回归、新包及19项EXE门禁已核对 | [核对](../p4-b7-r5-lazy-coordinator-review.md) |
+| P4-B7-R6-MODULE-READY：后台就绪后模块同步 | 既有执行智能体 | `review / finished` | 5文件、150开发及新EXE22项核对，接受为独立输入 | [核对](../p4-b7-r6-module-ready-coordinator-review.md) |
+| P4-C12-R8-MODULES：模块同步及Windows续验 | 既有测试智能体 | `ready / waiting_user` | 固定新包，模块独立边界/最小邻接后继续设备条件 | [任务](prompts/p4-c12-r8-modules-windows-tester.md) |
 | P4-C12-R4：lazy复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | 原节点0pass/1fail；故障命中未证实，未新增产品缺陷，Windows0次 | [报告](../testing/phase-4-c12-r4-lazy-windows-report.md) |
 | P4-C12-R4-R1：观察与续跑 | 既有测试智能体 | `blocked / finished` | mock1、#/daily、5016ms无alert；异常终态未定位 | [报告](../testing/phase-4-c12-r4-r1-observation-windows-report.md) |
 | P4-D15：异常传播有限诊断 | 既有技术顾问 | `blocked / finished` | import/默认loader拒绝成立；P3超时无阶段回执，原证据保留 | [报告](../phase-4-d15-lazy-propagation-advice.md)、[总控核对](../p4-d15-bootstrap-coordinator-review.md) |

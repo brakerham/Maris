@@ -1,24 +1,78 @@
 # 执行智能体状态
 
 - 角色：代码实现、自测、集成和执行子任务管理
-- 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R5-LAZY — 模块页面故障局部隔离与可控恢复
+- 连接状态：已确认；本次执行已停止
+- 当前任务：P4-B7-R6-MODULE-READY — 后台就绪后的模块与页面同步
 - 状态：review / finished
-- 最近更新：2026-10-02 23:11，Asia/Shanghai
-- 可修改范围：renderer/main.tsx、shell/Shell.tsx、必要产品 module-routes.tsx、新 lazy-isolation 测试、原 shell 测试必要追加、R5说明/source清单与本日志。
+- 最近更新：2026-10-13 08:15:14，Asia/Shanghai
+- 可修改范围：module-routes.tsx、新module-readiness.test.tsx、新R6运行说明/source清单、本人executor日志；仅5个仓库文件。
 
 ## 当前执行快照
 
 - 运行状态：finished
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
-- 步骤开始时间：2026-10-02 23:11，Asia/Shanghai
-- 最近有效进展：15files/132passed；static7/7，EXE19/19自然exit0；新旧逐文件复算通过，0owned残留
-- 最近心跳：2026-10-02 23:11，Asia/Shanghai
-- 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
-- 等待对象：总控稳定快照核对；独立验收未启动，其他角色在线状态unverified
-- 活动进程或会话：无自有产品/服务/测试会话；新根C:\MarisLazyR5\R5-20261002-222300产物/profile/证据保留
-- 重试次数：红灯/定向调试首次结果保留；package1/1、EXE1/1成功，无目标重跑
-- 最近输出：docs/b7-r5-lazy-running.md、apps/desktop/b7-r5-lazy-source.sha256、外部evidence/closeout.json
+- 当前步骤：实现、开发验证、唯一新包/EXE和资源审计完成，提交固定交付供总控review
+- 步骤开始时间：2026-10-13 08:10:42，Asia/Shanghai
+- 最近有效进展：开发28定向/150完整、静态7/7、新EXE22/22；正常exit0/owned资源0；旧R5/R7前后匹配
+- 最近心跳：2026-10-13 08:15:14，Asia/Shanghai
+- 下一检查点：总控核对R6运行说明、5文件及814项source快照；本执行方不启动后续角色/任务
+- 等待对象：无执行依赖；总控后续活动unverified
+- 活动进程或会话：无；开发、package、EXE63950、最终审计83028均exit0；验证临时目录已清理
+- 尝试预算：package1/1、EXE1/1、完整desktop回归1/1；均已用完，不追加运行
+- 最近输出：[R6运行说明](../../b7-r6-module-ready-running.md)、[814项source清单](../../../apps/desktop/b7-r6-module-ready-source.sha256)；外部evidence/inputs/closeout.json和delivery-five.sha256给出最终总摘要/逐文件摘要
+
+### 2026-10-13 08:15:14 — R6交付 review / finished
+
+- 先812/812原字节起点门禁；中断恢复只接受executor授权日志变化。最终812中810不变，module-routes与本人日志2授权变化；新测试/运行说明/source3新增，交付5文件。
+- 可控初空→两个相同online/authenticated通知在原产品红灯2failed；red2仅补安全标量仍2failed。修复后普通modules3/loader1、Strict modules4/loader2，真实daily导航/页面及Shell/Agent均true。旧R7 W1根因仍unverified。
+- 新测试18项；directed26passed，补充directed2为27passed/1failed（移除当前模块旧页面残留，非审查推测的Shell消失）。允许renderer内修复后directed3为28passed/0failed/0skip；TypeScript/lint通过。唯一full16files/150passed/0failed/0skip，原132断言保持。
+- package1/1 5736ms exit0；静态7/7、资源67/out140/asar11、fuses固定、污染/staging0，实际renderer及asar绑定新修复。完整813构建输入冻结，最终814source增加本说明而不回写旧构建。
+- 新EXE1/1，08:07:37.106—08:08:14.239+08，37133ms；原19+3真实UI门禁22/22。后台managed在线认证/canonical Profile、真实daily-title可见、Shell/导航/Agent、唯一recover、设置hash/theme/privacy保持、切回daily页面均有分列证据。
+- 选择既有R5 30000ms E2E退出，所有页面断言于21354ms内完成；25秒页面截止、5秒观察上限，driver冻结SHA679580c6b209256746e2a0efef80004611edbea656c01badd1b8385d77bc604b。内部只读执行辅助4项观察意见已于启动前集成；无辅助写入/测试/产品操作。
+- 正常exit0、signalnull、无timeout/forcedcleanup；owned进程/监听/窗口全0，2个Python后代退出。新profile62文件保留。EXEconsole/pageerror/crash/EventWindow异常0；原生stderr100bytes含CDP身份，仅外部留存。
+- 旧R5 source389/deps12443/full12677/dist73/out140/evidence60/profile62、旧R7外部64文件前后匹配；R7仓库独立材料受812起点不变性覆盖。只清理已验证绝对路径/无链接的新tests/tmp110个临时文件，所有产物/虚拟profile/证据保留。
+- 首次失败/警告均写运行说明；工具JS模板两次解析错误未执行目标；复制参数一次纠正及exit推断作废保留；额度审批中断恢复不计持续工作；Git ignore权限/LF→CRLF提示不改变原字节摘要。
+- 没有Git写操作、独立测试执行/修改、旧EXE/B/R7恢复重跑、真实provider/个人数据、Docker/OpenClaw/微信操作或用户点击要求；没有启动测试方/顾问/P4-C/D/下一任务。UI-01/UI-02/LAZY-001/P4-B仍交总控与独立流程判断，不冒称验收complete。
+- 逐文件和总摘要由停止编辑后的生成器写外部closeout及5文件清单；source排除自身避免循环。执行方现在停止。
+### 2026-10-13 08:06 — 唯一新包通过
+
+- package1/1：08:02:55.789—08:03:01.525+08，5736ms exit0；stderr0，实际Forge使用固定Node/pnpm/LOCALZIP。
+- 静态7/7，资源67、out140/386495405bytes、asar11files、production fuses一致、污染0/staging0。新EXE4ef5bce604fc61fc2b815300edee8a29ab593083d308e849445c6c97235c5f1e；asar5eb153002f4c48ce704f1d0f90b3bf441d5edf3799ea5fe4428f706aee7c69db；renderer fe85f460874450cbfd65a511818be1d18032e94179ff9f6fa0aa8e0eb691b453。
+- source/copy/实际asar renderer绑定通过；固定813构建输入无改动。旧R5 389/12443/full12677/73/140/60/profile62均通过打包前核对。
+- 新EXE仍0/1：选择既有R5 30000ms正常退出链路，所有页面断言deadline25000ms、就绪后每阶段观察<=5000ms。独立字段标量与unknown区分，event与details.stage分离，首次失败后仅有界只读观察和身份清理。driver启动前冻结。
+- 自有driver编写时两次functions JS模板解析错误发生于工具调用前、无文件或产品执行；已留会话原始错误。静态完善不消耗目标预算。
+### 2026-10-13 08:00 — 开发门禁通过，冻结构建输入
+
+- directed3为28passed/0failed/0skip；最终TypeScript/lint exit0。唯一full为16files/150passed/0failed/0skip，原132+新18，未改旧断言/测试。
+- 先写UI-01/UI-02/时序/状态保持映射。新构建source813，SHA256 05677054bf73b1a40c60a844f7cad99cc2654bf638ea3798a2081d04212851b4；最终交付source预计814，日志与运行说明变化单列。
+- 活动会话17101正在只读核验旧R5 source/deps/dist/out/evidence/虚拟profile和新输入。下一检查点为prepackage完整结果；可能超过五分钟，保留输出/会话。package0/1、EXE0/1。
+### 2026-10-13 07:56 — 审批恢复与真实交集变化补证
+
+- 中断前原实现red/red2普通与Strict各2failed；red首版JSON reporter未保留console标量，red2仅补日志、产品未改，首次证据均保留。修复后directed26passed、类型/lint exit0。
+- 00:43左右自动审批额度导致同步/direct​ed2未执行；07:54用户继续后审批已恢复、实际运行，间隔不计持续工作。
+- directed2为27passed/1failed、0skip：Strict同集合失败页面不自动retry通过；当前模块被移除时导航false而dailyPage仍true、Shell/Agent仍true。内部只读辅助此前提出潜在Shell消失仅是假设，实际证据明确不同，不据此认定旧W1根因或新增独立缺陷。
+- 在授权renderer内对真实交集变更重建RouterProvider并为已移除路由提供Shell内部空页；相同交集引用稳定，不进入重建。准备directed3验证；完整开发/package/EXE仍0次。
+- 下一检查点：18新增+10原定向、类型/lint；通过后唯一完整开发回归。无活动产品/服务；外部辅助停止、未启动独立验收。
+### 2026-10-13 00:21:21 — R6中断后恢复
+
+- control仍2026-10-12T19:28:42+08:00；811起点原字节不变，唯一授权变化executor接单日志；新测试/C根尚未创建，package0/1、EXE0/1。中断时段未连续观测，不计持续运行。
+- 前次内部只读辅助任务未收到结果，本次会话树已无该agent；不使用未验证结论，无辅助写入或动态操作证据。主执行继续负责所有编辑/目标操作。
+- 计划新根C:\MarisModulesR6\R6-20261013-002100，复制与完整摘要可能超过五分钟，下一检查点为普通文件/无链接/旧R5源与产物/固定工具绑定。
+
+### 2026-10-13 00:29:43 — 普通副本核验和内部只读审查
+
+- source812、冻结deps12443/full12677、dist73、tools3、lock全部匹配；与旧R5普通依赖0差异，复制与核验已exit0。
+- 首次复制/LOG参数错误在目标启动前修正一次；原生exit未捕获，人工记录16为推断已用clarification明确作废，观察外层exit1/原生>=8。只读CIM沙箱查询拒绝未影响执行，未据此操作其他进程。
+- 内部执行辅助r6_execution_readonly完成只读分析并停止，无编辑/测试/外部操作。建议先订阅、仅online且authenticated通知触发读取、同值通知不去重、单飞代次保护、有效交集引用稳定；主执行独立集成，不作独立验收。
+- 首次回归使用真实composition的先认证后模块赋值通知顺序；普通与StrictMode，清晰记录初读空、后台enabled、页面exists/hash；产品源码尚未修改，package0/1、EXE0/1。
+
+### 2026-10-12 19:56:46 — P4-B7-R6-MODULE-READY 接单
+
+- control版本2026-10-12T19:28:42+08:00；起点812项全匹配，UTF8无BOM/LF/ordinal排序，staged0；原.claude/.pnpm-store不改。
+- 任务仅5文件；保留R5局部错误/明确retry、原132开发断言；不运行独立冷入口B、R7恢复集合或旧EXE。真实后台结果与DOM结果分别记录。
+- 固定只读来源R5，新专属C根普通复制；不安装/下载/改永久环境；package/EXE各1仅在前置门禁通过后执行。
+- 先证明首次空模块后通知可复现，再最小renderer修复；同值runtime通知、过期回包、并发合并、相同集合router稳定、拒绝/卸载与交集均纳入开发范围。
+- 只读探查曾猜错composition-root路径，未运行产品；已按总控链接定位electron/main/composition-root.ts。首次命令记录保留，后续按实际路径读取。
+- 不启动测试方/顾问/后续任务，不改独立证据、报告、矩阵、control或其他角色，不执行Git写操作。最终仅review/finished或blocked/finished。
 
 ### 2026-10-02 23:11 — P4-B7-R5-LAZY 交付 review / finished
 
@@ -161,7 +215,7 @@
 - 已按 AGENTS 顺序读取项目入口、协调规则、最新 control、本角色状态、完整任务卡、E5-PKG-FINAL 总控核对/运行说明、旧最终 EXE 门禁与 E5-FINAL 运行说明。
 - 固定起点清单 270 entries、270 matched、0 missing/mismatch，清单普通 SHA-256 `d5eda74cd1e1eb25f2daf774a8a2aae4604380479a84e2e2704bf40dbccc4edf`；Git index staged paths=0。
 - 既有 C 盘输入初检：旧 evidence 58/58、manifest SHA-256 `072127d72a6d444452b1bbb52f72a33613387954aa8e561c1fa7506b83d6ec4a`；lock `5ddc0a93...cb4a`；Electron dist 73 files；官方 ZIP 158184819 bytes、SHA-256 `11c39582...cb5d`；任务根进程/监听均为 0。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 
 ### 2026-10-01 12:39 Asia/Shanghai — LOCALZIP 实现、自测与唯一 package 长操作检查点
 
@@ -512,7 +566,7 @@
 - 固定工具：官方 Node 24.21.0 ZIP SHA-256 `158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541`；npm registry 元数据确认 pnpm 12.7.0 tarball SHA-1 `2734f196debfb5e42276568a1c9fc57a058263e0`、registry SHA-512 与本地相同；官方 Electron 44.4.5 ZIP 为 158,184,819 bytes、SHA-256 `11c395820a5aaa8ebcc0686b476d0ac98a730274ebfbdc8cf5538a7c2815cb5d`；frozen Playwright 为 1.63.0。
 - 安装与内容：仓库和 C 盘 lock 均为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`；Electron dist 为 73 文件，清单 SHA-256 `ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f`；同一最小 fixture 为 3 文件，清单 SHA-256 `80e74627c3d2225567305e1ce425042b98598b0083556055276860a9ec0257bf`。
 - 证据：任务根与 dist ACL 均为继承规则、未启用 ACL protection；Electron executable、官方 archive 和三个 fixture 文件均只有默认 `:$DATA` stream；路径长度、Windows/display 摘要、脱敏参数与来源已写入 C 盘受限 evidence。原始 owner/ACL 只留在 C 盘，不写入仓库报告。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 
 ### 2026-09-28 09:42 Asia/Shanghai — E3 A1 direct 通过
 
@@ -593,7 +647,7 @@
 - 起点证据：`p4-b7-r1-h1-r1-start.sha256` 为 209 matched、0 mismatch、0 missing，自身 SHA-256 `cd77aa32af97f6a3b894d05a563583c745c3090b49cea7d47737a5fc697fcbe7`；旧 H1 source 为 198 matched、0 mismatch、0 missing，自身 SHA-256 `9e152288b5b1aaa2cb2fa979c877de617c8cdead08680e3d85430fb0b066f32e`。
 - 固定摘要：H1 报告为 `f11c99898c08565d9c0596b6c79853465cc034a39f3703923c7d05d992cc147d`；`pnpm-lock.yaml` 为 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`。
 - 环境门禁：相关 Electron、Maris、项目 sidecar 进程为 0；根和 desktop `node_modules`、`.maris-staging` 均不存在。没有启动、停止或清理用户其他进程。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 - 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
 
 ### 2026-09-28 00:32 Asia/Shanghai — P4-B7-R1-H1 提交 review 并停止
@@ -687,7 +741,7 @@
 - 状态：`review / finished`。最新 control `2026-09-28T00:06:00+08:00` 指定执行智能体为 H1 唯一负责人；H1 只做 Python runtime allowlist、确定性 staging、manifest 与静态/单元测试，禁止 Electron/Forge package/app.asar/Maris/sidecar/数据库，E3、P4-C12、技术顾问和测试智能体均停止。
 - 起点证据：`p4-b7-r1-h1-start.sha256` 逐行复算 209 matched、0 mismatch、0 missing，清单 SHA-256 `24dbffd395af61c06a5ac3424163879084d2397576f7da4e4658aadccb1b3921`；E2-R1 source manifest 独立复算 194 matched、0 mismatch、0 missing，摘要 `d4a6619ff0769a6d329739543013c4ab279cca515613fa6d5cef88ea32edf715`。
 - 环境门禁：lock SHA-256 `5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a`；旧任务拥有的 Electron/Maris/project Python 进程为 0，`node_modules=false`、`.maris-staging=false`。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 - 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
 
 ### 2026-09-27 20:44 Asia/Shanghai — P4-B7-R1-E1 接单与恢复门禁
@@ -766,7 +820,7 @@
 - 唯一缺陷：真实 PostgreSQL P3 schema 含合法 P1 expense/正负双分录、P2 paused run/needs-confirmation pending 和 P3 previewed import 时，`p4_host_user_scope` 的逐表 UPDATE 后立即 ALTER 会遇到 pending FK trigger events。
 - 范围：先在执行方测试中独立构造等价虚拟历史并在原 migration 上唯一一次复现失败；随后只修 `p4_host_user_scope.py` 的 PostgreSQL add/backfill/ALTER 顺序，保留 SQLite 分支、单事务、三个 P4 revision 和唯一 head。
 - 禁止范围：不修改/运行 `tests/independent/**`，不修改独立报告/矩阵、其他 migration、产品服务、依赖、冻结/control/overview/其他角色文件，不执行 Git 写操作，不启动外部集成。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 - 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
 
 ### 2026-09-27 11:11 Asia/Shanghai — R3 失败回归就绪与 PostgreSQL 启动前检查点
@@ -801,7 +855,7 @@
 - 状态：`in_progress`；运行状态：`active`。用户已发送 R3-R1 完整任务卡；最新 control `2026-09-27T11:25:00+08:00` 指定既有执行智能体为续跑唯一负责人，测试智能体、技术顾问和 C11-R2 继续停止。
 - 恢复起点：`p4-b6-r3-r1-start.sha256` 共 131 行，自身 SHA-256 为 `5aa1db6c395e745ad1bd96a92a40ece9d69bbdcc837e7234d47d12f3badeb9bb`；按路径、摘要两列逐项复算 131/131 匹配，0 missing、0 mismatch、0 invalid。
 - 现场连续性：保留 R3 已编译的执行方历史回归草稿和 blocked 运行说明；原 migration 仍为起点摘要，禁止 restore、覆盖或改用旧 130 文件清单。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 - 失败门禁：只有得到预期 PostgreSQL `ObjectInUse` / pending-trigger ALTER 失败，且异常路径证明仍为 P3 head、历史事实完整、无部分 `user_id` 列，才允许最小修改 migration；其他结果立即按任务卡停为 blocked。
 - 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
 
@@ -819,7 +873,7 @@
 - 状态：`in_progress`；运行状态：`active`。最新 control `2026-09-27T11:51:00+08:00` 明确派发 E1，并记录总控已验证 Desktop running、Engine Client/Server 29.8.0、Desktop 4.92.0、`desktop-linux` 和项目 Compose 为空；用户已发送 E1 完整任务卡。
 - 固定输入：继续使用 `p4-b6-r3-r1-start.sha256` 的 131 文件；逐项复算 131/131 matched、0 mismatch、0 missing、0 invalid，清单 SHA-256 `5aa1db6c395e745ad1bd96a92a40ece9d69bbdcc837e7234d47d12f3badeb9bb`。
 - 连续性：保留 `test_postgresql_r2.py` 已准备的 P1 双分录、P2 run/pending、P3 import 历史和异常回滚审计；两份旧环境阻塞报告只读保留，不 restore、重写或复制 fixture。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 - 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
 
 ### 2026-09-27 11:58 Asia/Shanghai — E1 Engine 接管与 PostgreSQL 健康里程碑
@@ -891,7 +945,7 @@
 - 起点证据：`p4-b6-r2-s2-t1-start.sha256` 共 103 行，自身普通 SHA-256 为 `b1c4c80d8d5a04e2571b9028e38abc7fb99f912c6b2ffba84d799f466e4d5b18`；逐项复算 103/103 文件，0 missing、0 mismatch。
 - 唯一修改：给 R1 绑定并发用例增加 pytest `monkeypatch`，仅在该用例期间把 `wife_system.api.host_routes.datetime.now(UTC)` 固定为已有 `2026-09-26T02:00:00Z`；保留十分钟 TTL、INSERT barrier、`[200,409]`、replay/revoke/retry 和隐私断言。
 - 禁止范围：不修改 `src/**`、migration、产品时钟/TTL、R2/Finance/P3/独立测试、S2 失败报告、冻结/审查/矩阵/快照、其他角色、依赖或 Git 状态；不启动 C11 或外部集成。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 - 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
 
 ### 2026-09-26 21:32 Asia/Shanghai — T1 PostgreSQL 启动前检查点
@@ -906,7 +960,7 @@
 
 - `docker compose up -d finance-postgres` 在创建项目容器前失败：`dockerDesktopLinuxEngine` 命名管道不存在，Docker API 不可达；因此没有服务被本任务启动。
 - 只读诊断显示当前 context 为 `desktop-linux`、client 29.8.0，且没有 `Docker Desktop` 或 `com.docker.backend` 进程。未启动桌面应用，未修改 context、全局设置、socket、volume 或项目数据。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 - 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
 
 ### 2026-09-26 21:36 Asia/Shanghai — P4-B6-R2-S2-T1 受阻交付
@@ -926,7 +980,7 @@
 - 起点证据：`p4-b6-r2-s2-start.sha256` 共 101 行，自身普通 SHA-256 为 `8e92671370cfbbea33dafec36a5d3e4dfbe6fe734fa8df0ed2caab9288e74969`；逐项复算 101/101 文件，0 missing、0 mismatch。
 - 范围：默认只新增/修改 `tests/host/test_postgresql_r2.py`、S2 运行说明和本日志；若既有共享 PostgreSQL fixture 确实阻塞，才最小修改任务卡列出的三个 fixture 文件。禁止修改产品、migration、依赖、独立测试、冻结/审查/矩阵/快照、其他角色文件或 Git 状态。
 - 环境边界：尚未启动 Docker/PostgreSQL。启动前必须再次读取 control；只允许项目 `finance-postgres`、随机 schema 和虚拟数据，结束普通 `docker compose down` 并确认服务列表为空；禁止删除 volume、prune、修改 Docker 全局设置或触碰 socket 目录。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 - 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
 
 ### 2026-09-26 19:22 Asia/Shanghai — S2 PostgreSQL 启动前检查点
@@ -1514,7 +1568,7 @@
 - 唯一目标：在既有 `p4_host_state` 内增加 run module version、candidate proposal Profile version 和 memory invalidated 状态机；保持三个 P4 revision、单一 head 和所有 R1/R2 安全不变量。
 - 文件边界：只修改任务卡列出的 migration、ORM、application、memory service/factory、指定执行方测试、S1 运行说明和本日志；不修改独立测试、冻结/审查/矩阵/快照、其他角色、依赖或 Git 状态。
 - 外部边界：S1 禁止 Docker/PostgreSQL，不启动服务，不接触 Electron/OpenClaw/微信/DeepSeek、真实 provider、密钥、账户或个人数据。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 - 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
 
 ### 2026-09-26 17:17 Asia/Shanghai — P4-B6-R2-S1 结构实现里程碑
@@ -1523,7 +1577,7 @@
 - 已完成产品实现：`agent_run.module_version` 独立持久化、P0～P3 `1.0.0` 回填及 compiler 双版本比较；candidate 保存实际 Profile version 并在 confirm 时复查 ID/version/module enablement/grant；memory item 支持 `active -> invalidated -> deleted`，包含 version CAS、同事务 receipt、提交后脱敏事件与 supersede 竞争边界。
 - 已完成测试实现：SQLite migration 对字段 non-null/长度/status check/历史回填增加断言；新增合法不同 module/Profile 版本和两种恢复漂移 fail-closed 测试；新增 candidate 四类失效重查、reject、invalidate 重放/冲突/旧版本/检索/隐私/delete 与双向 CAS 竞争覆盖；同步任务卡允许的 PostgreSQL 只读 fixture 文本，但本轮不运行 PostgreSQL。
 - 编译检查：本轮允许范围的产品、migration 与测试文件 `compileall` 退出 0。
-- 当前步骤：实现、自测、一次新包/EXE及资源收口完成；交固定快照review后停止
+- 当前步骤：普通副本摘要通过，运行原实现的普通/StrictMode可控就绪红灯
 - 步骤开始：`2026-09-26 17:17 Asia/Shanghai`；最后进展：`2026-09-26 17:17 Asia/Shanghai`；最后心跳：`2026-09-26 17:17 Asia/Shanghai`。
 - 下一检查点：总控核对7交付/390source固定清单，授权独立复验；执行方不启动其他任务
 

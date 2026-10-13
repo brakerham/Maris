@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6公开冷入口与R7五组恢复正式要求已通过；R7真实Windows首场景停在日常页面就绪观察，actual=unknown，现场根因未证实。总控核对68项交付，发布P4-B7-R6-MODULE-READY：执行方先以首次空模块列表→后台就绪通知的可控顺序复现，确认后最小修复renderer模块同步，同任务开发回归、新包和真实页面门禁。测试方与顾问停止；LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6公开冷入口与R7恢复正式要求保留通过证据；Windows W1旧页面观察根因仍未知。P4-B7-R6-MODULE-READY已交review/finished，5文件修复、150开发测试、新包与22项EXE门禁核对后接受为独立输入。发布P4-C12-R8-MODULES，由既有测试方独立验证模块同步和最小邻接行为，随后同任务继续剩余Windows条件；执行方与顾问停止。LAZY-001/UI-02/P4-B仍未关闭，P4-C/D未开始。
+
+- [模块就绪修复总控核对](docs/p4-b7-r6-module-ready-coordinator-review.md)：接受固定新包为独立输入，不把开发通过计作验收。
+- [R8模块同步与Windows独立任务](docs/coordination/prompts/p4-c12-r8-modules-windows-tester.md)：既有测试方待接单，同任务完成可执行的剩余场景。
 
 - [R7总控核对与模块就绪裁定](docs/p4-c12-r7-recovery-windows-coordinator-review.md)：接受恢复有限通过，保留Windows现场未知范围。
-- [模块就绪最小执行任务](docs/coordination/prompts/p4-b7-r6-module-ready-executor.md)：可控时序先复现再修复，既有执行方待接单。
+- [模块就绪最小执行任务](docs/coordination/prompts/p4-b7-r6-module-ready-executor.md)：已交review/finished，固定新包交R8独立验证。
 
 - [R6总控核对与恢复断言裁定](docs/p4-c12-r6-env-recovery-coordinator-review.md)：接受B的有限结论，恢复失败不猜定产品原因。
 - [R7恢复独立验收任务](docs/coordination/prompts/p4-c12-r7-recovery-tester.md)：blocked/finished；恢复正式门禁通过，Windows首场景受阻，首次证据保留。
