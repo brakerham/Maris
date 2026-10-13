@@ -1,0 +1,99 @@
+{
+  "nodes": [
+    {
+      "id": "R8-01",
+      "state": "pass",
+      "durationMs": 750.1218999999996,
+      "errors": []
+    },
+    {
+      "id": "R8-02",
+      "state": "pass",
+      "durationMs": 297.00999999999976,
+      "errors": []
+    },
+    {
+      "id": "R8-03",
+      "state": "pass",
+      "durationMs": 135.6026999999999,
+      "errors": []
+    },
+    {
+      "id": "R8-04",
+      "state": "pass",
+      "durationMs": 135.6564000000003,
+      "errors": []
+    },
+    {
+      "id": "R8-05",
+      "state": "pass",
+      "durationMs": 148.51340000000027,
+      "errors": []
+    },
+    {
+      "id": "R8-06",
+      "state": "pass",
+      "durationMs": 142.85670000000027,
+      "errors": []
+    },
+    {
+      "id": "R8-07",
+      "state": "pass",
+      "durationMs": 257.34749999999985,
+      "errors": []
+    },
+    {
+      "id": "R8-08",
+      "state": "pass",
+      "durationMs": 168.16039999999975,
+      "errors": []
+    },
+    {
+      "id": "R8-09",
+      "state": "pass",
+      "durationMs": 447.2671999999993,
+      "errors": []
+    },
+    {
+      "id": "R8-10",
+      "state": "fail",
+      "durationMs": 226.6877000000004,
+      "errors": [
+        {
+          "kind": "Error",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "id": "R8-11",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R8-12",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R8-13",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    }
+  ],
+  "passed": 9,
+  "failed": 1,
+  "notRun": 3,
+  "unhandledErrors": 0,
+  "moduleErrors": 0,
+  "firstFailure": null,
+  "formalComparisons": 393,
+  "formalPassed": 393,
+  "entered": 395,
+  "terminal": 395,
+  "journalComplete": true,
+  "paired": true
+}

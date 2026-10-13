@@ -1,0 +1,261 @@
+{
+  "category": "tester_instrumentation_error_after_product_started",
+  "node": "R8-10",
+  "conflictingId": "R8-10.REMOVED.NAV.EXISTS",
+  "basis": "Persisted first NAV assertion followed by completed Shell checks; frozen chrome(REMOVED) next expands the same NAV ID and guard throws before assert_enter. Original Error.message was not retained; classification is source-and-journal reconstruction, not a recovered raw exception.",
+  "priorNavRecords": [
+    {
+      "seq": 914,
+      "event": "assert_enter",
+      "elapsedMs": 5066.7544,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-10.REMOVED.NAV.EXISTS",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": false
+      }
+    },
+    {
+      "seq": 915,
+      "event": "assert_pass",
+      "elapsedMs": 5068.474099999999,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-10.REMOVED.NAV.EXISTS",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": false,
+        "actual": false
+      }
+    }
+  ],
+  "lastBodyRecord": {
+    "seq": 931,
+    "event": "assert_pass",
+    "elapsedMs": 5097.472199999999,
+    "pid": 22216,
+    "parentPid": 30140,
+    "details": {
+      "id": "R8-10.REMOVED.SHELL.CSS_VISIBLE",
+      "kind": "gate",
+      "operator": "eq",
+      "expected": true,
+      "actual": true
+    }
+  },
+  "sourceLines": {
+    "22": "  const aid=`${id}.${name}`; if(used.has(aid))throw Error('r8_duplicate_assertion');used.add(aid);",
+    "48": " s.chrome=(name:string)=>{ui(`${name}.SHELL`,'main.shell');ui(`${name}.NAV`,'nav[aria-label=\"模块导航\"]');ui(`${name}.AGENT`,'aside[aria-label=\"统一 Agent 面板\"]');};",
+    "123": " s.rows=[host('alpha')];await s.emit('ADD_ALPHA');await s.wait('ALPHA',()=>!!s.q('#r8-alpha'));await s.settings('SET');s.rows=[host('beta')];await s.emit('REMOVE_ALPHA_ADD_BETA');await s.wait('REMOVED',()=>!s.q('#r8-alpha')&&!!s.link('beta'));s.ui('REMOVED.PAGE','#r8-alpha',false);s.ui('REMOVED.NAV','nav a[href=\"#/alpha\"]',false);s.ui('ADDED.NAV','nav a[href=\"#/beta\"]');s.chrome('REMOVED');s.state('REMOVED_STATE');s.check('ADDED.NO_PRELOAD',()=>s.count.beta,0);await s.click('OPEN_BETA',s.link('beta'));await s.wait('BETA',()=>!!s.q('#r8-beta'));s.ui('ADDED.PAGE','#r8-beta');",
+    "135": " s.chrome=(name:string)=>s.check(`${name}.EMPTY_ROOT`,()=>s.q('#root')?.childElementCount,0);"
+  },
+  "failureRecordLimitations": [
+    "result.firstFailure=null covers only recorded assert_fail/operation_fail, not every thrown test-helper error",
+    "cleanup_terminal.passed=true indicates recorded comparison flag; it does not override failed test state",
+    "No actual sample for attempted duplicate chrome NAV or later Agent/theme/privacy/beta page checks"
+  ],
+  "retry": 0,
+  "developmentCompatibility": "not_run; independent prerequisite incomplete",
+  "Windows": "not_run; independent prerequisite incomplete",
+  "selectedComparisons": [
+    {
+      "seq": 441,
+      "event": "assert_pass",
+      "elapsedMs": 3943.1551,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-06.READS.BOUNDED",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": 2,
+        "actual": 2
+      }
+    },
+    {
+      "seq": 517,
+      "event": "assert_pass",
+      "elapsedMs": 4097.6924,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-07.READS.COALESCED",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": 2,
+        "actual": 2
+      }
+    },
+    {
+      "seq": 687,
+      "event": "assert_pass",
+      "elapsedMs": 4516.617899999999,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-09.LOADS.POSITIVE_BASE",
+        "kind": "gate",
+        "operator": "positive",
+        "expected": 0,
+        "actual": 2
+      }
+    },
+    {
+      "seq": 729,
+      "event": "assert_pass",
+      "elapsedMs": 4684.5729,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-09.NO_IMPLICIT_LOAD",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": 2,
+        "actual": 2
+      }
+    },
+    {
+      "seq": 751,
+      "event": "assert_pass",
+      "elapsedMs": 4727.9771,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-09.RETRY.EXACT_INCREMENT",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": 1,
+        "actual": 1
+      }
+    },
+    {
+      "seq": 757,
+      "event": "assert_pass",
+      "elapsedMs": 4737.596299999999,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-09.RETRY.SHELL_STABLE",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": true,
+        "actual": true
+      }
+    },
+    {
+      "seq": 759,
+      "event": "assert_pass",
+      "elapsedMs": 4740.8519,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-09.RETRY.SUBSCRIPTIONS_STABLE",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": 2,
+        "actual": 2
+      }
+    },
+    {
+      "seq": 761,
+      "event": "assert_pass",
+      "elapsedMs": 4744.114799999999,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-09.SETTINGS.TWO",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": 2,
+        "actual": 2
+      }
+    },
+    {
+      "seq": 915,
+      "event": "assert_pass",
+      "elapsedMs": 5068.474099999999,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-10.REMOVED.NAV.EXISTS",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": false,
+        "actual": false
+      }
+    },
+    {
+      "seq": 917,
+      "event": "assert_pass",
+      "elapsedMs": 5071.9096,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-10.REMOVED.NAV.COUNT",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "seq": 919,
+      "event": "assert_pass",
+      "elapsedMs": 5075.238899999999,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-10.REMOVED.NAV.CSS_VISIBLE",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": false,
+        "actual": false
+      }
+    },
+    {
+      "seq": 927,
+      "event": "assert_pass",
+      "elapsedMs": 5090.8305,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-10.REMOVED.SHELL.EXISTS",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": true,
+        "actual": true
+      }
+    },
+    {
+      "seq": 929,
+      "event": "assert_pass",
+      "elapsedMs": 5094.3776,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-10.REMOVED.SHELL.COUNT",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": 1,
+        "actual": 1
+      }
+    },
+    {
+      "seq": 931,
+      "event": "assert_pass",
+      "elapsedMs": 5097.472199999999,
+      "pid": 22216,
+      "parentPid": 30140,
+      "details": {
+        "id": "R8-10.REMOVED.SHELL.CSS_VISIBLE",
+        "kind": "gate",
+        "operator": "eq",
+        "expected": true,
+        "actual": true
+      }
+    }
+  ]
+}

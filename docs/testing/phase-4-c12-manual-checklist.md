@@ -137,3 +137,11 @@ ZIP/staging 的附加检查、UI-03/04 冲突与漂移门禁、HostClient/sessio
 - 真实固定EXE首次W1运行，13比较passed/1观察failed；首ID W1-DAILY-PAGE expected=true actual=unknown，5000ms等待没有页面就绪样本。真实后端online/认证/canonical模块、安全窄bridge/CSP部分通过；未取得页面初读模块/终态DOM，根因和产品定级unverified。
 - 产品1/8、辅助0/4、chunk注入0。首错后停止动态扩大，root3448按已验证身份定向收口，8登记进程与监听均无；这是强制清理，不是正常关闭/Tray通过。虚拟加密profile/db仅在本轮C:/MarisC12专属根保留，仓库无原文。
 - 原24项整项状态保持：B0 passed/1 failed/19 blocked/4 not_run；真实session重启、原生老化提示、关闭策略/单实例、OS注销/启动项/多屏/主题等缺口未通过，不要求用户立即操作。R7首次材料和新命名/取证限制详见报告，交付blocked / finished供总控review；不自动复跑或进入后续场景。
+
+
+## P4-C12-R8-MODULES 增量（2026-10-13）
+
+- [R8报告](phase-4-c12-r8-modules-windows-report.md)：提交总控review，blocked / finished。新818起点与R6源码/包/依赖已绑定；独立首次runner9 passed/1 failed/3 not_run，393正式比较passed。R8-10为测试辅助重复断言ID中断（R8-TOOL-ID-001），非新增产品缺陷；部分模块移除观察不代表节点通过。
+- 已取得普通/Strict空列表→同值就绪通知、已就绪启动、晚快照、同步通知、突发合并/旧列表、拒绝保页及同集合retry+1/状态保持证据。旧冷B/完整R7不重跑，旧W1原因仍unverified；jsdom样式可见性与真实Windows分别统计。
+- 目标已进入后不能修后重跑，保留首次源码/日志。后3节点、开发兼容28和Windows均not_run；产品0/8、辅助0/4、chunk0。root30140/worker22216实际exit1、无强杀/超时，真实卸载/退订/global恢复通过。
+- 原24项仍0 passed/1 failed/19 blocked/4 not_run；所有Tray、真实session/同ID重启、老化原生提示、设备条件继续未验证。无新外部profile或OS/用户操作，不请求即时点击；原预期及历史材料保持。

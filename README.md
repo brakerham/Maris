@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R6公开冷入口与R7恢复正式要求保留通过证据；Windows W1旧页面观察根因仍未知。P4-B7-R6-MODULE-READY已交review/finished，5文件修复、150开发测试、新包与22项EXE门禁核对后接受为独立输入。发布P4-C12-R8-MODULES，由既有测试方独立验证模块同步和最小邻接行为，随后同任务继续剩余Windows条件；执行方与顾问停止。LAZY-001/UI-02/P4-B仍未关闭，P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R8模块独立验收已有9个节点通过，第10节点因重复断言ID中断，3个未执行，没有新增产品缺陷证据。发布P4-C12-R8-R1，在新测试副本修正ID与异常记录，仅续验10至13；通过后同任务28项兼容与固定R6新包Windows续验。旧B/完整R7/已过9节点不重复。LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
+
+- [R8工具中断总控裁定](docs/p4-c12-r8-tooling-coordinator-review.md)：保留9节点通过，工具问题不归类产品缺陷。
+- [R8-R1剩余验收任务](docs/coordination/prompts/p4-c12-r8-r1-tooling-resume-tester.md)：既有测试方在新副本续验4节点，满足条件后继续Windows。
 
 - [模块就绪修复总控核对](docs/p4-b7-r6-module-ready-coordinator-review.md)：接受固定新包为独立输入，不把开发通过计作验收。
-- [R8模块同步与Windows独立任务](docs/coordination/prompts/p4-c12-r8-modules-windows-tester.md)：既有测试方待接单，同任务完成可执行的剩余场景。
+- [R8模块同步与Windows独立任务](docs/coordination/prompts/p4-c12-r8-modules-windows-tester.md)：已blocked/finished，首次材料保留，后续以R8-R1为准。
 
 - [R7总控核对与模块就绪裁定](docs/p4-c12-r7-recovery-windows-coordinator-review.md)：接受恢复有限通过，保留Windows现场未知范围。
 - [模块就绪最小执行任务](docs/coordination/prompts/p4-b7-r6-module-ready-executor.md)：已交review/finished，固定新包交R8独立验证。

@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-13T19:24:56.372115+08:00",
+  "entries": 29,
+  "matched": 29,
+  "manifestSha256": "3b91fa7a276ab04c671eb1926adf7ca5c20dd8846cc66aa6615cce3427f34f73",
+  "format": "UTF8 without BOM; sorted full POSIX repository-relative path TAB sha256 LF",
+  "manifestAndReceiptExcludedFromSelfDigest": true,
+  "status": "blocked / finished; delivered for coordinator review",
+  "independent": {
+    "passed": 9,
+    "runnerFailedTesterTool": 1,
+    "notRun": 3,
+    "formalComparisonsPassed": 393
+  },
+  "compatExecuted": 0,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "reruns": 0
+}

@@ -1,0 +1,36 @@
+{
+  "durationMs": 5909,
+  "streams": [
+    {
+      "rawBytes": 55,
+      "name": "stdout",
+      "complete": true
+    },
+    {
+      "rawBytes": 0,
+      "name": "stderr",
+      "complete": true
+    }
+  ],
+  "timedOut": false,
+  "streamsComplete": true,
+  "scope": "independent_modules_13_nodes_once",
+  "stagesObserved": 965,
+  "rootExited": true,
+  "workers": [
+    {
+      "identityVerified": true,
+      "pid": 22216,
+      "nativeExitCode": 1,
+      "exited": true,
+      "forced": false
+    }
+  ],
+  "rootPid": 30140,
+  "failure": null,
+  "productStarts": 0,
+  "cleanupScope": "owned_root_and_registered_workers_only",
+  "helperStarts": 0,
+  "rootExitCode": 1,
+  "forced": false
+}

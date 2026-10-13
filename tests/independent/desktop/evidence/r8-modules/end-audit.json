@@ -1,0 +1,269 @@
+{
+  "at": "2026-10-13T19:24:24.531892+08:00",
+  "inputs": {
+    "start": {
+      "entries": 818,
+      "unchanged": 814,
+      "authorizedChanges": [
+        "docs/coordination/agents/tester.md",
+        "docs/testing/phase-4-c12-manual-checklist.md",
+        "docs/testing/phase-4-c12-windows-shell-report.md",
+        "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+      ],
+      "manifestSha256": "8423b70bbaff05c7b37d888a836ec3f6c880c2a74d07a324b42a0e4c2f407337"
+    },
+    "r6Source": {
+      "entries": 814,
+      "unchanged": 805,
+      "authorizedChanges": [
+        "README.md",
+        "docs/coordination/agents/brainstorm.md",
+        "docs/coordination/agents/tester.md",
+        "docs/coordination/control.md",
+        "docs/coordination/overview.md",
+        "docs/project-coordination.md",
+        "docs/testing/phase-4-c12-manual-checklist.md",
+        "docs/testing/phase-4-c12-windows-shell-report.md",
+        "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+      ],
+      "manifestSha256": "74c6df4829b2f9ce8b0de2b84b748f14cc3dec520ceab234b91113d3a269a68e"
+    },
+    "buildSource": {
+      "entries": 813,
+      "unchanged": 813,
+      "authorizedChanges": [],
+      "manifestSha256": "05677054bf73b1a40c60a844f7cad99cc2654bf638ea3798a2081d04212851b4"
+    },
+    "out": {
+      "entries": 140,
+      "unchanged": 140,
+      "authorizedChanges": [],
+      "manifestSha256": "ebb3521d71bb45d03b692dc0eacda52db540bd722e1aee414c9c025211a28694",
+      "unlistedFiles": [],
+      "separatelyCoveredFiles": [],
+      "missingFiles": []
+    },
+    "resources": {
+      "entries": 67,
+      "unchanged": 67,
+      "authorizedChanges": [],
+      "manifestSha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1",
+      "unlistedFiles": [],
+      "separatelyCoveredFiles": [
+        "app.asar"
+      ],
+      "missingFiles": []
+    },
+    "dependencies": {
+      "entries": 12443,
+      "unchanged": 12443,
+      "authorizedChanges": [],
+      "manifestSha256": "15f5613ce7744083a81c05c68ab06e06b6aa0b6e30f0c9c98ed933d87899e04c"
+    },
+    "dist": {
+      "entries": 73,
+      "unchanged": 73,
+      "authorizedChanges": [],
+      "manifestSha256": "ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f",
+      "unlistedFiles": [],
+      "separatelyCoveredFiles": [],
+      "missingFiles": []
+    },
+    "r7Delivery": {
+      "entries": 68,
+      "unchanged": 64,
+      "authorizedChanges": [
+        "docs/coordination/agents/tester.md",
+        "docs/testing/phase-4-c12-manual-checklist.md",
+        "docs/testing/phase-4-c12-windows-shell-report.md",
+        "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+      ],
+      "manifestSha256": "1357d6c31d7643dc661961ef695b5403da1f3c74c047c99e5378a3252bdbdd0e"
+    }
+  },
+  "fullDependencyCopyAdditionalEndCheck": {
+    "entries": 12677,
+    "unchanged": 12677,
+    "authorizedChanges": [],
+    "manifestSha256": "035c05bffbbf5f297ac098e7fbda16d5bd48cf76a89e4036c3dc35ddb64b3ef8",
+    "unlistedFiles": [],
+    "separatelyCoveredFiles": [],
+    "missingFiles": []
+  },
+  "modules-source.sha256": {
+    "entries": 7,
+    "unchanged": 7,
+    "authorizedChanges": [],
+    "manifestSha256": "2e877d54df1e6012ea8509c873b6e3a4042a9a6c773cdb1e317c9ad61973fecc"
+  },
+  "modules-first.sha256": {
+    "entries": 6,
+    "unchanged": 6,
+    "authorizedChanges": [],
+    "manifestSha256": "24aae3eadf70d792213f29488dbee1f5436fb339ffdd0d32e9a876e3dc365760"
+  },
+  "artifactDigestsMatched": 3,
+  "versionMetadataMatched": 9,
+  "matrix": {
+    "uniqueRows": 120,
+    "columns": 12,
+    "allOriginalRowsUnchanged": true,
+    "outsideBBytesUnchanged": true,
+    "BStates": {
+      "passed": 0,
+      "failed": 1,
+      "blocked": 19,
+      "not_run": 4
+    }
+  },
+  "appendOnlyDocumentPrefixesMatched": 2,
+  "firstResult": {
+    "nodes": [
+      {
+        "id": "R8-01",
+        "state": "pass",
+        "durationMs": 750.1218999999996,
+        "errors": []
+      },
+      {
+        "id": "R8-02",
+        "state": "pass",
+        "durationMs": 297.00999999999976,
+        "errors": []
+      },
+      {
+        "id": "R8-03",
+        "state": "pass",
+        "durationMs": 135.6026999999999,
+        "errors": []
+      },
+      {
+        "id": "R8-04",
+        "state": "pass",
+        "durationMs": 135.6564000000003,
+        "errors": []
+      },
+      {
+        "id": "R8-05",
+        "state": "pass",
+        "durationMs": 148.51340000000027,
+        "errors": []
+      },
+      {
+        "id": "R8-06",
+        "state": "pass",
+        "durationMs": 142.85670000000027,
+        "errors": []
+      },
+      {
+        "id": "R8-07",
+        "state": "pass",
+        "durationMs": 257.34749999999985,
+        "errors": []
+      },
+      {
+        "id": "R8-08",
+        "state": "pass",
+        "durationMs": 168.16039999999975,
+        "errors": []
+      },
+      {
+        "id": "R8-09",
+        "state": "pass",
+        "durationMs": 447.2671999999993,
+        "errors": []
+      },
+      {
+        "id": "R8-10",
+        "state": "fail",
+        "durationMs": 226.6877000000004,
+        "errors": [
+          {
+            "kind": "Error",
+            "timeout": false
+          }
+        ]
+      },
+      {
+        "id": "R8-11",
+        "state": "not_run",
+        "durationMs": null,
+        "errors": []
+      },
+      {
+        "id": "R8-12",
+        "state": "not_run",
+        "durationMs": null,
+        "errors": []
+      },
+      {
+        "id": "R8-13",
+        "state": "not_run",
+        "durationMs": null,
+        "errors": []
+      }
+    ],
+    "formalComparisons": 393,
+    "comparisonPairs": 395,
+    "runtimeProductStarts": 0,
+    "helperStarts": 0,
+    "reruns": 0,
+    "compatibilityExecuted": 0,
+    "firstFailureLabelLimitation": "Helper duplicate-ID exception is outside reporter firstFailure field; original null retained, explained by first-run-analysis.json."
+  },
+  "process": {
+    "durationMs": 5909,
+    "streams": [
+      {
+        "rawBytes": 55,
+        "name": "stdout",
+        "complete": true
+      },
+      {
+        "rawBytes": 0,
+        "name": "stderr",
+        "complete": true
+      }
+    ],
+    "timedOut": false,
+    "streamsComplete": true,
+    "scope": "independent_modules_13_nodes_once",
+    "stagesObserved": 965,
+    "rootExited": true,
+    "workers": [
+      {
+        "identityVerified": true,
+        "pid": 22216,
+        "nativeExitCode": 1,
+        "exited": true,
+        "forced": false
+      }
+    ],
+    "rootPid": 30140,
+    "failure": null,
+    "productStarts": 0,
+    "cleanupScope": "owned_root_and_registered_workers_only",
+    "helperStarts": 0,
+    "rootExitCode": 1,
+    "forced": false
+  },
+  "readOnlyGit": {
+    "staged": {
+      "exitCode": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 84,
+      "warningCategories": [
+        "global_config_permission_denied"
+      ]
+    },
+    "diffCheck": {
+      "exitCode": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 425,
+      "warningCategories": [
+        "line_ending_conversion_warning"
+      ]
+    }
+  },
+  "passed": true
+}

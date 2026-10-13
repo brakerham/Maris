@@ -2,25 +2,27 @@
 
 - 角色：独立测试、边界检查、回归验证
 - 连接状态：已确认；用户启动的既有测试智能体已接单
-- 当前任务：P4-C12-R7-RECOVERY — 恢复逐断言取证与剩余验收
-- 状态：`blocked`
-- 最近更新：2026-10-12 11:21 Asia/Shanghai
-- 可修改范围：仅新增r7-recovery-*、evidence/r7-recovery、新R7报告；自身角色、原报告/清单追加及矩阵B备注/状态；产品/依赖/所有旧材料只读
+- 当前任务：P4-C12-R8-MODULES — 模块同步独立复验与剩余Windows
+- 状态：`blocked`（交付供总控 review）
+- 最近更新：2026-10-13 19:24 Asia/Shanghai
+- 可修改范围：仅新r8-modules-*、evidence/r8-modules、新R8报告；本人状态、旧主报告/清单追加及矩阵B；产品/开发/旧材料/依赖/包只读
 
 ## 当前执行快照
 
 - 运行状态：`finished`
-- 当前步骤：终点审计通过，blocked / finished已交总控review并停止
-- 步骤开始时间：2026-10-12 11:20 Asia/Shanghai
-- 最近有效进展：2026-10-12 11:21 Asia/Shanghai
-- 最近心跳：2026-10-12 11:21 Asia/Shanghai
-- 下一检查点：无；等待总控review，不再执行目标或自动创建后续任务
-- 等待对象：总控审阅W1页面就绪观察、静态时序线索和命名/取证限制
-- 活动进程或会话：无活动测试；Windows登记8进程/监听清零；恢复1/公开1/兼容1 CLI均结束；产品1/8、辅助0/4
+- 当前步骤：R8首次验收/阻塞报告、24项增量与终点审计已交；停止动态与角色派发
+- 步骤开始时间：2026-10-13 19:24 Asia/Shanghai
+- 最近有效进展：2026-10-13 19:24 Asia/Shanghai
+- 最近心跳：2026-10-13 19:24 Asia/Shanghai
+- 下一检查点：无；交付摘要复算后停止，等待总控新授权
+- 等待对象：总控review；需裁定测试ID/辅助异常记录修正与剩余验收，非产品返修
+- 活动进程或会话：本轮CLI1已退出：root30140/worker22216；强杀0；产品0/8、辅助0/4
 - 重试次数：0
-- 最近输出：743起点739保持+4授权文档；120ID/12列/原行/A/C/D保持；68项交付逐项复算通过，staged0/diff-check0
+- 最近输出：独立9passed/1工具中断/3not_run；28兼容和Windows未执行；终点813/140/67/12443/73及完整依赖12677保持
 
 ## 任务与后续
+
+- P4-C12-R8-MODULES交付 [R8增量报告](../../testing/phase-4-c12-r8-modules-windows-report.md)及 [首次结果](../../../tests/independent/desktop/evidence/r8-modules/modules/result.json)：9passed、R8-10测试记录器重复ID中断、3not_run；393正式比较passed但不能覆盖工具失败。28兼容/Windows未执行，产品0/8、辅助0/4。blocked / finished供总控review，首次源码不修后重跑。
 
 - P4-C12-R1交付 [R1报告](../../testing/phase-4-c12-r1-outbox-windows-report.md)、原报告/人工清单追加、P4-B状态及 `tests/independent/desktop/evidence/r1/`；原OUTBOX-001建议关闭，新REGISTRY-001为P1，停在blocked / finished。真实Windows/老化原生提示未执行，不能宣布SUP-06或P4-B通过。
 
@@ -46,6 +48,36 @@
 | r5_public_contract_review | review | finished | 只读合同/新工具静态问题已交付；父任务修正后冻结 | 2026-10-04 00:32 Asia/Shanghai | 无；已停止 | 父任务记录 | evidence/r5-public/subagent-read-only-receipt.json；0写入/目标，不计动态验收 |
 
 ## 工作日志
+
+### 2026-10-13 19:24 Asia/Shanghai — R8 终点审计、阻塞交付与停止
+
+- [报告](../../testing/phase-4-c12-r8-modules-windows-report.md)、原主报告/人工清单追加、B矩阵备注和本轮evidence已齐；120行12列/原预期/A64passed/C20与D12not_run保持，B仍0passed/1历史failed/19blocked/4not_run。没有新增产品缺陷。
+- 终点818=814不变+本角色/矩阵/主报告/清单4项授权；R6source805不变+5总控既有变化+4本轮；R7交付64保持+4共享变化。外部813/140/67/12443/73、完整依赖12677、EXE/asar/lock和9版本元数据全部匹配；冻结7源码/6首次保持，staged0/diff-check0，权限/行尾warning保留。
+- 只读终点初次inventory误把Python67当整个resources目录，另存工具更正后按完整out对asar、完整12677对依赖复核，全部匹配；无目标重跑。重复ID中断本质和reporter null/cleanup true的统计限制已明确，最后脱敏节点Error/timeout=false，定位R8-10.REMOVED.NAV.EXISTS，来源是冻结源码+首次journal重建，原Error.message未留存。
+- 最终CLI1已退出，root30140/worker22216实际exit1，无强杀/超时；10节点真实卸载/退订/global恢复，Windows/辅助0，无新外部profile。唯一后续是总控裁定是否授权测试辅助修正并完成未通过前置与28兼容/Windows；本人不改冻结测试、不启动其他角色或产品、不Git写。交付blocked / finished供review；最终清单刷新复算后停止。
+
+### 2026-10-13 19:15 Asia/Shanghai — R8 首次工具中断与停止动态扩大
+
+- 唯一CLI5909ms，runner9 passed/1 failed/3 not_run；393正式比较全部passed，395对记录包含2个自检。R8-10在已确认移除alpha、新beta导航及Shell可用后，中断于测试chrome辅助重复REMOVED.NAV.EXISTS；冻结源码与journal只读定位，不新增产品缺陷。原始错误正文未留存，来源重建范围见first-run-analysis.json。
+- reporter firstFailure=null和cleanup_terminal.passed=true不能冒充测试通过：它们未覆盖辅助抛错。保持首次文件，目标已进入，按任务卡不修后重跑；兼容28/Windows前置未完成，均not_run。
+- CLI30140 exit1/worker22216实际exit1，身份匹配且结束、无强杀或超时；10次真实卸载/退订/global恢复通过。产品0/8/辅助0/4，无新外部profile。后续仅报告、终点审计、矩阵B备注与本人日志。
+
+### 2026-10-13 19:13 Asia/Shanghai — R8 13节点与首次运行冻结
+
+- 13个独立节点映射在evidence/r8-modules/assertion-map.json；真实main装配DesktopApp/StrictMode已静态核对，TS/JS/PowerShell解析通过。native jsdom、同物理React/Router；节点不复制开发18项，旧完整R7不运行。
+- 源码/配置/setup/reporter/controller与映射7项已冻结。每节点body15秒+cleanup5秒/观察5秒、原生初始化60秒/CLI300秒；一次正式运行，首次失败停止扩大。产品/辅助0。
+
+### 2026-10-13 19:07 Asia/Shanghai — R8 用户继续与输入复核
+
+- 14:03接单至本次恢复之间无持续可观察运行记录，不计作持续执行/两个运行检查点失败；目标CLI/EXE仍0。重新读取当前control仍13:43版本；818项817保持+本人状态1项授权变化。首次接单证据不覆盖。
+- 必读合同及旧W1首错已复核；继续新同步suite准备，正文逐节点15秒、观察5秒、总CLI300秒，使用新R6固定物理依赖；没有重跑旧节点。
+
+### 2026-10-13 14:03 Asia/Shanghai — P4-C12-R8-MODULES 接单与固定输入通过
+
+- 用户新任务，control2026-10-13T13:43:00+08:00，既有Tester唯一负责人；执行方与顾问停止。818/818原字节起点通过、staged0；R6 source814仅5项列举协调变化，外部构建813/产物140/资源67/依赖12443/dist73、EXE/asar/lock及9版本匹配；旧R7交付68保持。证据evidence/r8-modules/start-audit.json。
+- 先真实DesktopApp/compileRegistry/Router/Shell独立模块同步、Strict与普通关键启动及最小邻接；同worker安全标量记录器自检。通过后仅一次28开发兼容，再同任务新EXE/新虚拟根剩余Windows。后台与真实页面分开取样，每条比较ID/operator/安全expected/actual，即时enter/terminal。
+- 独立suite一次正式运行，初始化60秒/每正文15秒/UI观察5秒/清理5秒/CLI300秒；实际失败停扩大，工具/设备不具备只阻塞对应项但不改称产品通过。旧B/完整R7/旧EXE/D16/无关回归0，不改产品/依赖/包、不Git写或启动角色。下一检查点14:13。
+
 
 ### 2026-10-12 11:21 Asia/Shanghai — C12-R7 最终审计通过并停止
 

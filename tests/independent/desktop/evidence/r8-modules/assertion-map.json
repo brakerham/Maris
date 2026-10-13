@@ -1,0 +1,99 @@
+{
+  "task": "P4-C12-R8-MODULES",
+  "nodes": [
+    {
+      "id": "R8-01",
+      "scenario": "normal initial empty / identical online events",
+      "matrix": "P4B-UI-01",
+      "newAssertions": "Explicit empty first; same-field notifications before/after modules; actual alpha navigation/page; no polling"
+    },
+    {
+      "id": "R8-02",
+      "scenario": "StrictMode initial empty / identical online events",
+      "matrix": "P4B-UI-01",
+      "newAssertions": "Same startup ordering under StrictMode; no manual remount or recovery"
+    },
+    {
+      "id": "R8-03",
+      "scenario": "normal already ready",
+      "matrix": "P4B-UI-01",
+      "newAssertions": "Page and online status on initial mount"
+    },
+    {
+      "id": "R8-04",
+      "scenario": "StrictMode already ready",
+      "matrix": "P4B-UI-01",
+      "newAssertions": "Page and online status on initial mount"
+    },
+    {
+      "id": "R8-05",
+      "scenario": "late snapshot",
+      "matrix": "P4B-UI-01",
+      "newAssertions": "Late offline snapshot cannot replace received online notification/page"
+    },
+    {
+      "id": "R8-06",
+      "scenario": "notification within read",
+      "matrix": "P4B-UI-01",
+      "newAssertions": "Synchronous event during initial module read is not lost; exactly two reads for controlled single-event fixture"
+    },
+    {
+      "id": "R8-07",
+      "scenario": "burst and stale module result",
+      "matrix": "P4B-UI-01",
+      "newAssertions": "12 events while initial promise pending coalesce to one final read; beta visible; alpha absent/not preloaded; 80ms no polling"
+    },
+    {
+      "id": "R8-08",
+      "scenario": "initial/later rejection and offline",
+      "matrix": "P4B-SEC-08 / UI-01",
+      "newAssertions": "Initial rejection safe, later update works, subsequent rejection/offline preserve page/Shell/load count"
+    },
+    {
+      "id": "R8-09",
+      "scenario": "equivalent intersection, retry and state",
+      "matrix": "P4B-UI-01 / UI-02",
+      "newAssertions": "Positive fixed loader baseline; equivalent/reordered/irrelevant Host entries and settings/offline cannot grow loads; explicit retry delta=1; Shell/subscriptions/theme/privacy retained; healthy/settings same-set refresh"
+    },
+    {
+      "id": "R8-10",
+      "scenario": "real intersection changes",
+      "matrix": "P4B-UI-01",
+      "newAssertions": "Missing/disabled/incompatible/unknown do not navigate/preload; legitimate module appears; removal clears content/navigation; new module visible; theme/privacy retained"
+    },
+    {
+      "id": "R8-11",
+      "scenario": "stale page after route-set replacement",
+      "matrix": "P4B-UI-02",
+      "newAssertions": "Pending old alpha result cannot displace beta page/hash after alpha removed"
+    },
+    {
+      "id": "R8-12",
+      "scenario": "render failure after route-set replacement",
+      "matrix": "P4B-UI-02 / SEC-08",
+      "newAssertions": "Real module local boundary after changed route set; Shell/nav/Agent safe; equal set no automatic retry"
+    },
+    {
+      "id": "R8-13",
+      "scenario": "StrictMode stale effect and unmount",
+      "matrix": "P4B-UI-01",
+      "newAssertions": "Old cleaned effect reply does not replace current beta; pending read after unmount leaves empty root/no more reads/zero subscriptions"
+    }
+  ],
+  "sharedAssertions": [
+    "Every UI sample has distinct EXISTS/COUNT/CSS_VISIBLE checks; CSS_VISIBLE is jsdom style/hidden observation, not Windows geometry",
+    "DOM/console virtual canary absence; console scan completeness; jsdom/unhandled0; blocked extra calls0",
+    "Balanced subscriptions and actual unmount; global and console restoration; cleanup <=5000ms"
+  ],
+  "history": "R6 cold B and full R7 recovery/structure are read-only historical evidence on older inputs, not rerun or counted",
+  "comparisonIdentity": "case ID + named assertion; recorder rejects duplicate IDs in same case; expected/actual safe scalar sampled once, unknown never equals absence",
+  "runBudget": {
+    "initMs": 60000,
+    "bodyMsPerNode": 15000,
+    "uiObservationMs": 5000,
+    "cleanupMs": 5000,
+    "cliMs": 300000,
+    "formalInvocations": 1
+  },
+  "legacyRepetition": false
+}

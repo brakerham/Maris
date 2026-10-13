@@ -1,0 +1,127 @@
+{
+  "at": "2026-10-13T14:03:10.387027+08:00",
+  "controlVersion": "2026-10-13T13:43:00+08:00",
+  "start": {
+    "entries": 818,
+    "matched": 818,
+    "authorizedChanges": [],
+    "sha256": "8423b70bbaff05c7b37d888a836ec3f6c880c2a74d07a324b42a0e4c2f407337",
+    "manifest": "D:\\CodeX_gap\\wife-system\\docs\\coordination\\snapshots\\p4-c12-r8-modules-start.sha256",
+    "base": "D:\\CodeX_gap\\wife-system"
+  },
+  "r6Source": {
+    "entries": 814,
+    "matched": 809,
+    "authorizedChanges": [
+      "README.md",
+      "docs/coordination/agents/brainstorm.md",
+      "docs/coordination/control.md",
+      "docs/coordination/overview.md",
+      "docs/project-coordination.md"
+    ],
+    "sha256": "74c6df4829b2f9ce8b0de2b84b748f14cc3dec520ceab234b91113d3a269a68e",
+    "manifest": "D:\\CodeX_gap\\wife-system\\apps\\desktop\\b7-r6-module-ready-source.sha256",
+    "base": "D:\\CodeX_gap\\wife-system"
+  },
+  "buildSource": {
+    "entries": 813,
+    "matched": 813,
+    "authorizedChanges": [],
+    "sha256": "05677054bf73b1a40c60a844f7cad99cc2654bf638ea3798a2081d04212851b4",
+    "manifest": "C:\\MarisModulesR6\\R6-20261013-002100\\evidence\\static\\workspace-source.sha256",
+    "base": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace"
+  },
+  "out": {
+    "entries": 140,
+    "matched": 140,
+    "authorizedChanges": [],
+    "sha256": "ebb3521d71bb45d03b692dc0eacda52db540bd722e1aee414c9c025211a28694",
+    "manifest": "C:\\MarisModulesR6\\R6-20261013-002100\\evidence\\static\\out-manifest-v4.tsv",
+    "base": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\apps\\desktop\\out\\Maris-win32-x64"
+  },
+  "resources": {
+    "entries": 67,
+    "matched": 67,
+    "authorizedChanges": [],
+    "sha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1",
+    "manifest": "C:\\MarisModulesR6\\R6-20261013-002100\\evidence\\static\\python-resources-v4.tsv",
+    "base": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\resources"
+  },
+  "dependencies": {
+    "entries": 12443,
+    "matched": 12443,
+    "authorizedChanges": [],
+    "sha256": "15f5613ce7744083a81c05c68ab06e06b6aa0b6e30f0c9c98ed933d87899e04c",
+    "manifest": "C:\\MarisModulesR6\\R6-20261013-002100\\evidence\\inputs\\node-modules-final.sha256",
+    "base": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules"
+  },
+  "dist": {
+    "entries": 73,
+    "matched": 73,
+    "authorizedChanges": [],
+    "sha256": "ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f",
+    "manifest": "C:\\MarisModulesR6\\R6-20261013-002100\\evidence\\inputs\\electron-dist-final.sha256",
+    "base": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules\\electron\\dist"
+  },
+  "artifacts": {
+    "apps/desktop/out/Maris-win32-x64/Maris.exe": "4ef5bce604fc61fc2b815300edee8a29ab593083d308e849445c6c97235c5f1e",
+    "apps/desktop/out/Maris-win32-x64/resources/app.asar": "5eb153002f4c48ce704f1d0f90b3bf441d5edf3799ea5fe4428f706aee7c69db",
+    "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+  },
+  "r7Delivery": {
+    "entries": 68,
+    "matched": 68,
+    "authorizedChanges": [],
+    "sha256": "1357d6c31d7643dc661961ef695b5403da1f3c74c047c99e5378a3252bdbdd0e",
+    "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r7-recovery\\delivery.sha256",
+    "base": "D:\\CodeX_gap\\wife-system"
+  },
+  "staged": [],
+  "versions": {
+    "vitest": {
+      "version": "5.0.2",
+      "packageSha256": "943ddc2cfd3676087e243b5adc450ea8c25ad941ba678b48a679b68f67ef297a",
+      "path": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules\\vitest\\package.json"
+    },
+    "vite": {
+      "version": "7.3.6",
+      "packageSha256": "e5ed0f85215f871fe22a48987dcd77fcfbe14064a53c0c9f7f48186a6b7e2cf0",
+      "path": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules\\vite\\package.json"
+    },
+    "react": {
+      "version": "19.3.0",
+      "packageSha256": "6e003e4e9ed25afa7fdd55613f8aa877cefa9b359d9c13f81ee704030248e24e",
+      "path": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules\\react\\package.json"
+    },
+    "react-dom": {
+      "version": "19.3.0",
+      "packageSha256": "136d4af63de473392ea79d6a21932b0ed9eb37fe518ce70f4621250f3d79e9bb",
+      "path": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules\\react-dom\\package.json"
+    },
+    "react-router": {
+      "version": "8.4.0",
+      "packageSha256": "41a544b0e3d42034cbef64e7003ce7a7543d863d323c7b4e762a3debd61b90a0",
+      "path": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules\\react-router\\package.json"
+    },
+    "jsdom": {
+      "version": "30.1.1",
+      "packageSha256": "72dff7780a7791071ebd9cb219262522fc28d0ce5570c41dc7bb69b2700db067",
+      "path": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules\\jsdom\\package.json"
+    },
+    "typescript": {
+      "version": "6.0.3",
+      "packageSha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+      "path": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules\\typescript\\package.json"
+    },
+    "electron": {
+      "version": "44.4.5",
+      "packageSha256": "255fc856265d3926c006672615c94f138a03da3ce4c7d1f62d6a1e7124bc3cec",
+      "path": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules\\electron\\package.json"
+    },
+    "playwright": {
+      "version": "1.63.0",
+      "packageSha256": "8bc2ddebe8d9b051b9ecb87d62c6c63877e59d08617f32c3215681ca8bb70998",
+      "path": "C:\\MarisModulesR6\\R6-20261013-002100\\workspace\\node_modules\\playwright\\package.json"
+    }
+  }
+}

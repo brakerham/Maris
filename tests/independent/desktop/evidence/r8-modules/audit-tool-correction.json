@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-13T19:22:46.805681+08:00",
+  "operation": "read-only end manifest inventory audit",
+  "firstError": "AssertionError: inventory_drift",
+  "source": "Initial audit compared all resources files with Python-only 67 manifest; app.asar belongs to separate full out manifest. Frozen dependency manifest12443 is a subset of full12677, explicitly documented in R6 running report line35.",
+  "correction": "Keep every original digest comparison; exclude only separately hashed app.asar from Python inventory; additionally compare complete copied dependencies against supplied 12677-entry full manifest. No product/test rerun.",
+  "dynamicBudgetsUnaffected": true
+}

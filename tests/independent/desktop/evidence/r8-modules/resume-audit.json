@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-13T19:07:02.567382+08:00",
+  "matched": 817,
+  "authorizedChanges": [
+    "docs/coordination/agents/tester.md"
+  ],
+  "control": "2026-10-13T13:43:00+08:00",
+  "targetsStarted": 0,
+  "visibilityGap": "No observed continuous execution between 14:03 acceptance and 19:06 resume"
+}

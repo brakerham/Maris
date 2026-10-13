@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-13T19:13:57.268395+08:00",
+  "node": "24.21.0",
+  "typescriptParser": "6.0.3",
+  "jsSyntaxFiles": 3,
+  "psParseErrors": 0,
+  "tsxParseErrors": 0,
+  "productionMainUsesActualDesktopApp": true,
+  "productionStrictMode": true,
+  "nodesPlanned": 13,
+  "runtimeTestsExecuted": 0,
+  "jsdomEntry": "native createRequire ./lib/api.js from frozen R6 physical dependency root",
+  "notes": [
+    "Earlier read-only file lookup used wrong guessed paths; corrected by rg; no target execution or mutation occurred."
+  ]
+}

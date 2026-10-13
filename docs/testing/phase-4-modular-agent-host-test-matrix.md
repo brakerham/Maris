@@ -305,6 +305,13 @@ SEC-01/02/03新增主/毛毛实际窄bridge、Node能力隔离、CSP inline与�
 
 B继续0 passed、1 failed、19 blocked、4 not_run；120 ID/12列/原预期及A/C/D不变。首次证据永久保留，blocked / finished交总控review，不自动重跑。
 
+#### C12-R8-MODULES 增量备注（2026-10-13）
+
+- [R8报告](phase-4-c12-r8-modules-windows-report.md)：新输入下独立首次9 passed/1 failed/3 not_run；393正式比较passed，R8-10测试辅助重复REMOVED.NAV.EXISTS使节点中断，非产品行为失败；首次源码和结果保留，不修后重跑。
+- UI-01新同步启动/同字段通知/时序/拒绝保页及UI-02同集合局部retry+1/状态保持部分通过；模块变化完整收尾、旧页面在途及render/卸载邻接未完成。不能以这些部分或执行方22项EXE代签整项。
+- 原24行状态不变：0 passed/1 failed/19 blocked/4 not_run；UI-02 failed为历史状态，不表示本轮新产品P1。28开发兼容、Windows均not_run，产品0/8、辅助0/4、chunk0；真实后台与页面均无本轮设备结果。
+- 10个已进入节点清理通过，CLI/worker实际退出，无强制终止；保留旧冷B/完整R7/W1。blocked / finished供总控review，待裁定仅测试工具修正与剩余验收；不改原预期/其他切片，不启动其他角色。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复
