@@ -1,0 +1,36 @@
+{
+  "rootExitCode": 0,
+  "rootPid": 26900,
+  "streams": [
+    {
+      "name": "stdout",
+      "rawBytes": 55,
+      "complete": true
+    },
+    {
+      "name": "stderr",
+      "rawBytes": 0,
+      "complete": true
+    }
+  ],
+  "rootExited": true,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "workers": [
+    {
+      "identityVerified": true,
+      "exited": true,
+      "pid": 5156,
+      "nativeExitCode": 1,
+      "forced": false
+    }
+  ],
+  "forced": false,
+  "cleanupScope": "owned_root_and_registered_workers_only",
+  "scope": "independent_modules_4_remaining_nodes_attempt_0",
+  "timedOut": false,
+  "streamsComplete": true,
+  "failure": null,
+  "stagesObserved": 471,
+  "durationMs": 5009
+}

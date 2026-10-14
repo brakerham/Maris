@@ -1,0 +1,101 @@
+{
+  "at": "2026-10-14T13:58:54.820357+08:00",
+  "assertionCount": 57,
+  "passed": 56,
+  "failed": 1,
+  "paired": true,
+  "settingsReadOnlyAfterStop": {
+    "closePolicy": "quit",
+    "theme": "dark",
+    "privacyMode": true,
+    "closeHintShown": false
+  },
+  "pageSamples": [
+    {
+      "seq": 31,
+      "event": "page_final_sample",
+      "at": "2026-10-14T05:54:52.302Z",
+      "elapsedMs": 15119.090900000001,
+      "details": {
+        "id": "W1-PAGE",
+        "sample": {
+          "elements": {
+            "DAILY": {
+              "exists": true,
+              "count": 1,
+              "visible": true
+            },
+            "SHELL": {
+              "exists": true,
+              "count": 1,
+              "visible": true
+            },
+            "NAV": {
+              "exists": true,
+              "count": 1,
+              "visible": true
+            },
+            "AGENT": {
+              "exists": true,
+              "count": 1,
+              "visible": true
+            }
+          },
+          "hash": "#/daily",
+          "readyState": "complete"
+        },
+        "observationLimitMs": 5000
+      }
+    },
+    {
+      "seq": 90,
+      "event": "page_final_sample",
+      "at": "2026-10-14T05:55:03.424Z",
+      "elapsedMs": 26241.1367,
+      "details": {
+        "id": "W1-RECOVER-PAGE",
+        "sample": {
+          "elements": {
+            "DAILY": {
+              "exists": true,
+              "count": 1,
+              "visible": true
+            },
+            "SHELL": {
+              "exists": true,
+              "count": 1,
+              "visible": true
+            },
+            "NAV": {
+              "exists": true,
+              "count": 1,
+              "visible": true
+            },
+            "AGENT": {
+              "exists": true,
+              "count": 1,
+              "visible": true
+            }
+          },
+          "hash": "#/daily",
+          "readyState": "complete"
+        },
+        "observationLimitMs": 5000
+      }
+    }
+  ],
+  "firstFailure": {
+    "stage": "normal-close",
+    "id": "W1-NORMAL-EXIT-OBSERVED",
+    "kind": "Error",
+    "code": "assertion_failed"
+  },
+  "unrun": [
+    "W1-NORMAL-EXIT-CODE",
+    "W2-W8",
+    "H1-H4"
+  ],
+  "note": "pre-failure actual comparison; forced cleanup is not successful product normal exit; child native exit codes unverified",
+  "productStarts": 1,
+  "helperStarts": 0
+}

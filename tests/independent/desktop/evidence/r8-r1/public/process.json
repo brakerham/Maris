@@ -1,0 +1,32 @@
+{
+  "workers": [
+    {
+      "nativeExitCode": 1,
+      "exited": true,
+      "identityVerified": true,
+      "forced": false,
+      "pid": 27744
+    }
+  ],
+  "rootExitCode": 0,
+  "rootPid": 7248,
+  "timedOut": false,
+  "scope": "six_remaining_public_nodes_once",
+  "productStarts": 0,
+  "rootExited": true,
+  "failure": null,
+  "streams": [
+    {
+      "rawBytes": 58,
+      "complete": true,
+      "name": "stdout"
+    },
+    {
+      "rawBytes": 0,
+      "complete": true,
+      "name": "stderr"
+    }
+  ],
+  "durationMs": 7755,
+  "forced": false
+}

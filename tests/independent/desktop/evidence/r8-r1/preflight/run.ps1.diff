@@ -1,0 +1,32 @@
+--- r8-modules-run.ps1
++++ r8-r1-run.ps1
+@@ -1,9 +1,9 @@
+ $ErrorActionPreference='Stop'
+ $own=[IO.Path]::GetFullPath($PSScriptRoot)
+ if($own -ne 'D:\CodeX_gap\wife-system\tests\independent\desktop'){throw 'r8_wrong_root'}
+-$ev=Join-Path $own 'evidence/r8-modules'
++$ev=Join-Path $own 'evidence/r8-r1'
+ $control=Get-Content -LiteralPath 'D:\CodeX_gap\wife-system\docs\coordination\control.md' -Raw
+-if(-not $control.Contains('2026-10-13T13:43:00+08:00')){throw 'r8_control_changed'}
++if(-not $control.Contains('2026-10-14T07:16:34+08:00')){throw 'r8_control_changed'}
+ foreach($line in Get-Content -LiteralPath (Join-Path $ev 'modules-source.sha256')){
+  $p=$line -split "`t";$target=[IO.Path]::GetFullPath((Join-Path $own $p[0]))
+  if(-not $target.StartsWith($own+'\') -or (Get-FileHash -LiteralPath $target).Hash.ToLowerInvariant() -ne $p[1]){throw 'r8_source_changed'}
+@@ -21,7 +21,7 @@
+ function Read-Shared([string]$File){$fs=[IO.FileStream]::new($File,[IO.FileMode]::Open,[IO.FileAccess]::Read,[IO.FileShare]::ReadWrite);try{$rd=[IO.StreamReader]::new($fs);try{return $rd.ReadToEnd()}finally{$rd.Dispose()}}finally{$fs.Dispose()}}
+ $proc=[Diagnostics.Process]::new();$proc.StartInfo=[Diagnostics.ProcessStartInfo]::new();$proc.StartInfo.FileName=$node;$proc.StartInfo.WorkingDirectory=$own
+ $proc.StartInfo.UseShellExecute=$false;$proc.StartInfo.CreateNoWindow=$true;$proc.StartInfo.RedirectStandardOutput=$true;$proc.StartInfo.RedirectStandardError=$true
+-foreach($a in @($cli,'run','--configLoader','native','--config',(Join-Path $own 'r8-modules-vitest.config.mjs'))){$proc.StartInfo.ArgumentList.Add($a)}
++foreach($a in @($cli,'run','--configLoader','native','--config',(Join-Path $own 'r8-r1-vitest.config.mjs'))){$proc.StartInfo.ArgumentList.Add($a)}
+ $started=$false;$handles=@{};$workers=@();$failure=$null;$timeout=$false;$forced=$false;$stage='initialization';$stageAt=0;$seen=0;$stdout=$null;$stderr=$null;$streamComplete=$false
+ Record 'controller_ready' @{initializationMs=60000;bodyMs=15000;cleanupMs=5000;suiteMs=300000;productStarts=0}
+ try{
+@@ -72,7 +72,7 @@
+   $safe=foreach($line in ($raw -split "`r?`n")){if($line -match '^\{"event":"r8_result","passed":\d+,"failed":\d+,"notRun":\d+\}$'){$line}elseif($line){'<redacted_output_line>'}else{''}}
+   [IO.File]::WriteAllText((Join-Path $out "$label.log"),($safe -join "`n"),$utf8);$streams+=@{name=$label;complete=($t -and $t.IsCompletedSuccessfully);rawBytes=$utf8.GetByteCount($raw)}
+  }
+- $result=@{scope='independent_modules_13_nodes_once';rootPid=if($started){$proc.Id}else{$null};rootExited=if($started){$proc.HasExited}else{$null};rootExitCode=if($started -and $proc.HasExited){$proc.ExitCode}else{$null};workers=$workers;failure=$failure;timedOut=$timeout;forced=$forced;durationMs=$clock.ElapsedMilliseconds;streams=$streams;streamsComplete=$streamComplete;productStarts=0;helperStarts=0;cleanupScope='owned_root_and_registered_workers_only';stagesObserved=$seen}
++ $result=@{scope='independent_modules_4_remaining_nodes_attempt_0';rootPid=if($started){$proc.Id}else{$null};rootExited=if($started){$proc.HasExited}else{$null};rootExitCode=if($started -and $proc.HasExited){$proc.ExitCode}else{$null};workers=$workers;failure=$failure;timedOut=$timeout;forced=$forced;durationMs=$clock.ElapsedMilliseconds;streams=$streams;streamsComplete=$streamComplete;productStarts=0;helperStarts=0;cleanupScope='owned_root_and_registered_workers_only';stagesObserved=$seen}
+  [IO.File]::WriteAllText((Join-Path $out 'process.json'),(($result|ConvertTo-Json -Depth 6)+"`n"),$utf8);Record 'controller_finished' @{durationMs=$clock.ElapsedMilliseconds};$journalStream.Dispose();$result|ConvertTo-Json -Depth 6
+ }
+ if($failure -or $timeout -or $forced -or -not $started -or $proc.ExitCode -ne 0){exit 1}

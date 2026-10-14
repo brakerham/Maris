@@ -1,0 +1,18 @@
+{
+  "nodes": 6,
+  "cases": {
+    "PUB01-05": {
+      "original": "P4B-UI-03",
+      "prior": "frozen inputs only; no independent mutation execution",
+      "new": "original checker with virtual fs/process ports; actual fixed generator+TypeScript semantic diagnostics on virtual DTO field/enum/required, stale type",
+      "limit": "no real CI process/export or runtime download test; not package rebuild"
+    },
+    "PUB06": {
+      "original": "P4B-UI-04",
+      "prior": "R1/R2/R3 conflicts and R7 strict schema retained",
+      "new": "real main startup mapping plus Shell/route AST moduleId branches",
+      "limit": "static source mapping only"
+    }
+  },
+  "other22": "reuse old partial evidence; Windows and device gaps remain; no repeated prior public nodes"
+}

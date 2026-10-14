@@ -1,0 +1,309 @@
+{
+  "attempt": 0,
+  "nodes": [
+    {
+      "id": "R8-10",
+      "state": "pass",
+      "durationMs": 849.337,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    },
+    {
+      "id": "R8-11",
+      "state": "pass",
+      "durationMs": 271.68820000000005,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    },
+    {
+      "id": "R8-12",
+      "state": "pass",
+      "durationMs": 343.33830000000034,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    },
+    {
+      "id": "R8-13",
+      "state": "pass",
+      "durationMs": 228.17020000000048,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    }
+  ],
+  "selectionExcluded": [
+    "R8-01",
+    "R8-02",
+    "R8-03",
+    "R8-04",
+    "R8-05",
+    "R8-06",
+    "R8-07",
+    "R8-08",
+    "R8-09"
+  ],
+  "historicalReused": [
+    "R8-01",
+    "R8-02",
+    "R8-03",
+    "R8-04",
+    "R8-05",
+    "R8-06",
+    "R8-07",
+    "R8-08",
+    "R8-09"
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "unhandledErrors": 0,
+  "moduleErrors": 0,
+  "firstProductFailure": null,
+  "firstToolError": null,
+  "firstUnknownError": null,
+  "firstFailure": null,
+  "nodeTerminals": [
+    {
+      "seq": 176,
+      "event": "node_terminal",
+      "at": "2026-10-14T05:33:30.651Z",
+      "attempt": 0,
+      "elapsedMs": 3330.959,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "id": "R8-10",
+        "passed": true,
+        "stage": "cleanup"
+      }
+    },
+    {
+      "seq": 271,
+      "event": "node_terminal",
+      "at": "2026-10-14T05:33:30.923Z",
+      "attempt": 0,
+      "elapsedMs": 3603.1753,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "id": "R8-11",
+        "passed": true,
+        "stage": "cleanup"
+      }
+    },
+    {
+      "seq": 378,
+      "event": "node_terminal",
+      "at": "2026-10-14T05:33:31.266Z",
+      "attempt": 0,
+      "elapsedMs": 3946.3237000000004,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "id": "R8-12",
+        "passed": true,
+        "stage": "cleanup"
+      }
+    },
+    {
+      "seq": 471,
+      "event": "node_terminal",
+      "at": "2026-10-14T05:33:31.495Z",
+      "attempt": 0,
+      "elapsedMs": 4175.123,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "id": "R8-13",
+        "passed": true,
+        "stage": "cleanup"
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "seq": 175,
+      "event": "cleanup_terminal",
+      "at": "2026-10-14T05:33:30.649Z",
+      "attempt": 0,
+      "elapsedMs": 3329.2384,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "id": "R8-10",
+        "cleanupMs": 62.80139999999983,
+        "passed": true
+      }
+    },
+    {
+      "seq": 270,
+      "event": "cleanup_terminal",
+      "at": "2026-10-14T05:33:30.921Z",
+      "attempt": 0,
+      "elapsedMs": 3601.2667,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "id": "R8-11",
+        "cleanupMs": 58.45560000000023,
+        "passed": true
+      }
+    },
+    {
+      "seq": 377,
+      "event": "cleanup_terminal",
+      "at": "2026-10-14T05:33:31.265Z",
+      "attempt": 0,
+      "elapsedMs": 3944.5903000000003,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "id": "R8-12",
+        "cleanupMs": 66.6921999999995,
+        "passed": true
+      }
+    },
+    {
+      "seq": 470,
+      "event": "cleanup_terminal",
+      "at": "2026-10-14T05:33:31.493Z",
+      "attempt": 0,
+      "elapsedMs": 4173.124699999999,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "id": "R8-13",
+        "cleanupMs": 59.57020000000011,
+        "passed": true
+      }
+    }
+  ],
+  "selftest": [
+    {
+      "seq": 2,
+      "event": "selftest_result",
+      "at": "2026-10-14T05:33:27.339Z",
+      "attempt": 0,
+      "elapsedMs": 19.29309999999998,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "kind": "selftest",
+        "caseId": "SELF.DISTINCT",
+        "passed": true
+      }
+    },
+    {
+      "seq": 3,
+      "event": "tool_error",
+      "at": "2026-10-14T05:33:27.343Z",
+      "attempt": 0,
+      "elapsedMs": 22.4572,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "kind": "selftest",
+        "nodeId": "SELF",
+        "attemptedAssertionId": "SELF.REMOVED.NAV.EXISTS",
+        "errorCode": "duplicate_assertion_id",
+        "stage": "body",
+        "caseId": "SELF.DUPLICATE",
+        "expectedFailure": true
+      }
+    },
+    {
+      "seq": 4,
+      "event": "selftest_node_terminal",
+      "at": "2026-10-14T05:33:27.346Z",
+      "attempt": 0,
+      "elapsedMs": 26.135599999999982,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "caseId": "SELF.DUPLICATE",
+        "kind": "selftest",
+        "expectedFailure": true,
+        "passed": false
+      }
+    },
+    {
+      "seq": 5,
+      "event": "selftest_result",
+      "at": "2026-10-14T05:33:27.348Z",
+      "attempt": 0,
+      "elapsedMs": 28.116499999999974,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "kind": "selftest",
+        "caseId": "SELF.DUPLICATE_RECORDED",
+        "passed": true
+      }
+    },
+    {
+      "seq": 6,
+      "event": "selftest_result",
+      "at": "2026-10-14T05:33:27.350Z",
+      "attempt": 0,
+      "elapsedMs": 29.696199999999976,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "kind": "selftest",
+        "caseId": "SELF.CLEANUP_NOT_OVERRIDE",
+        "passed": true
+      }
+    },
+    {
+      "seq": 7,
+      "event": "selftest_result",
+      "at": "2026-10-14T05:33:27.351Z",
+      "attempt": 0,
+      "elapsedMs": 31.26849999999999,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "kind": "selftest",
+        "caseId": "SELF.UNKNOWN",
+        "passed": true
+      }
+    },
+    {
+      "seq": 8,
+      "event": "selftest_result",
+      "at": "2026-10-14T05:33:27.353Z",
+      "attempt": 0,
+      "elapsedMs": 33.083,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "kind": "selftest",
+        "caseId": "SELF.PRIVACY",
+        "passed": true
+      }
+    },
+    {
+      "seq": 9,
+      "event": "recorder_selftest",
+      "at": "2026-10-14T05:33:27.355Z",
+      "attempt": 0,
+      "elapsedMs": 34.57389999999998,
+      "pid": 5156,
+      "parentPid": 26900,
+      "details": {
+        "kind": "selftest",
+        "passed": true,
+        "count": 5
+      }
+    }
+  ],
+  "formalComparisons": 184,
+  "formalPassed": 184,
+  "entered": 184,
+  "terminal": 184,
+  "journalComplete": true,
+  "paired": true
+}

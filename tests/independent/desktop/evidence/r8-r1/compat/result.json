@@ -1,0 +1,207 @@
+{
+  "started": 1791956080178,
+  "ended": 1791956086273,
+  "nodes": [
+    {
+      "file": "composition-root.test.ts",
+      "name": "single-flights composition, intersects modules, publishes safe state, and shuts down once",
+      "state": "pass",
+      "durationMs": 4.3945999999999685,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "recovers a transient import via one explicit loader retry while preserving Shell state and subscriptions",
+      "state": "pass",
+      "durationMs": 292.9678999999999,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "keeps persistent failures local without looping and permits healthy/settings navigation and return",
+      "state": "pass",
+      "durationMs": 448.6874,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "bounds pending retry to one loader call even with repeated clicks and can leave the failing route",
+      "state": "pass",
+      "durationMs": 202.03150000000028,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "isolates a module render error and retries its real loader to reset the local boundary",
+      "state": "pass",
+      "durationMs": 92.93209999999999,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "keeps the empty Host intersection and settings available without calling a page loader",
+      "state": "pass",
+      "durationMs": 92.11810000000014,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "does not load a disabled module even when its contribution and page port exist",
+      "state": "pass",
+      "durationMs": 17.49509999999964,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "fails closed for an unregistered trusted page port without importing a renderer-supplied path",
+      "state": "pass",
+      "durationMs": 76.91319999999996,
+      "errors": []
+    },
+    {
+      "file": "lazy-isolation.test.tsx",
+      "name": "keeps the actual production entry and builtin daily page success path working",
+      "state": "pass",
+      "durationMs": 109.3407000000002,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "automatically publishes the real page after initial empty modules and composition ready (StrictMode=false)",
+      "state": "pass",
+      "durationMs": 122.08420000000001,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "automatically publishes the real page after initial empty modules and composition ready (StrictMode=true)",
+      "state": "pass",
+      "durationMs": 33.8762999999999,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "shows an already ready module on mount (StrictMode=false)",
+      "state": "pass",
+      "durationMs": 19.029800000000023,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "shows an already ready module on mount (StrictMode=true)",
+      "state": "pass",
+      "durationMs": 15.250300000000152,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "keeps a subscription update when the initial runtime snapshot arrives late (StrictMode=false)",
+      "state": "pass",
+      "durationMs": 13.620799999999917,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "keeps a subscription update when the initial runtime snapshot arrives late (StrictMode=true)",
+      "state": "pass",
+      "durationMs": 14.417099999999891,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "subscribes before snapshot or module calls, including a synchronous notification in getSnapshot",
+      "state": "pass",
+      "durationMs": 13.202199999999948,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "does not lose a ready notification raised during an initial module read",
+      "state": "pass",
+      "durationMs": 8.22239999999988,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "coalesces a ready burst into one follow-up and discards the obsolete module result",
+      "state": "pass",
+      "durationMs": 6.138099999999895,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "ignores the disposed StrictMode effect's late module result",
+      "state": "pass",
+      "durationMs": 11.86440000000016,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "ignores pending module/snapshot completion after unmount (reject=false)",
+      "state": "pass",
+      "durationMs": 1.5901000000001204,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "ignores pending module/snapshot completion after unmount (reject=true)",
+      "state": "pass",
+      "durationMs": 0.928899999999885,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "handles initial and later read rejections safely without eventless retry",
+      "state": "pass",
+      "durationMs": 13.846900000000005,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "keeps routes, theme, privacy and subscriptions for equal effective intersections and offline observations",
+      "state": "pass",
+      "durationMs": 228.7050999999999,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "does not automatically retry a failed page when ready notifications return equal modules (StrictMode=false)",
+      "state": "pass",
+      "durationMs": 59.22869999999989,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "does not automatically retry a failed page when ready notifications return equal modules (StrictMode=true)",
+      "state": "pass",
+      "durationMs": 36.18359999999984,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "keeps ready empty/disabled/incompatible/unknown intersections empty and updates on a genuine change",
+      "state": "pass",
+      "durationMs": 80.25090000000023,
+      "errors": []
+    },
+    {
+      "file": "module-readiness.test.tsx",
+      "name": "keeps the Shell available when the displayed module is removed from the intersection",
+      "state": "pass",
+      "durationMs": 67.38659999999982,
+      "errors": []
+    },
+    {
+      "file": "shell.test.tsx",
+      "name": "renders accessible shell, privacy and hostile text as text",
+      "state": "pass",
+      "durationMs": 125.95559999999989,
+      "errors": []
+    }
+  ],
+  "total": 28,
+  "passed": 28,
+  "failed": 0,
+  "moduleErrors": 0,
+  "unhandled": 0
+}

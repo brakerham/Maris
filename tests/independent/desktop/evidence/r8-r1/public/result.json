@@ -1,0 +1,53 @@
+{
+  "started": 1791956997732,
+  "ended": 1791957002544,
+  "nodes": [
+    {
+      "file": "r8-r1-remaining.test.ts",
+      "name": "R8R1-PUB-01 | exact generated virtual baseline accepted",
+      "state": "pass",
+      "durationMs": 59.63249999999971,
+      "errors": []
+    },
+    {
+      "file": "r8-r1-remaining.test.ts",
+      "name": "R8R1-PUB-02 | virtual DTO field drift rejects and consumer no longer compiles",
+      "state": "pass",
+      "durationMs": 19.591999999999643,
+      "errors": []
+    },
+    {
+      "file": "r8-r1-remaining.test.ts",
+      "name": "R8R1-PUB-03 | virtual DTO enum drift rejects and consumer no longer compiles",
+      "state": "pass",
+      "durationMs": 13.052899999999681,
+      "errors": []
+    },
+    {
+      "file": "r8-r1-remaining.test.ts",
+      "name": "R8R1-PUB-04 | virtual DTO required drift rejects and consumer no longer compiles",
+      "state": "pass",
+      "durationMs": 12.879099999999198,
+      "errors": []
+    },
+    {
+      "file": "r8-r1-remaining.test.ts",
+      "name": "R8R1-PUB-05 | stale generated type pinpoints generated artifact",
+      "state": "pass",
+      "durationMs": 8.154900000000453,
+      "errors": []
+    },
+    {
+      "file": "r8-r1-remaining.test.ts",
+      "name": "R8R1-PUB-06 | real main registry startup and generic Shell wiring",
+      "state": "pass",
+      "durationMs": 21.491899999999987,
+      "errors": []
+    }
+  ],
+  "total": 6,
+  "passed": 6,
+  "failed": 0,
+  "moduleErrors": 0,
+  "unhandled": 0
+}

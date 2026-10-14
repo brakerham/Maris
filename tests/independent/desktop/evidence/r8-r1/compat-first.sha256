@@ -1,0 +1,5 @@
+tests/independent/desktop/evidence/r8-r1/compat/process.json	e66b8654b99bab3b41df6632a376cdf764f09e5bcd917837fd20eeeb8612245b
+tests/independent/desktop/evidence/r8-r1/compat/result.json	5e24cb9da600ee024bed4155a59e7471abfa1b0b3281b7a427eebe6916b3562b
+tests/independent/desktop/evidence/r8-r1/compat/stderr.log	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+tests/independent/desktop/evidence/r8-r1/compat/stdout.log	311ff30a9f057863f91d91fbd2a04d4384c22bacc706b732f7331fc2b84f1cce
+tests/independent/desktop/evidence/r8-r1/compat/workers.jsonl	05da4facc31867673f88e4fc5fd1c08c7f013ed745574021ae5c7f20b63691d3

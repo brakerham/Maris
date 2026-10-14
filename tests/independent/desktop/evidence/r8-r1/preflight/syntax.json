@@ -1,0 +1,26 @@
+{
+  "firstStaticError": "ERR_UNSUPPORTED_ESM_URL_SCHEME",
+  "correction": "file URL for TypeScript import; no target imported",
+  "results": [
+    {
+      "file": "r8-r1-readiness.test.tsx",
+      "syntaxPassed": true
+    },
+    {
+      "file": "r8-r1-reporter.mjs",
+      "syntaxPassed": true
+    },
+    {
+      "file": "r8-r1-setup.mjs",
+      "syntaxPassed": true
+    },
+    {
+      "file": "r8-r1-tooling.mjs",
+      "syntaxPassed": true
+    },
+    {
+      "file": "r8-r1-vitest.config.mjs",
+      "syntaxPassed": true
+    }
+  ]
+}

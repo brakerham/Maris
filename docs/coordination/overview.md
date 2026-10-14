@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-14 07:16，Asia/Shanghai
+更新时间：2026-10-14 18:42，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R8模块独立验收已有9个节点通过，第10节点因重复断言ID中断，3个未执行，没有新增产品缺陷证据。发布P4-C12-R8-R1，在新测试副本修正ID与异常记录，仅续验10至13；通过后同任务28项兼容与固定R6新包Windows续验。旧B/完整R7/已过9节点不重复。LAZY-001/UI-02/P4-B未关闭，P4-C/D未开始。
+P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R8旧9+R8-R1新4模块节点独立通过，UI-01已接受passed；兼容28、新公开6及真实页面/一次恢复的有限证据保留。Windows正常关闭发现P1 QUIT-001：quit策略下应用与自有后端未退出。发布P4-B7-R7-QUIT，由既有执行方最小修复main退出接线，测试方和顾问停止。P4-B为1 passed、3 failed、17 blocked、3 not_run，整体未完成；P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R8�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R8交付核对，剩余验收任务冻结 | 2026-10-14 07:16 | 既有测试方接单 | [裁定](../p4-c12-r8-tooling-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R8-R1核对与退出返修任务冻结 | 2026-10-14 18:42 | 既有执行方接单 | [裁定](../p4-c12-r8-r1-quit-coordinator-review.md) |
 | 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
-| 执行智能体 | R6-MODULE-READY `review / finished` | 修复及150开发、新包/EXE22门禁完成，停止 | 2026-10-13 08:15（交付） | 等待独立结论，不修改产品 | [运行说明](../b7-r6-module-ready-running.md) |
-| 测试智能体 | R8 `blocked / finished`；R8-R1 `ready / waiting_user` | 9节点独立通过保留；只续验4节点，随后兼容与Windows | 2026-10-14 07:16（总控准备） | 新起点接单；实际接单unverified | [新任务](prompts/p4-c12-r8-r1-tooling-resume-tester.md) |
+| 执行智能体 | R6 `review / finished`；R7-QUIT `ready / waiting_user` | 新任务待接单，只修main关闭接线及开发回归 | 2026-10-14 18:42（总控准备） | 复算新起点、真实main红灯 | [任务](prompts/p4-b7-r7-quit-executor.md) |
+| 测试智能体 | R8-R1 `blocked / finished` | 4独立/28兼容/6公开通过；Windows正常退出P1，停止 | 2026-10-14 14:08（交付核对） | 等待执行方固定新包再授权复验 | [报告](../testing/phase-4-c12-r8-r1-modules-windows-report.md) |
 
-当前唯一新任务是P4-C12-R8-R1，由既有测试方负责，实际接单unverified。仅修新测试副本，保留原失败；已证明工具错误在新卡限定条件下允许一次定向续验。四节点通过后同任务继续未执行的兼容/Windows。真实产品失败、安全/所有权/清理问题停止扩大。执行方和顾问停止，真实前端提醒保留。
+当前唯一新任务是P4-B7-R7-QUIT，由既有执行方负责，实际接单unverified。修复范围只在main退出接线及必要幂等；原UI-01和模块独立证据保留，不运行测试方集合或旧EXE。新包必须普通WM_CLOSE真实自然退出，不允许用自动退出timer替代。测试方、顾问停止，真实前端提醒保持。
 
 ## 阶段 0 任务状态
 
@@ -118,7 +118,8 @@ P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R8�
 | P4-B7-R5-LAZY：模块错误局部恢复 | 既有执行智能体 | `review / finished` | 稳定独立输入接受；132开发回归、新包及19项EXE门禁已核对 | [核对](../p4-b7-r5-lazy-coordinator-review.md) |
 | P4-B7-R6-MODULE-READY：后台就绪后模块同步 | 既有执行智能体 | `review / finished` | 5文件、150开发及新EXE22项核对，接受为独立输入 | [核对](../p4-b7-r6-module-ready-coordinator-review.md) |
 | P4-C12-R8-MODULES：模块同步及Windows续验 | 既有测试智能体 | `blocked / finished` | 9通过、1工具中断、3未执行；Windows未运行 | [报告](../testing/phase-4-c12-r8-modules-windows-report.md) |
-| P4-C12-R8-R1：工具更正与剩余验收 | 既有测试智能体 | `ready / waiting_user` | 只续验4节点，兼容/Windows原要求保持 | [任务](prompts/p4-c12-r8-r1-tooling-resume-tester.md) |
+| P4-C12-R8-R1：工具更正与剩余验收 | 既有测试智能体 | `blocked / finished` | 4独立通过，Windows正常退出P1；UI-01已接受passed | [报告](../testing/phase-4-c12-r8-r1-modules-windows-report.md) |
+| P4-B7-R7-QUIT：正常关闭退出修复 | 既有执行智能体 | `ready / waiting_user` | 五文件最小修复，真实main红绿和一次新包普通关闭 | [任务](prompts/p4-b7-r7-quit-executor.md) |
 | P4-C12-R4：lazy复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | 原节点0pass/1fail；故障命中未证实，未新增产品缺陷，Windows0次 | [报告](../testing/phase-4-c12-r4-lazy-windows-report.md) |
 | P4-C12-R4-R1：观察与续跑 | 既有测试智能体 | `blocked / finished` | mock1、#/daily、5016ms无alert；异常终态未定位 | [报告](../testing/phase-4-c12-r4-r1-observation-windows-report.md) |
 | P4-D15：异常传播有限诊断 | 既有技术顾问 | `blocked / finished` | import/默认loader拒绝成立；P3超时无阶段回执，原证据保留 | [报告](../phase-4-d15-lazy-propagation-advice.md)、[总控核对](../p4-d15-bootstrap-coordinator-review.md) |

@@ -1,0 +1,107 @@
+{
+  "id": "W1",
+  "startedUtc": "2026-10-14T05:54:37.182Z",
+  "durationMs": 45775.780399999996,
+  "firstFailure": {
+    "stage": "normal-close",
+    "id": "W1-NORMAL-EXIT-OBSERVED",
+    "kind": "Error",
+    "code": "assertion_failed"
+  },
+  "cleanupError": null,
+  "timeout": false,
+  "forced": true,
+  "rootPid": 28308,
+  "rootExit": {
+    "code": 1,
+    "signal": null,
+    "elapsedMs": 43640.2469
+  },
+  "normalClose": true,
+  "registered": [
+    {
+      "pid": 28308,
+      "parentPid": 7988,
+      "created": "2026-10-14T05:54:37.2060780Z",
+      "kind": "product"
+    },
+    {
+      "pid": 26396,
+      "parentPid": 28308,
+      "created": "2026-10-14T05:54:39.5644690Z",
+      "kind": "product"
+    },
+    {
+      "pid": 20224,
+      "parentPid": 28308,
+      "created": "2026-10-14T05:54:39.5690090Z",
+      "kind": "product"
+    },
+    {
+      "pid": 13164,
+      "parentPid": 28308,
+      "created": "2026-10-14T05:54:39.5827040Z",
+      "kind": "product"
+    },
+    {
+      "pid": 16832,
+      "parentPid": 28308,
+      "created": "2026-10-14T05:54:39.6269180Z",
+      "kind": "python"
+    },
+    {
+      "pid": 4740,
+      "parentPid": 16832,
+      "created": "2026-10-14T05:54:39.7713620Z",
+      "kind": "conhost"
+    },
+    {
+      "pid": 27980,
+      "parentPid": 28308,
+      "created": "2026-10-14T05:54:39.7820150Z",
+      "kind": "product"
+    },
+    {
+      "pid": 27308,
+      "parentPid": 16832,
+      "created": "2026-10-14T05:54:39.7949430Z",
+      "kind": "python"
+    },
+    {
+      "pid": 3788,
+      "parentPid": 28308,
+      "created": "2026-10-14T05:55:00.1435220Z",
+      "kind": "python"
+    },
+    {
+      "pid": 26552,
+      "parentPid": 3788,
+      "created": "2026-10-14T05:55:00.1589700Z",
+      "kind": "conhost"
+    },
+    {
+      "pid": 29316,
+      "parentPid": 3788,
+      "created": "2026-10-14T05:55:00.1743640Z",
+      "kind": "python"
+    }
+  ],
+  "stdoutBytes": 2,
+  "stderrBytes": 2950,
+  "rawLogsSaved": false,
+  "consoleEvents": [
+    {
+      "type": "error",
+      "secretPattern": false,
+      "internalPath": false
+    }
+  ],
+  "pageErrors": 0,
+  "productStarts": 1,
+  "helperStarts": 0,
+  "chunkInjectionCount": 0,
+  "profileAlias": "new_R8R1_main",
+  "remainingOwned": 0,
+  "remainingListeners": 0,
+  "passed": false
+}

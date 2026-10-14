@@ -1,0 +1,16 @@
+{
+  "idCounts": {
+    "R8-10": 69,
+    "R8-11": 36,
+    "R8-12": 42,
+    "R8-13": 37
+  },
+  "moduleCLI": 1,
+  "extraTargetCLI": 0,
+  "compatCLI": 1,
+  "publicCLI": 1,
+  "productStarts": 1,
+  "helpers": 0,
+  "sourceCRLFFirstPreserved": true,
+  "unchangedBusinessBodyExceptApprovedID": true
+}

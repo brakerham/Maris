@@ -1,0 +1,1 @@
+{"version":"5.0.2","results":[[":tests/unit/module-readiness.test.tsx",{"duration":746.9170000000001,"failed":false}],[":tests/unit/lazy-isolation.test.tsx",{"duration":1333.5121000000001,"failed":false}],[":tests/unit/composition-root.test.ts",{"duration":5.037800000000004,"failed":false}],[":tests/unit/shell.test.tsx",{"duration":126.90100000000007,"failed":false}]]}

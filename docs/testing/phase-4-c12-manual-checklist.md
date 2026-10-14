@@ -145,3 +145,12 @@ ZIP/staging 的附加检查、UI-03/04 冲突与漂移门禁、HostClient/sessio
 - 已取得普通/Strict空列表→同值就绪通知、已就绪启动、晚快照、同步通知、突发合并/旧列表、拒绝保页及同集合retry+1/状态保持证据。旧冷B/完整R7不重跑，旧W1原因仍unverified；jsdom样式可见性与真实Windows分别统计。
 - 目标已进入后不能修后重跑，保留首次源码/日志。后3节点、开发兼容28和Windows均not_run；产品0/8、辅助0/4、chunk0。root30140/worker22216实际exit1、无强杀/超时，真实卸载/退订/global恢复通过。
 - 原24项仍0 passed/1 failed/19 blocked/4 not_run；所有Tray、真实session/同ID重启、老化原生提示、设备条件继续未验证。无新外部profile或OS/用户操作，不请求即时点击；原预期及历史材料保持。
+
+
+## R8-R1 自动验收与人工缺口更新（2026-10-14）
+
+[R8-R1增量报告](phase-4-c12-r8-r1-modules-windows-report.md)：新4独立节点、28必要兼容、6剩余公开节点通过。旧R8九节点保留而不重跑。固定新包W1真实日常页及一次recover后页面通过；quit关闭策略出现P1 `P4-C12-R8-R1-QUIT-001`，正常关闭请求已发出但10秒后root及自有后端仍在，安全值expected=true/actual=false。
+
+已停止后续Windows/辅助场景。产品1/8、辅助0/4；测试方按核实所有权定向强制清理后登记对象0/监听0，不将此写作产品正常退出通过。虚拟根和首次证据保留。原人工范围仍未授权：OS注销/重启、启动项、OS主题、多屏/DPI。真实Tray/其他关闭策略、原生老化保留与明确删除、跨重启session/同ID、真实chunk故障均不得由本轮部分通过代签；待总控处理P1并授权后再按原清单执行，本轮没有要求用户点击。
+
+矩阵仅B实际状态更新为1passed、3failed、17blocked、3not_run：UI-01 passed；CMP-03及SUP-05正常退出子条件failed；旧UI-02 failed保留。SUP-05的注销等人工子条件仍not_run。测试角色blocked/finished，交总控review，不自行关闭LAZY-001或P4-B。

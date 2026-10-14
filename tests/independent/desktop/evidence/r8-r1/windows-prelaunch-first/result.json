@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-14T13:54:32.260589+08:00",
+  "errorCode": "runner_source_changed",
+  "stage": "source_manifest_before_external_root_and_spawn",
+  "cause": "CRLF digest text contains trailing CR; actual raw source hashes match after parsing line endings",
+  "productStarts": 0,
+  "helperStarts": 0,
+  "externalRootCreated": false,
+  "stdoutSafeError": true,
+  "correctionAuthorization": "task pretarget proven side-effect-free tooling correction once",
+  "count": 1
+}

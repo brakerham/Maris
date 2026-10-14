@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-14T13:33:16.482288+08:00",
+  "formalRuns": 0,
+  "budget": "initialization60s/body15s/UI5s/cleanup5s/CLI300s",
+  "files": 6,
+  "selftestBeforeNativeDOMAndProduct": true,
+  "selftestCaseIds": [
+    "SELF.DISTINCT",
+    "SELF.DUPLICATE_RECORDED",
+    "SELF.CLEANUP_NOT_OVERRIDE",
+    "SELF.UNKNOWN",
+    "SELF.PRIVACY"
+  ],
+  "formalExpectedFailureExemption": false,
+  "selected": [
+    "R8-10",
+    "R8-11",
+    "R8-12",
+    "R8-13"
+  ],
+  "idCounts": {
+    "R8-10": 69,
+    "R8-11": 36,
+    "R8-12": 42,
+    "R8-13": 37
+  }
+}

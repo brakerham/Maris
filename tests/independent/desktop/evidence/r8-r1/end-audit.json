@@ -1,0 +1,237 @@
+{
+  "at": "2026-10-14T14:05:37.547709+08:00",
+  "inputs": {
+    "start": {
+      "entries": 848,
+      "unchanged": 844,
+      "authorizedChanges": [
+        "docs/coordination/agents/tester.md",
+        "docs/testing/phase-4-c12-manual-checklist.md",
+        "docs/testing/phase-4-c12-windows-shell-report.md",
+        "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+      ],
+      "manifestSha256": "ca700581d646b4a6cae694737642678c25195cbd8c0aeb0c4a38143b7196f837"
+    },
+    "r6Source": {
+      "entries": 814,
+      "unchanged": 805,
+      "authorizedChanges": [
+        "README.md",
+        "docs/coordination/agents/brainstorm.md",
+        "docs/coordination/agents/tester.md",
+        "docs/coordination/control.md",
+        "docs/coordination/overview.md",
+        "docs/project-coordination.md",
+        "docs/testing/phase-4-c12-manual-checklist.md",
+        "docs/testing/phase-4-c12-windows-shell-report.md",
+        "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+      ],
+      "manifestSha256": "74c6df4829b2f9ce8b0de2b84b748f14cc3dec520ceab234b91113d3a269a68e"
+    },
+    "buildSource": {
+      "entries": 813,
+      "unchanged": 813,
+      "authorizedChanges": [],
+      "manifestSha256": "05677054bf73b1a40c60a844f7cad99cc2654bf638ea3798a2081d04212851b4"
+    },
+    "out": {
+      "entries": 140,
+      "unchanged": 140,
+      "authorizedChanges": [],
+      "manifestSha256": "ebb3521d71bb45d03b692dc0eacda52db540bd722e1aee414c9c025211a28694",
+      "unlistedFiles": [],
+      "separatelyCoveredFiles": [],
+      "missingFiles": []
+    },
+    "resources": {
+      "entries": 67,
+      "unchanged": 67,
+      "authorizedChanges": [],
+      "manifestSha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1",
+      "unlistedFiles": [],
+      "separatelyCoveredFiles": [
+        "app.asar"
+      ],
+      "missingFiles": []
+    },
+    "dependencies": {
+      "entries": 12443,
+      "unchanged": 12443,
+      "authorizedChanges": [],
+      "manifestSha256": "15f5613ce7744083a81c05c68ab06e06b6aa0b6e30f0c9c98ed933d87899e04c"
+    },
+    "dist": {
+      "entries": 73,
+      "unchanged": 73,
+      "authorizedChanges": [],
+      "manifestSha256": "ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f",
+      "unlistedFiles": [],
+      "separatelyCoveredFiles": [],
+      "missingFiles": []
+    },
+    "r8Delivery": {
+      "entries": 29,
+      "unchanged": 25,
+      "authorizedChanges": [
+        "docs/coordination/agents/tester.md",
+        "docs/testing/phase-4-c12-manual-checklist.md",
+        "docs/testing/phase-4-c12-windows-shell-report.md",
+        "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+      ],
+      "manifestSha256": "3b91fa7a276ab04c671eb1926adf7ca5c20dd8846cc66aa6615cce3427f34f73"
+    },
+    "r8Source": {
+      "entries": 7,
+      "unchanged": 7,
+      "authorizedChanges": [],
+      "manifestSha256": "2e877d54df1e6012ea8509c873b6e3a4042a9a6c773cdb1e317c9ad61973fecc"
+    },
+    "r8First": {
+      "entries": 6,
+      "unchanged": 6,
+      "authorizedChanges": [],
+      "manifestSha256": "24aae3eadf70d792213f29488dbee1f5436fb339ffdd0d32e9a876e3dc365760"
+    },
+    "r7Delivery": {
+      "entries": 68,
+      "unchanged": 64,
+      "authorizedChanges": [
+        "docs/coordination/agents/tester.md",
+        "docs/testing/phase-4-c12-manual-checklist.md",
+        "docs/testing/phase-4-c12-windows-shell-report.md",
+        "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+      ],
+      "manifestSha256": "1357d6c31d7643dc661961ef695b5403da1f3c74c047c99e5378a3252bdbdd0e"
+    }
+  },
+  "fullDependencyInventory": {
+    "entries": 12677,
+    "unchanged": 12677,
+    "authorizedChanges": [],
+    "manifestSha256": "035c05bffbbf5f297ac098e7fbda16d5bd48cf76a89e4036c3dc35ddb64b3ef8",
+    "unlistedFiles": [],
+    "separatelyCoveredFiles": [],
+    "missingFiles": []
+  },
+  "modules-source.sha256": {
+    "entries": 6,
+    "unchanged": 6,
+    "authorizedChanges": [],
+    "manifestSha256": "76de7fa1a48cffa40d00aa06ecb79156477bbb0665476c432fa678c7338fd3af"
+  },
+  "compat-source.sha256": {
+    "entries": 4,
+    "unchanged": 4,
+    "authorizedChanges": [],
+    "manifestSha256": "94e6f8cba311a5949e35741d53332d4e0e2fe5a5889dd38ff915a0ca25dbdeba"
+  },
+  "public-source-final.sha256": {
+    "entries": 5,
+    "unchanged": 5,
+    "authorizedChanges": [],
+    "manifestSha256": "9ecca6a1e424399bbfc2b7bbe2e13854291d00ce364dec3fff3f37329d94f9de"
+  },
+  "windows-source.sha256": {
+    "entries": 2,
+    "unchanged": 2,
+    "authorizedChanges": [],
+    "manifestSha256": "d19fefa1b731fab6a46588df89ea79e05274c57be40b27a3a4d70cd22f027246"
+  },
+  "windows-attempt1-source.sha256": {
+    "entries": 2,
+    "unchanged": 2,
+    "authorizedChanges": [],
+    "manifestSha256": "60a6072f8d7f86cbbf343d683fdad1baf0bf1e18c2743b08677ba87b0ad83d77"
+  },
+  "modules-first.sha256": {
+    "entries": 6,
+    "unchanged": 6,
+    "authorizedChanges": [],
+    "manifestSha256": "1b23a1c70d8683a5efc12e49e6cbcc810c24f951b27105887c6eae3e33157d91"
+  },
+  "compat-first.sha256": {
+    "entries": 5,
+    "unchanged": 5,
+    "authorizedChanges": [],
+    "manifestSha256": "f8d1524d5a1556bc5578d6586e911d80bc61233804ad234f9e677b05716cb010"
+  },
+  "public-first.sha256": {
+    "entries": 6,
+    "unchanged": 6,
+    "authorizedChanges": [],
+    "manifestSha256": "9576147e0a432124edc5c1c5491b2f6232da1c4b022bc3ba7491c0f72e96e9b0"
+  },
+  "windows-first.sha256": {
+    "entries": 2,
+    "unchanged": 2,
+    "authorizedChanges": [],
+    "manifestSha256": "d21191ea86f7d83bc309db6477ed62e90908bd68268bdace132283a20b1ea7f7"
+  },
+  "artifactDigestsMatched": 3,
+  "versionMetadataMatched": 9,
+  "matrix": {
+    "uniqueRows": 120,
+    "columns": 12,
+    "allOriginalExpectedUnchanged": true,
+    "outsideBBytesUnchanged": true,
+    "BStates": {
+      "passed": 1,
+      "failed": 3,
+      "blocked": 17,
+      "not_run": 3
+    }
+  },
+  "appendOnlyDocumentPrefixesMatched": 2,
+  "modules": {
+    "passed": 4,
+    "rootExitCode": 0,
+    "workerExitCodes": [
+      1
+    ]
+  },
+  "compat": {
+    "passed": 28,
+    "rootExitCode": 0,
+    "workerExitCodes": [
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "public": {
+    "passed": 6,
+    "rootExitCode": 0,
+    "workerExitCodes": [
+      1
+    ]
+  },
+  "windows": {
+    "productStarts": 1,
+    "helperStarts": 0,
+    "forcedCleanup": true,
+    "normalExitPassed": false,
+    "firstFailure": {
+      "stage": "normal-close",
+      "id": "W1-NORMAL-EXIT-OBSERVED",
+      "kind": "Error",
+      "code": "assertion_failed"
+    },
+    "remainingOwned": 0,
+    "remainingListeners": 0,
+    "childExitCodes": "unverified"
+  },
+  "readOnlyGit": {
+    "staged": {
+      "exitCode": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 84
+    },
+    "diffCheck": {
+      "exitCode": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 425
+    }
+  },
+  "passed": true
+}

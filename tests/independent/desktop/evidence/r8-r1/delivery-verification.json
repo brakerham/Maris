@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-14T14:08:56+08:00",
+  "task": "P4-C12-R8-R1",
+  "state": "blocked",
+  "execution": "finished",
+  "handoff": "coordinator_review",
+  "files": 82,
+  "manifestSha256": "437bcded2f0accc0e55e63cb411a48dc1414d76f659e70ddf4cc48a455a6fd58",
+  "manifestEncoding": "UTF-8 no BOM; sorted POSIX path TAB SHA256 LF",
+  "selfExcluded": [
+    "delivery.sha256",
+    "delivery-verification.json"
+  ],
+  "endAuditPassed": true,
+  "oldFirstEvidencePreserved": true,
+  "productStarts": 1,
+  "helperStarts": 0,
+  "firstProductFailure": "P4-C12-R8-R1-QUIT-001",
+  "matrixB": {
+    "passed": 1,
+    "failed": 3,
+    "blocked": 17,
+    "not_run": 3
+  }
+}

@@ -1,0 +1,16 @@
+{"event":"controller_ready","elapsedMs":16,"seq":1,"details":{"bodyMs":15000,"initializationMs":60000,"cleanupMs":5000,"productStarts":0,"suiteMs":300000}}
+{"event":"root_started","elapsedMs":64,"seq":2,"details":{"pid":26900}}
+{"event":"worker_registered","elapsedMs":813,"seq":3,"details":{"pathAndTimeVerified":true,"pid":5156,"parentPid":26900}}
+{"event":"body_enter","elapsedMs":3254,"seq":4,"details":{"id":"R8-10"}}
+{"event":"cleanup_enter","elapsedMs":4043,"seq":5,"details":{"id":"R8-10","bodyMs":779.1563000000001}}
+{"event":"cleanup_terminal","elapsedMs":4108,"seq":6,"details":{"id":"R8-10","cleanupMs":62.80139999999983}}
+{"event":"body_enter","elapsedMs":4112,"seq":7,"details":{"id":"R8-11"}}
+{"event":"cleanup_enter","elapsedMs":4289,"seq":8,"details":{"id":"R8-11","bodyMs":207.39759999999978}}
+{"event":"cleanup_terminal","elapsedMs":4354,"seq":9,"details":{"id":"R8-11","cleanupMs":58.45560000000023}}
+{"event":"body_enter","elapsedMs":4433,"seq":10,"details":{"id":"R8-12"}}
+{"event":"cleanup_enter","elapsedMs":4660,"seq":11,"details":{"id":"R8-12","bodyMs":270.73730000000023}}
+{"event":"cleanup_terminal","elapsedMs":4709,"seq":12,"details":{"id":"R8-12","cleanupMs":66.6921999999995}}
+{"event":"body_enter","elapsedMs":4711,"seq":13,"details":{"id":"R8-13"}}
+{"event":"cleanup_enter","elapsedMs":4909,"seq":14,"details":{"id":"R8-13","bodyMs":162.46380000000045}}
+{"event":"cleanup_terminal","elapsedMs":4945,"seq":15,"details":{"id":"R8-13","cleanupMs":59.57020000000011}}
+{"event":"controller_finished","elapsedMs":5012,"seq":16,"details":{"durationMs":5012}}

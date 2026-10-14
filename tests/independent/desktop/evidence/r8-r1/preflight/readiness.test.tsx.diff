@@ -1,0 +1,69 @@
+--- r8-modules-readiness.test.tsx
++++ r8-r1-readiness.test.tsx
+@@ -1,5 +1,6 @@
+ import { test, vi } from 'vitest';
+ const record=(globalThis as any).__r8Record;
++const tooling=(globalThis as any).__r8Tooling;
+ const {JSDOM,VirtualConsole}=(globalThis as any).__r8Dom;
+ const React=await import('react');
+ const {act,createElement:h,StrictMode}=React;
+@@ -13,19 +14,20 @@
+ async function scenario(id:string,strict:boolean,run:(s:any)=>Promise<void>){
+  record('body_enter',{id}); const begin=performance.now(),deadline=begin+15000;
+  let failed=false,root:any,dom:any,unhandled=0,consoleLeak=false,consoleIncomplete=false,jsdomErrors=0;
+- let mounted=false,cleanupStart=0;
++ let mounted=false,cleanupStart=0,cleanupFailed=false,bodyPassed=false,bodyError:any=null,phase='body';
++ const capture=(e:any)=>{failed=true;bodyError ??= e;if(phase==='cleanup')cleanupFailed=true;if(tooling.classify(e)==='unknown')record('unknown_error',{id,stage:phase,errorKind:e instanceof TypeError?'TypeError':e instanceof Error?'Error':'other'});};
+  const spies:any[]=[]; const listeners=new Set<any>(); const savedGlobals=new Map<string,PropertyDescriptor|undefined>();
+  const count={list:0,snapshot:0,subscribe:0,unsubscribe:0,settings:0,alpha:0,beta:0,gamma:0,denied:0,recover:0,auth:0,provider:0,outbox:0,finance:0};
+  const used=new Set<string>();
+  const scalar=(v:any)=>typeof v==='boolean'||typeof v==='number'&&Number.isFinite(v)||['unknown','dark','on','off','system','#/alpha','#/beta','#/settings'].includes(v)?v:'unknown';
+  const check=(name:string,get:()=>any,expected:any,operator='eq')=>{
+-  const aid=`${id}.${name}`; if(used.has(aid))throw Error('r8_duplicate_assertion');used.add(aid);
++  const aid=`${id}.${name}`; tooling.claim(used,aid,id,record,phase);
+   record('assert_enter',{id:aid,kind:'gate',operator,expected:scalar(expected)});let actual:any='unknown',passed=false;
+   try{actual=scalar(get());passed=actual!=='unknown'&&(operator==='lte'?actual<=expected:operator==='positive'?Number.isSafeInteger(actual)&&actual>expected:actual===expected);}catch{}
+-  record(passed?'assert_pass':'assert_fail',{id:aid,kind:'gate',operator,expected:scalar(expected),actual});if(!passed)failed=true;return passed;
++  record(passed?'assert_pass':'assert_fail',{id:aid,kind:'gate',operator,expected:scalar(expected),actual});if(!passed){failed=true;if(phase==='cleanup')cleanupFailed=true;}return passed;
+  };
+- const guard=()=>{if(failed)throw Error('r8_gate_failed');if(performance.now()>=deadline)throw Error('r8_body_deadline');};
+- const op=async(name:string,fn:()=>any)=>{guard();const oid=`${id}.${name}`;record('operation_enter',{id:oid});const start=performance.now();try{const x=await fn();record('operation_pass',{id:oid,durationMs:performance.now()-start});return x;}catch(e){record('operation_fail',{id:oid,durationMs:performance.now()-start,errorKind:e instanceof TypeError?'TypeError':'Error'});failed=true;throw Error('r8_operation_failed');}};
++ const guard=()=>{if(failed)throw new tooling.GateError('r8_gate_failed');if(performance.now()>=deadline)throw Error('r8_body_deadline');};
++ const op=async(name:string,fn:()=>any)=>{guard();const oid=`${id}.${name}`;record('operation_enter',{id:oid});const start=performance.now();try{const x=await fn();record('operation_pass',{id:oid,durationMs:performance.now()-start});return x;}catch(e){record('operation_fail',{id:oid,durationMs:performance.now()-start,errorKind:e instanceof TypeError?'TypeError':'Error'});throw e;}};
+  const pause=async(ms=40)=>{await act(async()=>{await new Promise(r=>setTimeout(r,ms));});};
+  const wait=async(name:string,fn:()=>boolean)=>op(name,async()=>{const end=Math.min(deadline-50,performance.now()+5000);let actual=fn();while(!actual&&performance.now()<end){await pause(5);actual=fn();}check(`${name}.READY`,()=>actual,true);});
+  const q=(sel:string)=>dom.window.document.querySelector(sel);
+@@ -71,9 +73,9 @@
+   const loaders=Object.fromEntries(['alpha','beta','gamma'].map(name=>[name,async()=>{count[name as 'alpha']++;return s.pages[name]?s.pages[name]():Page(name);} ]));
+   s.mount=()=>op('MOUNT',()=>act(async()=>{root=createRoot(q('#root'),rendererRootOptions);mounted=true;const tree=h(DesktopApp,{registry,loaders});root.render(strict?h(StrictMode,null,tree):tree);}));
+   s.unmount=()=>op('UNMOUNT_EARLY',()=>act(async()=>{root.unmount();mounted=false;}));
+-  await run(s);s.chrome('FINAL');guard();record('body_pass',{id,bodyMs:performance.now()-begin});
+- }finally{
+-  cleanupStart=performance.now();record('cleanup_enter',{id,bodyMs:cleanupStart-begin});
++  await run(s);s.chrome('FINAL');guard();bodyPassed=true;record('body_pass',{id,bodyMs:performance.now()-begin});
++ }catch(e){capture(e);}finally{
++  phase='cleanup';cleanupStart=performance.now();record('cleanup_enter',{id,bodyMs:cleanupStart-begin});
+   try{
+    check('SAFETY.DOM_LEAK',()=>dom?leak(dom.window.document.documentElement.outerHTML):false,false);
+    check('SAFETY.CONSOLE_LEAK',()=>consoleLeak,false);check('SAFETY.CONSOLE_COMPLETE',()=>consoleIncomplete,false);check('SAFETY.UNHANDLED',()=>unhandled,0);check('SAFETY.JSDOM',()=>jsdomErrors,0);
+@@ -85,9 +87,9 @@
+    }
+    check('CLEAN.ROOT_UNMOUNTED',()=>mounted,false);check('CLEAN.GLOBALS_RESTORED',()=>[...savedGlobals].every(([k,v])=>v?Object.getOwnPropertyDescriptor(globalThis,k)?.value===v.value:!Object.hasOwn(globalThis,k)),true);
+    check('CLEAN.BUDGET_MS',()=>performance.now()-cleanupStart,5000,'lte');
+-  }finally{record('cleanup_terminal',{id,cleanupMs:performance.now()-cleanupStart,passed:!failed});}
++  }catch(e){capture(e);}finally{record('cleanup_terminal',{id,cleanupMs:performance.now()-cleanupStart,passed:!cleanupFailed});record('node_terminal',{id,passed:tooling.nodePassed(bodyPassed,bodyError,!cleanupFailed)&&!failed,stage:'cleanup'});}
+  }
+- if(failed)throw Error('r8_gate_failed');
++ if(failed)throw new tooling.GateError('r8_gate_failed');
+ }
+ 
+ for(const [id,strict]of [['R8-01',false],['R8-02',true]] as const)test(`${id} | empty then identical ready notifications`,()=>scenario(id,strict,async s=>{
+@@ -120,7 +122,7 @@
+ }));
+ test('R8-10 | effective intersection changes remove active content',()=>scenario('R8-10',true,async s=>{
+  s.rows=[host('alpha',{enabled:false}),host('beta',{version:'2.0.0'}),host('unknown')];await s.mount();await s.wait('EMPTY',()=>!!s.q('main.shell'));for(const n of ['alpha','beta','gamma']){s.ui(`DENIED.${n.toUpperCase()}`,`nav a[href="#/${n}"]`,false);s.check(`NO_PRELOAD.${n.toUpperCase()}`,()=>s.count[n],0);}
+- s.rows=[host('alpha')];await s.emit('ADD_ALPHA');await s.wait('ALPHA',()=>!!s.q('#r8-alpha'));await s.settings('SET');s.rows=[host('beta')];await s.emit('REMOVE_ALPHA_ADD_BETA');await s.wait('REMOVED',()=>!s.q('#r8-alpha')&&!!s.link('beta'));s.ui('REMOVED.PAGE','#r8-alpha',false);s.ui('REMOVED.NAV','nav a[href="#/alpha"]',false);s.ui('ADDED.NAV','nav a[href="#/beta"]');s.chrome('REMOVED');s.state('REMOVED_STATE');s.check('ADDED.NO_PRELOAD',()=>s.count.beta,0);await s.click('OPEN_BETA',s.link('beta'));await s.wait('BETA',()=>!!s.q('#r8-beta'));s.ui('ADDED.PAGE','#r8-beta');
++ s.rows=[host('alpha')];await s.emit('ADD_ALPHA');await s.wait('ALPHA',()=>!!s.q('#r8-alpha'));await s.settings('SET');s.rows=[host('beta')];await s.emit('REMOVE_ALPHA_ADD_BETA');await s.wait('REMOVED',()=>!s.q('#r8-alpha')&&!!s.link('beta'));s.ui('REMOVED.PAGE','#r8-alpha',false);s.ui('REMOVED.ALPHA_LINK','nav a[href="#/alpha"]',false);s.ui('ADDED.NAV','nav a[href="#/beta"]');s.chrome('REMOVED');s.state('REMOVED_STATE');s.check('ADDED.NO_PRELOAD',()=>s.count.beta,0);await s.click('OPEN_BETA',s.link('beta'));await s.wait('BETA',()=>!!s.q('#r8-beta'));s.ui('ADDED.PAGE','#r8-beta');
+ }));
+ test('R8-11 | pending old page cannot revive removed module',()=>scenario('R8-11',false,async s=>{
+  const late=deferred();s.pages.alpha=()=>late.promise;await s.mount();await s.wait('LOADER_PENDING',()=>s.count.alpha>0);s.rows=[host('beta')];await s.emit('REPLACE_SET');await s.wait('BETA_NAV',()=>!!s.link('beta'));await s.click('OPEN_BETA',s.link('beta'));await s.wait('BETA',()=>!!s.q('#r8-beta'));await s.settle('OLD_PAGE_RESULT',()=>late.resolve(s.Page('alpha')));await s.op('QUIET',()=>s.pause(60));s.ui('STALE.ALPHA','#r8-alpha',false);s.ui('CURRENT.BETA','#r8-beta');s.check('CURRENT.HASH',()=>s.dom.window.location.hash,'#/beta');

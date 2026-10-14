@@ -1,0 +1,51 @@
+import { openSync, writeSync, fsyncSync, closeSync, readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+import * as tooling from './r8-r1-tooling.mjs';
+import { fileURLToPath } from 'node:url';
+const own = path.dirname(fileURLToPath(import.meta.url));
+const journal = path.join(own, 'evidence/r8-r1/modules/worker.journal.jsonl');
+const fd = openSync(journal, 'wx');
+const started = performance.now(); let seq = 0;
+const keys = new Set(['id','operator','expected','actual','kind','operation','passed','errorKind','durationMs','count','bodyMs','cleanupMs','exitCode','rejected','noRawField','stage','nodeId','attemptedAssertionId','caseId','expectedFailure','errorCode']);
+const enums = new Set(['unknown','eq','lte','positive','gate','selftest','Error','TypeError','AssertionError','other','dark','on','off','system','#/alpha','#/beta','#/settings','online','offline','body','cleanup','duplicate_assertion_id']);
+function record(event, details = {}) {
+  if (!/^[a-z][a-z0-9_]*$/.test(event)) throw Error('r8_record_schema');
+  for (const [key,value] of Object.entries(details)) {
+    if (!keys.has(key)) throw Error('r8_record_schema');
+    if (['id','operation','nodeId','attemptedAssertionId','caseId'].includes(key)) { if (typeof value !== 'string' || !/^(R8|SELF)[A-Z0-9._-]*$/.test(value)) throw Error('r8_record_schema'); }
+    else if (!(typeof value === 'boolean' || typeof value === 'number' && Number.isFinite(value) || enums.has(value))) throw Error('r8_record_schema');
+  }
+  if(details.expectedFailure!==undefined && !(details.kind==='selftest' && details.caseId?.startsWith('SELF.')))throw Error('r8_selftest_scope');
+  const bytes = Buffer.from(JSON.stringify({ seq: ++seq, event, at:new Date().toISOString(), attempt:0, elapsedMs: performance.now()-started, pid: process.pid, parentPid: process.ppid, details })+'\n');
+  for (let offset=0; offset<bytes.length;) offset+=writeSync(fd,bytes,offset,bytes.length-offset);
+  fsyncSync(fd);
+}
+globalThis.__r8Record = record;
+record('worker_start');
+process.once('exit', exitCode => { record('worker_exit',{exitCode}); closeSync(fd); });
+globalThis.__r8Tooling=tooling;
+const checks=[];
+function selfcheck(caseId,passed){record('selftest_result',{kind:'selftest',caseId,passed});checks.push(passed);}
+const ids=new Set();
+tooling.claim(ids,'SELF.REMOVED.ALPHA_LINK.EXISTS','SELF',record,'body',true);
+tooling.claim(ids,'SELF.REMOVED.NAV.EXISTS','SELF',record,'body',true);
+selfcheck('SELF.DISTINCT',ids.size===2);
+let duplicate=null;
+try{tooling.claim(ids,'SELF.REMOVED.NAV.EXISTS','SELF',record,'body',true);}catch(e){duplicate=e;}
+const deliberatePassed=tooling.nodePassed(false,duplicate,true);
+record('selftest_node_terminal',{caseId:'SELF.DUPLICATE',kind:'selftest',expectedFailure:true,passed:deliberatePassed});
+selfcheck('SELF.DUPLICATE_RECORDED',tooling.classify(duplicate)==='tool' && readFileSync(journal,'utf8').includes('"event":"tool_error"') && !deliberatePassed);
+selfcheck('SELF.CLEANUP_NOT_OVERRIDE',!tooling.nodePassed(true,duplicate,true));
+selfcheck('SELF.UNKNOWN',tooling.classify(new TypeError('virtual'))==='unknown');
+let rejected=false;
+try{record('forbidden',{raw:'R8_FORBIDDEN_PRIVATE_TEXT'});}catch{rejected=true;}
+selfcheck('SELF.PRIVACY',rejected&&!readFileSync(journal,'utf8').includes('R8_FORBIDDEN_PRIVATE_TEXT'));
+record('recorder_selftest',{kind:'selftest',passed:checks.every(Boolean),count:checks.length});
+if(!checks.every(Boolean))throw Error('r8_recorder_selftest');
+record('native_jsdom_enter');
+const req=createRequire('C:/MarisModulesR6/R6-20261013-002100/workspace/node_modules/jsdom/package.json');
+const api=req('./lib/api.js');
+if(typeof api.JSDOM!=='function'||typeof api.VirtualConsole!=='function') throw Error('r8_jsdom_api');
+globalThis.__r8Dom=api;
+record('native_jsdom_resolved');

@@ -1,0 +1,11 @@
+--- first
++++ new-copy
+@@ -31,7 +31,7 @@
+ must(fs.readFileSync(path.join(repo,'docs/coordination/control.md'),'utf8').includes('2026-10-14T07:16:34+08:00'),'control_changed');
+ const startAudit=JSON.parse(fs.readFileSync(path.join(ev,'start-audit.json'),'utf8'));
+ for(const [name,digest] of Object.entries(startAudit.artifacts))must(sha(fs.readFileSync(path.join(workspace,name)))===digest,'fixed_artifact_changed');
+-for(const line of fs.readFileSync(path.join(ev,'windows-source.sha256'),'utf8').trimEnd().split('\n')){const [name,digest]=line.split('\t');must(sha(fs.readFileSync(path.join(own,name)))===digest,'runner_source_changed');}
++for(const line of fs.readFileSync(path.join(ev,'windows-attempt1-source.sha256'),'utf8').trimEnd().split(/\r?\n/)){const [name,digest]=line.split('\t');must(sha(fs.readFileSync(path.join(own,name)))===digest,'runner_source_changed');}
+ boundary(plan.externalRoot);fs.mkdirSync(plan.externalRoot,{recursive:true});
+ for(const p of [profile,osEnv,...['appdata','localappdata','temp'].map(n=>path.join(osEnv,n))]){boundary(p);fs.mkdirSync(p);}
+ fs.mkdirSync(out);
