@@ -1,25 +1,106 @@
 # 执行智能体状态
 
-- 角色：代码实现、自测、集成和执行子任务管理
-- 连接状态：已确认；本次执行已停止
-- 当前任务：P4-B7-R6-MODULE-READY — 后台就绪后的模块与页面同步
+- 角色：执行智能体；代码实现、自测、集成和内部执行子任务管理
+- 连接状态：已确认；唯一执行负责人
+- 当前任务：P4-B7-R7-QUIT
 - 状态：review / finished
-- 最近更新：2026-10-13 08:15:14，Asia/Shanghai
-- 可修改范围：module-routes.tsx、新module-readiness.test.tsx、新R6运行说明/source清单、本人executor日志；仅5个仓库文件。
+- 最近更新：2026-10-15 11:37:42，Asia/Shanghai
+- 可修改范围：main/index.ts、新main-quit.test.ts、新R7运行说明/source清单、本人日志；仅5个仓库文件
 
 ## 当前执行快照
 
 - 运行状态：finished
-- 当前步骤：实现、开发验证、唯一新包/EXE和资源审计完成，提交固定交付供总控review
-- 步骤开始时间：2026-10-13 08:10:42，Asia/Shanghai
-- 最近有效进展：开发28定向/150完整、静态7/7、新EXE22/22；正常exit0/owned资源0；旧R5/R7前后匹配
-- 最近心跳：2026-10-13 08:15:14，Asia/Shanghai
-- 下一检查点：总控核对R6运行说明、5文件及814项source快照；本执行方不启动后续角色/任务
-- 等待对象：无执行依赖；总控后续活动unverified
-- 活动进程或会话：无；开发、package、EXE63950、最终审计83028均exit0；验证临时目录已清理
-- 尝试预算：package1/1、EXE1/1、完整desktop回归1/1；均已用完，不追加运行
-- 最近输出：[R6运行说明](../../b7-r6-module-ready-running.md)、[814项source清单](../../../apps/desktop/b7-r6-module-ready-source.sha256)；外部evidence/inputs/closeout.json和delivery-five.sha256给出最终总摘要/逐文件摘要
+- 当前步骤：实现、开发/新包/普通退出验证及不变性审计完成，5文件交付review
+- 步骤开始时间：2026-10-15 11:37:42，Asia/Shanghai
+- 最近有效进展：最终旧/新全部指定摘要匹配；真实WM_CLOSE后501ms自然exit0，自有资源0；运行说明完整
+- 最近心跳：2026-10-15 11:37:42，Asia/Shanghai
+- 下一检查点：总控按最终933项source与5项交付清单核对；没有新任务不继续运行
+- 等待对象：总控review；测试方/顾问保持停止，其他外部活动unverified
+- 活动进程或会话：无活动产品或测试；68588摘要审计已exit0；只生成/复算最终清单后停止
+- 尝试预算：package1/1、EXE1/1、完整desktop开发回归1/1；不得重复启动
+- 最近输出：docs/b7-r7-quit-running.md；apps/desktop/b7-r7-quit-source.sha256；新C根evidence/inputs/closeout.json及delivery-five.sha256
 
+## 本轮内部执行子任务快照
+
+| 子任务 | 任务状态/运行状态 | 最近可见进展 | 下一检查点/等待 | 证据 |
+| --- | --- | --- | --- | --- |
+| r7_quit_readonly | 中断后已不在会话树，后续完成unverified | 原只读分析完成；normal-close草案落盘，未见finalrunner | 由新辅助继续同两文件；不重跑目标 | 新根evidence/tools/normal-close.ps1 |
+| r7_driver_resume | blocked / finished | 辅助模型额度耗尽；文件复核无新增写入或目标运行 | 主执行接回两驱动实现，不再启动辅助 | 限定final-exe-runner.mjs/normal-close.ps1 |
+
+### 2026-10-15 11:37 — R7交付 review / finished
+
+- 严格5文件：main、新19项回归、R7运行说明、933项source清单、本人日志；931起点929未变，仅main/日志2授权修改，加新测试/说明/source3新增。未动.claude/.pnpm-store，staged0，无Git写操作。
+- 原实现红灯1failed保留；修复后directed5文件48passed、type/lint exit0、唯一full17文件169passed，最终0failed/skip，未改旧断言、不运行独立测试。
+- 唯一package6175ms exit0，静态7/7，140产物/67资源/11asar文件、fuses一致、污染及staging0；实际asar main绑定通过。
+- 新EXE1/1，2026-10-15 11:31:09.300—11:31:34.318，25018ms；25/25门禁通过。后台结果与真实页面分列；恢复后切日常页一次短暂count0，71ms后count1可见，保留中间态未当最终失败。
+- 唯一已核实可见主窗口WM_CLOSE于11:31:33.8178995投递，11:31:34.318观察自然exit0/signalnull（毫秒计501ms）；quit/falsehint/可见毛毛、无EXIT_MS。无timeout/强制清理，owned进程/监听/顶层窗口0，2个Python后代均不再存在，子退出码unknown。
+- 虚拟设置412bytes且hash保持；未完成outbox325bytes前后均存在/无tmp，cleanup重新seal导致密文hash改变，结合开发flush证据，不冒称解密或重启验证。新62文件虚拟profile、包和原始证据全部保留。
+- 最终旧R6 source813/deps12443/full12677/dist73/out140/resources67/evidence172，R8-R1外部65全部匹配；新932/full12677/73/140/67、driver/helper及62profile匹配。仅清理核实边界无reparse的新tests/tmp76临时文件。
+- 原生electron.log126bytes含一条ERROR GetGpuDriverOverlayInfo读取video device失败；不掩盖、不猜根因，未伴随本轮崩溃/页面/退出失败。EXEconsole/pageerror/crash0、Application/CodeIntegrity0；stderr100bytes含动态CDP身份仅留外部证据，package stderr0。
+- 所有失败/警告已列运行说明：red1、审批额度未执行中断、辅助模型额度未完成、一次编排JS未执行解析错误、helper首次静态签名策略拒绝与一次定向纠正、Git只读ignore/LF提示。无安全策略/永久环境更改。
+- 未运行旧EXE/W1、13独立模块、冷B或完整R7恢复；未启动测试/顾问/后续任务、Docker/OpenClaw/微信/真实provider。QUIT-001/CMP-03/SUP-05/LAZY-001/UI-02/P4-B仍交总控和独立流程判断，不宣布complete。
+- 停止编辑后生成933项source和5项交付摘要，准确值由外部closeout.json提供，避免文档自身摘要循环；最终只读复算后停止。
+
+### 2026-10-15 11:32 — 唯一新EXE普通关闭通过
+
+- EXE1/1，25门禁全部通过：原22与普通关闭来源/数据文件保存/无timer3项。实际主/毛毛、后台认证/canonical daily、真实页面、一次recover和设置状态保持分别有证据。
+- 唯一正常WM_CLOSE投递成立，明确quit/falsehint/毛毛visible且无EXIT_MS；10秒内自然exit0/signalnull，timeout=false、forcedCleanup=false。最终owned进程/监听/全部顶层窗口0，子进程退出码unknown不以root码代签。
+- 新虚拟未完成草稿只enqueue一次；设置/密文outbox关闭前后均存在且无tmp，安全字段保持；密文可重新seal，不用hash相等冒充内容/重启验证。
+- 下一步最终完整不变性摘要可能超过五分钟，下一检查点final-immutable-audit.json；不再运行产品/测试，随后限定临时目录清理和5文件review收口。
+
+### 2026-10-15 11:30 — 唯一包与正式EXE启动前检查
+
+- package1/1于11:22:12—11:22:18完成，6175ms exit0/stderr0；静态7/7，out140、资源67、asar11、production fuses一致，污染0/staging0。实际Forge固定Node/pnpm/LOCALZIP路径已记录。
+- 新EXE 183758e3b25a5314da8bea157f92ec00385e9ed6e18f42bac1ad679cdd6f6a65；asar 16f45da665693e9b606ffb6b839081a48fa6ed4ae3e4995b403f57237118aed3；实际main 80c09819f4e433715ee530c73a328c6bb0535f3c175074759d35db31052bb71c 与仓库/副本/受验修复绑定通过。
+- 主执行完成驱动：删除继承EXIT_MS、新profile quit/falsehint/毛毛visible、正常唯一WM_CLOSE、精确PID/path/creation/parent/profile/marker核验，投递起10秒自然exit0；每个UI阶段<=5秒，总120秒，子进程码unknown，不改生产owned5秒预算。
+- 静态Node/PowerShell AST/C#声明编译通过；15启动前门禁通过。driver dec61e6fc889ccc730fe3ca3146afa318fc01e18962f7cd8d8eb11c7308124c4；helper 0dd449843d43fcdbd19c09d10d2a9b99cd1f6255c4010658c9098d4e511f75c7。
+- 工具记录：一次functions JS转义解析错误未调用目标，已纠正；helper首次静态运行被系统Windows PowerShell脚本签名策略拒绝，目标未启动。保留首次并仅纠正一次，采用旧R8-R1已使用的同一路径PowerShell7；未更改策略/安全设置，不运行旧独立helper。当前产品额度尚未使用。
+
+### 2026-10-15 11:21 — 打包前冻结通过
+
+- prepackage8门禁通过：旧R6 source813/deps12443/full12677/dist73/out140/resources67/evidence172、R8-R1外部65项无差异；新source932/full12677/dist73、固定版本/lock/ZIP及范围全部匹配。
+- 构建source清单e7cec440e4420bec3f6fec274b6521ecd413d0d4c4fc1f304a584823ea9732a0；8打包驱动冻结。下一步唯一package，不再改受验产品。
+- 内部辅助r7_driver_resume报告模型额度耗尽；11:21目录核对未改两驱动，主执行接回完成。现有helper草案静态发现Split-Path参数集问题，尚未运行目标，将启动前修正；不计产品失败。
+
+### 2026-10-15 11:15 — 唯一完整开发回归通过
+
+- full于11:12:47—11:13:10运行，17文件169passed/0failed/0skip，原150+新19；exit0，日志无warning。不再重复full。
+- 准备冻结932构建输入和固定工具/LOCALZIP/范围核验；预打包完整摘要操作可能超过五分钟，下一检查点prepackage.json，保留可观察会话。package0/1、EXE0/1。
+
+### 2026-10-15 11:12 — 用户继续后恢复
+
+- 最新control仍2026-10-14T18:42:00+08:00；931起点仅main与本人日志2授权变化，定向受验输入与仓库/副本匹配。
+- 00:07附近完整回归被自动审批额度限制拦截，明确未执行；本次检查full/package/EXE尚无启动回执，不消耗预算。中断期间不计持续工作。
+- 前内部辅助只写完normal-close.ps1草案，finalrunner尚无文件，当前会话树已无旧辅助；不推定其完成。由新的内部执行辅助r7_driver_resume承接相同两份外部驱动边界，主执行继续负责所有产品/测试/最终集成。
+
+### 2026-10-15 00:06 — 开发定向门禁通过
+
+- directed实际5文件48passed（新19、邻接29），0failed/skip；TypeScript与lint均exit0，无警告输出。JSON的8suite含嵌套describe，不当文件数。
+- 重复close/before-quit/Tray及最后窗口同步重入：save/cleanup/ownedStop各1，finalExit1，allClosed1，资源全部释放，quitCalls3有界；退出失败只安全错误码，未假报成功。
+- 完整desktop将仅运行1次，预期原150+新增19；package0/1、EXE0/1。
+
+### 2026-10-15 00:05 — 精确原实现红灯与最小修复
+
+- 普通副本核验通过：931源码只含接单日志授权差异；旧R6 813/12443/73/140/172与完整12677、新12677/73、tools3/lock匹配；R8-R1外部65项已冻结只读基线。
+- 原实现red 0passed/1failed：真实main closeReceived1，prevented=false，shutdown0，finalExit0，mainDestroyed=true，liveWindows1，trayDestroyed=false；fixture就绪/可见检查均通过，非启动错误。
+- main显式quit接入requestQuit；退出期间阻止提前销毁；before-quit单飞防最后窗口同步重入；保留composition原flush/stop语义，失败只安全日志不假报完成。迟到对话框响应不访问已退出窗口。
+- 新增开发覆盖quit四组合、pending保存/停止、重复事件、失败、隐藏/询问/取消、虚拟Tray/session-end和原生老化保护。内部执行辅助仅获两份新外部驱动文件的写入边界，不运行目标，主执行负责审阅和最终启动。
+
+### 2026-10-14 23:55 — 普通副本与内部只读辅助
+
+- control仍18:42版本；当前真实时间与前序记录有跳跃，以接单日志23:47及复制回执23:49为当前记录，不把不可观测间隔计持续工作。
+- 新C根931源码及普通依赖/3工具已复制，Robocopy原生exit1、外层exit0；尚待完整摘要验证，package/EXE/full均0。
+- 内部执行辅助r7_quit_readonly只读确认quit绕过统一退出及window-all-closed尾声重入风险；无编辑/测试/产品操作，不作为独立结论。
+- 新测试导入真实main和composition，仅替换Electron/IO/后端端口；初始只运行精确quit、首次提示未显示、毛毛可见的原实现红灯。
+
+### 2026-10-14 23:47:19 — P4-B7-R7-QUIT 接单
+
+- 931/931 matched，0missing/mismatch；原字节UTF8无BOM/LF/ordinal，staged0。只读Git有用户ignore权限警告，不影响摘要。不执行Git写操作。
+- 只修main退出接线/必要幂等；真实main导入，模拟Electron/OS/composition边界，并明确destroy/closed存活集合和window-all-closed重入。先产品原实现红灯，再改产品。
+- 固定只读R6普通来源，新任务根不链接、不改旧环境；复制和完整旧/新摘要可能超过五分钟，下一检查点为source/deps/dist/tools/旧证据不变性。
+- 正式新EXE必须closePolicy=quit、closeHintShown=false、毛毛可见、删除MARIS_E2E_EXIT_MS，唯一已核实主窗口WM_CLOSE后10秒观察自然exit0和owned资源0；不以timer或强制清理代签。
+- 不重复13独立模块、B冷入口、R7恢复或旧EXE/W1；不运行/修改独立测试、报告、矩阵或其他产品，不启动测试方/顾问/后续任务、真实provider、Docker/OpenClaw/微信。
+- 最终只review/finished或blocked/finished，QUIT-001/CMP-03/SUP-05/P4-B交总控和独立流程判断。
 ### 2026-10-13 08:15:14 — R6交付 review / finished
 
 - 先812/812原字节起点门禁；中断恢复只接受executor授权日志变化。最终812中810不变，module-routes与本人日志2授权变化；新测试/运行说明/source3新增，交付5文件。

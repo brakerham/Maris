@@ -30,6 +30,7 @@ if (process.env.MARIS_E2E === "1") {
 let mainWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
 let quitting = false;
+let shutdownStarted = false;
 let shutdownComplete = false;
 let settings: DeviceSettings = { ...defaultSettings };
 let composition: DesktopCompositionRoot | null = null;
@@ -100,7 +101,13 @@ function createMainWindow(): BrowserWindow {
   const window = new BrowserWindow({ title: "Maris", width: 1360, height: 820, minWidth: 960, minHeight: 680, show: false, webPreferences: secureWebPreferences(path.join(__dirname, "preload.js")) });
   window.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
   window.webContents.on("will-navigate", (event) => event.preventDefault());
-  window.on("close", (event) => { if (!quitting && settings.closePolicy !== "quit") { event.preventDefault(); void handleClose(window); } });
+  window.on("close", (event) => {
+    if (shutdownComplete) return;
+    event.preventDefault();
+    if (quitting) return;
+    if (settings.closePolicy === "quit") requestQuit();
+    else void handleClose(window);
+  });
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) void window.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   else void window.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   window.once("ready-to-show", () => window.show());
@@ -111,11 +118,15 @@ function createMainWindow(): BrowserWindow {
 async function handleClose(window: BrowserWindow): Promise<void> {
   if (!settings.closeHintShown) {
     await dialog.showMessageBox(window, { type: "info", message: "Maris 将继续在托盘运行", detail: "可在设置中改为每次询问或直接退出。", buttons: ["知道了"] });
-    settings = { ...settings, closeHintShown: true }; await settingsStore.save(settings); window.hide(); return;
+    if (quitting || window.isDestroyed()) return;
+    settings = { ...settings, closeHintShown: true }; await settingsStore.save(settings);
+    if (!quitting && !window.isDestroyed()) window.hide();
+    return;
   }
   if (settings.closePolicy === "ask_every_time") {
     const result = await dialog.showMessageBox(window, { type: "question", message: "关闭 Maris", buttons: ["隐藏到托盘", "退出", "取消"], cancelId: 2, defaultId: 0 });
-    if (result.response === 0) window.hide(); else if (result.response === 1) { quitting = true; app.quit(); }
+    if (quitting || window.isDestroyed()) return;
+    if (result.response === 0) window.hide(); else if (result.response === 1) requestQuit();
     return;
   }
   window.hide();
@@ -177,7 +188,7 @@ function createTray(): void {
   ])); tray.on("double-click", () => mainWindow?.show());
 }
 
-function requestQuit(): void { quitting = true; app.quit(); }
+function requestQuit(): void { if (quitting) return; quitting = true; app.quit(); }
 
 const singleInstance = app.requestSingleInstanceLock();
 if (!singleInstance) app.quit();
@@ -189,7 +200,7 @@ else {
     composition = createComposition();
     composition.subscribe(publishRuntime);
     if (process.env.MARIS_E2E !== "1") app.setLoginItemSettings({ openAtLogin: settings.launchAtLogin }); mainWindow = createMainWindow(); registerIpc(); createTray();
-    mainWindow.on("session-end", () => { quitting = true; app.quit(); });
+    mainWindow.on("session-end", requestQuit);
     void composition.start().then(publishRuntime);
     if (settings.companionVisible) { const window = await companion.show(); window.setAlwaysOnTop(settings.companionAlwaysOnTop); }
     if (process.env.MARIS_E2E === "1" && process.env.MARIS_E2E_EXIT_MS) {
@@ -202,7 +213,10 @@ else {
     outboxRetention.stop();
     if (shutdownComplete) return;
     event.preventDefault();
-    void shutdown().then(() => app.quit());
+    // Destroying the last window synchronously reenters before-quit via window-all-closed.
+    if (shutdownStarted) return;
+    shutdownStarted = true;
+    void shutdown().then(() => app.quit(), () => console.error("desktop_shutdown_failed"));
   });
   app.on("window-all-closed", () => { if (quitting) app.quit(); });
 }

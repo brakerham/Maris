@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，outbox/设置键/路径缺陷独立关闭。R8旧9+R8-R1新4模块节点独立通过，UI-01已接受passed；兼容28、新公开6及真实页面/一次恢复的有限证据保留。Windows正常关闭发现P1 QUIT-001：quit策略下应用与自有后端未退出。发布P4-B7-R7-QUIT，由既有执行方最小修复main退出接线，测试方和顾问停止。P4-B为1 passed、3 failed、17 blocked、3 not_run，整体未完成；P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收；UI-01和模块13节点通过保持。R7-QUIT五文件及新包证据已核对：169开发通过，真实普通关闭约501ms自然exit0；此为执行方证据，QUIT-001及P4-B仍待独立验收。发布P4-C12-R9-QUIT，由既有测试方先做独立退出边界/相邻兼容及原Windows退出断言，随后同任务继续剩余条件。执行方和顾问停止；P4-B暂为1 passed、3 failed、17 blocked、3 not_run，P4-C/D未开始。
+
+- [R7退出修复总控核对](docs/p4-b7-r7-quit-coordinator-review.md)：固定新包和真实普通关闭证据绑定，尚待独立关闭。
+- [R9退出独立复验与Windows续验](docs/coordination/prompts/p4-c12-r9-quit-windows-tester.md)：新输入、原退出断言、已有通过复用及剩余场景。
 
 - [R8-R1独立结果与退出缺陷裁定](docs/p4-c12-r8-r1-quit-coordinator-review.md)：接受UI-01有限整项通过，确认正常退出P1待修。
-- [R7正常关闭最小修复任务](docs/coordination/prompts/p4-b7-r7-quit-executor.md)：真实main红绿、新包必须普通关闭退出，不用计时器代签。
+- [R7正常关闭最小修复任务](docs/coordination/prompts/p4-b7-r7-quit-executor.md)：已review/finished；修复与新包交R9独立复验。
 
 - [R8工具中断总控裁定](docs/p4-c12-r8-tooling-coordinator-review.md)：保留9节点通过，工具问题不归类产品缺陷。
 - [R8-R1剩余验收任务](docs/coordination/prompts/p4-c12-r8-r1-tooling-resume-tester.md)：已blocked/finished；四节点通过，Windows正常退出P1待返修，首次证据保留。
