@@ -1,0 +1,347 @@
+{
+  "started": 1792115812874,
+  "ended": 1792115814493,
+  "nodes": [
+    {
+      "file": "composition-root.test.ts",
+      "name": "single-flights composition, intersects modules, publishes safe state, and shuts down once",
+      "state": "pass",
+      "durationMs": 4.384399999999999,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "routes an actual main-window quit close through unified shutdown with the companion visible",
+      "state": "pass",
+      "durationMs": 261.69309999999996,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "keeps explicit quit independent of prior hint and companion visibility: {\"closeHintShown\":true,\"companionVisible\":true}",
+      "state": "pass",
+      "durationMs": 14.048400000000015,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "keeps explicit quit independent of prior hint and companion visibility: {\"closeHintShown\":true,\"companionVisible\":false}",
+      "state": "pass",
+      "durationMs": 13.689600000000041,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "keeps explicit quit independent of prior hint and companion visibility: {\"closeHintShown\":false,\"companionVisible\":false}",
+      "state": "pass",
+      "durationMs": 12.429499999999962,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "waits for the actual settings/outbox flush callback before owned stop and resource release",
+      "state": "pass",
+      "durationMs": 12.826299999999947,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "coalesces close, before-quit and Tray requests including synchronous last-window reentry",
+      "state": "pass",
+      "durationMs": 11.624699999999962,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "does not release resources or claim success when owned shutdown rejects",
+      "state": "pass",
+      "durationMs": 12.946500000000015,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "preserves default hide_to_tray and the first hint, saving before hiding",
+      "state": "pass",
+      "durationMs": 13.442199999999957,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "keeps the existing first-hint priority for ask_every_time",
+      "state": "pass",
+      "durationMs": 13.099699999999984,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "preserves ask_every_time hide/quit/cancel response 0",
+      "state": "pass",
+      "durationMs": 16.693300000000022,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "preserves ask_every_time hide/quit/cancel response 1",
+      "state": "pass",
+      "durationMs": 13.693200000000047,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "preserves ask_every_time hide/quit/cancel response 2",
+      "state": "pass",
+      "durationMs": 13.442300000000046,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "routes virtual tray through the same unified shutdown",
+      "state": "pass",
+      "durationMs": 12.760099999999966,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "routes virtual session-end through the same unified shutdown",
+      "state": "pass",
+      "durationMs": 13.396499999999946,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "ignores a late close-dialog reply after shutdown (hint previously shown=false)",
+      "state": "pass",
+      "durationMs": 13.216800000000035,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "ignores a late close-dialog reply after shutdown (hint previously shown=true)",
+      "state": "pass",
+      "durationMs": 12.885700000000043,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "does not hide a destroyed window when the first-hint save completes during quit",
+      "state": "pass",
+      "durationMs": 13.090599999999995,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "keeps actual retention prompt shutdown protection (dialog already pending=false)",
+      "state": "pass",
+      "durationMs": 13.05880000000002,
+      "errors": []
+    },
+    {
+      "file": "main-quit.test.ts",
+      "name": "keeps actual retention prompt shutdown protection (dialog already pending=true)",
+      "state": "pass",
+      "durationMs": 13.705000000000041,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "does not prompt at exactly 30 days",
+      "state": "pass",
+      "durationMs": 1.66640000000001,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "prompts once after readiness with safe count and retain defaults",
+      "state": "pass",
+      "durationMs": 1.4502999999999986,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "retains all data on retain",
+      "state": "pass",
+      "durationMs": 0.35480000000001155,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "retains all data on dialog-close",
+      "state": "pass",
+      "durationMs": 0.24510000000000787,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "retains all data on rejection",
+      "state": "pass",
+      "durationMs": 0.28419999999999845,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "explicit consent protects state changes and new messages while the dialog is pending",
+      "state": "pass",
+      "durationMs": 0.7479999999999905,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "explicit consent deletes the shown expired draft and persists the result",
+      "state": "pass",
+      "durationMs": 0.22999999999998977,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "does not prompt or delete during destroy",
+      "state": "pass",
+      "durationMs": 0.39390000000000214,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "does not prompt or delete during quit",
+      "state": "pass",
+      "durationMs": 0.3324000000000069,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "does not prompt or delete during stop",
+      "state": "pass",
+      "durationMs": 0.2612000000000023,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "keeps Host startup independent of retention dialog: before-ready-quit",
+      "state": "pass",
+      "durationMs": 73.62540000000001,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "keeps Host startup independent of retention dialog: pending-quit",
+      "state": "pass",
+      "durationMs": 11.648399999999981,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "keeps Host startup independent of retention dialog: pending-destroy",
+      "state": "pass",
+      "durationMs": 7.835100000000011,
+      "errors": []
+    },
+    {
+      "file": "outbox-retention.test.ts",
+      "name": "keeps Host startup independent of retention dialog: online",
+      "state": "pass",
+      "durationMs": 8.111500000000007,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "single-flights managed start, validates identity, and makes stop idempotent",
+      "state": "pass",
+      "durationMs": 2.526900000000012,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "retains draft at 30 days, +1ms and far beyond across startup/shutdown/reload",
+      "state": "pass",
+      "durationMs": 1.009299999999996,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "retains queued at 30 days, +1ms and far beyond across startup/shutdown/reload",
+      "state": "pass",
+      "durationMs": 0.2656000000000063,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "retains sending at 30 days, +1ms and far beyond across startup/shutdown/reload",
+      "state": "pass",
+      "durationMs": 0.2453000000000145,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "only expires terminal strictly beyond 24h",
+      "state": "pass",
+      "durationMs": 0.26250000000001705,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "deletes only unchanged shown candidates, preserves concurrent changes and bounds repeated confirmation",
+      "state": "pass",
+      "durationMs": 0.5763000000000034,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "invalidates consent on reload and protects candidates changed while deletion waits in the queue",
+      "state": "pass",
+      "durationMs": 0.2522999999999911,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "does not publish failed prepare/state/cleanup/deletion and recovers its serialized queue",
+      "state": "pass",
+      "durationMs": 2.289999999999992,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "serializes simultaneous writes and capacity checks without silently evicting expired messages",
+      "state": "pass",
+      "durationMs": 0.5711000000000013,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "keeps pending writes unpublished and prevents concurrent lost updates",
+      "state": "pass",
+      "durationMs": 0.39399999999997704,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "preserves retry IDs but allocates a new ID for changed sending content",
+      "state": "pass",
+      "durationMs": 0.24309999999999832,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "cleans a managed child that fails readiness and never stops external dev",
+      "state": "pass",
+      "durationMs": 0.29939999999999145,
+      "errors": []
+    },
+    {
+      "file": "supervisor-outbox.test.ts",
+      "name": "outbox preserves IDs across retry and restart, rejects overflow, and encrypts body",
+      "state": "pass",
+      "durationMs": 0.4784999999999968,
+      "errors": []
+    },
+    {
+      "file": "window-lifecycle.test.ts",
+      "name": "clamps companion DIP bounds into the active display",
+      "state": "pass",
+      "durationMs": 1.3318000000000012,
+      "errors": []
+    }
+  ],
+  "total": 48,
+  "passed": 48,
+  "failed": 0,
+  "moduleErrors": 0,
+  "unhandled": 0
+}

@@ -203,7 +203,7 @@
 | P4B-SUP-02 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 端口分配与 ready 协议冻结 | 端口冲突、无 ready、坏 nonce、ready 超时 | 启动后端 | 使用随机可用 loopback 端口；超时进入离线/诊断并清理自有子进程，不把 health 当 ready | P1 | blocked |
 | P4B-SUP-03 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 假后端可崩溃 | 启动前崩溃、ready 后崩溃、连续崩溃 | 观察重启策略 | 状态转 offline；重启次数/退避有界，不形成重启风暴或重复 run；用户可恢复 | P1 | blocked |
 | P4B-SUP-04 | B | D9 lifecycle | desktop/e2e | Windows/Electron | auto | 已有手动后端或两个 app 启动请求 | 重复启动、开发连接模式 | 启动/关闭两个客户端 | 不产生重复 owned 后端；连接手动后端时不取得停止权；状态可区分 | P1 | blocked |
-| P4B-SUP-05 | B | D9 lifecycle | security/manual | Windows/Electron | manual | 目标 Windows，后端含子线程/连接 | 正常退出、强关主窗口、系统注销 | 检查进程树/端口/文件锁 | 自有后端按冻结时限退出，无僵尸/孤儿/占用端口；未拥有进程不受影响 | P1 | failed |
+| P4B-SUP-05 | B | D9 lifecycle | security/manual | Windows/Electron | manual | 目标 Windows，后端含子线程/连接 | 正常退出、强关主窗口、系统注销 | 检查进程树/端口/文件锁 | 自有后端按冻结时限退出，无僵尸/孤儿/占用端口；未拥有进程不受影响 | P1 | blocked |
 | P4B-SUP-06 | B | D9 offline recovery | desktop/e2e | Windows/Electron | auto | renderer 有未发送虚拟消息 | 后端离线→恢复、应用重启、重复点击 | 发送并观察 client_event_id/GET | 未发送内容和同一 ID 保留；恢复后只提交一次；UI 不凭新 ID 制造重复账候选 | P0 | blocked |
 
 #### 模块 UI、主题、Tray 与毛毛
@@ -216,7 +216,7 @@
 | P4B-UI-04 | B | F12 | contract/unit | contract | auto | UI contribution 合同冻结 | hostUiMajor、route/path/setting/profile/companion 冲突 | 编译期注册和启动验证 | 不兼容或冲突稳定失败；Shell 无 `if moduleId` 业务分支 | P1 | blocked |
 | P4B-CMP-01 | B | F13；U02 | desktop/e2e | Windows/Electron | auto | daily/wealth contributions 与假状态流 | 切换模块及 idle/thinking/tool/confirmation/error/offline | 观察窗口、Profile 和状态 | 始终只有一个毛毛窗口/Agent 入口；主形态随 contribution，子状态不创建第二 Agent或触发写入 | P1 | blocked |
 | P4B-CMP-02 | B | U01/F13 | desktop/e2e | Windows/Electron | auto | 新设备设置 | 首次和第二次关闭主窗口 | 关闭、从 Tray 恢复、再次关闭 | 首次隐藏并只提示一次；第二次不重复提示；Host/毛毛按设置驻留且无数据丢失 | P1 | blocked |
-| P4B-CMP-03 | B | U01 | desktop/e2e | Windows/Electron | auto | 关闭策略可切换 | 退出/每次询问/隐藏，Tray 打开/隐藏 | 每种设置执行关闭与取消 | 行为精确对应设置；“退出”清理自有后端；询问取消不退出；Tray 状态一致 | P1 | failed |
+| P4B-CMP-03 | B | U01 | desktop/e2e | Windows/Electron | auto | 关闭策略可切换 | 退出/每次询问/隐藏，Tray 打开/隐藏 | 每种设置执行关闭与取消 | 行为精确对应设置；“退出”清理自有后端；询问取消不退出；Tray 状态一致 | P1 | blocked |
 | P4B-CMP-04 | B | U05 | security/manual | Windows/Electron | manual | 新安装测试 profile | 首次运行、显式启用/禁用开机启动 | 检查 OS 启动项和 UI | 默认关闭且无启动项；只有明确操作才创建；禁用清理本应用项，不改其他应用 | P1 | not_run |
 | P4B-CMP-05 | B | F13 | desktop/e2e | external/manual | manual | 多显示器/缩放/全屏测试设备 | 拖动、置顶、重启、拔屏、分辨率变化、全屏、隐私、键盘 | 逐项操作并重启 | 位置用临时文件原子替换并恢复/夹取；全屏按规则隐藏；隐私不显示金额；键盘入口可达 | P1 | not_run |
 | P4B-CMP-06 | B | U02；主题要求 | desktop/e2e | external/manual | manual | 支持/不支持透明窗口设备 | 透明失败、普通迷你窗降级；light/dark/system/high-contrast/reduced-motion；中外行情色 | 切换设备条件和主题 | 可安全降级且合同不变；文本对比/焦点可辨；reduced motion 生效；收入/支出色不复用涨跌色 | P2 | not_run |
@@ -320,6 +320,13 @@ B继续0 passed、1 failed、19 blocked、4 not_run；120 ID/12列/原预期及A
 - 本轮P4-B为1passed、3failed、17blocked、3not_run。旧UI-02 failed保留，真实chunk/跨重启会话未验证，LAZY-001/P4-B不关闭。A64passed、C20/D12not_run保持。
 - 产品1/8、辅助0/4；已按身份核实定向强制收口，登记对象及监听最后均0。测试方强制清理不是产品正常退出通过。停止W2～后续和H1～H4，blocked/finished供总控review。
 - 详见[R8-R1增量报告](phase-4-c12-r8-r1-modules-windows-report.md)与[Windows首次证据](../../tests/independent/desktop/evidence/r8-r1/windows-W1/result.json)。原预期、旧首次材料均保持。
+
+#### C12-R9-QUIT 增量备注（2026-10-16）
+
+- [R9报告](phase-4-c12-r9-quit-windows-report.md)：独立main退出8节点/235比较passed，单次5文件48项开发兼容passed；固定新R7 EXE W1的62比较passed。原普通WM_CLOSE/10秒断言true，root约480ms自然exit0，自有进程/监听/窗口约3082ms归零，无退出timer或强杀。
+- SUP-05与CMP-03由failed改为blocked：建议关闭QUIT-001正常关闭逻辑，但真实Tray/hide/ask/cancel、强关/注销/外来对照等原条件未齐。旧R8-R1首次false/强制收口证据保持原样，新的部分通过不等于整项passed。
+- H1辅助首次启动在safeStorage操作前出现ownership_observer_error，具体原status/stderr未留存、原因unverified；安全收口后3登记对象/监听/窗口0。该未知观察故障不是产品缺陷，按卡停止扩大，不继续W2-W6/H2-H4。产品1/8、辅助1/4；启动前清单列误读的唯一工具更正1/1已用完，首次和最小diff保留。
+- 当前B为1passed、1failed、19blocked、3not_run；UI-01保持accepted passed，UI-02/LAZY-001及P4-B未关闭。跨重启真实session/设置/同ID、原生老化提示、实际chunk命中/重试仍未验证；设备人工条件保持。A/C/D、120ID、12列、原预期不变。
 
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 

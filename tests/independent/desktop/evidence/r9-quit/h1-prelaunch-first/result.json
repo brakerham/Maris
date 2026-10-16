@@ -1,0 +1,18 @@
+{
+  "failure": "helper_exe_changed",
+  "classification": "proven_tool_manifest_column",
+  "manifestColumns": [
+    "path",
+    "bytes",
+    "sha256"
+  ],
+  "actualFileMatchesFrozenDigest": true,
+  "sha256": "bd14928e0728366fd3f41499cb398ff3f4304dab259a3e605077899a6f8c748e",
+  "helperOutputExists": false,
+  "helperEvidenceExists": false,
+  "failureBeforeDirectoryCreationAndSpawn": true,
+  "productStartsCumulative": 1,
+  "helperStartsCumulative": 0,
+  "correctionUsed": 1,
+  "scope": "only read final digest column; expected digest, target, operation and deadline unchanged"
+}

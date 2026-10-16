@@ -1,12 +1,13 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收；UI-01和模块13节点通过保持。R7-QUIT五文件及新包证据已核对：169开发通过，真实普通关闭约501ms自然exit0；此为执行方证据，QUIT-001及P4-B仍待独立验收。发布P4-C12-R9-QUIT，由既有测试方先做独立退出边界/相邻兼容及原Windows退出断言，随后同任务继续剩余条件。执行方和顾问停止；P4-B暂为1 passed、3 failed、17 blocked、3 not_run，P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收；R9独立退出8节点/235比较、48开发兼容及W1的62比较通过。总控关闭QUIT-001普通主窗口关闭缺陷范围，约480ms自然退出；CMP-03/SUP-05其余条件仍blocked。H1在解密前遇到未知观察错误，发布P4-C12-R9-R1修工具并续验剩余Windows；不重跑已过W1或旧集合。P4-B为1 passed、1 failed、19 blocked、3 not_run，P4-C/D未开始，执行方和顾问停止。
 
-- [R7退出修复总控核对](docs/p4-b7-r7-quit-coordinator-review.md)：固定新包和真实普通关闭证据绑定，尚待独立关闭。
-- [R9退出独立复验与Windows续验](docs/coordination/prompts/p4-c12-r9-quit-windows-tester.md)：新输入、原退出断言、已有通过复用及剩余场景。
+- [R9独立退出与H1续验裁定](docs/p4-c12-r9-quit-h1-coordinator-review.md)：普通关闭缺陷关闭，H1原因未知，原首次证据保留。
+- [R9-R1辅助工具与剩余Windows任务](docs/coordination/prompts/p4-c12-r9-r1-h1-windows-tester.md)：先修观察缺口，恢复H1后同任务继续；旧通过不重复。
+- [R9独立验收报告](docs/testing/phase-4-c12-r9-quit-windows-report.md)：8独立节点、48兼容、W1通过与H1首次阻塞。
 
 - [R8-R1独立结果与退出缺陷裁定](docs/p4-c12-r8-r1-quit-coordinator-review.md)：接受UI-01有限整项通过，确认正常退出P1待修。
-- [R7正常关闭最小修复任务](docs/coordination/prompts/p4-b7-r7-quit-executor.md)：已review/finished；修复与新包交R9独立复验。
+- [R7正常关闭最小修复任务](docs/coordination/prompts/p4-b7-r7-quit-executor.md)：执行方原review/finished保留；普通关闭缺陷已由R9独立复验并经总控接受。
 
 - [R8工具中断总控裁定](docs/p4-c12-r8-tooling-coordinator-review.md)：保留9节点通过，工具问题不归类产品缺陷。
 - [R8-R1剩余验收任务](docs/coordination/prompts/p4-c12-r8-r1-tooling-resume-tester.md)：已blocked/finished；四节点通过，Windows正常退出P1待返修，首次证据保留。

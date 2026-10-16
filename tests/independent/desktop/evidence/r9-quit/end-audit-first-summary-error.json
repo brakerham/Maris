@@ -1,0 +1,39 @@
+{
+  "kind": "post_execution_read_only_summary_correction",
+  "originalError": "AssertionError at matrix case count",
+  "broadCount": 124,
+  "actualCaseCount": 120,
+  "excludedSummaryLabels": [
+    "P4-A",
+    "P4-B",
+    "P4-C",
+    "P4-D"
+  ],
+  "completedInputChecks": {
+    "start": {
+      "entries": 937,
+      "matched": 933,
+      "authorizedChanges": 4
+    },
+    "r7Source": {
+      "entries": 933,
+      "matched": 924,
+      "authorizedChanges": 9
+    },
+    "buildSource": 932,
+    "out": 140,
+    "resources": 67,
+    "dist": 73,
+    "dependencies": 12677,
+    "executorEvidence": 157,
+    "r8r1Delivery": {
+      "entries": 82,
+      "matched": 78,
+      "authorizedChanges": 4
+    }
+  },
+  "sourceAndFirstMaterialChecksPassedBeforeCountFailure": true,
+  "rawNativeStatusMissing": false,
+  "newDynamicRuns": 0,
+  "note": "Task explicitly permits post-execution read-only file/summary evidence correction. Original audit source and first materials retained; no second tool/target retry."
+}

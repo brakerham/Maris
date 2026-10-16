@@ -1,0 +1,433 @@
+{
+  "attempt": 0,
+  "nodes": [
+    {
+      "id": "R9-Q01",
+      "state": "pass",
+      "durationMs": 517.4228999999998,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    },
+    {
+      "id": "R9-Q02",
+      "state": "pass",
+      "durationMs": 112.94759999999997,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    },
+    {
+      "id": "R9-Q03",
+      "state": "pass",
+      "durationMs": 135.69880000000012,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    },
+    {
+      "id": "R9-Q04",
+      "state": "pass",
+      "durationMs": 125.02280000000019,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    },
+    {
+      "id": "R9-Q05",
+      "state": "pass",
+      "durationMs": 111.61270000000013,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    },
+    {
+      "id": "R9-Q06",
+      "state": "pass",
+      "durationMs": 86.39319999999998,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    },
+    {
+      "id": "R9-Q07",
+      "state": "pass",
+      "durationMs": 99.49530000000004,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    },
+    {
+      "id": "R9-Q08",
+      "state": "pass",
+      "durationMs": 109.10190000000011,
+      "errors": [],
+      "scenarioPassed": true,
+      "cleanupPassed": true
+    }
+  ],
+  "selectionExcluded": [],
+  "historicalReused": [],
+  "passed": 8,
+  "failed": 0,
+  "notRun": 0,
+  "unhandledErrors": 0,
+  "moduleErrors": 0,
+  "firstProductFailure": null,
+  "firstToolError": null,
+  "firstUnknownError": null,
+  "firstFailure": null,
+  "nodeTerminals": [
+    {
+      "seq": 97,
+      "event": "node_terminal",
+      "at": "2026-10-16T01:55:55.094Z",
+      "attempt": 0,
+      "elapsedMs": 1977.2126000000003,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q01",
+        "passed": true,
+        "durationMs": 514.9860000000001
+      }
+    },
+    {
+      "seq": 157,
+      "event": "node_terminal",
+      "at": "2026-10-16T01:55:55.207Z",
+      "attempt": 0,
+      "elapsedMs": 2090.2571000000003,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q02",
+        "passed": true,
+        "durationMs": 111.08300000000008
+      }
+    },
+    {
+      "seq": 231,
+      "event": "node_terminal",
+      "at": "2026-10-16T01:55:55.343Z",
+      "attempt": 0,
+      "elapsedMs": 2226.2383,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q03",
+        "passed": true,
+        "durationMs": 133.95400000000018
+      }
+    },
+    {
+      "seq": 305,
+      "event": "node_terminal",
+      "at": "2026-10-16T01:55:55.468Z",
+      "attempt": 0,
+      "elapsedMs": 2351.4959,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q04",
+        "passed": true,
+        "durationMs": 123.29139999999961
+      }
+    },
+    {
+      "seq": 369,
+      "event": "node_terminal",
+      "at": "2026-10-16T01:55:55.580Z",
+      "attempt": 0,
+      "elapsedMs": 2463.0976,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q05",
+        "passed": true,
+        "durationMs": 109.85579999999982
+      }
+    },
+    {
+      "seq": 415,
+      "event": "node_terminal",
+      "at": "2026-10-16T01:55:55.667Z",
+      "attempt": 0,
+      "elapsedMs": 2549.6273,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q06",
+        "passed": true,
+        "durationMs": 84.67389999999978
+      }
+    },
+    {
+      "seq": 467,
+      "event": "node_terminal",
+      "at": "2026-10-16T01:55:55.766Z",
+      "attempt": 0,
+      "elapsedMs": 2649.1785,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q07",
+        "passed": true,
+        "durationMs": 97.80880000000025
+      }
+    },
+    {
+      "seq": 527,
+      "event": "node_terminal",
+      "at": "2026-10-16T01:55:55.875Z",
+      "attempt": 0,
+      "elapsedMs": 2758.319,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q08",
+        "passed": true,
+        "durationMs": 107.34820000000036
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "seq": 96,
+      "event": "cleanup_terminal",
+      "at": "2026-10-16T01:55:55.093Z",
+      "attempt": 0,
+      "elapsedMs": 1975.6846,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q01",
+        "passed": true,
+        "cleanupMs": 11.382399999999961
+      }
+    },
+    {
+      "seq": 156,
+      "event": "cleanup_terminal",
+      "at": "2026-10-16T01:55:55.206Z",
+      "attempt": 0,
+      "elapsedMs": 2088.7482,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q02",
+        "passed": true,
+        "cleanupMs": 11.51379999999972
+      }
+    },
+    {
+      "seq": 230,
+      "event": "cleanup_terminal",
+      "at": "2026-10-16T01:55:55.342Z",
+      "attempt": 0,
+      "elapsedMs": 2224.7129,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q03",
+        "passed": true,
+        "cleanupMs": 11.58239999999978
+      }
+    },
+    {
+      "seq": 304,
+      "event": "cleanup_terminal",
+      "at": "2026-10-16T01:55:55.467Z",
+      "attempt": 0,
+      "elapsedMs": 2350.0821,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q04",
+        "passed": true,
+        "cleanupMs": 10.352100000000064
+      }
+    },
+    {
+      "seq": 368,
+      "event": "cleanup_terminal",
+      "at": "2026-10-16T01:55:55.578Z",
+      "attempt": 0,
+      "elapsedMs": 2461.5478000000003,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q05",
+        "passed": true,
+        "cleanupMs": 11.457800000000134
+      }
+    },
+    {
+      "seq": 414,
+      "event": "cleanup_terminal",
+      "at": "2026-10-16T01:55:55.665Z",
+      "attempt": 0,
+      "elapsedMs": 2548.1706,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q06",
+        "passed": true,
+        "cleanupMs": 11.38149999999996
+      }
+    },
+    {
+      "seq": 466,
+      "event": "cleanup_terminal",
+      "at": "2026-10-16T01:55:55.765Z",
+      "attempt": 0,
+      "elapsedMs": 2647.6111,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q07",
+        "passed": true,
+        "cleanupMs": 10.83389999999963
+      }
+    },
+    {
+      "seq": 526,
+      "event": "cleanup_terminal",
+      "at": "2026-10-16T01:55:55.874Z",
+      "attempt": 0,
+      "elapsedMs": 2756.6122,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "id": "R9-Q08",
+        "passed": true,
+        "cleanupMs": 10.812299999999595
+      }
+    }
+  ],
+  "selftest": [
+    {
+      "seq": 2,
+      "event": "selftest_result",
+      "at": "2026-10-16T01:55:53.125Z",
+      "attempt": 0,
+      "elapsedMs": 8.587099999999992,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "kind": "selftest",
+        "caseId": "SELF.DISTINCT",
+        "passed": true
+      }
+    },
+    {
+      "seq": 3,
+      "event": "tool_error",
+      "at": "2026-10-16T01:55:53.129Z",
+      "attempt": 0,
+      "elapsedMs": 11.706099999999992,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "kind": "selftest",
+        "nodeId": "SELF",
+        "attemptedAssertionId": "SELF.REMOVED.NAV.EXISTS",
+        "errorCode": "duplicate_assertion_id",
+        "stage": "body",
+        "caseId": "SELF.DUPLICATE",
+        "expectedFailure": true
+      }
+    },
+    {
+      "seq": 4,
+      "event": "selftest_node_terminal",
+      "at": "2026-10-16T01:55:53.132Z",
+      "attempt": 0,
+      "elapsedMs": 14.889499999999998,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "caseId": "SELF.DUPLICATE",
+        "kind": "selftest",
+        "expectedFailure": true,
+        "passed": false
+      }
+    },
+    {
+      "seq": 5,
+      "event": "selftest_result",
+      "at": "2026-10-16T01:55:53.134Z",
+      "attempt": 0,
+      "elapsedMs": 16.74369999999999,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "kind": "selftest",
+        "caseId": "SELF.DUPLICATE_RECORDED",
+        "passed": true
+      }
+    },
+    {
+      "seq": 6,
+      "event": "selftest_result",
+      "at": "2026-10-16T01:55:53.135Z",
+      "attempt": 0,
+      "elapsedMs": 18.24769999999998,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "kind": "selftest",
+        "caseId": "SELF.CLEANUP_NOT_OVERRIDE",
+        "passed": true
+      }
+    },
+    {
+      "seq": 7,
+      "event": "selftest_result",
+      "at": "2026-10-16T01:55:53.137Z",
+      "attempt": 0,
+      "elapsedMs": 19.709699999999998,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "kind": "selftest",
+        "caseId": "SELF.UNKNOWN",
+        "passed": true
+      }
+    },
+    {
+      "seq": 8,
+      "event": "selftest_result",
+      "at": "2026-10-16T01:55:53.138Z",
+      "attempt": 0,
+      "elapsedMs": 21.341499999999996,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "kind": "selftest",
+        "caseId": "SELF.PRIVACY",
+        "passed": true
+      }
+    },
+    {
+      "seq": 9,
+      "event": "recorder_selftest",
+      "at": "2026-10-16T01:55:53.140Z",
+      "attempt": 0,
+      "elapsedMs": 22.872299999999996,
+      "pid": 7660,
+      "parentPid": 13468,
+      "details": {
+        "kind": "selftest",
+        "passed": true,
+        "count": 5
+      }
+    }
+  ],
+  "formalComparisons": 235,
+  "formalPassed": 235,
+  "entered": 235,
+  "terminal": 235,
+  "journalComplete": true,
+  "paired": true
+}

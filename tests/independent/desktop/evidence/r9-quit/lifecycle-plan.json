@@ -1,0 +1,70 @@
+{
+  "task": "P4-C12-R9-QUIT",
+  "attempt": 0,
+  "nodes": [
+    {
+      "id": "R9-Q01",
+      "requirement": "quit waits for flush and owned stop; repeated requests and final-window reentry"
+    },
+    {
+      "id": "R9-Q02",
+      "requirement": "previously acknowledged quit with companion disabled"
+    },
+    {
+      "id": "R9-Q03",
+      "requirement": "hide first hint saves before hide, second close then virtual Tray shutdown"
+    },
+    {
+      "id": "R9-Q04",
+      "requirement": "ask first hint priority, then cancel, hide and explicit quit"
+    },
+    {
+      "id": "R9-Q05",
+      "requirement": "late first-hint reply after completed quit cannot save or hide"
+    },
+    {
+      "id": "R9-Q06",
+      "requirement": "late ask reply on externally destroyed main is ignored"
+    },
+    {
+      "id": "R9-Q07",
+      "requirement": "owned stop rejection retains resources, coalesces requests, redacts error"
+    },
+    {
+      "id": "R9-Q08",
+      "requirement": "virtual session-end with unseen hint and companion disabled"
+    }
+  ],
+  "imports": [
+    "actual main/index.ts",
+    "actual composition-root.ts",
+    "actual window-lifecycle.ts",
+    "actual outbox-retention.ts"
+  ],
+  "controlledPorts": [
+    "Electron event model and windows",
+    "memory settings/outbox persistence",
+    "owned backend/owner/auth/host boundaries"
+  ],
+  "budgetsMs": {
+    "initialization": 60000,
+    "nodeBody": 15000,
+    "nodeCleanup": 5000,
+    "cli": 300000
+  },
+  "scope": "component boundary; virtual Tray/session-end are not Windows manual proof",
+  "formalOnce": true,
+  "compatibilityAfterPass": {
+    "files": [
+      "main-quit.test.ts",
+      "composition-root.test.ts",
+      "outbox-retention.test.ts",
+      "supervisor-outbox.test.ts",
+      "window-lifecycle.test.ts"
+    ],
+    "expectedTests": 48
+  },
+  "virtualRoot": "C:/MarisC12/C12-R9-QUIT-20261016-011200",
+  "productStarts": 0,
+  "helperStarts": 0
+}

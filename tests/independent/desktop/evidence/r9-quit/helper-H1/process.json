@@ -1,0 +1,40 @@
+{
+  "id": "H1",
+  "passed": false,
+  "firstFailure": "ownership_observer_error",
+  "cleanupError": null,
+  "forced": true,
+  "exit": {
+    "code": 1,
+    "signal": null
+  },
+  "rootPid": 4616,
+  "durationMs": 19724.2054,
+  "registered": [
+    {
+      "pid": 4616,
+      "parentPid": 25980,
+      "created": "2026-10-16T02:53:32.0278140Z",
+      "kind": "product"
+    },
+    {
+      "pid": 18316,
+      "parentPid": 4616,
+      "created": "2026-10-16T02:53:37.8580490Z",
+      "kind": "product"
+    },
+    {
+      "pid": 20428,
+      "parentPid": 4616,
+      "created": "2026-10-16T02:53:37.8649380Z",
+      "kind": "product"
+    }
+  ],
+  "remainingOwned": 0,
+  "remainingListeners": 0,
+  "remainingWindows": 0,
+  "stdoutBytes": 2,
+  "stderrBytes": 0,
+  "productStarts": 0,
+  "helperStarts": 1
+}

@@ -1,0 +1,51 @@
+{
+  "task": "P4-C12-R9-QUIT",
+  "independent": {
+    "nodesPassed": 8,
+    "comparisonsPassed": 235,
+    "selftests": 5,
+    "cliRuns": 1
+  },
+  "developerCompatibility": {
+    "files": 5,
+    "passed": 48,
+    "cliRuns": 1
+  },
+  "windows": {
+    "W1": "passed",
+    "comparisons": 62,
+    "normalExitCode": 0,
+    "forced": false,
+    "closeToRootExitApproxMs": 480,
+    "closeToResourceObservationMs": 3082,
+    "remainingOwned": 0,
+    "remainingListeners": 0,
+    "remainingWindows": 0
+  },
+  "helper": {
+    "H1": "blocked",
+    "safeStorageEntered": false,
+    "firstFailure": "ownership_observer_error",
+    "cause": "unverified",
+    "forcedCleanup": true,
+    "nativeExitCode": 1,
+    "remainingOwned": 0,
+    "remainingListeners": 0,
+    "remainingWindows": 0
+  },
+  "budgets": {
+    "products": 1,
+    "maxProducts": 8,
+    "helpers": 1,
+    "maxHelpers": 4,
+    "toolCorrections": 1,
+    "maxToolCorrections": 1
+  },
+  "B": {
+    "passed": 1,
+    "failed": 1,
+    "blocked": 19,
+    "not_run": 3
+  },
+  "finalDisposition": "blocked / finished; coordinator review"
+}

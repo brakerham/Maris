@@ -1,0 +1,60 @@
+{
+  "productStarts": 0,
+  "scope": "five_compat_files_48_once",
+  "forced": false,
+  "durationMs": 2036,
+  "failure": null,
+  "rootPid": 2308,
+  "workers": [
+    {
+      "identityVerified": true,
+      "pid": 25332,
+      "forced": false,
+      "exited": true,
+      "nativeExitCode": 1
+    },
+    {
+      "identityVerified": true,
+      "pid": 20800,
+      "forced": false,
+      "exited": true,
+      "nativeExitCode": 1
+    },
+    {
+      "identityVerified": true,
+      "pid": 26628,
+      "forced": false,
+      "exited": true,
+      "nativeExitCode": 1
+    },
+    {
+      "identityVerified": true,
+      "pid": 14652,
+      "forced": false,
+      "exited": true,
+      "nativeExitCode": 1
+    },
+    {
+      "identityVerified": true,
+      "pid": 7280,
+      "forced": false,
+      "exited": true,
+      "nativeExitCode": 1
+    }
+  ],
+  "streams": [
+    {
+      "complete": true,
+      "name": "stdout",
+      "rawBytes": 60
+    },
+    {
+      "complete": true,
+      "name": "stderr",
+      "rawBytes": 0
+    }
+  ],
+  "rootExited": true,
+  "rootExitCode": 0,
+  "timedOut": false
+}

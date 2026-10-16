@@ -1,0 +1,126 @@
+{
+  "at": "2026-10-16T01:06:31.922330+08:00",
+  "controlVersion": "2026-10-16T00:51:00+08:00",
+  "start": {
+    "entries": 937,
+    "matched": 937,
+    "authorizedChanges": [],
+    "manifest": "D:\\CodeX_gap\\wife-system\\docs\\coordination\\snapshots\\p4-c12-r9-quit-start.sha256",
+    "base": "D:\\CodeX_gap\\wife-system",
+    "sha256": "b1d8090aa0556dd4b08e6efbb718456850783da17acbc701a254a2cf0f43bf9e"
+  },
+  "r7Source": {
+    "entries": 933,
+    "matched": 928,
+    "authorizedChanges": [
+      "README.md",
+      "docs/coordination/agents/brainstorm.md",
+      "docs/coordination/control.md",
+      "docs/coordination/overview.md",
+      "docs/project-coordination.md"
+    ],
+    "manifest": "D:\\CodeX_gap\\wife-system\\apps\\desktop\\b7-r7-quit-source.sha256",
+    "base": "D:\\CodeX_gap\\wife-system",
+    "sha256": "3dc1f54d632de331515404174bce8686f03114da4695e5a8bb8d5a8c89af0f46"
+  },
+  "buildSource": {
+    "entries": 932,
+    "matched": 932,
+    "authorizedChanges": [],
+    "manifest": "C:\\MarisQuitR7\\R7-20261014-191500\\evidence\\static\\workspace-source.sha256",
+    "base": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace",
+    "sha256": "e7cec440e4420bec3f6fec274b6521ecd413d0d4c4fc1f304a584823ea9732a0"
+  },
+  "out": {
+    "entries": 140,
+    "matched": 140,
+    "authorizedChanges": [],
+    "manifest": "C:\\MarisQuitR7\\R7-20261014-191500\\evidence\\static\\out-manifest-v4.tsv",
+    "base": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\apps\\desktop\\out\\Maris-win32-x64",
+    "sha256": "1953b0f91d94b4d64850d4d81c5da8c803bb1da5eebda6bf32eda64935214521"
+  },
+  "resources": {
+    "entries": 67,
+    "matched": 67,
+    "authorizedChanges": [],
+    "manifest": "C:\\MarisQuitR7\\R7-20261014-191500\\evidence\\static\\python-resources-v4.tsv",
+    "base": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\resources",
+    "sha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1"
+  },
+  "dist": {
+    "entries": 73,
+    "matched": 73,
+    "authorizedChanges": [],
+    "manifest": "C:\\MarisQuitR7\\R7-20261014-191500\\evidence\\inputs\\electron-dist-final.sha256",
+    "base": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\node_modules\\electron\\dist",
+    "sha256": "ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f"
+  },
+  "dependencies": {
+    "entries": 12677,
+    "matched": 12677,
+    "authorizedChanges": [],
+    "manifest": "C:\\MarisQuitR7\\R7-20261014-191500\\evidence\\inputs\\old-r6-full-node-modules.sha256",
+    "base": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\node_modules",
+    "sha256": "035c05bffbbf5f297ac098e7fbda16d5bd48cf76a89e4036c3dc35ddb64b3ef8"
+  },
+  "executorEvidence": {
+    "entries": 157,
+    "matched": 157,
+    "authorizedChanges": [],
+    "manifest": "C:\\MarisQuitR7\\R7-20261014-191500\\evidence\\evidence-manifest.sha256",
+    "base": "C:\\MarisQuitR7\\R7-20261014-191500\\evidence",
+    "sha256": "63a94a2177dbe0107f1c9ea327d9d26b694137a91824d2733ad038aaf9d99615"
+  },
+  "r8r1Delivery": {
+    "entries": 82,
+    "matched": 82,
+    "authorizedChanges": [],
+    "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r8-r1\\delivery.sha256",
+    "base": "D:\\CodeX_gap\\wife-system",
+    "sha256": "437bcded2f0accc0e55e63cb411a48dc1414d76f659e70ddf4cc48a455a6fd58"
+  },
+  "artifacts": {
+    "apps/desktop/out/Maris-win32-x64/Maris.exe": "183758e3b25a5314da8bea157f92ec00385e9ed6e18f42bac1ad679cdd6f6a65",
+    "apps/desktop/out/Maris-win32-x64/resources/app.asar": "16f45da665693e9b606ffb6b839081a48fa6ed4ae3e4995b403f57237118aed3",
+    "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+  },
+  "versions": {
+    "vitest": {
+      "version": "5.0.2",
+      "path": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\node_modules\\vitest\\package.json",
+      "sha256": "943ddc2cfd3676087e243b5adc450ea8c25ad941ba678b48a679b68f67ef297a"
+    },
+    "react": {
+      "version": "19.3.0",
+      "path": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\node_modules\\react\\package.json",
+      "sha256": "6e003e4e9ed25afa7fdd55613f8aa877cefa9b359d9c13f81ee704030248e24e"
+    },
+    "react-dom": {
+      "version": "19.3.0",
+      "path": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\node_modules\\react-dom\\package.json",
+      "sha256": "136d4af63de473392ea79d6a21932b0ed9eb37fe518ce70f4621250f3d79e9bb"
+    },
+    "jsdom": {
+      "version": "30.1.1",
+      "path": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\node_modules\\jsdom\\package.json",
+      "sha256": "72dff7780a7791071ebd9cb219262522fc28d0ce5570c41dc7bb69b2700db067"
+    },
+    "typescript": {
+      "version": "6.0.3",
+      "path": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\node_modules\\typescript\\package.json",
+      "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9"
+    },
+    "electron": {
+      "version": "44.4.5",
+      "path": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\node_modules\\electron\\package.json",
+      "sha256": "255fc856265d3926c006672615c94f138a03da3ce4c7d1f62d6a1e7124bc3cec"
+    },
+    "playwright": {
+      "version": "1.63.0",
+      "path": "C:\\MarisQuitR7\\R7-20261014-191500\\workspace\\node_modules\\playwright\\package.json",
+      "sha256": "8bc2ddebe8d9b051b9ecb87d62c6c63877e59d08617f32c3215681ca8bb70998"
+    }
+  },
+  "staged": [],
+  "gitWarningBytes": 84
+}

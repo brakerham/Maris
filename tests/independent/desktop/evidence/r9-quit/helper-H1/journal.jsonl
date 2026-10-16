@@ -1,0 +1,8 @@
+{"seq":1,"event":"launch_plan","at":"2026-10-16T02:53:32.005Z","elapsedMs":0.3813000000000102,"details":{"id":"H1","maxHelpers":4,"maxMs":60000,"productImported":false}}
+{"seq":2,"event":"root_started","at":"2026-10-16T02:53:37.340Z","elapsedMs":5335.330999999999,"details":{"pid":4616}}
+{"seq":3,"event":"first_failure","at":"2026-10-16T02:53:45.930Z","elapsedMs":13925.4036,"details":{"code":"ownership_observer_error"}}
+{"seq":4,"event":"owned_snapshot","at":"2026-10-16T02:53:48.762Z","elapsedMs":16757.0609,"details":{"rootVerified":true,"rootPresent":true,"owned":[{"pid":4616,"parentPid":25980,"created":"2026-10-16T02:53:32.0278140Z","kind":"product"},{"pid":18316,"parentPid":4616,"created":"2026-10-16T02:53:37.8580490Z","kind":"product"},{"pid":20428,"parentPid":4616,"created":"2026-10-16T02:53:37.8649380Z","kind":"product"}],"listeners":[],"windowCount":4}}
+{"seq":5,"event":"forced_cleanup","at":"2026-10-16T02:53:49.139Z","elapsedMs":17134.0483,"details":{"status":0}}
+{"seq":6,"event":"root_exit","at":"2026-10-16T02:53:49.149Z","elapsedMs":17144.7799,"details":{"code":1,"signal":null}}
+{"seq":7,"event":"owned_snapshot","at":"2026-10-16T02:53:51.726Z","elapsedMs":19721.0455,"details":{"rootVerified":false,"rootPresent":false,"owned":[],"listeners":[],"windowCount":0}}
+{"seq":8,"event":"finished","at":"2026-10-16T02:53:51.729Z","elapsedMs":19724.7723,"details":{"passed":false}}

@@ -1,0 +1,13 @@
+{
+  "nodeSyntax": true,
+  "powershellSyntax": true,
+  "nativeInteropCompiled": true,
+  "literalIdsUnique": true,
+  "controlVersion": "2026-10-16T00:51:00+08:00",
+  "selfCimAvailable": true,
+  "newRootNoReparse": true,
+  "previousRegisteredPidsAbsent": true,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "toolCorrections": 0
+}

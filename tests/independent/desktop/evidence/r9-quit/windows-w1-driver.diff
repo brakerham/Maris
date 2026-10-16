@@ -1,0 +1,88 @@
+--- r8-r1-windows-attempt1-run.mjs
++++ r9-quit-windows-w1-run.mjs
+@@ -7,9 +7,9 @@
+ 
+ const own=path.dirname(fileURLToPath(import.meta.url));
+ const repo=path.resolve(own,'../../..');
+-const ev=path.join(own,'evidence/r8-r1');
++const ev=path.join(own,'evidence/r9-quit');
+ const plan=JSON.parse(fs.readFileSync(path.join(ev,'windows-plan.json'),'utf8'));
+-const ext='C:/MarisModulesR6/R6-20261013-002100';
++const ext='C:/MarisQuitR7/R7-20261014-191500';
+ const workspace=path.join(ext,'workspace');
+ const packageRoot=path.join(workspace,'apps/desktop/out/Maris-win32-x64');
+ const exe=path.join(packageRoot,'Maris.exe');
+@@ -27,11 +27,12 @@
+  return absolute;
+ }
+ must(!fs.existsSync(out),'first_evidence_exists');
+-must(!fs.existsSync(plan.externalRoot),'virtual_root_exists');
+-must(fs.readFileSync(path.join(repo,'docs/coordination/control.md'),'utf8').includes('2026-10-14T07:16:34+08:00'),'control_changed');
++must(fs.readFileSync(path.join(plan.externalRoot,'r9-owned-marker.txt'),'utf8')==='P4-C12-R9-QUIT 20261016-011200','virtual_root_owner_changed');
++must(!fs.existsSync(profile),'new_profile_exists');
++must(fs.readFileSync(path.join(repo,'docs/coordination/control.md'),'utf8').includes('2026-10-16T00:51:00+08:00'),'control_changed');
+ const startAudit=JSON.parse(fs.readFileSync(path.join(ev,'start-audit.json'),'utf8'));
+ for(const [name,digest] of Object.entries(startAudit.artifacts))must(sha(fs.readFileSync(path.join(workspace,name)))===digest,'fixed_artifact_changed');
+-for(const line of fs.readFileSync(path.join(ev,'windows-attempt1-source.sha256'),'utf8').trimEnd().split(/\r?\n/)){const [name,digest]=line.split('\t');must(sha(fs.readFileSync(path.join(own,name)))===digest,'runner_source_changed');}
++for(const line of fs.readFileSync(path.join(ev,'windows-w1-source.sha256'),'utf8').trimEnd().split(/\r?\n/)){const [name,digest]=line.split('\t');must(sha(fs.readFileSync(path.join(own,name)))===digest,'runner_source_changed');}
+ boundary(plan.externalRoot);fs.mkdirSync(plan.externalRoot,{recursive:true});
+ for(const p of [profile,osEnv,...['appdata','localappdata','temp'].map(n=>path.join(osEnv,n))]){boundary(p);fs.mkdirSync(p);}
+ fs.mkdirSync(out);
+@@ -42,11 +43,12 @@
+ fs.writeFileSync(path.join(profile,'device-settings.json'),JSON.stringify(settings)+'\n',{flag:'wx'});
+ const marker=randomUUID();fs.writeFileSync(path.join(plan.externalRoot,'owner-marker.txt'),marker,{flag:'wx'});
+ const start=new Date().toISOString();const clock=performance.now();let seq=0,root=null,browser=null,rootExit=null,rootError=null,timer=null,stage='start',firstFailure=null,cleanupError=null,forced=false,timeout=false;
+-let known=[],latest=null,stdoutBytes=0,stderrBytes=0,consoleEvents=[],pageErrors=0,cdpPort=null,normalClose=false;
++let known=[],latest=null,stdoutBytes=0,stderrBytes=0,stderrText='',consoleEvents=[],pageErrors=0,cdpPort=null,normalClose=false;
+ const journal=fs.openSync(path.join(out,'journal.jsonl'),'wx');
+ function record(stage,details={}){const b=Buffer.from(JSON.stringify({seq:++seq,event:stage,at:new Date().toISOString(),elapsedMs:performance.now()-clock,details})+'\n');fs.writeSync(journal,b);fs.fsyncSync(journal);}
+ const safe=v=>typeof v==='boolean'||typeof v==='number'&&Number.isFinite(v)||['online','managed','daily_finance','idle','unknown','system','dark','on','off','file:'].includes(v)?v:'unknown';
+-async function check(id,expected,observe){record('assert_enter',{id,expected:safe(expected)});let actual;try{actual=safe(await observe());}catch(e){record('assert_fail',{id,expected:safe(expected),actual:'unknown',observationStage:stage,errorKind:['Error','TypeError','TimeoutError'].includes(e.name)?e.name:'other'});e.gateId=id;throw e;}record(actual===expected?'assert_pass':'assert_fail',{id,expected:safe(expected),actual});if(actual!==expected){const e=new Error('assertion_failed');e.safeCode='assertion_failed';e.gateId=id;throw e;}return actual;}
++const assertionIds=new Set();
++async function check(id,expected,observe){must(!assertionIds.has(id),'duplicate_assertion_id');assertionIds.add(id);record('assert_enter',{id,expected:safe(expected),operator:'eq',stage});let actual;try{actual=safe(await observe());}catch(e){record('assert_fail',{id,expected:safe(expected),actual:'unknown',operator:'eq',observationStage:stage,errorKind:['Error','TypeError','TimeoutError'].includes(e.name)?e.name:'other'});e.gateId=id;throw e;}record(actual===expected?'assert_pass':'assert_fail',{id,expected:safe(expected),actual,operator:'eq',stage});if(actual!==expected){const e=new Error('assertion_failed');e.safeCode='assertion_failed';e.gateId=id;throw e;}return actual;}
+ async function observePage(page,prefix){
+  const end=performance.now()+5000;let sample=null;
+  do{
+@@ -63,9 +65,9 @@
+  await check(prefix+'-HASH',true,()=>sample.hash==='#/daily');await check(prefix+'-READY',true,()=>sample.readyState==='complete');
+ }
+ function os(action='snapshot',button=''){
+- const r=spawnSync(pwsh,['-NoProfile','-NonInteractive','-File',path.join(own,'r8-r1-windows-os.ps1'),'-Action',action,'-RootPid',String(root.pid),'-StartedUtc',start,'-KnownJson',JSON.stringify(known),...(button?['-Button',button]:[])],{encoding:'utf8',shell:false,windowsHide:true,timeout:8000,maxBuffer:1024*1024});
++ const r=spawnSync(pwsh,['-NoProfile','-NonInteractive','-File',path.join(own,'r9-quit-windows-os.ps1'),'-Action',action,'-RootPid',String(root.pid),'-ExpectedParentPid',String(process.pid),'-StartedUtc',start,'-KnownJson',JSON.stringify(known),...(button?['-Button',button]:[])],{encoding:'utf8',shell:false,windowsHide:true,timeout:8000,maxBuffer:1024*1024});
+  must(r.status===0,'os_observer_error');const value=JSON.parse(r.stdout);
+- if(action==='snapshot'){latest=value;known=[...new Map([...known,...value.owned].map(p=>[p.pid,p])).values()];record('owned_snapshot',{rootVerified:value.rootVerified,rootPresent:value.rootPresent,owned:value.owned,listeners:value.listeners});}
++ if(action==='snapshot'){latest=value;known=[...new Map([...known,...value.owned].map(p=>[p.pid,p])).values()];record('owned_snapshot',{rootVerified:value.rootVerified,rootPresent:value.rootPresent,owned:value.owned,listeners:value.listeners,windowCount:value.windowCount});}
+  return value;
+ }
+ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+@@ -81,7 +83,7 @@
+  for(const k of ['NODE_OPTIONS','ELECTRON_RUN_AS_NODE','MARIS_E2E_EXIT_MS','ELECTRON_ENABLE_LOGGING','ELECTRON_LOG_FILE','MARIS_EXTERNAL_HOST_URL','MARIS_EXTERNAL_HOST_NONCE'])delete env[k];
+  root=spawn(exe,['--remote-debugging-address=127.0.0.1','--remote-debugging-port=0'],{cwd:packageRoot,env,shell:false,windowsHide:true,stdio:['ignore','pipe','pipe']});
+  must(root.pid,'root_pid_missing');record('root_started',{pid:root.pid,startedUtc:start});
+- root.stdout.on('data',b=>{stdoutBytes+=b.length;});root.stderr.on('data',b=>{stderrBytes+=b.length;});
++ root.stdout.on('data',b=>{stdoutBytes+=b.length;});root.stderr.on('data',b=>{stderrBytes+=b.length;if(stderrText.length<1048576)stderrText+=b.toString('utf8');});
+  root.once('exit',(code,signal)=>{rootExit={code,signal:signal??null,elapsedMs:performance.now()-clock};record('root_exit',rootExit);});root.once('error',()=>{rootError='spawn_error';});
+  timer=setTimeout(()=>{timeout=true;try{forceOwned();}catch{cleanupError='deadline_cleanup_unverified';}},90000);
+  stage='ownership';await check('W1-OWN-ROOT',true,()=>os().rootVerified);
+@@ -130,14 +132,18 @@
+  await check('W1-HOST-UNAUTH-DENIED',true,async()=>{const r=await fetch(`http://127.0.0.1:${ports[0]}/api/v1/modules`,{signal:AbortSignal.timeout(2000)});return [401,403].includes(r.status);});
+  await check('W1-CONSOLE-NO-SECRET',true,()=>consoleEvents.every(e=>!e.secretPattern));
+  stage='recover';record('recover_enter',{expectedCalls:1});await main.evaluate(()=>window.maris.runtime.recover());record('recover_return');await check('W1-RECOVER-ONLINE',true,()=>main.evaluate(async()=>{const r=await window.maris.runtime.getSnapshot();return r.state==='online'&&r.authenticated;}));await main.getByRole('link',{name:'日常财务',exact:true}).click({timeout:5000});await observePage(main,'W1-RECOVER-PAGE');await check('W1-RECOVER-THEME',true,()=>main.evaluate(()=>document.querySelector('main.shell')?.dataset.theme==='dark'&&document.querySelector('main.shell')?.dataset.privacy==='on'));
+- stage='normal-close';const closed=os('close');normalClose=closed.closePosted;await check('W1-NATIVE-CLOSE-POSTED',true,()=>normalClose);const closeDeadline=performance.now()+10000;while(!rootExit&&performance.now()<closeDeadline)await sleep(75);await check('W1-NORMAL-EXIT-OBSERVED',true,()=>!!rootExit);
++ stage='normal-close';const closed=os('close');record('normal_close_source',{...closed,method:'owned_unique_main_WM_CLOSE',exitTimerAbsent:!('MARIS_E2E_EXIT_MS' in env)});normalClose=closed.closePosted;await check('W1-NATIVE-CLOSE-POSTED',true,()=>normalClose);const closeDeadline=Date.parse(closed.postedUtc)+10000;while(!rootExit&&Date.now()<closeDeadline)await sleep(75);await check('W1-NORMAL-EXIT-OBSERVED',true,()=>!!rootExit);
+  await check('W1-NORMAL-EXIT-CODE',0,()=>rootExit.code);
++ const natural=os();record('normal_exit_resources',{elapsedSinceCloseMs:Date.now()-Date.parse(closed.postedUtc),owned:natural.owned.length,listeners:natural.listeners.length,windowCount:natural.windowCount});
++ await check('W1-NORMAL-OWNED-GONE',0,()=>natural.owned.length);await check('W1-NORMAL-LISTENERS-GONE',0,()=>natural.listeners.length);await check('W1-NORMAL-WINDOWS-GONE',0,()=>natural.windowCount);
++ await check('W1-NORMAL-RESOURCE-DEADLINE',true,()=>Date.now()<=closeDeadline);
+ }catch(e){firstFailure={stage,id:e.gateId??null,kind:['AssertionError','TypeError','Error'].includes(e.name)?e.name:'other',code:e.safeCode??'operation_error'};record('first_failure',firstFailure);}
+ finally{
+  clearTimeout(timer);stage='cleanup';
+- try{if(root&&!rootExit){forceOwned();await wait(()=>!!rootExit,3000,'cleanup_exit_timeout');}if(root){const after=os();must(after.owned.length===0&&after.listeners.length===0,'owned_resources_remain');record('cleanup_confirmed',{registered:known.length,remainingOwned:0,remainingListeners:0});}}
++ try{if(root&&!rootExit){forceOwned();await wait(()=>!!rootExit,3000,'cleanup_exit_timeout');}if(root){const after=os();must(after.owned.length===0&&after.listeners.length===0&&after.windowCount===0,'owned_resources_remain');record('cleanup_confirmed',{registered:known.length,remainingOwned:0,remainingListeners:0,remainingWindows:0});}}
+  catch(e){cleanupError=e.safeCode??'cleanup_unverified';record('cleanup_failure',{code:cleanupError});}
+  try{if(browser)await Promise.race([browser.close(),sleep(2000)]);}catch{record('cdp_disconnect_unverified');}
+- const result={id:'W1',startedUtc:start,durationMs:performance.now()-clock,firstFailure,cleanupError,timeout,forced,rootPid:root?.pid??null,rootExit,normalClose,registered:known,stdoutBytes,stderrBytes,rawLogsSaved:false,consoleEvents,pageErrors,productStarts:1,helperStarts:0,chunkInjectionCount:0,profileAlias:'new_R8R1_main',remainingOwned:latest?.owned?.length??null,remainingListeners:latest?.listeners?.length??null,passed:!firstFailure&&!cleanupError&&!timeout&&!forced&&rootExit?.code===0};
++ const gpuOverlayErrors=(stderrText.match(/GetGpuDriverOverlayInfo: Failed to retrieve video device/g)||[]).length;record('native_stderr_summary',{rawBytes:stderrBytes,gpuOverlayErrors,recognizedMessage:gpuOverlayErrors?'GetGpuDriverOverlayInfo: Failed to retrieve video device':null,rawNotPersisted:true});
++ const result={id:'W1',startedUtc:start,durationMs:performance.now()-clock,firstFailure,cleanupError,timeout,forced,rootPid:root?.pid??null,rootExit,normalClose,registered:known,stdoutBytes,stderrBytes,gpuOverlayErrors,rawLogsSaved:false,consoleEvents,pageErrors,productStarts:1,helperStarts:0,chunkInjectionCount:0,profileAlias:'new_R9_main',remainingOwned:latest?.owned?.length??null,remainingListeners:latest?.listeners?.length??null,remainingWindows:latest?.windowCount??null,passed:!firstFailure&&!cleanupError&&!timeout&&!forced&&rootExit?.code===0};
+  record('runner_finished',{passed:result.passed,durationMs:result.durationMs});writeNew(path.join(out,'result.json'),result);fs.closeSync(journal);process.stdout.write(JSON.stringify({id:'W1',passed:result.passed,firstFailure,cleanupError,productStarts:1})+'\n');if(!result.passed)process.exitCode=1;
+ }

@@ -1,0 +1,13 @@
+--- r9-quit-h1-run.mjs
++++ r9-quit-h1-attempt1-run.mjs
+@@ -15,8 +15,8 @@
+ const distManifest=fs.readFileSync(path.join(fixed,'evidence/inputs/electron-dist-final.sha256'));
+ must(sha(distManifest)==='ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f','dist_manifest_changed');
+ const distRow=distManifest.toString('utf8').trimEnd().split(/\r?\n/).map(l=>l.split('\t')).find(v=>v[0]==='electron.exe');
+-must(!!distRow&&sha(fs.readFileSync(exe))===distRow[1],'helper_exe_changed');
+-for(const line of fs.readFileSync(path.join(ev,'h1-source.sha256'),'utf8').trimEnd().split(/\r?\n/)){const [name,digest]=line.split('\t');must(sha(fs.readFileSync(path.join(own,name)))===digest,'source_changed');}
++must(!!distRow&&sha(fs.readFileSync(exe))===distRow[2],'helper_exe_changed');
++for(const line of fs.readFileSync(path.join(ev,'h1-attempt1-source.sha256'),'utf8').trimEnd().split(/\r?\n/)){const [name,digest]=line.split('\t');must(sha(fs.readFileSync(path.join(own,name)))===digest,'source_changed');}
+ fs.mkdirSync(out);fs.mkdirSync(evidence);fs.mkdirSync(path.join(ext,'helper-profile-H1'));
+ const script=path.join(out,'main.cjs');fs.copyFileSync(path.join(own,'r9-quit-h1-native.cjs'),script,fs.constants.COPYFILE_EXCL);
+ const env={...process.env,APPDATA:path.join(ext,'os-env/appdata'),LOCALAPPDATA:path.join(ext,'os-env/localappdata'),TEMP:path.join(ext,'os-env/temp'),TMP:path.join(ext,'os-env/temp')};

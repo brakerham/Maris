@@ -1,0 +1,19 @@
+--- r9-quit-end-audit.py
++++ r9-quit-end-audit-analysis.py
+@@ -4,6 +4,7 @@
+ import datetime
+ import hashlib
+ import json
++import re
+ import subprocess
+ 
+ ROOT = Path(__file__).resolve().parents[3]
+@@ -100,7 +101,7 @@
+     assert hashlib.sha256(prefix).hexdigest() == BASELINE['outside_b_prefix']
+     assert hashlib.sha256(suffix).hexdigest() == BASELINE['outside_b_suffix']
+     cases = [[cell.strip() for cell in line.strip().strip('|').split('|')]
+-             for line in matrix.decode('utf8').splitlines() if line.startswith('| P4')]
++             for line in matrix.decode('utf8').splitlines() if re.match(r'^\| P4[ABCD]-[A-Z]+-\d{2} \|', line)]
+     assert len(cases) == len({row[0] for row in cases}) == 120
+     before = {row[0]: row for row in BASELINE['cases']}
+     for row in cases:

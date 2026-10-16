@@ -1,0 +1,36 @@
+{
+  "rootExitCode": 0,
+  "forced": false,
+  "durationMs": 3585,
+  "failure": null,
+  "cleanupScope": "owned_root_and_registered_workers_only",
+  "scope": "independent_quit_8_lifecycles_attempt_0",
+  "productStarts": 0,
+  "workers": [
+    {
+      "pid": 7660,
+      "identityVerified": true,
+      "forced": false,
+      "nativeExitCode": 1,
+      "exited": true
+    }
+  ],
+  "streams": [
+    {
+      "complete": true,
+      "rawBytes": 55,
+      "name": "stdout"
+    },
+    {
+      "complete": true,
+      "rawBytes": 0,
+      "name": "stderr"
+    }
+  ],
+  "stagesObserved": 527,
+  "helperStarts": 0,
+  "rootExited": true,
+  "rootPid": 13468,
+  "timedOut": false,
+  "streamsComplete": true
+}

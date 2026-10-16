@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-16T10:54:53.403957+08:00",
+  "firstFailure": "ownership_observer_error",
+  "classification": "unknown_observer_failure_not_product",
+  "rawStatusAndStderrRetained": false,
+  "cause": "unverified",
+  "readyExists": true,
+  "releaseExists": false,
+  "nativeResultExists": false,
+  "nativeCheckFiles": 0,
+  "deadlineReceiptExists": false,
+  "safeStorageOperationReached": false,
+  "productStarts": 1,
+  "helperStarts": 1,
+  "stoppedFollowing": [
+    "W2",
+    "W3",
+    "W4",
+    "W5",
+    "W6",
+    "reserved W7-W8",
+    "H2",
+    "H3",
+    "H4"
+  ],
+  "note": "Read-only analysis after successful scoped forced cleanup; no new helper/product launched, no retry permitted."
+}
