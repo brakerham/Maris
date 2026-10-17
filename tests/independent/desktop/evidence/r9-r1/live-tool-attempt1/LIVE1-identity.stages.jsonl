@@ -1,0 +1,3 @@
+{"callId":"LIVE1-identity","details":{},"event":"enter","at":"2026-10-16T16:16:42.0014636+00:00","stage":"process_query"}
+{"callId":"LIVE1-identity","details":{"parentEqual":true,"executableEqual":true,"scriptArgumentEqual":false,"creationWithinStart":true},"event":"identity_comparison","at":"2026-10-16T16:16:42.2096758+00:00","stage":"process_query"}
+{"callId":"LIVE1-identity","details":{"status":"failed","error":{"hresult":-2146233087,"code":"root_identity_mismatch","type":"RuntimeException","category":"query_failed"}},"event":"terminal","at":"2026-10-16T16:16:42.2199379+00:00","stage":"process_query"}

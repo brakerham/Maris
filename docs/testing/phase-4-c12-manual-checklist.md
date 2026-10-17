@@ -163,3 +163,12 @@ ZIP/staging 的附加检查、UI-03/04 冲突与漂移门禁、HostClient/sessio
 W1之后同任务继续H1辅助，实际启动前清单摘要列误读使用本卡唯一工具更正，后续H1首次启动发生未知ownership观察错误，解密和fixture写入未进入。按任务卡停止动态扩大；辅助定向强制清理后自有对象/监听/窗口归零，不写为产品正常退出或safeStorage通过。累计产品1/8、辅助1/4。W2以后跨重启session/设置/同ID、原生提示/Tray、老化保留/删除及剩余owned故障条件未执行；实际chunk注入0。未要求用户点击、修改启动项/主题/多屏或注销系统。
 
 矩阵SUP-05/CMP-03正常退出子条件通过，整项改blocked；B为1passed、1failed、19blocked、3not_run。UI-01既有通过保持，UI-02/LAZY-001和P4-B尚未完整验收。测试角色完成报告及终点核对后停在blocked/finished，交总控review；本轮不修改产品、不重打包、不Git写入、不自行启动其他角色。
+
+
+## R9-R1 H1观察工具续验（2026-10-17）
+
+[R9-R1增量报告](phase-4-c12-r9-r1-h1-windows-report.md)：1017起点全匹配，固定包/依赖和旧首次证据通过复核。复制63项W1关闭后的同内容虚拟profile到新根，尚未启动续验。12条虚拟工具检查及1条更正参数检查通过；首次现场工具控制器因脚本身份路径参数不匹配退出，使用唯一目标前更正后仍出现scriptArgumentEqual expected=true/actual=false，其余三个身份比较true；observer实际exit3/controller exit1。保留两次首次材料，按卡停止，不将工具失败写为产品缺陷或设备不支持。
+
+H1恢复、后续W2/W3及原生保留/删除等全部not_run；新产品0/7、辅助0/4，跨R9累计产品1/8、辅助1/5。旧失败H1及旧工具更正不抹除。R9独立8/235、48兼容、W1/62仅历史复用，不重跑。新/原profile均未解密或seed，未要求用户点击，未操作OS主题、启动项、多屏或注销。
+
+B仍1passed、1failed、19blocked、3not_run；UI-01通过保持，QUIT-001普通关闭范围已由总控关闭，其余条件不扩大通过。测试角色blocked/finished交总控review，不自行续跑或修改产品/依赖/包/Git。

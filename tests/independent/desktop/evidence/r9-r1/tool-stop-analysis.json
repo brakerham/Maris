@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-17T00:18:05+08:00",
+  "targetStarted": false,
+  "classification": "pretarget_tool_identity_binding_failure",
+  "confirmed": {
+    "parentEqual": true,
+    "executableEqual": true,
+    "creationWithinStart": true,
+    "scriptArgumentEqual": false
+  },
+  "observerStatus": 3,
+  "controllerStatus": 1,
+  "signal": null,
+  "errorType": "RuntimeException",
+  "safeCode": "root_identity_mismatch",
+  "errorHresult": -2146233087,
+  "stdoutBytes": 180,
+  "stderrBytes": 0,
+  "observerDurationMs": 635.2694,
+  "staticArgumentComparison": {
+    "launchUsesForwardSlash": true,
+    "expectedUsesBackslash": true,
+    "ordinalSubstringMatches": false,
+    "normalizedSameFile": true
+  },
+  "causalLimit": "Observed script-argument predicate false; static invocation/request comparison identifies differing path spellings. Full live command line deliberately not retained; no product/root-cause inference for old H1.",
+  "correctionUsed": 1,
+  "correctionLimit": 1,
+  "decision": "stop new dynamic checks; H1 and later scenarios not_run"
+}

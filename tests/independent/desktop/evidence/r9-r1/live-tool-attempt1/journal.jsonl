@@ -1,0 +1,7 @@
+{"event":"observer_enter","at":"2026-10-16T16:16:41.656Z","elapsedMs":1.7898999999999994,"details":{"id":"LIVE1-identity","startedUtc":"2026-10-16T16:16:41.656Z","limitMs":8000}}
+{"event":"observer_spawn","at":"2026-10-16T16:16:41.677Z","elapsedMs":23.5493,"details":{"id":"LIVE1-identity","pid":30052,"parentPid":21664}}
+{"event":"observer_exit","at":"2026-10-16T16:16:42.278Z","elapsedMs":624.5534,"details":{"id":"LIVE1-identity","status":3,"signal":null}}
+{"event":"observer_terminal","at":"2026-10-16T16:16:42.291Z","elapsedMs":637.0718999999999,"details":{"id":"LIVE1-identity","startedUtc":"2026-10-16T16:16:41.656Z","endedUtc":"2026-10-16T16:16:42.291Z","durationMs":635.2694,"status":3,"signal":null,"error":null,"timedOut":false,"cancelVerified":false,"pid":30052,"stdoutBytes":180,"stdoutSha256":"acd25a6db441c0ab53f978f94c500316c3e9a9b815d0a30a48a057bcc8b69ab3","stderrBytes":0,"stderrSha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}}
+{"event":"observer_classification","at":"2026-10-16T16:16:42.293Z","elapsedMs":638.7759,"details":{"id":"LIVE1-identity","kind":"nonzero"}}
+{"event":"first_failure","at":"2026-10-16T16:16:42.294Z","elapsedMs":640.492,"details":{"code":"observer_nonzero"}}
+{"event":"finished","at":"2026-10-16T16:16:42.296Z","elapsedMs":642.3321,"details":{"passed":false}}

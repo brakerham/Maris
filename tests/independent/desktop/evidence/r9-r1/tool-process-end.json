@@ -1,0 +1,31 @@
+{
+  "observed": [
+    {
+      "pid": 21836,
+      "present": false
+    },
+    {
+      "pid": 11032,
+      "present": false
+    },
+    {
+      "pid": 21664,
+      "present": false
+    },
+    {
+      "pid": 30052,
+      "present": false
+    },
+    {
+      "pid": 3176,
+      "present": false
+    },
+    {
+      "pid": 24928,
+      "present": false
+    }
+  ],
+  "scope": "known tool controller/observer and completed audit IDs only; no global descendant claim",
+  "at": "2026-10-17T00:18:05.4428860+08:00",
+  "forceUsed": false
+}

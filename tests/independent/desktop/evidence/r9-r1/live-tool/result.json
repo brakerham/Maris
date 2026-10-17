@@ -1,0 +1,12 @@
+{
+  "passed": false,
+  "failure": "observer_nonzero",
+  "observations": [],
+  "controllerPid": 21836,
+  "parentPid": 24364,
+  "controllerExpectedExit": 1,
+  "durationMs": 700.3625000000001,
+  "products": 0,
+  "helpers": 0,
+  "purpose": "read-only current controller identity and resource query status only"
+}

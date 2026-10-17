@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-17T00:23:01+08:00",
+  "files": 59,
+  "matched": 59,
+  "manifestSha256": "aacbc4e24f8b87e5af37ba815cc416fe83e6d5640f85cddc97886810092d8784",
+  "state": "blocked",
+  "executionState": "finished",
+  "handoff": "coordinator review",
+  "endAuditPassed": true,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "cumulativeProducts": 1,
+  "cumulativeHelpers": 1,
+  "toolCorrectionUsed": 1,
+  "gitWrites": 0,
+  "excludedSelfReferential": [
+    "delivery.sha256",
+    "delivery-verification.json"
+  ]
+}

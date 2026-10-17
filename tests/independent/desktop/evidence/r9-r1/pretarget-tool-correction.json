@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-17T00:16:37.756536+08:00",
+  "classification": "proven_pretarget_tool_argument_configuration",
+  "firstControllerExit": 1,
+  "firstObserverExit": 3,
+  "firstObserverType": "RuntimeException",
+  "firstNativeStarts": 0,
+  "launchScriptWasRelative": true,
+  "identityRequiredAbsoluteScript": true,
+  "absoluteSubstringInLaunchedRelativeArgument": false,
+  "sourceLocation": "r9-r1-observer.ps1 root command line comparison",
+  "correction": "pass absolute script argument; add safe per-field identity booleans; new attempt output only",
+  "used": 1,
+  "limit": 1,
+  "priorR9Used": 1,
+  "businessExpectationsChanged": false,
+  "timingsChanged": false,
+  "productStarts": 0,
+  "helperStarts": 0
+}

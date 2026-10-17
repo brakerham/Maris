@@ -1,0 +1,39 @@
+--- r9-r1-observer.ps1
++++ r9-r1-observer-attempt1.ps1
+@@ -26,6 +26,7 @@
+     $v=$root[0]
+     $commandMatched=([string]$v.CommandLine).Contains([string]$r.scriptPath)
+     $verified=$v.ExecutablePath -eq $r.executable -and $v.ParentProcessId -eq $r.parentPid -and $v.CreationDate.ToUniversalTime() -ge $start.AddSeconds(-2) -and $commandMatched
++    Record $stage 'identity_comparison' @{executableEqual=($v.ExecutablePath -eq $r.executable);parentEqual=($v.ParentProcessId -eq $r.parentPid);creationWithinStart=($v.CreationDate.ToUniversalTime() -ge $start.AddSeconds(-2));scriptArgumentEqual=$commandMatched}
+     if(-not $verified){throw 'root_identity_mismatch'}
+   }
+   $ids=[Collections.Generic.HashSet[int]]::new()
+@@ -70,6 +71,7 @@
+   exit 0
+ }catch{
+   $errorInfo=SafeError $_
++  $errorInfo.code=if($_.Exception.Message -in @('root_identity_mismatch','root_nonunique')){$_.Exception.Message}else{'unclassified'}
+   Record $stage 'terminal' @{status='failed';error=$errorInfo}
+   $failure=@{ok=$false;callId=$r.callId;stage=$stage;error=$errorInfo}|ConvertTo-Json -Depth 6 -Compress
+   [Console]::Out.WriteLine($failure)
+--- r9-r1-tool-live.mjs
++++ r9-r1-tool-live-attempt1.mjs
+@@ -1,7 +1,7 @@
+ import fs from 'node:fs';import path from 'node:path';import {fileURLToPath}from'node:url';
+ import {observe,write,must,sha}from'./r9-r1-observation.mjs';
+-const own=path.dirname(fileURLToPath(import.meta.url)),ev=path.join(own,'evidence/r9-r1/live-tool');
+-const ext='C:/MarisC12/C12-R9-R1-20261017-001500',output=path.join(ext,'tool-live');
++const own=path.dirname(fileURLToPath(import.meta.url)),ev=path.join(own,'evidence/r9-r1/live-tool-attempt1');
++const ext='C:/MarisC12/C12-R9-R1-20261017-001500',output=path.join(ext,'tool-live-attempt1');
+ const pwsh='C:/Users/xuhaolin/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe';
+ must(fs.readFileSync(path.resolve(own,'../../../docs/coordination/control.md'),'utf8').includes('2026-10-16T18:15:00+08:00'),'control_changed');
+ fs.mkdirSync(ev);fs.mkdirSync(output);
+@@ -10,7 +10,7 @@
+ let failure=null,known=[],observations=[];
+ try{
+  for(const action of ['identity','resources']){
+-  const s=await observe({action,rootPid:process.pid,parentPid:process.ppid,startedUtc,executable:process.execPath,scriptPath:fileURLToPath(import.meta.url),known,output,evidence:ev,observerScript:path.join(own,'r9-r1-observer.ps1'),pwsh,deadline:start+20000,record,id:'LIVE-'+action});
++  const s=await observe({action,rootPid:process.pid,parentPid:process.ppid,startedUtc,executable:process.execPath,scriptPath:fileURLToPath(import.meta.url),known,output,evidence:ev,observerScript:path.join(own,'r9-r1-observer-attempt1.ps1'),pwsh,deadline:start+20000,record,id:'LIVE1-'+action});
+   must(s.rootVerified&&s.commandPathMatched,'live_identity');known=s.owned;observations.push(s);
+   if(action==='resources')must(s.resourceStatus==='success','live_resource_status');
+  }

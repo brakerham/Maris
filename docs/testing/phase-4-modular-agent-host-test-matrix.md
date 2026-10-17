@@ -328,6 +328,8 @@ B继续0 passed、1 failed、19 blocked、4 not_run；120 ID/12列/原预期及A
 - H1辅助首次启动在safeStorage操作前出现ownership_observer_error，具体原status/stderr未留存、原因unverified；安全收口后3登记对象/监听/窗口0。该未知观察故障不是产品缺陷，按卡停止扩大，不继续W2-W6/H2-H4。产品1/8、辅助1/4；启动前清单列误读的唯一工具更正1/1已用完，首次和最小diff保留。
 - 当前B为1passed、1failed、19blocked、3not_run；UI-01保持accepted passed，UI-02/LAZY-001及P4-B未关闭。跨重启真实session/设置/同ID、原生老化提示、实际chunk命中/重试仍未验证；设备人工条件保持。A/C/D、120ID、12列、原预期不变。
 
+R9-R1（2026-10-17）增量：1017起点及固定输入通过；两次目标前工具现场观察在唯一更正后仍为脚本身份谓词false（其余exe/parent/create均true），observer3/controller1。12条虚拟工具检查+1条参数检查不计产品通过。H1恢复与后续Windows未启动，新产品0/7、辅助0/4，跨轮1/8、1/5；原profile及63项同内容副本只读保留。B状态不变，所有业务/设备缺口保持。见[增量报告](phase-4-c12-r9-r1-h1-windows-report.md)，blocked/finished供总控review。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复

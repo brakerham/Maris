@@ -1,0 +1,48 @@
+{
+  "task": "P4-C12-R9-R1",
+  "at": "2026-10-17T00:18:05+08:00",
+  "products": {
+    "priorR9": 1,
+    "thisTask": 0,
+    "thisTaskLimit": 7,
+    "cumulative": 1,
+    "cumulativeLimit": 8
+  },
+  "safeStorageHelpers": {
+    "priorR9FailedH1": 1,
+    "thisTask": 0,
+    "thisTaskLimit": 4,
+    "cumulative": 1,
+    "cumulativeLimit": 5
+  },
+  "liveToolControllers": {
+    "first": 1,
+    "singleAuthorizedCorrection": 1,
+    "total": 2,
+    "productOrElectron": false
+  },
+  "corrections": {
+    "priorR9": 1,
+    "thisTask": 1,
+    "thisTaskLimit": 1
+  },
+  "notRun": [
+    "H1 recovery",
+    "W2",
+    "W3",
+    "H2",
+    "W4",
+    "H3",
+    "W5",
+    "H4",
+    "W6",
+    "W7/W8 reserve"
+  ],
+  "chunkInjections": 0,
+  "historicalOnly": {
+    "independentNodes": 8,
+    "comparisons": 235,
+    "developmentCompatibility": 48,
+    "W1Comparisons": 62
+  }
+}

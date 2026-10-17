@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-16T23:45:09.513109+08:00",
+  "entries": 1017,
+  "matched": 1017,
+  "unique": 1017,
+  "format": "path TAB sha256 LF; UTF8 no BOM; POSIX sort; original bytes",
+  "manifestSha256": "e25b1743fe68f1fa0f8166013d3419feffb7d33cc919b3bbc512601fdddb9539",
+  "stagedCount": 0
+}

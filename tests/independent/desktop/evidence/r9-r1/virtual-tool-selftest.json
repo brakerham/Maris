@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "productImported": false,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "checks": [
+    {
+      "id": "TOOL-01-success",
+      "expected": "success",
+      "actual": "success",
+      "passed": true
+    },
+    {
+      "id": "TOOL-02-nonzero",
+      "expected": "nonzero",
+      "actual": "nonzero",
+      "passed": true
+    },
+    {
+      "id": "TOOL-03-timeout",
+      "expected": "timeout",
+      "actual": "timeout",
+      "passed": true
+    },
+    {
+      "id": "TOOL-04-parse",
+      "expected": "parse_failure",
+      "actual": "parse_failure",
+      "passed": true
+    },
+    {
+      "id": "TOOL-05-denied",
+      "expected": "access_denied",
+      "actual": "access_denied",
+      "passed": true
+    },
+    {
+      "id": "TOOL-06-empty",
+      "expected": "success",
+      "actual": "success",
+      "passed": true
+    },
+    {
+      "id": "TOOL-07-unknown-not-zero",
+      "expected": "nonzero",
+      "actual": "nonzero",
+      "passed": true
+    },
+    {
+      "id": "TOOL-08-schema",
+      "expected": "schema_failure",
+      "actual": "schema_failure",
+      "passed": true
+    },
+    {
+      "id": "TOOL-09-os-denied",
+      "expected": "access_denied",
+      "actual": "access_denied",
+      "passed": true
+    },
+    {
+      "id": "TOOL-10-error-allowlist",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "TOOL-11-two-columns",
+      "expected": 2,
+      "actual": 2,
+      "passed": true
+    },
+    {
+      "id": "TOOL-12-three-columns",
+      "expected": 3,
+      "actual": 3,
+      "passed": true
+    }
+  ],
+  "sourceSha256": "30734f364df6231605aba160b52f09028503ddde8d5fa41fc65494e6ab206d98"
+}

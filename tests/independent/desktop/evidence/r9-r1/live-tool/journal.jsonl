@@ -1,0 +1,7 @@
+{"event":"observer_enter","at":"2026-10-16T16:15:25.973Z","elapsedMs":7.297099999999997,"details":{"id":"LIVE-identity","startedUtc":"2026-10-16T16:15:25.973Z","limitMs":8000}}
+{"event":"observer_spawn","at":"2026-10-16T16:15:26.000Z","elapsedMs":34.308099999999996,"details":{"id":"LIVE-identity","pid":11032,"parentPid":21836}}
+{"event":"observer_exit","at":"2026-10-16T16:15:26.647Z","elapsedMs":681.5206000000001,"details":{"id":"LIVE-identity","status":3,"signal":null}}
+{"event":"observer_terminal","at":"2026-10-16T16:15:26.661Z","elapsedMs":695.3950000000001,"details":{"id":"LIVE-identity","startedUtc":"2026-10-16T16:15:25.973Z","endedUtc":"2026-10-16T16:15:26.661Z","durationMs":688.0848,"status":3,"signal":null,"error":null,"timedOut":false,"cancelVerified":false,"pid":11032,"stdoutBytes":147,"stdoutSha256":"5c84c243a954acb5148499f8043e4c71b2d15fbbdb6d713d79629ab7d45b3b82","stderrBytes":0,"stderrSha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}}
+{"event":"observer_classification","at":"2026-10-16T16:15:26.663Z","elapsedMs":697.1268,"details":{"id":"LIVE-identity","kind":"nonzero"}}
+{"event":"first_failure","at":"2026-10-16T16:15:26.664Z","elapsedMs":698.7467,"details":{"code":"observer_nonzero"}}
+{"event":"finished","at":"2026-10-16T16:15:26.666Z","elapsedMs":700.6142000000001,"details":{"passed":false}}

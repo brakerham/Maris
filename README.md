@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收；R9独立退出8节点/235比较、48开发兼容及W1的62比较通过。总控关闭QUIT-001普通主窗口关闭缺陷范围，约480ms自然退出；CMP-03/SUP-05其余条件仍blocked。H1在解密前遇到未知观察错误，发布P4-C12-R9-R1修工具并续验剩余Windows；不重跑已过W1或旧集合。P4-B为1 passed、1 failed、19 blocked、3 not_run，P4-C/D未开始，执行方和顾问停止。
+当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R1停于目标前脚本路径身份比较，产品/辅助新增均0，未形成产品缺陷；发布P4-C12-R9-R2，修完整参数/路径身份链后沿未耗额度续验H1及剩余Windows。旧8独立/48兼容/W1和模块/冷入口/恢复通过保持。P4-B仍1 passed、1 failed、19 blocked、3 not_run；P4-C/D未开始，执行方和顾问停止。
+
+- [R9-R1路径工具阻断裁定](docs/p4-c12-r9-r1-path-coordinator-review.md)：新故障在测试工具，未新增产品缺陷，旧H1原因保持未知。
+- [R9-R2路径身份修正与续验](docs/coordination/prompts/p4-c12-r9-r2-path-windows-tester.md)：同一任务完成有界工具开发、自检、H1及剩余Windows。
 
 - [R9独立退出与H1续验裁定](docs/p4-c12-r9-quit-h1-coordinator-review.md)：普通关闭缺陷关闭，H1原因未知，原首次证据保留。
-- [R9-R1辅助工具与剩余Windows任务](docs/coordination/prompts/p4-c12-r9-r1-h1-windows-tester.md)：先修观察缺口，恢复H1后同任务继续；旧通过不重复。
+- [R9-R1辅助工具与剩余Windows任务](docs/coordination/prompts/p4-c12-r9-r1-h1-windows-tester.md)：已blocked/finished，目标前路径谓词失败，后续以R9-R2为准。
 - [R9独立验收报告](docs/testing/phase-4-c12-r9-quit-windows-report.md)：8独立节点、48兼容、W1通过与H1首次阻塞。
 
 - [R8-R1独立结果与退出缺陷裁定](docs/p4-c12-r8-r1-quit-coordinator-review.md)：接受UI-01有限整项通过，确认正常退出P1待修。

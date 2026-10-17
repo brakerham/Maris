@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-10-17T00:23:01+08:00",
+  "kind": "read-only projection of preserved stage receipt; no new observation",
+  "checks": [
+    {
+      "id": "LIVE1-IDENTITY-EXE",
+      "field": "executableEqual",
+      "expected": true,
+      "actual": true,
+      "passed": true,
+      "sourceAt": "2026-10-16T16:16:42.2096758+00:00"
+    },
+    {
+      "id": "LIVE1-IDENTITY-PARENT",
+      "field": "parentEqual",
+      "expected": true,
+      "actual": true,
+      "passed": true,
+      "sourceAt": "2026-10-16T16:16:42.2096758+00:00"
+    },
+    {
+      "id": "LIVE1-IDENTITY-CREATED",
+      "field": "creationWithinStart",
+      "expected": true,
+      "actual": true,
+      "passed": true,
+      "sourceAt": "2026-10-16T16:16:42.2096758+00:00"
+    },
+    {
+      "id": "LIVE1-IDENTITY-SCRIPT",
+      "field": "scriptArgumentEqual",
+      "expected": true,
+      "actual": false,
+      "passed": false,
+      "sourceAt": "2026-10-16T16:16:42.2096758+00:00"
+    }
+  ]
+}
