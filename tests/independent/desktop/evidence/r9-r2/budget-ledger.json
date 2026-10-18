@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-18T00:11:35+08:00",
+  "products": {
+    "thisTask": 0,
+    "limit": 7,
+    "series": 1,
+    "seriesLimit": 8
+  },
+  "helpers": {
+    "thisTask": 1,
+    "limit": 4,
+    "series": 2,
+    "seriesLimit": 5,
+    "H1Recovery": 1,
+    "H1RecoveryLimit": 1
+  },
+  "localToolRounds": {
+    "used": 2,
+    "limit": 3
+  },
+  "liveToolControllers": 1,
+  "liveCorrectionUsed": 0,
+  "oldCorrections": {
+    "R9": 1,
+    "R9_R1": 1
+  },
+  "notRun": [
+    "W2",
+    "W3",
+    "H2",
+    "W4",
+    "H3",
+    "W5",
+    "H4",
+    "W6",
+    "reserved W7/W8"
+  ],
+  "chunkInjections": 0,
+  "historicalOnly": [
+    "R9 8 nodes/235 comparisons",
+    "48 developer compatibility",
+    "W1 62 comparisons",
+    "module 13",
+    "cold B",
+    "full recovery"
+  ]
+}

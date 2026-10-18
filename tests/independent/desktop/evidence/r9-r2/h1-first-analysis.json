@@ -1,0 +1,78 @@
+{
+  "at": "2026-10-18T00:11:35+08:00",
+  "classification": "native_operation_unclassified_acceptance_blocker",
+  "lastPassedId": "H1-NATIVE-AVAILABLE",
+  "nativeResultExpected": true,
+  "nativeResultActual": false,
+  "firstUnfinishedId": "H1-OWNER-SCHEMA",
+  "knownRegion": [
+    "read owner-session.bin",
+    "safeStorage.decryptString",
+    "JSON.parse"
+  ],
+  "errorKind": "Error",
+  "nativeCode": "operation_error",
+  "osErrorCode": "not_recorded",
+  "exactThrowSite": "unverified",
+  "helperExit": 1,
+  "controllerExit": 1,
+  "forced": false,
+  "released": true,
+  "profileUnchanged": true,
+  "remaining": {
+    "owned": 0,
+    "listeners": 0,
+    "windows": 0
+  },
+  "checks": [
+    {
+      "id": "H1-NATIVE-AVAILABLE",
+      "expected": true,
+      "actual": true,
+      "status": "passed"
+    },
+    {
+      "id": "H1-OWNER-SCHEMA",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OWNER-READY",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OWNER-NO-PLAIN",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-COUNT",
+      "expected": 1,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-CONTINUITY",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-NO-PLAIN",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    }
+  ],
+  "sourceReadOnlyReview": {
+    "ownerFileExists": true,
+    "ownerFileBytes": 235,
+    "secureStoreUsesRawEncryptStringBuffer": true,
+    "productSourceModified": false
+  },
+  "limitations": "Native source retained old broad catch. No individual read/decrypt/parse enter/terminal or allowlisted native error code was captured. Cannot assign root cause, claim product defect, successful decrypt or unsupported device. No post-target fix/rerun."
+}

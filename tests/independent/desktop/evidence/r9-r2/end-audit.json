@@ -1,0 +1,213 @@
+{
+  "at": "2026-10-18T05:40:26.055393+08:00",
+  "phase": "end",
+  "inputs": {
+    "repository": {
+      "entries": 1077,
+      "matched": 1073,
+      "changes": [
+        {
+          "path": "docs/coordination/agents/tester.md",
+          "sha256": "295db9fe048bb982a67b7f5614c95fdecf348e6747c549f049c473ec263b211f"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-manual-checklist.md",
+          "sha256": "73438ad45d395c267ae617aa1bcd13e6882189eb60579098b61a51de2ada32dc"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-windows-shell-report.md",
+          "sha256": "c7e7f92a812bee186f4add5d3b5f1ae12cadc3a964c1a711a2151371235c40a0"
+        },
+        {
+          "path": "docs/testing/phase-4-modular-agent-host-test-matrix.md",
+          "sha256": "2f127d4418b1b725792d9d5185ab2f01122c5b1690d4595f94057114d010c538"
+        }
+      ],
+      "manifestSha256": "c3d6731a6dc27062f2208e48c58c5aec3298675547d2ffa5dcca021b99d9b6e7",
+      "inventoryVerified": false
+    },
+    "buildSource": {
+      "entries": 932,
+      "matched": 932,
+      "changes": [],
+      "manifestSha256": "e7cec440e4420bec3f6fec274b6521ecd413d0d4c4fc1f304a584823ea9732a0",
+      "inventoryVerified": false
+    },
+    "out": {
+      "entries": 140,
+      "matched": 140,
+      "changes": [],
+      "manifestSha256": "1953b0f91d94b4d64850d4d81c5da8c803bb1da5eebda6bf32eda64935214521",
+      "inventoryVerified": true
+    },
+    "resources": {
+      "entries": 67,
+      "matched": 67,
+      "changes": [],
+      "manifestSha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1",
+      "inventoryVerified": true
+    },
+    "dist": {
+      "entries": 73,
+      "matched": 73,
+      "changes": [],
+      "manifestSha256": "ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f",
+      "inventoryVerified": true
+    },
+    "dependencies": {
+      "entries": 12677,
+      "matched": 12677,
+      "changes": [],
+      "manifestSha256": "035c05bffbbf5f297ac098e7fbda16d5bd48cf76a89e4036c3dc35ddb64b3ef8",
+      "inventoryVerified": true
+    },
+    "executorEvidence": {
+      "entries": 157,
+      "matched": 157,
+      "changes": [],
+      "manifestSha256": "63a94a2177dbe0107f1c9ea327d9d26b694137a91824d2733ad038aaf9d99615",
+      "inventoryVerified": false
+    },
+    "oldR9Delivery": {
+      "entries": 79,
+      "matched": 75,
+      "changes": [
+        {
+          "path": "docs/coordination/agents/tester.md",
+          "sha256": "295db9fe048bb982a67b7f5614c95fdecf348e6747c549f049c473ec263b211f"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-manual-checklist.md",
+          "sha256": "73438ad45d395c267ae617aa1bcd13e6882189eb60579098b61a51de2ada32dc"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-windows-shell-report.md",
+          "sha256": "c7e7f92a812bee186f4add5d3b5f1ae12cadc3a964c1a711a2151371235c40a0"
+        },
+        {
+          "path": "docs/testing/phase-4-modular-agent-host-test-matrix.md",
+          "sha256": "2f127d4418b1b725792d9d5185ab2f01122c5b1690d4595f94057114d010c538"
+        }
+      ],
+      "manifestSha256": "3d08ba6c8246cc4f6e994cdaa75060b411dc23b6c010f5bf60b8b1acedf9443d",
+      "inventoryVerified": false
+    },
+    "oldR1Delivery": {
+      "entries": 59,
+      "matched": 55,
+      "changes": [
+        {
+          "path": "docs/coordination/agents/tester.md",
+          "sha256": "295db9fe048bb982a67b7f5614c95fdecf348e6747c549f049c473ec263b211f"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-manual-checklist.md",
+          "sha256": "73438ad45d395c267ae617aa1bcd13e6882189eb60579098b61a51de2ada32dc"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-windows-shell-report.md",
+          "sha256": "c7e7f92a812bee186f4add5d3b5f1ae12cadc3a964c1a711a2151371235c40a0"
+        },
+        {
+          "path": "docs/testing/phase-4-modular-agent-host-test-matrix.md",
+          "sha256": "2f127d4418b1b725792d9d5185ab2f01122c5b1690d4595f94057114d010c538"
+        }
+      ],
+      "manifestSha256": "aacbc4e24f8b87e5af37ba815cc416fe83e6d5640f85cddc97886810092d8784",
+      "inventoryVerified": false
+    },
+    "oldR1First": {
+      "entries": 38,
+      "matched": 38,
+      "changes": [],
+      "manifestSha256": "5808a7f85d19044177030face311beba6f7ee1b2bfdfb6af412f0686e14caeab",
+      "inventoryVerified": false
+    },
+    "oldR9First": {
+      "entries": 68,
+      "matched": 68,
+      "changes": [],
+      "manifestSha256": "7c7a8bd3b211957c3b29ecc1c6472993a4e4df2924c68bc10998349dd6bd1182",
+      "inventoryVerified": false
+    }
+  },
+  "artifacts": {
+    "apps/desktop/out/Maris-win32-x64/Maris.exe": "183758e3b25a5314da8bea157f92ec00385e9ed6e18f42bac1ad679cdd6f6a65",
+    "apps/desktop/out/Maris-win32-x64/resources/app.asar": "16f45da665693e9b606ffb6b839081a48fa6ed4ae3e4995b403f57237118aed3",
+    "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+  },
+  "matrix": {
+    "uniqueIds": 120,
+    "columns": 12,
+    "expectationsAndNonBPreserved": true,
+    "B": {
+      "blocked": 19,
+      "passed": 1,
+      "failed": 1,
+      "not_run": 3
+    }
+  },
+  "appendOnly": true,
+  "originalProfile": {
+    "entries": 63,
+    "matched": 63,
+    "changes": [],
+    "manifestSha256": "575f132e0bc44a949391c9ab7c31747e4e21e58fdb8a344dc29a00e6639ce7ee",
+    "inventoryVerified": false
+  },
+  "oldR1Profile": {
+    "entries": 63,
+    "matched": 63,
+    "changes": [],
+    "manifestSha256": "575f132e0bc44a949391c9ab7c31747e4e21e58fdb8a344dc29a00e6639ce7ee",
+    "inventoryVerified": false
+  },
+  "currentCopy": {
+    "entries": 63,
+    "matched": 63,
+    "changes": [],
+    "manifestSha256": "575f132e0bc44a949391c9ab7c31747e4e21e58fdb8a344dc29a00e6639ce7ee",
+    "inventoryVerified": false
+  },
+  "profileInventoriesEqual": true,
+  "frozenNewSources": {
+    "end-audit-source.sha256": {
+      "entries": 1,
+      "matched": 1,
+      "changes": [],
+      "manifestSha256": "27c549edbee5c9b56b050c2152853a1a40b1db113bc5c2bf4f340a0a6a1888d3",
+      "inventoryVerified": false
+    },
+    "local-round1-source.sha256": {
+      "entries": 11,
+      "matched": 11,
+      "changes": [],
+      "manifestSha256": "2294282a7356f791b14c47b17e788446553bf3dac6db427fc302b0843a375b76",
+      "inventoryVerified": false
+    },
+    "local-round2-source.sha256": {
+      "entries": 11,
+      "matched": 11,
+      "changes": [],
+      "manifestSha256": "b438d4057d6cbb756049f0289427438cd087668d3cfc5637ba9a273b8862f478",
+      "inventoryVerified": false
+    },
+    "target-source.sha256": {
+      "entries": 9,
+      "matched": 9,
+      "changes": [],
+      "manifestSha256": "1b5742f7dc68de9256fde8f32ed3b425630a902db21788f3e5574b55bca9544e",
+      "inventoryVerified": false
+    }
+  },
+  "firstMaterials": {
+    "entries": 89,
+    "matched": 89,
+    "changes": [],
+    "manifestSha256": "4644653d9e9aeb7f8ef27cdcd5e02aaf19067e930304594331d00549d38eccf7",
+    "inventoryVerified": false
+  },
+  "stagedCount": 0,
+  "gitWrites": 0,
+  "passed": true
+}

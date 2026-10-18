@@ -1,0 +1,12 @@
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:51.3747460+00:00","stage":"parser_prepare","event":"enter","details":{}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:51.9071356+00:00","stage":"parser_prepare","event":"terminal","details":{"status":"success"}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:51.9078972+00:00","stage":"process_query","event":"enter","details":{}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:52.3040477+00:00","stage":"process_query","event":"terminal","details":{"rootVerified":false,"rootPresent":false,"ownedCount":0,"identityValidation":"pending_shared_checker","status":"success"}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:52.3058184+00:00","stage":"type_prepare","event":"enter","details":{}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:52.7253223+00:00","stage":"type_prepare","event":"terminal","details":{"status":"success"}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:52.7258660+00:00","stage":"window_query","event":"enter","details":{}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:52.7325909+00:00","stage":"window_query","event":"terminal","details":{"count":0,"status":"success"}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:52.7330228+00:00","stage":"listener_query","event":"enter","details":{}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:54.5461541+00:00","stage":"listener_query","event":"terminal","details":{"count":0,"status":"success"}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:54.5476339+00:00","stage":"json_output","event":"enter","details":{}}
+{"callId":"H1-OBS-2","at":"2026-10-17T15:40:54.5545226+00:00","stage":"json_output","event":"terminal","details":{"bytes":237,"status":"success"}}

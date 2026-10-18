@@ -1,0 +1,254 @@
+--- r9-r1-observer-attempt1.ps1
++++ r9-r2-observer.ps1
+@@ -12,22 +12,29 @@
+   return @{type=if($name -in $allow){$name}else{'other'};category=if($e.CategoryInfo.Category -eq 'PermissionDenied' -or $name -eq 'UnauthorizedAccessException'){'access_denied'}else{'query_failed'};hresult=$e.Exception.HResult}
+ }
+ $me=[Diagnostics.Process]::GetCurrentProcess()
+-$receipt=@{pid=$PID;created=$me.StartTime.ToUniversalTime().ToString('o');executable=$me.MainModule.FileName;scriptPath=$PSCommandPath;scriptSha256=(Get-FileHash -LiteralPath $PSCommandPath -Algorithm SHA256).Hash.ToLowerInvariant();callId=$r.callId}
++$receipt=@{pid=$PID;created=$me.StartTime.ToUniversalTime().ToString('o');executable=$me.MainModule.FileName;scriptPath=$PSCommandPath;scriptSha256=(Get-FileHash -LiteralPath $PSCommandPath -Algorithm SHA256).Hash.ToLowerInvariant();callId=$r.callId;marker=$r.descriptor.marker;output=$r.output}
+ [IO.File]::WriteAllText($r.receipt,($receipt|ConvertTo-Json -Compress),$encoding)
+-$stage='process_query'
++$stage='parser_prepare'
+ try {
+   Record $stage 'enter' @{}
++  . $r.parserScript
++  Record $stage 'terminal' @{status='success'}
++  $stage='process_query'
++  Record $stage 'enter' @{}
+   $all=@(Get-CimInstance Win32_Process -ErrorAction Stop)
++  $selfProcess=@($all|Where-Object ProcessId -eq $PID)
++  if($selfProcess.Count -eq 1){$receipt.parentPid=[int]$selfProcess[0].ParentProcessId;[IO.File]::WriteAllText($r.receipt,($receipt|ConvertTo-Json -Compress),$encoding)}
+   $root=@($all|Where-Object ProcessId -eq $r.rootPid)
+   if($root.Count -gt 1){throw 'root_nonunique'}
+   $start=[DateTimeOffset]::Parse($r.startedUtc).UtcDateTime
+-  $verified=$false;$commandMatched=$false
++  $verified=$false;$rootData=@{present=$false}
+   if($root.Count -eq 1){
+     $v=$root[0]
+-    $commandMatched=([string]$v.CommandLine).Contains([string]$r.scriptPath)
+-    $verified=$v.ExecutablePath -eq $r.executable -and $v.ParentProcessId -eq $r.parentPid -and $v.CreationDate.ToUniversalTime() -ge $start.AddSeconds(-2) -and $commandMatched
+-    Record $stage 'identity_comparison' @{executableEqual=($v.ExecutablePath -eq $r.executable);parentEqual=($v.ParentProcessId -eq $r.parentPid);creationWithinStart=($v.CreationDate.ToUniversalTime() -ge $start.AddSeconds(-2));scriptArgumentEqual=$commandMatched}
+-    if(-not $verified){throw 'root_identity_mismatch'}
++    $parsed=Parse-RootCommand ([string]$v.CommandLine)
++    $pathSafe=$false
++    if($parsed.ok -and $parsed.argv.Count -eq 2){$pathSafe=Path-WithoutReparse $parsed.argv[1]}
++    $verified=$v.ExecutablePath -ceq $r.descriptor.executable -and $v.ParentProcessId -eq $r.parentPid -and $v.CreationDate.ToUniversalTime() -ge $start.AddSeconds(-2)
++    $rootData=@{present=$true;pid=[int]$v.ProcessId;parentPid=[int]$v.ParentProcessId;created=$v.CreationDate.ToUniversalTime().ToString('o');executable=$v.ExecutablePath;parsed=$parsed;pathNoReparse=$pathSafe}
+   }
+   $ids=[Collections.Generic.HashSet[int]]::new()
+   if($verified){[void]$ids.Add([int]$r.rootPid)}
+@@ -38,15 +45,15 @@
+   $changed=$true
+   while($changed){$changed=$false;foreach($v in $all){if($ids.Contains([int]$v.ParentProcessId) -and $v.CreationDate.ToUniversalTime() -ge $start.AddSeconds(-2)){if($ids.Add([int]$v.ProcessId)){$changed=$true}}}}
+   $owned=@($all|Where-Object {$ids.Contains([int]$_.ProcessId)}|ForEach-Object {
+-    [pscustomobject]@{pid=[int]$_.ProcessId;parentPid=[int]$_.ParentProcessId;created=$_.CreationDate.ToUniversalTime().ToString('o');kind=if($_.ExecutablePath -eq $r.executable){'target'}elseif($_.Name -eq 'python.exe'){'python'}elseif($_.Name -eq 'conhost.exe'){'conhost'}else{'descendant'}}
++    [pscustomobject]@{pid=[int]$_.ProcessId;parentPid=[int]$_.ParentProcessId;created=$_.CreationDate.ToUniversalTime().ToString('o');kind=if($_.ExecutablePath -eq $r.descriptor.executable){'target'}elseif($_.Name -eq 'python.exe'){'python'}elseif($_.Name -eq 'conhost.exe'){'conhost'}else{'descendant'}}
+   })
+-  Record $stage 'terminal' @{status='success';rootPresent=($root.Count -eq 1);rootVerified=[bool]$verified;ownedCount=$owned.Count;commandPathMatched=$commandMatched}
+-  $result=@{ok=$true;callId=$r.callId;action=$r.action;rootPresent=($root.Count -eq 1);rootVerified=[bool]$verified;commandPathMatched=$commandMatched;owned=$owned;resourceStatus='not_requested';listeners=$null;windowCount=$null}
++  Record $stage 'terminal' @{status='success';rootPresent=($root.Count -eq 1);rootVerified=[bool]$verified;ownedCount=$owned.Count;identityValidation='pending_shared_checker'}
++  $result=@{rootData=$rootData;ok=$true;callId=$r.callId;action=$r.action;rootPresent=($root.Count -eq 1);rootVerified=[bool]$verified;identityValidation='pending_shared_checker';owned=$owned;resourceStatus='not_requested';listeners=$null;windowCount=$null}
+   if($r.action -eq 'resources'){
+     $stage='type_prepare';Record $stage 'enter' @{}
+     Add-Type -TypeDefinition @'
+ using System;using System.Runtime.InteropServices;using System.ComponentModel;
+-public static class R9R1Windows {
++public static class R9R2Windows {
+  public delegate bool Callback(IntPtr h,IntPtr l);
+  [DllImport("user32.dll",SetLastError=true)]public static extern bool EnumWindows(Callback cb,IntPtr l);
+  [DllImport("user32.dll",SetLastError=true)]public static extern uint GetWindowThreadProcessId(IntPtr h,out uint p);
+@@ -55,7 +62,7 @@
+ '@
+     Record $stage 'terminal' @{status='success'}
+     $stage='window_query';Record $stage 'enter' @{}
+-    $result.windowCount=[R9R1Windows]::Count([int[]]@($ids))
++    $result.windowCount=[R9R2Windows]::Count([int[]]@($ids))
+     Record $stage 'terminal' @{status='success';count=$result.windowCount}
+     $stage='listener_query';Record $stage 'enter' @{}
+     $listeners=@(Get-NetTCPConnection -State Listen -ErrorAction Stop|Where-Object {$ids.Contains([int]$_.OwningProcess)}|ForEach-Object {
+--- r9-r1-observation.mjs
++++ r9-r2-observation.mjs
+@@ -1,3 +1,4 @@
++import identity from './r9-r2-identity.cjs';
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import {spawn} from 'node:child_process';
+@@ -46,20 +47,25 @@
+   record('observer_terminal',terminal);
+   return {...terminal,stdout:out.toString('utf8')};
+ }
+-export async function observe({action,rootPid,parentPid,startedUtc,executable,scriptPath,known,output,evidence,observerScript,pwsh,deadline,record,id}){
+-  const limitMs=Math.min(8000,Math.floor(deadline-performance.now()));must(limitMs>=500,'remaining_observation_budget');
+-  const receipt=path.join(output,id+'.receipt.json');
+-  const request={callId:id,action,rootPid,parentPid,startedUtc,executable:path.resolve(executable),scriptPath:path.resolve(scriptPath),known,receipt,stageLog:path.join(evidence,id+'.stages.jsonl')};
+-  const requestPath=path.join(output,id+'.request.json');write(requestPath,request);
+-  const digest=sha(fs.readFileSync(observerScript));
+-  const result=await captured({exe:pwsh,args:['-NoProfile','-NonInteractive','-File',observerScript,'-RequestPath',requestPath],cwd:output,limitMs,id,record,rawDir:output,
+-    canCancel:(child,start)=>{
+-      if(!fs.existsSync(receipt))return false;
+-      const r=JSON.parse(fs.readFileSync(receipt,'utf8'));
+-      return r.pid===child.pid&&r.callId===id&&path.resolve(r.executable).toLowerCase()===path.resolve(pwsh).toLowerCase()&&r.scriptSha256===digest&&path.resolve(r.scriptPath)===path.resolve(observerScript)&&Date.parse(r.created)>=Date.parse(start)-2000;
+-    }});
+-  const c=classify(result);record('observer_classification',{id,kind:c.kind});
+-  if(c.kind!=='success')throw Object.assign(new Error('observer_'+c.kind),{safeCode:'observer_'+c.kind,observer:result.id});
+-  must(c.value.callId===id&&c.value.action===action,'observer_receipt_binding');
+-  record('owned_observation',{id,...c.value});return c.value;
++export async function observe({action,rootPid,parentPid,startedUtc,descriptor,known,output,evidence,observerScript,parserScript,pwsh,deadline,record,id}){
++ const limitMs=Math.min(8000,Math.floor(deadline-performance.now()));must(limitMs>=500,'remaining_observation_budget');
++ const receipt=path.join(output,id+'.receipt.json'),requestPath=path.join(output,id+'.request.json');
++ const request={callId:id,action,rootPid,parentPid,startedUtc,descriptor,known,receipt,output,parserScript,stageLog:path.join(evidence,id+'.stages.jsonl')};write(requestPath,request);
++ const observerDescriptor=identity.describe({executable:pwsh,script:observerScript,boundary:path.dirname(observerScript),markerFile:descriptor.markerFile,marker:descriptor.marker,output,callId:id});
++ const result=await captured({exe:pwsh,args:['-NoProfile','-NonInteractive','-File',observerDescriptor.script,'-RequestPath',requestPath],cwd:output,limitMs,id,record,rawDir:output,
++  canCancel:(child,start)=>{
++   if(!fs.existsSync(receipt))return false;const r=JSON.parse(fs.readFileSync(receipt,'utf8'));
++   const checked=identity.receiptCheck(r,observerDescriptor,{pid:child.pid,parentPid:process.pid,receiptPath:receipt,expectedReceiptPath:receipt,startedUtc:start});
++   record('observer_cancel_identity',{id,checks:checked.checks,pathChecks:checked.pathChecks});
++   return checked.passed&&identity.canonical(r.executable)===observerDescriptor.executable;
++  }});
++ const c=classify(result);record('observer_classification',{id,kind:c.kind});
++ if(c.kind!=='success')throw Object.assign(new Error('observer_'+c.kind),{safeCode:'observer_'+c.kind});
++ must(c.value.callId===id&&c.value.action===action,'observer_receipt_binding');
++ const {rootData,...safe}=c.value;
++ if(rootData.present){const verified=identity.rootCheck(rootData,descriptor,{pid:rootPid,parentPid,startedUtc});
++  record('root_identity_comparisons',{id,expected:true,checks:verified.checks,argv:verified.argv});
++  must(verified.passed,'root_identity_failed');safe.rootVerified=true;
++ }else{safe.rootVerified=false;}
++ record('owned_observation',{id,...safe});return safe;
+ }
+--- r9-r1-h1-native.cjs
++++ r9-r2-h1-native.cjs
+@@ -2,7 +2,9 @@
+ const path=require('node:path');
+ const crypto=require('node:crypto');
+ const {app,safeStorage}=require('electron');
+-const root='C:/MarisC12/C12-R9-R1-20261017-001500';
++const cfg=require('D:/CodeX_gap/wife-system/tests/independent/desktop/r9-r2-config.cjs');
++const identity=require('D:/CodeX_gap/wife-system/tests/independent/desktop/r9-r2-identity.cjs');
++const root=cfg.ext;
+ const output=path.join(root,'output/H1');
+ const profile=path.join(root,'profile-main');
+ app.setPath('userData',path.join(root,'helper-profile-H1'));
+@@ -14,7 +16,10 @@
+ function check(id,expected,actual){if(checks.some(c=>c.id===id))throw Error('duplicate_id');const at=new Date().toISOString();fs.appendFileSync(path.join(output,'checks.jsonl'),JSON.stringify({id,event:'enter',at,expected})+'\n');checks.push({id,operator:'eq',expected,actual,passed:expected===actual});write('check-'+checks.length+'.json',checks.at(-1));fs.appendFileSync(path.join(output,'checks.jsonl'),JSON.stringify({...checks.at(-1),event:'terminal',at:new Date().toISOString()})+'\n');if(expected!==actual)throw Error('comparison_failed');}
+ const timer=setTimeout(()=>{write('deadline.json',{timedOut:true});app.exit(2);},55000);
+ app.whenReady().then(async()=>{
+-  write('ready.json',{pid:process.pid,scriptPath:__filename,scriptSha256:sha(fs.readFileSync(__filename)),marker:'P4-C12-R9-R1 20261017-001500'});
++  const descriptor=JSON.parse(fs.readFileSync(path.join(output,'launch.json'),'utf8'));
++  const ready={pid:process.pid,scriptPath:identity.canonical(__filename),scriptSha256:sha(fs.readFileSync(__filename)),marker:cfg.marker,output,callId:'H1'};
++  if(!identity.receiptCheck(ready,descriptor,{pid:process.pid,receiptPath:path.join(output,'ready.json'),expectedReceiptPath:path.join(output,'ready.json')}).passed)throw Error('ready_identity');
++  write('ready.json',ready);
+   while(!fs.existsSync(path.join(output,'release.json')))await new Promise(r=>setTimeout(r,25));
+   check('H1-NATIVE-AVAILABLE',true,safeStorage.isEncryptionAvailable());
+   const ownerBlob=fs.readFileSync(path.join(profile,'owner-session.bin'));
+--- r9-quit-h1-attempt1-run.mjs
++++ r9-r2-h1-run.mjs
+@@ -1,48 +1,65 @@
+-import fs from 'node:fs';import path from 'node:path';import{spawn,spawnSync}from'node:child_process';import{createHash}from'node:crypto';import{fileURLToPath}from'node:url';
+-const own=path.dirname(fileURLToPath(import.meta.url)),repo=path.resolve(own,'../../..'),ev=path.join(own,'evidence/r9-quit');
+-const ext='C:/MarisC12/C12-R9-QUIT-20261016-011200',out=path.join(ext,'output/H1'),evidence=path.join(ev,'helper-H1');
+-const fixed='C:/MarisQuitR7/R7-20261014-191500',exe=path.join(fixed,'workspace/node_modules/electron/dist/electron.exe');
+-const pwsh='C:/Users/xuhaolin/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe';
+-const must=(ok,code)=>{if(!ok)throw Object.assign(new Error(code),{safeCode:code});};
+-const sha=v=>createHash('sha256').update(v).digest('hex');
+-const write=(p,v)=>fs.writeFileSync(p,JSON.stringify(v,null,2)+'\n',{flag:'wx'});
+-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+-must(fs.readFileSync(path.join(repo,'docs/coordination/control.md'),'utf8').includes('2026-10-16T00:51:00+08:00'),'control_changed');
+-must(JSON.parse(fs.readFileSync(path.join(ev,'windows-W1/result.json'),'utf8')).passed,'w1_not_passed');
+-must(!fs.existsSync(out)&&!fs.existsSync(evidence),'first_exists');
+-for(const p of [ext,path.join(ext,'output'),path.join(ext,'profile-main')])must(!fs.lstatSync(p).isSymbolicLink()&&fs.realpathSync(p).toLowerCase()===path.resolve(p).toLowerCase(),'reparse');
+-must(fs.readFileSync(path.join(ext,'r9-owned-marker.txt'),'utf8')==='P4-C12-R9-QUIT 20261016-011200','owner_marker');
+-const distManifest=fs.readFileSync(path.join(fixed,'evidence/inputs/electron-dist-final.sha256'));
+-must(sha(distManifest)==='ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f','dist_manifest_changed');
+-const distRow=distManifest.toString('utf8').trimEnd().split(/\r?\n/).map(l=>l.split('\t')).find(v=>v[0]==='electron.exe');
+-must(!!distRow&&sha(fs.readFileSync(exe))===distRow[2],'helper_exe_changed');
+-for(const line of fs.readFileSync(path.join(ev,'h1-attempt1-source.sha256'),'utf8').trimEnd().split(/\r?\n/)){const [name,digest]=line.split('\t');must(sha(fs.readFileSync(path.join(own,name)))===digest,'source_changed');}
+-fs.mkdirSync(out);fs.mkdirSync(evidence);fs.mkdirSync(path.join(ext,'helper-profile-H1'));
+-const script=path.join(out,'main.cjs');fs.copyFileSync(path.join(own,'r9-quit-h1-native.cjs'),script,fs.constants.COPYFILE_EXCL);
+-const env={...process.env,APPDATA:path.join(ext,'os-env/appdata'),LOCALAPPDATA:path.join(ext,'os-env/localappdata'),TEMP:path.join(ext,'os-env/temp'),TMP:path.join(ext,'os-env/temp')};
++import fs from 'node:fs';import path from 'node:path';import {spawn}from'node:child_process';
++import cfg from './r9-r2-config.cjs';import identity from './r9-r2-identity.cjs';
++import {observe,captured,write,must,sha,sleep}from'./r9-r2-observation.mjs';
++must(fs.readFileSync(path.join(cfg.repo,'docs/coordination/control.md'),'utf8').includes(cfg.controlVersion),'control_changed');
++must(JSON.parse(fs.readFileSync(path.join(cfg.evidence,'live/result.json'),'utf8')).passed,'live_gate');
++for(const line of fs.readFileSync(path.join(cfg.evidence,'target-source.sha256'),'utf8').trimEnd().split('\n')){
++ const [name,digest]=line.split('\t');must(sha(fs.readFileSync(path.join(cfg.own,name)))===digest,'source_changed');
++}
++const output=path.join(cfg.ext,'output/H1'),ev=path.join(cfg.evidence,'helper-H1'),script=path.join(output,'main.cjs');
++fs.mkdirSync(output);fs.mkdirSync(ev);fs.mkdirSync(path.join(cfg.ext,'helper-profile-H1'));
++fs.copyFileSync(path.join(cfg.own,'r9-r2-h1-native.cjs'),script,fs.constants.COPYFILE_EXCL);
++const descriptor=identity.describe({executable:cfg.electron,script,boundary:cfg.ext,markerFile:cfg.markerFile,marker:cfg.marker,output,callId:'H1'});
++must(descriptor.executableSha256==='bd14928e0728366fd3f41499cb398ff3f4304dab259a3e605077899a6f8c748e','electron_digest');
++write(path.join(output,'launch.json'),descriptor);
++const original=fs.readFileSync(path.join(cfg.evidence,'original-profile.tsv'),'utf8').trimEnd().split('\n').map(l=>l.split('\t'));
++const checkProfile=()=>original.every(([p,n,h])=>{const f=path.join(cfg.ext,p);return fs.statSync(f).size===Number(n)&&sha(fs.readFileSync(f))===h;});
++must(checkProfile(),'profile_before');
++const env={...process.env,APPDATA:path.join(cfg.ext,'os-env/appdata'),LOCALAPPDATA:path.join(cfg.ext,'os-env/localappdata'),TEMP:path.join(cfg.ext,'os-env/temp'),TMP:path.join(cfg.ext,'os-env/temp')};
+ for(const k of ['NODE_OPTIONS','ELECTRON_RUN_AS_NODE','MARIS_E2E','MARIS_E2E_USER_DATA','MARIS_E2E_EXIT_MS','ELECTRON_ENABLE_LOGGING','ELECTRON_LOG_FILE'])delete env[k];
+-const started=new Date().toISOString(),clock=performance.now();let root,exit=null,known=[],firstFailure=null,forced=false,stdoutBytes=0,stderrBytes=0,timer=null;
+-const fd=fs.openSync(path.join(evidence,'journal.jsonl'),'wx');let seq=0;
+-function record(event,details={}){fs.writeSync(fd,JSON.stringify({seq:++seq,event,at:new Date().toISOString(),elapsedMs:performance.now()-clock,details})+'\n');fs.fsyncSync(fd);}
+-function snapshot(){const r=spawnSync(pwsh,['-NoProfile','-NonInteractive','-File',path.join(own,'r9-quit-helper-os.ps1'),'-RootPid',String(root.pid),'-ExpectedParentPid',String(process.pid),'-StartedUtc',started,'-KnownJson',JSON.stringify(known)],{shell:false,windowsHide:true,encoding:'utf8',timeout:8000});must(r.status===0,'ownership_observer_error');const s=JSON.parse(r.stdout);known=[...new Map([...known,...s.owned].map(p=>[p.pid,p])).values()];record('owned_snapshot',s);return s;}
+-function force(){const s=snapshot();if(s.rootPresent){must(s.rootVerified,'cleanup_ownership_unknown');forced=true;const r=spawnSync('taskkill.exe',['/PID',String(root.pid),'/T','/F'],{shell:false,windowsHide:true,encoding:'utf8',timeout:5000});record('forced_cleanup',{status:r.status});}}
++const fd=fs.openSync(path.join(ev,'journal.jsonl'),'wx'),start=performance.now(),startedUtc=new Date().toISOString();
++const record=(event,details)=>{fs.writeSync(fd,JSON.stringify({event,at:new Date().toISOString(),elapsedMs:performance.now()-start,details})+'\n');fs.fsyncSync(fd);};
++let root,exit=null,known=[],seq=0,failure=null,cleanupError=null,forced=false,stdout=[],stderr=[],remaining=null,released=false,native=null;
++const obs=async(action,deadline)=>{
++ const s=await observe({action,rootPid:root.pid,parentPid:process.pid,startedUtc,descriptor,known,output,evidence:ev,observerScript:cfg.observer,parserScript:cfg.parser,pwsh:cfg.pwsh,deadline,record,id:'H1-OBS-'+(++seq)});
++ known=[...new Map([...known,...s.owned].map(v=>[v.pid+':'+v.created,v])).values()];return s;
++};
+ try{
+- record('launch_plan',{id:'H1',maxHelpers:4,maxMs:60000,productImported:false});
+- root=spawn(exe,[script],{cwd:out,env,shell:false,windowsHide:true,stdio:['ignore','pipe','pipe']});must(root.pid,'spawn_failed');record('root_started',{pid:root.pid});
+- root.stdout.on('data',b=>{stdoutBytes+=b.length;});root.stderr.on('data',b=>{stderrBytes+=b.length;});
+- root.once('exit',(code,signal)=>{exit={code,signal:signal??null};record('root_exit',exit);});root.once('error',()=>{firstFailure='spawn_error';});
+- timer=setTimeout(()=>{firstFailure??='deadline';try{force();}catch{firstFailure='deadline_cleanup_unverified';}},48000);
+- const readyDeadline=performance.now()+15000;
+- while(!fs.existsSync(path.join(out,'ready.json'))&&!exit&&performance.now()<readyDeadline)await sleep(50);
+- must(fs.existsSync(path.join(out,'ready.json')),'ready_timeout');must(snapshot().rootVerified,'root_identity');
+- write(path.join(out,'release.json'),{authorized:true});
+- const end=performance.now()+10000;while(!exit&&performance.now()<end)await sleep(50);
+- must(exit?.code===0,'native_helper_failed');
+- const native=JSON.parse(fs.readFileSync(path.join(out,'result.json'),'utf8'));write(path.join(evidence,'native-result.json'),native);must(native.passed,'native_comparison_failed');
+-}catch(e){firstFailure??=e.safeCode??'unknown_error';record('first_failure',{code:firstFailure});}
++ record('launch_plan',{id:'H1',remainingHelperLimit:4,cumulativeBefore:1,totalMs:60000,cleanupReserveMs:10000,scriptDigest:descriptor.scriptSha256});
++ root=spawn(descriptor.executable,[descriptor.script],{cwd:output,env,shell:false,windowsHide:true,stdio:['ignore','pipe','pipe']});
++ must(root.pid,'helper_spawn');record('helper_spawn',{pid:root.pid,parentPid:process.pid,helperStarts:1,cumulativeHelpers:2});
++ root.stdout.on('data',b=>stdout.push(b));root.stderr.on('data',b=>stderr.push(b));
++ root.once('exit',(code,signal)=>{exit={code,signal:signal??null};record('helper_exit',exit);});
++ root.once('error',e=>{failure??='spawn_error';record('helper_error',{type:e.name,code:['EACCES','ENOENT','EPERM'].includes(e.code)?e.code:null});});
++ const readyPath=path.join(output,'ready.json');
++ while(!fs.existsSync(readyPath)&&!exit&&performance.now()<start+15000)await sleep(25);
++ must(fs.existsSync(readyPath),'ready_missing');
++ const s=await obs('identity',start+50000);must(s.rootVerified,'root_identity');
++ const ready=JSON.parse(fs.readFileSync(readyPath,'utf8'));
++ const checked=identity.receiptCheck(ready,descriptor,{pid:root.pid,receiptPath:readyPath,expectedReceiptPath:readyPath});
++ record('ready_comparisons',{id:'H1-READY',expected:true,checks:checked.checks,pathChecks:checked.pathChecks});must(checked.passed,'ready_identity');
++ must(performance.now()<start+50000,'native_budget');write(path.join(output,'release.json'),{authorized:true,callId:'H1',pid:root.pid});released=true;record('release',{id:'H1-RELEASE',pid:root.pid});
++ while(!exit&&performance.now()<start+50000)await sleep(25);
++ must(exit!==null,'helper_deadline');must(exit.code===0,'native_helper_nonzero');
++ native=JSON.parse(fs.readFileSync(path.join(output,'result.json'),'utf8'));
++ for(const name of ['result.json','baseline.json','checks.jsonl'])if(fs.existsSync(path.join(output,name)))fs.copyFileSync(path.join(output,name),path.join(ev,'native-'+name),fs.constants.COPYFILE_EXCL);
++ must(native.passed,'native_comparison');
++}catch(e){failure??=e.safeCode??'unknown';record('first_failure',{code:failure});}
+ finally{
+- clearTimeout(timer);let remaining=null,cleanupError=null;
+- try{if(root&&!exit)force();const end=performance.now()+2000;while(!exit&&performance.now()<end)await sleep(25);if(root){remaining=snapshot();must(remaining.owned.length===0&&remaining.listeners.length===0&&remaining.windowCount===0,'resources_remain');}}catch(e){cleanupError=e.safeCode??'cleanup_unknown';}
+- const result={id:'H1',passed:!firstFailure&&!cleanupError&&!forced&&exit?.code===0,firstFailure,cleanupError,forced,exit,rootPid:root?.pid??null,durationMs:performance.now()-clock,registered:known,remainingOwned:remaining?.owned.length??null,remainingListeners:remaining?.listeners.length??null,remainingWindows:remaining?.windowCount??null,stdoutBytes,stderrBytes,productStarts:0,helperStarts:1};
+- write(path.join(evidence,'process.json'),result);record('finished',{passed:result.passed});fs.closeSync(fd);console.log(JSON.stringify({id:'H1',passed:result.passed,firstFailure,cleanupError}));if(!result.passed)process.exitCode=1;
++ try{
++  if(root&&!exit){
++   const current=await obs('identity',start+55000);must(current.rootVerified,'cleanup_identity');forced=true;
++   const kill=await captured({exe:path.join(process.env.SystemRoot,'System32/taskkill.exe'),args:['/PID',String(root.pid),'/T','/F'],cwd:output,limitMs:Math.min(3000,Math.floor(start+57000-performance.now())),id:'H1-STOP',record,rawDir:output,canCancel:()=>false});
++   must(kill.status===0,'cleanup_command');
++  }
++  while(root&&!exit&&performance.now()<start+57000)await sleep(25);
++  if(root){remaining=await obs('resources',start+60000);must(remaining.owned.length===0&&remaining.listeners.length===0&&remaining.windowCount===0,'remaining_resources');}
++ }catch(e){cleanupError=e.safeCode??'cleanup_unknown';record('cleanup_failure',{code:cleanupError});}
++ let unchanged=null;try{unchanged=checkProfile();}catch{failure??='profile_read_unknown';}
++ record('profile_readonly_comparison',{id:'H1-PROFILE-UNCHANGED',expected:true,actual:unchanged});
++ if(!unchanged)failure??='profile_changed';
++ // Even failure-native checks are retained if present; never manufacture a native result.
++ for(const name of ['result.json','baseline.json','checks.jsonl'])if(fs.existsSync(path.join(output,name))&&!fs.existsSync(path.join(ev,'native-'+name)))fs.copyFileSync(path.join(output,name),path.join(ev,'native-'+name),fs.constants.COPYFILE_EXCL);
++ const result={id:'H1',passed:!failure&&!cleanupError&&!forced&&exit?.code===0&&unchanged,failure,cleanupError,forced,exit,rootPid:root?.pid??null,durationMs:performance.now()-start,released,profileUnchanged:unchanged,known,remainingOwned:remaining?.owned.length??null,remainingListeners:remaining?.listeners.length??null,remainingWindows:remaining?.windowCount??null,stdoutBytes:Buffer.concat(stdout).length,stdoutSha256:sha(Buffer.concat(stdout)),stderrBytes:Buffer.concat(stderr).length,stderrSha256:sha(Buffer.concat(stderr)),productStarts:0,helperStarts:root?.pid?1:0};
++ write(path.join(ev,'process.json'),result);record('finished',{passed:result.passed});fs.closeSync(fd);process.exitCode=result.passed?0:1;console.log(JSON.stringify({H1Passed:result.passed,failure,cleanupError}));
+ }

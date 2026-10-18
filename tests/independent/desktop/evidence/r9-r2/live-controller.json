@@ -1,0 +1,16 @@
+{
+  "id": "LIVE-controller",
+  "pid": 27508,
+  "parentPid": 31636,
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "forced": false,
+  "durationMs": 6749.5209,
+  "stdoutBytes": 35,
+  "stdoutSha256": "e18d1fad4761a820dcca0caeb36db156ad06d5bb9a87e73da3556d575b0f5751",
+  "stderrBytes": 0,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "productStarts": 0,
+  "helperStarts": 0
+}

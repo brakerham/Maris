@@ -1,0 +1,1 @@
+// inert virtual path fixture

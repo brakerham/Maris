@@ -1,0 +1,2 @@
+{"id":"H1-NATIVE-AVAILABLE","event":"enter","at":"2026-10-17T15:40:50.962Z","expected":true}
+{"id":"H1-NATIVE-AVAILABLE","operator":"eq","expected":true,"actual":true,"passed":true,"event":"terminal","at":"2026-10-17T15:40:50.967Z"}

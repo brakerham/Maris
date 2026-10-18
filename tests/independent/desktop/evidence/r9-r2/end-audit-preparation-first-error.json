@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-18T05:40:15+08:00",
+  "stage": "read_only_summary_source_compile",
+  "error": "IndentationError",
+  "code": "indentation_mismatch",
+  "line": 77,
+  "sourceWritten": false,
+  "targetStarts": 0,
+  "classification": "summary_tool_preparation_only",
+  "correction": "replace_complete_loop_block_before_first_audit_execution"
+}

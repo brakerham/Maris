@@ -1,0 +1,12 @@
+{"callId":"LIVE-resources","event":"enter","details":{},"at":"2026-10-17T15:40:11.2781077+00:00","stage":"parser_prepare"}
+{"callId":"LIVE-resources","event":"terminal","details":{"status":"success"},"at":"2026-10-17T15:40:11.7999608+00:00","stage":"parser_prepare"}
+{"callId":"LIVE-resources","event":"enter","details":{},"at":"2026-10-17T15:40:11.8004552+00:00","stage":"process_query"}
+{"callId":"LIVE-resources","event":"terminal","details":{"status":"success","identityValidation":"pending_shared_checker","rootPresent":true,"rootVerified":true,"ownedCount":4},"at":"2026-10-17T15:40:12.1367056+00:00","stage":"process_query"}
+{"callId":"LIVE-resources","event":"enter","details":{},"at":"2026-10-17T15:40:12.1378279+00:00","stage":"type_prepare"}
+{"callId":"LIVE-resources","event":"terminal","details":{"status":"success"},"at":"2026-10-17T15:40:12.6240416+00:00","stage":"type_prepare"}
+{"callId":"LIVE-resources","event":"enter","details":{},"at":"2026-10-17T15:40:12.6247889+00:00","stage":"window_query"}
+{"callId":"LIVE-resources","event":"terminal","details":{"count":0,"status":"success"},"at":"2026-10-17T15:40:12.6300543+00:00","stage":"window_query"}
+{"callId":"LIVE-resources","event":"enter","details":{},"at":"2026-10-17T15:40:12.6305290+00:00","stage":"listener_query"}
+{"callId":"LIVE-resources","event":"terminal","details":{"count":0,"status":"success"},"at":"2026-10-17T15:40:15.6180685+00:00","stage":"listener_query"}
+{"callId":"LIVE-resources","event":"enter","details":{},"at":"2026-10-17T15:40:15.6192943+00:00","stage":"json_output"}
+{"callId":"LIVE-resources","event":"terminal","details":{"bytes":932,"status":"success"},"at":"2026-10-17T15:40:15.6259851+00:00","stage":"json_output"}

@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-18T05:42:12+08:00",
+  "gitDiffCheckExit": 0,
+  "gitDiffWarnings": "warning: in the working copy of 'docs/coordination/agents/tester.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/testing/phase-4-c12-manual-checklist.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/testing/phase-4-c12-windows-shell-report.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/testing/phase-4-modular-agent-host-test-matrix.md', LF will be replaced by CRLF the next time Git touches it\n",
+  "stagedCount": 0,
+  "gitWrites": 0,
+  "reportLocalLinks": 22,
+  "missingLocalLinks": [],
+  "pendingGeneratedLinks": [
+    "tests\\independent\\desktop\\evidence\\r9-r2\\delivery.sha256",
+    "tests\\independent\\desktop\\evidence\\r9-r2\\delivery-verification.json"
+  ],
+  "targetReruns": 0,
+  "passed": true
+}

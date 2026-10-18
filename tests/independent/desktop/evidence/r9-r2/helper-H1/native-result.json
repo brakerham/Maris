@@ -1,0 +1,15 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "id": "H1-NATIVE-AVAILABLE",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    }
+  ],
+  "errorKind": "Error",
+  "code": "operation_error",
+  "productImported": false
+}

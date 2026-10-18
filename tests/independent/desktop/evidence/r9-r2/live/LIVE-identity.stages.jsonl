@@ -1,0 +1,6 @@
+{"stage":"parser_prepare","callId":"LIVE-identity","at":"2026-10-17T15:40:09.6325089+00:00","event":"enter","details":{}}
+{"stage":"parser_prepare","callId":"LIVE-identity","at":"2026-10-17T15:40:10.3629310+00:00","event":"terminal","details":{"status":"success"}}
+{"stage":"process_query","callId":"LIVE-identity","at":"2026-10-17T15:40:10.3634355+00:00","event":"enter","details":{}}
+{"stage":"process_query","callId":"LIVE-identity","at":"2026-10-17T15:40:10.7332127+00:00","event":"terminal","details":{"rootPresent":true,"status":"success","identityValidation":"pending_shared_checker","ownedCount":4,"rootVerified":true}}
+{"stage":"json_output","callId":"LIVE-identity","at":"2026-10-17T15:40:10.7343321+00:00","event":"enter","details":{}}
+{"stage":"json_output","callId":"LIVE-identity","at":"2026-10-17T15:40:10.7506600+00:00","event":"terminal","details":{"bytes":940,"status":"success"}}

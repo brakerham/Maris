@@ -330,6 +330,8 @@ B继续0 passed、1 failed、19 blocked、4 not_run；120 ID/12列/原预期及A
 
 R9-R1（2026-10-17）增量：1017起点及固定输入通过；两次目标前工具现场观察在唯一更正后仍为脚本身份谓词false（其余exe/parent/create均true），observer3/controller1。12条虚拟工具检查+1条参数检查不计产品通过。H1恢复与后续Windows未启动，新产品0/7、辅助0/4，跨轮1/8、1/5；原profile及63项同内容副本只读保留。B状态不变，所有业务/设备缺口保持。见[增量报告](phase-4-c12-r9-r1-h1-windows-report.md)，blocked/finished供总控review。
 
+R9-R2（2026-10-18）增量：1077起点、局部工具2轮36/38及唯一现场Node门禁通过；同一共享argv/绝对路径/摘要/回执链在实际H1通过。H1 availability=true后operation_error，owner/outbox基线未取得，原生细分抛错点unverified；真实exit1、无forced，owned/监听/窗口0，profile保持。停止后续W2等，不判新增产品缺陷或设备不支持。产品新增0/7、辅助1/4，系列1/8和2/5，H1恢复1/1；B状态/原预期不变。见[R9-R2报告](phase-4-c12-r9-r2-path-windows-report.md)，blocked/finished供review。
+
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
 #### 主闭环、查询与恢复

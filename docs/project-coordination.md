@@ -132,7 +132,7 @@ Git 写操作集中由头脑风暴总控负责。执行、测试、技术顾问�
 | 阶段 2 财务 Agent 工具 | `complete`（P2-A 本地与 PostgreSQL 冻结范围） | C6/D6 已完成；DATA-R2 的 P2 SPG 4/4 通过，`PG-C7-DATA-001` 已关闭；DeepSeek、桌面与微信扩展仍按独立阶段推进 |
 | P3 活动 Markdown 导入 | `complete` | B5-R1 固定快照通过 C9-R2 独立验收；89/89 项、执行方 PostgreSQL 9/9、独立 PostgreSQL 10/10 通过 |
 | P4-A Host、身份和通用状态地基 | `complete` | C11-R2 关闭 PostgreSQL 历史迁移 P0；P4-A 64/64 passed，最终 134 文件快照已固定 |
-| P4-B Windows Shell、模块 UI 与毛毛 | `blocked`；R9-R1 `blocked / finished`，R9-R2 `ready / waiting_user` | P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R1停于目标前脚本路径身份比较，产品/辅助新增均0，未形成产品缺陷；发布P4-C12-R9-R2，修完整参数/路径身份链后沿未耗额度续验H1及剩余Windows。旧8独立/48兼容/W1和模块/冷入口/恢复通过保持。P4-B仍1 passed、1 failed、19 blocked、3 not_run；P4-C/D未开始，执行方和顾问停止。 |
+| P4-B Windows Shell、模块 UI 与毛毛 | `blocked`；R9-R2 `blocked / finished`，R9-R3 `ready / waiting_user` | P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R2路径与H1身份链通过，原生availability后operation_error；总控确认helper未预置同源Local State，旧精确抛错仍unknown。发布P4-C12-R9-R3，修原生上下文及分段记录，一次新H1通过后同任务续Windows。产品累计1/8、辅助2/6（显式增加一次H1），旧通过不重跑。P4-B仍1 passed、1 failed、19 blocked、3 not_run；P4-C/D未开始，执行方和顾问停止。 |
 | P4-C 财务驾驶舱 / P4-D 财富管理 | `not_started` | 等 P4-B Shell 完成独立验收后推进；不得在 B7 中伪造真实业务数据或提前实现 |
 
 此前已经有临时子智能体参与微信资料核实和学习路线审阅；这些调查结果不代表编码、账号接入或部署已完成。

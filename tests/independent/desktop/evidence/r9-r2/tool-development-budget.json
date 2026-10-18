@@ -1,0 +1,9 @@
+{
+  "startedAt": "2026-10-17T23:33:32.629807+08:00",
+  "maxMinutes": 30,
+  "maxLocalRounds": 3,
+  "localRoundsStarted": 0,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "note": "Shared argv/path implementation and complete H1 flow frozen before live gate"
+}

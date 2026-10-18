@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R1停于目标前脚本路径身份比较，产品/辅助新增均0，未形成产品缺陷；发布P4-C12-R9-R2，修完整参数/路径身份链后沿未耗额度续验H1及剩余Windows。旧8独立/48兼容/W1和模块/冷入口/恢复通过保持。P4-B仍1 passed、1 failed、19 blocked、3 not_run；P4-C/D未开始，执行方和顾问停止。
+当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R2路径与H1身份链通过，原生availability后operation_error；总控确认helper未预置同源Local State，旧精确抛错仍unknown。发布P4-C12-R9-R3，修原生上下文及分段记录，一次新H1通过后同任务续Windows。产品累计1/8、辅助2/6（显式增加一次H1），旧通过不重跑。P4-B仍1 passed、1 failed、19 blocked、3 not_run；P4-C/D未开始，执行方和顾问停止。
+
+- [R9-R2原生上下文裁定](docs/p4-c12-r9-r2-native-coordinator-review.md)：辅助上下文遗漏已确认，旧具体异常阶段保持未知。
+- [R9-R3同源上下文与续验](docs/coordination/prompts/p4-c12-r9-r3-storage-windows-tester.md)：一次新H1通过后接剩余Windows。
 
 - [R9-R1路径工具阻断裁定](docs/p4-c12-r9-r1-path-coordinator-review.md)：新故障在测试工具，未新增产品缺陷，旧H1原因保持未知。
-- [R9-R2路径身份修正与续验](docs/coordination/prompts/p4-c12-r9-r2-path-windows-tester.md)：同一任务完成有界工具开发、自检、H1及剩余Windows。
+- [R9-R2路径身份修正与续验](docs/coordination/prompts/p4-c12-r9-r2-path-windows-tester.md)：已blocked/finished，路径通过、原生异常；后续以R9-R3为准。
 
 - [R9独立退出与H1续验裁定](docs/p4-c12-r9-quit-h1-coordinator-review.md)：普通关闭缺陷关闭，H1原因未知，原首次证据保留。
 - [R9-R1辅助工具与剩余Windows任务](docs/coordination/prompts/p4-c12-r9-r1-h1-windows-tester.md)：已blocked/finished，目标前路径谓词失败，后续以R9-R2为准。

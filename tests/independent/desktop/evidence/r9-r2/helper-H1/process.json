@@ -1,0 +1,44 @@
+{
+  "id": "H1",
+  "passed": false,
+  "failure": "native_helper_nonzero",
+  "cleanupError": null,
+  "forced": false,
+  "exit": {
+    "code": 1,
+    "signal": null
+  },
+  "rootPid": 22544,
+  "durationMs": 8207.2836,
+  "released": true,
+  "profileUnchanged": true,
+  "known": [
+    {
+      "pid": 22544,
+      "parentPid": 31700,
+      "created": "2026-10-17T15:40:46.5419100Z",
+      "kind": "target"
+    },
+    {
+      "pid": 28532,
+      "parentPid": 22544,
+      "created": "2026-10-17T15:40:48.9690680Z",
+      "kind": "target"
+    },
+    {
+      "pid": 23316,
+      "parentPid": 22544,
+      "created": "2026-10-17T15:40:48.9746400Z",
+      "kind": "target"
+    }
+  ],
+  "remainingOwned": 0,
+  "remainingListeners": 0,
+  "remainingWindows": 0,
+  "stdoutBytes": 2,
+  "stdoutSha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+  "stderrBytes": 0,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "productStarts": 0,
+  "helperStarts": 1
+}

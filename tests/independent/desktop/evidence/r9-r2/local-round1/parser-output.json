@@ -1,0 +1,189 @@
+[
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\中文 空格\\entry.cjs"
+      ]
+    },
+    "id": "PATH-01-backslash"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:/CodeX_gap/wife-system/tests/independent/desktop/evidence/r9-r2/local-round1/fixtures/中文 空格/entry.cjs"
+      ]
+    },
+    "id": "PATH-02-forwardslash"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\中文 空格\\entry.cjs"
+      ]
+    },
+    "id": "PATH-03-spaces-chinese-quotes"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\中文 空格\\entry.cjs"
+      ]
+    },
+    "id": "PATH-04-different-cwd"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\other\\entry.cjs"
+      ]
+    },
+    "id": "PATH-05-wrong-script"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\other\\entry.cjs"
+      ]
+    },
+    "id": "PATH-06-same-name-other-dir"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\other\\entry.cjs",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\中文 空格\\entry.cjs"
+      ]
+    },
+    "id": "PATH-07-only-other-argument"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\中文 空格\\entry.cjs.more.cjs"
+      ]
+    },
+    "id": "PATH-08-longer-substring"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\中文 空格\\entry.cjs",
+        "--extra"
+      ]
+    },
+    "id": "PATH-09-extra-arg"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe"
+      ]
+    },
+    "id": "PATH-10-missing-script"
+  },
+  {
+    "parsed": {
+      "errorType": "command_line_parse_failed",
+      "ok": false,
+      "argv": null
+    },
+    "id": "PATH-11-empty"
+  },
+  {
+    "parsed": {
+      "errorType": "command_line_parse_failed",
+      "ok": false,
+      "argv": null
+    },
+    "id": "PATH-12-unparseable"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "entry.cjs"
+      ]
+    },
+    "id": "PATH-13-relative"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:entry.cjs"
+      ]
+    },
+    "id": "PATH-14-drive-relative"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "\\entry.cjs"
+      ]
+    },
+    "id": "PATH-15-root-relative"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "\\\\server\\share\\entry.cjs"
+      ]
+    },
+    "id": "PATH-16-UNC"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "\\\\?\\D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\中文 空格\\entry.cjs"
+      ]
+    },
+    "id": "PATH-17-device"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\中文 空格\\ENTRY.cjs"
+      ]
+    },
+    "id": "PATH-18-case-alias"
+  },
+  {
+    "parsed": {
+      "ok": true,
+      "argv": [
+        "C:\\MarisQuitR7\\R7-20261014-191500\\tools\\node\\node.exe",
+        "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r2\\local-round1\\fixtures\\SHORT~1\\entry.cjs"
+      ]
+    },
+    "id": "PATH-19-short-alias"
+  }
+]

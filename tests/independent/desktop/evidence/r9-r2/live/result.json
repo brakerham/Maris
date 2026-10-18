@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "failure": null,
+  "controllerPid": 27508,
+  "parentPid": 31636,
+  "durationMs": 6660.0796,
+  "products": 0,
+  "helpers": 0,
+  "known": [
+    {
+      "pid": 27508,
+      "parentPid": 31636,
+      "created": "2026-10-17T15:40:09.1777000Z",
+      "kind": "target"
+    },
+    {
+      "pid": 24444,
+      "parentPid": 27508,
+      "created": "2026-10-17T15:40:09.1885780Z",
+      "kind": "conhost"
+    },
+    {
+      "pid": 12532,
+      "parentPid": 27508,
+      "created": "2026-10-17T15:40:10.9380850Z",
+      "kind": "descendant"
+    },
+    {
+      "pid": 28376,
+      "parentPid": 12532,
+      "created": "2026-10-17T15:40:10.9505760Z",
+      "kind": "conhost"
+    }
+  ]
+}

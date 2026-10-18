@@ -172,3 +172,12 @@ W1之后同任务继续H1辅助，实际启动前清单摘要列误读使用本�
 H1恢复、后续W2/W3及原生保留/删除等全部not_run；新产品0/7、辅助0/4，跨R9累计产品1/8、辅助1/5。旧失败H1及旧工具更正不抹除。R9独立8/235、48兼容、W1/62仅历史复用，不重跑。新/原profile均未解密或seed，未要求用户点击，未操作OS主题、启动项、多屏或注销。
 
 B仍1passed、1failed、19blocked、3not_run；UI-01通过保持，QUIT-001普通关闭范围已由总控关闭，其余条件不扩大通过。测试角色blocked/finished交总控review，不自行续跑或修改产品/依赖/包/Git。
+
+
+## R9-R2路径身份与H1续验追加（2026-10-18）
+
+[R9-R2报告](phase-4-c12-r9-r2-path-windows-report.md)：1077起点通过，纯工具两轮36/38均通过（最终38唯一检查），唯一Node现场身份/resources通过。完整H1控制器与共享argv/绝对路径/摘要/ready/cancel链已在现场前冻结；H1实际身份/ready/release通过、原生availability=true，随后owner读取/解密/解析区间operation_error，helper/controller真实exit1。native分步回执及原生错误码未留存，原因unverified，不定级产品缺陷、不判设备不支持。
+
+H1约8.207秒自然异常退出，无强制结束，最终owned/监听/窗口0，profile原字节保持。按正式目标停止规则，不执行W2等后续、不修后重跑。产品新增0/7，辅助新增1/4，系列累计1/8及2/5；H1恢复1/1已用，现场更正0/1不能用于目标失败。旧8/235、48、W1/62及模块/冷B/完整恢复只引用。
+
+原R9/R9-R1两份profile只读，新63项同内容副本不等于产品续启通过；未seed，owner/outbox基线、同ID重启、真实保留/删除/Tray等仍未验。B整项仍1passed/1failed/19blocked/3not_run。人工条件保持，未要求用户立即操作。blocked/finished交总控review，无产品/依赖/包/Git写，不启动其他角色。

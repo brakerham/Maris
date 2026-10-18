@@ -1,0 +1,238 @@
+{
+  "round": 2,
+  "passed": true,
+  "failure": null,
+  "checks": [
+    {
+      "id": "PARSER-EXIT",
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "id": "PATH-01-backslash",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "PATH-02-forwardslash",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "PATH-03-spaces-chinese-quotes",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "PATH-04-different-cwd",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "PATH-05-wrong-script",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-06-same-name-other-dir",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-07-only-other-argument",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-08-longer-substring",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-09-extra-arg",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-10-missing-script",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-11-empty",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-12-unparseable",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-13-relative",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-14-drive-relative",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-15-root-relative",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-16-UNC",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-17-device",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-18-case-alias",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-19-short-alias",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-20-digest-drift",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "PATH-21-boundary-drift",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "READY-01-valid",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "READY-02-wrong-pid",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "READY-03-old-output",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "READY-04-old-marker",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "READY-05-wrong-path",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "READY-06-wrong-hash",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "READY-07-missing",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "READY-08-call-id",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "READY-09-forward-path",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "READY-10-old-receipt-path",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "CANCEL-01-stale-created",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "CANCEL-02-parent-match",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "CANCEL-03-parent-mismatch",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "ROOT-01-valid",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "ROOT-02-parent",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "ROOT-03-reparse",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    }
+  ],
+  "productImported": false,
+  "productStarts": 0,
+  "helperStarts": 0
+}

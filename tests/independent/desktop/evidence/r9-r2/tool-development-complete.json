@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-17T23:39:38+08:00",
+  "started": "2026-10-17T23:33:32.629807+08:00",
+  "roundsUsed": 2,
+  "roundLimit": 3,
+  "first": {
+    "checks": 36,
+    "passed": 36
+  },
+  "second": {
+    "checks": 38,
+    "passed": 38
+  },
+  "uniqueFinalChecks": 38,
+  "old12ClassificationChecks": "historical reference only; not rerun",
+  "fullH1ControllerFrozen": true,
+  "liveCorrectionUsed": 0,
+  "productStarts": 0,
+  "helperStarts": 0
+}

@@ -1,0 +1,60 @@
+--- round1/r9-r2-h1-run.mjs
++++ round2/r9-r2-h1-run.mjs
+@@ -55,7 +55,8 @@
+   while(root&&!exit&&performance.now()<start+57000)await sleep(25);
+   if(root){remaining=await obs('resources',start+60000);must(remaining.owned.length===0&&remaining.listeners.length===0&&remaining.windowCount===0,'remaining_resources');}
+  }catch(e){cleanupError=e.safeCode??'cleanup_unknown';record('cleanup_failure',{code:cleanupError});}
+- const unchanged=checkProfile();record('profile_readonly_comparison',{id:'H1-PROFILE-UNCHANGED',expected:true,actual:unchanged});
++ let unchanged=null;try{unchanged=checkProfile();}catch{failure??='profile_read_unknown';}
++ record('profile_readonly_comparison',{id:'H1-PROFILE-UNCHANGED',expected:true,actual:unchanged});
+  if(!unchanged)failure??='profile_changed';
+  // Even failure-native checks are retained if present; never manufacture a native result.
+  for(const name of ['result.json','baseline.json','checks.jsonl'])if(fs.existsSync(path.join(output,name))&&!fs.existsSync(path.join(ev,'native-'+name)))fs.copyFileSync(path.join(output,name),path.join(ev,'native-'+name),fs.constants.COPYFILE_EXCL);
+--- round1/r9-r2-identity.cjs
++++ round2/r9-r2-identity.cjs
+@@ -44,10 +44,10 @@
+  try{checks.executableEqual=canonical(raw.executable)===d.executable;}catch{}
+  return {passed:Object.values(checks).every(Boolean),checks,argv};
+ }
+-function receiptCheck(receipt,d,{pid,receiptPath,expectedReceiptPath,startedUtc=null}){
++function receiptCheck(receipt,d,{pid,receiptPath,expectedReceiptPath,startedUtc=null,parentPid=null}){
+  const pathResult=fileCheck(receipt?.scriptPath,d.script,d.boundary,d.scriptSha256);
+  const checks={present:!!receipt,pidEqual:receipt?.pid===pid,callIdEqual:receipt?.callId===d.callId,markerEqual:receipt?.marker===d.marker,
+-  scriptEqual:pathResult.passed,reportedDigestEqual:receipt?.scriptSha256===d.scriptSha256,outputEqual:false,receiptPathEqual:false,creationValid:startedUtc===null};
++  scriptEqual:pathResult.passed,reportedDigestEqual:receipt?.scriptSha256===d.scriptSha256,outputEqual:false,receiptPathEqual:false,creationValid:startedUtc===null,parentEqual:parentPid===null||receipt?.parentPid===parentPid};
+  try{checks.outputEqual=canonical(receipt.output)===d.output;checks.receiptPathEqual=canonical(receiptPath)===canonical(expectedReceiptPath)&&within(receiptPath,d.output);}catch{}
+  if(startedUtc!==null)checks.creationValid=Date.parse(receipt?.created)>=Date.parse(startedUtc)-2000;
+  return {passed:Object.values(checks).every(Boolean),checks,pathChecks:pathResult.checks};
+--- round1/r9-r2-local.test.mjs
++++ round2/r9-r2-local.test.mjs
+@@ -41,6 +41,8 @@
+  ])check(id,expected,identity.receiptCheck(receipt,d,args).passed);
+  check('READY-10-old-receipt-path',false,identity.receiptCheck(base,d,{...args,receiptPath:path.join(other,'ready.json')}).passed);
+  check('CANCEL-01-stale-created',false,identity.receiptCheck({...base,created:'2020-01-01T00:00:00Z'},d,{...args,startedUtc:new Date().toISOString()}).passed);
++ check('CANCEL-02-parent-match',true,identity.receiptCheck({...base,parentPid:456},d,{...args,parentPid:456,startedUtc:new Date().toISOString()}).passed);
++ check('CANCEL-03-parent-mismatch',false,identity.receiptCheck({...base,parentPid:789},d,{...args,parentPid:456,startedUtc:new Date().toISOString()}).passed);
+  const now=new Date().toISOString(),raw={present:true,pid:123,parentPid:456,created:now,executable:d.executable,parsed:parsedGood,pathNoReparse:true};
+  check('ROOT-01-valid',true,identity.rootCheck(raw,d,{pid:123,parentPid:456,startedUtc:now}).passed);
+  check('ROOT-02-parent',false,identity.rootCheck({...raw,parentPid:999},d,{pid:123,parentPid:456,startedUtc:now}).passed);
+--- round1/r9-r2-observation.mjs
++++ round2/r9-r2-observation.mjs
+@@ -55,7 +55,7 @@
+  const result=await captured({exe:pwsh,args:['-NoProfile','-NonInteractive','-File',observerDescriptor.script,'-RequestPath',requestPath],cwd:output,limitMs,id,record,rawDir:output,
+   canCancel:(child,start)=>{
+    if(!fs.existsSync(receipt))return false;const r=JSON.parse(fs.readFileSync(receipt,'utf8'));
+-   const checked=identity.receiptCheck(r,observerDescriptor,{pid:child.pid,receiptPath:receipt,expectedReceiptPath:receipt,startedUtc:start});
++   const checked=identity.receiptCheck(r,observerDescriptor,{pid:child.pid,parentPid:process.pid,receiptPath:receipt,expectedReceiptPath:receipt,startedUtc:start});
+    record('observer_cancel_identity',{id,checks:checked.checks,pathChecks:checked.pathChecks});
+    return checked.passed&&identity.canonical(r.executable)===observerDescriptor.executable;
+   }});
+--- round1/r9-r2-observer.ps1
++++ round2/r9-r2-observer.ps1
+@@ -22,6 +22,8 @@
+   $stage='process_query'
+   Record $stage 'enter' @{}
+   $all=@(Get-CimInstance Win32_Process -ErrorAction Stop)
++  $selfProcess=@($all|Where-Object ProcessId -eq $PID)
++  if($selfProcess.Count -eq 1){$receipt.parentPid=[int]$selfProcess[0].ParentProcessId;[IO.File]::WriteAllText($r.receipt,($receipt|ConvertTo-Json -Compress),$encoding)}
+   $root=@($all|Where-Object ProcessId -eq $r.rootPid)
+   if($root.Count -gt 1){throw 'root_nonunique'}
+   $start=[DateTimeOffset]::Parse($r.startedUtc).UtcDateTime
