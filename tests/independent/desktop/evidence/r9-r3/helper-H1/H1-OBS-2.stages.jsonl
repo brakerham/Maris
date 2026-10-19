@@ -1,0 +1,12 @@
+{"at":"2026-10-18T03:03:14.9765872+00:00","event":"enter","details":{},"callId":"H1-OBS-2","stage":"parser_prepare"}
+{"at":"2026-10-18T03:03:15.1579146+00:00","event":"terminal","details":{"status":"success"},"callId":"H1-OBS-2","stage":"parser_prepare"}
+{"at":"2026-10-18T03:03:15.1584953+00:00","event":"enter","details":{},"callId":"H1-OBS-2","stage":"process_query"}
+{"at":"2026-10-18T03:03:15.8040122+00:00","event":"terminal","details":{"rootVerified":false,"rootPresent":false,"ownedCount":0,"status":"success","identityValidation":"pending_shared_checker"},"callId":"H1-OBS-2","stage":"process_query"}
+{"at":"2026-10-18T03:03:15.8069113+00:00","event":"enter","details":{},"callId":"H1-OBS-2","stage":"type_prepare"}
+{"at":"2026-10-18T03:03:15.8801153+00:00","event":"terminal","details":{"status":"success"},"callId":"H1-OBS-2","stage":"type_prepare"}
+{"at":"2026-10-18T03:03:15.8810130+00:00","event":"enter","details":{},"callId":"H1-OBS-2","stage":"window_query"}
+{"at":"2026-10-18T03:03:15.8886385+00:00","event":"terminal","details":{"count":0,"status":"success"},"callId":"H1-OBS-2","stage":"window_query"}
+{"at":"2026-10-18T03:03:15.8897381+00:00","event":"enter","details":{},"callId":"H1-OBS-2","stage":"listener_query"}
+{"at":"2026-10-18T03:03:18.6079224+00:00","event":"terminal","details":{"count":0,"status":"success"},"callId":"H1-OBS-2","stage":"listener_query"}
+{"at":"2026-10-18T03:03:18.6093952+00:00","event":"enter","details":{},"callId":"H1-OBS-2","stage":"json_output"}
+{"at":"2026-10-18T03:03:18.6163742+00:00","event":"terminal","details":{"status":"success","bytes":237},"callId":"H1-OBS-2","stage":"json_output"}

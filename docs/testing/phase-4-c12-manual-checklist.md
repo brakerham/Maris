@@ -181,3 +181,12 @@ B仍1passed、1failed、19blocked、3not_run；UI-01通过保持，QUIT-001普�
 H1约8.207秒自然异常退出，无强制结束，最终owned/监听/窗口0，profile原字节保持。按正式目标停止规则，不执行W2等后续、不修后重跑。产品新增0/7，辅助新增1/4，系列累计1/8及2/5；H1恢复1/1已用，现场更正0/1不能用于目标失败。旧8/235、48、W1/62及模块/冷B/完整恢复只引用。
 
 原R9/R9-R1两份profile只读，新63项同内容副本不等于产品续启通过；未seed，owner/outbox基线、同ID重启、真实保留/删除/Tray等仍未验。B整项仍1passed/1failed/19blocked/3not_run。人工条件保持，未要求用户立即操作。blocked/finished交总控review，无产品/依赖/包/Git写，不启动其他角色。
+
+
+## R9-R3同源H1与W2首次恢复失败（2026-10-18）
+
+[R9-R3独立增量报告](phase-4-c12-r9-r3-storage-windows-report.md)：1192起点匹配；唯一局部工具轮30/30通过。预置同源Local State、ready前绑定userData/sessionData并分段记录后，新H1原生7/7、helper/controller exit0、产品副本63项保持及资源全零。该成功不倒推旧operation_error精确阶段。
+
+随后同任务唯一W2在首次设置界面比较失败：保存dark/隐私true，实际页面system/off、主题控件system/隐私checkbox false；设置取样前未写入且字节不变。登记P1 P4-C12-R9-R3-SETTINGS-001，四比较来自同一首样。产品普通WM_CLOSE后自然exit0、owned/listener/window=0，无强制结束；controller exit1保留失败。W3、H2、W4/H3、W5/H4、W6及剩余原生/人工条件not_run，不声称设备不支持。
+
+本轮产品1/7、辅助1/4；系列产品2/8、辅助3/6（含两次旧失败H1）。旧退出/48兼容/W1/模块/冷入口/恢复/38路径及现场Node均未重跑。B为1 passed、2 failed、19 blocked、2 not_run：CMP-06仅因主题恢复子条件改failed，其余设备子条件未验；CMP-05多屏/金额隐藏/键盘等人工条件仍not_run，隐私开关恢复失败单独记录。UI-02/LAZY-001保持。原首次材料和本文旧字节保留，最终blocked / finished供总控review，不请求用户此刻操作。

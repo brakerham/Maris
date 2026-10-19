@@ -1,0 +1,8 @@
+{"id":"CTX-PREP-BOUNDARY","event":"enter","role":"helper_context","operation":"validate","at":"2026-10-18T02:59:39.283Z"}
+{"id":"CTX-PREP-BOUNDARY","event":"terminal","role":"helper_context","operation":"validate","at":"2026-10-18T02:59:39.288Z","durationMs":5.0730000000000075,"category":"success"}
+{"id":"CTX-SOURCE-READ","event":"enter","role":"local_state","operation":"read","at":"2026-10-18T02:59:39.291Z"}
+{"id":"CTX-SOURCE-READ","event":"terminal","role":"local_state","operation":"read","at":"2026-10-18T02:59:39.294Z","durationMs":3.2519000000000062,"category":"success","bytes":2,"fileSha256":"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"}
+{"id":"CTX-SOURCE-PARSE","event":"enter","role":"local_state","operation":"parse","at":"2026-10-18T02:59:39.297Z"}
+{"id":"CTX-SOURCE-PARSE","event":"terminal","role":"local_state","operation":"parse","at":"2026-10-18T02:59:39.299Z","durationMs":1.662099999999981,"category":"success"}
+{"id":"CTX-SOURCE-FIELDS","event":"enter","role":"local_state","operation":"validate","at":"2026-10-18T02:59:39.300Z"}
+{"id":"CTX-SOURCE-FIELDS","event":"terminal","role":"local_state","operation":"validate","at":"2026-10-18T02:59:39.302Z","durationMs":1.6345000000000027,"category":"error","error":{"name":"Error","code":"context_missing_key"}}

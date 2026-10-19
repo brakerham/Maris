@@ -1,0 +1,6 @@
+{"id":"CTX-PREP-BOUNDARY","event":"enter","role":"helper_context","operation":"validate","at":"2026-10-18T02:59:39.256Z"}
+{"id":"CTX-PREP-BOUNDARY","event":"terminal","role":"helper_context","operation":"validate","at":"2026-10-18T02:59:39.261Z","durationMs":4.886300000000006,"category":"success"}
+{"id":"CTX-SOURCE-READ","event":"enter","role":"local_state","operation":"read","at":"2026-10-18T02:59:39.265Z"}
+{"id":"CTX-SOURCE-READ","event":"terminal","role":"local_state","operation":"read","at":"2026-10-18T02:59:39.268Z","durationMs":3.250699999999995,"category":"success","bytes":7,"fileSha256":"be302461cda285db3ed2d45fb767b23e08ca8808b35a638009937df22b332d73"}
+{"id":"CTX-SOURCE-PARSE","event":"enter","role":"local_state","operation":"parse","at":"2026-10-18T02:59:39.271Z"}
+{"id":"CTX-SOURCE-PARSE","event":"terminal","role":"local_state","operation":"parse","at":"2026-10-18T02:59:39.273Z","durationMs":1.9736999999999938,"category":"error","error":{"name":"SyntaxError","code":"json_parse_failed"}}

@@ -1,0 +1,169 @@
+{
+  "id": "W2",
+  "passed": false,
+  "firstFailure": {
+    "stage": "first_persisted_ui",
+    "id": "W2-PERSISTED-UI-THEME",
+    "name": "Error",
+    "code": "comparison_failed"
+  },
+  "cleanupError": null,
+  "forced": false,
+  "rootPid": 14764,
+  "exit": {
+    "code": 0,
+    "signal": null,
+    "at": "2026-10-18T11:33:00.341Z"
+  },
+  "secondaryPid": null,
+  "secondaryExit": null,
+  "productStarts": 1,
+  "helperStarts": 0,
+  "seriesProductStarts": 2,
+  "seriesHelperStarts": 3,
+  "durationMs": 12800.2316,
+  "comparisons": [
+    {
+      "id": "W2-STORED-THEME",
+      "expected": "dark",
+      "actual": "dark",
+      "passed": true
+    },
+    {
+      "id": "W2-STORED-PRIVACY",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-STORED-CLOSE-POLICY",
+      "expected": "quit",
+      "actual": "quit",
+      "passed": true
+    },
+    {
+      "id": "W2-STORED-HINT",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "W2-CONTINUITY-FIXTURE",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-OWN-ROOT",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-CDP-OWNED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-PAGE-READY",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-PERSISTED-UI-THEME",
+      "expected": "dark",
+      "actual": "system",
+      "passed": false
+    },
+    {
+      "id": "W2-PERSISTED-UI-PRIVACY",
+      "expected": "on",
+      "actual": "off",
+      "passed": false
+    },
+    {
+      "id": "W2-PERSISTED-THEME-CONTROL",
+      "expected": "dark",
+      "actual": "system",
+      "passed": false
+    },
+    {
+      "id": "W2-PERSISTED-PRIVACY-CONTROL",
+      "expected": true,
+      "actual": false,
+      "passed": false
+    }
+  ],
+  "known": [
+    {
+      "pid": 14764,
+      "parentPid": 19684,
+      "created": "2026-10-18T11:32:50.6513040Z",
+      "kind": "product"
+    },
+    {
+      "pid": 19960,
+      "parentPid": 14764,
+      "created": "2026-10-18T11:32:52.1675220Z",
+      "kind": "product"
+    },
+    {
+      "pid": 16448,
+      "parentPid": 14764,
+      "created": "2026-10-18T11:32:52.1724100Z",
+      "kind": "product"
+    },
+    {
+      "pid": 27448,
+      "parentPid": 14764,
+      "created": "2026-10-18T11:32:52.2177230Z",
+      "kind": "product"
+    },
+    {
+      "pid": 14468,
+      "parentPid": 14764,
+      "created": "2026-10-18T11:32:52.2498930Z",
+      "kind": "python"
+    },
+    {
+      "pid": 27296,
+      "parentPid": 14468,
+      "created": "2026-10-18T11:32:52.3514090Z",
+      "kind": "conhost"
+    },
+    {
+      "pid": 16652,
+      "parentPid": 14764,
+      "created": "2026-10-18T11:32:52.3614190Z",
+      "kind": "product"
+    },
+    {
+      "pid": 27328,
+      "parentPid": 14468,
+      "created": "2026-10-18T11:32:52.3706450Z",
+      "kind": "python"
+    }
+  ],
+  "closeReceipt": {
+    "rootVerified": true,
+    "matchingMainWindows": 1,
+    "closePosted": true,
+    "postedUtc": "2026-10-18T11:32:59.9739262+00:00",
+    "rootPid": 14764,
+    "parentVerified": true
+  },
+  "remainingOwned": 0,
+  "remainingListeners": 0,
+  "remainingWindows": 0,
+  "streams": [
+    {
+      "id": "W2",
+      "stdoutBytes": 2,
+      "stdoutSha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "stderrBytes": 100,
+      "stderrSha256": "bde02d01f1e6d2bc60bb812bd546d863efbfd48e0cdd4747b7057ae33adf1ef1"
+    }
+  ]
+}

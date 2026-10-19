@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-18T10:53:24+08:00",
+  "entries": 1192,
+  "matched": 1192,
+  "unique": true,
+  "sorted": true,
+  "utf8NoBomLf": true,
+  "stagedCount": 0,
+  "manifestSha256": "9b9b0f977fe96900b4d05cf977f222233034fc39f8882a82ff9c2b543e2181f1",
+  "control": "2026-10-18T05:57:00+08:00",
+  "passed": true
+}

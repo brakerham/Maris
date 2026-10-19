@@ -1,0 +1,12 @@
+{"id":"H1-OP-AVAILABILITY","event":"enter","role":"native_storage","operation":"availability","at":"2026-10-18T02:59:39.869Z"}
+{"id":"H1-OP-AVAILABILITY","event":"terminal","role":"native_storage","operation":"availability","at":"2026-10-18T02:59:39.873Z","durationMs":3.9519000000000233,"category":"success","available":true}
+{"id":"H1-NATIVE-AVAILABLE","event":"enter","role":"business_comparison","operation":"compare","at":"2026-10-18T02:59:39.876Z"}
+{"id":"H1-NATIVE-AVAILABLE","event":"terminal","role":"business_comparison","operation":"compare","at":"2026-10-18T02:59:39.879Z","durationMs":3.1580000000000155,"category":"success","expected":true,"actual":true,"passed":true}
+{"id":"H1-OP-OWNER-READ","event":"enter","role":"owner_ciphertext","operation":"read","at":"2026-10-18T02:59:39.882Z"}
+{"id":"H1-OP-OWNER-READ","event":"terminal","role":"owner_ciphertext","operation":"read","at":"2026-10-18T02:59:39.884Z","durationMs":1.9159000000000788,"category":"success","bytes":12}
+{"id":"H1-OP-OWNER-DECRYPT","event":"enter","role":"owner_ciphertext","operation":"decrypt","at":"2026-10-18T02:59:39.886Z"}
+{"id":"H1-OP-OWNER-DECRYPT","event":"terminal","role":"owner_ciphertext","operation":"decrypt","at":"2026-10-18T02:59:39.887Z","durationMs":1.5766999999999598,"category":"success"}
+{"id":"H1-OP-OWNER-PARSE","event":"enter","role":"owner_plaintext","operation":"parse","at":"2026-10-18T02:59:39.889Z"}
+{"id":"H1-OP-OWNER-PARSE","event":"terminal","role":"owner_plaintext","operation":"parse","at":"2026-10-18T02:59:39.890Z","durationMs":1.5524000000000342,"category":"error","error":{"name":"SyntaxError","code":"json_parse_failed"}}
+{"id":"H1-OP-RESULT-WRITE","event":"enter","role":"native_result","operation":"write","at":"2026-10-18T02:59:39.892Z"}
+{"id":"H1-OP-RESULT-WRITE","event":"terminal","role":"native_result","operation":"write","at":"2026-10-18T02:59:39.894Z","durationMs":2.4295999999999367,"category":"success"}

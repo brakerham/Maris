@@ -1,0 +1,92 @@
+{
+  "queryStatus": "success",
+  "checks": [
+    {
+      "originalAbsent": true,
+      "pid": 7576,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 12164,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 3028,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 7256,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 6156,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 19484,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 11952,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 15440,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 4616,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 18316,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 20428,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 22544,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 28532,
+      "sameCreation": false,
+      "pidPresent": false
+    },
+    {
+      "originalAbsent": true,
+      "pid": 23316,
+      "sameCreation": false,
+      "pidPresent": false
+    }
+  ],
+  "at": "2026-10-18T11:00:46.3999515+08:00",
+  "remainingRegistered": 0,
+  "registeredCount": 14
+}

@@ -1,0 +1,70 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "id": "H1-NATIVE-AVAILABLE",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H1-OWNER-SCHEMA",
+      "operator": "eq",
+      "expected": true,
+      "actual": false,
+      "passed": false
+    }
+  ],
+  "notRun": [
+    {
+      "id": "H1-OWNER-READY",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OWNER-NO-PLAIN",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-COUNT",
+      "expected": 1,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-CONTINUITY",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-NO-PLAIN",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    }
+  ],
+  "firstError": {
+    "id": "H1-OWNER-SCHEMA",
+    "event": "terminal",
+    "role": "business_comparison",
+    "operation": "compare",
+    "at": "2026-10-18T02:59:40.200Z",
+    "durationMs": 1.6248000000000502,
+    "category": "error",
+    "error": {
+      "name": "Error",
+      "code": "comparison_failed"
+    },
+    "expected": true,
+    "actual": false,
+    "passed": false
+  },
+  "baseline": null,
+  "productImported": false,
+  "fixtureWritten": false
+}

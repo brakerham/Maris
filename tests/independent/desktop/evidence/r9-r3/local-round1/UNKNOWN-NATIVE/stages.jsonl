@@ -1,0 +1,10 @@
+{"id":"H1-OP-AVAILABILITY","event":"enter","role":"native_storage","operation":"availability","at":"2026-10-18T02:59:40.150Z"}
+{"id":"H1-OP-AVAILABILITY","event":"terminal","role":"native_storage","operation":"availability","at":"2026-10-18T02:59:40.153Z","durationMs":3.0136999999999716,"category":"success","available":true}
+{"id":"H1-NATIVE-AVAILABLE","event":"enter","role":"business_comparison","operation":"compare","at":"2026-10-18T02:59:40.156Z"}
+{"id":"H1-NATIVE-AVAILABLE","event":"terminal","role":"business_comparison","operation":"compare","at":"2026-10-18T02:59:40.159Z","durationMs":2.907299999999964,"category":"success","expected":true,"actual":true,"passed":true}
+{"id":"H1-OP-OWNER-READ","event":"enter","role":"owner_ciphertext","operation":"read","at":"2026-10-18T02:59:40.162Z"}
+{"id":"H1-OP-OWNER-READ","event":"terminal","role":"owner_ciphertext","operation":"read","at":"2026-10-18T02:59:40.164Z","durationMs":1.6243999999999232,"category":"success","bytes":12}
+{"id":"H1-OP-OWNER-DECRYPT","event":"enter","role":"owner_ciphertext","operation":"decrypt","at":"2026-10-18T02:59:40.165Z"}
+{"id":"H1-OP-OWNER-DECRYPT","event":"terminal","role":"owner_ciphertext","operation":"decrypt","at":"2026-10-18T02:59:40.167Z","durationMs":1.660099999999943,"category":"error","error":{"name":"Error","code":"unknown"}}
+{"id":"H1-OP-RESULT-WRITE","event":"enter","role":"native_result","operation":"write","at":"2026-10-18T02:59:40.169Z"}
+{"id":"H1-OP-RESULT-WRITE","event":"terminal","role":"native_result","operation":"write","at":"2026-10-18T02:59:40.171Z","durationMs":2.350400000000036,"category":"success"}

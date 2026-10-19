@@ -1,0 +1,8 @@
+{"id":"H1-OP-AVAILABILITY","event":"enter","role":"native_storage","operation":"availability","at":"2026-10-18T02:59:39.817Z"}
+{"id":"H1-OP-AVAILABILITY","event":"terminal","role":"native_storage","operation":"availability","at":"2026-10-18T02:59:39.820Z","durationMs":3.1942999999999984,"category":"success","available":true}
+{"id":"H1-NATIVE-AVAILABLE","event":"enter","role":"business_comparison","operation":"compare","at":"2026-10-18T02:59:39.823Z"}
+{"id":"H1-NATIVE-AVAILABLE","event":"terminal","role":"business_comparison","operation":"compare","at":"2026-10-18T02:59:39.826Z","durationMs":3.00120000000004,"category":"success","expected":true,"actual":true,"passed":true}
+{"id":"H1-OP-OWNER-READ","event":"enter","role":"owner_ciphertext","operation":"read","at":"2026-10-18T02:59:39.829Z"}
+{"id":"H1-OP-OWNER-READ","event":"terminal","role":"owner_ciphertext","operation":"read","at":"2026-10-18T02:59:39.831Z","durationMs":1.7701999999999316,"category":"error","error":{"name":"Error","code":"EACCES"}}
+{"id":"H1-OP-RESULT-WRITE","event":"enter","role":"native_result","operation":"write","at":"2026-10-18T02:59:39.833Z"}
+{"id":"H1-OP-RESULT-WRITE","event":"terminal","role":"native_result","operation":"write","at":"2026-10-18T02:59:39.835Z","durationMs":2.3840000000000146,"category":"success"}

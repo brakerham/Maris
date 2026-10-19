@@ -1,0 +1,44 @@
+{
+  "task": "P4-C12-R9-R3",
+  "product": {
+    "before": 1,
+    "thisTask": 1,
+    "thisTaskLimit": 7,
+    "seriesUsed": 2,
+    "seriesLimit": 8
+  },
+  "safeStorage": {
+    "before": 2,
+    "thisTask": 1,
+    "thisTaskLimit": 4,
+    "seriesUsed": 3,
+    "seriesLimit": 6
+  },
+  "H1": {
+    "used": 1,
+    "limit": 1,
+    "passed": true
+  },
+  "localToolRounds": {
+    "used": 1,
+    "limit": 3,
+    "checks": 30,
+    "realDecryptCalls": 0
+  },
+  "oldPassedCollectionsRerun": 0,
+  "liveNodeGateRun": 0,
+  "chunkInjections": 0,
+  "H2Seed": false,
+  "notRun": [
+    "W2-PERSISTED-REQUEST-ID",
+    "W3",
+    "H2",
+    "W4",
+    "H3",
+    "W5",
+    "H4",
+    "W6",
+    "reservedWindowsScenarios"
+  ],
+  "stopReason": "first valid W2 product comparison failed; remaining allocation is not rerun authority"
+}

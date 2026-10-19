@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-18T19:43:40.754090+08:00",
+  "entries": 170,
+  "matched": 170,
+  "unique": true,
+  "sorted": true,
+  "utf8NoBomLf": true,
+  "manifestSha256": "130c4c1e601008998357a32785c71c8454b940d27dab2acbea80403bae669f03",
+  "firstMaterialsSha256": "ee47682828cf4341c6cf78b7330446ec5329186998eea42d635ee4f7b1ea8e87",
+  "status": "blocked",
+  "runtimeStatus": "finished",
+  "handoff": "review",
+  "productStarts": 1,
+  "helperStarts": 1,
+  "seriesProductStarts": 2,
+  "seriesHelperStarts": 3,
+  "newDefect": "P4-C12-R9-R3-SETTINGS-001",
+  "H1": "passed",
+  "W2": "failed",
+  "targetReruns": 0,
+  "gitWrites": 0,
+  "passed": true
+}

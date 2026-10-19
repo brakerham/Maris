@@ -1,0 +1,14 @@
+{"id":"H1-OP-AVAILABILITY","event":"enter","role":"native_storage","operation":"availability","at":"2026-10-18T02:59:40.177Z"}
+{"id":"H1-OP-AVAILABILITY","event":"terminal","role":"native_storage","operation":"availability","at":"2026-10-18T02:59:40.181Z","durationMs":3.0781999999999243,"category":"success","available":true}
+{"id":"H1-NATIVE-AVAILABLE","event":"enter","role":"business_comparison","operation":"compare","at":"2026-10-18T02:59:40.183Z"}
+{"id":"H1-NATIVE-AVAILABLE","event":"terminal","role":"business_comparison","operation":"compare","at":"2026-10-18T02:59:40.186Z","durationMs":3.016399999999976,"category":"success","expected":true,"actual":true,"passed":true}
+{"id":"H1-OP-OWNER-READ","event":"enter","role":"owner_ciphertext","operation":"read","at":"2026-10-18T02:59:40.190Z"}
+{"id":"H1-OP-OWNER-READ","event":"terminal","role":"owner_ciphertext","operation":"read","at":"2026-10-18T02:59:40.191Z","durationMs":1.6252999999999247,"category":"success","bytes":12}
+{"id":"H1-OP-OWNER-DECRYPT","event":"enter","role":"owner_ciphertext","operation":"decrypt","at":"2026-10-18T02:59:40.193Z"}
+{"id":"H1-OP-OWNER-DECRYPT","event":"terminal","role":"owner_ciphertext","operation":"decrypt","at":"2026-10-18T02:59:40.194Z","durationMs":1.448699999999917,"category":"success"}
+{"id":"H1-OP-OWNER-PARSE","event":"enter","role":"owner_plaintext","operation":"parse","at":"2026-10-18T02:59:40.196Z"}
+{"id":"H1-OP-OWNER-PARSE","event":"terminal","role":"owner_plaintext","operation":"parse","at":"2026-10-18T02:59:40.197Z","durationMs":1.5142000000000735,"category":"success"}
+{"id":"H1-OWNER-SCHEMA","event":"enter","role":"business_comparison","operation":"compare","at":"2026-10-18T02:59:40.199Z"}
+{"id":"H1-OWNER-SCHEMA","event":"terminal","role":"business_comparison","operation":"compare","at":"2026-10-18T02:59:40.200Z","durationMs":1.6248000000000502,"category":"error","error":{"name":"Error","code":"comparison_failed"},"expected":true,"actual":false,"passed":false}
+{"id":"H1-OP-RESULT-WRITE","event":"enter","role":"native_result","operation":"write","at":"2026-10-18T02:59:40.202Z"}
+{"id":"H1-OP-RESULT-WRITE","event":"terminal","role":"native_result","operation":"write","at":"2026-10-18T02:59:40.204Z","durationMs":2.4680000000000746,"category":"success"}

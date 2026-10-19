@@ -1,0 +1,2 @@
+{"id":"CTX-PREP-BOUNDARY","event":"enter","role":"helper_context","operation":"validate","at":"2026-10-18T02:59:39.241Z"}
+{"id":"CTX-PREP-BOUNDARY","event":"terminal","role":"helper_context","operation":"validate","at":"2026-10-18T02:59:39.245Z","durationMs":3.793199999999999,"category":"error","error":{"name":"Error","code":"ENOENT"}}

@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R2路径与H1身份链通过，原生availability后operation_error；总控确认helper未预置同源Local State，旧精确抛错仍unknown。发布P4-C12-R9-R3，修原生上下文及分段记录，一次新H1通过后同任务续Windows。产品累计1/8、辅助2/6（显式增加一次H1），旧通过不重跑。P4-B仍1 passed、1 failed、19 blocked、3 not_run；P4-C/D未开始，执行方和顾问停止。
+当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R3原生H1独立7/7通过；W2有效首样确认已保存dark/隐私开启未恢复到页面，SETTINGS-001定为P1。发布P4-B7-R8-SETTINGS，补既有设计的窄设置读取与启动恢复；执行方新package最多1次、同一新profile保存/续启EXE最多2次。Tester累计产品2/8、辅助3/6冻结，旧通过不重跑。P4-B仍1 passed、2 failed、19 blocked、2 not_run，P4-C/D未开始；测试方/顾问停止。
+
+- [R9-R3设置恢复缺陷裁定](docs/p4-c12-r9-r3-settings-coordinator-review.md)：H1通过，确认启动读取链缺口；原W2首样保留。
+- [R8设置恢复执行任务](docs/coordination/prompts/p4-b7-r8-settings-executor.md)：12路径范围，一次新包及两次顺序保存/续启。
 
 - [R9-R2原生上下文裁定](docs/p4-c12-r9-r2-native-coordinator-review.md)：辅助上下文遗漏已确认，旧具体异常阶段保持未知。
-- [R9-R3同源上下文与续验](docs/coordination/prompts/p4-c12-r9-r3-storage-windows-tester.md)：一次新H1通过后接剩余Windows。
+- [R9-R3同源上下文与续验](docs/coordination/prompts/p4-c12-r9-r3-storage-windows-tester.md)：已blocked/finished：H1通过、W2设置恢复失败；后续按R8返修。
 
 - [R9-R1路径工具阻断裁定](docs/p4-c12-r9-r1-path-coordinator-review.md)：新故障在测试工具，未新增产品缺陷，旧H1原因保持未知。
 - [R9-R2路径身份修正与续验](docs/coordination/prompts/p4-c12-r9-r2-path-windows-tester.md)：已blocked/finished，路径通过、原生异常；后续以R9-R3为准。

@@ -1,0 +1,39 @@
+{
+  "task": "P4-C12-R9-R3",
+  "scenario": "W2/W3",
+  "at": "2026-10-18T11:06:37.104670+08:00",
+  "source": "W1 immutable virtual continuity + H1 baseline",
+  "initialExpected": {
+    "storedTheme": "dark",
+    "storedPrivacy": true,
+    "UITheme": "dark",
+    "UIPrivacy": "on",
+    "themeControl": "dark",
+    "privacyControl": true,
+    "closePolicy": "quit",
+    "closeHintShown": false
+  },
+  "beforeFirstUiSample": "no settings writes; no theme/privacy rewrite; no profile reset",
+  "gates": [
+    "source and H1 passed",
+    "fixed EXE identity and owned CDP",
+    "online and ready UI within original budgets",
+    "first persisted UI sample and settings assertions",
+    "same draft/clientEventId",
+    "W3 second instance",
+    "first native hint and hide",
+    "companion restore",
+    "ask cancel/hide/quit",
+    "normal owned exit and resource cleanup"
+  ],
+  "failureRule": "first valid mismatch stops W3 and all later operations; normal WM_CLOSE cleanup using existing quit policy; scoped force only fallback, never pass",
+  "productStartsBefore": 1,
+  "productsLimit": 8,
+  "helpersBefore": 3,
+  "helperLimit": 6,
+  "productDeadlineMs": 120000,
+  "ordinaryCloseMs": 10000,
+  "pageSampleMs": 5000,
+  "rawStreams": "external new root only",
+  "observerReuse": "R2 capture/receipt cancellation and identity functions unchanged; R9 original product PID/executable/parent/start predicate retained; strict listener error handling"
+}

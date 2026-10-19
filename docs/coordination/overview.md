@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-18 05:57，Asia/Shanghai
+更新时间：2026-10-19 07:58，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R2路径与H1身份链通过，原生availability后operation_error；总控确认helper未预置同源Local State，旧精确抛错仍unknown。发布P4-C12-R9-R3，修原生上下文及分段记录，一次新H1通过后同任务续Windows。产品累计1/8、辅助2/6（显式增加一次H1），旧通过不重跑。P4-B仍1 passed、1 failed、19 blocked、3 not_run；P4-C/D未开始，执行方和顾问停止。
+P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R3原生H1独立7/7通过；W2有效首样确认已保存dark/隐私开启未恢复到页面，SETTINGS-001定为P1。发布P4-B7-R8-SETTINGS，补既有设计的窄设置读取与启动恢复；执行方新package最多1次、同一新profile保存/续启EXE最多2次。Tester累计产品2/8、辅助3/6冻结，旧通过不重跑。P4-B仍1 passed、2 failed、19 blocked、2 not_run，P4-C/D未开始；测试方/顾问停止。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R2路�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R9-R2证据核对与R9-R3同源上下文冻结 | 2026-10-18 05:57 | 既有测试方接单 | [裁定](../p4-c12-r9-r2-native-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R9-R3已核对，SETTINGS-R8合同及执行卡准备 | 2026-10-19 07:58 | 执行方复算新起点接单 | [裁定](../p4-c12-r9-r3-settings-coordinator-review.md) |
 | 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
-| 执行智能体 | R7原 `review / finished` 保留；普通关闭修复已接受 | R9独立关闭QUIT-001限定范围 | 2026-10-16（总控接受） | 停止，无产品返修 | [裁定](../p4-c12-r9-quit-h1-coordinator-review.md) |
-| 测试智能体 | R9-R2 `blocked / finished`；R9-R3 `ready / waiting_user` | 原生上下文/分段记录修正与续验 | 2026-10-18 05:42（本人交付），2026-10-18 05:57（总控准备） | 复算新起点接单 | [任务](prompts/p4-c12-r9-r3-storage-windows-tester.md) |
+| 执行智能体 | R7原review保留；R8 `ready / waiting_user` | 只修设置启动恢复；实际接单unverified | 2026-10-19 07:58（总控准备） | 新起点与12路径接单 | [任务](prompts/p4-b7-r8-settings-executor.md) |
+| 测试智能体 | R9-R3 `blocked / finished` | H1原生通过、W2设置恢复P1 | 2026-10-18 19:43（本人交付） | 停止，待新固定包与独立复验任务 | [报告](../testing/phase-4-c12-r9-r3-storage-windows-report.md) |
 
-当前唯一新任务是P4-C12-R9-R3，由既有测试方负责，实际接单unverified。R9-R2新增辅助1/产品0，系列已用辅助2/产品1；本卡显式增加一次H1，辅助上限6剩4、产品上限8剩7。同源上下文覆盖H1至H4，H1通过后同任务继续，旧通过不重跑，前端提醒保持。
+当前唯一新任务是P4-B7-R8-SETTINGS，由既有执行方负责，实际接单unverified。既有D11读取设计漏接已静态确认，限定5产品路径、2旧fixture适配、2新测试及3交付；package1/顺序新EXE2，helper0。Tester系列产品2/8、辅助3/6剩余额度冻结，旧H1/W1/工具/已过集合不重跑；前端图稿与模型提醒保持。
 
 ## 阶段 0 任务状态
 
@@ -123,7 +123,8 @@ P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R2路�
 | P4-C12-R9-QUIT：退出独立复验与Windows续验 | 既有测试智能体 | `blocked / finished` | 8/235、48兼容及W1的62比较通过；H1未解密即工具unknown | [报告](../testing/phase-4-c12-r9-quit-windows-report.md) |
 | P4-C12-R9-R1：H1观察工具与Windows续验 | 既有测试智能体 | `blocked / finished` | 路径字面Contains错误；目标未启动，旧材料保持 | [报告](../testing/phase-4-c12-r9-r1-h1-windows-report.md) |
 | P4-C12-R9-R2：脚本路径身份与Windows续验 | 既有测试智能体 | `blocked / finished` | 身份链通过，原生availability后异常，精确阶段unknown | [报告](../testing/phase-4-c12-r9-r2-path-windows-report.md) |
-| P4-C12-R9-R3：原生上下文与Windows续验 | 既有测试智能体 | `ready / waiting_user` | 新H1一次，同源配置/分段记录；通过后接剩余Windows | [任务](prompts/p4-c12-r9-r3-storage-windows-tester.md) |
+| P4-C12-R9-R3：原生上下文与Windows续验 | 既有测试智能体 | `blocked / finished` | H1 7/7通过；W2设置恢复4比较失败，P1确认 | [报告](../testing/phase-4-c12-r9-r3-storage-windows-report.md) |
+| P4-B7-R8-SETTINGS：设备设置启动恢复 | 既有执行智能体 | `ready / waiting_user` | 窄读取通路、启动保护及真实保存/续启 | [任务](prompts/p4-b7-r8-settings-executor.md) |
 | P4-C12-R4：lazy复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | 原节点0pass/1fail；故障命中未证实，未新增产品缺陷，Windows0次 | [报告](../testing/phase-4-c12-r4-lazy-windows-report.md) |
 | P4-C12-R4-R1：观察与续跑 | 既有测试智能体 | `blocked / finished` | mock1、#/daily、5016ms无alert；异常终态未定位 | [报告](../testing/phase-4-c12-r4-r1-observation-windows-report.md) |
 | P4-D15：异常传播有限诊断 | 既有技术顾问 | `blocked / finished` | import/默认loader拒绝成立；P3超时无阶段回执，原证据保留 | [报告](../phase-4-d15-lazy-propagation-advice.md)、[总控核对](../p4-d15-bootstrap-coordinator-review.md) |
@@ -132,7 +133,7 @@ P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R2路�
 
 ## 当前阻塞与风险
 
-- OUTBOX/setting/PATH与QUIT-001普通关闭范围已独立关闭；LAZY-001/UI-02仍有真实Windows条件，UI-01已passed。冷B/恢复/模块/退出通过保持；R9-R2路径已通过，helper上下文遗漏已确认而旧抛错语句仍unknown；R9-R3不作产品返修。
+- OUTBOX、全局setting键冲突、PATH与QUIT-001普通关闭已独立关闭；新SETTINGS-001为设备设置启动恢复问题，与旧setting键缺陷不同。LAZY-001/UI-02未关闭，UI-01已passed；H1原生本次通过，旧精确异常未知。R8执行方修复后仍须独立W2及剩余Windows，不补签整项。
 - 原C12及后续首次失败与通过材料保留；受验包为固定R7新包，真实老化提示、跨重启数据、Windows chunk故障恢复及人工设备项仍待证据。
 - `P4-B6-R1-REV-001` 已由 F1 修复并由 C11 独立关闭；没有发现新的 P4-A 产品 P0/P1。
 - C11-R1 发现的 PostgreSQL 历史迁移 P0 已由 E1 保持原子性完成最小修复，并经 C11-R2 的真实历史、非法历史、catalog 和相邻迁移测试关闭；原失败继续保留为审计证据。

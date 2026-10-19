@@ -1,0 +1,309 @@
+{
+  "at": "2026-10-18T19:42:18.988838+08:00",
+  "phase": "end",
+  "inputs": {
+    "repository": {
+      "entries": 1192,
+      "matched": 1188,
+      "changes": [
+        {
+          "path": "docs/coordination/agents/tester.md",
+          "sha256": "d2bc82ec62307fb230a3e0bab37c0054e4a0dcf9c311e8656344899cfe861838"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-manual-checklist.md",
+          "sha256": "ae30fd012886752c6f67a5cae8514c94c2feaaa825b469c3fa029ed9f36958d6"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-windows-shell-report.md",
+          "sha256": "e2bf6be9314769ba859b5e51db07f78e8617f0f51031ec109ffa029cf07c6c01"
+        },
+        {
+          "path": "docs/testing/phase-4-modular-agent-host-test-matrix.md",
+          "sha256": "fb87b3f95c6ddea5922487e174e47aa04b8631e0d067ce61346c0e749587c7bd"
+        }
+      ],
+      "manifestSha256": "9b9b0f977fe96900b4d05cf977f222233034fc39f8882a82ff9c2b543e2181f1",
+      "inventoryVerified": false
+    },
+    "buildSource": {
+      "entries": 932,
+      "matched": 932,
+      "changes": [],
+      "manifestSha256": "e7cec440e4420bec3f6fec274b6521ecd413d0d4c4fc1f304a584823ea9732a0",
+      "inventoryVerified": false
+    },
+    "out": {
+      "entries": 140,
+      "matched": 140,
+      "changes": [],
+      "manifestSha256": "1953b0f91d94b4d64850d4d81c5da8c803bb1da5eebda6bf32eda64935214521",
+      "inventoryVerified": true
+    },
+    "resources": {
+      "entries": 67,
+      "matched": 67,
+      "changes": [],
+      "manifestSha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1",
+      "inventoryVerified": true
+    },
+    "dist": {
+      "entries": 73,
+      "matched": 73,
+      "changes": [],
+      "manifestSha256": "ffb4b389d5c454ca139cb6384f5ebb3d20633cf000960a8aa1b6c1794c9ebf8f",
+      "inventoryVerified": true
+    },
+    "dependencies": {
+      "entries": 12677,
+      "matched": 12677,
+      "changes": [],
+      "manifestSha256": "035c05bffbbf5f297ac098e7fbda16d5bd48cf76a89e4036c3dc35ddb64b3ef8",
+      "inventoryVerified": true
+    },
+    "executorEvidence": {
+      "entries": 157,
+      "matched": 157,
+      "changes": [],
+      "manifestSha256": "63a94a2177dbe0107f1c9ea327d9d26b694137a91824d2733ad038aaf9d99615",
+      "inventoryVerified": false
+    },
+    "oldR9Delivery": {
+      "entries": 79,
+      "matched": 75,
+      "changes": [
+        {
+          "path": "docs/coordination/agents/tester.md",
+          "sha256": "d2bc82ec62307fb230a3e0bab37c0054e4a0dcf9c311e8656344899cfe861838"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-manual-checklist.md",
+          "sha256": "ae30fd012886752c6f67a5cae8514c94c2feaaa825b469c3fa029ed9f36958d6"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-windows-shell-report.md",
+          "sha256": "e2bf6be9314769ba859b5e51db07f78e8617f0f51031ec109ffa029cf07c6c01"
+        },
+        {
+          "path": "docs/testing/phase-4-modular-agent-host-test-matrix.md",
+          "sha256": "fb87b3f95c6ddea5922487e174e47aa04b8631e0d067ce61346c0e749587c7bd"
+        }
+      ],
+      "manifestSha256": "3d08ba6c8246cc4f6e994cdaa75060b411dc23b6c010f5bf60b8b1acedf9443d",
+      "inventoryVerified": false
+    },
+    "oldR1Delivery": {
+      "entries": 59,
+      "matched": 55,
+      "changes": [
+        {
+          "path": "docs/coordination/agents/tester.md",
+          "sha256": "d2bc82ec62307fb230a3e0bab37c0054e4a0dcf9c311e8656344899cfe861838"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-manual-checklist.md",
+          "sha256": "ae30fd012886752c6f67a5cae8514c94c2feaaa825b469c3fa029ed9f36958d6"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-windows-shell-report.md",
+          "sha256": "e2bf6be9314769ba859b5e51db07f78e8617f0f51031ec109ffa029cf07c6c01"
+        },
+        {
+          "path": "docs/testing/phase-4-modular-agent-host-test-matrix.md",
+          "sha256": "fb87b3f95c6ddea5922487e174e47aa04b8631e0d067ce61346c0e749587c7bd"
+        }
+      ],
+      "manifestSha256": "aacbc4e24f8b87e5af37ba815cc416fe83e6d5640f85cddc97886810092d8784",
+      "inventoryVerified": false
+    },
+    "oldR2Delivery": {
+      "entries": 114,
+      "matched": 110,
+      "changes": [
+        {
+          "path": "docs/coordination/agents/tester.md",
+          "sha256": "d2bc82ec62307fb230a3e0bab37c0054e4a0dcf9c311e8656344899cfe861838"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-manual-checklist.md",
+          "sha256": "ae30fd012886752c6f67a5cae8514c94c2feaaa825b469c3fa029ed9f36958d6"
+        },
+        {
+          "path": "docs/testing/phase-4-c12-windows-shell-report.md",
+          "sha256": "e2bf6be9314769ba859b5e51db07f78e8617f0f51031ec109ffa029cf07c6c01"
+        },
+        {
+          "path": "docs/testing/phase-4-modular-agent-host-test-matrix.md",
+          "sha256": "fb87b3f95c6ddea5922487e174e47aa04b8631e0d067ce61346c0e749587c7bd"
+        }
+      ],
+      "manifestSha256": "31722e61175b5dec530fb596178352e77a31523cd7c20c9d8074808426173be3",
+      "inventoryVerified": false
+    },
+    "oldR9First": {
+      "entries": 68,
+      "matched": 68,
+      "changes": [],
+      "manifestSha256": "7c7a8bd3b211957c3b29ecc1c6472993a4e4df2924c68bc10998349dd6bd1182",
+      "inventoryVerified": false
+    },
+    "oldR1First": {
+      "entries": 38,
+      "matched": 38,
+      "changes": [],
+      "manifestSha256": "5808a7f85d19044177030face311beba6f7ee1b2bfdfb6af412f0686e14caeab",
+      "inventoryVerified": false
+    },
+    "oldR2First": {
+      "entries": 89,
+      "matched": 89,
+      "changes": [],
+      "manifestSha256": "4644653d9e9aeb7f8ef27cdcd5e02aaf19067e930304594331d00549d38eccf7",
+      "inventoryVerified": false
+    },
+    "oldR2Target": {
+      "entries": 9,
+      "matched": 9,
+      "changes": [],
+      "manifestSha256": "1b5742f7dc68de9256fde8f32ed3b425630a902db21788f3e5574b55bca9544e",
+      "inventoryVerified": false
+    }
+  },
+  "artifacts": {
+    "apps/desktop/out/Maris-win32-x64/Maris.exe": "183758e3b25a5314da8bea157f92ec00385e9ed6e18f42bac1ad679cdd6f6a65",
+    "apps/desktop/out/Maris-win32-x64/resources/app.asar": "16f45da665693e9b606ffb6b839081a48fa6ed4ae3e4995b403f57237118aed3",
+    "pnpm-lock.yaml": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a"
+  },
+  "frozenSources": {
+    "local-round1-source": {
+      "entries": 5,
+      "matched": 5,
+      "changes": [],
+      "manifestSha256": "023eab792006a964e9c2d8af6ed626fb801e62b6eba2d615f20304936d242ba1",
+      "inventoryVerified": false
+    },
+    "target-first-source": {
+      "entries": 8,
+      "matched": 8,
+      "changes": [],
+      "manifestSha256": "c771c8af1f2c0f85bf2bd9c91cadf077af71b18ac7c8fe2a3f0545ed50b2e279",
+      "inventoryVerified": false
+    },
+    "target-source.sha256": {
+      "entries": 8,
+      "matched": 8,
+      "changes": [],
+      "manifestSha256": "c771c8af1f2c0f85bf2bd9c91cadf077af71b18ac7c8fe2a3f0545ed50b2e279",
+      "inventoryVerified": false
+    },
+    "windows-w2-first-source": {
+      "entries": 5,
+      "matched": 5,
+      "changes": [],
+      "manifestSha256": "7cac786caf90b665b6bfba5bb60a37f823b216a59ee3a3d15d2c8345a6fee8b7",
+      "inventoryVerified": false
+    },
+    "windows-w2-source.sha256": {
+      "entries": 5,
+      "matched": 5,
+      "changes": [],
+      "manifestSha256": "7cac786caf90b665b6bfba5bb60a37f823b216a59ee3a3d15d2c8345a6fee8b7",
+      "inventoryVerified": false
+    }
+  },
+  "oldProfiles": {
+    "R9": {
+      "entries": 63,
+      "inventoryBytesHashesEqual": true,
+      "noReparse": true
+    },
+    "R1": {
+      "entries": 63,
+      "inventoryBytesHashesEqual": true,
+      "noReparse": true
+    },
+    "R2": {
+      "entries": 63,
+      "inventoryBytesHashesEqual": true,
+      "noReparse": true
+    }
+  },
+  "newProfile": {
+    "entries": 65,
+    "added": [
+      "profile-main/Local Storage/leveldb/LOG.old",
+      "profile-main/Session Storage/LOG.old"
+    ],
+    "removed": [],
+    "changed": [
+      "profile-main/DIPS",
+      "profile-main/DawnGraphiteCache/index",
+      "profile-main/DawnWebGPUCache/index",
+      "profile-main/DevToolsActivePort",
+      "profile-main/GPUCache/index",
+      "profile-main/GrShaderCache/index",
+      "profile-main/Local Storage/leveldb/LOG",
+      "profile-main/Session Storage/000003.log",
+      "profile-main/Session Storage/LOG",
+      "profile-main/ShaderCache/index",
+      "profile-main/maris-host.db",
+      "profile-main/outbox.bin",
+      "profile-main/owner-session.bin"
+    ],
+    "manifestSha256": "43d1cc90995924157597c83502a61c7acfe0d79445304f4f003e954fc275f20d",
+    "scope": "current synthetic copy after authorized product W2; no H2 seed",
+    "noReparse": true,
+    "deviceSettingsBytesUnchanged": true,
+    "continuityBytesUnchanged": true
+  },
+  "H1ReadOnlyStage": {
+    "passed": true,
+    "evidence": "helper-H1/process.json; checked before W2"
+  },
+  "nativeStagesCollection": {
+    "exitCode": 0,
+    "firstNativeError": null,
+    "resultPresent": true,
+    "baselinePresent": true,
+    "stagesPresent": true,
+    "collectionErrors": [],
+    "nativePassed": true,
+    "stageEnters": 39,
+    "stageTerminals": 39,
+    "uniqueIds": true
+  },
+  "results": {
+    "H1BusinessPassed": 7,
+    "W2ComparisonsPassed": 8,
+    "W2ComparisonsFailed": 4,
+    "W2ProductExit": 0,
+    "W2ControllerExit": 1,
+    "forced": false,
+    "remainingOwned": 0,
+    "remainingListeners": 0,
+    "remainingWindows": 0
+  },
+  "matrix": {
+    "uniqueIds": 120,
+    "columns": 12,
+    "expectationsAndNonBPreserved": true,
+    "B": {
+      "blocked": 19,
+      "passed": 1,
+      "failed": 2,
+      "not_run": 2
+    }
+  },
+  "appendOnly": true,
+  "firstMaterials": {
+    "entries": 148,
+    "matched": 148,
+    "changes": [],
+    "manifestSha256": "ee47682828cf4341c6cf78b7330446ec5329186998eea42d635ee4f7b1ea8e87",
+    "inventoryVerified": false
+  },
+  "stagedCount": 0,
+  "gitWrites": 0,
+  "readonlyDiffCheck": true,
+  "passed": true
+}

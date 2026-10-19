@@ -1,0 +1,69 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "id": "H1-NATIVE-AVAILABLE",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H1-OWNER-SCHEMA",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H1-OWNER-READY",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H1-OWNER-NO-PLAIN",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    }
+  ],
+  "notRun": [
+    {
+      "id": "H1-OUTBOX-COUNT",
+      "expected": 1,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-CONTINUITY",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-NO-PLAIN",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    }
+  ],
+  "firstError": {
+    "id": "H1-OP-OUTBOX-PARSE",
+    "event": "terminal",
+    "role": "outbox_plaintext",
+    "operation": "parse",
+    "at": "2026-10-18T02:59:40.140Z",
+    "durationMs": 1.6568999999999505,
+    "category": "error",
+    "error": {
+      "name": "SyntaxError",
+      "code": "json_parse_failed"
+    }
+  },
+  "baseline": null,
+  "productImported": false,
+  "fixtureWritten": false
+}

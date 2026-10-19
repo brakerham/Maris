@@ -1,0 +1,107 @@
+{
+  "H1": "passed",
+  "W2": "failed",
+  "W2BeforeFailure": {
+    "comparisonsPassed": 8,
+    "comparisonsFailed": 4
+  },
+  "remaining": [
+    {
+      "id": "W2-PERSISTED-REQUEST-ID",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W3-SECOND-EXIT",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W3-FIRST-ALIVE",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W3-HOST-IDENTITY-UNCHANGED",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W2-HINT-PERSISTED",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W2-FIRST-HIDE",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W2-COMPANION-RESTORES",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W2-CANCEL-ALIVE",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W2-CANCEL-VISIBLE",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W2-ASK-HIDE",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "H2",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W4",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "H3",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W5",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "H4",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    },
+    {
+      "id": "W6",
+      "status": "not_run",
+      "actual": null,
+      "reason": "W2 first valid product failure stop"
+    }
+  ],
+  "manualConditions": "unverified; no user action requested; no device incapability inferred"
+}

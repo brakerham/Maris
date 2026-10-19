@@ -1,0 +1,93 @@
+{
+  "at": "2026-10-18T19:42:18.640681+08:00",
+  "defect": "P4-C12-R9-R3-SETTINGS-001",
+  "severityProposed": "P1",
+  "category": "product_comparison_failure",
+  "firstFailure": {
+    "stage": "first_persisted_ui",
+    "id": "W2-PERSISTED-UI-THEME",
+    "name": "Error",
+    "code": "comparison_failed"
+  },
+  "firstSample": {
+    "event": "first_ui_sample",
+    "at": "2026-10-18T11:32:59.008Z",
+    "elapsedMs": 8403.286399999999,
+    "details": {
+      "id": "W2-PERSISTED-FIRST-SAMPLE",
+      "settingsWritesBeforeSample": 0,
+      "sample": {
+        "shellPresent": true,
+        "dailyPresent": true,
+        "ready": true,
+        "theme": "system",
+        "privacy": "off",
+        "themeControl": "system",
+        "privacyControl": false
+      },
+      "stored": {
+        "theme": "dark",
+        "privacy": true
+      },
+      "settingsBytesUnchanged": true,
+      "observationLimitMs": 5000
+    }
+  },
+  "failedComparisons": [
+    {
+      "id": "W2-PERSISTED-UI-THEME",
+      "expected": "dark",
+      "actual": "system",
+      "passed": false
+    },
+    {
+      "id": "W2-PERSISTED-UI-PRIVACY",
+      "expected": "on",
+      "actual": "off",
+      "passed": false
+    },
+    {
+      "id": "W2-PERSISTED-THEME-CONTROL",
+      "expected": "dark",
+      "actual": "system",
+      "passed": false
+    },
+    {
+      "id": "W2-PERSISTED-PRIVACY-CONTROL",
+      "expected": true,
+      "actual": false,
+      "passed": false
+    }
+  ],
+  "subsequentBusinessActionsRun": false,
+  "knownOwnerIdentity": true,
+  "deviceUnsupported": false,
+  "sourcePointer": {
+    "path": "apps/desktop/src/renderer/module-routes.tsx",
+    "sha256": "bb548392ea338336d5274f68a27b6ad52d2caa3f051c00ea67184d8041a4c00b",
+    "initialStateLines": [
+      100,
+      101
+    ],
+    "saveCallbackLines": [
+      168,
+      169,
+      170
+    ]
+  },
+  "sourceInference": "component initializes system/false and has update callbacks; actual UI evidence is authoritative",
+  "realPersonalDataUsed": false,
+  "actualFinancialDisclosureTested": false,
+  "cleanup": {
+    "forced": false,
+    "cleanupError": null,
+    "exit": {
+      "code": 0,
+      "signal": null,
+      "at": "2026-10-18T11:33:00.341Z"
+    },
+    "remainingOwned": 0,
+    "remainingListeners": 0,
+    "remainingWindows": 0
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-18T11:10:33+08:00",
+  "sources": 5,
+  "jsSyntaxPassed": true,
+  "psParserErrors": 0,
+  "originalR9ProductPredicateUnchanged": true,
+  "oldR2IdentityAndCaptureReused": true,
+  "strictListenerFailures": true,
+  "productSettingsWrites": 0,
+  "productStarts": 0,
+  "oldPassedCollectionsRun": 0,
+  "controllerDurationBoundMs": 120000,
+  "helperInput": "R3 H1 passed 7/7"
+}

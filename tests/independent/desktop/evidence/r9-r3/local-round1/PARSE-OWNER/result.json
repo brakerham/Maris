@@ -1,0 +1,66 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "id": "H1-NATIVE-AVAILABLE",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    }
+  ],
+  "notRun": [
+    {
+      "id": "H1-OWNER-SCHEMA",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OWNER-READY",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OWNER-NO-PLAIN",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-COUNT",
+      "expected": 1,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-CONTINUITY",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    },
+    {
+      "id": "H1-OUTBOX-NO-PLAIN",
+      "expected": true,
+      "actual": null,
+      "status": "not_run"
+    }
+  ],
+  "firstError": {
+    "id": "H1-OP-OWNER-PARSE",
+    "event": "terminal",
+    "role": "owner_plaintext",
+    "operation": "parse",
+    "at": "2026-10-18T02:59:39.890Z",
+    "durationMs": 1.5524000000000342,
+    "category": "error",
+    "error": {
+      "name": "SyntaxError",
+      "code": "json_parse_failed"
+    }
+  },
+  "baseline": null,
+  "productImported": false,
+  "fixtureWritten": false
+}

@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-18T11:02:38+08:00",
+  "started": "2026-10-18T10:55:03+08:00",
+  "roundsUsed": 1,
+  "roundLimit": 3,
+  "checks": 30,
+  "passed": 30,
+  "old38AndLiveRun": 0,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "runtimeSourcesFrozen": 8,
+  "oldR2TargetSourcesMatched": 9,
+  "syntheticOnly": true,
+  "realDecryptCalls": 0
+}

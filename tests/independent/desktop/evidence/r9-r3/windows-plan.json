@@ -1,0 +1,99 @@
+{
+  "task": "P4-C12-R9-R3",
+  "productLimit": 8,
+  "helperLimit": 6,
+  "perProductMs": 120000,
+  "perHelperMs": 60000,
+  "externalRoot": "C:/MarisC12/C12-R9-R3-20261018-105500",
+  "launches": [
+    {
+      "id": "W2",
+      "conditional": "new R3 H1 seven checks and resource cleanup passed",
+      "covers": [
+        "same virtual owner/session persistence on restart",
+        "settings persistence",
+        "hide/ask native close and companion restore",
+        "same draft UUID and returned event ID persisted from W1",
+        "actual close hint/cancel/hide/quit scoped native buttons",
+        "No settings rewrite before initial persisted UI sample",
+        "same owner identity digests from H1/H2; refresh token rotation not equated to owner change"
+      ],
+      "exit": "owned scoped native prompt Quit or bounded owned cleanup"
+    },
+    {
+      "id": "W3",
+      "conditional": "W2 has live verified ownership",
+      "covers": [
+        "single instance second launch same new profile"
+      ],
+      "exit": "second direct spawned root naturally exits; original and original owned backend stay; counts by ownership not fixed total processes"
+    },
+    {
+      "id": "W4",
+      "conditional": "prior gates pass and safeStorage fixture/UIA ready",
+      "covers": [
+        "native aged drafts default keep/close"
+      ],
+      "exit": "owned native close quit policy"
+    },
+    {
+      "id": "W5",
+      "conditional": "W4 passed and helper proves data retained",
+      "covers": [
+        "native explicit delete finite stale selection persists"
+      ],
+      "exit": "owned native close quit policy"
+    },
+    {
+      "id": "W6",
+      "conditional": "W1-W5 pass or only documented nondependent tooling/device gaps; no safety failure",
+      "covers": [
+        "owned backend failure and bounded manual recovery if remaining runtime scope permits"
+      ],
+      "exit": "normal quit; bounded scoped cleanup"
+    },
+    {
+      "id": "W7-W8",
+      "conditional": "reserved only for planned unresolved independent cases; no failed node rerun",
+      "covers": [
+        "unused reserve; no automatic startup"
+      ]
+    }
+  ],
+  "helpers": [
+    "H1 after W1: native decrypt baseline owner/outbox counts and digests; no seed yet",
+    "H2 after W2: native decrypt same-owner comparison and seed bounded aged virtual outbox",
+    "H3 after W4: native decrypt retained counts after keep/cancel prompt",
+    "H4 after W5: native decrypt finite explicit deletion counts"
+  ],
+  "chunkPolicy": "Read exact built lazy chunk provenance; if attach after file/asar chunk completed or interception unsupported, record unverified and no blind extra launches",
+  "notAuthorized": [
+    "OS logout/reboot",
+    "startup items",
+    "OS theme/displays",
+    "real profile/provider/WeChat/Docker",
+    "package/dependency mutation"
+  ],
+  "evidence": "only scalar comparisons, owned PID/times and safe enums in repo; virtual encrypted profile/db outside repo",
+  "seriesBefore": {
+    "products": 1,
+    "helpers": 2
+  },
+  "thisTaskLimits": {
+    "products": 7,
+    "helpers": 4,
+    "newH1": 1
+  },
+  "notRepeated": [
+    "W1",
+    "38 path checks",
+    "live Node gate",
+    "8 exit nodes",
+    "48 compatibility",
+    "module13",
+    "cold B",
+    "full recovery"
+  ],
+  "contextRule": "Before each helper spawn copy full current synthetic product Local State; bind userData and sessionData before ready; compare encrypted fields at ready and after; never copy helper configuration to product",
+  "H1SourceCount": 8
+}

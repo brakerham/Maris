@@ -219,7 +219,7 @@
 | P4B-CMP-03 | B | U01 | desktop/e2e | Windows/Electron | auto | 关闭策略可切换 | 退出/每次询问/隐藏，Tray 打开/隐藏 | 每种设置执行关闭与取消 | 行为精确对应设置；“退出”清理自有后端；询问取消不退出；Tray 状态一致 | P1 | blocked |
 | P4B-CMP-04 | B | U05 | security/manual | Windows/Electron | manual | 新安装测试 profile | 首次运行、显式启用/禁用开机启动 | 检查 OS 启动项和 UI | 默认关闭且无启动项；只有明确操作才创建；禁用清理本应用项，不改其他应用 | P1 | not_run |
 | P4B-CMP-05 | B | F13 | desktop/e2e | external/manual | manual | 多显示器/缩放/全屏测试设备 | 拖动、置顶、重启、拔屏、分辨率变化、全屏、隐私、键盘 | 逐项操作并重启 | 位置用临时文件原子替换并恢复/夹取；全屏按规则隐藏；隐私不显示金额；键盘入口可达 | P1 | not_run |
-| P4B-CMP-06 | B | U02；主题要求 | desktop/e2e | external/manual | manual | 支持/不支持透明窗口设备 | 透明失败、普通迷你窗降级；light/dark/system/high-contrast/reduced-motion；中外行情色 | 切换设备条件和主题 | 可安全降级且合同不变；文本对比/焦点可辨；reduced motion 生效；收入/支出色不复用涨跌色 | P2 | not_run |
+| P4B-CMP-06 | B | U02；主题要求 | desktop/e2e | external/manual | manual | 支持/不支持透明窗口设备 | 透明失败、普通迷你窗降级；light/dark/system/high-contrast/reduced-motion；中外行情色 | 切换设备条件和主题 | 可安全降级且合同不变；文本对比/焦点可辨；reduced motion 生效；收入/支出色不复用涨跌色 | P2 | failed |
 
 #### C12 独立执行状态备注（2026-10-01）
 
@@ -331,6 +331,8 @@ B继续0 passed、1 failed、19 blocked、4 not_run；120 ID/12列/原预期及A
 R9-R1（2026-10-17）增量：1017起点及固定输入通过；两次目标前工具现场观察在唯一更正后仍为脚本身份谓词false（其余exe/parent/create均true），observer3/controller1。12条虚拟工具检查+1条参数检查不计产品通过。H1恢复与后续Windows未启动，新产品0/7、辅助0/4，跨轮1/8、1/5；原profile及63项同内容副本只读保留。B状态不变，所有业务/设备缺口保持。见[增量报告](phase-4-c12-r9-r1-h1-windows-report.md)，blocked/finished供总控review。
 
 R9-R2（2026-10-18）增量：1077起点、局部工具2轮36/38及唯一现场Node门禁通过；同一共享argv/绝对路径/摘要/回执链在实际H1通过。H1 availability=true后operation_error，owner/outbox基线未取得，原生细分抛错点unverified；真实exit1、无forced，owned/监听/窗口0，profile保持。停止后续W2等，不判新增产品缺陷或设备不支持。产品新增0/7、辅助1/4，系列1/8和2/5，H1恢复1/1；B状态/原预期不变。见[R9-R2报告](phase-4-c12-r9-r2-path-windows-report.md)，blocked/finished供review。
+
+R9-R3（2026-10-18）增量：1192起点通过；虚拟局部工具30/30与同源H1完整7/7通过，H1前后副本63项保持、原生/helper/controller exit0、资源全零。旧operation_error精确原因仍unknown，不倒写。唯一W2首样保存dark/隐私true，页面system/off及控件system/false，四比较失败；设置取样前未写且字节不变。新P1 P4-C12-R9-R3-SETTINGS-001；CMP-06主题恢复子条件failed，原风险P2/完整预期保持，透明/OS主题/对比/动效/颜色未验；隐私开关恢复失败不代替CMP-05多屏/金额隐藏等未运行条件。B为1passed、2failed、19blocked、2not_run。普通关窗自然exit0、无forced、资源全零；controller exit1。W3/H2及后续not_run。系列产品2/8、辅助3/6；旧集合不重跑，UI-02/LAZY-001和P4-B不关闭。详见[R9-R3报告](phase-4-c12-r9-r3-storage-windows-report.md)，blocked/finished供review。
 
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 
