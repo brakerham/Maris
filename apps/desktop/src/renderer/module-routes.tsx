@@ -2,7 +2,7 @@ import { Component, createContext, useContext, useEffect, useRef, useState, type
 import { createHashRouter, Navigate, RouterProvider, useLoaderData, useRevalidator, type RouteObject } from "react-router";
 import { intersectModules, type DesktopModuleContribution } from "../modules/registry";
 import { EmptyModulePage, RouteErrorBoundary, SettingsPage, Shell } from "../shell/Shell";
-import type { RuntimeSnapshot, Theme } from "../shared/contracts";
+import { settingsSnapshotSchema, type RuntimeSnapshot, type Theme } from "../shared/contracts";
 
 export type ModulePageLoader = () => Promise<ComponentType>;
 export type ModulePageLoaders = Readonly<Record<string, ModulePageLoader>>;
@@ -99,7 +99,25 @@ export function DesktopApp({ registry, loaders = builtinPageLoaders }: Readonly<
   const [modules, setModules] = useState<readonly DesktopModuleContribution[] | null>(null);
   const [theme, setTheme] = useState<Theme>("system");
   const [privacyMode, setPrivacyMode] = useState(false);
+  const [settingsStatus, setSettingsStatus] = useState<"loading" | "ready" | "failed">("loading");
   const [router, setRouter] = useState<{ instance: ReturnType<typeof createHashRouter>; revision: number } | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    void (async () => {
+      try {
+        const snapshot = settingsSnapshotSchema.parse(await window.maris.settings.getSnapshot());
+        if (!active) return;
+        setTheme(snapshot.theme);
+        setPrivacyMode(snapshot.privacyMode);
+        setSettingsStatus("ready");
+      } catch {
+        // A rejected/malformed response must never expose defaults or raw errors.
+        if (active) setSettingsStatus("failed");
+      }
+    })();
+    return () => { active = false; };
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -147,7 +165,7 @@ export function DesktopApp({ registry, loaders = builtinPageLoaders }: Readonly<
   }, [registry]);
 
   useEffect(() => {
-    if (modules === null) return;
+    if (modules === null || settingsStatus !== "ready") return;
     const next = createHashRouter([{
       path: "/", element: <ConnectedShell />, errorElement: <RouteErrorBoundary />,
       hydrateFallbackElement: <ConnectedShell />,
@@ -163,8 +181,10 @@ export function DesktopApp({ registry, loaders = builtinPageLoaders }: Readonly<
     // fresh provider. Equal intersections never reach this effect.
     setRouter((current) => ({ instance: next, revision: (current?.revision ?? 0) + 1 }));
     return () => { next.dispose(); };
-  }, [modules, loaders]);
+  }, [modules, loaders, settingsStatus]);
 
+  if (settingsStatus === "loading") return <p role="status">正在读取设备设置</p>;
+  if (settingsStatus === "failed") return <p role="alert">暂时无法读取设备设置，请稍后重新打开应用。</p>;
   const state: ShellState = { modules: modules ?? [], runtime, theme, privacyMode,
     onTheme: (value) => { setTheme(value); void window.maris.settings.update({ theme: value }); },
     onPrivacy: (value) => { setPrivacyMode(value); void window.maris.settings.update({ privacyMode: value }); } };

@@ -93,7 +93,7 @@ function fixture(initial: readonly HostModuleSummary[] = [daily]) {
       subscribe: vi.fn((listener: (value: RuntimeSnapshot) => void) => {
         listeners.add(listener); return () => { listeners.delete(listener); unsubscribe(); };
       }) },
-    modules: { list: read }, settings: { update: vi.fn(async () => ({ accepted: true })) },
+    modules: { list: read }, settings: { getSnapshot: async () => ({ theme: "system", reducedMotion: false, privacyMode: false }), update: vi.fn(async () => ({ accepted: true })) },
     outbox: { enqueue: vi.fn() }, external: { open: vi.fn() }, window: { perform: vi.fn() }
   };
   Object.defineProperty(window, "maris", { configurable: true, value: bridge });
@@ -137,7 +137,7 @@ it.each([false, true])("automatically publishes the real page after initial empt
   }));
   Object.defineProperty(window, "maris", { configurable: true, value: {
     runtime: { getSnapshot: async () => root.snapshot(), subscribe, recover }, modules: { list: readModules },
-    settings: { update: vi.fn() }, outbox: { enqueue: vi.fn() }, external: { open: vi.fn() }, window: { perform: vi.fn() }
+    settings: { getSnapshot: async () => ({ theme: "system", reducedMotion: false, privacyMode: false }), update: vi.fn() }, outbox: { enqueue: vi.fn() }, external: { open: vi.fn() }, window: { perform: vi.fn() }
   } });
   const load = vi.fn(async () => Daily);
   const app = <DesktopApp registry={registry} loaders={{ daily_finance_home: load }} />;

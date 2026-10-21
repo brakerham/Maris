@@ -1,32 +1,96 @@
 # 执行智能体状态
 
-- 角色：执行智能体；代码实现、自测、集成和内部执行子任务管理
-- 连接状态：已确认；唯一执行负责人
-- 当前任务：P4-B7-R7-QUIT
-- 状态：review / finished
-- 最近更新：2026-10-15 11:37:42，Asia/Shanghai
-- 可修改范围：main/index.ts、新main-quit.test.ts、新R7运行说明/source清单、本人日志；仅5个仓库文件
+- 角色：执行智能体；本任务唯一执行负责人
+- 连接状态：已确认
+- 当前任务：P4-B7-R8-SETTINGS
+- 状态：blocked / finished
+- 最近更新：2026-10-20T22:42:13+08:00，Asia/Shanghai
+- 可修改范围：任务卡限定12路径；不修改独立材料、其他角色或Git状态
 
 ## 当前执行快照
 
 - 运行状态：finished
-- 当前步骤：实现、开发/新包/普通退出验证及不变性审计完成，5文件交付review
-- 步骤开始时间：2026-10-15 11:37:42，Asia/Shanghai
-- 最近有效进展：最终旧/新全部指定摘要匹配；真实WM_CLOSE后501ms自然exit0，自有资源0；运行说明完整
-- 最近心跳：2026-10-15 11:37:42，Asia/Shanghai
-- 下一检查点：总控按最终933项source与5项交付清单核对；没有新任务不继续运行
-- 等待对象：总控review；测试方/顾问保持停止，其他外部活动unverified
-- 活动进程或会话：无活动产品或测试；68588摘要审计已exit0；只生成/复算最终清单后停止
-- 尝试预算：package1/1、EXE1/1、完整desktop开发回归1/1；不得重复启动
-- 最近输出：docs/b7-r7-quit-running.md；apps/desktop/b7-r7-quit-source.sha256；新C根evidence/inputs/closeout.json及delivery-five.sha256
+- 当前步骤：S1首次失败保留、当前资源零；12路径交付冻结后停止
+- 步骤开始时间：2026-10-20T09:11:34+08:00
+- 最近有效进展：22:34当前进程/监听/窗口0，纯转换证实日期二次解析缺口；完整说明已落盘
+- 最近心跳：2026-10-20T22:42:13+08:00
+- 下一检查点：总控核对本报告及外部closeout.json；不自行续验，快照生成后停止
+- 等待对象：头脑风暴总控裁定；其他角色停止，外部活动unverified
+- 活动进程或会话：无产品进程；原42927已不可恢复，实际退出码unknown
+- 尝试预算：package1/1、EXE1/2（S1受阻、S2禁止启动）、helper0/0、完整desktop回归1/1
+- 最近输出：S1原始result success=false，firstFailure.stage=launch，known_identity_unknown；真实页面未取样
 
 ## 本轮内部执行子任务快照
 
-| 子任务 | 任务状态/运行状态 | 最近可见进展 | 下一检查点/等待 | 证据 |
-| --- | --- | --- | --- | --- |
-| r7_quit_readonly | 中断后已不在会话树，后续完成unverified | 原只读分析完成；normal-close草案落盘，未见finalrunner | 由新辅助继续同两文件；不重跑目标 | 新根evidence/tools/normal-close.ps1 |
-| r7_driver_resume | blocked / finished | 辅助模型额度耗尽；文件复核无新增写入或目标运行 | 主执行接回两驱动实现，不再启动辅助 | 限定final-exe-runner.mjs/normal-close.ps1 |
+| 子任务 | 状态 | 最近进展 | 下一检查点 |
+| --- | --- | --- | --- |
+| r8_snapshot_chain | review / finished | 限定5路径已集成，21新测试通过 | 父执行统一交付 |
+| r8_lifecycle_driver | blocked / finished | 两外部驱动已落盘，额度中断尚未final | 父复核/接回，不重启产品 |
+| r8_driver_review | review / finished | 目标前静态21项通过；未覆盖运行时DateTime类型转换 | 无目标运行；首次S1失败保留 |
+| r8_closeout_readonly | blocked / finished | 两次模型额度中断，无结论或编辑；父完成纯日期转换核查 | 停止，不再调度 |
 
+### 2026-10-20T22:42:13+08:00 — 最后摘要核对的只读可见性差异
+
+- 首次终点生成source1366/delivery12后，严格要求沙箱与获准环境均显示.claude导致AssertionError/exit1；无产品操作。原生成器、首批清单和错误已保存first-closeout-*。
+- 只读核实两环境12交付相同，区别仅全局ignore权限导致原有.claude显示/隐藏；.pnpm-store仍在。收口仅修清单可见性谓词，继续要求12交付全部出现，其他仅允许这两个旧根；1363原字节非授权路径校验不放宽。
+- 本报告与日志更新后重算最终source及证据清单；不修改冻结动态驱动，不运行测试/产品，无Git写操作。状态仍blocked/finished。
+
+### 2026-10-20T22:39:13+08:00 — R8 blocked / finished 交付
+
+- 产品窄snapshot/启动水合已实现；修复前红灯1failed保留。定向99、唯一full217、TypeScript/lint均通过，新增48唯一节点，原169保留；无开发skip/warning。
+- package1/1 exit0、7静态和8入包绑定通过，构建1365/产物140/资源67。正式S1在8328ms的原生身份观察失败，未进入真实UI、保存、recover或正常关闭；S2 not_run，不修后重跑，不追加包。
+- 同一PowerShell7.6.5纯转换证实created经JSON成为DateTime，再Parse变为08:18:36Z，而原值16:18:36.956912Z；时区/精度丢失解释known_identity_unknown。仅只读分析，冻结两驱动摘要仍匹配。原first result与unknown字段保留。
+- 09:12和22:34当前资源查询成功、owned进程/监听/窗口均0；未额外终止产品。旧root/子进程的实际退出原因/时间/退出码仍unknown，120秒退出不能签通过。原控制会话42927已失效，外层exit回执缺失。
+- 09:12最终不变性审计通过：旧R7 932/140/67/73/12677/157、四R9外部83/72/103/114、新1365/12677/73全部匹配。22:34仅清理无reparse的本任务88临时文件/12子目录及2污染标记；package/profile/原证据保留。
+- [运行说明](../../b7-r8-settings-running.md)已列所有失败/警告、后台与真实UI分层和未运行项。12路径交付、1366终点source、逐文件/总摘要由外部closeout.json及delivery-twelve.sha256记录，避免自引用。
+- 末轮只读辅助仍被模型额度中断，没有产出结论；主执行自行完成收口。自动审批中断期间未执行/未绕过，恢复后仅核查资源，没有再启动产品。没有Git写操作/暂存，没有独立测试或后续角色启动。
+- SETTINGS-001/CMP-06/LAZY-001/UI-02/P4-B不关闭；本任务blocked/finished，交总控裁定有限工具修复与后续验证权限。最后生成摘要并只读复算，不继续产品工作。
+
+### 2026-10-20T09:11:34+08:00 — S1停止及额度恢复后的收口
+
+- 00:18:36.935正式S1直启，新EXE1/2；8328ms后首个windows取证在normal-close.ps1:57抛known_identity_unknown。已保存原result/journal/native stderr，首次失败不覆盖；真实DOM/设置交互/recover/正常close均未完成，S2 not_run且不启动。
+- 五项seed检查通过不代表页面通过；settingsWriteOperations=0，初始light/false文件414字节摘要保持。原result root exit/资源均unknown；其内部timedOut=false只对应约15秒观察结束，不证明进程在120秒内退出。
+- 原清理与最终窗口观察均被同一身份谓词拒绝，未强杀成功。失败后补充只读查询确认8PID当时仍在；随后精确日期类型核查因自动审批额度耗尽未执行，辅助同样额度中断。没有绕过审批。
+- 用户09:10继续后control不变；旧8PID现均不在，仍无自然退出原因/时间/退出码，不补填成功。只读证据显示JSON created已变System.DateTime；具体精度问题仍待静态确认，不推定产品问题。
+- 仓库1363基线仅授权8项变化，staged=0；开发217和唯一package/静态结果保持，不重跑。继续仅资源/摘要/文档收口，最终blocked/finished。
+
+### 2026-10-20 00:15:10 — 唯一包和启动前门禁通过
+
+- package1/1，2026-10-20 00:09:53—00:10:02，8343ms exit0；七静态门禁通过：140产物、67资源、11asar文件、fuses一致、污染0/staging0。新读取链实际main/preload/renderer字节绑定8项通过。
+- 新EXE c80d27c8e31fa60df91065a770e669a553260cf8f883c55a0a7f83f8a430736b；asar 05cdad34ba60b59773eebe671156c96260e69354568b9942da59058641f9c0b2。
+- 来源绑定首次工具使用POSIX archive路径失败，已保留原源码/错误；仅改原验证器使用的native分隔符后静态通过，没有第二次package。动态驱动经只读复核后集中修正事件未知、身份未知、收尾失败回执和spawn监听，旧稿保留；最终Node语法/native AST+C#声明编译、参数及清单共21门禁通过。工具修正至此冻结，不再追加轮次。
+- 驱动f78ab28dffdad2a9decde29ba34328d11ae27ed42149e78b3cdd520d7281a7b0；normal-close e5224103c28c05ea7ba859ada029ccf421f249908d7350f7179eda2aeaa86745。EXE0/2，helper0/0；接下来S1真实界面保存和普通退出，只有全通过才S2同profile首样恢复。
+
+### 2026-10-20 00:08:10 — 额度恢复续接
+
+- 用户继续后重读control不变；prepackage-audit.json已落盘passed，固定1365构建摘要c880730b84d726dec41e077867e44e942855ba60790e3a0ddb38940b89efd1d4。package-started不存在，0package/0EXE，staged=0。
+- 上轮创建settings-chain-binding工具被自动审批额度限制拒绝且明确未执行；不是安全否决，不绕过。辅助驱动也被额度中断，但新两文件实际存在，先只读复核而不假定完成。中断不计连续工作或产品时间。
+- 保留原开发217通过结果，不重复完整回归；后续唯一package和两个EXE额度保持。
+
+### 2026-10-19 15:37:57 — 开发门禁通过
+
+- 定向8文件99passed/0failed/0skip；新hydration27+snapshot21共48唯一新增节点。TypeScript/lint exit0。唯一full19文件217passed/0failed/0skip，原17文件169项保持；定向/full不重复累计。stderr无输出。
+- 安全链覆盖真实main/preload/IPC和DesktopApp/Router/Shell，strict/延迟/非法/过期/恢复等边界；两个旧测试文件仅3处mock新增getter，原断言不改。
+- r8_snapshot_chain已完成限定5路径，无自行运行，父执行集成通过；r8_lifecycle_driver仅外部两驱动准备中，正式目标尚未启动。
+
+### 2026-10-19 15:36 — 红灯与新环境里程碑
+
+- 真实DesktopApp/Router/Shell红灯1failed/0passed/0skip，页面挂载成功而theme/control=system、privacy=off/false，getter0/write0，证据evidence/tests/red*和red-settings-hydration.test.tsx保留。
+- 旧R7 source932/out140/resources67/dist73/full依赖12677/evidence157逐项匹配；四R9外部现场83/72/103/114项只读冻结。新1363源码/12677依赖/3工具普通物化无reparse。首次GBK解码错误已保留，以明确UTF8续完；未启动产品。
+- 内部r8_snapshot_chain实现4窄链文件及新snapshot测试；r8_lifecycle_driver仅新外部runner/normal-close两文件准备，均不跑目标。父负责renderer、新hydration回归、两旧mock补getter和集成。
+- 当前package0/1、EXE0/2、helper0/0、完整回归1/1；下一检查点定向开发回归。
+
+### 2026-10-19 15:29 — 从门禁检查点恢复
+
+- 用户继续后重读control版本保持，当前仅本人日志变化，staged=0。旧工具会话已失效、新C根不存在，先前环境物化没有可确认执行结果；不推断成功。中断期间不计持续工作，产品/package/完整回归均未启动。重新执行新根物化并保留结果。
+
+### 2026-10-19 10:39 — R8接单
+
+- 已读取AGENTS必读及最新control版本2026-10-19T07:58:21+08:00、本人状态、完整任务卡、SETTINGS-R8合同和旧W2有效首样。已复算1363项固定起点、UTF8无BOM/LF/唯一ordinal排序/排除自身全部通过；staged=0，Git读取ignore权限警告保留。
+- 唯一范围：三字段窄snapshot读取、启动安全水合及必要执行方回归；先保留真实组件system/off红灯，再最小修复。旧H1、W1、独立模块/冷B/恢复集合不重跑；不启动测试方、顾问或后续任务。
+- 新环境拟定C:/MarisSettingsR8/R8-20261019-103900，普通复制已核实工具/依赖；旧R7及四个R9现场只读摘要。可能超过五分钟的核对/物化将保留可观察会话，下一检查点为环境清单和首次红灯。
+- 开发后最多一次package、两次同新虚拟profile顺序EXE；真实UI保存及WM_CLOSE自然退出后，S2首次样本验证恢复。任一正式有效失败停止后续；不使用timer/强杀冒充通过。
+- 仅提交review/finished或blocked/finished，不关闭SETTINGS-001或P4-B。
 ### 2026-10-15 11:37 — R7交付 review / finished
 
 - 严格5文件：main、新19项回归、R7运行说明、933项source清单、本人日志；931起点929未变，仅main/日志2授权修改，加新测试/说明/source3新增。未动.claude/.pnpm-store，staged0，无Git写操作。

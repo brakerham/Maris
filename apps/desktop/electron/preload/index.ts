@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
-import type { HostModuleSummary, MarisBridge, RuntimeSnapshot, Theme, WindowAction } from "../../src/shared/contracts";
+import type { HostModuleSummary, MarisBridge, RuntimeSnapshot, SettingsSnapshot, Theme, WindowAction } from "../../src/shared/contracts";
 
 const bridge: MarisBridge = {
   runtime: {
@@ -15,7 +15,10 @@ const bridge: MarisBridge = {
     perform: (action: WindowAction) => ipcRenderer.invoke("window:perform@1", action)
   },
   modules: { list: () => ipcRenderer.invoke("modules:list@1") as Promise<readonly HostModuleSummary[]> },
-  settings: { update: (value: { theme?: Theme; reducedMotion?: boolean; privacyMode?: boolean }) => ipcRenderer.invoke("settings:update@1", value) },
+  settings: {
+    getSnapshot: () => ipcRenderer.invoke("settings:get-snapshot@1") as Promise<SettingsSnapshot>,
+    update: (value: { theme?: Theme; reducedMotion?: boolean; privacyMode?: boolean }) => ipcRenderer.invoke("settings:update@1", value)
+  },
   outbox: { enqueue: (value: { draftId: string; body: string }) => ipcRenderer.invoke("outbox:enqueue@1", value) },
   external: { open: (linkId: "privacy") => ipcRenderer.invoke("external:open@1", linkId) }
 };

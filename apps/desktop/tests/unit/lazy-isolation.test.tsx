@@ -28,7 +28,7 @@ function bridgeFixture(host: readonly HostModuleSummary[] = summaries) {
     runtime: { getSnapshot: vi.fn(async () => online), recover: vi.fn(), subscribe: vi.fn((listener: (value: RuntimeSnapshot) => void) => {
       subscribers.add(listener); return () => { subscribers.delete(listener); unsubscribe(); };
     }) },
-    modules: { list: vi.fn(async () => host) }, settings: { update: vi.fn(async () => ({ ok: true })) },
+    modules: { list: vi.fn(async () => host) }, settings: { getSnapshot: async () => ({ theme: "system", reducedMotion: false, privacyMode: false }), update: vi.fn(async () => ({ ok: true })) },
     outbox: { enqueue: vi.fn() }, external: { open: vi.fn() }, window: { perform: vi.fn() }
   };
   Object.defineProperty(window, "maris", { configurable: true, value: bridge });

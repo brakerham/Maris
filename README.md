@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-R3原生H1独立7/7通过；W2有效首样确认已保存dark/隐私开启未恢复到页面，SETTINGS-001定为P1。发布P4-B7-R8-SETTINGS，补既有设计的窄设置读取与启动恢复；执行方新package最多1次、同一新profile保存/续启EXE最多2次。Tester累计产品2/8、辅助3/6冻结，旧通过不重跑。P4-B仍1 passed、2 failed、19 blocked、2 not_run，P4-C/D未开始；测试方/顾问停止。
+当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8设置读取/启动恢复已实现，217开发回归及唯一新包通过；S1在页面取样前因日期身份观察工具受阻，S2未运行。发布P4-B7-R8-R1-LIFECYCLE，只修任务外身份/收口工具，用同一新包、新虚拟profile顺序执行S1/S2各一次；不改产品、不重测或重打包。R8系列package1不增，EXE上限3（旧已用1、本次最多2），helper0。Tester累计产品2/8、辅助3/6冻结。SETTINGS-001仍未关闭，P4-B保持1 passed、2 failed、19 blocked、2 not_run，P4-C/D未开始。
+
+- [R8交付与工具续验裁定](docs/p4-b7-r8-settings-lifecycle-coordinator-review.md)：源码/新包保持，日期转换与失败收口需修，旧退出未知不补记。
+- [R8-R1同包生命周期执行任务](docs/coordination/prompts/p4-b7-r8-r1-lifecycle-executor.md)：工具自检通过后，S1与S2各一次；不重打包。
 
 - [R9-R3设置恢复缺陷裁定](docs/p4-c12-r9-r3-settings-coordinator-review.md)：H1通过，确认启动读取链缺口；原W2首样保留。
-- [R8设置恢复执行任务](docs/coordination/prompts/p4-b7-r8-settings-executor.md)：12路径范围，一次新包及两次顺序保存/续启。
+- [R8设置恢复执行任务](docs/coordination/prompts/p4-b7-r8-settings-executor.md)：已blocked/finished，开发/新包通过，S1工具受阻；以R8-R1续验为准。
 
 - [R9-R2原生上下文裁定](docs/p4-c12-r9-r2-native-coordinator-review.md)：辅助上下文遗漏已确认，旧具体异常阶段保持未知。
 - [R9-R3同源上下文与续验](docs/coordination/prompts/p4-c12-r9-r3-storage-windows-tester.md)：已blocked/finished：H1通过、W2设置恢复失败；后续按R8返修。

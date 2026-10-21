@@ -8,6 +8,7 @@ export const ipcRequests = {
   "window:perform@1": z.tuple([z.enum(["show_main", "focus_main", "hide_main", "toggle_companion"])]),
   "external:open@1": z.tuple([z.enum(["privacy"])]),
   "modules:list@1": z.tuple([]),
+  "settings:get-snapshot@1": z.tuple([]),
   "settings:update@1": z.tuple([z.strictObject({ theme: z.enum(["system", "light", "dark", "high_contrast"]).optional(), reducedMotion: z.boolean().optional(), privacyMode: z.boolean().optional() })]),
   "outbox:enqueue@1": z.tuple([z.strictObject({ draftId: z.string().uuid(), body: z.string().min(1).max(8000) })])
   ,"companion:get-state@1": z.tuple([])

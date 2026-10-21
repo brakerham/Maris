@@ -9,7 +9,7 @@ import { SecureStore } from "./secure-store";
 import { validateIpc, type IpcChannel } from "./ipc-contract";
 import { secureWebPreferences } from "./security";
 import { CompanionController } from "./window-lifecycle";
-import type { RuntimeSnapshot } from "../../src/shared/contracts";
+import type { RuntimeSnapshot, SettingsSnapshot } from "../../src/shared/contracts";
 import { compileRegistry } from "../../src/modules/registry";
 import { dailyFinanceContribution } from "../../src/modules/daily-finance/contribution";
 import { BackendSupervisor } from "./backend-supervisor";
@@ -151,6 +151,7 @@ function registerIpc(): void {
   registerMainHandler("modules:list@1", () => requireComposition().modules());
   registerMainHandler("window:perform@1", (action: string) => { if (action === "show_main" || action === "focus_main") { mainWindow?.show(); mainWindow?.focus(); } if (action === "hide_main") mainWindow?.hide(); if (action === "toggle_companion") companion.toggle(); return { accepted: true }; });
   registerMainHandler("external:open@1", async (linkId: string) => { const url = allowedExternalLinks.get(linkId); if (!url) throw new Error("external_link_not_allowed"); await shell.openExternal(url); return { accepted: true }; });
+  registerMainHandler("settings:get-snapshot@1", (): SettingsSnapshot => ({ theme: settings.theme, reducedMotion: settings.reducedMotion, privacyMode: settings.privacyMode }));
   registerMainHandler("settings:update@1", async (value: object) => { const next = deviceSettingsSchema.parse({ ...settings, ...value }); await settingsStore.save(next); settings = next; if (process.env.MARIS_E2E !== "1") app.setLoginItemSettings({ openAtLogin: settings.launchAtLogin }); return { accepted: true }; });
   registerMainHandler("outbox:enqueue@1", async (value: { draftId: string; body: string }) => ({ clientEventId: (await outbox.prepare(value.draftId, value.body)).clientEventId }));
   ipcMain.handle("companion:get-state@1", (event, ...args) => { const window = companion.window; if (!window) throw new Error("companion_window_unavailable"); validateIpc(event, window, "companion:get-state@1", args, COMPANION_WINDOW_VITE_DEV_SERVER_URL); return companion.snapshot(); });
