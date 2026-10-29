@@ -1,12 +1,15 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8设置读取/启动恢复已实现，217开发回归及唯一新包通过；S1在页面取样前因日期身份观察工具受阻，S2未运行。发布P4-B7-R8-R1-LIFECYCLE，只修任务外身份/收口工具，用同一新包、新虚拟profile顺序执行S1/S2各一次；不改产品、不重测或重打包。R8系列package1不增，EXE上限3（旧已用1、本次最多2），helper0。Tester累计产品2/8、辅助3/6冻结。SETTINGS-001仍未关闭，P4-B保持1 passed、2 failed、19 blocked、2 not_run，P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8设置修复、217项开发回归和固定新包保持；R8-R1已blocked/finished，25项身份检查通过，最终controller收尾仍有未保护IO，产品0次、S1/S2未运行。发布P4-B7-R8-R2-FINALIZER，仅修任务外控制器收尾/安全输出，有限自检后使用原未耗额度顺序完成同包S1/S2，不改产品、不重测或重打包。R8系列package1/1、EXE已用1/总3（本次最多2）、helper0；Tester累计产品2/8、辅助3/6冻结。SETTINGS-001与P4-B未关闭，矩阵保持1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。
+
+- [R8-R1收口缺口裁定](docs/p4-b7-r8-r1-finalizer-coordinator-review.md)：身份检查保留，只修controller结果读取、输出异常和无条件释放。
+- [R8-R2收尾修正与同包续验](docs/coordination/prompts/p4-b7-r8-r2-finalizer-executor.md)：先有限工具自检，再用原未耗S1/S2额度，不重打包。
 
 - [R8交付与工具续验裁定](docs/p4-b7-r8-settings-lifecycle-coordinator-review.md)：源码/新包保持，日期转换与失败收口需修，旧退出未知不补记。
-- [R8-R1同包生命周期执行任务](docs/coordination/prompts/p4-b7-r8-r1-lifecycle-executor.md)：工具自检通过后，S1与S2各一次；不重打包。
+- [R8-R1同包生命周期执行任务](docs/coordination/prompts/p4-b7-r8-r1-lifecycle-executor.md)：已blocked/finished，未启动产品；新续验以R8-R2为准。
 
 - [R9-R3设置恢复缺陷裁定](docs/p4-c12-r9-r3-settings-coordinator-review.md)：H1通过，确认启动读取链缺口；原W2首样保留。
-- [R8设置恢复执行任务](docs/coordination/prompts/p4-b7-r8-settings-executor.md)：已blocked/finished，开发/新包通过，S1工具受阻；以R8-R1续验为准。
+- [R8设置恢复执行任务](docs/coordination/prompts/p4-b7-r8-settings-executor.md)：已blocked/finished，开发/新包通过，S1工具受阻；以R8-R2续验为准。
 
 - [R9-R2原生上下文裁定](docs/p4-c12-r9-r2-native-coordinator-review.md)：辅助上下文遗漏已确认，旧具体异常阶段保持未知。
 - [R9-R3同源上下文与续验](docs/coordination/prompts/p4-c12-r9-r3-storage-windows-tester.md)：已blocked/finished：H1通过、W2设置恢复失败；后续按R8返修。

@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-10-21 13:48，Asia/Shanghai
+更新时间：2026-10-29 19:38，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8设置读取/启动恢复已实现，217开发回归及唯一新包通过；S1在页面取样前因日期身份观察工具受阻，S2未运行。发布P4-B7-R8-R1-LIFECYCLE，只修任务外身份/收口工具，用同一新包、新虚拟profile顺序执行S1/S2各一次；不改产品、不重测或重打包。R8系列package1不增，EXE上限3（旧已用1、本次最多2），helper0。Tester累计产品2/8、辅助3/6冻结。SETTINGS-001仍未关闭，P4-B保持1 passed、2 failed、19 blocked、2 not_run，P4-C/D未开始。
+P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8设置修复、217项开发回归和固定新包保持；R8-R1已blocked/finished，25项身份检查通过，最终controller收尾仍有未保护IO，产品0次、S1/S2未运行。发布P4-B7-R8-R2-FINALIZER，仅修任务外控制器收尾/安全输出，有限自检后使用原未耗额度顺序完成同包S1/S2，不改产品、不重测或重打包。R8系列package1/1、EXE已用1/总3（本次最多2）、helper0；Tester累计产品2/8、辅助3/6冻结。SETTINGS-001与P4-B未关闭，矩阵保持1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8设置�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R8固定交付核对、同包有限续验卡准备 | 2026-10-21 13:48 | 执行方新起点接单，实际unverified | [裁定](../p4-b7-r8-settings-lifecycle-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R1收尾审阅完成，新R2任务准备 | 2026-10-29 19:38 | 执行方新起点接单，实际unverified | [裁定](../p4-b7-r8-r1-finalizer-coordinator-review.md) |
 | 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
-| 执行智能体 | R8 `blocked / finished`；R8-R1 `ready / waiting_user` | 已完成修复/新包，待工具修正与同包S1/S2 | 2026-10-21 13:48（总控准备） | 先工具自检，成功直接顺序S1/S2 | [任务](prompts/p4-b7-r8-r1-lifecycle-executor.md) |
+| 执行智能体 | R8/R1 `blocked / finished`；R2 `ready / waiting_user` | 保留新包和身份检查，只续修收尾工具 | 2026-10-29 19:38（总控准备） | 有限工具自检通过，直接S1后S2 | [任务](prompts/p4-b7-r8-r2-finalizer-executor.md) |
 | 测试智能体 | R9-R3 `blocked / finished` | H1原生通过、W2设置恢复P1 | 2026-10-18 19:43（本人交付） | 停止，待新固定包与独立复验任务 | [报告](../testing/phase-4-c12-r9-r3-storage-windows-report.md) |
 
-当前唯一新任务是P4-B7-R8-R1-LIFECYCLE，既有执行方负责，实际接单unverified。旧R8、Tester及顾问停止；工具开发3轮/30分钟，之后同包EXE2次、package0/helper0。保留217项开发结果、旧S1首次与未知退出记录，禁止改产品或重跑旧通过；前端图稿/模型提醒保持。
+当前唯一新任务是P4-B7-R8-R2-FINALIZER，既有执行方负责，实际接单unverified。原R8/R1、Tester及顾问停止。工具开发限25分钟3版，普通Node集成最多2次；产品仍只沿用未消耗S1/S2各一次、package0/helper0。保留217开发结果、25身份结果及旧首次证据。前端图稿/模型提醒保持。
 
 ## 阶段 0 任务状态
 
@@ -125,7 +125,8 @@ P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8设置�
 | P4-C12-R9-R2：脚本路径身份与Windows续验 | 既有测试智能体 | `blocked / finished` | 身份链通过，原生availability后异常，精确阶段unknown | [报告](../testing/phase-4-c12-r9-r2-path-windows-report.md) |
 | P4-C12-R9-R3：原生上下文与Windows续验 | 既有测试智能体 | `blocked / finished` | H1 7/7通过；W2设置恢复4比较失败，P1确认 | [报告](../testing/phase-4-c12-r9-r3-storage-windows-report.md) |
 | P4-B7-R8-SETTINGS：设备设置启动恢复 | 既有执行智能体 | `blocked / finished` | 217开发回归/新包通过，S1工具受阻/S2未运行 | [报告](../b7-r8-settings-running.md) |
-| P4-B7-R8-R1-LIFECYCLE：同包设置续验 | 既有执行智能体 | `ready / waiting_user` | UTC身份/收口自检；同一包S1保存、S2重启各一次 | [任务](prompts/p4-b7-r8-r1-lifecycle-executor.md) |
+| P4-B7-R8-R1-LIFECYCLE：同包设置续验 | 既有执行智能体 | `blocked / finished` | 身份检查通过，controller收尾IO缺口，EXE0 | [报告](../b7-r8-r1-lifecycle-running.md) |
+| P4-B7-R8-R2-FINALIZER：收尾修正与续验 | 既有执行智能体 | `ready / waiting_user` | 最小controller修正，同包原剩余S1/S2 | [任务](prompts/p4-b7-r8-r2-finalizer-executor.md) |
 | P4-C12-R4：lazy复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | 原节点0pass/1fail；故障命中未证实，未新增产品缺陷，Windows0次 | [报告](../testing/phase-4-c12-r4-lazy-windows-report.md) |
 | P4-C12-R4-R1：观察与续跑 | 既有测试智能体 | `blocked / finished` | mock1、#/daily、5016ms无alert；异常终态未定位 | [报告](../testing/phase-4-c12-r4-r1-observation-windows-report.md) |
 | P4-D15：异常传播有限诊断 | 既有技术顾问 | `blocked / finished` | import/默认loader拒绝成立；P3超时无阶段回执，原证据保留 | [报告](../phase-4-d15-lazy-propagation-advice.md)、[总控核对](../p4-d15-bootstrap-coordinator-review.md) |
