@@ -1,6 +1,6 @@
 # 项目进度总览
 
-更新时间：2026-10-29 19:38，Asia/Shanghai
+更新时间：2026-10-29 19:50，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8设置�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R1收尾审阅完成，新R2任务准备 | 2026-10-29 19:38 | 执行方新起点接单，实际unverified | [裁定](../p4-b7-r8-r1-finalizer-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | 已核实误发旧卡日志，同一R2起点刷新v2 | 2026-10-29 19:50 | 执行方v2匹配后首次接单 | [裁定](../p4-b7-r8-r1-finalizer-coordinator-review.md) |
 | 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
-| 执行智能体 | R8/R1 `blocked / finished`；R2 `ready / waiting_user` | 保留新包和身份检查，只续修收尾工具 | 2026-10-29 19:38（总控准备） | 有限工具自检通过，直接S1后S2 | [任务](prompts/p4-b7-r8-r2-finalizer-executor.md) |
-| 测试智能体 | R9-R3 `blocked / finished` | H1原生通过、W2设置恢复P1 | 2026-10-18 19:43（本人交付） | 停止，待新固定包与独立复验任务 | [报告](../testing/phase-4-c12-r9-r3-storage-windows-report.md) |
+| 执行智能体 | R8/R1 `blocked / finished`；R2 `ready / waiting_user` | 首次接单前tester日志差异已核实，待按v2重新核对 | 2026-10-29 19:50（总控刷新） | v2全部匹配后首次接单，原额度不变 | [任务](prompts/p4-b7-r8-r2-finalizer-executor.md) |
+| 测试智能体 | R9-R3 `blocked / finished` | 误收旧卡后只读核对，仍停止；历史H1/W2结论保持 | 2026-10-29 19:40（本人日志） | 停止，待新固定包与独立复验任务 | [报告](../testing/phase-4-c12-r9-r3-storage-windows-report.md) |
 
-当前唯一新任务是P4-B7-R8-R2-FINALIZER，既有执行方负责，实际接单unverified。原R8/R1、Tester及顾问停止。工具开发限25分钟3版，普通Node集成最多2次；产品仍只沿用未消耗S1/S2各一次、package0/helper0。保留217开发结果、25身份结果及旧首次证据。前端图稿/模型提醒保持。
+当前唯一新任务是P4-B7-R8-R2-FINALIZER，既有执行方负责，首次接单前因单项日志漂移停止；当前v2起点已刷新，实际接单仍unverified。原R8/R1、Tester及顾问停止。工具开发限25分钟3版，普通Node集成最多2次；产品仍只沿用未消耗S1/S2各一次、package0/helper0。保留217开发结果、25身份结果及旧首次证据。前端图稿/模型提醒保持。
 
 ## 阶段 0 任务状态
 

@@ -44,3 +44,13 @@ R8 的 217 项开发测试、唯一新包及静态检查保持。R1 产品启动
 SETTINGS-001、CMP-06、LAZY-001/UI-02 和 P4-B 均未关闭。P4-B 维持 1 passed、2 failed、19 blocked、2 not_run。前端高保真界面与模型分工提醒继续保留，尚未进入 P4-C。
 
 本地 Git 仅保存明确标注未完成的证据与协调检查点，不推送，不作为验收完成提交。
+
+## 2026-10-29 19:50 同一 R2 起点刷新
+
+用户确认误将旧 R9-R2 Prompt 发给 Tester。Tester 按最新 control 保持停止，仅更新本人状态；Executor 随后收到正确 R2 卡，在接单前发现单项摘要差异并停止，未登记接单或消耗工具/产品额度。
+
+总控亲自复算原1375项：1374匹配、1不匹配、0缺失；唯一变化是 `docs/coordination/agents/tester.md`，原值 `4db1a7b3912e69bdbbb10a8ad3d3d08cf08784bb5d4b71bb6620677127d33abc`，当前值 `0e83aa5599f535ab652743e32770895f1e5ddf63def70cb77cc21735165de782`。Git差异只涉及该状态文件的当前快照与19:40停止记录；从R9-R3执行记录至末尾的旧历史文本完全保持。内部 `r8_r2_snapshot_refresh_review` 独立只读核对一致，无文件修改或目标运行。
+
+这是已核实的协调日志变化，不是新产品/工具失败。批准纳入当前起点。原清单SHA-256 `cb0a4e078923d34cc3da383e501f55d75efc8753c80f73ae2cc24dbb80b3b368`保持，新增[1376项v2清单](coordination/snapshots/p4-b7-r8-r2-finalizer-start-v2.sha256)，原R2卡改为引用v2。本次同时更新control、overview、brainstorm和本裁定；不改Tester交付原文、Executor状态、产品/测试/包/旧证据。
+
+任务仍为P4-B7-R8-R2-FINALIZER，25分钟/3版工具开发、普通Node集成最多2次和原剩余S1/S2各一次全部不变。本次接单前只读核对不计这些额度。执行方须重新复算当前v2后首次接单，不以“角色日志可以变化”为由豁免其他未核实差异；Tester继续停止，无需重复发送旧卡。
