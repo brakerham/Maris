@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8设置修复、217项开发回归和固定新包保持；R8-R1已blocked/finished，25项身份检查通过，最终controller收尾仍有未保护IO，产品0次、S1/S2未运行。发布P4-B7-R8-R2-FINALIZER，仅修任务外控制器收尾/安全输出，有限自检后使用原未耗额度顺序完成同包S1/S2，不改产品、不重测或重打包。R8系列package1/1、EXE已用1/总3（本次最多2）、helper0；Tester累计产品2/8、辅助3/6冻结。SETTINGS-001与P4-B未关闭，矩阵保持1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8-R2执行方已review/finished；同包S1保存及S2原样续启均通过，S2首次四字段dark/on/dark/true且未重写设置。总控核对固定输入后发布P4-C12-R10-SETTINGS，由既有测试智能体独立复验新增设置读取/水合及原W2，再续接剩余Windows。R8执行系列package1/1、EXE3/3已停止；Tester累计产品2/8、辅助3/6，本卡最多使用剩余6/3，不增加。SETTINGS-001与P4-B未关闭，矩阵保持1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。
+
+- [R8-R2执行方通过与独立复验裁定](docs/p4-b7-r8-r2-settings-coordinator-review.md)：S1/S2真实续启通过，固定包交测试方，不预先关闭缺陷。
+- [R10设置恢复独立复验任务](docs/coordination/prompts/p4-c12-r10-settings-windows-tester.md)：原W2四断言不变，通过后同任务续接剩余Windows。
 
 - [R8-R1收口缺口裁定](docs/p4-b7-r8-r1-finalizer-coordinator-review.md)：身份检查保留，只修controller结果读取、输出异常和无条件释放。
-- [R8-R2收尾修正与同包续验](docs/coordination/prompts/p4-b7-r8-r2-finalizer-executor.md)：先有限工具自检，再用原未耗S1/S2额度，不重打包。
+- [R8-R2收尾修正与同包续验](docs/coordination/prompts/p4-b7-r8-r2-finalizer-executor.md)：已review/finished，工具及S1/S2通过；停止执行，后续以R10独立任务为准。
 
 - [R8交付与工具续验裁定](docs/p4-b7-r8-settings-lifecycle-coordinator-review.md)：源码/新包保持，日期转换与失败收口需修，旧退出未知不补记。
 - [R8-R1同包生命周期执行任务](docs/coordination/prompts/p4-b7-r8-r1-lifecycle-executor.md)：已blocked/finished，未启动产品；新续验以R8-R2为准。

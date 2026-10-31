@@ -132,7 +132,7 @@ Git 写操作集中由头脑风暴总控负责。执行、测试、技术顾问�
 | 阶段 2 财务 Agent 工具 | `complete`（P2-A 本地与 PostgreSQL 冻结范围） | C6/D6 已完成；DATA-R2 的 P2 SPG 4/4 通过，`PG-C7-DATA-001` 已关闭；DeepSeek、桌面与微信扩展仍按独立阶段推进 |
 | P3 活动 Markdown 导入 | `complete` | B5-R1 固定快照通过 C9-R2 独立验收；89/89 项、执行方 PostgreSQL 9/9、独立 PostgreSQL 10/10 通过 |
 | P4-A Host、身份和通用状态地基 | `complete` | C11-R2 关闭 PostgreSQL 历史迁移 P0；P4-A 64/64 passed，最终 134 文件快照已固定 |
-| P4-B Windows Shell、模块 UI 与毛毛 | `blocked`；R8/R8-R1 `blocked / finished`，R8-R2 `ready / waiting_user` | P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8设置修复、217项开发回归和固定新包保持；R8-R1已blocked/finished，25项身份检查通过，最终controller收尾仍有未保护IO，产品0次、S1/S2未运行。发布P4-B7-R8-R2-FINALIZER，仅修任务外控制器收尾/安全输出，有限自检后使用原未耗额度顺序完成同包S1/S2，不改产品、不重测或重打包。R8系列package1/1、EXE已用1/总3（本次最多2）、helper0；Tester累计产品2/8、辅助3/6冻结。SETTINGS-001与P4-B未关闭，矩阵保持1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。 |
+| P4-B Windows Shell、模块 UI 与毛毛 | `blocked`；R8-R2 `review / finished`，R10 `ready / waiting_user` | P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8-R2执行方已review/finished；同包S1保存及S2原样续启均通过，S2首次四字段dark/on/dark/true且未重写设置。总控核对固定输入后发布P4-C12-R10-SETTINGS，由既有测试智能体独立复验新增设置读取/水合及原W2，再续接剩余Windows。R8执行系列package1/1、EXE3/3已停止；Tester累计产品2/8、辅助3/6，本卡最多使用剩余6/3，不增加。SETTINGS-001与P4-B未关闭，矩阵保持1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。 |
 | P4-C 财务驾驶舱 / P4-D 财富管理 | `not_started` | 等 P4-B Shell 完成独立验收后推进；不得在 B7 中伪造真实业务数据或提前实现 |
 
 此前已经有临时子智能体参与微信资料核实和学习路线审阅；这些调查结果不代表编码、账号接入或部署已完成。
