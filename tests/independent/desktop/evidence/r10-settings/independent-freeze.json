@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-01T09:38:58.488605+08:00",
+  "sourceCount": 8,
+  "manifestSha256": "7b1a207b0356579c76f1d3f62f7fbc64cee18eec5e73ef5a081ae215e879d5af",
+  "preflightChecks": 17,
+  "preflightPassed": true,
+  "toolVersionsUsed": 2,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "planNodes": 38,
+  "noOldCollections": true
+}

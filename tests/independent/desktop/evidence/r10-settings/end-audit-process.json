@@ -1,0 +1,7 @@
+{
+  "source": "exec_command actual return",
+  "exitCode": 0,
+  "durationSeconds": 2.6046057,
+  "processPid": "unknown",
+  "scope": "read-only audit; no tests or target startups"
+}

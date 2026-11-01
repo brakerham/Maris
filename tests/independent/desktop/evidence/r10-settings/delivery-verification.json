@@ -1,0 +1,43 @@
+{
+  "task": "P4-C12-R10-SETTINGS",
+  "at": "2026-11-01T09:45:13.872169+08:00",
+  "status": "blocked",
+  "execution": "finished",
+  "entries": 50,
+  "matched": 50,
+  "manifestSha256": "f128dac56c7743a9d2928532e7cfe840a49a11468cb284911875b7fa0a734a21",
+  "utf8NoBomLfOnly": true,
+  "sortedUnique": true,
+  "differences": [],
+  "repositoryChanges": [
+    "docs/coordination/agents/tester.md",
+    "docs/testing/phase-4-c12-manual-checklist.md",
+    "docs/testing/phase-4-c12-windows-shell-report.md",
+    "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+  ],
+  "authorizedChangesOnly": true,
+  "firstMaterialsUnchanged": true,
+  "reportMappingRows": 24,
+  "finalRoleMatches": true,
+  "stagedCount": 0,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "seriesProductStarts": 2,
+  "seriesHelperStarts": 3,
+  "independent": {
+    "planned": 38,
+    "passed": 5,
+    "failed": 1,
+    "notRun": 32,
+    "comparisons": 40,
+    "comparisonsPassed": 39
+  },
+  "compatibility": "not_run",
+  "W2andRemainingWindows": "not_run",
+  "excluded": [
+    "delivery.sha256",
+    "delivery-verification.json",
+    "cache/**"
+  ],
+  "passed": true
+}

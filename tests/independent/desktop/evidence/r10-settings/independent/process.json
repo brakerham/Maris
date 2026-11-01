@@ -1,0 +1,32 @@
+{
+  "workers": [
+    {
+      "exited": true,
+      "pid": 3196,
+      "identityVerified": true,
+      "forced": false,
+      "nativeExitCode": 1
+    }
+  ],
+  "scope": "independent",
+  "productStarts": 0,
+  "timedOut": false,
+  "durationMs": 2331,
+  "rootExited": true,
+  "rootPid": 29676,
+  "forced": false,
+  "rootExitCode": 1,
+  "failure": null,
+  "streams": [
+    {
+      "rawBytes": 57,
+      "name": "stdout",
+      "complete": true
+    },
+    {
+      "rawBytes": 0,
+      "name": "stderr",
+      "complete": true
+    }
+  ]
+}

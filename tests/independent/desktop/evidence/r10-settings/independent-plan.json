@@ -1,0 +1,338 @@
+{
+  "task": "P4-C12-R10-SETTINGS",
+  "at": "2026-11-01T09:38:24.781845+08:00",
+  "nodeCount": 38,
+  "nodes": [
+    {
+      "id": "R10-I01",
+      "requirement": "loaded strict projection; fresh object; zero side effects",
+      "expected": "production contract satisfied; values in frozen assertions",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-I02",
+      "requirement": "existing three-field write; unchanged receipt; reject expanded permissions",
+      "expected": "production contract satisfied; values in frozen assertions",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-I03",
+      "requirement": "zero args; undefined/null/object/string/boolean/number/array/multiple rejected",
+      "expected": "production contract satisfied; values in frozen assertions",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-I04",
+      "requirement": "main sender; mainFrame; other and companion refused",
+      "expected": "production contract satisfied; values in frozen assertions",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-I05",
+      "requirement": "production unsafe origins rejected",
+      "expected": "production contract satisfied; values in frozen assertions",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-I06",
+      "requirement": "exact development origin including distinct-port prefix negative",
+      "expected": "production contract satisfied; values in frozen assertions",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-I07",
+      "requirement": "actual main preload getter and companion absence",
+      "expected": "production contract satisfied; values in frozen assertions",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U01",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "system",
+        "privacyMode": false,
+        "reducedMotion": false,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U02",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "system",
+        "privacyMode": false,
+        "reducedMotion": true,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U03",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "system",
+        "privacyMode": true,
+        "reducedMotion": false,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U04",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "system",
+        "privacyMode": true,
+        "reducedMotion": true,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U05",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "light",
+        "privacyMode": false,
+        "reducedMotion": false,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U06",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "light",
+        "privacyMode": false,
+        "reducedMotion": true,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U07",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "light",
+        "privacyMode": true,
+        "reducedMotion": false,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U08",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "light",
+        "privacyMode": true,
+        "reducedMotion": true,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U09",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "dark",
+        "privacyMode": false,
+        "reducedMotion": false,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U10",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "dark",
+        "privacyMode": false,
+        "reducedMotion": true,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U11",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "dark",
+        "privacyMode": true,
+        "reducedMotion": false,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U12",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "dark",
+        "privacyMode": true,
+        "reducedMotion": true,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U13",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "high_contrast",
+        "privacyMode": false,
+        "reducedMotion": false,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U14",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "high_contrast",
+        "privacyMode": false,
+        "reducedMotion": true,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U15",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "high_contrast",
+        "privacyMode": true,
+        "reducedMotion": false,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U16",
+      "requirement": "valid hydration",
+      "expected": {
+        "theme": "high_contrast",
+        "privacyMode": true,
+        "reducedMotion": true,
+        "writes": 0,
+        "reads": 1
+      },
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U17",
+      "requirement": "theme enum",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U18",
+      "requirement": "privacy type",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U19",
+      "requirement": "reducedMotion type",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U20",
+      "requirement": "missing field",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U21",
+      "requirement": "extra secret field",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U22",
+      "requirement": "null",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U23",
+      "requirement": "array",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U24",
+      "requirement": "null theme",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U25",
+      "requirement": "pending controls/business hidden",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U26",
+      "requirement": "rejected finite safe error",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U27",
+      "requirement": "StrictMode stale reply ignored",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U28",
+      "requirement": "unmounted reply ignored",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U29",
+      "requirement": "notices/recover preserve choice/page",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U30",
+      "requirement": "empty modules then ready retain settings",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    },
+    {
+      "id": "R10-U31",
+      "requirement": "failed page not implicitly retried",
+      "expected": "contract holds; no default writes, private detail or implicit reread",
+      "state": "not_run"
+    }
+  ],
+  "sourceBoundary": "real main/IPC/preloads/renderer/router/Shell; OS/storage/Host ports virtual",
+  "fixtureReuse": "R9 external-boundary fixture only; no old assertions run",
+  "settingsBridgeAdaptation": "new fake getter is only input adaptation; no old test edited",
+  "stop": "first valid comparison or unknown error; bail1; later not_run",
+  "next": "all pass then exactly two compatibility files once; all pass then separately frozen W2 onward",
+  "windowsStarts": 0,
+  "helperStarts": 0
+}

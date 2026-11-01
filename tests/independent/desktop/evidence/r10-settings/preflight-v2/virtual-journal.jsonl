@@ -1,0 +1,6 @@
+{"seq":1,"at":"2026-11-01T01:38:26.300Z","pid":23804,"parentPid":27996,"event":"assert_enter","id":"SELF.ONE","expected":true}
+{"seq":2,"at":"2026-11-01T01:38:26.304Z","pid":23804,"parentPid":27996,"event":"assert_terminal","id":"SELF.ONE","expected":true,"actual":true,"passed":true}
+{"seq":3,"at":"2026-11-01T01:38:26.308Z","pid":23804,"parentPid":27996,"event":"assert_enter","id":"SELF.COMPARE","expected":true}
+{"seq":4,"at":"2026-11-01T01:38:26.311Z","pid":23804,"parentPid":27996,"event":"assert_terminal","id":"SELF.COMPARE","expected":true,"actual":false,"passed":false}
+{"seq":5,"at":"2026-11-01T01:38:26.314Z","pid":23804,"parentPid":27996,"event":"error","id":"SELF.COMPARE","stage":"body","kind":"comparison","name":"CompareError"}
+{"seq":6,"at":"2026-11-01T01:38:26.316Z","pid":23804,"parentPid":27996,"event":"error","id":"SELF.LATER","stage":"body","kind":"unknown","name":"TypeError"}

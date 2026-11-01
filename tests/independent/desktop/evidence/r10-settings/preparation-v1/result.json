@@ -1,0 +1,10 @@
+{
+  "stage": "input_manifest_decode",
+  "errorName": "UnicodeDecodeError",
+  "classification": "tool",
+  "cause": "default Windows GBK reading UTF8 manifest",
+  "targetStarted": false,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "at": "2026-11-01T09:34:25.376151+08:00"
+}

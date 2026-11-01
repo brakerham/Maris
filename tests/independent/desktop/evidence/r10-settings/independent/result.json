@@ -1,0 +1,314 @@
+{
+  "mode": "independent",
+  "nodes": [
+    {
+      "id": "R10-I01",
+      "state": "pass",
+      "durationMs": 238.56590000000006,
+      "errors": []
+    },
+    {
+      "id": "R10-I02",
+      "state": "pass",
+      "durationMs": 52.23770000000013,
+      "errors": []
+    },
+    {
+      "id": "R10-I03",
+      "state": "pass",
+      "durationMs": 48.60640000000012,
+      "errors": []
+    },
+    {
+      "id": "R10-I04",
+      "state": "pass",
+      "durationMs": 36.707800000000134,
+      "errors": []
+    },
+    {
+      "id": "R10-I05",
+      "state": "pass",
+      "durationMs": 40.28410000000008,
+      "errors": []
+    },
+    {
+      "id": "R10-I06",
+      "state": "fail",
+      "durationMs": 31.039999999999964,
+      "errors": [
+        {
+          "name": "CompareError",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "id": "R10-I07",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U01",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U02",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U03",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U04",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U05",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U06",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U07",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U08",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U09",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U10",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U11",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U12",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U13",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U14",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U15",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U16",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U17",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U18",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U19",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U20",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U21",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U22",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U23",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U24",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U25",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U26",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U27",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U28",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U29",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U30",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    },
+    {
+      "id": "R10-U31",
+      "state": "not_run",
+      "durationMs": null,
+      "errors": []
+    }
+  ],
+  "passed": 5,
+  "failed": 1,
+  "notRun": 32,
+  "unhandledErrors": 0,
+  "moduleErrors": 0,
+  "journalError": null,
+  "formalComparisons": 40,
+  "comparisonsPassed": 39,
+  "paired": true,
+  "firstFailure": {
+    "seq": 104,
+    "at": "2026-11-01T01:39:09.768Z",
+    "pid": 3196,
+    "parentPid": 29676,
+    "event": "assert_terminal",
+    "id": "R10-I06.DIFFERENT_PORT_REJECTED",
+    "expected": "ipc_origin_rejected",
+    "actual": null,
+    "passed": false
+  },
+  "nodeTerminals": [
+    {
+      "seq": 25,
+      "at": "2026-11-01T01:39:09.568Z",
+      "pid": 3196,
+      "parentPid": 29676,
+      "event": "node_terminal",
+      "id": "R10-I01",
+      "passed": true
+    },
+    {
+      "seq": 47,
+      "at": "2026-11-01T01:39:09.620Z",
+      "pid": 3196,
+      "parentPid": 29676,
+      "event": "node_terminal",
+      "id": "R10-I02",
+      "passed": true
+    },
+    {
+      "seq": 69,
+      "at": "2026-11-01T01:39:09.669Z",
+      "pid": 3196,
+      "parentPid": 29676,
+      "event": "node_terminal",
+      "id": "R10-I03",
+      "passed": true
+    },
+    {
+      "seq": 83,
+      "at": "2026-11-01T01:39:09.706Z",
+      "pid": 3196,
+      "parentPid": 29676,
+      "event": "node_terminal",
+      "id": "R10-I04",
+      "passed": true
+    },
+    {
+      "seq": 99,
+      "at": "2026-11-01T01:39:09.746Z",
+      "pid": 3196,
+      "parentPid": 29676,
+      "event": "node_terminal",
+      "id": "R10-I05",
+      "passed": true
+    },
+    {
+      "seq": 108,
+      "at": "2026-11-01T01:39:09.775Z",
+      "pid": 3196,
+      "parentPid": 29676,
+      "event": "node_terminal",
+      "id": "R10-I06",
+      "passed": false
+    }
+  ]
+}

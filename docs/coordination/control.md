@@ -2,19 +2,26 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-10-31T23:15:00+08:00`
+- 指令版本：`2026-11-01T15:58:19+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8-R2执行方已review/finished；同包S1保存及S2原样续启均通过，S2首次四字段dark/on/dark/true且未重写设置。总控核对固定输入后发布P4-C12-R10-SETTINGS，由既有测试智能体独立复验新增设置读取/水合及原W2，再续接剩余Windows。R8执行系列package1/1、EXE3/3已停止；Tester累计产品2/8、辅助3/6，本卡最多使用剩余6/3，不增加。SETTINGS-001与P4-B未关闭，矩阵保持1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。
-- 需要用户参与：将R10新卡发给既有测试智能体，先读取最新control及新起点后接单；不再发送旧R9或R8卡。R10 ready/waiting_user，实际接单unverified。执行方和顾问保持停止；当前无需用户操作窗口、系统或真实账户。
+- 当前动作：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8-R2真实设置保存/续启执行方证据保持。R10独立验证5 passed、1 failed、32 not_run，确认开发origin前缀匹配错误接受不同端口，P1 IPC-ORIGIN-001；Windows与48项兼容未运行。发布P4-B7-R9-IPC-ORIGIN，由执行方只修security开发来源校验及相邻回归，最多1次新package、EXE/helper/开发服务器0。Tester停止，系列产品2/8、辅助3/6不变；SETTINGS-001与P4-B未关闭，B为1 passed、3 failed、18 blocked、2 not_run；P4-C/D未开始。
+- 需要用户参与：把R9-IPC-ORIGIN新卡发给既有执行智能体，先读取最新control及新起点后接单。任务ready/waiting_user、实际接单unverified；Tester/顾问停止，不继续旧R10或R8卡。当前无需用户操作窗口、系统或账户。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；远端 `main` 当前为 `251b4a2`，其后的 E5 协调与返修单元只在本地提交，尚未推送。现有远端与本地提交仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 - 前端实现提醒门禁：P4-B Shell 完成独立验收后、创建首个 P4-C 财务驾驶舱技术方案或执行 Prompt 之前，总控必须主动提醒用户进入真实前端界面阶段，并先复核两张既定参考图、高保真信息架构、页面/组件切片、视觉验收方式和模型分工。不得直接沿用 Shell 占位页开始编码；必须让用户先确认当时可用模型及分工策略。当前建议重新评估“强推理/视觉模型（现为 GPT-6 Astra）负责界面方案、复杂交互和关键审阅，编码工作模型（现为 GPT-6 Sol）负责组件实现、重构和常规测试”，模型能力或额度变化时以届时讨论为准。
 
-## R10 设置恢复独立复验（2026-10-31）
+## R9-IPC-ORIGIN 开发来源最小返修（2026-11-01）
+
+- 总控接受[R10来源反例](../p4-c12-r10-ipc-origin-coordinator-review.md)为P1，限定开发来源配置；不声明生产包可达、数据泄露或R8引入回归。50交付/8来源/29首次材料匹配，原1381仅4测试文档变化；SEC-04 failed，其余原结论保持。
+- 当前唯一新任务为[P4-B7-R9-IPC-ORIGIN](prompts/p4-b7-r9-ipc-origin-executor.md)，由既有执行方按[新起点](snapshots/p4-b7-r9-ipc-origin-start.sha256)接单。产品仅security.ts开发分支，三个执行方测试可增补；不动独立证据/生产接口/依赖。
+- 新返修预算package最多1次、EXE/helper/开发服务器0；旧R8实际额度不重置。Tester产品2/8、辅助3/6及剩余6/3冻结，旧H1/W1/S1/S2不重跑。新包只取得静态证据，交付后再冻结独立失败复验和剩余Windows，不提前关闭缺陷。
+- Tester/顾问保持停止，不为旧卡改写新起点。实际Executor接单unverified，以下R10安排仅作为已停止任务历史。
+
+## R10 设置恢复独立复验（2026-10-31，历史）
 
 - 总控已核对[R8-R2裁定](../p4-b7-r8-r2-settings-coordinator-review.md)，接受执行方交付为独立输入，不关闭SETTINGS-001/CMP-06/LAZY-001/UI-02/P4-B。
-- 当前唯一新任务为[P4-C12-R10-SETTINGS](prompts/p4-c12-r10-settings-windows-tester.md)，使用[新起点](snapshots/p4-c12-r10-settings-start.sha256)及固定R8包。先独立设置边界、两文件48项兼容，再原W2首样；通过后同任务继续W3/H2/W4/H3/W5/H4/W6/W7，不等待逐场景再派发。
+- 当时任务为[P4-C12-R10-SETTINGS](prompts/p4-c12-r10-settings-windows-tester.md)，使用[新起点](snapshots/p4-c12-r10-settings-start.sha256)及固定R8包。先独立设置边界、两文件48项兼容，再原W2首样；通过后同任务继续W3/H2/W4/H3/W5/H4/W6/W7，不等待逐场景再派发。
 - Tester系列已用产品2/8、helper3/6，本次剩余6/3；不再H1、不重跑旧已过集合、不安装/打包、不改产品。旧closePolicy非法IPC去除，后续合法配置只在新副本产品全退后按卡预置。
-- Executor/顾问保持停止，不为重复旧卡追加修改。Tester接单状态由本人记录，未实测不写已启动。以下R8-R2刷新记录仅保留历史，不能作为新任务起点。
+- R10已因IPC-ORIGIN-001停止，Windows未进入；后续以R9-IPC-ORIGIN为准。以下R8-R2刷新记录也只保留历史，不能作为新任务起点。
 
 ## R8-R2 接单前起点刷新（2026-10-29 19:50，历史）
 
@@ -165,7 +172,8 @@
 | P4-B7-R8-SETTINGS 持久设置启动恢复 | 既有执行智能体；`blocked / finished` | 窄读取链修复，217开发回归、新包及7/8静态检查通过；S1日期工具受阻、S2未运行 | 原任务停止、首次材料保持；不宣称SETTINGS-001关闭 |
 | P4-B7-R8-R1-LIFECYCLE 同包设置续验 | 既有执行智能体；`blocked / finished` | 1371/3/5/115逐项匹配；25身份通过、Node5次4过1失败，收尾IO缺口未修，产品0 | 原失败与未知值保留，候选未获准启动产品；后续以R8-R2为准 |
 | P4-B7-R8-R2-FINALIZER 收尾修正与同包续验 | 既有执行智能体；`review / finished`，总控接受为独立输入 | 1377/3/6/4/255匹配；S1/S2各26门禁、39/42比较通过，同profile首样正确 | 已停止；执行系列package1/1、EXE3/3，无追加额度，不关闭独立缺陷 |
-| P4-C12-R10-SETTINGS 设置恢复独立复验 | 既有测试智能体；`ready / waiting_user`，接单unverified | 新包设置读取/水合、原W2四首样、剩余Windows；原H1及旧通过只引用 | 按新卡使用剩余产品6/helper3，无安装/打包/产品修改或Git写；执行方/顾问停止 |
+| P4-C12-R10-SETTINGS 设置恢复独立复验 | 既有测试智能体；`blocked / finished` | 5通过/1失败/32未运行，开发origin不同端口被接受；50交付匹配 | 原首次保留，48兼容/W2/Windows未运行，Tester累计2/8与3/6冻结 |
+| P4-B7-R9-IPC-ORIGIN 开发来源精确校验 | 既有执行智能体；`ready / waiting_user`，接单unverified | 唯一产品security.ts及三个相邻测试；精确origin、真实接线和静态新包 | 最多7仓库路径，package1、EXE/helper/服务器0；无独立测试/依赖/系统/Git写 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |

@@ -1,0 +1,263 @@
+{
+  "startedAt": "2026-11-01T09:43:53.920359+08:00",
+  "repository": {
+    "entries": 1381,
+    "matched": 1377,
+    "changes": [
+      "docs/coordination/agents/tester.md",
+      "docs/testing/phase-4-c12-manual-checklist.md",
+      "docs/testing/phase-4-c12-windows-shell-report.md",
+      "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+    ],
+    "manifestSha256": "7ebea7c1cd0866623acd4ffcdbeb7df0ff1cab25c96db2ee5b1c0fee66280ed8",
+    "passed": true
+  },
+  "fixed": {
+    "buildSource": {
+      "entries": 1365,
+      "matched": 1365,
+      "changes": [],
+      "manifestSha256": "c880730b84d726dec41e077867e44e942855ba60790e3a0ddb38940b89efd1d4",
+      "passed": true
+    },
+    "out": {
+      "entries": 140,
+      "matched": 140,
+      "changes": [],
+      "manifestSha256": "8afdd6d3e7c928912b48acedb2d7c1931607e47f32e549a67e92d04eff142409",
+      "passed": true
+    },
+    "resources": {
+      "entries": 67,
+      "matched": 67,
+      "changes": [],
+      "manifestSha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1",
+      "passed": true
+    }
+  },
+  "singles": [
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\Maris.exe",
+      "sha256": "c80d27c8e31fa60df91065a770e669a553260cf8f883c55a0a7f83f8a430736b",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\resources\\app.asar",
+      "sha256": "05cdad34ba60b59773eebe671156c96260e69354568b9942da59058641f9c0b2",
+      "passed": true
+    },
+    {
+      "path": "D:\\CodeX_gap\\wife-system\\pnpm-lock.yaml",
+      "sha256": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a",
+      "passed": true
+    },
+    {
+      "path": "C:/MarisSettingsR8/R8-R2-20261030-040716/evidence/closeout.json",
+      "sha256": "7f1c23ab0c9cbfa578b5e9b136ec3b728b17917f4621917ca20882eff78edf24",
+      "passed": true
+    },
+    {
+      "path": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r3\\helper-H1\\native-result.json",
+      "sha256": "f6c493c244f18832b0e69e5fa7c45a09108e304bd72fb685951c92252b7a62e3",
+      "passed": true
+    }
+  ],
+  "toolEntries": [
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\vitest\\vitest.mjs",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\vitest\\dist\\index.js",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\vite\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\esbuild\\lib\\main.js",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\jsdom\\lib\\api.js",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\jsdom\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\react\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\react-dom\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\react-router\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\zod\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\electron\\dist\\electron.exe",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\playwright\\index.js",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\node_modules\\playwright\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\tools\\node\\node.exe",
+      "passed": true
+    }
+  ],
+  "fullDependencyRescan": false,
+  "oldFirst": {
+    "r9-quit": {
+      "entries": 68,
+      "matched": 68,
+      "changes": [],
+      "manifestSha256": "7c7a8bd3b211957c3b29ecc1c6472993a4e4df2924c68bc10998349dd6bd1182",
+      "passed": true
+    },
+    "r9-r1": {
+      "entries": 38,
+      "matched": 38,
+      "changes": [],
+      "manifestSha256": "5808a7f85d19044177030face311beba6f7ee1b2bfdfb6af412f0686e14caeab",
+      "passed": true
+    },
+    "r9-r2": {
+      "entries": 89,
+      "matched": 89,
+      "changes": [],
+      "manifestSha256": "4644653d9e9aeb7f8ef27cdcd5e02aaf19067e930304594331d00549d38eccf7",
+      "passed": true
+    },
+    "r9-r3": {
+      "entries": 148,
+      "matched": 148,
+      "changes": [],
+      "manifestSha256": "ee47682828cf4341c6cf78b7330446ec5329186998eea42d635ee4f7b1ea8e87",
+      "passed": true
+    }
+  },
+  "oldProfiles": {
+    "R9": {
+      "entries": 63,
+      "matched": 63,
+      "changes": [],
+      "manifestSha256": "575f132e0bc44a949391c9ab7c31747e4e21e58fdb8a344dc29a00e6639ce7ee",
+      "passed": true,
+      "inventoryEqual": true,
+      "noReparse": true
+    },
+    "R1": {
+      "entries": 63,
+      "matched": 63,
+      "changes": [],
+      "manifestSha256": "575f132e0bc44a949391c9ab7c31747e4e21e58fdb8a344dc29a00e6639ce7ee",
+      "passed": true,
+      "inventoryEqual": true,
+      "noReparse": true
+    },
+    "R2": {
+      "entries": 63,
+      "matched": 63,
+      "changes": [],
+      "manifestSha256": "575f132e0bc44a949391c9ab7c31747e4e21e58fdb8a344dc29a00e6639ce7ee",
+      "passed": true,
+      "inventoryEqual": true,
+      "noReparse": true
+    },
+    "R3afterW2": {
+      "entries": 65,
+      "matched": 65,
+      "changes": [],
+      "manifestSha256": "43d1cc90995924157597c83502a61c7acfe0d79445304f4f003e954fc275f20d",
+      "passed": true,
+      "inventoryEqual": true,
+      "noReparse": true
+    }
+  },
+  "newFirst": {
+    "entries": 29,
+    "matched": 29,
+    "changes": [],
+    "manifestSha256": "2e3e373e50113dbb7182e32aa65a73abbe13a1b892008b2ecaf4f4747735e2da",
+    "passed": true
+  },
+  "formalSource": {
+    "entries": 8,
+    "matched": 8,
+    "changes": [],
+    "manifestSha256": "7b1a207b0356579c76f1d3f62f7fbc64cee18eec5e73ef5a081ae215e879d5af",
+    "passed": true
+  },
+  "sourceArchive": {
+    "passed": true,
+    "entries": 8
+  },
+  "matrix": {
+    "entries": 120,
+    "sameUniqueIds": true,
+    "columns": 12,
+    "changedRows": [
+      "P4B-SEC-04"
+    ],
+    "allExpectationsAndRiskUnchanged": true,
+    "ACDUnchanged": true,
+    "B": {
+      "passed": 1,
+      "failed": 3,
+      "blocked": 18,
+      "not_run": 2
+    },
+    "passed": true
+  },
+  "appendOnly": {
+    "phase-4-c12-windows-shell-report.md": true,
+    "phase-4-c12-manual-checklist.md": true
+  },
+  "formalEvidence": {
+    "comparisons": 40,
+    "passedComparisons": 39,
+    "unique": true,
+    "paired": true,
+    "cleanupCount": 6,
+    "cleanupPassed": true
+  },
+  "process": {
+    "actualRootExit": 1,
+    "rootExited": true,
+    "workers": [
+      {
+        "exited": true,
+        "pid": 3196,
+        "identityVerified": true,
+        "forced": false,
+        "nativeExitCode": 1
+      }
+    ],
+    "forced": false,
+    "timedOut": false,
+    "fullSystemResourceQuery": "not_run"
+  },
+  "stagedCount": 0,
+  "sharedDiffCheck": {
+    "exitCode": 0,
+    "outputLines": 0,
+    "stderrLines": 4
+  },
+  "passed": true,
+  "finishedAt": "2026-11-01T09:43:56.317185+08:00"
+}

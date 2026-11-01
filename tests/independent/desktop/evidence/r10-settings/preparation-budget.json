@@ -1,0 +1,9 @@
+{
+  "startedAt": "2026-11-01T09:34:25.376151+08:00",
+  "limitMinutes": 30,
+  "limitVersions": 3,
+  "currentVersion": 2,
+  "priorReadOnlyInputAuditCorrection": "GBK explicit UTF8; first retained",
+  "deadline": "2026-11-01T10:04:25.376151+08:00",
+  "formalTargetsStarted": false
+}

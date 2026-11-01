@@ -194,7 +194,7 @@
 | P4B-SEC-01 | B | F11 | security/manual | Windows/Electron | auto | 固定 Electron 构建 | BrowserWindow 配置与运行时 renderer | 静态检查并在 renderer 探测 | sandbox/contextIsolation 开启、nodeIntegration 关闭；无 `require/process/fs/child_process` 或任意 preload 对象 | P0 | blocked |
 | P4B-SEC-02 | B | F11 | security/manual | Windows/Electron | auto | CSP/导航 allowlist 冻结 | inline script、data/javascript URL、未知 origin、新窗口、外链 | 从不可信内容触发导航/打开 | CSP 阻止执行；未知导航/窗口拒绝；获准外链只由 main 安全打开，不加载进应用权限域 | P0 | blocked |
 | P4B-SEC-03 | B | F11 | contract/unit | contract | auto | preload 类型合同可导入 | 枚举 contextBridge 暴露对象 | 与 allowlist 对比并尝试直接 ipcRenderer/send/invoke | 只暴露窄 typed 方法；无通用 channel、Node require、密钥或进程控制 | P0 | blocked |
-| P4B-SEC-04 | B | F11 | security/manual | Windows/Electron | auto | IPC handlers 已注册 | 伪造 sender、错 origin、额外/错型参数、未知 channel、重复调用 | 逐项 invoke/send | sender 与参数双校验；稳定拒绝；不得启动进程、改设置、打开窗口或泄露异常 | P0 | blocked |
+| P4B-SEC-04 | B | F11 | security/manual | Windows/Electron | auto | IPC handlers 已注册 | 伪造 sender、错 origin、额外/错型参数、未知 channel、重复调用 | 逐项 invoke/send | sender 与参数双校验；稳定拒绝；不得启动进程、改设置、打开窗口或泄露异常 | P0 | failed |
 | P4B-SEC-05 | B | F07/F11 | security/manual | Windows/Electron | auto | 假 token 与假 API key | localStorage/sessionStorage/IndexedDB/renderer 内存转储、main safeStorage | 登录/刷新/重启并检查各层 | refresh/device token 与 API key 只在 main/OS 保护边界；renderer 无持久原文；日志与 crash dump 无值 | P0 | blocked |
 | P4B-SEC-06 | B | F11 | API/integration | Windows/Electron | auto | 后端绑定随机 loopback port | 只知道端口、错 nonce、错 origin、过期 access、远程地址 | 绕过 main 直连 Host | 端口不是认证；nonce/origin/token 均校验；只绑定 loopback，远程连接拒绝 | P0 | blocked |
 | P4B-SEC-07 | B | F11/F12 | security/manual | Windows/Electron | auto | 模块标签、错误、消息均含虚拟恶意 HTML | script/img/event handler/RTL/超长文本 | 渲染导航、通知、Agent panel、错误 | 文本安全编码、布局有界且不执行；不得改变 IPC、模块注册或权限 | P0 | blocked |
@@ -333,6 +333,14 @@ R9-R1（2026-10-17）增量：1017起点及固定输入通过；两次目标前�
 R9-R2（2026-10-18）增量：1077起点、局部工具2轮36/38及唯一现场Node门禁通过；同一共享argv/绝对路径/摘要/回执链在实际H1通过。H1 availability=true后operation_error，owner/outbox基线未取得，原生细分抛错点unverified；真实exit1、无forced，owned/监听/窗口0，profile保持。停止后续W2等，不判新增产品缺陷或设备不支持。产品新增0/7、辅助1/4，系列1/8和2/5，H1恢复1/1；B状态/原预期不变。见[R9-R2报告](phase-4-c12-r9-r2-path-windows-report.md)，blocked/finished供review。
 
 R9-R3（2026-10-18）增量：1192起点通过；虚拟局部工具30/30与同源H1完整7/7通过，H1前后副本63项保持、原生/helper/controller exit0、资源全零。旧operation_error精确原因仍unknown，不倒写。唯一W2首样保存dark/隐私true，页面system/off及控件system/false，四比较失败；设置取样前未写且字节不变。新P1 P4-C12-R9-R3-SETTINGS-001；CMP-06主题恢复子条件failed，原风险P2/完整预期保持，透明/OS主题/对比/动效/颜色未验；隐私开关恢复失败不代替CMP-05多屏/金额隐藏等未运行条件。B为1passed、2failed、19blocked、2not_run。普通关窗自然exit0、无forced、资源全零；controller exit1。W3/H2及后续not_run。系列产品2/8、辅助3/6；旧集合不重跑，UI-02/LAZY-001和P4-B不关闭。详见[R9-R3报告](phase-4-c12-r9-r3-storage-windows-report.md)，blocked/finished供review。
+
+#### C12-R10-SETTINGS 增量（2026-11-01）
+
+- [R10报告](phase-4-c12-r10-settings-windows-report.md)：blocked / finished。1381起点通过，固定R8构建1365/产物140/资源67及原W1资料63匹配。独立38计划唯一运行5 passed、1 failed、32 not_run；40比较39通过、1失败且配对。工具17项另列，不计产品通过。
+- P4B-SEC-04由blocked改failed：新getter真实main接线在无尾斜杠开发origin `http://127.0.0.1:5173` 下，错误接受 `http://127.0.0.1:51730/index.html`。R10-I06.DIFFERENT_PORT_REJECTED expected=ipc_origin_rejected、actual=null（未抛拒绝），建议P1 IPC-ORIGIN-001待总控裁定；矩阵原风险P0不改。未证明打包可达、导航绕过或真实数据曝光。
+- 本轮I01～I05三字段新投影、原update窄合同、错误参数/sender/生产非信任来源通过；preload和所有水合节点未运行。两文件48兼容及W2/W3/H2/W4/H3/W5/H4/W6/W7均not_run，未将设备能力未知写成不支持，不重跑或改产品。
+- B为1 passed、3 failed、18 blocked、2 not_run；UI-01历史接受保持、UI-02/CMP-06旧failed保持，SETTINGS-001及整个P4-B不关闭。120唯一ID/12列/原预期/风险及A/C/D保持。
+- 本轮产品0/6、helper0/3，系列2/8、3/6不变；root/worker实际exit1、无超时/强制，正式首错保留。旧H1/W1/退出/模块/冷入口/恢复仅引用。停止供总控review，不安装/打包/Git写入，不请求用户操作系统。
 
 ### 5.3 P4-C：日常财务纵向闭环（20 项）
 

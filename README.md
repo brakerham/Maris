@@ -1,9 +1,12 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8-R2执行方已review/finished；同包S1保存及S2原样续启均通过，S2首次四字段dark/on/dark/true且未重写设置。总控核对固定输入后发布P4-C12-R10-SETTINGS，由既有测试智能体独立复验新增设置读取/水合及原W2，再续接剩余Windows。R8执行系列package1/1、EXE3/3已停止；Tester累计产品2/8、辅助3/6，本卡最多使用剩余6/3，不增加。SETTINGS-001与P4-B未关闭，矩阵保持1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8-R2真实设置保存/续启执行方证据保持。R10独立验证5 passed、1 failed、32 not_run，确认开发origin前缀匹配错误接受不同端口，P1 IPC-ORIGIN-001；Windows与48项兼容未运行。发布P4-B7-R9-IPC-ORIGIN，由执行方只修security开发来源校验及相邻回归，最多1次新package、EXE/helper/开发服务器0。Tester停止，系列产品2/8、辅助3/6不变；SETTINGS-001与P4-B未关闭，B为1 passed、3 failed、18 blocked、2 not_run；P4-C/D未开始。
+
+- [R10来源校验缺陷裁定](docs/p4-c12-r10-ipc-origin-coordinator-review.md)：开发不同端口反例确认，生产可达与数据泄露未证实。
+- [R9来源精确校验返修任务](docs/coordination/prompts/p4-b7-r9-ipc-origin-executor.md)：仅安全谓词及回归，1次新包、动态目标0次。
 
 - [R8-R2执行方通过与独立复验裁定](docs/p4-b7-r8-r2-settings-coordinator-review.md)：S1/S2真实续启通过，固定包交测试方，不预先关闭缺陷。
-- [R10设置恢复独立复验任务](docs/coordination/prompts/p4-c12-r10-settings-windows-tester.md)：原W2四断言不变，通过后同任务续接剩余Windows。
+- [R10设置恢复独立复验任务](docs/coordination/prompts/p4-c12-r10-settings-windows-tester.md)：已blocked/finished；来源校验反例待修，W2和Windows未运行。
 
 - [R8-R1收口缺口裁定](docs/p4-b7-r8-r1-finalizer-coordinator-review.md)：身份检查保留，只修controller结果读取、输出异常和无条件释放。
 - [R8-R2收尾修正与同包续验](docs/coordination/prompts/p4-b7-r8-r2-finalizer-executor.md)：已review/finished，工具及S1/S2通过；停止执行，后续以R10独立任务为准。

@@ -1,0 +1,57 @@
+--- R9 external fixture only
++++ R10 new fixture
+@@ -7,8 +7,8 @@
+ }
+ const base='../../../apps/desktop/electron/main/';
+ const boundaryNames=['device-settings','outbox','managed-host-port','backend-supervisor','owner-session','owner-auth-client','owner-secret-store','host-client'];
+-function makeFixture(overrides:Record<string,unknown>) {
+-  vi.resetModules();
++export function makeFixture(overrides:Record<string,unknown>, origin="") {
++  vi.resetModules(); const handlers=new Map<string,any>();
+   const app:any=new EventEmitter(), live=new Set<any>(), windows:any[]=[], sent:any[]=[], trace:string[]=[], unhandled:any[]=[];
+   const count={start:0,establish:0,save:0,flush:0,stop:0,recover:0,revoke:0,refresh:0,enqueue:0,quit:0,final:0,allClosed:0,trayDestroy:0};
+   const saveGate=deferred(), stopGate=deferred();
+@@ -18,7 +18,7 @@
+   process.on('unhandledRejection',onUnhandled);
+   class Window extends EventEmitter {
+     title:string; destroyed=false; visible=false; hides=0; destroys=0;
+-    webContents={setWindowOpenHandler:()=>{},on:()=>{},send:(_channel:string,value:any)=>sent.push(value)};
++    webContents={mainFrame:{url:origin||"file:///r10-virtual/index.html"},setWindowOpenHandler:()=>{},on:()=>{},send:(_channel:string,value:any)=>sent.push(value)};
+     constructor(options:any){super();this.title=options.title;windows.push(this);live.add(this);}
+     show(){this.visible=true;} hide(){if(this.destroyed)throw Error('invalid_window_operation');this.visible=false;this.hides++;}
+     focus(){} setAlwaysOnTop(){} async loadFile(){} async loadURL(){}
+@@ -51,14 +51,14 @@
+   }
+   const dialog=vi.fn(async(_window:any,options:any)=>{prompts.push(options);const gate=deferred<{response:number}>();pending.push(gate);return gate.promise;});
+   const consoleErrors:any[]=[];
+-  const f:any={app,live,windows,sent,count,trace,unhandled,saveGate,stopGate,prompts,consoleErrors,
++  const f:any={app,live,windows,sent,count,trace,unhandled,saveGate,stopGate,prompts,consoleErrors,handlers,
+     get main(){return windows.find(w=>w.title==='Maris');},get tray(){return tray;},
+     get persisted(){return {...persisted};}, holdSave(){hold=true;},
+     respond(response:number){const gate=pending.shift();if(!gate)throw Error('missing_prompt');gate.resolve({response});},
+     trayQuit(){const entry=menu.find(m=>m.label==='退出');if(!entry)throw Error('missing_tray_entry');entry.click();},
+     async start(){
+       vi.stubEnv('MARIS_E2E','');vi.stubEnv('MARIS_E2E_EXIT_MS','');vi.stubEnv('MARIS_EXTERNAL_HOST_URL','');vi.stubEnv('MARIS_EXTERNAL_HOST_NONCE','');
+-      for(const name of ['MAIN_WINDOW','COMPANION_WINDOW']){vi.stubGlobal(name+'_VITE_DEV_SERVER_URL','');vi.stubGlobal(name+'_VITE_NAME',name.toLowerCase());}
++      for(const name of ['MAIN_WINDOW','COMPANION_WINDOW']){vi.stubGlobal(name+'_VITE_DEV_SERVER_URL',origin);vi.stubGlobal(name+'_VITE_NAME',name.toLowerCase());}
+       vi.spyOn(console,'error').mockImplementation((...args)=>consoleErrors.push(args));
+       const actual=await import('../../../apps/desktop/electron/main/device-settings');
+       persisted={...actual.defaultSettings,closePolicy:'quit',closeHintShown:false,companionVisible:true,...overrides};
+@@ -83,7 +83,7 @@
+       }
+       class Host {setAccessToken(){} async modules(){return [{module_id:'daily_finance',version:'1.0.0',enabled:true,profile_ids:['daily_finance.assistant@1'],api_prefixes:['/api/v1/finance'],settings_schema_version:1}];}}
+       class Port {}
+-      vi.doMock('electron',()=>({app,BrowserWindow:Window,Tray,dialog:{showMessageBox:dialog},ipcMain:{handle(){}},
++      vi.doMock('electron',()=>({app,BrowserWindow:Window,Tray,dialog:{showMessageBox:dialog},ipcMain:{handle:(channel:string,handler:any)=>handlers.set(channel,handler)},
+         Menu:{buildFromTemplate:(v:any)=>v},nativeImage:{createFromDataURL(){}},safeStorage:{},shell:{},
+         screen:{getPrimaryDisplay:()=>({workArea:{x:0,y:0,width:1280,height:800}})},
+         session:{defaultSession:{setPermissionRequestHandler(){},setPermissionCheckHandler(){}}}}));
+@@ -103,7 +103,7 @@
+       // Cleanup cannot stand in for successful product exit.
+       disposing=true;saveGate.resolve();stopGate.resolve();
+       while(pending.length)pending.shift().resolve({response:2});await tick();
+-      app.removeAllListeners();
++      app.removeAllListeners(); handlers.clear();
+       for(const w of [...live]){w.removeAllListeners();w.destroy();}
+       if(tray&&!tray.destroyed)tray.destroy();
+       process.off('unhandledRejection',onUnhandled);

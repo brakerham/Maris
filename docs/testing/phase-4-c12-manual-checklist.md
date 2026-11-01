@@ -190,3 +190,16 @@ H1约8.207秒自然异常退出，无强制结束，最终owned/监听/窗口0�
 随后同任务唯一W2在首次设置界面比较失败：保存dark/隐私true，实际页面system/off、主题控件system/隐私checkbox false；设置取样前未写入且字节不变。登记P1 P4-C12-R9-R3-SETTINGS-001，四比较来自同一首样。产品普通WM_CLOSE后自然exit0、owned/listener/window=0，无强制结束；controller exit1保留失败。W3、H2、W4/H3、W5/H4、W6及剩余原生/人工条件not_run，不声称设备不支持。
 
 本轮产品1/7、辅助1/4；系列产品2/8、辅助3/6（含两次旧失败H1）。旧退出/48兼容/W1/模块/冷入口/恢复/38路径及现场Node均未重跑。B为1 passed、2 failed、19 blocked、2 not_run：CMP-06仅因主题恢复子条件改failed，其余设备子条件未验；CMP-05多屏/金额隐藏/键盘等人工条件仍not_run，隐私开关恢复失败单独记录。UI-02/LAZY-001保持。原首次材料和本文旧字节保留，最终blocked / finished供总控review，不请求用户此刻操作。
+
+
+## P4-C12-R10-SETTINGS 独立增量（2026-11-01）
+
+[R10完整报告](phase-4-c12-r10-settings-windows-report.md)：blocked / finished，交总控review。1381新起点全匹配后接单；固定R8构建1365、产物140、资源67与原W1虚拟profile63匹配，旧资料只读。
+
+独立38节点唯一执行5 passed、1 failed、32 not_run；40条比较39通过。首错R10-I06.DIFFERENT_PORT_REJECTED：开发来源配置为http://127.0.0.1:5173（无尾斜杠）时，实际main新设置getter对http://127.0.0.1:51730/index.html未拒绝，expected=ipc_origin_rejected、actual=null。提出P1 P4-C12-R10-IPC-ORIGIN-001，待总控定级；这是合同反例，不是工具故障/设备不支持，不外推为打包攻击可达或真实数据泄露。
+
+来源失败后停止。新preload/水合32节点、指定两文件48兼容、W2四首样与W3/H2/W4/H3/W5/H4/W6/W7均未执行；SETTINGS-001旧四条失败保持，未建议关闭。设备UIA/Tray/chunk能力未尝试，不选择降级分支、不要求用户立即操作。旧H1、W1、退出/48、模块/冷入口/恢复不重跑。
+
+本轮产品0/6、helper0/3，系列产品2/8、helper3/6；没有新外部profile或数据库。独立CLI root29676/worker3196实际exit1，无超时/强杀，6节点finally均完成。工具17项检查单列；首次UTF8/GBK输入审计错误及新v2保持，不覆写首次源码或正式结果。
+
+矩阵仅SEC-04改failed，B为1 passed、3 failed、18 blocked、2 not_run；原24项完整要求及未验人工范围不变。不修改产品/依赖/包，不安装/打包/Git写入，不关闭P4-B、不自动启动其他角色。

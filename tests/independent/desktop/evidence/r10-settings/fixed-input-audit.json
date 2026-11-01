@@ -1,0 +1,73 @@
+{
+  "at": "2026-11-01T09:34:26.950659+08:00",
+  "fixed": {
+    "buildSource": {
+      "base": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace",
+      "manifest": "C:\\MarisSettingsR8\\R8-20261019-103900\\evidence\\static\\workspace-source.sha256",
+      "entries": 1365,
+      "matched": 1365,
+      "sha256": "c880730b84d726dec41e077867e44e942855ba60790e3a0ddb38940b89efd1d4",
+      "changes": [],
+      "passed": true
+    },
+    "out": {
+      "base": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\apps\\desktop\\out\\Maris-win32-x64",
+      "manifest": "C:\\MarisSettingsR8\\R8-20261019-103900\\evidence\\static\\out-manifest-v4.tsv",
+      "entries": 140,
+      "matched": 140,
+      "sha256": "8afdd6d3e7c928912b48acedb2d7c1931607e47f32e549a67e92d04eff142409",
+      "changes": [],
+      "passed": true
+    },
+    "resources": {
+      "base": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\resources",
+      "manifest": "C:\\MarisSettingsR8\\R8-20261019-103900\\evidence\\static\\python-resources-v4.tsv",
+      "entries": 67,
+      "matched": 67,
+      "sha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1",
+      "changes": [],
+      "passed": true
+    }
+  },
+  "singles": [
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\Maris.exe",
+      "sha256": "c80d27c8e31fa60df91065a770e669a553260cf8f883c55a0a7f83f8a430736b",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisSettingsR8\\R8-20261019-103900\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\resources\\app.asar",
+      "sha256": "05cdad34ba60b59773eebe671156c96260e69354568b9942da59058641f9c0b2",
+      "passed": true
+    },
+    {
+      "path": "D:\\CodeX_gap\\wife-system\\pnpm-lock.yaml",
+      "sha256": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a",
+      "passed": true
+    },
+    {
+      "path": "C:/MarisSettingsR8/R8-R2-20261030-040716/evidence/closeout.json",
+      "sha256": "7f1c23ab0c9cbfa578b5e9b136ec3b728b17917f4621917ca20882eff78edf24",
+      "passed": true
+    },
+    {
+      "path": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r3\\helper-H1\\native-result.json",
+      "sha256": "f6c493c244f18832b0e69e5fa7c45a09108e304bd72fb685951c92252b7a62e3",
+      "passed": true
+    }
+  ],
+  "oldW1Profile": {
+    "base": "C:\\MarisC12\\C12-R9-QUIT-20261016-011200",
+    "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r9-r1\\original-profile.tsv",
+    "entries": 63,
+    "matched": 63,
+    "sha256": "575f132e0bc44a949391c9ab7c31747e4e21e58fdb8a344dc29a00e6639ce7ee",
+    "changes": [],
+    "passed": true
+  },
+  "repositoryChangesSinceAcceptance": [
+    "docs/coordination/agents/tester.md"
+  ],
+  "stagedCount": 0,
+  "passed": true
+}
