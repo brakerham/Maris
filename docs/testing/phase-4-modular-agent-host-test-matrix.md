@@ -194,7 +194,7 @@
 | P4B-SEC-01 | B | F11 | security/manual | Windows/Electron | auto | 固定 Electron 构建 | BrowserWindow 配置与运行时 renderer | 静态检查并在 renderer 探测 | sandbox/contextIsolation 开启、nodeIntegration 关闭；无 `require/process/fs/child_process` 或任意 preload 对象 | P0 | blocked |
 | P4B-SEC-02 | B | F11 | security/manual | Windows/Electron | auto | CSP/导航 allowlist 冻结 | inline script、data/javascript URL、未知 origin、新窗口、外链 | 从不可信内容触发导航/打开 | CSP 阻止执行；未知导航/窗口拒绝；获准外链只由 main 安全打开，不加载进应用权限域 | P0 | blocked |
 | P4B-SEC-03 | B | F11 | contract/unit | contract | auto | preload 类型合同可导入 | 枚举 contextBridge 暴露对象 | 与 allowlist 对比并尝试直接 ipcRenderer/send/invoke | 只暴露窄 typed 方法；无通用 channel、Node require、密钥或进程控制 | P0 | blocked |
-| P4B-SEC-04 | B | F11 | security/manual | Windows/Electron | auto | IPC handlers 已注册 | 伪造 sender、错 origin、额外/错型参数、未知 channel、重复调用 | 逐项 invoke/send | sender 与参数双校验；稳定拒绝；不得启动进程、改设置、打开窗口或泄露异常 | P0 | failed |
+| P4B-SEC-04 | B | F11 | security/manual | Windows/Electron | auto | IPC handlers 已注册 | 伪造 sender、错 origin、额外/错型参数、未知 channel、重复调用 | 逐项 invoke/send | sender 与参数双校验；稳定拒绝；不得启动进程、改设置、打开窗口或泄露异常 | P0 | blocked |
 | P4B-SEC-05 | B | F07/F11 | security/manual | Windows/Electron | auto | 假 token 与假 API key | localStorage/sessionStorage/IndexedDB/renderer 内存转储、main safeStorage | 登录/刷新/重启并检查各层 | refresh/device token 与 API key 只在 main/OS 保护边界；renderer 无持久原文；日志与 crash dump 无值 | P0 | blocked |
 | P4B-SEC-06 | B | F11 | API/integration | Windows/Electron | auto | 后端绑定随机 loopback port | 只知道端口、错 nonce、错 origin、过期 access、远程地址 | 绕过 main 直连 Host | 端口不是认证；nonce/origin/token 均校验；只绑定 loopback，远程连接拒绝 | P0 | blocked |
 | P4B-SEC-07 | B | F11/F12 | security/manual | Windows/Electron | auto | 模块标签、错误、消息均含虚拟恶意 HTML | script/img/event handler/RTL/超长文本 | 渲染导航、通知、Agent panel、错误 | 文本安全编码、布局有界且不执行；不得改变 IPC、模块注册或权限 | P0 | blocked |
@@ -390,6 +390,14 @@ R9-R3（2026-10-18）增量：1192起点通过；虚拟局部工具30/30与同�
 | P4D-CAL-02 | D | F16；U07 | API/integration | SQLite | auto | snapshot port 可返回缺项 | 缺余额、目标、月支出、陈旧 as_of | 调用工具/页面 | 明确缺失/数据日期，不猜值、不除零、不让模型补金额；无写入 | P1 | not_run |
 | P4D-CAL-03 | D | F16；U07 | contract/unit | contract | auto | 公式与舍入待冻结后绑定 | 0、负值、target=current、current>target、极大值、零月支出 | 参数化计算 | 边界按唯一规则返回/拒绝，无 float/溢出/负月数；gap 不被静默截错 | P1 | not_run |
 | P4D-CAL-04 | D | F16；U07 | security/manual | API | auto | 监控所有工具/表/网络 adapter | 正常与缺失 fixture、诱导买股/交易/改目标 | 运行 wealth Agent 和页面动作 | 不接行情、不写账/目标、不推荐证券、不调用网络；只解释确定性虚拟结果和限制 | P0 | not_run |
+
+
+#### C12-R11-ORIGIN-SETTINGS 增量（2026-11-02）
+
+- [R11报告](phase-4-c12-r11-origin-settings-windows-report.md)：1438新起点全匹配；原I06三比较、O01～O08八来源及原未执行I07/U01～31共41独立节点、321比较全部通过；旧I01～05只引用。四文件109兼容另列通过，不替代独立证据。
+- SEC-04本轮由failed转blocked：原来源反例与新增来源边界独立通过，建议总控限定关闭IPC-ORIGIN-001；仍缺原整项Windows/未知channel/重复调用等完整组合，不签passed。原R10首次失败原样保留，不声明生产包开发来源可达。
+- Windows目标前只读process_query首次CimException，HResult=-2146233088，安全code=unknown。按卡停止，不归产品、不判device unavailable；W2四页面首样与W3/H2/W4/H3/W5/H4/W6/W7均not_run。独立水合通过不关闭SETTINGS-001，UI-02与CMP-06旧failed保持。
+- B=1 passed、2 failed、19 blocked、2 not_run；120唯一ID、12列、全部原预期/风险及A/C/D保持。产品新增0/6、helper0/3，系列2/8、3/6；没有新Windows副本、窗口操作或全机资源零结论。blocked / finished供总控review，不自行关闭P4-B。
 
 ## 6. 执行方与独立测试所有权
 

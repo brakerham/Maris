@@ -1,0 +1,410 @@
+{
+  "startedAt": "2026-11-02T18:01:14.469679+08:00",
+  "repository": {
+    "entries": 1438,
+    "matched": 1434,
+    "changes": [
+      "docs/coordination/agents/tester.md",
+      "docs/testing/phase-4-c12-manual-checklist.md",
+      "docs/testing/phase-4-c12-windows-shell-report.md",
+      "docs/testing/phase-4-modular-agent-host-test-matrix.md"
+    ],
+    "manifestSha256": "5286d9c16aa862f61046080fafae3d5a37f205d2e1a4b27ed6d4616fb1524fc1",
+    "passed": true
+  },
+  "fixed": {
+    "delivery": {
+      "base": "D:\\CodeX_gap\\wife-system",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\delivery-seven.sha256",
+      "entries": 7,
+      "matched": 7,
+      "changes": [],
+      "sha256": "7fe3eb3c3f03f38fa78af110507b27e0d0b032fe95d52d3a1df8a315c6aec9b3",
+      "passed": true
+    },
+    "buildInput": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\static\\workspace-source.sha256",
+      "entries": 1432,
+      "matched": 1432,
+      "changes": [],
+      "sha256": "492e1a1e9d3c9885a7e7f486c8d6a9c4dc57d83981ef5c053548072d599a3a1a",
+      "passed": true
+    },
+    "out": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\apps\\desktop\\out\\Maris-win32-x64",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\static\\out-manifest-v4.tsv",
+      "entries": 140,
+      "matched": 140,
+      "changes": [],
+      "sha256": "8afdd6d3e7c928912b48acedb2d7c1931607e47f32e549a67e92d04eff142409",
+      "passed": true
+    },
+    "pythonResources": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\resources",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\static\\python-resources-v4.tsv",
+      "entries": 67,
+      "matched": 67,
+      "changes": [],
+      "sha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1",
+      "passed": true
+    },
+    "tools": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\tools",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\tools.sha256",
+      "entries": 7,
+      "matched": 7,
+      "changes": [],
+      "sha256": "b8d6dfc119b86d44ee186aa4eaf04d29ba0cdd2c938b1ac5756d5fbafeaefcc0",
+      "passed": true
+    },
+    "runtimeTools": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\runtime-tools.sha256",
+      "entries": 3,
+      "matched": 3,
+      "changes": [],
+      "sha256": "fa5ef973bf23d99c3b1b398dca8004307ef6aebe30a6257254f634437f30ef03",
+      "passed": true
+    },
+    "developmentInputs": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\development-inputs.sha256",
+      "entries": 7,
+      "matched": 7,
+      "changes": [],
+      "sha256": "315646680ef31ca1daca8b2252aba3a698037b02f270729544c5249d6eadf7bd",
+      "passed": true
+    },
+    "evidence": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\evidence-manifest.tsv",
+      "entries": 75,
+      "matched": 75,
+      "changes": [],
+      "sha256": "5a4b4bba8bb654a699377f66a1768a7669192cd4f6b1b29bc3382112941d0839",
+      "passed": true
+    },
+    "R10delivery": {
+      "base": "D:\\CodeX_gap\\wife-system",
+      "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r10-settings\\delivery.sha256",
+      "entries": 50,
+      "matched": 50,
+      "changes": [],
+      "sha256": "f128dac56c7743a9d2928532e7cfe840a49a11468cb284911875b7fa0a734a21",
+      "passed": true
+    },
+    "R10source": {
+      "base": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop",
+      "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r10-settings\\independent-source.sha256",
+      "entries": 8,
+      "matched": 8,
+      "changes": [],
+      "sha256": "7b1a207b0356579c76f1d3f62f7fbc64cee18eec5e73ef5a081ae215e879d5af",
+      "passed": true
+    },
+    "R10first": {
+      "base": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r10-settings",
+      "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r10-settings\\first-materials.sha256",
+      "entries": 29,
+      "matched": 29,
+      "changes": [],
+      "sha256": "2e3e373e50113dbb7182e32aa65a73abbe13a1b892008b2ecaf4f4747735e2da",
+      "passed": true
+    }
+  },
+  "toolsAndSingles": [
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\vitest\\vitest.mjs",
+      "sha256": "39db22f579acf5639bbb17a261408debbde03f4692c0c439e77e7f13aeba74d6",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\vitest\\dist\\index.js",
+      "sha256": "ccd7b97d999c6c1be303de2f7f486f2e5b8216444a39f0f8f4ad30f03e700b0d",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\vite\\package.json",
+      "sha256": "e5ed0f85215f871fe22a48987dcd77fcfbe14064a53c0c9f7f48186a6b7e2cf0",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\esbuild\\lib\\main.js",
+      "sha256": "61ec0ba144ff93f4bf0e96ad6fab6f430ede0aa13e27ace8063ed63ba416b3cd",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\jsdom\\lib\\api.js",
+      "sha256": "bcf577e0fe48db5b9b6a917228f8be8e62d83696b87eb6711d705d28772adba7",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\jsdom\\package.json",
+      "sha256": "72dff7780a7791071ebd9cb219262522fc28d0ce5570c41dc7bb69b2700db067",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\react\\package.json",
+      "sha256": "6e003e4e9ed25afa7fdd55613f8aa877cefa9b359d9c13f81ee704030248e24e",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\react-dom\\package.json",
+      "sha256": "136d4af63de473392ea79d6a21932b0ed9eb37fe518ce70f4621250f3d79e9bb",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\react-router\\package.json",
+      "sha256": "41a544b0e3d42034cbef64e7003ce7a7543d863d323c7b4e762a3debd61b90a0",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\zod\\package.json",
+      "sha256": "a046ed85fa09571dba539fee9ef236152d12dabd1f229b014ec3bd2ebaad9000",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\electron\\dist\\electron.exe",
+      "sha256": "bd14928e0728366fd3f41499cb398ff3f4304dab259a3e605077899a6f8c748e",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\playwright\\index.js",
+      "sha256": "4e98f65f0a9d9bcab8cffc0c5cfdd87fd3f5b0be74fc494ff166a466b204cd44",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\playwright\\package.json",
+      "sha256": "8bc2ddebe8d9b051b9ecb87d62c6c63877e59d08617f32c3215681ca8bb70998",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\tools\\node\\node.exe",
+      "sha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\Maris.exe",
+      "sha256": "c80d27c8e31fa60df91065a770e669a553260cf8f883c55a0a7f83f8a430736b",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\resources\\app.asar",
+      "sha256": "05cdad34ba60b59773eebe671156c96260e69354568b9942da59058641f9c0b2",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\pnpm-lock.yaml",
+      "sha256": "5ddc0a93d097e0e67c6fa7c48eef250bb5be6b18530f0871d620434ef93dcb4a",
+      "passed": true
+    }
+  ],
+  "oldFirst": {
+    "r9-quit": {
+      "entries": 68,
+      "matched": 68,
+      "changes": [],
+      "manifestSha256": "7c7a8bd3b211957c3b29ecc1c6472993a4e4df2924c68bc10998349dd6bd1182",
+      "passed": true
+    },
+    "r9-r1": {
+      "entries": 38,
+      "matched": 38,
+      "changes": [],
+      "manifestSha256": "5808a7f85d19044177030face311beba6f7ee1b2bfdfb6af412f0686e14caeab",
+      "passed": true
+    },
+    "r9-r2": {
+      "entries": 89,
+      "matched": 89,
+      "changes": [],
+      "manifestSha256": "4644653d9e9aeb7f8ef27cdcd5e02aaf19067e930304594331d00549d38eccf7",
+      "passed": true
+    },
+    "r9-r3": {
+      "entries": 148,
+      "matched": 148,
+      "changes": [],
+      "manifestSha256": "ee47682828cf4341c6cf78b7330446ec5329186998eea42d635ee4f7b1ea8e87",
+      "passed": true
+    }
+  },
+  "oldProfiles": {
+    "W1": {
+      "entries": 63,
+      "matched": 63,
+      "changes": [],
+      "manifestSha256": "575f132e0bc44a949391c9ab7c31747e4e21e58fdb8a344dc29a00e6639ce7ee",
+      "passed": true,
+      "inventoryEqual": true,
+      "noReparse": true
+    },
+    "R1": {
+      "entries": 63,
+      "matched": 63,
+      "changes": [],
+      "manifestSha256": "575f132e0bc44a949391c9ab7c31747e4e21e58fdb8a344dc29a00e6639ce7ee",
+      "passed": true,
+      "inventoryEqual": true,
+      "noReparse": true
+    },
+    "R2": {
+      "entries": 63,
+      "matched": 63,
+      "changes": [],
+      "manifestSha256": "575f132e0bc44a949391c9ab7c31747e4e21e58fdb8a344dc29a00e6639ce7ee",
+      "passed": true,
+      "inventoryEqual": true,
+      "noReparse": true
+    },
+    "R3afterW2": {
+      "entries": 65,
+      "matched": 65,
+      "changes": [],
+      "manifestSha256": "43d1cc90995924157597c83502a61c7acfe0d79445304f4f003e954fc275f20d",
+      "passed": true,
+      "inventoryEqual": true,
+      "noReparse": true
+    }
+  },
+  "source": {
+    "independent": {
+      "entries": 49,
+      "changed": [],
+      "sha256": "6e574c9784fae35c0b8243316bc41fb4fc6870fd37470378461343a766b91a63",
+      "passed": true
+    },
+    "compat": {
+      "entries": 49,
+      "changed": [],
+      "sha256": "6e574c9784fae35c0b8243316bc41fb4fc6870fd37470378461343a766b91a63",
+      "passed": true
+    }
+  },
+  "firstMaterials": {
+    "base": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings",
+    "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings\\first-materials.sha256",
+    "entries": 90,
+    "matched": 90,
+    "changes": [],
+    "sha256": "7de69c4d6c2826a788305602e02c81f8ec1a63562afb0c18662bea5d3252b26a",
+    "passed": true
+  },
+  "sourceArchive": {
+    "base": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings",
+    "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings\\source-archive.sha256",
+    "entries": 50,
+    "matched": 50,
+    "changes": [],
+    "sha256": "bac56bac385722d270877290e79930bbeae321067feae870f1669714cfbf6c2b",
+    "passed": true
+  },
+  "matrix": {
+    "entries": 120,
+    "columns": 12,
+    "uniqueSameIds": true,
+    "changedRows": [
+      "P4B-SEC-04"
+    ],
+    "expectationsAndRiskUnchanged": true,
+    "ACDUnchanged": true,
+    "B": {
+      "passed": 1,
+      "failed": 2,
+      "blocked": 19,
+      "not_run": 2
+    },
+    "passed": true
+  },
+  "appendOnly": {
+    "phase-4-c12-windows-shell-report.md": true,
+    "phase-4-c12-manual-checklist.md": true
+  },
+  "comparisons": {
+    "count": 321,
+    "passedCount": 321,
+    "unique": true,
+    "paired": true,
+    "cleanupCount": 41,
+    "cleanupPassed": true
+  },
+  "runs": {
+    "independent": {
+      "nodes": 41,
+      "failed": 0,
+      "notRun": 0,
+      "rootExitCode": 0,
+      "rootExited": true,
+      "workers": [
+        {
+          "identityVerified": true,
+          "nativeExitCode": 1,
+          "forced": false,
+          "pid": 23388,
+          "exited": true
+        }
+      ],
+      "forced": false,
+      "timedOut": false,
+      "passed": true
+    },
+    "compat": {
+      "nodes": 109,
+      "failed": 0,
+      "notRun": 0,
+      "rootExitCode": 0,
+      "rootExited": true,
+      "workers": [
+        {
+          "identityVerified": true,
+          "forced": false,
+          "exited": true,
+          "pid": 19760,
+          "nativeExitCode": 0
+        },
+        {
+          "identityVerified": true,
+          "forced": false,
+          "exited": true,
+          "pid": 28060,
+          "nativeExitCode": 1
+        },
+        {
+          "identityVerified": true,
+          "forced": false,
+          "exited": true,
+          "pid": 12524,
+          "nativeExitCode": 1
+        },
+        {
+          "identityVerified": true,
+          "forced": false,
+          "exited": true,
+          "pid": 26768,
+          "nativeExitCode": 1
+        }
+      ],
+      "forced": false,
+      "timedOut": false,
+      "passed": true
+    }
+  },
+  "windows": {
+    "productStarts": 0,
+    "nativeHelperStarts": 0,
+    "seriesProducts": 2,
+    "seriesHelpers": 3,
+    "profileCreated": false,
+    "resourceQuery": "failed at process_query; unknown CimException; no global-zero claim",
+    "acceptance": "not_run"
+  },
+  "stagedCount": 0,
+  "sharedDiffCheck": {
+    "exitCode": 0,
+    "stdoutLines": 0,
+    "stderrLines": 3
+  },
+  "passed": true,
+  "finishedAt": "2026-11-02T18:01:18.211313+08:00"
+}

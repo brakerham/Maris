@@ -1,0 +1,32 @@
+{
+  "rootPid": 30544,
+  "forced": false,
+  "workers": [
+    {
+      "identityVerified": true,
+      "nativeExitCode": 1,
+      "forced": false,
+      "pid": 23388,
+      "exited": true
+    }
+  ],
+  "rootExited": true,
+  "streams": [
+    {
+      "complete": true,
+      "name": "stdout",
+      "rawBytes": 57
+    },
+    {
+      "complete": true,
+      "name": "stderr",
+      "rawBytes": 0
+    }
+  ],
+  "timedOut": false,
+  "scope": "independent",
+  "failure": null,
+  "productStarts": 0,
+  "rootExitCode": 0,
+  "durationMs": 4547
+}

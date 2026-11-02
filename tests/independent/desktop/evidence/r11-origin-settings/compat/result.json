@@ -1,0 +1,670 @@
+{
+  "mode": "compat",
+  "nodes": [
+    {
+      "id": "accepts exact main-frame sender and strict schema",
+      "state": "pass",
+      "durationMs": 1.5863999999999976,
+      "errors": []
+    },
+    {
+      "id": "rejects unknown action, extra args, origin, subframe, and sender",
+      "state": "pass",
+      "durationMs": 1.1144999999999925,
+      "errors": []
+    },
+    {
+      "id": "rejects extra object fields",
+      "state": "pass",
+      "durationMs": 0.9201999999999941,
+      "errors": []
+    },
+    {
+      "id": "R9 original counterexample changes only the same mainFrame URL",
+      "state": "pass",
+      "durationMs": 0.41109999999997626,
+      "errors": []
+    },
+    {
+      "id": "rejects the actual main-frame origin before parameter parsing: http://127.0.0.1:51730/",
+      "state": "pass",
+      "durationMs": 0.31620000000000914,
+      "errors": []
+    },
+    {
+      "id": "rejects the actual main-frame origin before parameter parsing: https://127.0.0.1:5173/",
+      "state": "pass",
+      "durationMs": 0.17240000000001032,
+      "errors": []
+    },
+    {
+      "id": "rejects the actual main-frame origin before parameter parsing: http://localhost:5173/",
+      "state": "pass",
+      "durationMs": 0.14169999999998595,
+      "errors": []
+    },
+    {
+      "id": "rejects the actual main-frame origin before parameter parsing: http://user@127.0.0.1:5173/",
+      "state": "pass",
+      "durationMs": 0.09780000000000655,
+      "errors": []
+    },
+    {
+      "id": "rejects the actual main-frame origin before parameter parsing: blob:http://127.0.0.1:5173/id",
+      "state": "pass",
+      "durationMs": 0.10589999999999122,
+      "errors": []
+    },
+    {
+      "id": "rejects the actual main-frame origin before parameter parsing: /relative",
+      "state": "pass",
+      "durationMs": 0.16380000000000905,
+      "errors": []
+    },
+    {
+      "id": "rejects the actual main-frame origin before parameter parsing: http://[broken",
+      "state": "pass",
+      "durationMs": 0.09049999999999159,
+      "errors": []
+    },
+    {
+      "id": "preserves sender priority and strict getter/update contracts at a trusted origin",
+      "state": "pass",
+      "durationMs": 0.45150000000001,
+      "errors": []
+    },
+    {
+      "id": "keeps renderer sandboxed without Node integration",
+      "state": "pass",
+      "durationMs": 1.3301000000000016,
+      "errors": []
+    },
+    {
+      "id": "denies renderer network and unknown origins",
+      "state": "pass",
+      "durationMs": 0.281099999999995,
+      "errors": []
+    },
+    {
+      "id": "keeps process, network, token, nonce, PID, port, and paths out of the preload bridge",
+      "state": "pass",
+      "durationMs": 0.4789999999999992,
+      "errors": []
+    },
+    {
+      "id": "R9 original counterexample keeps the same-origin positive control",
+      "state": "pass",
+      "durationMs": 0.1419999999999959,
+      "errors": []
+    },
+    {
+      "id": "accepts normalized same origin: http://127.0.0.1:5173 -> http://127.0.0.1:5173/index.html",
+      "state": "pass",
+      "durationMs": 0.10550000000000637,
+      "errors": []
+    },
+    {
+      "id": "accepts normalized same origin: http://127.0.0.1:5173/ -> http://127.0.0.1:5173/other?q=1#settings",
+      "state": "pass",
+      "durationMs": 0.07489999999999952,
+      "errors": []
+    },
+    {
+      "id": "accepts normalized same origin: http://127.0.0.1:5173/base?config=1#x -> http://127.0.0.1:5173/elsewhere?q=2#y",
+      "state": "pass",
+      "durationMs": 0.07860000000000866,
+      "errors": []
+    },
+    {
+      "id": "accepts normalized same origin: http://LOCALHOST:80/ -> http://localhost/index.html",
+      "state": "pass",
+      "durationMs": 0.06640000000000157,
+      "errors": []
+    },
+    {
+      "id": "accepts normalized same origin: http://localhost -> http://LOCALHOST:80/index.html",
+      "state": "pass",
+      "durationMs": 0.09350000000000591,
+      "errors": []
+    },
+    {
+      "id": "accepts normalized same origin: https://LOCALHOST:443/ -> https://localhost/index.html",
+      "state": "pass",
+      "durationMs": 0.11260000000000048,
+      "errors": []
+    },
+    {
+      "id": "accepts normalized same origin: https://localhost -> https://LOCALHOST:443/index.html",
+      "state": "pass",
+      "durationMs": 0.061499999999995225,
+      "errors": []
+    },
+    {
+      "id": "accepts normalized same origin: http://[::1]:5173 -> http://[::1]:5173/index.html",
+      "state": "pass",
+      "durationMs": 0.07760000000000389,
+      "errors": []
+    },
+    {
+      "id": "accepts normalized same origin: http://127.0.0.1:51730 -> http://127.0.0.1:51730/index.html",
+      "state": "pass",
+      "durationMs": 0.04829999999999757,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://127.0.0.1:5173 -> http://127.0.0.1:51730/index.html",
+      "state": "pass",
+      "durationMs": 0.537700000000001,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://127.0.0.1:5173/ -> http://127.0.0.1:51730/index.html",
+      "state": "pass",
+      "durationMs": 0.10999999999999943,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://127.0.0.1:51730 -> http://127.0.0.1:5173/index.html",
+      "state": "pass",
+      "durationMs": 0.06409999999999627,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost:5173 -> https://localhost:5173/index.html",
+      "state": "pass",
+      "durationMs": 0.05369999999999209,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: https://localhost:5173 -> http://localhost:5173/index.html",
+      "state": "pass",
+      "durationMs": 0.049000000000006594,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> http://localhost:81/",
+      "state": "pass",
+      "durationMs": 0.04569999999999652,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: https://localhost -> https://localhost:444/",
+      "state": "pass",
+      "durationMs": 0.054400000000001114,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost:5173 -> http://127.0.0.1:5173/",
+      "state": "pass",
+      "durationMs": 0.04989999999999384,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://127.0.0.1:5173 -> http://localhost:5173/",
+      "state": "pass",
+      "durationMs": 0.06179999999999097,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> http://localhost.evil.invalid/",
+      "state": "pass",
+      "durationMs": 0.0782999999999987,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost.evil.invalid -> http://localhost/",
+      "state": "pass",
+      "durationMs": 0.056100000000000705,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> http://localhost@evil.invalid/",
+      "state": "pass",
+      "durationMs": 0.5852000000000004,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> http://user@localhost/",
+      "state": "pass",
+      "durationMs": 0.11020000000000607,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> http://user:password@localhost/",
+      "state": "pass",
+      "durationMs": 0.05689999999999884,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://user@localhost -> http://localhost/",
+      "state": "pass",
+      "durationMs": 0.043400000000005434,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://user:password@localhost -> http://user:password@localhost/",
+      "state": "pass",
+      "durationMs": 0.03889999999999816,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> blob:http://localhost/virtual-id",
+      "state": "pass",
+      "durationMs": 0.0391000000000048,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: blob:http://localhost/virtual-id -> blob:http://localhost/virtual-id",
+      "state": "pass",
+      "durationMs": 0.0379999999999967,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: data:text/plain,virtual -> data:text/plain,virtual",
+      "state": "pass",
+      "durationMs": 0.03629999999999711,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: javascript:void(0) -> javascript:void(0)",
+      "state": "pass",
+      "durationMs": 0.03670000000001039,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: ftp://localhost -> ftp://localhost/file",
+      "state": "pass",
+      "durationMs": 0.05159999999999343,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> data:text/plain,virtual",
+      "state": "pass",
+      "durationMs": 0.03900000000000148,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> javascript:void(0)",
+      "state": "pass",
+      "durationMs": 0.054100000000005366,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> ",
+      "state": "pass",
+      "durationMs": 0.08490000000000464,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> /relative",
+      "state": "pass",
+      "durationMs": 0.05540000000000589,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://localhost -> http://[broken",
+      "state": "pass",
+      "durationMs": 0.06650000000000489,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: http://[broken -> http://localhost/",
+      "state": "pass",
+      "durationMs": 0.05339999999999634,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: /relative -> /relative/index",
+      "state": "pass",
+      "durationMs": 0.046599999999997976,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing:  -> http://localhost/",
+      "state": "pass",
+      "durationMs": 0.05740000000000123,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: undefined -> http://localhost/",
+      "state": "pass",
+      "durationMs": 0.04800000000000182,
+      "errors": []
+    },
+    {
+      "id": "fails closed without throwing: null -> null",
+      "state": "pass",
+      "durationMs": 0.050399999999996226,
+      "errors": []
+    },
+    {
+      "id": "preserves production schemes and denies similar maris hosts",
+      "state": "pass",
+      "durationMs": 0.14880000000000848,
+      "errors": []
+    },
+    {
+      "id": "restores persisted dark and privacy before showing the real Shell and module page",
+      "state": "pass",
+      "durationMs": 110.47919999999999,
+      "errors": []
+    },
+    {
+      "id": "hydrates before the first visible page (strict=false theme=dark privacy=true)",
+      "state": "pass",
+      "durationMs": 15.562199999999848,
+      "errors": []
+    },
+    {
+      "id": "hydrates before the first visible page (strict=true theme=dark privacy=true)",
+      "state": "pass",
+      "durationMs": 17.042599999999993,
+      "errors": []
+    },
+    {
+      "id": "hydrates before the first visible page (strict=false theme=light privacy=false)",
+      "state": "pass",
+      "durationMs": 11.286299999999983,
+      "errors": []
+    },
+    {
+      "id": "hydrates before the first visible page (strict=true theme=high_contrast privacy=true)",
+      "state": "pass",
+      "durationMs": 17.034400000000005,
+      "errors": []
+    },
+    {
+      "id": "hydrates before the first visible page (strict=false theme=system privacy=false)",
+      "state": "pass",
+      "durationMs": 9.597500000000082,
+      "errors": []
+    },
+    {
+      "id": "holds content and controls until a valid delayed read (strict=false)",
+      "state": "pass",
+      "durationMs": 12.088700000000017,
+      "errors": []
+    },
+    {
+      "id": "holds content and controls until a valid delayed read (strict=true)",
+      "state": "pass",
+      "durationMs": 13.431800000000067,
+      "errors": []
+    },
+    {
+      "id": "fails safely without defaults, writes or automatic retry: missing snapshot",
+      "state": "pass",
+      "durationMs": 3.394599999999855,
+      "errors": []
+    },
+    {
+      "id": "fails safely without defaults, writes or automatic retry: null",
+      "state": "pass",
+      "durationMs": 2.2295000000001437,
+      "errors": []
+    },
+    {
+      "id": "fails safely without defaults, writes or automatic retry: missing theme",
+      "state": "pass",
+      "durationMs": 2.2701999999999316,
+      "errors": []
+    },
+    {
+      "id": "fails safely without defaults, writes or automatic retry: missing privacy",
+      "state": "pass",
+      "durationMs": 2.184600000000046,
+      "errors": []
+    },
+    {
+      "id": "fails safely without defaults, writes or automatic retry: missing motion",
+      "state": "pass",
+      "durationMs": 1.8778999999999542,
+      "errors": []
+    },
+    {
+      "id": "fails safely without defaults, writes or automatic retry: wrong theme",
+      "state": "pass",
+      "durationMs": 1.9062999999998738,
+      "errors": []
+    },
+    {
+      "id": "fails safely without defaults, writes or automatic retry: wrong privacy",
+      "state": "pass",
+      "durationMs": 1.9912999999999101,
+      "errors": []
+    },
+    {
+      "id": "fails safely without defaults, writes or automatic retry: wrong motion",
+      "state": "pass",
+      "durationMs": 2.444200000000137,
+      "errors": []
+    },
+    {
+      "id": "fails safely without defaults, writes or automatic retry: extra field",
+      "state": "pass",
+      "durationMs": 2.3613000000000284,
+      "errors": []
+    },
+    {
+      "id": "contains rejection and never publishes a default Shell",
+      "state": "pass",
+      "durationMs": 2.264099999999871,
+      "errors": []
+    },
+    {
+      "id": "contains synchronous throw and never publishes a default Shell",
+      "state": "pass",
+      "durationMs": 2.0062000000000353,
+      "errors": []
+    },
+    {
+      "id": "contains missing getter and never publishes a default Shell",
+      "state": "pass",
+      "durationMs": 2.399800000000141,
+      "errors": []
+    },
+    {
+      "id": "keeps empty modules separate from settings readiness and retains Agent and settings entry",
+      "state": "pass",
+      "durationMs": 65.7926,
+      "errors": []
+    },
+    {
+      "id": "does not rehydrate or reload after user settings and equal notifications/recover (strict=false)",
+      "state": "pass",
+      "durationMs": 153.10300000000007,
+      "errors": []
+    },
+    {
+      "id": "does not rehydrate or reload after user settings and equal notifications/recover (strict=true)",
+      "state": "pass",
+      "durationMs": 154.53759999999988,
+      "errors": []
+    },
+    {
+      "id": "ignores a stale StrictMode read arriving after a completed user choice",
+      "state": "pass",
+      "durationMs": 78.42970000000014,
+      "errors": []
+    },
+    {
+      "id": "ignores stale resolve/reject after unmount and a fresh mount (reject=false)",
+      "state": "pass",
+      "durationMs": 9.108699999999999,
+      "errors": []
+    },
+    {
+      "id": "ignores stale resolve/reject after unmount and a fresh mount (reject=true)",
+      "state": "pass",
+      "durationMs": 8.37779999999998,
+      "errors": []
+    },
+    {
+      "id": "does not implicitly retry a failed lazy page on settings changes or recovery",
+      "state": "pass",
+      "durationMs": 29.45230000000015,
+      "errors": []
+    },
+    {
+      "id": "R9 original counterexample rejects a different port on the same actual mainFrame",
+      "state": "pass",
+      "durationMs": 72.41429999999997,
+      "errors": []
+    },
+    {
+      "id": "rejects getter and write handlers before business effects with configuration http://127.0.0.1:5173",
+      "state": "pass",
+      "durationMs": 17.915099999999995,
+      "errors": []
+    },
+    {
+      "id": "rejects getter and write handlers before business effects with configuration http://127.0.0.1:5173/",
+      "state": "pass",
+      "durationMs": 15.083300000000008,
+      "errors": []
+    },
+    {
+      "id": "keeps companion handlers scoped to their own development origin",
+      "state": "pass",
+      "durationMs": 13.588400000000036,
+      "errors": []
+    },
+    {
+      "id": "returns fresh three-field loaded snapshots without storage, OS, Host or outbox effects",
+      "state": "pass",
+      "durationMs": 12.48660000000001,
+      "errors": []
+    },
+    {
+      "id": "reads the current settings after a successful typed update and preserves the old update receipt",
+      "state": "pass",
+      "durationMs": 13.694800000000043,
+      "errors": []
+    },
+    {
+      "id": "keeps the loaded snapshot when a write fails and does not broaden write permissions",
+      "state": "pass",
+      "durationMs": 12.980399999999975,
+      "errors": []
+    },
+    {
+      "id": "uses actual main sender, frame, origin and empty-argument checks, excluding the companion",
+      "state": "pass",
+      "durationMs": 13.368599999999958,
+      "errors": []
+    },
+    {
+      "id": "adds only the fixed zero-argument getter while keeping the existing bridge key sets",
+      "state": "pass",
+      "durationMs": 13.0899,
+      "errors": []
+    },
+    {
+      "id": "validates the new IPC channel using the actual empty tuple and identity rules",
+      "state": "pass",
+      "durationMs": 0.5709999999999695,
+      "errors": []
+    },
+    {
+      "id": "accepts the exact system snapshot without coercion",
+      "state": "pass",
+      "durationMs": 0.5536000000000172,
+      "errors": []
+    },
+    {
+      "id": "accepts the exact light snapshot without coercion",
+      "state": "pass",
+      "durationMs": 0.1711999999999989,
+      "errors": []
+    },
+    {
+      "id": "accepts the exact dark snapshot without coercion",
+      "state": "pass",
+      "durationMs": 0.17570000000000618,
+      "errors": []
+    },
+    {
+      "id": "accepts the exact high_contrast snapshot without coercion",
+      "state": "pass",
+      "durationMs": 0.12700000000000955,
+      "errors": []
+    },
+    {
+      "id": "rejects missing theme responses",
+      "state": "pass",
+      "durationMs": 0.21800000000001774,
+      "errors": []
+    },
+    {
+      "id": "rejects missing privacy responses",
+      "state": "pass",
+      "durationMs": 0.15430000000003474,
+      "errors": []
+    },
+    {
+      "id": "rejects missing motion responses",
+      "state": "pass",
+      "durationMs": 0.12530000000003838,
+      "errors": []
+    },
+    {
+      "id": "rejects invalid enum responses",
+      "state": "pass",
+      "durationMs": 0.12310000000002219,
+      "errors": []
+    },
+    {
+      "id": "rejects theme type responses",
+      "state": "pass",
+      "durationMs": 0.13960000000002992,
+      "errors": []
+    },
+    {
+      "id": "rejects motion type responses",
+      "state": "pass",
+      "durationMs": 0.12930000000000064,
+      "errors": []
+    },
+    {
+      "id": "rejects privacy type responses",
+      "state": "pass",
+      "durationMs": 0.13139999999998508,
+      "errors": []
+    },
+    {
+      "id": "rejects extra field responses",
+      "state": "pass",
+      "durationMs": 0.176400000000001,
+      "errors": []
+    },
+    {
+      "id": "rejects extra private field responses",
+      "state": "pass",
+      "durationMs": 0.26399999999995316,
+      "errors": []
+    },
+    {
+      "id": "rejects null responses",
+      "state": "pass",
+      "durationMs": 0.18720000000001846,
+      "errors": []
+    },
+    {
+      "id": "rejects array responses",
+      "state": "pass",
+      "durationMs": 0.12439999999998008,
+      "errors": []
+    }
+  ],
+  "passed": 109,
+  "failed": 0,
+  "notRun": 0,
+  "unhandledErrors": 0,
+  "moduleErrors": 0,
+  "journalError": null,
+  "formalComparisons": 0,
+  "comparisonsPassed": 0,
+  "paired": true,
+  "firstFailure": null,
+  "nodeTerminals": []
+}

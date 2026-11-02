@@ -1,0 +1,15 @@
+{
+  "node": "C:/MarisIpcR9/R9-20261101-161412/tools/node/node.exe",
+  "dependencies": "C:/MarisIpcR9/R9-20261101-161412/workspace/node_modules",
+  "cwd": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop",
+  "independentRoot": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop",
+  "compatRoot": "D:\\CodeX_gap\\wife-system\\apps\\desktop",
+  "cacheRoot": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings\\cache",
+  "nativeJsdom": true,
+  "config": "r11-origin-settings-vitest.config.mjs",
+  "scope": "41 independent once then only if all pass 4-file109 compatibility once",
+  "productStarts": 0,
+  "helperStarts": 0,
+  "seriesProductStarts": 2,
+  "seriesHelperStarts": 3
+}

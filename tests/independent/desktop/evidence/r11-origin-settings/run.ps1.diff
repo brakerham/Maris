@@ -1,0 +1,28 @@
+--- r10-settings-run.ps1
++++ r11-origin-settings-run.ps1
+@@ -3,20 +3,20 @@
+ $ownRoot=[IO.Path]::GetFullPath($PSScriptRoot)
+ if($ownRoot -ne 'D:\CodeX_gap\wife-system\tests\independent\desktop'){throw 'wrong_root'}
+ $control=Get-Content -LiteralPath 'D:\CodeX_gap\wife-system\docs\coordination\control.md' -Raw
+-if(-not $control.Contains('2026-10-31T23:15:00+08:00')){throw 'control_changed'}
+-$ev=Join-Path $ownRoot 'evidence/r10-settings'
++if(-not $control.Contains('2026-11-02T11:30:00+08:00')){throw 'control_changed'}
++$ev=Join-Path $ownRoot 'evidence/r11-origin-settings'
+ foreach($entry in Get-ChildItem -LiteralPath $ev -Force -Recurse){if($entry.Attributes -band [IO.FileAttributes]::ReparsePoint){throw 'reparse'}}
+ foreach($line in Get-Content -LiteralPath (Join-Path $ev ($Mode+'-source.sha256'))){$parts=$line -split "`t";if((Get-FileHash -LiteralPath (Join-Path $ownRoot $parts[0])).Hash.ToLowerInvariant() -ne $parts[1]){throw 'source_changed'}}
+ $out=Join-Path $ev $Mode
+ if(Test-Path -LiteralPath $out){throw 'first_exists_no_rerun'}
+ New-Item -ItemType Directory -Path $out | Out-Null
+-$node='C:\MarisSettingsR8\R8-20261019-103900\tools\node\node.exe'
++$node='C:\MarisIpcR9\R9-20261101-161412\tools\node\node.exe'
+ $utf8=[Text.UTF8Encoding]::new($false)
+ $proc=[Diagnostics.Process]::new();$proc.StartInfo=[Diagnostics.ProcessStartInfo]::new()
+ $proc.StartInfo.FileName=$node;$proc.StartInfo.WorkingDirectory=$ownRoot;$proc.StartInfo.UseShellExecute=$false;$proc.StartInfo.CreateNoWindow=$true
+ $proc.StartInfo.RedirectStandardOutput=$true;$proc.StartInfo.RedirectStandardError=$true
+-$workerFile=Join-Path $out 'workers.jsonl';$proc.StartInfo.Environment['R10_WORKERS']=$workerFile;$proc.StartInfo.Environment['R10_MODE']=$Mode;$proc.StartInfo.Environment['R10_OUTPUT']=$out
+-foreach($a in @('C:\MarisSettingsR8\R8-20261019-103900\workspace\node_modules\vitest\vitest.mjs','run','--configLoader','native','--config',(Join-Path $ownRoot 'r10-settings.config.mjs'))){$proc.StartInfo.ArgumentList.Add($a)}
++$workerFile=Join-Path $out 'workers.jsonl';$proc.StartInfo.Environment['R11_WORKERS']=$workerFile;$proc.StartInfo.Environment['R11_MODE']=$Mode;$proc.StartInfo.Environment['R11_OUTPUT']=$out
++foreach($a in @('C:\MarisIpcR9\R9-20261101-161412\workspace\node_modules\vitest\vitest.mjs','run','--configLoader','native','--config',(Join-Path $ownRoot 'r11-origin-settings.config.mjs'))){$proc.StartInfo.ArgumentList.Add($a)}
+ $clock=[Diagnostics.Stopwatch]::StartNew();$handles=@{};$started=$false;$timedOut=$false;$forced=$false;$failure=$null;$workers=@();$stdout=$null;$stderr=$null
+ try {
+  $started=$proc.Start();if(-not $started){throw 'start_failed'}

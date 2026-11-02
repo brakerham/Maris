@@ -1,0 +1,223 @@
+{
+  "nodes": [
+    {
+      "id": "R10-I06",
+      "name": "R10-I06 | development getter binds exact origin not a port prefix"
+    },
+    {
+      "id": "R11-O01",
+      "name": "R11-O01 | canonical network origins and same-origin resources"
+    },
+    {
+      "id": "R11-O02",
+      "name": "R11-O02 | distinct network origins stay distinct in both directions"
+    },
+    {
+      "id": "R11-O03",
+      "name": "R11-O03 | invalid or credential-bearing URLs fail without parse leakage"
+    },
+    {
+      "id": "R11-O04",
+      "name": "R11-O04 | opaque protocols and original production resources"
+    },
+    {
+      "id": "R11-O05",
+      "name": "R11-O05 | real validation preserves identity origin and schema order"
+    },
+    {
+      "id": "R11-O06",
+      "name": "R11-O06 | real main handlers reject without incremental effects"
+    },
+    {
+      "id": "R11-O07",
+      "name": "R11-O07 | companion handlers use own origin identity and narrow arguments"
+    },
+    {
+      "id": "R11-O08",
+      "name": "R11-O08 | adjacent main and companion ports are isolated both ways"
+    },
+    {
+      "id": "R10-I07",
+      "name": "R10-I07 | actual preloads expose fixed getter only to main"
+    },
+    {
+      "id": "R10-U01",
+      "name": "R10-U01 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U02",
+      "name": "R10-U02 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U03",
+      "name": "R10-U03 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U04",
+      "name": "R10-U04 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U05",
+      "name": "R10-U05 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U06",
+      "name": "R10-U06 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U07",
+      "name": "R10-U07 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U08",
+      "name": "R10-U08 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U09",
+      "name": "R10-U09 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U10",
+      "name": "R10-U10 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U11",
+      "name": "R10-U11 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U12",
+      "name": "R10-U12 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U13",
+      "name": "R10-U13 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U14",
+      "name": "R10-U14 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U15",
+      "name": "R10-U15 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U16",
+      "name": "R10-U16 | valid snapshot combination"
+    },
+    {
+      "id": "R10-U17",
+      "name": "R10-U17 | malformed response safe finite error"
+    },
+    {
+      "id": "R10-U18",
+      "name": "R10-U18 | malformed response safe finite error"
+    },
+    {
+      "id": "R10-U19",
+      "name": "R10-U19 | malformed response safe finite error"
+    },
+    {
+      "id": "R10-U20",
+      "name": "R10-U20 | malformed response safe finite error"
+    },
+    {
+      "id": "R10-U21",
+      "name": "R10-U21 | malformed response safe finite error"
+    },
+    {
+      "id": "R10-U22",
+      "name": "R10-U22 | malformed response safe finite error"
+    },
+    {
+      "id": "R10-U23",
+      "name": "R10-U23 | malformed response safe finite error"
+    },
+    {
+      "id": "R10-U24",
+      "name": "R10-U24 | malformed response safe finite error"
+    },
+    {
+      "id": "R10-U25",
+      "name": "R10-U25 | pending settings hide business and writable controls"
+    },
+    {
+      "id": "R10-U26",
+      "name": "R10-U26 | rejected read remains safe without defaults or retry loop"
+    },
+    {
+      "id": "R10-U27",
+      "name": "R10-U27 | StrictMode stale response cannot overwrite current choice"
+    },
+    {
+      "id": "R10-U28",
+      "name": "R10-U28 | response after unmount stays inert"
+    },
+    {
+      "id": "R10-U29",
+      "name": "R10-U29 | notices and recovery preserve user state without implicit page reload"
+    },
+    {
+      "id": "R10-U30",
+      "name": "R10-U30 | settings hydrate before modules become available"
+    },
+    {
+      "id": "R10-U31",
+      "name": "R10-U31 | runtime notices do not retry a failed page or rehydrate settings"
+    }
+  ],
+  "excludedHistorical": [
+    "R10-I01",
+    "R10-I02",
+    "R10-I03",
+    "R10-I04",
+    "R10-I05"
+  ],
+  "productBodyExecuted": false,
+  "oldToNew": {
+    "I06": "exact body, same ID",
+    "I07_U01_U31": "exact tail, same IDs"
+  },
+  "order": [
+    "R10-I06",
+    "R11-O01",
+    "R11-O02",
+    "R11-O03",
+    "R11-O04",
+    "R11-O05",
+    "R11-O06",
+    "R11-O07",
+    "R11-O08",
+    "R10-I07",
+    "R10-U01",
+    "R10-U02",
+    "R10-U03",
+    "R10-U04",
+    "R10-U05",
+    "R10-U06",
+    "R10-U07",
+    "R10-U08",
+    "R10-U09",
+    "R10-U10",
+    "R10-U11",
+    "R10-U12",
+    "R10-U13",
+    "R10-U14",
+    "R10-U15",
+    "R10-U16",
+    "R10-U17",
+    "R10-U18",
+    "R10-U19",
+    "R10-U20",
+    "R10-U21",
+    "R10-U22",
+    "R10-U23",
+    "R10-U24",
+    "R10-U25",
+    "R10-U26",
+    "R10-U27",
+    "R10-U28",
+    "R10-U29",
+    "R10-U30",
+    "R10-U31"
+  ]
+}

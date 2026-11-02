@@ -1,0 +1,158 @@
+--- r10-settings-contract.test.tsx
++++ r11-origin-settings-contract.test.tsx
+@@ -1,6 +1,6 @@
+ import {test,vi} from 'vitest';
+-import {makeFixture} from './r10-settings-main-fixture';
+-import {CompareError} from './r10-settings-record.mjs';
++import {makeFixture} from './r11-origin-settings-main-fixture';
++import {CompareError} from './r11-origin-settings-record.mjs';
+ const rec=(globalThis as any).__r10;
+ const {JSDOM,VirtualConsole}=(globalThis as any).__r10Dom;
+ const tick=async()=>{for(let i=0;i<90;i++)await Promise.resolve();};
+@@ -20,41 +20,116 @@
+ function failure(fn:()=>any){try{fn();return null;}catch(e){return e;}}
+ function errorCode(e:any){return ['ipc_sender_rejected','ipc_origin_rejected'].includes(e?.message)?e.message:e?.name==='ZodError'?'ZodError':e===null?null:'unknown';}
+ 
+-test('R10-I01 | loaded read is a fresh strict projection with no side effects',()=>node('R10-I01',main,async(f,c)=>{
+- const counts={...f.count},before=JSON.stringify(f.persisted),a=invoke(f),b=invoke(f);
+- c('FIELDS',true,JSON.stringify(Object.keys(a).sort())===JSON.stringify(['privacyMode','reducedMotion','theme']));
+- for(const key of ['theme','privacyMode','reducedMotion'] as const)c(key.toUpperCase(),saved[key],a[key]);
+- c('FRESH',true,a!==b);a.theme='light';a.privacyMode=false;a.token='R10_PRIVATE_MUTATION';
+- c('MUTATION_IGNORED',true,JSON.stringify(invoke(f))===JSON.stringify(b));
+- c('PERSISTED_UNCHANGED',true,JSON.stringify(f.persisted)===before);c('NO_SIDE_EFFECTS',true,JSON.stringify(f.count)===JSON.stringify(counts));c('NO_PRIVATE_FIELDS',true,noRaw(b));
+-}));
+-test('R10-I02 | existing write contract and receipt remain narrow',()=>node('R10-I02',main,async(f,c)=>{
+- const event={sender:f.main.webContents,senderFrame:f.main.webContents.mainFrame},update=f.handlers.get('settings:update@1');
+- const patch={theme:'light',reducedMotion:false,privacyMode:false};const receipt=await update(event,patch);
+- c('RECEIPT',true,JSON.stringify(receipt)==='{"accepted":true}');c('SAVE_ONCE',1,f.count.save);
+- c('CURRENT_PROJECTION',true,JSON.stringify(invoke(f))===JSON.stringify(patch));
+- const invalid=[{closePolicy:'quit'},{theme:'sepia'},{privacyMode:'true'},{reducedMotion:1},{theme:'dark',path:'R10_PRIVATE'}];
+- invalid.forEach((value,i)=>c('REJECT_'+i,'ZodError',errorCode(failure(()=>update(event,value)))));
+- c('NO_EXTRA_SAVE',1,f.count.save);
+-}));
+-test('R10-I03 | getter rejects all nonzero argument shapes',()=>node('R10-I03',main,async(f,c)=>{
+- const bad=[[undefined],[null],[{}],['dark'],[false],[0],[[]],[null,null]];
+- bad.forEach((args,i)=>c('ARGS_'+i,'ZodError',errorCode(failure(()=>invoke(f,args)))));c('NO_SAVE',0,f.count.save);
+-}));
+-test('R10-I04 | actual main rejects companion other sender and subframe',()=>node('R10-I04',main,async(f,c)=>{
+- const other=f.windows.find((w:any)=>w!==f.main);c('COMPANION_EXISTS',true,!!other);
+- const events=[{sender:{},senderFrame:f.main.webContents.mainFrame},{sender:f.main.webContents,senderFrame:{url:f.main.webContents.mainFrame.url}},{sender:other.webContents,senderFrame:other.webContents.mainFrame}];
+- events.forEach((event,i)=>c('SENDER_'+i,'ipc_sender_rejected',errorCode(failure(()=>invoke(f,[],event)))));c('NO_SAVE',0,f.count.save);
+-}));
+-test('R10-I05 | production getter refuses untrusted origins',()=>node('R10-I05',main,async(f,c)=>{
+- const urls=['https://untrusted.invalid/','http://127.0.0.1:5173/','javascript:void(0)','data:text/html,virtual','maris://app.evil.invalid/'];
+- urls.forEach((url,i)=>{f.main.webContents.mainFrame.url=url;c('ORIGIN_'+i,'ipc_origin_rejected',errorCode(failure(()=>invoke(f))));});c('NO_SAVE',0,f.count.save);
+-}));
+ test('R10-I06 | development getter binds exact origin not a port prefix',()=>node('R10-I06',()=>main('http://127.0.0.1:5173'),async(f,c)=>{
+  f.main.webContents.mainFrame.url='http://127.0.0.1:5173/index.html';c('TRUSTED',saved.theme,invoke(f).theme);
+  f.main.webContents.mainFrame.url='http://127.0.0.1:51730/index.html';
+  const error=failure(()=>invoke(f));c('DIFFERENT_PORT_REJECTED','ipc_origin_rejected',errorCode(error));
+  c('NO_SAVE',0,f.count.save);
++}));
++// Independent, pre-frozen input tables. No network traffic or executor oracle.
++const noFixture=()=>({dispose(){vi.restoreAllMocks();}});
++test('R11-O01 | canonical network origins and same-origin resources',()=>node('R11-O01',noFixture,async(_f,c)=>{
++ const {isTrustedRenderer}=await import('../../../apps/desktop/electron/main/security');
++ const rows=[
++  ['http://127.0.0.1:5173','http://127.0.0.1:5173/'],
++  ['http://127.0.0.1:5173/','http://127.0.0.1:5173/other?x=1#part'],
++  ['http://EXAMPLE.test','http://example.test:80/other'],
++  ['http://example.test:80/a','http://EXAMPLE.test/b?c#d'],
++  ['https://EXAMPLE.test','https://example.test:443/path'],
++  ['https://example.test:443/','https://EXAMPLE.test/?q#fragment'],
++ ];
++ rows.forEach(([configured,actual],i)=>c('ALLOW_'+i,true,isTrustedRenderer(actual,configured)));
++}));
++test('R11-O02 | distinct network origins stay distinct in both directions',()=>node('R11-O02',noFixture,async(_f,c)=>{
++ const {isTrustedRenderer}=await import('../../../apps/desktop/electron/main/security');
++ const rows=[
++  ['http://127.0.0.1:5173','http://127.0.0.1:51730/'],
++  ['http://127.0.0.1:51730','http://127.0.0.1:5173/'],
++  ['http://127.0.0.1:5173','https://127.0.0.1:5173/'],
++  ['http://example.test:5173','http://example.test.evil.test:5173/'],
++  ['http://example.test:5173','http://other.test:5173/'],
++  ['http://localhost:5173','http://127.0.0.1:5173/'],
++  ['http://127.0.0.1:5173','http://localhost:5173/'],
++  ['https://example.test','https://example.test:444/'],
++ ];
++ rows.forEach(([configured,actual],i)=>c('REJECT_'+i,false,isTrustedRenderer(actual,configured)));
++}));
++test('R11-O03 | invalid or credential-bearing URLs fail without parse leakage',()=>node('R11-O03',noFixture,async(_f,c)=>{
++ const {isTrustedRenderer}=await import('../../../apps/desktop/electron/main/security');
++ const good='http://127.0.0.1:5173/';
++ const invalid=['','/relative','not a url','http://[','http://127.0.0.1:99999','http://virtual-user@127.0.0.1:5173/','http://virtual-user:virtual-pass@127.0.0.1:5173/'];
++ invalid.forEach((value,i)=>{
++  for(const [kind,configured,actual] of [['CONFIG',value,good],['REQUEST',good,value]]){
++   let result:any=null;const error=failure(()=>{result=isTrustedRenderer(actual,configured);});
++   c(kind+'_'+i+'_ERROR',null,errorCode(error));c(kind+'_'+i+'_REJECT',false,result);
++  }
++ });
++}));
++test('R11-O04 | opaque protocols and original production resources',()=>node('R11-O04',noFixture,async(_f,c)=>{
++ const {isTrustedRenderer}=await import('../../../apps/desktop/electron/main/security');
++ const opaque=['data:text/plain,virtual','javascript:void(0)','ftp://example.test/a','blob:http://127.0.0.1:5173/virtual-id','null'];
++ opaque.forEach((value,i)=>{c('SAME_OPAQUE_'+i,false,isTrustedRenderer(value,value));c('NETWORK_CONFIG_'+i,false,isTrustedRenderer(value,'http://127.0.0.1:5173'));});
++ const resources=[['file:///virtual/index.html',true],['maris://app/index.html',true],['filex:///virtual/index.html',false],['maris://app.evil/index.html',false],['maris://other/index.html',false]] as const;
++ for(const [j,configured]of ['http://127.0.0.1:5173','invalid-config'].entries())for(const [i,[actual,expected]]of resources.entries())c('PRODUCTION_'+j+'_'+i,expected,isTrustedRenderer(actual,configured));
++}));
++test('R11-O05 | real validation preserves identity origin and schema order',()=>node('R11-O05',noFixture,async(_f,c)=>{
++ const {validateIpc}=await import('../../../apps/desktop/electron/main/ipc-contract');
++ const frame={url:'http://127.0.0.1:5173/'},contents={mainFrame:frame},window:any={webContents:contents};
++ const event:any={sender:contents,senderFrame:frame},origin='http://127.0.0.1:5173';
++ const call=(channel:any,args:any[],ev=event)=>validateIpc(ev,window,channel,args,origin);
++ const invalid=[{token:'R11_PRIVATE'}];
++ frame.url='http://127.0.0.1:51730/';
++ c('WRONG_SENDER_FIRST','ipc_sender_rejected',errorCode(failure(()=>call('settings:update@1',invalid,{sender:{},senderFrame:frame}))));
++ c('SUBFRAME_FIRST','ipc_sender_rejected',errorCode(failure(()=>call('settings:update@1',invalid,{sender:contents,senderFrame:{url:frame.url}}))));
++ c('ORIGIN_BEFORE_SCHEMA','ipc_origin_rejected',errorCode(failure(()=>call('settings:update@1',invalid))));
++ frame.url=origin+'/valid';
++ c('GETTER_EMPTY',0,call('settings:get-snapshot@1',[]).length);
++ c('GETTER_STRICT','ZodError',errorCode(failure(()=>call('settings:get-snapshot@1',[{}]))));
++ c('UPDATE_STRICT','ZodError',errorCode(failure(()=>call('settings:update@1',invalid))));
++ c('UPDATE_CLOSE_FORBIDDEN','ZodError',errorCode(failure(()=>call('settings:update@1',[{closePolicy:'quit'}]))));
++ c('UPDATE_TYPE_STRICT','ZodError',errorCode(failure(()=>call('settings:update@1',[{privacyMode:'true'}]))));
++ c('UPDATE_ALLOWED',true,JSON.stringify(call('settings:update@1',[saved]))===JSON.stringify([saved]));
++}));
++const effects=(f:any)=>JSON.stringify({count:f.count,persisted:f.persisted,windows:f.windows.map((w:any)=>({shows:w.shows,focuses:w.focuses,hides:w.hides,destroys:w.destroys,visible:w.visible})),sent:f.sent.length,prompts:f.prompts.length});
++test('R11-O06 | real main handlers reject without incremental effects',()=>node('R11-O06',()=>main('http://127.0.0.1:5173/'),async(f,c)=>{
++ const event={sender:f.main.webContents,senderFrame:f.main.webContents.mainFrame};
++ const update=(value:any)=>f.handlers.get('settings:update@1')(event,value);
++ const beforeSave=f.count.save;
++ c('TRUSTED_GETTER','dark',invoke(f).theme);c('TRUSTED_WRITE',true,(await update({theme:'light'})).accepted);
++ c('ONE_SAVE',beforeSave+1,f.count.save);c('CURRENT_GETTER','light',invoke(f).theme);
++ const before=effects(f);event.senderFrame.url='http://127.0.0.1:51730/settings';
++ c('GET_REJECT','ipc_origin_rejected',errorCode(failure(()=>invoke(f))));
++ c('WRITE_REJECT','ipc_origin_rejected',errorCode(failure(()=>update({theme:'dark'}))));
++ await tick();c('NO_INCREMENTAL_EFFECTS',true,before===effects(f));
++}));
++test('R11-O07 | companion handlers use own origin identity and narrow arguments',()=>node('R11-O07',()=>makeFixture(saved,'http://127.0.0.1:5173','http://127.0.0.1:5174'),async(f,c)=>{
++ const companion=f.windows.find((w:any)=>w!==f.main),frame=companion.webContents.mainFrame;
++ const event={sender:companion.webContents,senderFrame:frame};
++ const call=(channel:string,args:any[]=[],ev:any=event)=>f.handlers.get(channel)(ev,...args);
++ c('TRUSTED_STATE',true,typeof call('companion:get-state@1').state==='string');
++ const shows=f.main.shows,focuses=f.main.focuses;
++ c('TRUSTED_OPEN',true,call('companion:open-main@1').accepted);
++ c('SHOW_ONCE',shows+1,f.main.shows);c('FOCUS_ONCE',focuses+1,f.main.focuses);
++ for(const [i,channel]of ['companion:get-state@1','companion:open-main@1'].entries()){
++  c('STRICT_'+i,'ZodError',errorCode(failure(()=>call(channel,[{}]))));
++  c('IDENTITY_'+i,'ipc_sender_rejected',errorCode(failure(()=>call(channel,[],{sender:f.main.webContents,senderFrame:frame}))));
++  c('SUBFRAME_'+i,'ipc_sender_rejected',errorCode(failure(()=>call(channel,[],{sender:companion.webContents,senderFrame:{url:frame.url}}))));
++ }
++ const before=effects(f);frame.url='http://127.0.0.1:5173/companion';
++ c('MAIN_ORIGIN_STATE_REJECT','ipc_origin_rejected',errorCode(failure(()=>call('companion:get-state@1'))));
++ c('MAIN_ORIGIN_OPEN_REJECT','ipc_origin_rejected',errorCode(failure(()=>call('companion:open-main@1'))));
++ await tick();c('NO_INCREMENTAL_EFFECTS',true,before===effects(f));
++}));
++test('R11-O08 | adjacent main and companion ports are isolated both ways',()=>node('R11-O08',()=>makeFixture(saved,'http://127.0.0.1:5173','http://127.0.0.1:51730'),async(f,c)=>{
++ const companion=f.windows.find((w:any)=>w!==f.main),mainFrame=f.main.webContents.mainFrame,companionFrame=companion.webContents.mainFrame;
++ const event={sender:companion.webContents,senderFrame:companionFrame};
++ const getCompanion=()=>f.handlers.get('companion:get-state@1')(event);
++ c('MAIN_POSITIVE','dark',invoke(f).theme);c('COMPANION_POSITIVE',true,typeof getCompanion().state==='string');
++ const before=effects(f);mainFrame.url='http://127.0.0.1:51730/main';companionFrame.url='http://127.0.0.1:5173/companion';
++ c('MAIN_CROSS_REJECT','ipc_origin_rejected',errorCode(failure(()=>invoke(f))));
++ c('COMPANION_CROSS_REJECT','ipc_origin_rejected',errorCode(failure(getCompanion)));
++ c('MAIN_FRAME_SAME',true,mainFrame===f.main.webContents.mainFrame);c('COMPANION_FRAME_SAME',true,companionFrame===companion.webContents.mainFrame);
++ await tick();c('NO_INCREMENTAL_EFFECTS',true,before===effects(f));
+ }));
+ test('R10-I07 | actual preloads expose fixed getter only to main',()=>node('R10-I07',()=>({dispose(){vi.doUnmock('electron');vi.restoreAllMocks();}}),async(_f,c)=>{
+  vi.resetModules();const exposed=new Map<string,any>(),calls:any[]=[];

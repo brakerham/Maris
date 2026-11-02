@@ -1,0 +1,632 @@
+{
+  "mode": "independent",
+  "nodes": [
+    {
+      "id": "R10-I06",
+      "state": "pass",
+      "durationMs": 217.63760000000002,
+      "errors": []
+    },
+    {
+      "id": "R11-O01",
+      "state": "pass",
+      "durationMs": 32.30140000000006,
+      "errors": []
+    },
+    {
+      "id": "R11-O02",
+      "state": "pass",
+      "durationMs": 32.890300000000025,
+      "errors": []
+    },
+    {
+      "id": "R11-O03",
+      "state": "pass",
+      "durationMs": 96.62300000000005,
+      "errors": []
+    },
+    {
+      "id": "R11-O04",
+      "state": "pass",
+      "durationMs": 71.44700000000012,
+      "errors": []
+    },
+    {
+      "id": "R11-O05",
+      "state": "pass",
+      "durationMs": 40.04079999999999,
+      "errors": []
+    },
+    {
+      "id": "R11-O06",
+      "state": "pass",
+      "durationMs": 46.071500000000015,
+      "errors": []
+    },
+    {
+      "id": "R11-O07",
+      "state": "pass",
+      "durationMs": 62.49339999999984,
+      "errors": []
+    },
+    {
+      "id": "R11-O08",
+      "state": "pass",
+      "durationMs": 44.022500000000036,
+      "errors": []
+    },
+    {
+      "id": "R10-I07",
+      "state": "pass",
+      "durationMs": 40.33349999999996,
+      "errors": []
+    },
+    {
+      "id": "R10-U01",
+      "state": "pass",
+      "durationMs": 289.3997999999997,
+      "errors": []
+    },
+    {
+      "id": "R10-U02",
+      "state": "pass",
+      "durationMs": 45.885499999999865,
+      "errors": []
+    },
+    {
+      "id": "R10-U03",
+      "state": "pass",
+      "durationMs": 43.95380000000023,
+      "errors": []
+    },
+    {
+      "id": "R10-U04",
+      "state": "pass",
+      "durationMs": 45.471900000000005,
+      "errors": []
+    },
+    {
+      "id": "R10-U05",
+      "state": "pass",
+      "durationMs": 45.47679999999991,
+      "errors": []
+    },
+    {
+      "id": "R10-U06",
+      "state": "pass",
+      "durationMs": 44.71339999999964,
+      "errors": []
+    },
+    {
+      "id": "R10-U07",
+      "state": "pass",
+      "durationMs": 43.251300000000356,
+      "errors": []
+    },
+    {
+      "id": "R10-U08",
+      "state": "pass",
+      "durationMs": 43.12909999999965,
+      "errors": []
+    },
+    {
+      "id": "R10-U09",
+      "state": "pass",
+      "durationMs": 47.936899999999696,
+      "errors": []
+    },
+    {
+      "id": "R10-U10",
+      "state": "pass",
+      "durationMs": 44.03470000000016,
+      "errors": []
+    },
+    {
+      "id": "R10-U11",
+      "state": "pass",
+      "durationMs": 41.10809999999992,
+      "errors": []
+    },
+    {
+      "id": "R10-U12",
+      "state": "pass",
+      "durationMs": 40.74130000000014,
+      "errors": []
+    },
+    {
+      "id": "R10-U13",
+      "state": "pass",
+      "durationMs": 40.44029999999975,
+      "errors": []
+    },
+    {
+      "id": "R10-U14",
+      "state": "pass",
+      "durationMs": 43.73440000000028,
+      "errors": []
+    },
+    {
+      "id": "R10-U15",
+      "state": "pass",
+      "durationMs": 42.86259999999993,
+      "errors": []
+    },
+    {
+      "id": "R10-U16",
+      "state": "pass",
+      "durationMs": 40.845200000000204,
+      "errors": []
+    },
+    {
+      "id": "R10-U17",
+      "state": "pass",
+      "durationMs": 62.799299999999675,
+      "errors": []
+    },
+    {
+      "id": "R10-U18",
+      "state": "pass",
+      "durationMs": 62.61830000000009,
+      "errors": []
+    },
+    {
+      "id": "R10-U19",
+      "state": "pass",
+      "durationMs": 63.115999999999985,
+      "errors": []
+    },
+    {
+      "id": "R10-U20",
+      "state": "pass",
+      "durationMs": 77.59230000000025,
+      "errors": []
+    },
+    {
+      "id": "R10-U21",
+      "state": "pass",
+      "durationMs": 60.617499999999836,
+      "errors": []
+    },
+    {
+      "id": "R10-U22",
+      "state": "pass",
+      "durationMs": 63.80560000000014,
+      "errors": []
+    },
+    {
+      "id": "R10-U23",
+      "state": "pass",
+      "durationMs": 63.520600000000286,
+      "errors": []
+    },
+    {
+      "id": "R10-U24",
+      "state": "pass",
+      "durationMs": 60.346700000000055,
+      "errors": []
+    },
+    {
+      "id": "R10-U25",
+      "state": "pass",
+      "durationMs": 53.26180000000022,
+      "errors": []
+    },
+    {
+      "id": "R10-U26",
+      "state": "pass",
+      "durationMs": 58.957200000000284,
+      "errors": []
+    },
+    {
+      "id": "R10-U27",
+      "state": "pass",
+      "durationMs": 64.00500000000011,
+      "errors": []
+    },
+    {
+      "id": "R10-U28",
+      "state": "pass",
+      "durationMs": 31.429799999999886,
+      "errors": []
+    },
+    {
+      "id": "R10-U29",
+      "state": "pass",
+      "durationMs": 78.10290000000032,
+      "errors": []
+    },
+    {
+      "id": "R10-U30",
+      "state": "pass",
+      "durationMs": 75.44550000000027,
+      "errors": []
+    },
+    {
+      "id": "R10-U31",
+      "state": "pass",
+      "durationMs": 92.33489999999983,
+      "errors": []
+    }
+  ],
+  "passed": 41,
+  "failed": 0,
+  "notRun": 0,
+  "unhandledErrors": 0,
+  "moduleErrors": 0,
+  "journalError": null,
+  "formalComparisons": 321,
+  "comparisonsPassed": 321,
+  "paired": true,
+  "firstFailure": null,
+  "nodeTerminals": [
+    {
+      "seq": 13,
+      "at": "2026-11-02T09:47:22.602Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-I06",
+      "passed": true
+    },
+    {
+      "seq": 29,
+      "at": "2026-11-02T09:47:22.635Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R11-O01",
+      "passed": true
+    },
+    {
+      "seq": 49,
+      "at": "2026-11-02T09:47:22.667Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R11-O02",
+      "passed": true
+    },
+    {
+      "seq": 109,
+      "at": "2026-11-02T09:47:22.764Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R11-O03",
+      "passed": true
+    },
+    {
+      "seq": 153,
+      "at": "2026-11-02T09:47:22.836Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R11-O04",
+      "passed": true
+    },
+    {
+      "seq": 175,
+      "at": "2026-11-02T09:47:22.875Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R11-O05",
+      "passed": true
+    },
+    {
+      "seq": 193,
+      "at": "2026-11-02T09:47:22.922Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R11-O06",
+      "passed": true
+    },
+    {
+      "seq": 223,
+      "at": "2026-11-02T09:47:22.985Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R11-O07",
+      "passed": true
+    },
+    {
+      "seq": 241,
+      "at": "2026-11-02T09:47:23.029Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R11-O08",
+      "passed": true
+    },
+    {
+      "seq": 255,
+      "at": "2026-11-02T09:47:23.069Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-I07",
+      "passed": true
+    },
+    {
+      "seq": 273,
+      "at": "2026-11-02T09:47:23.359Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U01",
+      "passed": true
+    },
+    {
+      "seq": 291,
+      "at": "2026-11-02T09:47:23.404Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U02",
+      "passed": true
+    },
+    {
+      "seq": 309,
+      "at": "2026-11-02T09:47:23.448Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U03",
+      "passed": true
+    },
+    {
+      "seq": 327,
+      "at": "2026-11-02T09:47:23.494Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U04",
+      "passed": true
+    },
+    {
+      "seq": 345,
+      "at": "2026-11-02T09:47:23.539Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U05",
+      "passed": true
+    },
+    {
+      "seq": 363,
+      "at": "2026-11-02T09:47:23.584Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U06",
+      "passed": true
+    },
+    {
+      "seq": 381,
+      "at": "2026-11-02T09:47:23.627Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U07",
+      "passed": true
+    },
+    {
+      "seq": 399,
+      "at": "2026-11-02T09:47:23.671Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U08",
+      "passed": true
+    },
+    {
+      "seq": 417,
+      "at": "2026-11-02T09:47:23.719Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U09",
+      "passed": true
+    },
+    {
+      "seq": 435,
+      "at": "2026-11-02T09:47:23.763Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U10",
+      "passed": true
+    },
+    {
+      "seq": 453,
+      "at": "2026-11-02T09:47:23.804Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U11",
+      "passed": true
+    },
+    {
+      "seq": 471,
+      "at": "2026-11-02T09:47:23.845Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U12",
+      "passed": true
+    },
+    {
+      "seq": 489,
+      "at": "2026-11-02T09:47:23.885Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U13",
+      "passed": true
+    },
+    {
+      "seq": 507,
+      "at": "2026-11-02T09:47:23.929Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U14",
+      "passed": true
+    },
+    {
+      "seq": 525,
+      "at": "2026-11-02T09:47:23.972Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U15",
+      "passed": true
+    },
+    {
+      "seq": 543,
+      "at": "2026-11-02T09:47:24.013Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U16",
+      "passed": true
+    },
+    {
+      "seq": 559,
+      "at": "2026-11-02T09:47:24.075Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U17",
+      "passed": true
+    },
+    {
+      "seq": 575,
+      "at": "2026-11-02T09:47:24.138Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U18",
+      "passed": true
+    },
+    {
+      "seq": 591,
+      "at": "2026-11-02T09:47:24.201Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U19",
+      "passed": true
+    },
+    {
+      "seq": 607,
+      "at": "2026-11-02T09:47:24.279Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U20",
+      "passed": true
+    },
+    {
+      "seq": 623,
+      "at": "2026-11-02T09:47:24.340Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U21",
+      "passed": true
+    },
+    {
+      "seq": 639,
+      "at": "2026-11-02T09:47:24.403Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U22",
+      "passed": true
+    },
+    {
+      "seq": 655,
+      "at": "2026-11-02T09:47:24.466Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U23",
+      "passed": true
+    },
+    {
+      "seq": 671,
+      "at": "2026-11-02T09:47:24.527Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U24",
+      "passed": true
+    },
+    {
+      "seq": 693,
+      "at": "2026-11-02T09:47:24.581Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U25",
+      "passed": true
+    },
+    {
+      "seq": 707,
+      "at": "2026-11-02T09:47:24.639Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U26",
+      "passed": true
+    },
+    {
+      "seq": 725,
+      "at": "2026-11-02T09:47:24.703Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U27",
+      "passed": true
+    },
+    {
+      "seq": 737,
+      "at": "2026-11-02T09:47:24.735Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U28",
+      "passed": true
+    },
+    {
+      "seq": 759,
+      "at": "2026-11-02T09:47:24.813Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U29",
+      "passed": true
+    },
+    {
+      "seq": 789,
+      "at": "2026-11-02T09:47:24.889Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U30",
+      "passed": true
+    },
+    {
+      "seq": 809,
+      "at": "2026-11-02T09:47:24.981Z",
+      "pid": 23388,
+      "parentPid": 30544,
+      "event": "node_terminal",
+      "id": "R10-U31",
+      "passed": true
+    }
+  ]
+}

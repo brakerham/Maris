@@ -1,0 +1,12 @@
+{
+  "independentNodes": 41,
+  "comparisons": 321,
+  "cleanupTerminals": 41,
+  "rootExitCode": 0,
+  "workerNativeExitCode": 1,
+  "workerSignal": "not_observed",
+  "controllerForced": false,
+  "frameworkTeardownSource": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\vitest\\dist\\chunks\\index.C-uw7tH9.js",
+  "frameworkSourceSha256": "a0fd07e32370305250f173648b675304c4b3fa2740a7323eabfb6665241d0c67",
+  "interpretation": "Framework uses fork.kill during pool stop; completed test/cleanup events and root exit0 retained. Native worker exit1 is not replaced with0; no product EXE was run."
+}

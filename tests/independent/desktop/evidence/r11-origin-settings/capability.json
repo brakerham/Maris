@@ -1,0 +1,11 @@
+{
+  "readOnly": true,
+  "helperStarts": 0,
+  "at": "2026-11-02T17:49:41.5641481+08:00",
+  "stage": "process_query",
+  "code": "unknown",
+  "hresult": -2146233088,
+  "passed": false,
+  "errorName": "CimException",
+  "productStarts": 0
+}

@@ -1,0 +1,53 @@
+{
+  "timedOut": false,
+  "forced": false,
+  "rootExitCode": 0,
+  "rootPid": 23832,
+  "rootExited": true,
+  "scope": "compat",
+  "failure": null,
+  "streams": [
+    {
+      "complete": true,
+      "name": "stdout",
+      "rawBytes": 58
+    },
+    {
+      "complete": true,
+      "name": "stderr",
+      "rawBytes": 0
+    }
+  ],
+  "durationMs": 3272,
+  "workers": [
+    {
+      "identityVerified": true,
+      "forced": false,
+      "exited": true,
+      "pid": 19760,
+      "nativeExitCode": 0
+    },
+    {
+      "identityVerified": true,
+      "forced": false,
+      "exited": true,
+      "pid": 28060,
+      "nativeExitCode": 1
+    },
+    {
+      "identityVerified": true,
+      "forced": false,
+      "exited": true,
+      "pid": 12524,
+      "nativeExitCode": 1
+    },
+    {
+      "identityVerified": true,
+      "forced": false,
+      "exited": true,
+      "pid": 26768,
+      "nativeExitCode": 1
+    }
+  ],
+  "productStarts": 0
+}

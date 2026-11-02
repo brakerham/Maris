@@ -1,0 +1,36 @@
+--- R10 fixture
++++ R11 fixture
+@@ -10,7 +10,7 @@
+ }
+ const base='../../../apps/desktop/electron/main/';
+ const boundaryNames=['device-settings','outbox','managed-host-port','backend-supervisor','owner-session','owner-auth-client','owner-secret-store','host-client'];
+-export function makeFixture(overrides:Record<string,unknown>, origin="") {
++export function makeFixture(overrides:Record<string,unknown>, origin="", companionOrigin=origin) {
+   vi.resetModules(); const handlers=new Map<string,any>();
+   const app:any=new EventEmitter(), live=new Set<any>(), windows:any[]=[], sent:any[]=[], trace:string[]=[], unhandled:any[]=[];
+   const count={start:0,establish:0,save:0,flush:0,stop:0,recover:0,revoke:0,refresh:0,enqueue:0,quit:0,final:0,allClosed:0,trayDestroy:0};
+@@ -20,11 +20,11 @@
+   const onUnhandled=(e:any)=>unhandled.push(e);
+   process.on('unhandledRejection',onUnhandled);
+   class Window extends EventEmitter {
+-    title:string; destroyed=false; visible=false; hides=0; destroys=0;
++    title:string; destroyed=false; visible=false; hides=0; destroys=0; shows=0; focuses=0;
+     webContents={mainFrame:{url:origin||"file:///r10-virtual/index.html"},setWindowOpenHandler:()=>{},on:()=>{},send:(_channel:string,value:any)=>sent.push(value)};
+-    constructor(options:any){super();this.title=options.title;windows.push(this);live.add(this);}
+-    show(){this.visible=true;} hide(){if(this.destroyed)throw Error('invalid_window_operation');this.visible=false;this.hides++;}
+-    focus(){} setAlwaysOnTop(){} async loadFile(){} async loadURL(){}
++    constructor(options:any){super();this.title=options.title;this.webContents.mainFrame.url=(this.title==='Maris'?origin:companionOrigin)||"file:///r10-virtual/index.html";windows.push(this);live.add(this);}
++    show(){this.shows++;this.visible=true;} hide(){if(this.destroyed)throw Error('invalid_window_operation');this.visible=false;this.hides++;}
++    focus(){this.focuses++;} setAlwaysOnTop(){} async loadFile(){} async loadURL(){}
+     isDestroyed(){return this.destroyed;} isVisible(){return this.visible;}
+     close(){const e=cancelEvent();this.emit('close',e);if(!e.defaultPrevented&&!this.destroyed)this.destroy();return e;}
+     destroy(){
+@@ -61,7 +61,7 @@
+     trayQuit(){const entry=menu.find(m=>m.label==='退出');if(!entry)throw Error('missing_tray_entry');entry.click();},
+     async start(){
+       vi.stubEnv('MARIS_E2E','');vi.stubEnv('MARIS_E2E_EXIT_MS','');vi.stubEnv('MARIS_EXTERNAL_HOST_URL','');vi.stubEnv('MARIS_EXTERNAL_HOST_NONCE','');
+-      for(const name of ['MAIN_WINDOW','COMPANION_WINDOW']){vi.stubGlobal(name+'_VITE_DEV_SERVER_URL',origin);vi.stubGlobal(name+'_VITE_NAME',name.toLowerCase());}
++      for(const name of ['MAIN_WINDOW','COMPANION_WINDOW']){vi.stubGlobal(name+'_VITE_DEV_SERVER_URL',name==='MAIN_WINDOW'?origin:companionOrigin);vi.stubGlobal(name+'_VITE_NAME',name.toLowerCase());}
+       vi.spyOn(console,'error').mockImplementation((...args)=>consoleErrors.push(args));
+       const actual=await import('../../../apps/desktop/electron/main/device-settings');
+       persisted={...actual.defaultSettings,closePolicy:'quit',closeHintShown:false,companionVisible:true,...overrides};

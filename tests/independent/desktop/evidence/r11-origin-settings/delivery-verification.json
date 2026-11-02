@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-02T18:03:02.441825+08:00",
+  "task": "P4-C12-R11-ORIGIN-SETTINGS",
+  "status": "blocked",
+  "activity": "finished",
+  "handoff": "review",
+  "tools": {
+    "manifest": "tests/independent/desktop/evidence/r11-origin-settings/tools.sha256",
+    "entries": 11,
+    "sha256": "277c33a4126279ab4972c009cab30e5b9dde313c093bbf2c0e83781beef82f01",
+    "matched": 11
+  },
+  "evidence": {
+    "manifest": "tests/independent/desktop/evidence/r11-origin-settings/evidence.sha256",
+    "entries": 93,
+    "sha256": "bad03c55f08b65c5db23eca9d469b6b0ceedbd5daebb7ad8ae339571cb7612f6",
+    "matched": 93
+  },
+  "delivery": {
+    "manifest": "tests/independent/desktop/evidence/r11-origin-settings/delivery.sha256",
+    "entries": 110,
+    "sha256": "b282382cf86dc5ccc9bf47439d0c3a591d9d57d546095bea6f7c3f46cd4cfc67",
+    "matched": 110
+  },
+  "immutableFirstRechecked": true,
+  "passed": true,
+  "validationMeaning": "File delivery and preservation only; Windows acceptance remains not_run after unknown observation error.",
+  "independent": {
+    "passed": 41,
+    "failed": 0,
+    "comparisons": 321
+  },
+  "compat": {
+    "passed": 109,
+    "failed": 0
+  },
+  "productNew": 0,
+  "helperNew": 0,
+  "seriesProduct": 2,
+  "seriesHelper": 3,
+  "cacheExcludedFromDeliverable": true
+}

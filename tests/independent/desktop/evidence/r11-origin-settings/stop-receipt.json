@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-02T17:57:19.679658+08:00",
+  "task": "P4-C12-R11-ORIGIN-SETTINGS",
+  "status": "blocked",
+  "activity": "finished",
+  "reason": "unknown_observation_tool_error",
+  "firstError": {
+    "readOnly": true,
+    "helperStarts": 0,
+    "at": "2026-11-02T17:49:41.5641481+08:00",
+    "stage": "process_query",
+    "code": "unknown",
+    "hresult": -2146233088,
+    "passed": false,
+    "errorName": "CimException",
+    "productStarts": 0
+  },
+  "classification": "tool/environment; not product defect; not proven device unavailability",
+  "attempts": 1,
+  "laterStages": "not_run",
+  "productStarts": 0,
+  "helperStarts": 0,
+  "seriesProductStarts": 2,
+  "seriesHelperStarts": 3,
+  "independentNodesPassed": 41,
+  "independentComparisonsPassed": 321,
+  "compatPassed": 109,
+  "noTargetToCleanup": true,
+  "fullSystemResources": "unverified because query failed",
+  "reruns": 0,
+  "windowOperations": 0
+}

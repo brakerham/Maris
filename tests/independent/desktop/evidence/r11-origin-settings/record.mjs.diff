@@ -1,0 +1,11 @@
+--- r10-settings-record.mjs
++++ r11-origin-settings-record.mjs
+@@ -1,7 +1,7 @@
+ import {openSync,writeSync,fsyncSync,closeSync} from 'node:fs';
+ export class CompareError extends Error {name='CompareError'}
+ export class ToolError extends Error {name='ToolError'}
+-const safeString=/^(R10|SELF)[A-Z0-9._-]*$|^(system|light|dark|high_contrast|on|off|unknown|body|cleanup|tool|comparison|parse|missing|passed|failed|not_run|Error|TypeError|SyntaxError|CompareError|ToolError|other|ipc_sender_rejected|ipc_origin_rejected|ZodError)$/;
++const safeString=/^(R10|R11|SELF)[A-Z0-9._-]*$|^(system|light|dark|high_contrast|on|off|unknown|body|cleanup|tool|comparison|parse|missing|passed|failed|not_run|Error|TypeError|SyntaxError|CompareError|ToolError|other|ipc_sender_rejected|ipc_origin_rejected|ZodError)$/;
+ export function safe(v){if(v===null||typeof v==='boolean'||typeof v==='number'&&Number.isFinite(v)||typeof v==='string'&&safeString.test(v))return v;throw new ToolError('unsafe_record_value');}
+ export function recorder(file,io={openSync,writeSync,fsyncSync,closeSync}){
+  const fd=io.openSync(file,'wx'),ids=new Set();let seq=0,firstError=null;

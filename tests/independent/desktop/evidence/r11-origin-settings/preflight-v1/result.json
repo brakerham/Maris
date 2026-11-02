@@ -1,0 +1,147 @@
+{
+  "at": "2026-11-02T09:46:15.826Z",
+  "passed": true,
+  "rows": [
+    {
+      "id": "SELF.UNIQUE",
+      "expected": 1,
+      "actual": 1,
+      "passed": true
+    },
+    {
+      "id": "SELF.DUPLICATE",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.NO_RAW",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.FIRST_PRESERVED",
+      "expected": "SELF.COMPARE",
+      "actual": "SELF.COMPARE",
+      "passed": true
+    },
+    {
+      "id": "SELF.COMPARE_CLASS",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.MISSING",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.BAD_JSON",
+      "expected": "SyntaxError",
+      "actual": "SyntaxError",
+      "passed": true
+    },
+    {
+      "id": "SELF.BAD_RESULT",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.GOOD_RESULT",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.FINALLY_RELEASE",
+      "expected": 1,
+      "actual": 1,
+      "passed": true
+    },
+    {
+      "id": "SELF.FIRST_NOT_MASKED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.SHORT_COMPLETE",
+      "expected": 2,
+      "actual": 2,
+      "passed": true
+    },
+    {
+      "id": "SELF.REDACTED",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "SELF.CASE_SYNTAX",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.FIXTURE_SYNTAX",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.PLAN_COUNT",
+      "expected": 41,
+      "actual": 41,
+      "passed": true
+    },
+    {
+      "id": "SELF.PLAN_UNIQUE",
+      "expected": 41,
+      "actual": 41,
+      "passed": true
+    },
+    {
+      "id": "SELF.PLAN_ORDER",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.NO_TARGET_BODY",
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "id": "SELF.I06_EXACT_BODY",
+      "expected": "83e94a5d13e9b23da7c072c1cbd1f6af1ae6d20eb6e38d753be1dd508820e435",
+      "actual": "83e94a5d13e9b23da7c072c1cbd1f6af1ae6d20eb6e38d753be1dd508820e435",
+      "passed": true
+    },
+    {
+      "id": "SELF.I07_U_EXACT_BODY",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.ABSOLUTE_ROOT",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "SELF.DATE_VALID",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    }
+  ],
+  "productStarts": 0,
+  "helperStarts": 0,
+  "targetImported": false
+}

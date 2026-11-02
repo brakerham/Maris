@@ -1,0 +1,47 @@
+{
+  "task": "R11 coordinator readonly observation",
+  "date": "2026-11-02",
+  "purpose": "Compare access contexts without starting products or changing Windows settings.",
+  "command": "$ErrorActionPreference='Stop'\n$watch=[Diagnostics.Stopwatch]::StartNew()\n$receipt=[ordered]@{context='default';at=[DateTimeOffset]::Now.ToString('o');operation='Get-CimInstance Win32_Process';passed=$false;processesReturned=$null;selfPresent=$null;errorType=$null;hresult=$null;nativeErrorCode=$null;statusCode=$null;category=$null;durationMs=$null}\ntry {\n $inventory=@(Get-CimInstance Win32_Process -OperationTimeoutSec 5 -ErrorAction Stop)\n $receipt.processesReturned=$inventory.Count\n $receipt.selfPresent=@($inventory|Where-Object ProcessId -eq $PID).Count -eq 1\n $receipt.passed=$receipt.selfPresent\n} catch {\n $receipt.errorType=$_.Exception.GetType().FullName\n $receipt.hresult=$_.Exception.HResult\n if($_.Exception.PSObject.Properties['NativeErrorCode']){$receipt.nativeErrorCode=[string]$_.Exception.NativeErrorCode}\n if($_.Exception.PSObject.Properties['StatusCode']){$receipt.statusCode=[string]$_.Exception.StatusCode}\n $receipt.category=[string]$_.CategoryInfo.Category\n}\n$receipt.durationMs=$watch.ElapsedMilliseconds\n$receipt|ConvertTo-Json -Compress",
+  "default": {
+    "context": "default",
+    "at": "2026-11-02T18:10:55.1426129+08:00",
+    "operation": "Get-CimInstance Win32_Process",
+    "passed": false,
+    "processesReturned": null,
+    "selfPresent": null,
+    "errorType": "Microsoft.Management.Infrastructure.CimException",
+    "hresult": -2146233088,
+    "nativeErrorCode": "AccessDenied",
+    "statusCode": "2",
+    "category": "PermissionDenied",
+    "durationMs": 275
+  },
+  "approved": {
+    "context": "approved_readonly",
+    "at": "2026-11-02T18:11:48.3324343+08:00",
+    "operation": "Get-CimInstance Win32_Process",
+    "passed": true,
+    "processesReturned": 359,
+    "selfPresent": true,
+    "errorType": null,
+    "hresult": null,
+    "nativeErrorCode": null,
+    "statusCode": null,
+    "category": null,
+    "durationMs": 589
+  },
+  "scope": {
+    "productStarts": 0,
+    "helperStarts": 0,
+    "servicesChanged": false,
+    "permissionsChanged": false,
+    "inventoryContentsStored": false,
+    "oldFailureReclassified": false
+  },
+  "limitations": [
+    "Original R11 capability.json lacks native error fields and remains unknown.",
+    "This proves current CIM read access only, not listener/UIA/Tray capability, absence of old target processes, or Windows acceptance.",
+    "Standard tool approval does not authorize RunAs, OS administrator changes, persistent permission changes, or reading unrelated process arguments into evidence."
+  ]
+}

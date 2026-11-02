@@ -203,3 +203,14 @@ H1约8.207秒自然异常退出，无强制结束，最终owned/监听/窗口0�
 本轮产品0/6、helper0/3，系列产品2/8、helper3/6；没有新外部profile或数据库。独立CLI root29676/worker3196实际exit1，无超时/强杀，6节点finally均完成。工具17项检查单列；首次UTF8/GBK输入审计错误及新v2保持，不覆写首次源码或正式结果。
 
 矩阵仅SEC-04改failed，B为1 passed、3 failed、18 blocked、2 not_run；原24项完整要求及未验人工范围不变。不修改产品/依赖/包，不安装/打包/Git写入，不关闭P4-B、不自动启动其他角色。
+
+
+## P4-C12-R11-ORIGIN-SETTINGS 独立增量（2026-11-02）
+
+[R11完整报告](phase-4-c12-r11-origin-settings-windows-report.md)：1438项新起点全部匹配；固定R9新根绑定，原I06三比较、八个来源节点及原未执行I07/U01～31共41/41独立节点、321/321比较通过。四文件109/109必要兼容另列通过。首次源码和结果保留，不改原R10或其他首次材料。
+
+原开发不同端口反例已正确拒绝，IPC-ORIGIN-001建议限定关闭；SEC-04整项改blocked，仍待完整Windows安全组合。独立设置水合通过尚无本轮W2四条实际页面结果，SETTINGS-001、UI-02/LAZY-001、CMP-06及P4-B不关闭。
+
+Windows目标前只读进程查询首次CimException/unknown（HResult=-2146233088），进程归属未能核实。该工具/环境阻塞不是产品缺陷，也不是已证明的设备能力缺失。按卡停止，不重试、不请求用户点击或更改系统；W2/W3/H2/W4/H3/W5/H4/W6/W7全not_run，未选择能力降级分支。产品新增0/6、原生helper0/3，系列2/8、3/6保持；无新Windowsprofile或目标进程需要收口，未完成的全机查询不写成资源零。
+
+B=1 passed、2 failed、19 blocked、2 not_run；原人工范围仍未验证。交付blocked / finished供总控review，旧首次失败和原完整预期保持。

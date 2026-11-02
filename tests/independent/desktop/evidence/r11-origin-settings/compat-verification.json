@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "nodes": 109,
+  "independent": false,
+  "files": [
+    "security.test.ts",
+    "ipc.test.ts",
+    "settings-snapshot.test.ts",
+    "settings-hydration.test.tsx"
+  ],
+  "baselineCounts": [
+    45,
+    12,
+    25,
+    27
+  ],
+  "rootExitCode": 0,
+  "rootPid": 23832,
+  "workers": [
+    {
+      "identityVerified": true,
+      "forced": false,
+      "exited": true,
+      "pid": 19760,
+      "nativeExitCode": 0
+    },
+    {
+      "identityVerified": true,
+      "forced": false,
+      "exited": true,
+      "pid": 28060,
+      "nativeExitCode": 1
+    },
+    {
+      "identityVerified": true,
+      "forced": false,
+      "exited": true,
+      "pid": 12524,
+      "nativeExitCode": 1
+    },
+    {
+      "identityVerified": true,
+      "forced": false,
+      "exited": true,
+      "pid": 26768,
+      "nativeExitCode": 1
+    }
+  ],
+  "forced": false,
+  "timedOut": false,
+  "note": "Execution order belongs to Vitest; worker native codes retained separately. No product EXE."
+}

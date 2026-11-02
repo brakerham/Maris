@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-02T11:42:44.685348+08:00",
+  "deadline": "2026-11-02T12:12:44.685348+08:00",
+  "maxVersions": 3,
+  "currentVersion": 1,
+  "productStarts": 0,
+  "helperStarts": 0,
+  "resumedAt": "2026-11-02T17:42:56+08:00",
+  "priorPreparationChargedMinutes": 5,
+  "resumedDeadline": "2026-11-02T18:07:56+08:00",
+  "interruption": "No running target; no continuous execution claimed; original deadline retained as historical."
+}
