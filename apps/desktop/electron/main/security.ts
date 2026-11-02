@@ -25,6 +25,17 @@ export function secureWebPreferences(
 }
 
 export function isTrustedRenderer(url: string, developmentOrigin?: string): boolean {
-  if (developmentOrigin && url.startsWith(developmentOrigin)) return true;
+  if (developmentOrigin) {
+    try {
+      const configured = new URL(developmentOrigin);
+      const actual = new URL(url);
+      const isNetworkOrigin = (value: URL) =>
+        (value.protocol === "http:" || value.protocol === "https:") &&
+        value.username === "" && value.password === "" && value.origin !== "null";
+      if (isNetworkOrigin(configured) && isNetworkOrigin(actual) && actual.origin === configured.origin) return true;
+    } catch {
+      // Invalid development URLs never grant network access.
+    }
+  }
   return url.startsWith("file://") || url.startsWith("maris://app/");
 }

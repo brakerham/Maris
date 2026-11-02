@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-11-01 15:58，Asia/Shanghai
+更新时间：2026-11-02 11:30，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8-R2真实设置保存/续启执行方证据保持。R10独立验证5 passed、1 failed、32 not_run，确认开发origin前缀匹配错误接受不同端口，P1 IPC-ORIGIN-001；Windows与48项兼容未运行。发布P4-B7-R9-IPC-ORIGIN，由执行方只修security开发来源校验及相邻回归，最多1次新package、EXE/helper/开发服务器0。Tester停止，系列产品2/8、辅助3/6不变；SETTINGS-001与P4-B未关闭，B为1 passed、3 failed、18 blocked、2 not_run；P4-C/D未开始。
+P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R9-IPC-ORIGIN执行交付已核对，109定向通过、一次新包静态通过，生产dev分支裁剪导致新旧包相同；动态未运行。发布P4-C12-R11-ORIGIN-SETTINGS，由Tester复验原I06、8组新来源、余32设置节点，兼容四文件109后续原W2与剩余Windows。Executor/顾问停止；Tester系列已用产品2/8、辅助3/6，本轮最多6/3。IPC-ORIGIN-001、SETTINGS-001及P4-B未关闭，B为1 passed、3 failed、18 blocked、2 not_run；P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8-R2真�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R10反例核对、最小来源返修任务准备 | 2026-11-01 15:58 | 执行方新卡接单 | [裁定](../p4-c12-r10-ipc-origin-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R9交付核对、R11独立卡和固定起点已准备 | 2026-11-02 11:30 | Tester按新卡接单 | [裁定](../p4-b7-r9-ipc-origin-coordinator-review.md) |
 | 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
-| 执行智能体 | R8-R2 `review / finished`；R9-IPC-ORIGIN `ready / waiting_user` | 新返修卡准备，实际接单unverified | 2026-11-01 15:58（总控派发） | 新起点匹配后按R9接单 | [任务](prompts/p4-b7-r9-ipc-origin-executor.md) |
-| 测试智能体 | R10 `blocked / finished` | 独立来源缺陷已提交，Windows0次；停止 | 2026-11-01 09:44（本人交付） | 等待修复与新独立任务 | [报告](../testing/phase-4-c12-r10-settings-windows-report.md) |
+| 执行智能体 | R9 `review / finished`，独立输入接受 | 109定向、package静态通过，动态0；已停止 | 2026-11-02 01:59（本人交付） | 无新执行任务 | [交付](../b7-r9-ipc-origin-running.md) |
+| 测试智能体 | R10停止；R11 `ready / waiting_user` | 原I06/新来源/未执行设置及Windows续验；接单unverified | 2026-11-02 11:30（总控派发） | 新起点全部匹配后接单 | [任务](prompts/p4-c12-r11-origin-settings-windows-tester.md) |
 
-当前唯一新任务是P4-B7-R9-IPC-ORIGIN，由执行方修共享开发来源谓词。Tester/顾问停止；不重跑旧S1/S2，不建立新观察框架。本次新包最多1次、动态目标0次，后续独立验收再使用已冻结的Tester剩余6/3。前端参考图和模型分工提醒保持。
+当前唯一新任务为P4-C12-R11-ORIGIN-SETTINGS，既有Tester负责；执行方/顾问停止。先原来源失败及剩余设置，全部通过后同任务续验Windows。产品剩余6、helper3，无新打包/开发服务器；前端参考图和模型分工提醒保持。
 
 ## 阶段 0 任务状态
 
@@ -128,7 +128,8 @@ P0～P3与P4-A已独立验收，QUIT-001普通关闭范围已关闭。R8-R2真�
 | P4-B7-R8-R1-LIFECYCLE：同包设置续验 | 既有执行智能体 | `blocked / finished` | 身份检查通过，controller收尾IO缺口，EXE0 | [报告](../b7-r8-r1-lifecycle-running.md) |
 | P4-B7-R8-R2-FINALIZER：收尾修正与续验 | 既有执行智能体 | `review / finished`；作为独立输入接受 | 工具/S1/S2通过，原首次失败保留 | [报告](../b7-r8-r2-finalizer-running.md) |
 | P4-C12-R10-SETTINGS：设置恢复独立复验 | 既有测试智能体 | `blocked / finished` | 5/1/32，IPC-ORIGIN-001；Windows未运行 | [报告](../testing/phase-4-c12-r10-settings-windows-report.md) |
-| P4-B7-R9-IPC-ORIGIN：开发来源最小返修 | 既有执行智能体 | `ready / waiting_user` | 精确origin与相邻自测，新包静态交付，动态0 | [任务](prompts/p4-b7-r9-ipc-origin-executor.md) |
+| P4-B7-R9-IPC-ORIGIN：开发来源最小返修 | 既有执行智能体 | `review / finished`，独立输入接受 | 109定向/静态新包/映射通过，动态0 | [交付](../b7-r9-ipc-origin-running.md) |
+| P4-C12-R11-ORIGIN-SETTINGS：来源设置及Windows续验 | 既有测试智能体 | `ready / waiting_user` | 41独立节点、109兼容，原W2和剩余Windows | [任务](prompts/p4-c12-r11-origin-settings-windows-tester.md) |
 | P4-C12-R4：lazy复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | 原节点0pass/1fail；故障命中未证实，未新增产品缺陷，Windows0次 | [报告](../testing/phase-4-c12-r4-lazy-windows-report.md) |
 | P4-C12-R4-R1：观察与续跑 | 既有测试智能体 | `blocked / finished` | mock1、#/daily、5016ms无alert；异常终态未定位 | [报告](../testing/phase-4-c12-r4-r1-observation-windows-report.md) |
 | P4-D15：异常传播有限诊断 | 既有技术顾问 | `blocked / finished` | import/默认loader拒绝成立；P3超时无阶段回执，原证据保留 | [报告](../phase-4-d15-lazy-propagation-advice.md)、[总控核对](../p4-d15-bootstrap-coordinator-review.md) |

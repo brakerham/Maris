@@ -17,12 +17,13 @@ afterEach(() => {
   vi.restoreAllMocks(); vi.unstubAllGlobals(); vi.unstubAllEnvs();
 });
 
-async function mainFixture() {
+async function mainFixture(development: { main?: string; companion?: string } = {}) {
   vi.resetModules();
   vi.stubEnv("MARIS_E2E", ""); vi.stubEnv("MARIS_E2E_EXIT_MS", "");
   vi.stubEnv("MARIS_EXTERNAL_HOST_URL", ""); vi.stubEnv("MARIS_EXTERNAL_HOST_NONCE", "");
   for (const name of ["MAIN_WINDOW", "COMPANION_WINDOW"]) {
-    vi.stubGlobal(`${name}_VITE_DEV_SERVER_URL`, ""); vi.stubGlobal(`${name}_VITE_NAME`, name.toLowerCase());
+    vi.stubGlobal(`${name}_VITE_DEV_SERVER_URL`, (name === "MAIN_WINDOW" ? development.main : development.companion) ?? "");
+    vi.stubGlobal(`${name}_VITE_NAME`, name.toLowerCase());
   }
   let persisted: DeviceSettings = { ...defaultSettings, ...virtualSnapshot, launchAtLogin: true,
     closePolicy: "quit", companionVisible: true, companionAppearance: "VIRTUAL_PRIVATE_APPEARANCE",
@@ -49,7 +50,7 @@ async function mainFixture() {
   class Window extends EventEmitter {
     webContents = { mainFrame: { url: "file:///virtual-r8/index.html" }, setWindowOpenHandler: vi.fn(), on: vi.fn(), send: vi.fn() };
     show = vi.fn(); hide = vi.fn(); focus = vi.fn(); setAlwaysOnTop = vi.fn(); destroy = vi.fn();
-    loadURL = vi.fn(async () => {}); loadFile = vi.fn(async () => {});
+    loadURL = vi.fn(async (url: string) => { this.webContents.mainFrame.url = url; }); loadFile = vi.fn(async () => {});
     isDestroyed = () => false; isVisible = () => true;
     constructor(readonly options: { title: string }) { super(); windows.push(this); }
   }
@@ -87,8 +88,72 @@ async function mainFixture() {
   for (const effect of Object.values(effects)) effect.mockClear();
   const event = { sender: main.webContents, senderFrame: main.webContents.mainFrame } as unknown as Invocation;
   const invoke = (channel: IpcChannel, args: unknown[] = [], sender = event) => handlers.get(channel)!(sender, ...args);
-  return { main, companion, event, effects, invoke, persisted: () => persisted };
+  const effectCounts = () => ({
+    operations: Object.fromEntries(Object.entries(effects).map(([name, operation]) => [name, operation.mock.calls.length])),
+    windows: windows.length,
+    windowOperations: windows.map(window => [window.show, window.hide, window.focus, window.destroy, window.loadURL, window.loadFile]
+      .map(operation => operation.mock.calls.length))
+  });
+  return { main, companion, event, effects, invoke, persisted: () => persisted, effectCounts };
 }
+
+describe("R9 actual registered development IPC", () => {
+  it("R9 original counterexample rejects a different port on the same actual mainFrame", async () => {
+    const f = await mainFixture({ main: "http://127.0.0.1:5173", companion: "http://127.0.0.1:5174" });
+    f.main.webContents.mainFrame.url = "http://127.0.0.1:5173/index.html";
+    const before = f.effectCounts(); const persisted = structuredClone(f.persisted());
+    expect(f.invoke("settings:get-snapshot@1")).toEqual(virtualSnapshot);
+    expect(Object.keys(f.invoke("settings:get-snapshot@1") as object).sort()).toEqual(["privacyMode", "reducedMotion", "theme"]);
+    f.main.webContents.mainFrame.url = "http://127.0.0.1:51730/index.html";
+    expect(f.event.sender).toBe(f.main.webContents);
+    expect(f.event.senderFrame).toBe(f.main.webContents.mainFrame);
+    expect(() => f.invoke("settings:get-snapshot@1")).toThrow("ipc_origin_rejected");
+    expect(f.effectCounts()).toEqual(before); expect(f.persisted()).toEqual(persisted);
+  });
+
+  it.each(["http://127.0.0.1:5173", "http://127.0.0.1:5173/"])
+  ("rejects getter and write handlers before business effects with configuration %s", async main => {
+    const f = await mainFixture({ main, companion: "http://127.0.0.1:5174/" });
+    f.main.webContents.mainFrame.url = "http://127.0.0.1:5173/other?q=1#settings";
+    expect(f.invoke("settings:get-snapshot@1")).toEqual(virtualSnapshot);
+    const before = f.effectCounts(); const persisted = structuredClone(f.persisted());
+    for (const url of ["http://127.0.0.1:51730/", "http://127.0.0.1:5174/", "https://127.0.0.1:5173/",
+      "http://localhost:5173/", "http://user@127.0.0.1:5173/", "http://[invalid"]) {
+      f.main.webContents.mainFrame.url = url;
+      expect(() => f.invoke("settings:get-snapshot@1")).toThrow("ipc_origin_rejected");
+      expect(() => f.invoke("settings:update@1", [{ theme: "light", privacyMode: false }])).toThrow("ipc_origin_rejected");
+      expect(() => f.invoke("runtime:recover@1")).toThrow("ipc_origin_rejected");
+      expect(() => f.invoke("outbox:enqueue@1", [{ draftId: "00000000-0000-4000-8000-000000000001", body: "virtual" }])).toThrow("ipc_origin_rejected");
+      expect(() => f.invoke("window:perform@1", ["show_main"])).toThrow("ipc_origin_rejected");
+      expect(f.effectCounts()).toEqual(before); expect(f.persisted()).toEqual(persisted);
+    }
+    f.main.webContents.mainFrame.url = "http://127.0.0.1:5173/";
+    expect(() => f.invoke("settings:get-snapshot@1", [1])).toThrow();
+    expect(() => f.invoke("settings:update@1", [{ closePolicy: "quit" }])).toThrow();
+    expect(() => f.invoke("settings:get-snapshot@1", [], { ...f.event, sender: {} } as Invocation)).toThrow("ipc_sender_rejected");
+    expect(() => f.invoke("settings:get-snapshot@1", [], { ...f.event, senderFrame: { url: f.main.webContents.mainFrame.url } } as Invocation)).toThrow("ipc_sender_rejected");
+    expect(f.effectCounts()).toEqual(before);
+  });
+
+  it("keeps companion handlers scoped to their own development origin", async () => {
+    const f = await mainFixture({ main: "http://127.0.0.1:5173", companion: "http://127.0.0.1:51730" });
+    const event = { sender: f.companion.webContents, senderFrame: f.companion.webContents.mainFrame } as unknown as Invocation;
+    f.companion.webContents.mainFrame.url = "http://127.0.0.1:51730/companion?q=1#view";
+    expect(f.invoke("companion:get-state@1", [], event)).toMatchObject({ state: "idle" });
+    const before = f.effectCounts();
+    f.companion.webContents.mainFrame.url = "http://127.0.0.1:5173/index.html";
+    expect(event.senderFrame).toBe(f.companion.webContents.mainFrame);
+    expect(() => f.invoke("companion:get-state@1", [], event)).toThrow("ipc_origin_rejected");
+    expect(() => f.invoke("companion:open-main@1", [], event)).toThrow("ipc_origin_rejected");
+    expect(f.effectCounts()).toEqual(before);
+    f.companion.webContents.mainFrame.url = "http://127.0.0.1:51730/";
+    expect(() => f.invoke("companion:get-state@1", [1], event)).toThrow();
+    expect(() => f.invoke("companion:get-state@1", [], f.event)).toThrow("ipc_sender_rejected");
+    expect(f.invoke("companion:open-main@1", [], event)).toEqual({ accepted: true });
+    expect(f.main.show.mock.calls.length).toBe(before.windowOperations[0]![0]! + 1);
+    expect(f.main.focus.mock.calls.length).toBe(before.windowOperations[0]![2]! + 1);
+  });
+});
 
 describe("actual main settings projection", () => {
   it("returns fresh three-field loaded snapshots without storage, OS, Host or outbox effects", async () => {
