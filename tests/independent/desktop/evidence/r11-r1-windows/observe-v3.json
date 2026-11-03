@@ -1,0 +1,56 @@
+{
+  "productStarts": 0,
+  "helperStarts": 0,
+  "mode": "Observe",
+  "passed": true,
+  "firstError": null,
+  "at": "2026-11-03T00:24:25.9057808+08:00",
+  "signal": null,
+  "exitCode": 0,
+  "durationMs": 3173,
+  "stages": [
+    {
+      "related": [],
+      "parentIdentityVerified": true,
+      "processesReturned": 453,
+      "launcherIdentityVerified": true,
+      "selfCreation": "2026-11-02T16:24:25.5887300Z",
+      "selfPid": 37620,
+      "selfIdentityVerified": true,
+      "status": "success",
+      "stage": "process_query",
+      "relatedCount": 0,
+      "excludedExactPids": [
+        37620,
+        37188,
+        22996
+      ],
+      "event": "result"
+    },
+    {
+      "querySucceeded": true,
+      "event": "result",
+      "relatedListenerCount": 0,
+      "status": "success",
+      "listenerCount": 56,
+      "stage": "listener_query"
+    },
+    {
+      "event": "result",
+      "status": "success",
+      "topLevelCount": 14,
+      "deviceUnavailable": false,
+      "dialogAction": "existing_owned_button_adapter_requires_target_identity",
+      "stage": "uia_read"
+    },
+    {
+      "rootCount": 1,
+      "event": "result",
+      "status": "success",
+      "deviceUnavailable": false,
+      "actionAdapter": "not_implemented",
+      "stage": "tray_read"
+    }
+  ],
+  "processInventoryStored": false
+}

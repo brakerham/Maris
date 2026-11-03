@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "id": "W2-TOOL-NO-CLOSE-POLICY-IPC",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "W2-TOOL-NO-EXIT-TIMER",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "W2-TOOL-FOUR-FIRST-IDS",
+      "expected": 4,
+      "actual": 4,
+      "passed": true
+    },
+    {
+      "id": "W2-TOOL-FINALLY",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-TOOL-NATIVE-ERROR-FIELDS",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-TOOL-ASYNC-OBSERVER",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-TOOL-PLAYWRIGHT-CDP",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-TOOL-FIRST-RESULT-EXCLUSIVE",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-TOOL-BUDGET",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    }
+  ],
+  "targetExecuted": false
+}

@@ -1,0 +1,6 @@
+{"event":"enter","stage":"parser_prepare","callId":"H2-OBS-1","details":{},"at":"2026-11-03T02:36:30.1887685+00:00"}
+{"event":"terminal","stage":"parser_prepare","callId":"H2-OBS-1","details":{"status":"success"},"at":"2026-11-03T02:36:30.4921929+00:00"}
+{"event":"enter","stage":"process_query","callId":"H2-OBS-1","details":{},"at":"2026-11-03T02:36:30.4928022+00:00"}
+{"event":"terminal","stage":"process_query","callId":"H2-OBS-1","details":{"ownedCount":3,"identityValidation":"pending_shared_checker","rootVerified":true,"rootPresent":true,"status":"success"},"at":"2026-11-03T02:36:31.1332616+00:00"}
+{"event":"enter","stage":"json_output","callId":"H2-OBS-1","details":{},"at":"2026-11-03T02:36:31.1353097+00:00"}
+{"event":"terminal","stage":"json_output","callId":"H2-OBS-1","details":{"bytes":902,"status":"success"},"at":"2026-11-03T02:36:31.1524375+00:00"}

@@ -1,0 +1,8 @@
+{
+  "startedAt": "2026-11-03T00:20:06.064115+08:00",
+  "deadline": "2026-11-03T00:50:06.064115+08:00",
+  "version": 1,
+  "maxVersions": 3,
+  "maxActiveMinutes": 30,
+  "approvalWaitingExcluded": true
+}

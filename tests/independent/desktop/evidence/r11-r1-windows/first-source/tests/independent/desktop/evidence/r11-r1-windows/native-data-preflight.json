@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "id": "H-SELF-SEED-FOUR",
+      "expected": 4,
+      "actual": 4,
+      "passed": true
+    },
+    {
+      "id": "H-SELF-SEED-COUNT",
+      "expected": 5,
+      "actual": 5,
+      "passed": true
+    },
+    {
+      "id": "H-SELF-H3-KEEP",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H-SELF-H4-ONLY-CANDIDATES",
+      "expected": 3,
+      "actual": 3,
+      "passed": true
+    },
+    {
+      "id": "H-SELF-OWNER-MISMATCH",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H-SELF-NO-SEED-AFTER-MISMATCH",
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "id": "H-SELF-PARSE-ERROR",
+      "expected": "SyntaxError",
+      "actual": "SyntaxError",
+      "passed": true
+    },
+    {
+      "id": "H-SELF-PARSE-NO-WRITE",
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "id": "H-SELF-PROTECTED-CHANGE-REJECTED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H-SELF-UNIQUE-IDS",
+      "expected": 9,
+      "actual": 9,
+      "passed": true
+    }
+  ],
+  "productStarts": 0,
+  "helperStarts": 0,
+  "nativeStorageUsed": false
+}

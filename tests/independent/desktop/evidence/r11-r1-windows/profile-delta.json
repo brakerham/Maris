@@ -1,0 +1,35 @@
+{
+  "beforeEntries": 63,
+  "afterEntries": 68,
+  "added": [
+    "profile-main/Code Cache/electron-preload/9BEA595D2130B331944222EBF85473B8C8A7100F89046D8A064A1422A2A4A9FF-046EE14B76106E2E39DCF4D74A8AEE393DEDA01000D21673491EB8D652BB29D2.cache",
+    "profile-main/Code Cache/electron-preload/D5A96F0890590A24B5954AB25ABA8A41B40ABAD3C80C349E54C66381D83B6DCA-046EE14B76106E2E39DCF4D74A8AEE393DEDA01000D21673491EB8D652BB29D2.cache",
+    "profile-main/DIPS-wal",
+    "profile-main/Local Storage/leveldb/LOG.old",
+    "profile-main/Session Storage/LOG.old"
+  ],
+  "removed": [],
+  "changed": [
+    "profile-main/DIPS",
+    "profile-main/DawnGraphiteCache/index",
+    "profile-main/DawnWebGPUCache/index",
+    "profile-main/DevToolsActivePort",
+    "profile-main/GPUCache/index",
+    "profile-main/GrShaderCache/index",
+    "profile-main/Local Storage/leveldb/LOG",
+    "profile-main/Session Storage/000003.log",
+    "profile-main/Session Storage/LOG",
+    "profile-main/ShaderCache/index",
+    "profile-main/maris-host.db",
+    "profile-main/outbox.bin",
+    "profile-main/owner-session.bin"
+  ],
+  "outboxCipherEqualsH2Seed": false,
+  "semanticH3Readback": "not_run",
+  "safeSettings": {
+    "theme": "dark",
+    "privacyMode": true,
+    "closePolicy": "quit",
+    "closeHintShown": false
+  }
+}

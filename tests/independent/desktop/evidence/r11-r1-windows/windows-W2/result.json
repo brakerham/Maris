@@ -1,0 +1,210 @@
+{
+  "id": "W2",
+  "passed": true,
+  "firstFailure": null,
+  "cleanupError": null,
+  "forced": false,
+  "rootPid": 22292,
+  "exit": {
+    "code": 0,
+    "signal": null,
+    "at": "2026-11-03T02:31:50.671Z"
+  },
+  "secondaryPid": 22100,
+  "secondaryExit": {
+    "code": 0,
+    "signal": null
+  },
+  "productStarts": 2,
+  "helperStarts": 0,
+  "seriesProductStarts": 4,
+  "seriesHelperStarts": 3,
+  "durationMs": 14894.0525,
+  "comparisons": [
+    {
+      "id": "W2-STORED-THEME",
+      "expected": "dark",
+      "actual": "dark",
+      "passed": true
+    },
+    {
+      "id": "W2-STORED-PRIVACY",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-STORED-CLOSE-POLICY",
+      "expected": "quit",
+      "actual": "quit",
+      "passed": true
+    },
+    {
+      "id": "W2-STORED-HINT",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "id": "W2-CONTINUITY-FIXTURE",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-OWN-ROOT",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-CDP-OWNED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-PAGE-READY",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-PERSISTED-UI-THEME",
+      "expected": "dark",
+      "actual": "dark",
+      "passed": true
+    },
+    {
+      "id": "W2-PERSISTED-UI-PRIVACY",
+      "expected": "on",
+      "actual": "on",
+      "passed": true
+    },
+    {
+      "id": "W2-PERSISTED-THEME-CONTROL",
+      "expected": "dark",
+      "actual": "dark",
+      "passed": true
+    },
+    {
+      "id": "W2-PERSISTED-PRIVACY-CONTROL",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-SHELL-NAV-AGENT",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-SETTINGS-BYTES-UNCHANGED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W2-PERSISTED-REQUEST-ID",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W3-SECOND-EXIT",
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "id": "W3-FIRST-ALIVE",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W3-HOST-IDENTITY-UNCHANGED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    }
+  ],
+  "known": [
+    {
+      "pid": 22292,
+      "parentPid": 10564,
+      "created": "2026-11-03T02:31:38.9538350Z",
+      "kind": "product"
+    },
+    {
+      "pid": 12604,
+      "parentPid": 22292,
+      "created": "2026-11-03T02:31:41.5279370Z",
+      "kind": "product"
+    },
+    {
+      "pid": 16084,
+      "parentPid": 22292,
+      "created": "2026-11-03T02:31:41.5348940Z",
+      "kind": "product"
+    },
+    {
+      "pid": 29316,
+      "parentPid": 22292,
+      "created": "2026-11-03T02:31:41.5719720Z",
+      "kind": "product"
+    },
+    {
+      "pid": 32036,
+      "parentPid": 22292,
+      "created": "2026-11-03T02:31:41.6059410Z",
+      "kind": "python"
+    },
+    {
+      "pid": 16088,
+      "parentPid": 32036,
+      "created": "2026-11-03T02:31:41.6114450Z",
+      "kind": "conhost"
+    },
+    {
+      "pid": 10168,
+      "parentPid": 22292,
+      "created": "2026-11-03T02:31:41.6279320Z",
+      "kind": "product"
+    },
+    {
+      "pid": 17796,
+      "parentPid": 32036,
+      "created": "2026-11-03T02:31:41.6333590Z",
+      "kind": "python"
+    }
+  ],
+  "closeReceipt": {
+    "rootVerified": true,
+    "matchingMainWindows": 1,
+    "closePosted": true,
+    "postedUtc": "2026-11-03T02:31:50.2806379+00:00",
+    "rootPid": 22292,
+    "parentVerified": true
+  },
+  "remainingOwned": 0,
+  "remainingListeners": 0,
+  "remainingWindows": 0,
+  "streams": [
+    {
+      "id": "W2",
+      "stdoutBytes": 2,
+      "stdoutSha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "stderrBytes": 100,
+      "stderrSha256": "02ef890ef191845712897bde27122e398d64cde1112ea30a9092207bb71934b9"
+    },
+    {
+      "id": "W3",
+      "stdoutBytes": 2,
+      "stdoutSha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "stderrBytes": 100,
+      "stderrSha256": "b51a8b2ffb555940abb5d41134afe89c5e24b00badeb8ee85707bfb3b80b6966"
+    }
+  ]
+}

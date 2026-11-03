@@ -219,7 +219,7 @@
 | P4B-CMP-03 | B | U01 | desktop/e2e | Windows/Electron | auto | 关闭策略可切换 | 退出/每次询问/隐藏，Tray 打开/隐藏 | 每种设置执行关闭与取消 | 行为精确对应设置；“退出”清理自有后端；询问取消不退出；Tray 状态一致 | P1 | blocked |
 | P4B-CMP-04 | B | U05 | security/manual | Windows/Electron | manual | 新安装测试 profile | 首次运行、显式启用/禁用开机启动 | 检查 OS 启动项和 UI | 默认关闭且无启动项；只有明确操作才创建；禁用清理本应用项，不改其他应用 | P1 | not_run |
 | P4B-CMP-05 | B | F13 | desktop/e2e | external/manual | manual | 多显示器/缩放/全屏测试设备 | 拖动、置顶、重启、拔屏、分辨率变化、全屏、隐私、键盘 | 逐项操作并重启 | 位置用临时文件原子替换并恢复/夹取；全屏按规则隐藏；隐私不显示金额；键盘入口可达 | P1 | not_run |
-| P4B-CMP-06 | B | U02；主题要求 | desktop/e2e | external/manual | manual | 支持/不支持透明窗口设备 | 透明失败、普通迷你窗降级；light/dark/system/high-contrast/reduced-motion；中外行情色 | 切换设备条件和主题 | 可安全降级且合同不变；文本对比/焦点可辨；reduced motion 生效；收入/支出色不复用涨跌色 | P2 | failed |
+| P4B-CMP-06 | B | U02；主题要求 | desktop/e2e | external/manual | manual | 支持/不支持透明窗口设备 | 透明失败、普通迷你窗降级；light/dark/system/high-contrast/reduced-motion；中外行情色 | 切换设备条件和主题 | 可安全降级且合同不变；文本对比/焦点可辨；reduced motion 生效；收入/支出色不复用涨跌色 | P2 | blocked |
 
 #### C12 独立执行状态备注（2026-10-01）
 
@@ -398,6 +398,15 @@ R9-R3（2026-10-18）增量：1192起点通过；虚拟局部工具30/30与同�
 - SEC-04本轮由failed转blocked：原来源反例与新增来源边界独立通过，建议总控限定关闭IPC-ORIGIN-001；仍缺原整项Windows/未知channel/重复调用等完整组合，不签passed。原R10首次失败原样保留，不声明生产包开发来源可达。
 - Windows目标前只读process_query首次CimException，HResult=-2146233088，安全code=unknown。按卡停止，不归产品、不判device unavailable；W2四页面首样与W3/H2/W4/H3/W5/H4/W6/W7均not_run。独立水合通过不关闭SETTINGS-001，UI-02与CMP-06旧failed保持。
 - B=1 passed、2 failed、19 blocked、2 not_run；120唯一ID、12列、全部原预期/风险及A/C/D保持。产品新增0/6、helper0/3，系列2/8、3/6；没有新Windows副本、窗口操作或全机资源零结论。blocked / finished供总控review，不自行关闭P4-B。
+
+
+#### C12-R11-R1-WINDOWS 增量（2026-11-03）
+
+- [R11-R1报告](phase-4-c12-r11-r1-windows-report.md)：1550新起点全匹配，旧41/321及109只引用、不重跑，IPC-ORIGIN-001已由总控限定关闭。标准审批观察成功，实际self/Node/launcher精确排除，进程/监听/UIA/Tray根读各自记录；Tray操作未实现不当设备缺失。
+- W1同内容63项虚拟副本实际W2首样dark/on/dark/true四比较通过、首样前设置未写，原请求ID保持；W3第二实例exit0、原Host保持；主窗普通关闭exit0/资源0。W2/W3合计18比较。基于既有独立水合与本轮真实W2，建议总控限定关闭SETTINGS-001；CMP-06由failed改blocked，完整透明降级/对比/焦点/动效/颜色仍未验。
+- H2稳定owner/原draft/event/body实际原生13比较通过后才seed4虚拟条目，非outbox产品文件保持；不比较可轮换refresh token相等、不重跑H1。H2 exit0/资源0。
+- W4首次在owned_button返回owned_dialog_button_ambiguous，实际匹配数量未记录，不能断言0或多个；未完成保留点击。normal_close另有owned_main_ambiguous；身份复核后定向清理，root1596实际exit1/forced=true、资源0。工具定位阻塞，不是产品业务比较失败、普通退出回归或设备不支持；H3/W5/H4/W6/W7未运行，不把密文摘要代替实际H3读回。
+- B=1 passed、1 failed、20 blocked、2 not_run；UI-02历史failed保持，P4-B未关闭。120唯一ID/12列/原预期风险/A-C-D保持。新增产品3/6、helper1/3，系列5/8、4/6，不安装/打包/Git写；停止blocked / finished供总控review。
 
 ## 6. 执行方与独立测试所有权
 

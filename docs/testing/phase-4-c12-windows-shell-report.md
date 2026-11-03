@@ -528,3 +528,14 @@ H1约8.207秒自然异常退出，无强制结束，最终owned/监听/窗口0�
 Windows目标前只读进程查询首次CimException/unknown（HResult=-2146233088），进程归属未能核实。该工具/环境阻塞不是产品缺陷，也不是已证明的设备能力缺失。按卡停止，不重试、不请求用户点击或更改系统；W2/W3/H2/W4/H3/W5/H4/W6/W7全not_run，未选择能力降级分支。产品新增0/6、原生helper0/3，系列2/8、3/6保持；无新Windowsprofile或目标进程需要收口，未完成的全机查询不写成资源零。
 
 B=1 passed、2 failed、19 blocked、2 not_run；原人工范围仍未验证。交付blocked / finished供总控review，旧首次失败和原完整预期保持。
+
+
+## P4-C12-R11-R1-WINDOWS 实际Windows增量（2026-11-03）
+
+[R11-R1报告](phase-4-c12-r11-r1-windows-report.md)：新1550项起点匹配；旧41独立/321比较及109兼容已接受只引用。独立只读查询经标准审批通过，身份与资源/原生能力分列；目标以普通用户运行，不RunAs或改变系统权限。
+
+固定R9新包、原W1完整63项虚拟副本实际W2四首样dark/on/dark/true通过、首样未写设置；原请求ID保持、W3第二实例exit0且原Host保持；主窗普通关闭exit0/资源0。H2实际原生13比较核对稳定owner、原草稿/事件/正文后seed4冻结条目，exit0/资源0。建议总控限定关闭SETTINGS-001；CMP-06整项仍blocked，完整设备视觉条件未验，不自行关闭P4-B。
+
+W4在原生owned_button定位返回owned_dialog_button_ambiguous，未完成“保留”操作；匹配数量未留存，不补猜0或多个。随后normal_close为owned_main_ambiguous；保留首错并复核本轮树后定向强制退出，实际exit1/forced=true、资源0。该错误属于工具定位，非产品保留功能失败或设备不支持；普通退出历史和本轮W2通过不被该收口混写。H3/W5/H4/W6/W7未运行，老化保留/删除仍需实际原生读回，Tray操作未实现不等于设备缺失。
+
+新增产品3/6、辅助1/3，系列5/8、4/6；B=1 passed、1 failed、20 blocked、2 not_run。所有旧首次材料保持，未运行H1/W1/S1/S2/旧通过集合，不安装打包、不改产品/依赖/Git。blocked / finished，等待总控review。

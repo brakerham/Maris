@@ -1,0 +1,25 @@
+{
+  "task": "P4-C12-R11-R1-WINDOWS",
+  "sourceProfile": "W1 full 63-file same-content copy",
+  "packageRoot": "C:/MarisIpcR9/R9-20261101-161412",
+  "firstPageAssertions": {
+    "W2-PERSISTED-UI-THEME": "dark",
+    "W2-PERSISTED-UI-PRIVACY": "on",
+    "W2-PERSISTED-THEME-CONTROL": "dark",
+    "W2-PERSISTED-PRIVACY-CONTROL": true
+  },
+  "preSampleWrites": 0,
+  "order": [
+    "W2 backend",
+    "W2 page first sample",
+    "W2 same request ID",
+    "W3 second instance",
+    "W2 ordinary close <=10s resources0"
+  ],
+  "productLimit": 2,
+  "seriesBefore": 2,
+  "helperBefore": 3,
+  "ownershipQueries": "existing asynchronous bounded child calls in separately approved ordinary-user product action; prior readonly gate separate; no RunAs",
+  "remainingAfterPass": "H2 then W4/H3/W5/H4/W6/W7 as card; tooling still must be frozen before those targets",
+  "trayAction": "unimplemented, not a device-unavailable claim"
+}

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "previousFirstPreserved": true,
+  "fix": "exact Node controller PID/executable/command script/creation time and actual launcher ancestry bound to passed PID/executable; never exclude process classes",
+  "targetStarted": false
+}

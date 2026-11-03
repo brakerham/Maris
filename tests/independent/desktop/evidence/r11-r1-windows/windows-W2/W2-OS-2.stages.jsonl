@@ -1,0 +1,8 @@
+{"event":"enter","details":{},"at":"2026-11-03T02:31:44.6532611+00:00","stage":"process_query","callId":"W2-OS-2"}
+{"event":"terminal","details":{"rootVerified":true,"status":"success","ownedCount":8},"at":"2026-11-03T02:31:45.3471587+00:00","stage":"process_query","callId":"W2-OS-2"}
+{"event":"enter","details":{},"at":"2026-11-03T02:31:45.3481672+00:00","stage":"type_prepare","callId":"W2-OS-2"}
+{"event":"terminal","details":{"status":"success"},"at":"2026-11-03T02:31:45.5224724+00:00","stage":"type_prepare","callId":"W2-OS-2"}
+{"event":"enter","details":{},"at":"2026-11-03T02:31:45.5231988+00:00","stage":"listener_query","callId":"W2-OS-2"}
+{"event":"terminal","details":{"status":"success","count":2},"at":"2026-11-03T02:31:46.3847351+00:00","stage":"listener_query","callId":"W2-OS-2"}
+{"event":"enter","details":{},"at":"2026-11-03T02:31:46.3938127+00:00","stage":"window_query","callId":"W2-OS-2"}
+{"event":"terminal","details":{"status":"success","visibleMainCount":1,"count":10},"at":"2026-11-03T02:31:46.4046615+00:00","stage":"window_query","callId":"W2-OS-2"}

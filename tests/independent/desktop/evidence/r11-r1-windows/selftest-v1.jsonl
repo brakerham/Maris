@@ -1,0 +1,12 @@
+{"actual":1,"passed":true,"id":"OBS-SELF-EXACT-EXCLUSION","expected":1}
+{"actual":11,"passed":true,"id":"OBS-SELF-FOREIGN-RETAINED","expected":11}
+{"actual":"2026-11-02T16:20:06.5754991Z","passed":true,"id":"OBS-SELF-DATETIME","expected":"2026-11-02T16:20:06.5754991Z"}
+{"actual":"2026-11-02T16:20:06.5754991Z","passed":true,"id":"OBS-SELF-DATEOFFSET","expected":"2026-11-02T16:20:06.5754991Z"}
+{"actual":null,"passed":true,"id":"OBS-SELF-ERROR-NATIVE-NULL","expected":null}
+{"actual":"System.UnauthorizedAccessException","passed":true,"id":"OBS-SELF-ERROR-TYPE","expected":"System.UnauthorizedAccessException"}
+{"actual":0,"passed":true,"id":"OBS-SELF-EMPTY-INVENTORY","expected":0}
+{"actual":"first","passed":true,"id":"OBS-SELF-FIRST-ERROR","expected":"first"}
+{"actual":true,"passed":true,"id":"OBS-SELF-FINALLY","expected":true}
+{"actual":true,"passed":true,"id":"OBS-SELF-BAD-RESULT","expected":true}
+{"actual":true,"passed":true,"id":"OBS-SELF-MISSING-NOT-ZERO","expected":true}
+{"actual":11,"passed":true,"id":"OBS-SELF-IDS-UNIQUE","expected":11}

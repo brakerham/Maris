@@ -1,0 +1,6 @@
+{"at":"2026-11-03T02:36:54.7990046+00:00","callId":"W4-OS-4","stage":"process_query","details":{},"event":"enter"}
+{"at":"2026-11-03T02:36:55.5329985+00:00","callId":"W4-OS-4","stage":"process_query","details":{"ownedCount":8,"rootVerified":true,"status":"success"},"event":"terminal"}
+{"at":"2026-11-03T02:36:55.5339036+00:00","callId":"W4-OS-4","stage":"type_prepare","details":{},"event":"enter"}
+{"at":"2026-11-03T02:36:55.6860822+00:00","callId":"W4-OS-4","stage":"type_prepare","details":{"status":"success"},"event":"terminal"}
+{"at":"2026-11-03T02:36:55.6873252+00:00","callId":"W4-OS-4","stage":"native_close","details":{},"event":"enter"}
+{"at":"2026-11-03T02:36:55.6987574+00:00","callId":"W4-OS-4","stage":"native_close","details":{"code":"owned_main_ambiguous","errorName":"RuntimeException","hresult":-2146233087,"status":"error"},"event":"terminal"}

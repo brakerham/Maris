@@ -1,0 +1,5 @@
+{"at":"2026-11-02T16:22:30.107Z","event":"observer_enter","details":{"id":"OBS-R1","startedUtc":"2026-11-02T16:22:30.106Z","limitMs":8000}}
+{"at":"2026-11-02T16:22:30.122Z","event":"observer_spawn","details":{"id":"OBS-R1","pid":37748,"parentPid":34512}}
+{"at":"2026-11-02T16:22:31.317Z","event":"observer_exit","details":{"id":"OBS-R1","status":1,"signal":null}}
+{"at":"2026-11-02T16:22:31.322Z","event":"observer_terminal","details":{"id":"OBS-R1","startedUtc":"2026-11-02T16:22:30.106Z","endedUtc":"2026-11-02T16:22:31.322Z","durationMs":1216.0260999999998,"status":1,"signal":null,"error":null,"timedOut":false,"cancelVerified":false,"pid":37748,"stdoutBytes":1380,"stdoutSha256":"2c3164c68a2493c1e6ab4ff273d36dd30cf8123ab70016382ea596550337a386","stderrBytes":0,"stderrSha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}}
+{"at":"2026-11-02T16:22:31.325Z","event":"finished","details":{"passed":false}}

@@ -1,0 +1,196 @@
+{
+  "delivery": {
+    "base": "D:\\CodeX_gap\\wife-system",
+    "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings\\delivery.sha256",
+    "entries": 110,
+    "matched": 110,
+    "changes": [],
+    "sha256": "b282382cf86dc5ccc9bf47439d0c3a591d9d57d546095bea6f7c3f46cd4cfc67",
+    "passed": true
+  },
+  "tools": {
+    "base": "D:\\CodeX_gap\\wife-system",
+    "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings\\tools.sha256",
+    "entries": 11,
+    "matched": 11,
+    "changes": [],
+    "sha256": "277c33a4126279ab4972c009cab30e5b9dde313c093bbf2c0e83781beef82f01",
+    "passed": true
+  },
+  "evidence": {
+    "base": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings",
+    "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings\\evidence.sha256",
+    "entries": 93,
+    "matched": 93,
+    "changes": [],
+    "sha256": "bad03c55f08b65c5db23eca9d469b6b0ceedbd5daebb7ad8ae339571cb7612f6",
+    "passed": true
+  },
+  "first-materials": {
+    "base": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings",
+    "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings\\first-materials.sha256",
+    "entries": 90,
+    "matched": 90,
+    "changes": [],
+    "sha256": "7de69c4d6c2826a788305602e02c81f8ec1a63562afb0c18662bea5d3252b26a",
+    "passed": true
+  },
+  "source-archive": {
+    "base": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings",
+    "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-origin-settings\\source-archive.sha256",
+    "entries": 50,
+    "matched": 50,
+    "changes": [],
+    "sha256": "bac56bac385722d270877290e79930bbeae321067feae870f1669714cfbf6c2b",
+    "passed": true
+  },
+  "formalSource": {
+    "entries": 49,
+    "passed": true
+  },
+  "fixed": {
+    "delivery": {
+      "base": "D:\\CodeX_gap\\wife-system",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\delivery-seven.sha256",
+      "entries": 7,
+      "matched": 7,
+      "changes": [],
+      "sha256": "7fe3eb3c3f03f38fa78af110507b27e0d0b032fe95d52d3a1df8a315c6aec9b3",
+      "passed": true
+    },
+    "buildInput": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\static\\workspace-source.sha256",
+      "entries": 1432,
+      "matched": 1432,
+      "changes": [],
+      "sha256": "492e1a1e9d3c9885a7e7f486c8d6a9c4dc57d83981ef5c053548072d599a3a1a",
+      "passed": true
+    },
+    "out": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\apps\\desktop\\out\\Maris-win32-x64",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\static\\out-manifest-v4.tsv",
+      "entries": 140,
+      "matched": 140,
+      "changes": [],
+      "sha256": "8afdd6d3e7c928912b48acedb2d7c1931607e47f32e549a67e92d04eff142409",
+      "passed": true
+    },
+    "pythonResources": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\resources",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\static\\python-resources-v4.tsv",
+      "entries": 67,
+      "matched": 67,
+      "changes": [],
+      "sha256": "324845f07f050f2b90e3c1e0b89b6598c8748aca549f8f848b600d5a2a0da5d1",
+      "passed": true
+    },
+    "tools": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\tools",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\tools.sha256",
+      "entries": 7,
+      "matched": 7,
+      "changes": [],
+      "sha256": "b8d6dfc119b86d44ee186aa4eaf04d29ba0cdd2c938b1ac5756d5fbafeaefcc0",
+      "passed": true
+    },
+    "runtimeTools": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\runtime-tools.sha256",
+      "entries": 3,
+      "matched": 3,
+      "changes": [],
+      "sha256": "fa5ef973bf23d99c3b1b398dca8004307ef6aebe30a6257254f634437f30ef03",
+      "passed": true
+    },
+    "developmentInputs": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\development-inputs.sha256",
+      "entries": 7,
+      "matched": 7,
+      "changes": [],
+      "sha256": "315646680ef31ca1daca8b2252aba3a698037b02f270729544c5249d6eadf7bd",
+      "passed": true
+    },
+    "evidence": {
+      "base": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence",
+      "manifest": "C:\\MarisIpcR9\\R9-20261101-161412\\evidence\\evidence-manifest.tsv",
+      "entries": 75,
+      "matched": 75,
+      "changes": [],
+      "sha256": "5a4b4bba8bb654a699377f66a1768a7669192cd4f6b1b29bc3382112941d0839",
+      "passed": true
+    }
+  },
+  "actualEntries": [
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\vitest\\vitest.mjs",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\vitest\\dist\\index.js",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\vite\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\esbuild\\lib\\main.js",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\jsdom\\lib\\api.js",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\jsdom\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\react\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\react-dom\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\react-router\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\zod\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\electron\\dist\\electron.exe",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\playwright\\index.js",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\node_modules\\playwright\\package.json",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\tools\\node\\node.exe",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\Maris.exe",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\apps\\desktop\\out\\Maris-win32-x64\\resources\\app.asar",
+      "passed": true
+    },
+    {
+      "path": "C:\\MarisIpcR9\\R9-20261101-161412\\workspace\\pnpm-lock.yaml",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

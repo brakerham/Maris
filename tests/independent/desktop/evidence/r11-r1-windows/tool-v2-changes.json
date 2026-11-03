@@ -1,0 +1,12 @@
+{
+  "from": "r11-r1-windows-observe.ps1",
+  "to": "r11-r1-windows-observe-v2.ps1",
+  "priorSha256": "50af8db32d3aea13b1cdd65518bf1a7ba59e8c625b7d5d5e7a3c142ba41869a4",
+  "changes": [
+    "finite network CIM timeout2 seconds",
+    "self receipt with actual parent verification",
+    "native/status code virtual rejection tests",
+    "bounded existing captured controller"
+  ],
+  "oldSourceUnchanged": true
+}

@@ -2,17 +2,26 @@
 
 这是所有角色和独立 Codex 任务的当前控制面。时间较早的任务说明、聊天记录或本地假设与本文冲突时，以本文和用户最新决定为准。本文只由头脑风暴总控维护。
 
-- 指令版本：`2026-11-03T00:05:00+08:00`
+- 指令版本：`2026-11-03T15:39:00+08:00`
 - 当前阶段：P4-A Host、身份和通用状态地基已经完成。`P4-C11-R2` 已在真实 PostgreSQL 上关闭 `P4-C11-R1-PG-001`，`P4A-DB-05` 与 `P4A-DB-06` 已通过，P4-A 矩阵为 64 passed、0 failed、0 blocked、0 not_run。
-- 当前动作：P0～P3与P4-A已独立验收。R11独立41/41节点、321/321比较和109/109兼容通过，总控限定关闭IPC-ORIGIN-001；SEC-04整项blocked。Windows在目标前只读观察处停止，新增核对发现默认AccessDenied、标准审批后查询成功，旧R11根因仍unknown。唯一续接P4-C12-R11-R1-WINDOWS由既有Tester负责，从获准只读观察进入原W2及剩余Windows，不重跑41/109。系列已用产品2/8、helper3/6，剩余最多6/3；无安装或打包。SETTINGS-001、LAZY-001/UI-02、CMP-06及P4-B未关闭，B为1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。
-- 需要用户参与：将R11-R1-WINDOWS新卡发给既有测试智能体，按新control/起点接单；ready/waiting_user，实际接单unverified。Executor/顾问停止，不续旧卡；当前无需用户操作窗口、系统或账户。必要只读观察按工具标准审批办理，不要求修改安全设置。
+- 当前动作：P0～P3与P4-A已独立验收。R11-R1原W2四条首样、W2/W3共18比较及H2原生13比较通过，总控限定关闭SETTINGS-001；IPC-ORIGIN-001及QUIT-001普通关闭范围保持关闭。W4原生定位工具受阻，实际同标题可见窗口为2，按钮失败精确数量仍unknown，未形成新产品缺陷。唯一新任务P4-C12-R11-R2-NATIVE由既有Tester负责：修正窗口/模态定位，在新副本先只读H0确认五条消息，再W4-R/H3/W5/H4/W6/W7。历史产品5/helper4保持，本次最多4/3，明确增加W4补验和H0额度，系列上限9/7；不重跑W2/W3/H2或41/109、不安装打包。B为1 passed、1 failed、20 blocked、2 not_run，UI-02/LAZY-001及P4-B未关闭，P4-C/D未开始。
+- 需要用户参与：将R11-R2-NATIVE新卡发给既有测试智能体；新任务ready/waiting_user，实际接单unverified。Executor/顾问停止，不续旧W4；当前无需用户点击窗口或修改系统。观察权限按已有标准工具审批处理。
 - Git 状态：新仓库 `https://github.com/brakerham/Maris.git` 是当前正式 `origin`；远端 `main` 当前为 `251b4a2`，其后的 E5 协调与返修单元只在本地提交，尚未推送。现有远端与本地提交仍是发布前保护性检查点，不是首个正式大版本，也不启动 PR-only 流程。旧 `DM001-mm/wife-system` 只保留为 `old-origin`，后续默认不推送。
 - 前端实现提醒门禁：P4-B Shell 完成独立验收后、创建首个 P4-C 财务驾驶舱技术方案或执行 Prompt 之前，总控必须主动提醒用户进入真实前端界面阶段，并先复核两张既定参考图、高保真信息架构、页面/组件切片、视觉验收方式和模型分工。不得直接沿用 Shell 占位页开始编码；必须让用户先确认当时可用模型及分工策略。当前建议重新评估“强推理/视觉模型（现为 GPT-6 Astra）负责界面方案、复杂交互和关键审阅，编码工作模型（现为 GPT-6 Sol）负责组件实现、重构和常规测试”，模型能力或额度变化时以届时讨论为准。
 
-## R11结果接受及Windows-only续接（2026-11-03）
+## R11-R1有限接受及原生定位续验（2026-11-03 15:39）
+
+- 总控核对[R1裁定](../p4-c12-r11-r1-settings-native-coordinator-review.md)：129交付/17工具/106证据/103首次/30归档、固定1432/140/67及68项停止后资料匹配。原W2四首样和H2读回支持限定关闭SETTINGS-001；CMP-06整体blocked，旧LAZY/UI02未关闭。
+- 唯一新任务[P4-C12-R11-R2-NATIVE](prompts/p4-c12-r11-r2-native-tester.md)，既有Tester按[新起点](snapshots/p4-c12-r11-r2-native-start.sha256)接单。旧R1停止，实际新接单unverified，Executor/顾问不动旧交付。
+- 新副本定位不能仅靠Maris标题唯一性：产品主窗和原生模态同标题，实际可见同名2；必须绑定owned窗口/模态关系并留下具体候选。首个按钮异常的0/多原因unknown，不倒写为产品失败。
+- 新profile从R1停止后68项资料普通复制；先只读H0与H2五条语义比对，无reset/reseed。通过后唯一W4-R/H3/W5/H4以及已冻结能力分支W6/W7，同任务连续执行。
+- 总控明确新增W4一次恢复及H0一次只读额度，历史已用产品5/helper4不变；本次最多4/3，系列总上限由8/6调整9/7，不追溯重置旧失败。旧W2/W3/H2、41/321/109及其他已过集合只引用，安装/package/额外UI夹具0。
+- 同标题定位和原生能力不足不是P4-B接受；新比较/未知工具错误按卡保留首次并停止。以下R11-R1/R11安排均为历史，不再直接授权执行。
+
+## R11结果接受及Windows-only续接（2026-11-03 00:05，历史）
 
 - 总控已核对[R11裁定](../p4-c12-r11-origin-observer-coordinator-review.md)：110交付/11工具/93证据/49来源/90首次/50归档匹配；41独立及109兼容接受，不重跑。IPC-ORIGIN-001限定关闭，R9修复仅此范围complete；SEC-04整项仍blocked，SETTINGS-001仍需W2真实首样。
-- 唯一新任务[P4-C12-R11-R1-WINDOWS](prompts/p4-c12-r11-r1-windows-tester.md)，使用[新起点](snapshots/p4-c12-r11-r1-windows-start.sha256)。既有Tester负责；Executor/顾问停止，实际接单unverified。旧R11首次记录原样保留。
+- 当时任务[P4-C12-R11-R1-WINDOWS](prompts/p4-c12-r11-r1-windows-tester.md)，使用[新起点](snapshots/p4-c12-r11-r1-windows-start.sha256)。既有Tester负责；Executor/顾问停止，实际接单unverified。旧R11首次记录原样保留。
 - 新只读核对明确默认AccessDenied、标准工具审批环境成功；不倒推旧CimException根因，不更改WMI/ACL/服务、安全软件或Maris运行权限。必要身份/资源查询经获准通道，错误不当空库存；目标前核实原生能力与准确自身PID排除。
 - 观察通过后同任务原W2→W3/H2/W4/H3/W5/H4/W6/W7，最多新增产品6/helper3，系列2/8与3/6不重置。旧41/109、H1/W1、冷入口/恢复/模块/退出及执行方S1/S2只引用；package/安装/开发服务器0。
 - 未完成的原生条件与设备限制据实保留，不能因单缺陷关闭签整个P4-B。以下R11、R9、R10为历史，不再直接授权执行。
@@ -191,7 +200,8 @@
 | P4-C12-R10-SETTINGS 设置恢复独立复验 | 既有测试智能体；`blocked / finished` | 5通过/1失败/32未运行，开发origin不同端口被接受；50交付匹配 | 原首次保留，48兼容/W2/Windows未运行，Tester累计2/8与3/6冻结 |
 | P4-B7-R9-IPC-ORIGIN 开发来源精确校验 | 总控限定接受 `complete`；本人原review保留 | R11原I06及O01～08独立通过，IPC-ORIGIN-001限定关闭 | 执行停止，SEC-04整项与Windows验收不外推 |
 | P4-C12-R11-ORIGIN-SETTINGS 来源/设置及Windows续验 | 既有Tester；`blocked / finished`，有限结果接受 | 41/321与109通过，Windows目标前CimException/unknown | 原首次保留，不重复已通过集合，产品/helper均0 |
-| P4-C12-R11-R1-WINDOWS 只读观察与Windows续接 | 既有Tester；`ready / waiting_user`，实际接单unverified | 按获准只读观察后直接原W2及剩余Windows | 最多新增产品6/helper3，系列2/8与3/6不重置；无安装/package/Git写 |
+| P4-C12-R11-R1-WINDOWS 只读观察与Windows续接 | 既有Tester；`blocked / finished`，有限结果接受 | W2/W3 18与H2 13通过，SETTINGS-001限定关闭，W4定位工具blocked | 旧现场/首次保持，历史累计产品5/helper4，不重跑已过 |
+| P4-C12-R11-R2-NATIVE 原生定位与剩余Windows | 既有Tester；`ready / waiting_user`，接单unverified | 新副本H0只读基线后W4-R/H3/W5/H4/W6/W7 | 本次最多4产品/3helper，系列上限9/7；无安装/打包/产品写/Git写 |
 | P4-IF-002 返修补充冻结 | `complete`；头脑风暴总控 | 冻结一次性绑定、同事务 receipt、认证/错误、活动导入 principal、复合 FK、三 migration、R1/R2 顺序 | 变更必须退回总控与技术顾问；执行方不得自行选择替代语义 |
 | P4-B6-R1 安全数据与兼容入口返修 | 既有执行智能体；`review`，已接受为 R2 输入 | R1/F1 22 文件安全切片摘要 `e690882a...7976` 可复算；最终独立结论仍由 C11 给出 | 原 R1/F1 执行已停止；不得继续修改 migration、独立测试或启动 C11 |
 | P4-B6-R1-F1 外部身份并发绑定返修 | 既有执行智能体；`review`，开发返修接受 | 总控核对 4 changed/19 unchanged/0 missing、五文件摘要、本地 41 passed；执行方 PG 原 21+新增 1 通过 | 作为 R2 精确基线保留；F1 真实并发反例在 C11 再独立执行，不重复改实现 |

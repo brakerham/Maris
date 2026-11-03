@@ -1,0 +1,102 @@
+{
+  "id": "W4",
+  "passed": false,
+  "firstFailure": {
+    "stage": "retention_dialog",
+    "id": null,
+    "name": "Error",
+    "code": "os_observer_nonzero"
+  },
+  "cleanupError": null,
+  "forced": true,
+  "rootPid": 1596,
+  "exit": {
+    "code": 1,
+    "signal": null,
+    "at": "2026-11-03T02:36:58.737Z"
+  },
+  "secondaryPid": null,
+  "secondaryExit": null,
+  "productStarts": 1,
+  "helperStarts": 0,
+  "seriesProductStarts": 5,
+  "seriesHelperStarts": 4,
+  "durationMs": 13857.5074,
+  "comparisons": [
+    {
+      "id": "W4-OWN-ROOT",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "W4-CDP-OWNED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    }
+  ],
+  "known": [
+    {
+      "pid": 1596,
+      "parentPid": 10064,
+      "created": "2026-11-03T02:36:48.4113560Z",
+      "kind": "product"
+    },
+    {
+      "pid": 10148,
+      "parentPid": 1596,
+      "created": "2026-11-03T02:36:48.5292540Z",
+      "kind": "product"
+    },
+    {
+      "pid": 6636,
+      "parentPid": 1596,
+      "created": "2026-11-03T02:36:48.5338210Z",
+      "kind": "product"
+    },
+    {
+      "pid": 7132,
+      "parentPid": 1596,
+      "created": "2026-11-03T02:36:48.5745120Z",
+      "kind": "product"
+    },
+    {
+      "pid": 16252,
+      "parentPid": 1596,
+      "created": "2026-11-03T02:36:48.6082630Z",
+      "kind": "python"
+    },
+    {
+      "pid": 29232,
+      "parentPid": 16252,
+      "created": "2026-11-03T02:36:48.6140750Z",
+      "kind": "conhost"
+    },
+    {
+      "pid": 9772,
+      "parentPid": 1596,
+      "created": "2026-11-03T02:36:48.6272490Z",
+      "kind": "product"
+    },
+    {
+      "pid": 24976,
+      "parentPid": 16252,
+      "created": "2026-11-03T02:36:48.6344530Z",
+      "kind": "python"
+    }
+  ],
+  "closeReceipt": null,
+  "remainingOwned": 0,
+  "remainingListeners": 0,
+  "remainingWindows": 0,
+  "streams": [
+    {
+      "id": "W4",
+      "stdoutBytes": 2,
+      "stdoutSha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "stderrBytes": 100,
+      "stderrSha256": "c99c8feaf8051dc34bb1062804cb2477bca1aaf72b08ec8b4fea1fd8aa2aad49"
+    }
+  ]
+}

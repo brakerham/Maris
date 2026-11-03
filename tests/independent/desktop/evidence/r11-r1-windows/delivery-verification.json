@@ -1,0 +1,43 @@
+{
+  "at": "2026-11-03T10:55:24.023485+08:00",
+  "status": "blocked",
+  "activity": "finished",
+  "meaning": "Delivery integrity only; W4 tool-blocked, business unverified",
+  "sets": [
+    {
+      "base": "D:\\CodeX_gap\\wife-system",
+      "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-r1-windows\\tools.sha256",
+      "entries": 17,
+      "sha256": "7f674aa75e295d3f458e2aa85017889ded94cd599d03490c875f9b4ce1f244e1",
+      "matched": 17,
+      "changes": [],
+      "passed": true
+    },
+    {
+      "base": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-r1-windows",
+      "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-r1-windows\\evidence.sha256",
+      "entries": 106,
+      "sha256": "26aff2bea38c3aedf787548ecc84a182e5b03e225631b0d188ae043088513393",
+      "matched": 106,
+      "changes": [],
+      "passed": true
+    },
+    {
+      "base": "D:\\CodeX_gap\\wife-system",
+      "manifest": "D:\\CodeX_gap\\wife-system\\tests\\independent\\desktop\\evidence\\r11-r1-windows\\delivery.sha256",
+      "entries": 129,
+      "sha256": "f147d734de1b138a45a069013a8d0a10800ba7b5d092e305d96ca1eca2b86a21",
+      "matched": 129,
+      "changes": [],
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "newProductStarts": 3,
+  "newHelperStarts": 1,
+  "seriesProducts": 5,
+  "seriesHelpers": 4,
+  "targetRerun": false,
+  "gitWrite": false,
+  "endAuditSha256": "3b4e5c25f4fd877b467296d125f87613bf88ceb80eaa48fa2a8959c30590ebac"
+}

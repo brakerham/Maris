@@ -1,0 +1,86 @@
+{
+  "passed": false,
+  "firstError": {
+    "details": {
+      "hresult": -2146233087,
+      "safeCode": "target_process_present",
+      "nativeErrorCode": null,
+      "errorType": "System.Management.Automation.RuntimeException",
+      "statusCode": null,
+      "category": "OperationStopped"
+    },
+    "stage": "process_query"
+  },
+  "process": {
+    "id": "OBS-R1",
+    "startedUtc": "2026-11-02T16:22:30.106Z",
+    "endedUtc": "2026-11-02T16:22:31.322Z",
+    "durationMs": 1216.0260999999998,
+    "status": 1,
+    "signal": null,
+    "error": null,
+    "timedOut": false,
+    "cancelVerified": false,
+    "pid": 37748,
+    "stdoutBytes": 1380,
+    "stdoutSha256": "2c3164c68a2493c1e6ab4ff273d36dd30cf8123ab70016382ea596550337a386",
+    "stderrBytes": 0,
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "returnedResult": {
+    "exitCode": 1,
+    "signal": null,
+    "stages": [
+      {
+        "processesReturned": 437,
+        "selfCreation": "2026-11-02T16:22:30.1132760Z",
+        "event": "result",
+        "stage": "process_query",
+        "excludedExactPids": [
+          37748
+        ],
+        "related": [
+          {
+            "created": "2026-11-02T16:22:29.5049160Z",
+            "executableInsideScope": false,
+            "pid": 1200,
+            "scopeIndex": 1,
+            "parentPid": 24428
+          },
+          {
+            "created": "2026-11-02T16:22:29.7792750Z",
+            "executableInsideScope": true,
+            "pid": 34512,
+            "scopeIndex": 1,
+            "parentPid": 1200
+          }
+        ],
+        "selfPid": 37748,
+        "parentIdentityVerified": false,
+        "relatedCount": 2,
+        "selfIdentityVerified": true,
+        "status": "success"
+      }
+    ],
+    "firstError": {
+      "details": {
+        "hresult": -2146233087,
+        "safeCode": "target_process_present",
+        "nativeErrorCode": null,
+        "errorType": "System.Management.Automation.RuntimeException",
+        "statusCode": null,
+        "category": "OperationStopped"
+      },
+      "stage": "process_query"
+    },
+    "productStarts": 0,
+    "at": "2026-11-03T00:22:30.4318301+08:00",
+    "durationMs": 817,
+    "processInventoryStored": false,
+    "passed": false,
+    "mode": "Observe",
+    "helperStarts": 0
+  },
+  "productStarts": 0,
+  "helperStarts": 0
+}

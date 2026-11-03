@@ -1,0 +1,105 @@
+{
+  "processInventoryStored": false,
+  "durationMs": 114,
+  "productStarts": 0,
+  "signal": null,
+  "stages": [],
+  "firstError": null,
+  "helperStarts": 0,
+  "mode": "SelfTest",
+  "checks": [
+    {
+      "actual": 1,
+      "expected": 1,
+      "id": "OBS-SELF-EXACT-EXCLUSION",
+      "passed": true
+    },
+    {
+      "actual": 11,
+      "expected": 11,
+      "id": "OBS-SELF-FOREIGN-RETAINED",
+      "passed": true
+    },
+    {
+      "actual": "2026-11-02T16:21:39.2933180Z",
+      "expected": "2026-11-02T16:21:39.2933180Z",
+      "id": "OBS-SELF-DATETIME",
+      "passed": true
+    },
+    {
+      "actual": "2026-11-02T16:21:39.2933180Z",
+      "expected": "2026-11-02T16:21:39.2933180Z",
+      "id": "OBS-SELF-DATEOFFSET",
+      "passed": true
+    },
+    {
+      "actual": null,
+      "expected": null,
+      "id": "OBS-SELF-ERROR-NATIVE-NULL",
+      "passed": true
+    },
+    {
+      "actual": "System.UnauthorizedAccessException",
+      "expected": "System.UnauthorizedAccessException",
+      "id": "OBS-SELF-ERROR-TYPE",
+      "passed": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "id": "OBS-SELF-EMPTY-INVENTORY",
+      "passed": true
+    },
+    {
+      "actual": "first",
+      "expected": "first",
+      "id": "OBS-SELF-FIRST-ERROR",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "id": "OBS-SELF-FINALLY",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "id": "OBS-SELF-BAD-RESULT",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "expected": true,
+      "id": "OBS-SELF-MISSING-NOT-ZERO",
+      "passed": true
+    },
+    {
+      "actual": 11,
+      "expected": 11,
+      "id": "OBS-SELF-IDS-UNIQUE",
+      "passed": true
+    },
+    {
+      "actual": "AccessDenied",
+      "expected": "AccessDenied",
+      "id": "OBS-SELF-NATIVE-CODE",
+      "passed": true
+    },
+    {
+      "actual": "2",
+      "expected": "2",
+      "id": "OBS-SELF-STATUS-CODE",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "expected": false,
+      "id": "OBS-SELF-ERROR-NOT-EMPTY",
+      "passed": true
+    }
+  ],
+  "at": "2026-11-03T00:21:39.2893964+08:00",
+  "exitCode": 0,
+  "passed": true
+}

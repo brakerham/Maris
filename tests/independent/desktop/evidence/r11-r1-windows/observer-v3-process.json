@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "firstError": null,
+  "process": {
+    "id": "OBS-R1-V3",
+    "startedUtc": "2026-11-02T16:24:25.572Z",
+    "endedUtc": "2026-11-02T16:24:29.166Z",
+    "durationMs": 3593.8252,
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "timedOut": false,
+    "cancelVerified": false,
+    "pid": 37620,
+    "stdoutBytes": 1375,
+    "stdoutSha256": "22aef1aab44a11b0884348f612e38c4c716070266591df73502dab78104266dd",
+    "stderrBytes": 0,
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "returnedResult": {
+    "productStarts": 0,
+    "helperStarts": 0,
+    "mode": "Observe",
+    "passed": true,
+    "firstError": null,
+    "at": "2026-11-03T00:24:25.9057808+08:00",
+    "signal": null,
+    "exitCode": 0,
+    "durationMs": 3173,
+    "stages": [
+      {
+        "related": [],
+        "parentIdentityVerified": true,
+        "processesReturned": 453,
+        "launcherIdentityVerified": true,
+        "selfCreation": "2026-11-02T16:24:25.5887300Z",
+        "selfPid": 37620,
+        "selfIdentityVerified": true,
+        "status": "success",
+        "stage": "process_query",
+        "relatedCount": 0,
+        "excludedExactPids": [
+          37620,
+          37188,
+          22996
+        ],
+        "event": "result"
+      },
+      {
+        "querySucceeded": true,
+        "event": "result",
+        "relatedListenerCount": 0,
+        "status": "success",
+        "listenerCount": 56,
+        "stage": "listener_query"
+      },
+      {
+        "event": "result",
+        "status": "success",
+        "topLevelCount": 14,
+        "deviceUnavailable": false,
+        "dialogAction": "existing_owned_button_adapter_requires_target_identity",
+        "stage": "uia_read"
+      },
+      {
+        "rootCount": 1,
+        "event": "result",
+        "status": "success",
+        "deviceUnavailable": false,
+        "actionAdapter": "not_implemented",
+        "stage": "tray_read"
+      }
+    ],
+    "processInventoryStored": false
+  },
+  "productStarts": 0,
+  "helperStarts": 0
+}

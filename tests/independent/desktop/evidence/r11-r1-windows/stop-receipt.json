@@ -1,0 +1,65 @@
+{
+  "at": "2026-11-03T10:38:31.935030+08:00",
+  "status": "blocked",
+  "activity": "finished",
+  "scope": "P4-C12-R11-R1-WINDOWS",
+  "firstError": {
+    "id": "W4-OS-3",
+    "action": "dialog",
+    "status": 3,
+    "signal": null,
+    "error": null,
+    "timedOut": false,
+    "safeDetail": {
+      "stage": "owned_button",
+      "errorName": "System.Management.Automation.RuntimeException",
+      "code": "owned_dialog_button_ambiguous",
+      "hresult": -2146233087,
+      "nativeErrorCode": null,
+      "statusCode": null,
+      "category": "OperationStopped"
+    }
+  },
+  "normalCleanupError": {
+    "id": "W4-OS-4",
+    "action": "close",
+    "status": 3,
+    "signal": null,
+    "error": null,
+    "timedOut": false,
+    "safeDetail": {
+      "stage": "native_close",
+      "errorName": "System.Management.Automation.RuntimeException",
+      "code": "owned_main_ambiguous",
+      "hresult": -2146233087,
+      "nativeErrorCode": null,
+      "statusCode": null,
+      "category": "OperationStopped"
+    }
+  },
+  "classification": "tool_identity_locator_ambiguous; not a product comparison failure; not device_unavailable",
+  "targetRerun": false,
+  "productNew": 3,
+  "helperNew": 1,
+  "seriesProducts": 5,
+  "seriesHelpers": 4,
+  "laterNotRun": [
+    "H3",
+    "W5",
+    "H4",
+    "W6",
+    "W7"
+  ],
+  "W4Exit": {
+    "code": 1,
+    "signal": null,
+    "at": "2026-11-03T02:36:58.737Z"
+  },
+  "W4Forced": true,
+  "remainingOwned": 0,
+  "remainingListeners": 0,
+  "remainingWindows": 0,
+  "H2NativeChecks": 13,
+  "W2Comparisons": 18,
+  "W4Comparisons": 2
+}

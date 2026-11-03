@@ -1,0 +1,8 @@
+{"at":"2026-11-03T02:36:53.4345359+00:00","callId":"W4-OS-3","event":"enter","details":{},"stage":"process_query"}
+{"at":"2026-11-03T02:36:54.1126510+00:00","callId":"W4-OS-3","event":"terminal","details":{"ownedCount":8,"rootVerified":true,"status":"success"},"stage":"process_query"}
+{"at":"2026-11-03T02:36:54.1135725+00:00","callId":"W4-OS-3","event":"enter","details":{},"stage":"type_prepare"}
+{"at":"2026-11-03T02:36:54.2758908+00:00","callId":"W4-OS-3","event":"terminal","details":{"status":"success"},"stage":"type_prepare"}
+{"at":"2026-11-03T02:36:54.2771508+00:00","callId":"W4-OS-3","event":"enter","details":{},"stage":"uia_prepare"}
+{"at":"2026-11-03T02:36:54.2835009+00:00","callId":"W4-OS-3","event":"terminal","details":{"status":"success"},"stage":"uia_prepare"}
+{"at":"2026-11-03T02:36:54.2926664+00:00","callId":"W4-OS-3","event":"enter","details":{},"stage":"owned_button"}
+{"at":"2026-11-03T02:36:54.4461437+00:00","callId":"W4-OS-3","event":"terminal","details":{"code":"owned_dialog_button_ambiguous","hresult":-2146233087,"errorName":"RuntimeException","status":"error"},"stage":"owned_button"}

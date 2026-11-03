@@ -1,0 +1,257 @@
+{
+  "checks": [
+    {
+      "scene": "W2",
+      "id": "W2-STORED-THEME",
+      "expected": "dark",
+      "actual": "dark",
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-STORED-PRIVACY",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-STORED-CLOSE-POLICY",
+      "expected": "quit",
+      "actual": "quit",
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-STORED-HINT",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-CONTINUITY-FIXTURE",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-OWN-ROOT",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-CDP-OWNED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-PAGE-READY",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-PERSISTED-UI-THEME",
+      "expected": "dark",
+      "actual": "dark",
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-PERSISTED-UI-PRIVACY",
+      "expected": "on",
+      "actual": "on",
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-PERSISTED-THEME-CONTROL",
+      "expected": "dark",
+      "actual": "dark",
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-PERSISTED-PRIVACY-CONTROL",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-SHELL-NAV-AGENT",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-SETTINGS-BYTES-UNCHANGED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W2-PERSISTED-REQUEST-ID",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W3-SECOND-EXIT",
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W3-FIRST-ALIVE",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W2",
+      "id": "W3-HOST-IDENTITY-UNCHANGED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W4",
+      "id": "W4-OWN-ROOT",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "W4",
+      "id": "W4-CDP-OWNED",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-NATIVE-AVAILABLE",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-OWNER-SCHEMA",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-OWNER-STABLE-IDENTITY",
+      "operator": "eq",
+      "expected": "7d65139817c6810471b88bbc940369e10f05a9129952b9e0969bf7c76cde541c",
+      "actual": "7d65139817c6810471b88bbc940369e10f05a9129952b9e0969bf7c76cde541c",
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-REFRESH-PRESENT",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-ENTRIES-ARRAY",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-ORIGINAL-CONTINUITY",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-DRAFT-DIGEST",
+      "operator": "eq",
+      "expected": "d450a2a8db073edde56afc669722e49c68203c8d30be28176327d85c88ee8551",
+      "actual": "d450a2a8db073edde56afc669722e49c68203c8d30be28176327d85c88ee8551",
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-EVENT-DIGEST",
+      "operator": "eq",
+      "expected": "97bf07ba60ffd6aaae69195d23532ea860aa1a09e3bba24cea204ef7162da27c",
+      "actual": "97bf07ba60ffd6aaae69195d23532ea860aa1a09e3bba24cea204ef7162da27c",
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-PAYLOAD-DIGEST",
+      "operator": "eq",
+      "expected": "07ddee3f2b4af92a2c6df36e9449621fc53fde20c76c84fcc7cc6e5a8bb222e8",
+      "actual": "07ddee3f2b4af92a2c6df36e9449621fc53fde20c76c84fcc7cc6e5a8bb222e8",
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-ORIGINAL-COUNT",
+      "operator": "eq",
+      "expected": 1,
+      "actual": 1,
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-SEED-UNIQUE",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-SEED-READBACK",
+      "operator": "eq",
+      "expected": "8f22c45b2b687325449eb55123bb3025c486d27861040204830b2cea6c403320",
+      "actual": "8f22c45b2b687325449eb55123bb3025c486d27861040204830b2cea6c403320",
+      "passed": true
+    },
+    {
+      "scene": "H2",
+      "id": "H2-OWNER-UNCHANGED",
+      "operator": "eq",
+      "expected": "5fec8e73c513311ee70d9103d7eb85897bf066f385d6ada65c03c5d3c81b49b7",
+      "actual": "5fec8e73c513311ee70d9103d7eb85897bf066f385d6ada65c03c5d3c81b49b7",
+      "passed": true
+    }
+  ],
+  "notRun": [
+    "W4-RETENTION-CHOICE-INVOKED",
+    "H3",
+    "W5",
+    "H4",
+    "W6",
+    "W7"
+  ],
+  "businessFailure": false
+}

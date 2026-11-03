@@ -1,0 +1,8 @@
+{
+  "resumedAt": "2026-11-03T10:28:28.697039+08:00",
+  "previousActiveMinutesCharged": 10,
+  "remainingActiveMinutes": 20,
+  "deadline": "2026-11-03T10:48:28.697039+08:00",
+  "version": 3,
+  "interruption": "No target/controller ran while execution control absent; no retroactive heartbeat."
+}

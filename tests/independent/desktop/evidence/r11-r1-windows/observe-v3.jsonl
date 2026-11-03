@@ -1,0 +1,9 @@
+{"event":"enter","at":"2026-11-03T00:24:25.9496678+08:00","stage":"process_query"}
+{"related":[],"parentIdentityVerified":true,"processesReturned":453,"launcherIdentityVerified":true,"selfCreation":"2026-11-02T16:24:25.5887300Z","selfPid":37620,"selfIdentityVerified":true,"status":"success","stage":"process_query","relatedCount":0,"excludedExactPids":[37620,37188,22996],"event":"result"}
+{"event":"enter","at":"2026-11-03T00:24:26.7753177+08:00","stage":"listener_query"}
+{"querySucceeded":true,"event":"result","relatedListenerCount":0,"status":"success","listenerCount":56,"stage":"listener_query"}
+{"event":"enter","at":"2026-11-03T00:24:28.8510835+08:00","stage":"uia_load"}
+{"event":"enter","at":"2026-11-03T00:24:28.8630541+08:00","stage":"uia_read"}
+{"event":"result","status":"success","topLevelCount":14,"deviceUnavailable":false,"dialogAction":"existing_owned_button_adapter_requires_target_identity","stage":"uia_read"}
+{"event":"enter","at":"2026-11-03T00:24:29.0638135+08:00","stage":"tray_read"}
+{"rootCount":1,"event":"result","status":"success","deviceUnavailable":false,"actionAdapter":"not_implemented","stage":"tray_read"}

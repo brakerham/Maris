@@ -1,11 +1,11 @@
 # 项目进度总览
 
-更新时间：2026-11-03 00:05，Asia/Shanghai
+更新时间：2026-11-03 15:39，Asia/Shanghai
 维护者：头脑风暴智能体
 
 ## 当前阶段
 
-P0～P3与P4-A已独立验收。R11独立41/41节点、321/321比较和109/109兼容通过，总控限定关闭IPC-ORIGIN-001；SEC-04整项blocked。Windows在目标前只读观察处停止，新增核对发现默认AccessDenied、标准审批后查询成功，旧R11根因仍unknown。唯一续接P4-C12-R11-R1-WINDOWS由既有Tester负责，从获准只读观察进入原W2及剩余Windows，不重跑41/109。系列已用产品2/8、helper3/6，剩余最多6/3；无安装或打包。SETTINGS-001、LAZY-001/UI-02、CMP-06及P4-B未关闭，B为1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。
+P0～P3与P4-A已独立验收。R11-R1原W2四条首样、W2/W3共18比较及H2原生13比较通过，总控限定关闭SETTINGS-001；IPC-ORIGIN-001及QUIT-001普通关闭范围保持关闭。W4原生定位工具受阻，实际同标题可见窗口为2，按钮失败精确数量仍unknown，未形成新产品缺陷。唯一新任务P4-C12-R11-R2-NATIVE由既有Tester负责：修正窗口/模态定位，在新副本先只读H0确认五条消息，再W4-R/H3/W5/H4/W6/W7。历史产品5/helper4保持，本次最多4/3，明确增加W4补验和H0额度，系列上限9/7；不重跑W2/W3/H2或41/109、不安装打包。B为1 passed、1 failed、20 blocked、2 not_run，UI-02/LAZY-001及P4-B未关闭，P4-C/D未开始。
 
 部署范围已收紧为单机、单主人、本地数据库。其他人使用时在自己的设备安装独立实例；公众注册、多账号、云账户和注册/常规登录 UI 暂停。内部 `user_id`、Principal、session 和微信绑定继续作为本地数据安全边界，桌面端以后再决定自动本地会话或可选应用锁。
 
@@ -13,12 +13,12 @@ P0～P3与P4-A已独立验收。R11独立41/41节点、321/321比较和109/109�
 
 | 角色 | 任务状态 | 运行状态/当前步骤 | 最近进展或心跳 | 下一检查点 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| 头脑风暴 | `ready / waiting_user` | R11有限接受、Windows续接卡与起点准备 | 2026-11-03 00:05 | Tester按新卡接单 | [裁定](../p4-c12-r11-origin-observer-coordinator-review.md) |
+| 头脑风暴 | `ready / waiting_user` | R1有限接受与R2原生续接卡/新起点准备 | 2026-11-03 15:39 | Tester按新卡接单 | [裁定](../p4-c12-r11-r1-settings-native-coordinator-review.md) |
 | 技术顾问 | D16有限裁定`complete`；本人原`review / finished`保留 | 39交付匹配，E1/E2两次成功，旧A根因unknown | 2026-10-03 23:34（交付已核对） | 停止，不续诊断或独立验收 | [报告](../phase-4-d16-harness-and-acceptance-advice.md) |
 | 执行智能体 | R9开发来源修复限定complete；本人review保留 | IPC-ORIGIN-001独立复验关闭，执行停止 | 2026-11-03 00:05（总控裁定） | 无新执行任务 | [裁定](../p4-c12-r11-origin-observer-coordinator-review.md) |
-| 测试智能体 | R11 blocked/finished；新R11-R1 ready/waiting_user | 41/321及109通过不再运行；只读观察后Windows续接 | 2026-11-03 00:05（总控派发） | 新起点匹配后接单，当前unverified | [任务](prompts/p4-c12-r11-r1-windows-tester.md) |
+| 测试智能体 | R1 blocked/finished；R2 ready/waiting_user | W2/W3/H2通过只引用，W4原生定位待修 | 2026-11-03 15:39（总控派发） | 新起点接单，当前unverified | [任务](prompts/p4-c12-r11-r2-native-tester.md) |
 
-当前唯一新任务为P4-C12-R11-R1-WINDOWS，既有Tester负责。Executor/顾问停止；已有41/109只引用，从获准只读观察继续原W2及剩余场景。产品剩余6/helper3，无安装/打包；前端参考图与模型分工提醒保持。
+当前唯一新任务P4-C12-R11-R2-NATIVE；Tester负责，执行方/顾问停止。历史已用产品5/helper4，增加一次W4补验及H0后，本次最多4/3，系列上限9/7。先只读新副本基线，再后续原生场景，无安装/打包；前端提醒保持。
 
 ## 阶段 0 任务状态
 
@@ -130,7 +130,8 @@ P0～P3与P4-A已独立验收。R11独立41/41节点、321/321比较和109/109�
 | P4-C12-R10-SETTINGS：设置恢复独立复验 | 既有测试智能体 | `blocked / finished` | 5/1/32，IPC-ORIGIN-001；Windows未运行 | [报告](../testing/phase-4-c12-r10-settings-windows-report.md) |
 | P4-B7-R9-IPC-ORIGIN：开发来源最小返修 | 既有执行智能体 | 限定 `complete`；原review保留 | R11独立来源通过，IPC-ORIGIN-001限定关闭 | [裁定](../p4-c12-r11-origin-observer-coordinator-review.md) |
 | P4-C12-R11-ORIGIN-SETTINGS：来源设置及Windows续验 | 既有测试智能体 | `blocked / finished`，有限结果接受 | 41/321与109通过，Windows目标前观察unknown | [报告](../testing/phase-4-c12-r11-origin-settings-windows-report.md) |
-| P4-C12-R11-R1-WINDOWS：只读观察与Windows续接 | 既有测试智能体 | `ready / waiting_user`，接单unverified | 先获准观察，再原W2及后续Windows；不重复源级通过集合 | [任务](prompts/p4-c12-r11-r1-windows-tester.md) |
+| P4-C12-R11-R1-WINDOWS：只读观察与Windows续接 | 既有Tester | `blocked / finished`，有限结果接受 | W2/W3/H2通过，SETTINGS-001限定关闭，W4工具阻塞 | [报告](../testing/phase-4-c12-r11-r1-windows-report.md) |
+| P4-C12-R11-R2-NATIVE：原生定位与剩余Windows | 既有Tester | `ready / waiting_user`，接单unverified | 新副本H0只读后一次W4补验及剩余场景 | [任务](prompts/p4-c12-r11-r2-native-tester.md) |
 | P4-C12-R4：lazy复验与Windows续跑 | 既有测试智能体 | `blocked / finished` | 原节点0pass/1fail；故障命中未证实，未新增产品缺陷，Windows0次 | [报告](../testing/phase-4-c12-r4-lazy-windows-report.md) |
 | P4-C12-R4-R1：观察与续跑 | 既有测试智能体 | `blocked / finished` | mock1、#/daily、5016ms无alert；异常终态未定位 | [报告](../testing/phase-4-c12-r4-r1-observation-windows-report.md) |
 | P4-D15：异常传播有限诊断 | 既有技术顾问 | `blocked / finished` | import/默认loader拒绝成立；P3超时无阶段回执，原证据保留 | [报告](../phase-4-d15-lazy-propagation-advice.md)、[总控核对](../p4-d15-bootstrap-coordinator-review.md) |

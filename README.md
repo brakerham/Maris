@@ -1,10 +1,11 @@
 # 个人财务 Agent：开发与学习项目
 
-当前阶段：P0～P3与P4-A已独立验收。R11独立41/41节点、321/321比较和109/109兼容通过，总控限定关闭IPC-ORIGIN-001；SEC-04整项blocked。Windows在目标前只读观察处停止，新增核对发现默认AccessDenied、标准审批后查询成功，旧R11根因仍unknown。唯一续接P4-C12-R11-R1-WINDOWS由既有Tester负责，从获准只读观察进入原W2及剩余Windows，不重跑41/109。系列已用产品2/8、helper3/6，剩余最多6/3；无安装或打包。SETTINGS-001、LAZY-001/UI-02、CMP-06及P4-B未关闭，B为1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。
+当前阶段：P0～P3与P4-A已独立验收。R11-R1原W2四条首样、W2/W3共18比较及H2原生13比较通过，总控限定关闭SETTINGS-001；IPC-ORIGIN-001及QUIT-001普通关闭范围保持关闭。W4原生定位工具受阻，实际同标题可见窗口为2，按钮失败精确数量仍unknown，未形成新产品缺陷。唯一新任务P4-C12-R11-R2-NATIVE由既有Tester负责：修正窗口/模态定位，在新副本先只读H0确认五条消息，再W4-R/H3/W5/H4/W6/W7。历史产品5/helper4保持，本次最多4/3，明确增加W4补验和H0额度，系列上限9/7；不重跑W2/W3/H2或41/109、不安装打包。B为1 passed、1 failed、20 blocked、2 not_run，UI-02/LAZY-001及P4-B未关闭，P4-C/D未开始。
 
 - [R9来源修复交付核对](docs/p4-b7-r9-ipc-origin-coordinator-review.md)：接受为独立输入，生产包相同的构建原因已核对。
 - [R11独立结果与观察裁定](docs/p4-c12-r11-origin-observer-coordinator-review.md)：来源缺陷限定关闭，旧观察错误unknown保留。
-- [R11-R1剩余Windows续接](docs/coordination/prompts/p4-c12-r11-r1-windows-tester.md)：唯一新任务；不重跑41/109，先获准只读观察，再原W2与后续场景。
+- [R11-R1设置恢复接受与原生定位裁定](docs/p4-c12-r11-r1-settings-native-coordinator-review.md)：SETTINGS-001限定关闭，W4工具首次保持。
+- [R11-R2原生定位与剩余Windows](docs/coordination/prompts/p4-c12-r11-r2-native-tester.md)：唯一新任务；不重跑W2/W3/H2，先副本只读核对，再一次W4补验。
 
 - [R10来源校验缺陷裁定](docs/p4-c12-r10-ipc-origin-coordinator-review.md)：开发不同端口反例确认，生产可达与数据泄露未证实。
 - [R9来源精确校验返修任务](docs/coordination/prompts/p4-b7-r9-ipc-origin-executor.md)：已review/finished，执行停止；来源缺陷已由R11独立复验并限定关闭。

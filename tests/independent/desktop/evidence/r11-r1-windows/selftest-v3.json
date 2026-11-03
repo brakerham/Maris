@@ -1,0 +1,123 @@
+{
+  "exitCode": 0,
+  "firstError": null,
+  "helperStarts": 0,
+  "passed": true,
+  "signal": null,
+  "productStarts": 0,
+  "durationMs": 131,
+  "mode": "SelfTest",
+  "processInventoryStored": false,
+  "checks": [
+    {
+      "id": "OBS-SELF-EXACT-EXCLUSION",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-FOREIGN-RETAINED",
+      "actual": 11,
+      "expected": 11,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-DATETIME",
+      "actual": "2026-11-02T16:24:01.1653025Z",
+      "expected": "2026-11-02T16:24:01.1653025Z",
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-DATEOFFSET",
+      "actual": "2026-11-02T16:24:01.1653025Z",
+      "expected": "2026-11-02T16:24:01.1653025Z",
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-ERROR-NATIVE-NULL",
+      "actual": null,
+      "expected": null,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-ERROR-TYPE",
+      "actual": "System.UnauthorizedAccessException",
+      "expected": "System.UnauthorizedAccessException",
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-EMPTY-INVENTORY",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-FIRST-ERROR",
+      "actual": "first",
+      "expected": "first",
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-FINALLY",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-BAD-RESULT",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-MISSING-NOT-ZERO",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-IDS-UNIQUE",
+      "actual": 11,
+      "expected": 11,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-NATIVE-CODE",
+      "actual": "AccessDenied",
+      "expected": "AccessDenied",
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-STATUS-CODE",
+      "actual": "2",
+      "expected": "2",
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-ERROR-NOT-EMPTY",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-EXCLUDE-EXACT-CHAIN",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-NO-NAME-EXCLUSION",
+      "actual": 2,
+      "expected": 2,
+      "passed": true
+    },
+    {
+      "id": "OBS-SELF-FOREIGN-SAME-PATH",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    }
+  ],
+  "stages": [],
+  "at": "2026-11-03T00:24:01.1612115+08:00"
+}

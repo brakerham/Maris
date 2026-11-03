@@ -1,0 +1,17 @@
+{
+  "H2": {
+    "readBeforeSeed": [
+      "stable owner digest",
+      "refresh present, not token equality",
+      "original draft/event/body digests",
+      "original count1"
+    ],
+    "seed": "2 expired draft/queued + recent queued + expired sending, preserve original; total5",
+    "onlyProductProfileMutation": "outbox.bin"
+  },
+  "W4": "actual owned native 保留 button then ordinary quit",
+  "H3": "plaintext identities/states/timestamps/count5 all unchanged",
+  "W5": "actual owned native 明确删除 button then ordinary quit",
+  "H4": "only2expired candidates removed, all3protected unchanged",
+  "readonlyNativeCapability": "UIA readable proven; existing owned button adapter reused. No device-unavailable fallback."
+}

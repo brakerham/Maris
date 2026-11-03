@@ -1,0 +1,174 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "id": "H2-NATIVE-AVAILABLE",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H2-OWNER-SCHEMA",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H2-OWNER-STABLE-IDENTITY",
+      "operator": "eq",
+      "expected": "7d65139817c6810471b88bbc940369e10f05a9129952b9e0969bf7c76cde541c",
+      "actual": "7d65139817c6810471b88bbc940369e10f05a9129952b9e0969bf7c76cde541c",
+      "passed": true
+    },
+    {
+      "id": "H2-REFRESH-PRESENT",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H2-ENTRIES-ARRAY",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H2-ORIGINAL-CONTINUITY",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H2-DRAFT-DIGEST",
+      "operator": "eq",
+      "expected": "d450a2a8db073edde56afc669722e49c68203c8d30be28176327d85c88ee8551",
+      "actual": "d450a2a8db073edde56afc669722e49c68203c8d30be28176327d85c88ee8551",
+      "passed": true
+    },
+    {
+      "id": "H2-EVENT-DIGEST",
+      "operator": "eq",
+      "expected": "97bf07ba60ffd6aaae69195d23532ea860aa1a09e3bba24cea204ef7162da27c",
+      "actual": "97bf07ba60ffd6aaae69195d23532ea860aa1a09e3bba24cea204ef7162da27c",
+      "passed": true
+    },
+    {
+      "id": "H2-PAYLOAD-DIGEST",
+      "operator": "eq",
+      "expected": "07ddee3f2b4af92a2c6df36e9449621fc53fde20c76c84fcc7cc6e5a8bb222e8",
+      "actual": "07ddee3f2b4af92a2c6df36e9449621fc53fde20c76c84fcc7cc6e5a8bb222e8",
+      "passed": true
+    },
+    {
+      "id": "H2-ORIGINAL-COUNT",
+      "operator": "eq",
+      "expected": 1,
+      "actual": 1,
+      "passed": true
+    },
+    {
+      "id": "H2-SEED-UNIQUE",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "id": "H2-SEED-READBACK",
+      "operator": "eq",
+      "expected": "8f22c45b2b687325449eb55123bb3025c486d27861040204830b2cea6c403320",
+      "actual": "8f22c45b2b687325449eb55123bb3025c486d27861040204830b2cea6c403320",
+      "passed": true
+    },
+    {
+      "id": "H2-OWNER-UNCHANGED",
+      "operator": "eq",
+      "expected": "5fec8e73c513311ee70d9103d7eb85897bf066f385d6ada65c03c5d3c81b49b7",
+      "actual": "5fec8e73c513311ee70d9103d7eb85897bf066f385d6ada65c03c5d3c81b49b7",
+      "passed": true
+    }
+  ],
+  "firstError": null,
+  "error": null,
+  "baseline": {
+    "before": [
+      {
+        "draft": "d450a2a8db073edde56afc669722e49c68203c8d30be28176327d85c88ee8551",
+        "event": "97bf07ba60ffd6aaae69195d23532ea860aa1a09e3bba24cea204ef7162da27c",
+        "body": "07ddee3f2b4af92a2c6df36e9449621fc53fde20c76c84fcc7cc6e5a8bb222e8",
+        "digest": "07ddee3f2b4af92a2c6df36e9449621fc53fde20c76c84fcc7cc6e5a8bb222e8",
+        "state": "queued",
+        "createdAt": 1792118904850,
+        "updatedAt": 1792118904850
+      }
+    ],
+    "after": [
+      {
+        "draft": "c00530b2bb1475e7b119abf68bf51bcdb283be34f6f38864b5f5db4ebd6de186",
+        "event": "1df315db33c3a0ca563cd15682bd2be76faad1bedd88488a7184c20ae8275309",
+        "body": "77257505bacf34af95f11efae42f0d42ed2d187a842a8aabb0c7c8d722e02dc5",
+        "digest": "77257505bacf34af95f11efae42f0d42ed2d187a842a8aabb0c7c8d722e02dc5",
+        "state": "draft",
+        "createdAt": 1790994991477,
+        "updatedAt": 1790994991477
+      },
+      {
+        "draft": "96f66ee2ed7713929493cc06460acf42bbc9e3323ab57081a54cce384321c1bf",
+        "event": "325a025c4fdf1ffe70847dce67df9f52e68b4d2002bd3182391cc8a61d1924f9",
+        "body": "b66794896be07805bd28c9631cf2ed5e633d91722b5f103912e90dcf45d3b1dd",
+        "digest": "b66794896be07805bd28c9631cf2ed5e633d91722b5f103912e90dcf45d3b1dd",
+        "state": "sending",
+        "createdAt": 1790994991477,
+        "updatedAt": 1790994991477
+      },
+      {
+        "draft": "0db372f1c6f8b6920d403f33574179a13a6c15f0b012d10fbfea0e27b747606a",
+        "event": "724bc55260beabcac2332271e5d36ad095c9eb4ceef352f670b3fcf62a9ea687",
+        "body": "f121f8d59260f0ccedd3b5606f42f18c4e6819c9766743d22b393a9de21ec809",
+        "digest": "f121f8d59260f0ccedd3b5606f42f18c4e6819c9766743d22b393a9de21ec809",
+        "state": "queued",
+        "createdAt": 1790994991477,
+        "updatedAt": 1790994991477
+      },
+      {
+        "draft": "d450a2a8db073edde56afc669722e49c68203c8d30be28176327d85c88ee8551",
+        "event": "97bf07ba60ffd6aaae69195d23532ea860aa1a09e3bba24cea204ef7162da27c",
+        "body": "07ddee3f2b4af92a2c6df36e9449621fc53fde20c76c84fcc7cc6e5a8bb222e8",
+        "digest": "07ddee3f2b4af92a2c6df36e9449621fc53fde20c76c84fcc7cc6e5a8bb222e8",
+        "state": "queued",
+        "createdAt": 1792118904850,
+        "updatedAt": 1792118904850
+      },
+      {
+        "draft": "aaa402adeff6238ad757b4cfcd9840d44148aa77a5cb6c9e1b00d3f5ecefc802",
+        "event": "ebfd7e67bca8c682b90d1cde4252262cdd06c93c074abf5986ce07cabb0800e1",
+        "body": "0897fa60eae4d677e6918ec9a7f29c7dfd760b0986e17cb6eeddcb67c0ae5e75",
+        "digest": "0897fa60eae4d677e6918ec9a7f29c7dfd760b0986e17cb6eeddcb67c0ae5e75",
+        "state": "queued",
+        "createdAt": 1793673390477,
+        "updatedAt": 1793673390477
+      }
+    ],
+    "removed": [
+      "1df315db33c3a0ca563cd15682bd2be76faad1bedd88488a7184c20ae8275309",
+      "724bc55260beabcac2332271e5d36ad095c9eb4ceef352f670b3fcf62a9ea687"
+    ],
+    "original": {
+      "draft": "d450a2a8db073edde56afc669722e49c68203c8d30be28176327d85c88ee8551",
+      "event": "97bf07ba60ffd6aaae69195d23532ea860aa1a09e3bba24cea204ef7162da27c",
+      "body": "07ddee3f2b4af92a2c6df36e9449621fc53fde20c76c84fcc7cc6e5a8bb222e8",
+      "digest": "07ddee3f2b4af92a2c6df36e9449621fc53fde20c76c84fcc7cc6e5a8bb222e8",
+      "state": "queued",
+      "createdAt": 1792118904850,
+      "updatedAt": 1792118904850
+    },
+    "ownerIdentityDigest": "7d65139817c6810471b88bbc940369e10f05a9129952b9e0969bf7c76cde541c",
+    "seeded": 4
+  },
+  "productImported": false
+}

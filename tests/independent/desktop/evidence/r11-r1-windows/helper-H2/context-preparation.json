@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "sameBytes": true,
+  "sameEncryptedFields": true,
+  "sourceUnchanged": true,
+  "bytes": 490,
+  "fileSha256": "079639a94da0580e9533bf8397d8a2a400d87cacdb755416a3265fe3b6fced22"
+}

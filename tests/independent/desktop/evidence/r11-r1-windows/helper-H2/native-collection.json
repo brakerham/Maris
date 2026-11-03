@@ -1,0 +1,12 @@
+{
+  "exitCode": 0,
+  "firstNativeError": null,
+  "resultPresent": true,
+  "baselinePresent": true,
+  "stagesPresent": true,
+  "collectionErrors": [],
+  "nativePassed": true,
+  "stageEnters": 45,
+  "stageTerminals": 45,
+  "uniqueIds": true
+}

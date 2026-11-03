@@ -1,0 +1,6 @@
+{"details":{},"stage":"process_query","at":"2026-11-03T02:31:49.3591474+00:00","callId":"W2-OS-4","event":"enter"}
+{"details":{"ownedCount":8,"rootVerified":true,"status":"success"},"stage":"process_query","at":"2026-11-03T02:31:50.0899330+00:00","callId":"W2-OS-4","event":"terminal"}
+{"details":{},"stage":"type_prepare","at":"2026-11-03T02:31:50.0910522+00:00","callId":"W2-OS-4","event":"enter"}
+{"details":{"status":"success"},"stage":"type_prepare","at":"2026-11-03T02:31:50.2595083+00:00","callId":"W2-OS-4","event":"terminal"}
+{"details":{},"stage":"native_close","at":"2026-11-03T02:31:50.2608733+00:00","callId":"W2-OS-4","event":"enter"}
+{"details":{"closePosted":true,"status":"success"},"stage":"native_close","at":"2026-11-03T02:31:50.2713503+00:00","callId":"W2-OS-4","event":"terminal"}

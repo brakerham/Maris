@@ -132,7 +132,7 @@ Git 写操作集中由头脑风暴总控负责。执行、测试、技术顾问�
 | 阶段 2 财务 Agent 工具 | `complete`（P2-A 本地与 PostgreSQL 冻结范围） | C6/D6 已完成；DATA-R2 的 P2 SPG 4/4 通过，`PG-C7-DATA-001` 已关闭；DeepSeek、桌面与微信扩展仍按独立阶段推进 |
 | P3 活动 Markdown 导入 | `complete` | B5-R1 固定快照通过 C9-R2 独立验收；89/89 项、执行方 PostgreSQL 9/9、独立 PostgreSQL 10/10 通过 |
 | P4-A Host、身份和通用状态地基 | `complete` | C11-R2 关闭 PostgreSQL 历史迁移 P0；P4-A 64/64 passed，最终 134 文件快照已固定 |
-| P4-B Windows Shell、模块 UI 与毛毛 | `blocked`；R11有限结果接受，R11-R1 Windows `ready / waiting_user` | P0～P3与P4-A已独立验收。R11独立41/41节点、321/321比较和109/109兼容通过，总控限定关闭IPC-ORIGIN-001；SEC-04整项blocked。Windows在目标前只读观察处停止，新增核对发现默认AccessDenied、标准审批后查询成功，旧R11根因仍unknown。唯一续接P4-C12-R11-R1-WINDOWS由既有Tester负责，从获准只读观察进入原W2及剩余Windows，不重跑41/109。系列已用产品2/8、helper3/6，剩余最多6/3；无安装或打包。SETTINGS-001、LAZY-001/UI-02、CMP-06及P4-B未关闭，B为1 passed、2 failed、19 blocked、2 not_run；P4-C/D未开始。 |
+| P4-B Windows Shell、模块 UI 与毛毛 | `blocked`；SETTINGS-001限定关闭，R11-R2原生续验 `ready / waiting_user` | P0～P3与P4-A已独立验收。R11-R1原W2四条首样、W2/W3共18比较及H2原生13比较通过，总控限定关闭SETTINGS-001；IPC-ORIGIN-001及QUIT-001普通关闭范围保持关闭。W4原生定位工具受阻，实际同标题可见窗口为2，按钮失败精确数量仍unknown，未形成新产品缺陷。唯一新任务P4-C12-R11-R2-NATIVE由既有Tester负责：修正窗口/模态定位，在新副本先只读H0确认五条消息，再W4-R/H3/W5/H4/W6/W7。历史产品5/helper4保持，本次最多4/3，明确增加W4补验和H0额度，系列上限9/7；不重跑W2/W3/H2或41/109、不安装打包。B为1 passed、1 failed、20 blocked、2 not_run，UI-02/LAZY-001及P4-B未关闭，P4-C/D未开始。 |
 | P4-C 财务驾驶舱 / P4-D 财富管理 | `not_started` | 等 P4-B Shell 完成独立验收后推进；不得在 B7 中伪造真实业务数据或提前实现 |
 
 此前已经有临时子智能体参与微信资料核实和学习路线审阅；这些调查结果不代表编码、账号接入或部署已完成。
